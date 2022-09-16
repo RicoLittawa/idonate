@@ -17,7 +17,7 @@
             <a class="nav-link" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Donations</a>
+            <a class="nav-link" href="donation.php">Donations</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">How it works?</a>

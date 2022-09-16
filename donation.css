@@ -26,45 +26,16 @@ body{
     border-radius: 5px;
     z-index:999;
 }
-
-.wrapper .input {
-    height: 30px;
-    width: 90%;
-    padding: 3px 30px;
-    border: none;
-    border-radius: 13px;
-    font-weight: bold;
-}
-
-.searchbtn {
-    padding-right: 50px;
-    width: 10%;
-    border-radius: 5px;
-    position: relative;
-    cursor: pointer;
-}
-
-.searchbtn .fas{
-	position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 18px;
-}
-.navbar input[type=text] {
-    float: none;
-    padding: 5px;
-    padding-right: 20px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-}
-.nav-item{
-    padding-right: 40px ;
-    padding-left: 50px;
-    padding-top: 20px;
-    color: black;
-    font-weight: bolder;
-}
+.navbar-nav{
+    padding-right: 500px;
+   }
+   .nav-item{
+       padding-right: 50px ;
+   }
+   .navbar-nav .nav-item .nav-link{
+       position: relative;
+       right: -120px;
+   }
 .navbar{
     z-index:999;
 }
