@@ -3,21 +3,27 @@ body{
     overflow: hidden;
 }
 .navbar-nav{
- padding-right: 100px;
-
+ padding-right: 500px;
 }
 .nav-item{
     padding-right: 50px ;
 }
-.bgdesign{
+.navbar-nav .nav-item .nav-link{
     position: relative;
-    top: -100px;
+    right: -120px;
+}
+.bgdesign{
+    margin: 12px;
+    position: relative;
+    top: -150px;
+    left: 50px;
+    
 }
 .headertitle{
     position: absolute;
     width: 647px;
     height: 111px;
-    left: 185px;
+    left: 280px;
     top: -50px;
     font-family: 'Lato';
     font-style: normal;
@@ -28,28 +34,21 @@ body{
 }
     .dot{
     position: absolute;
-    width: 800px;
-    height: 700px;
-    left: -100px;
+    width: 900px;
+    height: 750px;
+    left: -200px;
     top: 250px;
     border-radius: 50%;
     display: inline-block;
     background-color: #83f28f;
-}
-.photo1{
-    position: absolute;
-    width: 580px;
-    height: 340px;
-    left: 320px;
-    bottom: 270px;
-   
+    z-index: -1000;
 }
 .content p{
     position: absolute;
     width: 424px;
     height: 243px;
-    left: 866px;
-    top: 295px;
+    left: 790px;
+    top: 350px;
 
     font-family: 'Inter';
     font-style: normal;
@@ -65,9 +64,30 @@ body{
     background-color: #83f28f;
     border-radius: 20px;
     border-style: none;
+    font-weight: 500;
     width: 170px;
     height: 60px;
     position: relative  ;
-    left: 1050px;
-    top: 500px;
+    left: 790px;
+    top: 638px;
+}
+.container{
+    position: absolute;
+    bottom: -640px;
+    left: 50px;
+}
+.carousel{
+    width:600px;
+    height:350px;
+}
+.carousel-inner > .carousel-item > img {
+    width:600px;
+    height:350px;
+    border-radius: 20px;
+
+  }
+
+.carousel .carousel-indicators{
+    position: absolute;
+    left: 12px;
 }
