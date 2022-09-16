@@ -49,16 +49,14 @@ body{
     height: 243px;
     left: 790px;
     top: 350px;
-
-    font-family: 'Inter';
+    font-family: 'Lato';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     font-size: 20px;
     line-height: 27px;
-    /* or 135% */
- 
     align-content: center; 
     text-align: justify;
+    color: #454E5B;
 }
 .btn-primary{
     background-color: #83f28f;
