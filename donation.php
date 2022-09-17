@@ -30,24 +30,27 @@
           </li>
         </ul>
       </nav>
-  
-        <span class="dot"></span>
+  <div class="circles">
+        <div class="dot" >
+           <div class="photos">
+            <img class="photo1" src="img/water.png" alt=""> 
+            <img class="photo2" src="img/money.png" alt="">
+            <img class="photo3" src="img/food.png" alt="">
+            <img class="photo4" src="img/clothes.png" alt="">
+            </div>
+          <div class="dashedcircle"></div>
+      </div>
         <span class="dot2"></span>
-
-        <h1 class="title">You want to<br></h1>
-        <h2 class="con">Donate?</h2>
-           
+          <h1 class="title">You want to<br></h1>
+          <h2 class="con">Donate?</h2>
+        </div>
         <div class = "parag">
           <p>You can set request to inform the staff to<br>
             your arrival and know what kind of donation<br> 
             you will donate. Or You can directly drop off<br>
             your donation to relief hub.</p>
-
-            <button type="button" class="btn btn-primary">Set Request</button>
-
         </div>
-
-  
+        <button type="button" class="btn btn-primary">Set Request</button>
   
      <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

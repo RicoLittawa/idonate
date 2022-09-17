@@ -60,14 +60,17 @@ body{
 }
 .btn-primary{
     background-color: #83f28f;
-    border-radius: 20px;
+    border-radius: 50px;
     border-style: none;
-    font-weight: 500;
     width: 170px;
     height: 60px;
     position: relative  ;
     left: 790px;
     top: 638px;
+    font-family: "Lato";
+    font-style: Bold;
+    font-weight: 800;
+
 }
 .container{
     position: absolute;
