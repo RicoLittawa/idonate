@@ -85,10 +85,14 @@ body{
     width:600px;
     height:350px;
     border-radius: 20px;
-
   }
-
 .carousel .carousel-indicators{
     position: absolute;
     left: 12px;
 }
+.carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+  }
+  
