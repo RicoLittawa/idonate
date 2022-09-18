@@ -1,6 +1,10 @@
 body{
     background-color: #E5E5E5;
-    overflow: hidden;
+   overflow-inline: hidden;
+
+}
+.navbar{
+    margin:auto;
 }
 .navbar-nav{
  padding-right: 500px;
@@ -13,18 +17,15 @@ body{
     right: -120px;
 }
 .bgdesign{
-    margin: 12px;
-    position: relative;
-    top: -150px;
-    left: 50px;
-    
+    margin: auto;   
 }
 .headertitle{
     position: absolute;
+    left: 140px;
+    bottom: 430px;
     width: 647px;
     height: 111px;
-    left: 280px;
-    top: -50px;
+    padding: 1px;
     font-family: 'Lato';
     font-style: normal;
     font-weight: 700;
@@ -34,10 +35,10 @@ body{
 }
     .dot{
     position: absolute;
-    width: 900px;
-    height: 750px;
-    left: -200px;
-    top: 250px;
+    width: 1104px;
+    height: 924px;
+    left: -400px;
+    top: 150px;
     border-radius: 50%;
     display: inline-block;
     background-color: #83f28f;
@@ -47,8 +48,8 @@ body{
     position: absolute;
     width: 424px;
     height: 243px;
-    left: 790px;
-    top: 350px;
+    left: 800px;
+    top: 270px;
     font-family: 'Lato';
     font-style: normal;
     font-weight: 300;
@@ -65,17 +66,17 @@ body{
     width: 170px;
     height: 60px;
     position: relative  ;
-    left: 790px;
-    top: 638px;
+    left: 800px;
+    top: 510px;
     font-family: "Lato";
     font-style: Bold;
     font-weight: 800;
 
 }
-.container{
+.container1{
     position: absolute;
-    bottom: -640px;
-    left: 50px;
+    bottom: 45px;
+    left: 100px;
 }
 .carousel{
     width:600px;
@@ -95,4 +96,67 @@ body{
     height: 10px;
     border-radius: 100%;
   }
-  
+  footer{
+    position: absolute;
+    bottom: -500px;
+    left: 0;
+    right: 0;
+  }
+  .site-footer
+{
+  background-color:#3B5347;
+  padding:45px 0 20px;
+  font-size:15px;
+  line-height:24px;
+  color: #fff;
+}
+.site-footer hr
+{
+  border-top-color:#bbb;
+  opacity:0.5
+}
+.site-footer hr.small
+{
+  margin:20px 0
+}
+.site-footer h6
+{
+  color:#fff;
+  font-size:16px;
+  text-transform:uppercase;
+  margin-top:5px;
+  letter-spacing:2px
+}
+.site-footer a
+{
+  color:#fff;
+}
+.site-footer a:hover
+{
+  color:#3366cc;
+  text-decoration:none;
+}
+.footer-links
+{
+  padding-left:0;
+  list-style:none
+}
+.footer-links li
+{
+  display:block;
+}
+.footer-links h1
+{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color:#fff;
+    display: inline-block;
+    }
+.logo{
+    position: absolute;
+    left:1000px;
+    bottom: 150px;
+}

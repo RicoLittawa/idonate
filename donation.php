@@ -51,6 +51,37 @@
             your donation to relief hub.</p>
         </div>
         <button type="button" class="btn btn-primary">Set Request</button>
+        <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <h6>About</h6>
+            <p class="text-justify">IDONATE</i> is an online platform created for CDRRMO. With the use of the internet, 
+            this web-based system will lessen the manual process. It will also automate sending the acknowledgement receipt to the donors.
+             Donors may see how their donations are used with the help of a web-based donation system.</p>
+          </div>
+          <div class="col-xs-6 col-md-3">
+            <h6>Contacts</h6>
+            <ul class="footer-links">
+              <li><h1>Emergency Hotline: (043) 702-3902</h1></li>
+              <li><h1>Office Number: (043)- 984-4300 /(043)-727-2768</h1></li>
+              <li><h1>Email: cdrrmobatangas@yahoo.com.ph</h1></li>   
+              <li><h1>Location: Brgy.  Bolbok 4200, Batangas City Philippines</h1></li>            
+            </ul>
+          </div>
+          <div class="logo"> <img src="img/logo.png" alt=""></div>
+        </div>
+        <hr>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text">Copyright &copy; 2022 All Rights Reserved
+            </p>
+          </div>
+        </div>
+      </div>
+</footer>
   
      <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
