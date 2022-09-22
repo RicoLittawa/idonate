@@ -26,10 +26,12 @@
                 <li><a href=""><span class="fa fa-cog"><span></span>Settings</span></span></a></li>
                 <li><a href=""><span class="fa fa-power-off"><span></span>Logout</span></span></a></li>
             </ul>
+            <div class="logo"><img src="img/logo.png" alt=""></div>
         </div>
+        
     </div>
     <div class="main-content">
-      
+      <h2><span>Hello</span></h2>
     </div>
       
     <!-- Optional JavaScript -->
