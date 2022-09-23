@@ -1,7 +1,7 @@
 <?php
 $serverName= "DESKTOP-S2EIV7U";
 $ConnectionOptions=[
-	"Database"=>"loginsignup",
+	"Database"=>"idonate",
 	"UID"=>"",
 	"PWD"=>""
 ];
