@@ -21,7 +21,6 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
 </head>
-ASD ASD
 <body>
 	
 	<div class="limiter">
