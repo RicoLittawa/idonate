@@ -1,7 +1,8 @@
 <?php 
-require 'connection.php';
+
 
 if (isset($_POST['signup-submit'])){
+   require 'connection.php';
     $Email= $_POST['email'];
     $Password= $_POST['pwd'];
     $ConfirmPass= $_POST['pwd-repeat'];
@@ -19,7 +20,7 @@ if (isset($_POST['signup-submit'])){
        exit();
    }
    else{
-       $sql = "SELECT email from useradmin WHERE email=?";
+       $sql = "SELECT email  FROM useradmin WHERE email=?";
        $stmt = mysqli_stmt_init($conn);
        if(!mysqli_stmt_prepare($stmt, $sql)){
            header("Location: ../login/signup.php?error=sqlerror");
