@@ -30,14 +30,14 @@ if (isset($_SESSION['id']) && isset($_SESSION['email'])) {
                 <li><a href=""><span class="las la-envelope"><span>Requests</span></span></a></li>
                 <li><a href=""><span class="las la-edit"><span>Add Donations</span></span></a></li>
                 <li><a href=""><span class="fa fa-cog"><span></span>Settings</span></span></a></li>
-                <li><a href=""><span class="fa fa-power-off"><span></span>Logout</span></span></a></li>
+                <li><a href="/Admin/login/logout.php"><span class="fa fa-power-off"><span></span>Logout</span></span></a></li>
             </ul>
             <div class="logo"><img src="img/logo.png" alt=""></div>
         </div>
         
     </div>
     <div class="main-content">
-      <h2><span>Hello</span></h2>
+      <h2><span>Hello<?php echo $_SESSION['name']; ?></span></h2>
     </div>
       
     <!-- Optional JavaScript -->
