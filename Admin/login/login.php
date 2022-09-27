@@ -54,15 +54,14 @@
 					<span>
 						<?php 
 							if(isset($_GET['error'])){
-								if($_GET['error']=="Incorrect Email or password"){
-									echo '<p class= "signuperror">*Incorrect email or password </p>';
+								if($_GET['error']=="wrongpassword"){
+									echo '<p class= "signuperror">*Your password is incorrect</p>';
 								}
-
 							}
 						
 						?></span>
 					<div class="container-login100-form-btn">
-					<button type="submit" class="login100-form-btn">Login</button>
+					<button type="submit" name="login-submit" class="login100-form-btn">Login</button>
 				
 					</div>
 

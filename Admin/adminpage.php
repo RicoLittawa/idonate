@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-if (isset($_SESSION['id']) && isset($_SESSION['email'])) {
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -182,14 +180,3 @@ if (isset($_SESSION['id']) && isset($_SESSION['email'])) {
 	<script src="script.js"></script>
 </body>
 </html>
-<?php 
-
-}else{
-
-     header("Location: /admin/adminpage.php");
-
-     exit();
-
-}
-
- ?>

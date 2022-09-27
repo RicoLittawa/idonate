@@ -71,12 +71,13 @@
 								else if($_GET['error']=="usertaken"){
 									echo '<p class= "signuperror">*Email Already taken </p>';
 
+								}	
+	
 								}
-							} 
-							else if($_GET['signup']=="success"){
-								echo '<p class= "signupsuccess">Registration success </p>';
-
-							}?>
+								if(isset($_GET['signup'])){
+							 if($_GET['signup']=="success"){
+								echo '<p class= "signupsuccess">Registration success </p>';}}
+						?>
 						</span>
 					
 					<div class="container-login100-form-btn">
