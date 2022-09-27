@@ -11,7 +11,7 @@ session_start();
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="../Admin/css/landing.css">
 
 	<title>Dashboard</title>
 </head>
@@ -26,7 +26,7 @@ session_start();
 		</a>
 		<ul class="side-menu top">
 			<li class="active">
-				<a href="#">
+				<a href="adminpage.php">
 					<i class='bx bxs-dashboard' ></i>
 					<span class="text">Dashboard</span>
 				</a>
@@ -44,7 +44,7 @@ session_start();
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="addDonations.php">
 					<i class='bx bxs-add-to-queue' ></i>
 					<span class="text">Add Donations</span>
 				</a>
@@ -141,16 +141,16 @@ session_start();
 			<div class="table-data">
 				<div class="order">
 					<div class="head">
-						<h3>Recent Orders</h3>
+						<h3></h3>
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
 					</div>
 					<table>
 						<thead>
 							<tr>
-								<th>User</th>
-								<th>Date Order</th>
-								<th>Status</th>
+								<th></th>
+								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -177,6 +177,6 @@ session_start();
 	
 	
 
-	<script src="script.js"></script>
+	<script src="../Admin/scripts/landing.js"></script>
 </body>
 </html>
