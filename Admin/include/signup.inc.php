@@ -8,7 +8,7 @@ if (isset($_POST['signup-submit'])){
     $ConfirmPass= $_POST['pwd-repeat'];
     $Fname=$_POST['fName'];
     
-    if(empty($Email)||empty($Password)||empty($ConfirmPass)||empty($ConfirmPass)){
+    if(empty($Email)||empty($Password)||empty($ConfirmPass)||empty($Fname)){
       header("Location: ../login/signup.php?error=emptyfields&email=".$Email);
    }
    else if (!filter_var($Email, FILTER_VALIDATE_EMAIL)){
@@ -16,7 +16,7 @@ if (isset($_POST['signup-submit'])){
        exit();
    }
    else if ($Password !== $ConfirmPass){
-       header("Location: ../login/signup.php?error=passwordcheck&email=".$Email);
+       header("Location: ../login/signup.php?error=passwordcheck");
        exit();
    }
    else{
