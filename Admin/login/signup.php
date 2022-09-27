@@ -11,7 +11,6 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
 <!--===============================================================================================-->	
 	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
@@ -64,6 +63,21 @@
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
+					<span><?php 
+							if(isset($_GET['error'])){
+								if($_GET['error']=="passwordcheck"){
+									echo '<p class= "signuperror">*Password does not match </p>';
+								}
+								else if($_GET['error']=="usertaken"){
+									echo '<p class= "signuperror">*Email Already taken </p>';
+
+								}
+							} 
+							else if($_GET['signup']=="success"){
+								echo '<p class= "signupsuccess">Registration success </p>';
+
+							}?>
+						</span>
 					
 					<div class="container-login100-form-btn">
 						<input type="submit" name="signup-submit" value="signup" class="login100-form-btn">

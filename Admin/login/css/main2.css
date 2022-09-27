@@ -215,6 +215,12 @@ img{
   position: relative;
   top: -60px;
 }
+.signuperror{
+  color: #c80000;
+}
+.signupsuccess{
+  color: #57b846;
+}
 
 .login100-form-title {
   font-family: Poppins-Bold;

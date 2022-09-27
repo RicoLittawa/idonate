@@ -91,8 +91,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['email'])) {
 			<a href="#" class="notification">
 				<i class='bx bxs-bell' ></i>
 				<span class="num">8</span>
-			</a>
-			<a href="#" class="profile"></a>
+			</a>Good Day
+			<a href="#" class="profile"><span> <?php echo $_SESSION['name']; ?></span></a>
+			
 		</nav>
 		<!-- NAVBAR -->
 

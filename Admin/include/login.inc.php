@@ -4,6 +4,7 @@ session_start();
 
 include "connection.php";
 
+
 if (isset($_POST['userEmail']) && isset($_POST['userPassword'])) {
 
     function validate($data){
@@ -22,17 +23,11 @@ if (isset($_POST['userEmail']) && isset($_POST['userPassword'])) {
 
     $Password = validate($_POST['userPassword']);
 
-    if (empty($Email)) {
-        header("Location: ../login/login.php?error=User Name is required");
-        exit();
+    if(empty($Email)||empty($Password)){
+        header("Location: ../login/login.php?error=emptyfields");
+     }
 
-    }else if(empty($Password)){
-
-        header("Location: ../login/login.php?error=Password is required");
-
-        exit();
-
-    }else{
+    else{
 
         $sql = "SELECT * FROM useradmin WHERE email='$Email' AND pwdUsers='$Password'";
 
