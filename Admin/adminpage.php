@@ -7,6 +7,7 @@ session_start();
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
@@ -25,14 +26,14 @@ session_start();
 			<span ><img class="img" src="/Admin/img/logo.png" alt=""></span>
 		</a>
 		<ul class="side-menu top">
-			<li class="active">
+			<li  class="active">
 				<a href="adminpage.php">
 					<i class='bx bxs-dashboard' ></i>
 					<span class="text">Dashboard</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="donations.php">
 					<i class='bx bxs-box' ></i>
 					<span class="text">Donations</span>
 				</a>
@@ -43,7 +44,7 @@ session_start();
 					<span class="text">Requests</span>
 				</a>
 			</li>
-			<li>
+			<li >
 				<a href="addDonations.php">
 					<i class='bx bxs-add-to-queue' ></i>
 					<span class="text">Add Donations</span>
@@ -137,39 +138,16 @@ session_start();
 				</li>
 			</ul>
 
-
+				</div>
+			</div>
 			<div class="table-data">
-				<div class="order">
+				<div class="add">
 					<div class="head">
-						<h3></h3>
+						<h3>Add Donations</h3>
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
 					</div>
-					<table>
-						<thead>
-							<tr>
-								<th></th>
-								<th></th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="todo">
-					<div class="head">
-						<h3>Todos</h3>
-						<i class='bx bx-plus' ></i>
-						<i class='bx bx-filter' ></i>
-					</div>
-					<ul class="todo-list">
-						
-					</ul>
-				</div>
+					
 			</div>
 		</main>
 	

@@ -7,7 +7,7 @@ session_start();
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
@@ -33,7 +33,7 @@ session_start();
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="../Admin/donations.php">
 					<i class='bx bxs-box' ></i>
 					<span class="text">Donations</span>
 				</a>
@@ -103,7 +103,7 @@ session_start();
 					<h1>Add Donations</h1>
 					<ul class="breadcrumb">
 						<li>
-							<a href="#">Donations</a>
+							<a href="../Admin/donations.php">Donations</a>
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
 						<li>
@@ -113,53 +113,53 @@ session_start();
 				</div>
 			</div>
 			<div class="table-data">
-				<div class="order">
+				<div class="add">
 					<div class="head">
 						<h3>Add Donations</h3>
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
 					</div>
-					<form action="" method="">
-						<div class="" data-validate = "">
-					
-						<input class="input100" type="text" name="fullname" placeholder="Full name">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
+					<form class="donationform" action="../Admin/include/add.inc.php" method="POST">
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="fname" placeholder="Full name">
 						</div>
-						<div class="" data-validate = "">
-					
-						<input class="input100" type="text" name="address" placeholder="Address">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="address" placeholder="Address">
 						</div>
-						<div class="" data-validate = "">
-					
-						<input class="input100" type="text" name="email" placeholder="Email">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="email" placeholder="Email">
 						</div>
-						<div class="" data-validate = "">
-					
-						<input class="input100" type="text" name="date" placeholder="Date">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="date" name="donation_date" placeholder="Date">
 						</div>
-						<div class="" data-validate = "">
-					
-						<input class="input100" type="text" name="date" placeholder="Date">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
+						<div class="form-group" data-validate = "">
+								<label for="items">Select:</label>
+								<select class="form-control" id="categ" name="category">
+								<option value="food">Food</option>
+								<option value="clothes">Clothes</option>
+								<option value="beverages">Beverages</option>
+								<option value="others">Others</option>
+								</select>
 						</div>
+						<div class="form-group" data-validate = "">
+							<label for="quanti">Select:</label>
+								<select class="form-control" id="quanti" name="variant">
+								<option value="Per Box">Per Box</option>
+								<option value="Pieces">Pieces</option>
+								<option value="Others">Others</option>
+								</select>
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="productName" placeholder="Product Name">
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="number" name="quantity" placeholder="Quantity">
+						</div>
+						<div class="button">
+							
+							<button type="submit" name="submit-donations" class="btn">Submit</button>
+						</div>
+
 
 					</form>
 				
