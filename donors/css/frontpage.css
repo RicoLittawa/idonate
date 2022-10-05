@@ -3,18 +3,26 @@ body{
    overflow-inline: hidden;
 
 }
-.navbar{
-    margin:auto;
-}
-.navbar-nav{
- padding-right: 500px;
+#navbar{
+  z-index:999;
+
 }
 .nav-item{
-    padding-right: 50px ;
+padding-right: 50px ;
 }
 .navbar-nav .nav-item .nav-link{
-    position: relative;
-    right: -120px;
+position: relative;
+right: -120px;
+color: grey;
+}
+.sticky {
+position: fixed;
+top: 0;
+width: 100%;
+}
+
+.sticky + .content {
+padding-top: 60px;
 }
 .bgdesign{
     margin: auto;   

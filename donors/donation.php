@@ -4,18 +4,18 @@
     <title>Donation</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/donation.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
   </head>
   <body> 
-  
-  <nav class="navbar navbar-expand-sm bg-light navbar-light">
-        <ul class="navbar-nav">
+  <div class="navbar navbar-expand-sm bg-light" id="navbar">
+  <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="frontpage.php">Home</a>
           </li>
@@ -29,7 +29,8 @@
             <a class="nav-link" href="#">What is needed?</a>
           </li>
         </ul>
-      </nav>
+</div>
+<div class="container-fluid">
   <div class="circles">
         <div class="dot" >
            <div class="photos">
@@ -50,7 +51,34 @@
             you will donate. Or You can directly drop off<br>
             your donation to relief hub.</p>
         </div>
-        <button type="button" class="btn btn-primary">Set Request</button>
+        <span><button class="btn btn-primary addrequest" type="submit" data-toggle="modal" data-target="request"><i class="fa-solid fa-plus"></i>SET REQUEST</button></span>
+        </div>
+        
+<!-- The Modal -->
+<div class="modal" id="request">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Modal body..
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
         <footer class="site-footer">
       <div class="container">
         <div class="row">
@@ -88,5 +116,30 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+		$(document).ready(function(){
+			$('.addrequest').on('click',function(){
+				$('#request').modal('show');
+
+
+			});
+
+
+		});
+	</script>
+  <script>
+window.onscroll = function() {myFunction()};
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
   </body>
 </html>

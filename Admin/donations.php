@@ -46,12 +46,6 @@ session_start();
 					<span class="text">Requests</span>
 				</a>
 			</li>
-			<li >
-				<a href="addDonations.php">
-					<i class='bx bxs-add-to-queue' ></i>
-					<span class="text">Add Donations</span>
-				</a>
-			</li>
 			<li>
 				<a href="#">
 					<i class='bx bxs-chat' ></i>
@@ -113,7 +107,76 @@ session_start();
 						</li>
 					</ul>
 				</div>
+				<a href="#" class="btn-download">
+	
+					<span><button class="btn btn-success adddata" type="submit"><i class="fa-solid fa-plus"></i> Add donations</button></span>
+				</a>
 			</div>
+			<div class="modal fade" id="addform">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Donations</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+     
+		<form action="../Admin/include/add.inc.php" method="POST">
+		<div class="modal-body">
+			
+	  					<input type="hidden" name="update_id">
+	  					<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="fname"  placeholder="Full name">
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="address" placeholder="Address">
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="email"  placeholder="Email">
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="date" name="donation_date"  placeholder="Date">
+						</div>
+						<div class="form-group" data-validate = "">
+								<label for="items">Select:</label>
+								<select class="form-control"  name="category">
+								<option value="food">Food</option>
+								<option value="clothes">Clothes</option>
+								<option value="beverages">Beverages</option>
+								<option value="others">Others</option>
+								</select>
+						</div>
+						<div class="form-group" data-validate = "">
+							<label for="quanti">Select:</label>
+								<select class="form-control"  name="variant">
+								<option value="Per Box">Per Box</option>
+								<option value="Pieces">Pieces</option>
+								<option value="Others">Others</option>
+								</select>
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="productName"placeholder="Product Name">
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="quantity" placeholder="Quantity">
+						</div>
+
+       
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="submit" name="submit-donations" class="btn btn-primary">Save</button>
+      </div>
+	  </form>	
+
+    </div>
+  </div>
+</div>
 			<div class="table-data">
 				<div class="add">
 					<div class="head">
@@ -122,6 +185,7 @@ session_start();
 						<i class='bx bx-filter' ></i>
 					</div>
 					<table class="table">
+					
     <thead>
       <tr>
 	  	<th>ID</th>
@@ -155,9 +219,9 @@ session_start();
 				<td> <?php echo $row['variant']; ?></td>
 				<td> <?php echo $row['productName']; ?></td>
 				<td> <?php echo $row['quantity']; ?></td>
-				<td><button class="btn"><i class="fa-solid fa-trash " style="color: red;"></i><a class="icon" href="../admin/operations/delete.php?deleteid=<?php echo $row['id'] ?>">
-				</a></button>
-				<button class="btn update"><i class="fa-solid fa-pen-to-square" style="color: green;"></i></button>
+				<td><a href="../admin/operations/delete.php?deleteid=<?php echo $row['id'] ?>"><i class="fa-solid fa-trash " style="color: red;"></i>
+				</a>
+				<button type="button" class="btn update"><i class="fa-solid fa-pen-to-square" style="color: green;"></i></button>
 					</td>
 
 				<td><button class="btn btn-success" type="submit">Send Certificate</button></td>
@@ -222,7 +286,7 @@ session_start();
 							<input class="form-control" type="text" name="productName" id="productName" placeholder="Product Name">
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="text" name="quantity" id="quantity" placeholder="Quantity">
+							<input class="form-control" type="number" name="quantity" id="quantity" placeholder="Quantity">
 						</div>
 
        
@@ -230,9 +294,10 @@ session_start();
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="delete btn btn-danger" data-dismiss="modal">Close</button>
 		<button type="submit" name="updatedata" class="btn btn-primary">Save</button>
       </div>
+	  
 	  </form>	
 
     </div>
@@ -246,11 +311,13 @@ session_start();
 	</section>
 	
 	
+	
 
 	<script src="../Admin/scripts/donations.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 	<script>
 		$(document).ready(function(){
 			$('.update').on('click',function(){
@@ -259,7 +326,10 @@ session_start();
 				var data = $tr.children("td").map(function(){
 					return $(this).text();
 				}).get();
-				console.log(data);
+				var numData = $tr.children("td").map(function () { return parseInt($(this).text()); }).get();
+				
+				
+			console.log(data,numData)
 				$('#update_id').val(data[0]);
 				$('#fname').val(data[1]);
 				$('#address').val(data[2]);
@@ -268,7 +338,7 @@ session_start();
 				$('#category').val(data[5]);
 				$('#variant').val(data[6]);
 				$('#productName').val(data[7]);
-				$('#quantity').val(data[8]);
+				$('#quantity').val(numData[8]);
 
 
 
@@ -277,5 +347,17 @@ session_start();
 
 		});
 	</script>
+	<script>
+		$(document).ready(function(){
+			$('.adddata').on('click',function(){
+				$('#addform').modal('show');
+
+
+			});
+
+
+		});
+	</script>
+
 </body>
 </html>

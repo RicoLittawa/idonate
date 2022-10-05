@@ -44,12 +44,6 @@ session_start();
 					<span class="text">Requests</span>
 				</a>
 			</li>
-			<li >
-				<a href="addDonations.php">
-					<i class='bx bxs-add-to-queue' ></i>
-					<span class="text">Add Donations</span>
-				</a>
-			</li>
 			<li>
 				<a href="#">
 					<i class='bx bxs-chat' ></i>

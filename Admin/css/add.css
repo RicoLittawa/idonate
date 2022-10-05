@@ -361,19 +361,6 @@ body {
 	flex-grow: 1;
 	flex-basis: 500px;
 }
-#content main form input {
-	margin: 1rem;
-	width: 940px;
-} 
-#content main form .form-group {
-	margin: 1rem;
-	width: 940px;
-} 
-#content main form .button {
-	margin: 1rem;
-	float: right;
-	
-} 
 .btn{
 	background: #83f28f;
 	width: 200px;
@@ -381,6 +368,7 @@ body {
 	color: #fff;
 	border-radius: 10px;
 	font-family: var(--poppins);
+	float: right;
 }
 
 /* MAIN */
