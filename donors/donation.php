@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="css/donation.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-
+    <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+        padding-right: 0px !important;
+        overflow-y: auto;
+    }</style>
   </head>
   <body> 
   <div class="navbar navbar-expand-sm bg-light" id="navbar">
@@ -30,7 +33,7 @@
           </li>
         </ul>
 </div>
-<div class="container-fluid">
+<div class="container">
   <div class="circles">
         <div class="dot" >
            <div class="photos">
@@ -55,13 +58,13 @@
         </div>
         
 <!-- The Modal -->
-<div class="modal" id="request">
+<div class="modal fade" id="request">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
+        <h4 class="modal-title">Set Request</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
