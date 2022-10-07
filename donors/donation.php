@@ -19,8 +19,10 @@
   <body> 
   <div class="navbar navbar-expand-sm bg-light" id="navbar">
   <ul class="navbar-nav">
+      <div class="btn-box">
           <li class="nav-item">
             <a class="nav-link" href="frontpage.php">Home</a>
+  </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="donation.php">Donations</a>
