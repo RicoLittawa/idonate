@@ -129,20 +129,20 @@ session_start();
 			
 	  					<input type="hidden" name="update_id">
 	  					<div class="form-group validate-input" data-validate = "Fullname is required">
-							<input class="form-control" type="text" name="fname"  placeholder="Full name">
+							<input class="form-control" type="text" name="fname" id="Ufullname" placeholder="Full name">
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="text" name="address" placeholder="Address">
+							<input class="form-control" type="text" name="address" id="Uaddress" placeholder="Address">
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="text" name="email"  placeholder="Email">
+							<input class="form-control" type="text" name="email" id="Uemail"  placeholder="Email">
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="date" name="donation_date"  placeholder="Date">
+							<input class="form-control" type="date" name="donation_date" id="Udonation_date" placeholder="Date">
 						</div>
 						<div class="form-group" data-validate = "">
 								<label for="items">Select:</label>
-								<select class="form-control"  name="category">
+								<select class="form-control"  name="category" id="Ucategory">
 								<option value="food">Food</option>
 								<option value="clothes">Clothes</option>
 								<option value="beverages">Beverages</option>
@@ -151,17 +151,17 @@ session_start();
 						</div>
 						<div class="form-group" data-validate = "">
 							<label for="quanti">Select:</label>
-								<select class="form-control"  name="variant">
+								<select class="form-control"  name="variant" id="Uvariant">
 								<option value="Per Box">Per Box</option>
 								<option value="Pieces">Pieces</option>
 								<option value="Others">Others</option>
 								</select>
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="text" name="productName"placeholder="Product Name">
+							<input class="form-control" type="text" id="UproductName" name="productName"placeholder="Product Name">
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="number" name="quantity" placeholder="Quantity">
+							<input class="form-control" type="number" id="Uquantity" name="quantity" placeholder="Quantity">
 						</div>
 
        
@@ -170,7 +170,7 @@ session_start();
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" name="" class="btn btn-primary" onclick="submitdonations()">Save</button>
+		<button type="submit" class="btn btn-primary submitBtn" onclick="submitdonations()">Save</button>
       </div>
 	  </form>	
 
@@ -353,12 +353,6 @@ session_start();
 
 		});
 	</script>
-	<script>
-		function submitdonations(){
-
-		}
-
-	</script>
-
+	
 </body>
 </html>
