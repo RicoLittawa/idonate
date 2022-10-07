@@ -161,7 +161,7 @@ session_start();
 							<input class="form-control" type="text" name="productName"placeholder="Product Name">
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="text" name="quantity" placeholder="Quantity">
+							<input class="form-control" type="number" name="quantity" placeholder="Quantity">
 						</div>
 
        
@@ -246,15 +246,12 @@ session_start();
         <h4 class="modal-title">Update/Edit</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-
       <!-- Modal body -->
-     
-		<form action="../Admin/operations/update.php" method="POST">
+	  <form action="../Admin/operations/update.php?" method="POST">
 		<div class="modal-body">
-			
 	  					<input type="hidden" name="update_id" id="update_id">
 	  					<div class="form-group" data-validate = "">
-							<input class="form-control" type="text" name="fname" id="fname" placeholder="Full name">
+							<input class="form-control" type="text" name="fname" id="fname" placeholder="Full name" >
 						</div>
 						<div class="form-group" data-validate = "">
 							<input class="form-control" type="text" name="address" id="address" placeholder="Address">
@@ -263,23 +260,23 @@ session_start();
 							<input class="form-control" type="text" name="email" id="email" placeholder="Email">
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="date" name="donation_date" id="donation_date" placeholder="Date">
-						</div>
-						<div class="form-group" data-validate = "">
 								<label for="items">Select:</label>
 								<select class="form-control" id="category" name="category">
+								<option selected>Choose...</option>	
 								<option value="food">Food</option>
 								<option value="clothes">Clothes</option>
 								<option value="beverages">Beverages</option>
-								<option value="others">Others</option>
+								<option class="editable" value="others">Others</option>
 								</select>
+								<input class="editOption" style="display:none;"></input>
 						</div>
 						<div class="form-group" data-validate = "">
 							<label for="quanti">Select:</label>
 								<select class="form-control" id="variant" name="variant">
+								<option selected>Choose...</option>
 								<option value="Per Box">Per Box</option>
 								<option value="Pieces">Pieces</option>
-								<option value="Others">Others</option>
+								<option class="editable" value="Others">Others</option>
 								</select>
 						</div>
 						<div class="form-group" data-validate = "">
@@ -295,7 +292,7 @@ session_start();
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="delete btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" name="updatedata" class="btn btn-primary">Save</button>
+		<button type="submit" name="updatedata" id="updatedata" class="btn btn-primary">Save</button>
       </div>
 	  
 	  </form>	
@@ -311,39 +308,36 @@ session_start();
 	</section>
 	
 	
-	
 
 	<script src="../Admin/scripts/donations.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
+
+
 	<script>
 		$(document).ready(function(){
 			$('.update').on('click',function(){
 				$('#updateform').modal('show');
 				$tr = $(this).closest('tr');
 				var data = $tr.children("td").map(function(){
-					return $(this).text();
+					return $.trim($(this).text());
 				}).get();
-				var numData = $tr.children("td").map(function () { return parseInt($(this).text()); }).get();
-				
-				
-			console.log(data,numData)
+				var numData = $tr.children("td").map(function () { return parseInt($(this).text()); }).get();			
+			
 				$('#update_id').val(data[0]);
 				$('#fname').val(data[1]);
 				$('#address').val(data[2]);
 				$('#email').val(data[3]);
 				$('#donation_date').val(data[4]);
-				$('#category').val(data[5]);
-				$('#variant').val(data[6]);
+				$( "#category" ).find( "option:selected" ).val();     	
+				$( "#variant" ).find( "option:selected" ).val();     			 
 				$('#productName').val(data[7]);
 				$('#quantity').val(numData[8]);
-
-
-
+				
 			});
-
 
 		});
 	</script>

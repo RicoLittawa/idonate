@@ -27,9 +27,7 @@ body{
 .sticky + .content {
   padding-top: 60px;
 }
-.modal-open {
-  overflow-y: auto;
-}
+
 
 
 .dot2{
@@ -54,6 +52,7 @@ body{
     display: inline-block;
     background-color: #83f28f;
     z-index: -1000;  
+    overflow: hidden;
 }
 .dashedcircle{
     position: absolute;
@@ -145,14 +144,14 @@ body{
     line-height: 27px;
     color: #454E5B;
 }
-.btn-primary{
+.addrequest{
     background-color: #83f28f;
     border-radius: 50px;
     border-style: none;
     width: 200px;
     height: 70px;
     position: relative  ;
-    left: 490px;
+    left: 340px;
     top: 450px;
     font-family: "Lato";
     font-size: 20px;

@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
         padding-right: 0px !important;
-        overflow-y: auto;
     }</style>
   </head>
   <body> 
@@ -54,7 +53,7 @@
             you will donate. Or You can directly drop off<br>
             your donation to relief hub.</p>
         </div>
-        <span><button class="btn btn-primary addrequest" type="submit" data-toggle="modal" data-target="request"><i class="fa-solid fa-plus"></i>SET REQUEST</button></span>
+        <span><button class="btn btn-success addrequest" type="submit" data-toggle="modal" data-target="request"><i class="fa-solid fa-plus"></i> SET REQUEST</button></span>
         </div>
         
 <!-- The Modal -->
@@ -69,14 +68,56 @@
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">
-        Modal body..
+      <form action="../Admin/operations/update.php" method="POST">
+		<div class="modal-body">
+			
+	  					<input type="hidden" name="update_id" id="update_id">
+	  					<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="fname" id="fname" placeholder="Full name">
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="address" id="address" placeholder="Address">
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="email" id="email" placeholder="Email">
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="date" name="donation_date" id="donation_date" placeholder="Date">
+						</div>
+						<div class="form-group" data-validate = "">
+								<label for="items">Select:</label>
+								<select class="form-control" id="category" name="category">
+								<option value="food">Food</option>
+								<option value="clothes">Clothes</option>
+								<option value="beverages">Beverages</option>
+								<option value="others">Others</option>
+								</select>
+						</div>
+						<div class="form-group" data-validate = "">
+							<label for="quanti">Select:</label>
+								<select class="form-control" id="variant" name="variant">
+								<option value="Per Box">Per Box</option>
+								<option value="Pieces">Pieces</option>
+								<option value="Others">Others</option>
+								</select>
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="text" name="productName" id="productName" placeholder="Product Name">
+						</div>
+						<div class="form-group" data-validate = "">
+							<input class="form-control" type="number" name="quantity" id="quantity" placeholder="Quantity">
+						</div>
+
+       
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="delete btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="submit" name="updatedata" class="btn btn-primary">Submit</button>
       </div>
+	  
+	  </form>	
 
     </div>
   </div>
