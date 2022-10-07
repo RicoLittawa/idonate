@@ -20,9 +20,11 @@
             <a class="nav-link" href="donation.php">Donations</a>
           </li>
 </div>
+        <div class="btn-box">
           <li class="nav-item">
             <a class="nav-link" href="#">How it works?</a>
           </li>
+<div>
           <li class="nav-item">
             <a class="nav-link" href="#">What is needed?</a>
           </li>
