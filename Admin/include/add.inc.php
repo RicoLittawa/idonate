@@ -11,7 +11,7 @@ if (isset($_POST['submit-donations'])){
     $Quantity= $_POST['quantity'];
 
     if(empty($Fname)||empty($Address)||empty($Email)||empty($Date)||empty($Categ)||empty($Quanti)||empty($Product)||empty($Quantity)){
-        header("Location: ../addDonations.php?error=emptyfields");
+        header("Location: ../donations.php?error=emptyfields");
         exit();
      }
      else{
@@ -19,7 +19,7 @@ if (isset($_POST['submit-donations'])){
          VALUES (?,?,?,?,?,?,?,?)" ;
         $stmt= mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$sql)){
-            header("Location: ../addDonations.php?error=sqlerror");
+            header("Location: ../donations.php?error=sqlerror");
             exit();
         }
         else{

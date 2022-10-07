@@ -124,11 +124,11 @@ session_start();
 
       <!-- Modal body -->
      
-		<form action="../Admin/include/add.inc.php" method="POST">
+		<form action="../Admin/include/add.inc.php" method="POST" id="addmodalform">
 		<div class="modal-body">
 			
 	  					<input type="hidden" name="update_id">
-	  					<div class="form-group" data-validate = "">
+	  					<div class="form-group validate-input" data-validate = "Fullname is required">
 							<input class="form-control" type="text" name="fname"  placeholder="Full name">
 						</div>
 						<div class="form-group" data-validate = "">
@@ -170,7 +170,7 @@ session_start();
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" name="submit-donations" class="btn btn-primary">Save</button>
+		<button type="submit" name="" class="btn btn-primary" onclick="submitdonations()">Save</button>
       </div>
 	  </form>	
 
@@ -315,6 +315,7 @@ session_start();
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 	<script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 
 	<script>
@@ -351,6 +352,12 @@ session_start();
 
 
 		});
+	</script>
+	<script>
+		function submitdonations(){
+
+		}
+
 	</script>
 
 </body>
