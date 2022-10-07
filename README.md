@@ -25,4 +25,6 @@ The following are the objective of the study that the researchers target to achi
     To provide an analytical report that will determine the trend of donations and the volume or quantity of donations.
      - Inventory of items to be donated
      - Real Time reports of donated items and donor
+     
+     2022
 
