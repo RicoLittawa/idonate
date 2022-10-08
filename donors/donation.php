@@ -73,19 +73,23 @@
 			
 	  					<input type="hidden" name="update_id" id="update_id">
 	  					<div class="form-group" data-validate = "">
-							<input class="form-control" type="text" name="fname" id="fname" placeholder="Full name">
+                <label for="fname">Full Name</label>
+							<input class="form-control" type="text" name="fname" id="fname" placeholder="*Dela Cruz Juan">
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="text" name="address" id="address" placeholder="Address">
+              <label for="address">Address</label>
+							<input class="form-control" type="text" name="address" id="address" placeholder="*Street Address/City">
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="text" name="email" id="email" placeholder="Email">
+              <label for="email">Email</label>
+							<input class="form-control" type="text" name="email" id="email" placeholder="*Sample@email.com">
 						</div>
 						<div class="form-group" data-validate = "">
+              <label for="donation_date">Donation Date</label>
 							<input class="form-control" type="date" name="donation_date" id="donation_date" placeholder="Date">
 						</div>
 						<div class="form-group" data-validate = "">
-								<label for="items">Select:</label>
+								<label for="category">Select Category:</label>
 								<select class="form-control" id="category" name="category">
 								<option value="food">Food</option>
 								<option value="clothes">Clothes</option>
@@ -94,7 +98,7 @@
 								</select>
 						</div>
 						<div class="form-group" data-validate = "">
-							<label for="quanti">Select:</label>
+							<label for="variant">Select Variant:</label>
 								<select class="form-control" id="variant" name="variant">
 								<option value="Per Box">Per Box</option>
 								<option value="Pieces">Pieces</option>
@@ -102,10 +106,15 @@
 								</select>
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="text" name="productName" id="productName" placeholder="Product Name">
+              <label for="productName">Product Name</label>
+							<input class="form-control" type="text" name="productName" id="productName" placeholder="*Luckyme Pancit Canton/Summit Mineral Water">
 						</div>
 						<div class="form-group" data-validate = "">
-							<input class="form-control" type="number" name="quantity" id="quantity" placeholder="Quantity">
+              <label for="quantity">Quantity</label>
+							<input class="form-control" type="number" name="quantity" id="quantity" placeholder="*Numeric Value">
+						</div>
+            <div class="form-group" data-validate = "">
+              <textarea  class="form-control" type="text" name="note" id="note" placeholder="Donors Note" cols="30" rows="10"></textarea>
 						</div>
 
        
