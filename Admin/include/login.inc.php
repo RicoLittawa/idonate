@@ -6,7 +6,7 @@ if(isset($_POST['login-submit'])){
     if (empty($Email)||empty($Password)){
         header("Location: ../login/login.php?error=emptyfields");
         exit();
-    }
+    }   
     else{
         $sql = "SELECT *FROM useradmin WHERE email=?";
         $stmt = mysqli_stmt_init($conn);

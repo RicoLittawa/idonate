@@ -10,21 +10,21 @@
   <body>
   <div class="navbar navbar-expand-sm bg-light" id="navbar">
   <ul class="navbar-nav">
-        <div class="btn-box">
+        
           <li class="nav-item">
             <a class="nav-link" href="frontpage.php">Home</a>
           </li>
-</div>
-        <div class="btn-box">
+
+
           <li class="nav-item">
             <a class="nav-link" href="donation.php">Donations</a>
           </li>
-</div>
-        <div class="btn-box">
+
+
           <li class="nav-item">
             <a class="nav-link" href="#">How it works?</a>
           </li>
-<div>
+
           <li class="nav-item">
             <a class="nav-link" href="#">What is needed?</a>
           </li>

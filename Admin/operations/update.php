@@ -1,6 +1,8 @@
 <?php
+session_start();
 include '../include/connection.php';
-if (isset($_POST['updatedata'])){
+
+if (isset($_POST['updatedata'])){ 
   $id= $_POST['update_id'];
   $Fname= $_POST['fname'];
   $Address= $_POST['address'];
@@ -10,14 +12,38 @@ if (isset($_POST['updatedata'])){
   $Quanti= $_POST['variant'];
   $Product = $_POST['productName'];
   $Quantity= $_POST['quantity'];
+ 
+if (!preg_match ("/^[0-9]*$/", $Quantity)){
+  $_SESSION['status']="Please enter numeric value";
+  $_SESSION['status_code']="error";
+  header("Location: ../donations.php?error=notvalidnumber");
+  exit();
+  
+}
+else if(!preg_match("/^[a-zA-Z-' ]*$/",$Fname)){
+  $_SESSION['status']="Not a valid name";
+  $_SESSION['status_code']="error";
+  header("Location: ../donations.php?error=notvalidname");
+  exit();
+}
 
-    $sql ="UPDATE items SET fullname='$Fname',address='$Address',email='$Email',donationDate='$Date',category='$Categ',
-    variant='$Quanti',productName='$Product',quantity='$Quantity' WHERE id=$id";
-    $result= mysqli_query($conn,$sql);
-    if ($result){
-        header("Location: ../donations.php");
-    }
-    else{
-        die(mysqli_error($conn));
-    }
+else{
+
+    $sql ="UPDATE items SET fullname=?,address=?,email=?,donationDate=?,category=?,
+    variant=?,productName=?,quantity=? WHERE id=?";
+    $stmt= $conn->prepare($sql);
+    $stmt->bind_param("ssssssssi", $Fname, $Address, $Email,$Date,$Categ,$Quanti,$Product,$Quantity, $id);
+    $stmt->execute();
+    $_SESSION['status']=" Update Success";
+      $_SESSION['status_code']="success";
+        header("Location: ../donations.php?fillup=success");
+ }
+       
+ mysqli_stmt_close($stmt);
+ mysqli_close($conn);
+    
+}
+else {
+  header("Location: ../donations.php");
+              exit();
 }
