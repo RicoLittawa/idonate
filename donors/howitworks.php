@@ -17,20 +17,26 @@
   </head>
   <body> 
   <div class="navbar navbar-expand-sm bg-light" id="navbar">
-  <ul class="nav nav-pills nav-fill">
-          <li class="nav-item">
-            <a class="nav-link" href="frontpage.php">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Donations</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="howitworks.php">How it works?</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="whatisneeded.php">What is needed?</a>
-          </li>
-        </ul>
+    <ul class="nav nav-pills nav-fill">
+        
+        <li class="nav-item">
+          <a class="nav-link" href="frontpage.php">Home</a>
+        </li>
+  
+  
+        <li class="nav-item">
+          <a class="nav-link" href="donation.php">Donations</a>
+        </li>
+  
+  
+        <li class="nav-item">
+          <a class="nav-link active" href="#">How it works?</a>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link" href="whatisneeded.php">What is needed?</a>
+        </li>
+      </ul>
 </div>
 <div class="container">
   <div class="circles">

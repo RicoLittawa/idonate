@@ -2,17 +2,27 @@
 <html lang="en">
   <head>
     <title>frontpage</title>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/donation.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="css/frontpage.css">
+    <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+        padding-right: 0px !important;
+    }</style>
   </head>
   <body>
+  
   <div class="navbar navbar-expand-sm bg-light" id="navbar">
-  <ul class="navbar-nav">
+  <ul class="nav nav-pills nav-fill">
         
           <li class="nav-item">
-            <a class="nav-link" href="frontpage.php">Home</a>
+            <a class="nav-link active" href="#">Home</a>
           </li>
 
 
@@ -22,11 +32,11 @@
 
 
           <li class="nav-item">
-            <a class="nav-link" href="#">How it works?</a>
+            <a class="nav-link" href="howitworks.php">How it works?</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">What is needed?</a>
+            <a class="nav-link" href="">What is needed?</a>
           </li>
         </ul>
 </div>  

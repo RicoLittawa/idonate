@@ -27,4 +27,3 @@ The following are the objective of the study that the researchers target to achi
      - Real Time reports of donated items and donor
      
      2022
-
