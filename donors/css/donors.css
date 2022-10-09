@@ -13,3 +13,8 @@
     border-style: solid;
     border-color: rgb(135, 241, 135) !important;
  }
+
+ div > Ul  > li > a {
+   border-style: solid;
+   border-color: transparent !important;
+ }
