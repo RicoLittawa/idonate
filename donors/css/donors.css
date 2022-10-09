@@ -1,0 +1,15 @@
+/*div > Ul  > li > a:active {
+   color: rgb(0, 12, 12) !important;
+   background-color: rgb(120, 241, 120);
+} */
+
+.active {
+    color: rgb(59, 189, 59) !important;
+    background-color: transparent !important;
+ }
+
+ div > Ul  > li > a:hover {
+    background-color: transparent !important;
+    border-style: solid;
+    border-color: rgb(135, 241, 135) !important;
+ }
