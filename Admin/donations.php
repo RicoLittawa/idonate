@@ -7,6 +7,7 @@ session_start();
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 	<!-- Boxicons -->
@@ -97,18 +98,18 @@ session_start();
 					<h1>Donations</h1>
 					<ul class="breadcrumb">
 						<li>
-							<a href="#">Dashboard</a>
+							<a href="#" style="font-size: 18px;">Dashboard</a>
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
 						<li>
-							<a class="active" href="#">Home</a>
+							<a class="active" href="#" style="font-size: 18px;">Home</a>
 						</li>
 					</ul>
 				</div>
-				<a href="#" class="btn-download">
+				
 	
-					<span><button class="btn btn-success adddata" type="submit"><i class="fa-solid fa-plus"></i> Add donations</button></span>
-				</a>
+					<span><button class="adddata" type="submit"><i class="fa-solid fa-plus"></i> Add donations</button></span>
+				
 			</div>
 			<div class="modal fade" id="addform">
   <div class="modal-dialog">
@@ -128,20 +129,24 @@ session_start();
 			
 	  					<input type="hidden" name="update_id">
 	  					<div class="form-group validate-input" data-validate = "Fullname is required">
-							<input class="form-control" type="text" name="fname" id="Ufullname" placeholder="Full name">
+							<label for="fname">Fullname</label>
+							<input class="form-control" type="text" name="fname" placeholder="*Dela Cruz Juan">
 						</div>
 						<div class="form-group validate-input" data-validate = "Address is required">
-							<input class="form-control" type="text" name="address" id="Uaddress" placeholder="Address">
+							<label for="address">Address</label>
+							<input class="form-control" type="text" name="address" placeholder="*Street Address/City">
 						</div>
 						<div class="form-group validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-							<input class="form-control" type="text" name="email" id="Uemail"  placeholder="Email">
+							<label for="email">Email</label>
+							<input class="form-control" type="text" name="email" placeholder="*Ex@abc.xyz">
 						</div>
 						<div class="form-group validate-input" data-validate = "Date is required">
-							<input class="form-control" type="date" name="donation_date" id="Udonation_date" placeholder="Date">
+							<label for="donation_date">Donation Date</label>
+							<input class="form-control" type="date" name="donation_date"  placeholder="Date">
 						</div>
 						<div class="form-group validate-input" data-validate = "Please select to the given options">
-								<label for="items">Select:</label>
-								<select class="form-control"  name="category" id="Ucategory" class="required">
+								<label for="items">Select Category:</label>
+								<select class="form-control"  name="category" class="required">
 								<option value="">Choose...</option>
 								<option value="food">Food</option>
 								<option value="clothes">Clothes</option>
@@ -150,8 +155,8 @@ session_start();
 								</select>
 						</div>
 						<div class="form-group validate-input" data-validate = "Please select to the given options">
-							<label for="quanti">Select:</label>
-								<select class="form-control"  name="variant" id="Uvariant" class="required">
+							<label for="quanti">Select Variant:</label>
+								<select class="form-control"  name="variant" class="required">
 								<option value="">Choose...</option>
 								<option value="Per Box">Per Box</option>
 								<option value="Pieces">Pieces</option>
@@ -159,10 +164,12 @@ session_start();
 								</select>
 						</div>
 						<div class="form-group validate-input" data-validate = "Product name is required">
-							<input class="form-control" type="text" id="UproductName" name="productName"placeholder="Product Name">
+							<label for="productName">Product Name</label>
+							<input class="form-control" type="text" name="productName"placeholder="*Luckyme Pancit Canton/Summit Mineral Water">
 						</div>
 						<div class="form-group validate-input" data-validate = "This field is required">
-							<input class="form-control" type="number" id="Uquantity" name="quantity" placeholder="Quantity">
+							<label for="quantity">Quantity</label>
+							<input class="form-control" type="number"name="quantity" placeholder="*Numeric Value">
 						</div>     
       </div>
 
@@ -220,9 +227,10 @@ session_start();
 				<td> <?php echo $row['quantity']; ?></td>
 				<td><a  class="btnDel" href="../admin/operations/delete.php?deleteid=<?php echo $row['id'] ?>"><i class="fa-solid fa-trash " style="color: red;"></i>
 				</a>
-				<button type="button" class="btn update"><i class="fa-solid fa-pen-to-square" style="color: green;"></i></button>
+				<a  class="" href="../admin/operations/updateDonations.php?updateid=<?php echo $row['id'] ?>"><i class="fa-solid fa-pen-to-square" style="color: green;"></i>
+				</a>
 					</td>
-
+					
 				<td><button class="btn btn-success" type="submit">Send Certificate</button></td>			
 			</tr>
 			<?php
@@ -232,70 +240,7 @@ session_start();
     </tbody>
 	
   </table>
-  <div class="modal fade" id="updateform">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Update/Edit</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <!-- Modal body -->
-	  <form action="../Admin/operations/update.php?" method="POST">
-		<div class="modal-body">
-	  					<input type="hidden" name="update_id" id="update_id">
-	  					<div class="form-group" data-validate = "Fullname is required">
-							<input class="form-control" type="text" name="fname" id="fname" placeholder="Full name" >
-						</div>
-						<div class="form-group" data-validate = "Address is required">
-							<input class="form-control" type="text" name="address" id="address" placeholder="Address">
-						</div>
-						<div class="form-group" data-validate = "Valid email is required: ex@abc.xyz">
-							<input class="form-control" type="text" name="email" id="email" placeholder="Email">
-						</div>
-						<div class="form-group" data-validate = "Please select to the given options">
-								<label for="items">Select:</label>
-								<select class="form-control" id="category" name="category" class="required">
-								<option value="">Choose...</option>
-								<option value="food">Food</option>
-								<option value="clothes">Clothes</option>
-								<option value="beverages">Beverages</option>
-								<option class="editable" value="others">Others</option>
-								</select>
-								<input class="editOption" style="display:none;"></input>
-						</div>
-						<div class="form-group" data-validate = "Please select to the given options">
-							<label for="quanti">Select:</label>
-								<select class="form-control" id="variant" name="variant" class="required">
-								<option value="">Choose...</option>
-								<option value="Per Box">Per Box</option>
-								<option value="Pieces">Pieces</option>
-								<option class="editable" value="Others">Others</option>
-								</select>
-						</div>
-						<div class="form-group" data-validate = "Product name is required">
-							<input class="form-control" type="text" name="productName" id="productName" placeholder="Product Name">
-						</div>
-						<div class="form-group" data-validate = "This field is required">
-							<input class="form-control" type="text" name="quantity" id="quantity" placeholder="Quantity">
-						</div>
-
-       
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="delete btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" name="updatedata" id="updatedata" class="btn btn-primary updatedata">Save</button>
-      </div>
-	  
-	  </form>	
-
-    </div>
-  </div>
-</div>
-<!-- End of modal-->
+ 
   			
 			</div>
 		</main>
@@ -312,33 +257,6 @@ session_start();
 	<script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
 	<script src="../Admin/scripts/validation.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
-	<script>
-		$(document).ready(function(){
-			$('.update').on('click',function(){
-				$('#updateform').modal('show');
-				$tr = $(this).closest('tr');
-				var data = $tr.children("td").map(function(){
-					return $.trim($(this).text());
-				}).get();
-				var numData = $tr.children("td").map(function () { return parseInt($(this).text()); }).get();			
-			
-				$('#update_id').val(data[0]);
-				$('#fname').val(data[1]);
-				$('#address').val(data[2]);
-				$('#email').val(data[3]);
-				$('#donation_date').val(data[4]);
-				$( "#category" ).find( "option:selected" ).val();     	
-				$( "#variant" ).find( "option:selected" ).val();     			 
-				$('#productName').val(data[7]);
-				$('#quantity').val(numData[8]);
-				
-			});
-
-		});
-	</script>
 	<script>
 		$(document).ready(function(){
 			$('.adddata').on('click',function(){
@@ -375,21 +293,6 @@ session_start();
 		
 	if (isset($_SESSION['status']) && $_SESSION['status']!='')
 	{?>
-	<script>
-		swal({  
-  		title: " Confirm?",  
- 		 text: "<?php echo $_SESSION['status']; ?>",  
- 		 type: "<?php echo $_SESSION['status_code']; ?>",  
- 		 showCancelButton: true,  
-		confirmButtonClass: "btn-danger",  
-		confirmButtonText: " Confirm, remove it!",  
-		closeOnConfirm: false  
-		},  
-		function(){  
-		swal("remove it!", "Imaginary file remove it.", "Confirm");  
-		})
-		
-	</script>
 	<script>
 			Swal.fire({
 			icon: '<?php echo $_SESSION['status_code']; ?>',

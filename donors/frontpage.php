@@ -4,6 +4,7 @@
     <title>frontpage</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/frontpage.css">
   </head>
@@ -68,14 +69,14 @@
           disaster risk reduction in Batangas City led by Mayor Beverly Dimacuha. Their office is 
           located in barangay Bolbok, Batangas City. Their mission is to reduce risk and vulnerabilities, mitigate the 
           negative effects of hazards, and assure Batanguenos' safety and security. .... </p>
-          <button type="button" class="btn btn-primary">Read more></button>
+         
       </div>
       <footer class="site-footer">
       <div class="container">
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <h6>About</h6>
-            <p class="text-justify">IDONATE is an online platform created for CDRRMO. With the use of the internet, 
+            <p class="text-justify" style="font-family: 'Lato', sans-serif;">IDONATE is an online platform created for CDRRMO. With the use of the internet, 
             this web-based system will lessen the manual process. It will also automate sending the acknowledgement receipt to the donors.
              Donors may see how their donations are used with the help of a web-based donation system.</p>
           </div>

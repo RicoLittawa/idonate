@@ -1,19 +1,29 @@
+
 <?php
 session_start();
 include '../include/connection.php';
 
 if (isset($_POST['updatedata'])){ 
+
+  
   $id= $_POST['update_id'];
   $Fname= $_POST['fname'];
   $Address= $_POST['address'];
   $Email= $_POST['email'];
-  $Date= date('Y-m-d', strtotime($_POST['donation_date']));
+  $Date= $_POST['donation_date'];
   $Categ= $_POST['category'];
   $Quanti= $_POST['variant'];
   $Product = $_POST['productName'];
   $Quantity= $_POST['quantity'];
+
+  if(empty($Fname)||empty($Address)||empty($Email)||empty($Date)||empty($Categ)||empty($Quanti)||empty($Product)||empty($Quantity)){
+    $_SESSION['status']="Empty Fields";
+    $_SESSION['status_code']="error";
+    header("Location: ../donations.php?error=emptyfields");
+    exit();
+ }
  
-if (!preg_match ("/^[0-9]*$/", $Quantity)){
+else if (!preg_match ("/^[0-9]*$/", $Quantity)){
   $_SESSION['status']="Please enter numeric value";
   $_SESSION['status_code']="error";
   header("Location: ../donations.php?error=notvalidnumber");
