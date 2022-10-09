@@ -5,8 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/donation.css">
@@ -18,20 +17,26 @@
   </head>
   <body> 
   <div class="navbar navbar-expand-sm bg-light" id="navbar">
-  <ul class="nav nav-pills nav-fill">
-          <li class="nav-item">
-            <a class="nav-link" href="frontpage.php">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Donations</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="howitworks.php">How it works?</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="whatisneeded.php">What is needed?</a>
-          </li>
-        </ul>
+    <ul class="nav nav-pills nav-fill">
+        
+        <li class="nav-item">
+          <a class="nav-link" href="frontpage.php">Home</a>
+        </li>
+  
+  
+        <li class="nav-item">
+          <a class="nav-link" href="donation.php">Donations</a>
+        </li>
+  
+  
+        <li class="nav-item">
+          <a class="nav-link" href="howitworks.php">How it works?</a>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link active" href="#">What is needed?</a>
+        </li>
+      </ul>
 </div>
 <div class="container">
   <div class="circles">
@@ -138,7 +143,7 @@
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <h6>About</h6>
-            <p class="text-justify" style="font-family: 'Lato', sans-serif;">IDONATE</i> is an online platform created for CDRRMO. With the use of the internet, 
+            <p class="text-justify">IDONATE</i> is an online platform created for CDRRMO. With the use of the internet, 
             this web-based system will lessen the manual process. It will also automate sending the acknowledgement receipt to the donors.
              Donors may see how their donations are used with the help of a web-based donation system.</p>
           </div>
