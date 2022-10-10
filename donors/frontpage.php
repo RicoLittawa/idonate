@@ -13,13 +13,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="css/frontpage.css">
-    <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
-        padding-right: 0px !important;
-    }</style>
+
   </head>
   <body>
   
-  <div class="navbar navbar-expand-sm bg-light" id="navbar">
+  <div class="navbar navbar-expand-lg bg-light" id="navbar">
   <ul class="nav nav-pills nav-fill">
         
           <li class="nav-item">
