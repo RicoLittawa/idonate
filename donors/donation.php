@@ -26,7 +26,7 @@
           <li class="nav-item">
             <a class="nav-link active" href="#">Donations</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item"> 
             <a class="nav-link" href="howitworks.php">How it works?</a>
           </li>
           <li class="nav-item">
@@ -71,7 +71,7 @@
       </div>
 
       <!-- Modal body -->
-      <form action="../Admin/operations/update.php" method="POST">
+      <form method="POST" action="" id="requestform">
 		<div class="modal-body">
 			
 	  					<input type="hidden" name="update_id" id="update_id">
@@ -114,7 +114,7 @@
 						</div>
 						<div class="form-group" data-validate = "">
               <label for="quantity">Quantity</label>
-							<input class="form-control" type="number" name="quantity" id="quantity" placeholder="*Numeric Value">
+							<input class="form-control" type="text" name="quantity" id="quantity" placeholder="*Numeric Value">
 						</div>
             <div class="form-group" data-validate = "">
               <textarea  class="form-control" type="text" name="note" id="note" placeholder="Donors Note" cols="30" rows="10"></textarea>
@@ -126,7 +126,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="delete btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" name="updatedata" class="btn btn-primary">Submit</button>
+		<button type="button" class="btn btn-success" id="submit-request"> Submit</button>
       </div>
 	  
 	  </form>	
@@ -169,33 +169,10 @@
   
      <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="../donors/js/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script>
-		$(document).ready(function(){
-			$('.addrequest').on('click',function(){
-				$('#request').modal('show');
-
-
-			});
-
-
-		});
-	</script>
-  <script>
-window.onscroll = function() {myFunction()};
-
-var navbar = document.getElementById("navbar");
-var sticky = navbar.offsetTop;
-
-function myFunction() {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add("sticky")
-  } else {
-    navbar.classList.remove("sticky");
-  }
-}
-</script>
+    <script src="../donors/js/main.js"></script>
+   
   </body>
 </html>

@@ -40,7 +40,7 @@ session_start();
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="request.php">
 					<i class='bx bxs-envelope' ></i>
 					<span class="text">Requests</span>
 				</a>
@@ -194,7 +194,7 @@ session_start();
 					
     <thead>
       <tr>
-	  	<th>ID</th>
+	  	
         <th>Fullname</th>
         <th>Address</th>
         <th>Email</th>
@@ -216,7 +216,7 @@ session_start();
 		while($row= mysqli_fetch_assoc($result)){
 			?>
 			<tr>
-				<td> <?php echo $row['id']; ?></td>
+				
 				<td> <?php echo $row['fullname']; ?></td>
 				<td> <?php echo $row['address']; ?></td>
 				<td> <?php echo $row['email']; ?></td>
@@ -231,7 +231,7 @@ session_start();
 				</a>
 					</td>
 					
-				<td><button class="btn btn-success" type="submit">Send Certificate</button></td>			
+				<td><button class="btn btn-success"><a href="../Admin/include/sendcerti.php?sendid=<?php echo $row['id'] ?>" style="color: white; text-decoration: none ;">Send Certificate</a></button></td>			
 			</tr>
 			<?php
 	  }

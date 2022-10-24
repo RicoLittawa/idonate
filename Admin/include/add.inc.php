@@ -12,7 +12,8 @@ if (isset($_POST['submit-donations'])){
     $Quantity= $_POST['quantity'];
 
     if(empty($Fname)||empty($Address)||empty($Email)||empty($Date)||empty($Categ)||empty($Quanti)||empty($Product)||empty($Quantity)){
-        
+        $_SESSION['status']="Empty Fields";
+        $_SESSION['status_code']="error";
         header("Location: ../donations.php?error=emptyfields");
         exit();
      }
