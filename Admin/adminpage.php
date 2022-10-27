@@ -39,7 +39,7 @@ session_start();
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="request.php">
 					<i class='bx bxs-envelope' ></i>
 					<span class="text">Requests</span>
 				</a>
@@ -149,6 +149,7 @@ session_start();
 	
 	
 
-	<script src="../Admin/scripts/landing.js"></script>
+	<script src="../Admin/scripts/sidemenu.js"></script>
+	<script src="../Admin/scripts/jQuery.js"></script>
 </body>
 </html>

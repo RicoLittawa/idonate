@@ -1,3 +1,5 @@
+<?php 
+session_start()?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,6 +17,7 @@
     <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
         padding-right: 0px !important;
     }</style>
+    
   </head>
   <body> 
 
@@ -71,10 +74,10 @@
       </div>
 
       <!-- Modal body -->
-      <form method="POST" action="" id="requestform">
+      <form id="requestform">
 		<div class="modal-body">
-			
-	  					<input type="hidden" name="update_id" id="update_id">
+              <span id="msg" class="text-center"></span>
+
 	  					<div class="form-group" data-validate = "">
                 <label for="fname">Full Name</label>
 							<input class="form-control" type="text" name="fname" id="fname" placeholder="*Dela Cruz Juan">
@@ -173,6 +176,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="../donors/js/main.js"></script>
-   
+    <script src="../donors/js/sweetalert2.all.min.js"></script>
+    
+ 
   </body>
 </html>

@@ -107,11 +107,11 @@ session_start();
 					</ul>
 				</div>
 				
-	
-					<span><button class="adddata" type="submit"><i class="fa-solid fa-plus"></i> Add donations</button></span>
 				
+					<span><button class="adddata" type="submit" data-toggle="modal" data-target="add"><i class="fa-solid fa-plus"></i> Add donations</button></span>
+				   
 			</div>
-			<div class="modal fade" id="addform">
+			<div class="modal fade" id="add">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -123,30 +123,30 @@ session_start();
 
       <!-- Modal body -->
      
-		
+	  <form class="validate-form" id="validate-form" method="POST">
 		<div class="modal-body">
-		<form action="../Admin/include/add.inc.php" class="validate-form" method="POST">
-			
+	
+						<span id="msg" class="text-center"></span>
 	  					<input type="hidden" name="update_id">
 	  					<div class="form-group validate-input" data-validate = "Fullname is required">
 							<label for="fname">Fullname</label>
-							<input class="form-control" type="text" name="fname" placeholder="*Dela Cruz Juan">
+							<input class="form-control" type="text" name="fname" id="fname" placeholder="*Dela Cruz Juan">
 						</div>
 						<div class="form-group validate-input" data-validate = "Address is required">
 							<label for="address">Address</label>
-							<input class="form-control" type="text" name="address" placeholder="*Street Address/City">
+							<input class="form-control" type="text" name="address" id="address" placeholder="*Street Address/City">
 						</div>
 						<div class="form-group validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 							<label for="email">Email</label>
-							<input class="form-control" type="text" name="email" placeholder="*Ex@abc.xyz">
+							<input class="form-control" type="text" name="email" id="email" placeholder="*Ex@abc.xyz">
 						</div>
 						<div class="form-group validate-input" data-validate = "Date is required">
 							<label for="donation_date">Donation Date</label>
-							<input class="form-control" type="date" name="donation_date"  placeholder="Date">
+							<input class="form-control" type="date" name="donation_date" id="donation_date" placeholder="Date">
 						</div>
 						<div class="form-group validate-input" data-validate = "Please select to the given options">
 								<label for="items">Select Category:</label>
-								<select class="form-control"  name="category" class="required">
+								<select class="form-control"  name="category" class="required" id="category">
 								<option value="">Choose...</option>
 								<option value="food">Food</option>
 								<option value="clothes">Clothes</option>
@@ -156,7 +156,7 @@ session_start();
 						</div>
 						<div class="form-group validate-input" data-validate = "Please select to the given options">
 							<label for="quanti">Select Variant:</label>
-								<select class="form-control"  name="variant" class="required">
+								<select class="form-control"  name="variant" class="required" id="variant">
 								<option value="">Choose...</option>
 								<option value="Per Box">Per Box</option>
 								<option value="Pieces">Pieces</option>
@@ -165,18 +165,18 @@ session_start();
 						</div>
 						<div class="form-group validate-input" data-validate = "Product name is required">
 							<label for="productName">Product Name</label>
-							<input class="form-control" type="text" name="productName"placeholder="*Luckyme Pancit Canton/Summit Mineral Water">
+							<input class="form-control" type="text" name="productName" id="productName" placeholder="*Luckyme Pancit Canton/Summit Mineral Water">
 						</div>
 						<div class="form-group validate-input" data-validate = "This field is required">
 							<label for="quantity">Quantity</label>
-							<input class="form-control" type="number"name="quantity" placeholder="*Numeric Value">
+							<input class="form-control" type="text"name="quantity" id="quantity" placeholder="*Numeric Value">
 						</div>     
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" name="submit-donations" class="btn btn-primary submitBtn">Save</button>
+		<button type="button" id="submit-donations" class="btn btn-primary submitBtn">Save</button>
       </div>
 	  </form>	
 
@@ -207,37 +207,46 @@ session_start();
 		<th>Certificate</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="table_data">
       <?php
 	   require ("../Admin/include/connection.php");
 	    
 	  $sql = "SELECT *FROM items ";
 	  $result = mysqli_query($conn,$sql);
-		while($row= mysqli_fetch_assoc($result)){
+	 $data = $result->fetch_all(MYSQLI_ASSOC);
+	 $count= 0;
+	 foreach ($data as $row){
+		$count = $count+ 1;
+		echo'<tr>
+		<td>'.$row['fullname'].'</td>
+		<td>'.$row['address'].'</td>
+		<td>'.$row['email'].'</td>
+		<td>'.$row['donationDate'].'</td>
+		<td>'.$row['category'].'</td>
+		<td>'.$row['variant'].'</td>
+		<td>'.$row['productName'].'</td>
+		<td>'.$row['quantity'].'</td>
+		<td>
+		<a class="btnDel" href="../admin/operations/delete.php?deleteid='.$row['id'].'"><i class="fa-solid fa-trash " style="color: red;"></i>
+		</a>
+		<a  class="" href="../admin/operations/updateDonations.php?updateid='.$row['id'].'"><i class="fa-solid fa-pen-to-square" style="color: green;"></i>
+		</a>
+		<input type="checkbox" name="single_select" class="single_select" data-email="'.$row['email'].'" data-name="'.$row['fullname'].'"></input></td>
+		<td><button type="button" class="btn btn-info email_button" name="email_button" id="'.$count.'"
+		data-email="'.$row['email'].'" data-name="'.$row['fullname'].'" data-action="single">Send</button></td>
+	
+		</tr>';
+
+	 }
+
+			
 			?>
-			<tr>
-				
-				<td> <?php echo $row['fullname']; ?></td>
-				<td> <?php echo $row['address']; ?></td>
-				<td> <?php echo $row['email']; ?></td>
-				<td> <?php echo $row['donationDate']; ?></td>
-				<td> <?php echo $row['category']; ?></td>
-				<td> <?php echo $row['variant']; ?></td>
-				<td> <?php echo $row['productName']; ?></td>
-				<td> <?php echo $row['quantity']; ?></td>
-				<td><a  class="btnDel" href="../admin/operations/delete.php?deleteid=<?php echo $row['id'] ?>"><i class="fa-solid fa-trash " style="color: red;"></i>
-				</a>
-				<a  class="" href="../admin/operations/updateDonations.php?updateid=<?php echo $row['id'] ?>"><i class="fa-solid fa-pen-to-square" style="color: green;"></i>
-				</a>
-					</td>
-					
-				<td><button class="btn btn-success"><a href="../Admin/include/sendcerti.php?sendid=<?php echo $row['id'] ?>" style="color: white; text-decoration: none ;">Send Certificate</a></button></td>			
-			</tr>
-			<?php
-	  }
-	  ?>  
-	  
+			
     </tbody>
+	<tr>
+		<td colspan="9"></td>
+		<td><button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
+	</tr>
 	
   </table>
  
@@ -249,46 +258,14 @@ session_start();
 	
 	
 
-	<script src="../Admin/scripts/landing.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="../Admin/scripts/sidemenu.js"></script>
+	<script src="../Admin/scripts/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
+	
+	<script src="../Admin/scripts/function.js"></script>
 	<script src="../Admin/scripts/validation.js"></script>
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script>
-		$(document).ready(function(){
-			$('.adddata').on('click',function(){
-				$('#addform').modal('show');
-
-			});
-		});
-		
-	</script>
-	<script>
-		$('.btnDel').on('click',function(e){
-			e.preventDefault();
-			const href=$(this).attr('href');
-						Swal.fire({
-				title: 'Are you sure?',
-				text: "You won't be able to revert this!",
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Yes, delete it!'
-				}).then((result) => {
-				if (result.value) {
-					document.location.href=href;
-				}
-				})
-		})			
-
-	</script>
-
-
-		
+	<script src="../donors/js/sweetalert2.all.min.js"></script>	
 		<?php
 		
 	if (isset($_SESSION['status']) && $_SESSION['status']!='')
@@ -305,7 +282,58 @@ session_start();
 		unset($_SESSION['status']);
 	}
 	?>
+<script>
+	$(document).ready(function(){
+    $('.email_button').click(function(){
+        $(this).attr('disabled','disabled');
+        var id = $(this).attr("id");
+        var action=$(this).data("action");
+		var email_data=[];
+		if (action=='single')
+		{
+			email_data.push({
+			email: $(this).data("email"),
+			name: $(this).data("name")
+			});
 
+		}
+		else
+		{
+			$('.single_select').each(function(){
+				if($(this).prop("checked")==true){
+					email_data.push({
+					email: $(this).data("email"),
+					name: $(this).data("name")
+			});
+				}
+			});
+		}
+		$.ajax({
+			url:"http://localhost:3000/Admin/include/sendcerti.php" ,
+			method: "POST",
+			data: {email_data:email_data},
+			beforeSend:function(){
+				$('#'+id).html('Sending...');
+				$('#' + id).addClass('btn-danger');
+			},
+			success: function(data){
+				if (data == 'ok')
+				{
+					$('#' +id).text("Success");
+					$('#' + id).removeClass('btn-danger');
+					$('#' + id).removeClass('btn-info');
+					$('#' + id).addClass('btn-success');
+				}
+				else{
+					$('#' +id).text(data);
+				}
+				$('#'+ id).attr('disabled', false);
+			}
+
+		});
+    });
+});
+</script>
 
 
 </body>

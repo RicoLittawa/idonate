@@ -44,12 +44,6 @@ searchButton.addEventListener('click', function (e) {
 	}
 })
 
-
-
-
-
-
-
 if(window.innerWidth < 768) {
 	sidebar.classList.add('hide');
 } else if(window.innerWidth > 576) {
@@ -64,6 +58,7 @@ window.addEventListener('resize', function () {
 		searchForm.classList.remove('show');
 	}
 })
+
 
 
 
