@@ -39,6 +39,9 @@ session_start()?>
         <li class="nav-item">
           <a class="nav-link" href="">What is needed?</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="requestform.php">Create request<i style="color: #83f28f;" class="fa-solid fa-plus"></i></a>
+        </li>
       </ul>
   
     </div>
@@ -60,11 +63,13 @@ session_start()?>
           <h1 class="title">You want to<br></h1>
           <h2 class="con">Donate?</h2>
         </div>
-        <div class = "parag">
-          <p>You can set <a href="requestform.php">request</a> to inform the staff to<br>
-            your arrival and know what kind of donation<br> 
-            you will donate. Or You can directly drop off<br>
-            your donation to relief hub.</p>
+        <div class="parag">
+          <p class="text-justify">You can set <a style="font-weight:bold ;" href="requestform.php">request</a> to inform the staff to
+            your arrival and know what kind of donation
+            you will donate. Or You can directly drop off
+            your donation to relief hub. If you donated money kind inform us by
+          filling up the <a style="font-weight:bold ;" href="formoney.php">form</a> with transaction/reference number and screen shot
+        of the reciept to recive acknowledgement certificate.</p>
         </div>
         
         </div>

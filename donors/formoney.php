@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Request</title>
+    <title>Money</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -131,7 +131,7 @@
         
       </div>
     
-  <div class="send_request"><p>Create Request</p></div>
+  <div class="send_request"><p>Thank you for<br> donating</p></div>
   <div><a class="backbtn" href="donation.php"><i style="font-size: 50px;" class="fa-solid fa-arrow-left"></i></a><span class="reqdot"></span><span class="reqdot2">   </span></div>
       </div>
       
