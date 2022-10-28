@@ -1,20 +1,27 @@
 body{
   background-color: #E5E5E5;
  overflow-inline: hidden;
+ margin:0;
+ padding:0;
+ height:100%;
 
 }
-#navbar{
-z-index:999;
-
-}
-.nav-item{
-padding-right: 50px ;
-}
-.navbar-nav .nav-item .nav-link{
-position: relative;
-right: -120px;
-color: grey;
-}
+nav{
+  z-index: 999;
+  
+ }
+ .nav-item{
+   padding-right: 50px ;
+ }
+ .nav-item .nav-link{
+   position: relative;
+   right: -120px;
+   font-family: 'Kantumruy Pro', sans-serif;
+   font-weight: 700;
+   letter-spacing:2pt;
+   color: grey;
+ }
+ 
 .sticky {
 position: fixed;
 top: 0;
@@ -24,15 +31,13 @@ width: 100%;
 .sticky + .content {
 padding-top: 60px;
 }
-.bgdesign{
-  margin: auto;   
-}
+
 .headertitle{
   position: absolute;
   left: 140px;
   bottom: 400px;
   padding: 1px;
-  font-family: 'IBM Plex Sans', sans-serif;-family: 'Lato';
+  font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 800;
   font-size: 50px;
   line-height: 60px;
@@ -101,18 +106,23 @@ padding-top: 60px;
   border-radius: 100%;
 }
 footer{
-  position: absolute;
-  bottom: -500px;
-  left: 0;
-  right: 0;
+  clear: both;
+    position: relative;
+ 
+    margin-top: -200px;
 }
+
 .site-footer
 {
+  position:absolute;
+  bottom:-500px;
+  width:100%;
 background-color:#3B5347;
 padding:45px 0 20px;
 font-size:15px;
 line-height:24px;
 color: #fff;
+
 }
 .site-footer hr
 {

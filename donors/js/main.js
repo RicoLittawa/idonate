@@ -1,7 +1,7 @@
 
 window.onscroll = function() {myFunction()};
 
-var navbar = document.getElementById("navbar");
+var navbar = document.getElementById("myNavbar");
 var sticky = navbar.offsetTop;
 
 function myFunction() {
@@ -11,10 +11,27 @@ function myFunction() {
     navbar.classList.remove("sticky");
   }
 }
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Get the forms we want to add validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
 
 $(document).ready(function(){
     $(document).on("click","#submit-request",function(){
-        
+   
         var fname= $('#fname').val();
         var address= $('#address').val();
         var email= $('#email').val();
@@ -26,40 +43,26 @@ $(document).ready(function(){
         var note= $('#note').val();
         if (fname ==""||address ==""||email ==""||donation_date ==""||category ==""||variant ==""||productName ==""||
         quantity ==""||note ==""){
-            $('#msg').html("<p class='alert alert-danger'>Please fill up all the fields</p>");
+            $('#msg').html("<p class='alert alert-danger'>All fields are required</p>");
 
         }
+        
+    
         else{
-            Swal.fire({
-                title: 'Do you want to save the changes?',
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: 'Save',
-                denyButtonText: `Don't save`,
-              }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: 'addrequest.php',
-                        method: 'post',
-                        data:{fname:fname,address:address,email:email,donation_date:donation_date,
-                            category:category,variant:variant,productName:productName,quantity:quantity,
-                            note:note},
-                        success: function(data) {
-                            $('#request').modal('hide');
-            
-                            console.log("success");
-                            Swal.fire('Saved!', '', 'success');
-                            $('#requestform').each(function(){
-                                this.reset();
-                            })
-                            }
-                        });
-                } else if (result.isDenied) {
-                  Swal.fire('Changes are not saved', '', 'info')
+          $.ajax({
+            url: 'addrequest.php',
+            method: 'post',
+            data:{fname:fname,address:address,email:email,donation_date:donation_date,
+                category:category,variant:variant,productName:productName,quantity:quantity,
+                note:note},
+        
+            success: function(data) {
+              
+              $('#msg').html("<p class='alert alert-success'>Data added</p>");
                 }
-              })
+            });
         }
+        
     });
 });
  

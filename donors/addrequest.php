@@ -12,6 +12,7 @@
     $Product = $_POST['productName'];
     $Quantity= $_POST['quantity'];
     $DNote= $_POST['note'];
+    $result='';
 
    
      
@@ -26,9 +27,7 @@
         else{
             mysqli_stmt_bind_param($stmt,"sssssssss",$Fname,$Address,$Email,$Date,$Categ,$Quanti,$Product,$Quantity,$DNote);
             mysqli_stmt_execute($stmt);
-            header("Location:donation.php?success=datasubmitted");
-            exit();
-           
+          
         }
      
      mysqli_stmt_close($stmt);

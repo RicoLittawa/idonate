@@ -8,7 +8,6 @@
     <!-- Bootstrap CSS -->
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/donation.css">
     <link rel="stylesheet" href="css/donors.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -16,24 +15,30 @@
 
   </head>
   <body>
-  
-  <div class="navbar navbar-expand-lg bg-light" id="navbar">
-  <ul class="nav nav-pills nav-fill">
+  <nav class="navbar bg-light" id="myNavbar">
+  <div class="container-fluid">
+    
+    <div>
+    <ul class="nav nav-pills nav-fill">
         
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="donation.php">Donations</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="howitworks.php">How it works?</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">What is needed?</a>
-          </li>
-        </ul>
-</div>  
+        <li class="nav-item">
+          <a class="nav-link active" href="frontpage.php">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="donation.php">Donations</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="howitworks.php">How it works?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">What is needed?</a>
+        </li>
+      </ul>
+  
+    </div>
+  </div>
+</nav>
+
       <div class="bgdesign">
         <div class="container1">
           <div class="col-md-8">
@@ -72,12 +77,13 @@
           disaster risk reduction in Batangas City led by Mayor Beverly Dimacuha. Their office is 
           located in barangay Bolbok, Batangas City. Their mission is to reduce risk and vulnerabilities, mitigate the 
           negative effects of hazards, and assure Batanguenos' safety and security. .... </p>
-          <button type="button" class="btn btn-primary">Read more></button>
+          
       </div>
-      <footer class="site-footer">
+
+      <div class="site-footer" id="footer">
       <div class="container">
         <div class="row">
-          <div class="col-sm-12 col-md-6">
+          <div class="col-sm-12 col-md-6"> 
             <h6>About</h6>
             <p class="text-justify">IDONATE is an online platform created for CDRRMO. With the use of the internet, 
             this web-based system will lessen the manual process. It will also automate sending the acknowledgement receipt to the donors.
@@ -104,7 +110,7 @@
           </div>
         </div>
       </div>
-</footer>
+</div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../donors/js/jQuery.js"></script>
