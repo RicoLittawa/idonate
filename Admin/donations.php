@@ -123,11 +123,11 @@ session_start();
 
       <!-- Modal body -->
      
-	  <form class="validate-form" id="validate-form" method="POST">
+	  <form class="validate-form" id="add-form" method="POST">
 		<div class="modal-body">
 	
 						<span id="msg" class="text-center"></span>
-	  					<input type="hidden" name="update_id">
+						<input type="hidden" name="donor_id" id="donor_id">
 	  					<div class="form-group validate-input" data-validate = "Fullname is required">
 							<label for="fname">Fullname</label>
 							<input class="form-control" type="text" name="fname" id="fname" placeholder="*Dela Cruz Juan">
@@ -176,7 +176,7 @@ session_start();
       <!-- Modal footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="button" id="submit-donations" class="btn btn-primary submitBtn">Save</button>
+		<button type="submit" id="submit-donations" class="btn btn-primary submitBtn">Save</button>
       </div>
 	  </form>	
 
@@ -190,7 +190,8 @@ session_start();
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
 					</div>
-					<table class="table">
+					
+					<table class="table" id="table_data">
 					
     <thead>
       <tr>
@@ -207,11 +208,11 @@ session_start();
 		<th>Certificate</th>
       </tr>
     </thead>
-    <tbody id="table_data">
+    <tbody>
       <?php
 	   require ("../Admin/include/connection.php");
 	    
-	  $sql = "SELECT *FROM items ";
+	  $sql = "SELECT *FROM items order by id DESC";
 	  $result = mysqli_query($conn,$sql);
 	 $data = $result->fetch_all(MYSQLI_ASSOC);
 	 $count= 0;
@@ -227,7 +228,7 @@ session_start();
 		<td>'.$row['productName'].'</td>
 		<td>'.$row['quantity'].'</td>
 		<td>
-		<a class="btnDel" href="../admin/operations/delete.php?deleteid='.$row['id'].'"><i class="fa-solid fa-trash " style="color: red;"></i>
+		<button type="button" class="btnDel btn" value="'.$row['id'].'"><i class="fa-solid fa-trash " style="color: red;"></i></button>
 		</a>
 		<a  class="" href="../admin/operations/updateDonations.php?updateid='.$row['id'].'"><i class="fa-solid fa-pen-to-square" style="color: green;"></i>
 		</a>
@@ -264,7 +265,6 @@ session_start();
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	
 	<script src="../Admin/scripts/function.js"></script>
-	<script src="../Admin/scripts/validation.js"></script>
 	<script src="../donors/js/sweetalert2.all.min.js"></script>	
 		<?php
 		

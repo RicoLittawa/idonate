@@ -7,64 +7,68 @@ $(document).ready(function(){
 
 
 $(document).ready(function(){
-    $(document).on('click',"#submit-donations",function(event){
+    $("#add-form").submit(function(event){
         event.preventDefault();
-        var fname= $('#fname').val();
-        var address= $('#address').val();
-        var email= $('#email').val();
-        var donation_date= $('#donation_date').val();
-        var category= $('#category').val();
-        var variant= $('#variant').val();
-        var productName= $('#productName').val();
-        var quantity= $('#quantity').val();
+        var formData= new FormData(this);
+        formData.append("save_data",true)
+       
         
-        if (fname ==""||address ==""||email ==""||donation_date ==""||category ==""||variant ==""||productName ==""||
-        quantity ==""){
-            $('#msg').html("<p class='alert alert-danger'>Please fill up all the fields</p>");}
-      
-        else{
+        
             $.ajax({
                 url: 'http://localhost:3000/Admin/include/add.inc.php',
-                        method: 'post',
-                        data:{fname:fname,address:address,email:email,donation_date:donation_date,
-                            category:category,variant:variant,productName:productName,quantity:quantity},   
-                        success: function(data) {
-                          if (data =='ok'){
-                            console.log("success");
-                            $('#add').modal('hide');
-                          
-                            Swal.fire('Saved!', '', 'success');
-                            $('#validate-form').each(function(){
-                                this.reset();
-                                location.reload();
-                            });
+                method: 'post',
+                data:formData,
+                        processData:false,
+                        contentType:false,  
+                        
+                        success: function(response) {
+                            var res= jQuery.parseJSON(response);
+                            if(res.status == 422)
+                            {
+                               alert(res.message);
+                            }else if (res.status == 200)
+                            {
+                                alert(res.message)
+                                $('#add').modal('hide');
+                                $('#add-form')[0].reset();
+                                $('#table_data').load(location.href+ " #table_data")
+                            }
                            
-                          }
-                          else{
-                            console.log("error");
-                    }
-               }
+                            
+                            
+                        }
             });
-        }
+        
     });
 });
 
 //delete
-$('.btnDel').on('click',function(e){
+$(document).on('click', '.btnDel', function (e) {
     e.preventDefault();
-    const href=$(this).attr('href');
-                Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-        if (result.value) {
-            document.location.href=href;
-        }
-        });
-});			
 
+    if(confirm('Are you sure you want to delete this data?'))
+    {
+        var id = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/Admin/operations/delete.php",
+            data: {
+                'delete_data': true,
+                'id': id
+            },
+            success: function (response) {
+
+                var res = jQuery.parseJSON(response);
+                if(res.status == 500) {
+
+                    alert(res.message);
+                }else{
+                 
+                    alert(res.message);
+
+                    $('#table_data').load(location.href + " #table_data");
+                }
+            }
+        });
+    }
+});

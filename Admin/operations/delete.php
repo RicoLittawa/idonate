@@ -1,14 +1,29 @@
 <?php 
-include '../include/connection.php';
-if (isset($_GET['deleteid'])){
-    $id = $_GET['deleteid'];
+require '../include/connection.php';
 
-    $sql ="DELETE FROM items WHERE id=$id";
-    $result= mysqli_query($conn,$sql);
-    if ($result){
-        header("Location: ../donations.php");
+if(isset($_POST['delete_data']))
+{
+    $id = mysqli_real_escape_string($conn, $_POST['id']);
+
+    $query = "DELETE FROM items WHERE id='$id'";
+    $query_run = mysqli_query($conn, $query);
+
+    if($query_run)
+    {
+        $res = [
+            'status' => 200,
+            'message' => 'Student Deleted Successfully'
+        ];
+        echo json_encode($res);
+        return;
     }
-    else{
-        die(mysqli_error($conn));
+    else
+    {
+        $res = [
+            'status' => 500,
+            'message' => 'Student Not Deleted'
+        ];
+        echo json_encode($res);
+        return;
     }
 }

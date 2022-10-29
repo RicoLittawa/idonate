@@ -131,7 +131,7 @@
         
       </div>
     
-  <div class="send_request"><p>Create Request</p></div>
+  <div class="send_request"><p>Set Request</p></div>
   <div><a class="backbtn" href="donation.php"><i style="font-size: 50px;" class="fa-solid fa-arrow-left"></i></a><span class="reqdot"></span><span class="reqdot2">   </span></div>
       </div>
       
