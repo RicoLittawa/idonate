@@ -13,12 +13,12 @@
   $output='';
   foreach($_POST['email_data']as $row)
   {
-    $image= imagecreatefrompng('D:/App Projects/Source/idonate/Admin/include/Certificate Template/certificate.png');
+    $image= imagecreatefrompng('D:/App Projects/Source/idonate/Admin/include/Certificate Template/certificate2.png');
     $white = imagecolorallocate($image, 255, 255, 255);
     $black = imagecolorallocate($image, 0, 0, 0);
     $font="D:/App Projects/Source/idonate/Admin/fonts/Roboto-Black.ttf";
     $size =110;
-    $box = imagettfbbox($size, 0, $font, $row['name']);
+    $box = imagettfbbox($size, 0, $font, $row['donor_name']);
     $text_width = abs($box[2]) - abs($box[0]);
     $text_height = abs($box[5]) - abs($box[3]);
     $image_width = imagesx($image);
@@ -27,7 +27,7 @@
     $y = ($image_height + $text_height) / 2;
 
 // add text
-    imagettftext($image, $size, 0, $x, $y, $black,$font, $row['name']);
+    imagettftext($image, $size, 0, $x, $y, $black,$font, $row['donor_name']);
   
    
     
@@ -51,7 +51,7 @@
      $mail->Port=465;
    
      $mail->setFrom('testcdrrmo@gmail.com');
-     $mail->addAddress($row['email'],$row['name']);
+     $mail->addAddress($row['donor_email'],$row['donor_name']);
      $mail->isHTML(true);
      $mail->Subject= "Certificate";
      $mail->Body= "This is certificate";
