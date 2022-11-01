@@ -116,11 +116,89 @@ session_start();
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
 					</div>
-					<table class="table">
-					
-    
+					<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Donor Name</th>
+        <th>Address</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+     <?php 
+	 include '../Admin/include/connection.php';
+	 $sql= "SELECT * FROM set_request";
+	 $result =mysqli_query($conn,$sql);
+	 while ($row = mysqli_fetch_assoc($result)){
+		echo '<tr>
+		<td>'.$row['req_name'].'</td>
+		<td>'.$row['req_street'].'</td>
+		<td><button type:"button" name="viewBtn" class="btn viewBtn" data-toggle="modal" data-target="#recieveReq" value="'.$row['request_id'].'"><i  style="color:green;" class="fa-solid fa-eye"></i></button></td>
+		</tr>';
+	 }
+	 ?>
+	  </tbody>
   </table>
- 
+  <div class="modal fade" id="recieveReq">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">View Requests</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		
+      </div>
+	
+	
+
+	<form action="" id="saveRequest">
+	<div class="modal-body">
+	<div class="mb-3">
+		<p id="req_name" name="req_name" class="form-control"></p>
+	</div>
+	<div class="mb-3">
+		<p id="req_city" name="req_city" class="form-control"></p>
+	</div>
+	<div class="mb-3">
+		<p id="req_street" name="req_street" class="form-control"></p>
+	</div>
+	<div class="mb-3">
+		<p id="req_region" name="req_region" class="form-control"></p>
+	</div>
+	<div class="mb-3">
+		<p id="req_email" name="req_email" class="form-control"></p>
+	</div>
+	<div class="mb-3">
+		<p id="req_date" name="req_date" class="form-control"></p>
+	</div>
+	<div class="mb-3">
+		<p id="req_category" name="req_category" class="form-control"></p>
+	</div>
+	<div class="mb-3">
+		<p id="req_variant" name="req_variant" class="form-control"></p>
+	</div>
+	<div class="mb-3">
+		<p id="req_quantity" name="req_quantity" class="form-control"></p>
+	</div>
+	<div class="mb-3">
+		<textarea class="form-control" name="req_note" id="req_note" cols="30" rows="5" disabled></textarea>
+		
+	</div>
+	  </div>
+
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+      </div>
+	</form>
+
+		
+
+    </div>
+  </div>
+</div>
   			
 			</div>
 		</main>
@@ -129,14 +207,15 @@ session_start();
 	
 	
 
-	<script src="../Admin/scripts/landing.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="../Admin/scripts/sidemenu.js"></script>
+	<script src="../Admin/scripts/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
-	<script src="../Admin/scripts/validation.js"></script>
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+	<script src="../Admin/scripts/function.js"></script>
+	<script src="../donors/js/sweetalert2.all.min.js"></script>	
+	
+
 	
 
 </body>

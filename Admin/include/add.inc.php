@@ -4,15 +4,16 @@
     if (isset($_POST["save_data"]))
     {
         $Fname= $_POST['fname'];
-        $Address= $_POST['address'];
+        $City= $_POST['city'];
+        $Street = $_POST['street'];
+        $Region = $_POST['region'];
         $Email= $_POST['email'];
         $Date= date('Y-m-d', strtotime($_POST['donation_date']));
-        $Categ= $_POST['category'];
-        $Quanti= $_POST['variant'];
-        $Product = $_POST['productName'];
+        $Category= $_POST['category'];
+        $Variant= $_POST['variant'];
         $Quantity= $_POST['quantity'];
-
-        if (empty($Fname)||empty($Address)||empty($Email)||empty($Date)||empty($Categ)||empty($Quanti)||empty($Product)||empty($Quantity))
+        $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^"; 
+        if (empty($Fname)||empty($City)||empty($Street)||empty($Region)||empty($Email)||empty($Date)||empty($Category)||empty($Variant)||empty($Quantity))
         {
             $res =[
                 'status' => 422,
@@ -22,25 +23,50 @@
             echo json_encode($res);
             return false;
         }
-        $sql = "INSERT INTO items (fullname,address,email,donationDate,category,variant,productName,quantity)
-        VALUES (?,?,?,?,?,?,?,?)" ;
+        else if($Region =="default"||$Category=="default"||$Variant=="default"){
+            $res =[
+                'status' => 422,
+                'message' => 'Please select an option'
+     
+            ];
+            echo json_encode($res);
+            return false;
+        
+        }else if (!preg_match ($pattern, $Email) ){  
+            $res =[
+                'status' => 422,
+                'message' => 'Email is not valid'
+     
+            ];
+            echo json_encode($res);
+            return false;
+        }else if (!is_numeric($Quantity)){
+            $res =[
+                'status' => 422,
+                'message' => 'Only enter numeric values'
+     
+            ];
+            echo json_encode($res);
+            return false;
+        }else{
+            $sql = "INSERT INTO donation_items (donor_name,donor_city,donor_street,donor_region,donor_email,donationDate,donation_category,donation_variant,donation_quantity)
+        VALUES (?,?,?,?,?,?,?,?,?)" ;
        $stmt= mysqli_stmt_init($conn);
        if(!mysqli_stmt_prepare($stmt,$sql)){
         $res =[
             'status' => 422,
-            'message' => 'All fields are required'
+            'message' => 'Sql Error'
 
         ];
         echo json_encode($res);
         return false;
        }
-       else{
-           mysqli_stmt_bind_param($stmt,"ssssssss",$Fname,$Address,$Email,$Date,$Categ,$Quanti,$Product,$Quantity);
+   else{
+           mysqli_stmt_bind_param($stmt,"sssssssss",$Fname,$City,$Street,$Region,$Email,$Date,$Category,$Variant,$Quantity);
            mysqli_stmt_execute($stmt);
-         
            $res =[
             'status' => 200,
-            'message' => 'Data submitted'
+            'message' => 'Data has been added'
 
         ];
         echo json_encode($res);
@@ -48,6 +74,8 @@
        
        }
     
+        }
+        
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
     }

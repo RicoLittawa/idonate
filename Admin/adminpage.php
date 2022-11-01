@@ -138,6 +138,7 @@ session_start();
 				<div class="add">
 					<div class="head">
 						<h3>Add Donations</h3>
+						
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
 					</div>

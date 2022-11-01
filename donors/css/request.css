@@ -79,6 +79,18 @@ nav{
   overflow: hidden;
  
 }
+.col label{
+  font-family:'Kantumruy Pro', sans-serif;
+  font-weight: bold
+}
+.note label{
+  font-family:'Kantumruy Pro', sans-serif;
+  font-weight: bold
+}
+.select_opt label{
+  font-family:'Kantumruy Pro', sans-serif;
+  font-weight: bold
+}
 .submit-request{
   margin-top: 20px;
   padding: 20px;
@@ -110,8 +122,14 @@ nav{
   color: #3B5347;
 }
 .backbtn:hover{color: white}
-
-
+/*ERROR */
+.blank{
+  border: 1px solid #e74c3c;
+  box-shadow: 0px 0px 0px 1px #e74c3c;
+}
+.red{
+  color: #e74c3c;
+}
 #footer{
   clear: both;
     position: relative;

@@ -47,82 +47,96 @@
  
 	<!-- Request Form -->
        <div class="donorForm"> 
-       <form id="requestform" class="needs-validation" novalidate method="POST">
+       <form id="requestform" method="POST">
 
           <span id="msg" class="text-center"></span>
           <div class="row">
             <div class="col">
             <label for="fname">Fullname</label>
-            <input class="form-control" type="text" name="fname" id="fname" placeholder="" required>
-            <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <input class="form-control required error-fname" type="text" name="fname" id="fname" placeholder="">
+      
             </div>
             <div class="col">
-            <label for="address">Address</label>
-            <input class="form-control" type="text" name="address" id="address" required>
-            <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <label for="city">City</label>
+            <input class="form-control required" type="text" name="city" id="city">
+            
             </div>
-            </div>	
+            </div>
+            <div class="row">
+            <div class="col">
+            <label for="street">Street</label>
+            <input class="form-control required" type="text" name="street" id="street">
+            
+            </div>
+            <div class="col">
+              <label for="region">Select Region</label>
+              <select class="custom-select required" name="region" id="region">
+              <option value="default">Choose Region</option>
+              <?php 
+              include '../Admin/include/connection.php';
+                $sql = "SELECT * FROM regions";
+                $result = mysqli_query($conn,$sql);
+                while($row =mysqli_fetch_array($result))
+                {
+                  echo '<option value="'.$row['region_name'].'">'.$row['region_name'].'</option>';
+                }
+                
+              ?>
+            </select>
+            
+						</div>
+            </div>	  
             <div class="row">
             <div class="col">
             <label for="email">Email</label>
-            <input class="form-control" type="text" name="email" id="email" required>
-            <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <input class="form-control required error-email" type="text" name="email" id="email">
+            
             </div>
             <div class="col">
             <label for="donation_date">Donation Date</label>
-            <input class="form-control" type="date" name="donation_date" id="donation_date" required>
-            <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+            <input class="form-control required" type="date" name="donation_date" id="donation_date">
+            
             </div>
             </div>
-            <div>
+            <div class="select_opt">
             <label for="category">Select Category:</label>
-								<select class="custom-select" id="category" name="category" required>
-                <option value="" >Choose category</option>
-								<option value="food">Food</option>
+								<select class="custom-select required" id="category" name="category">
+                <option value="default" >Choose category</option>
+								<option value="Ready-to-eat goods">Ready-to-eat goods</option>
+                <option value="Canned goods, Noodles">Canned goods, Noodles</option>
 								<option value="clothes">Clothes</option>
-								<option value="beverages">Beverages</option>
-								<option value="others">Others</option>
+								<option value="Hygiene Essentials">Hygiene Essentials</option>
+                <option value="Infant Items">Infant Items</option>
+								<option value="Drinking water">Drinking water</option>
+                <option value="First Aid Kits">First Aid Kits</option>
+                <option value="Medicine">Medicine</option>
 								</select>
-                <div class="valid-feedback">Valid.</div>
-                <div class="invalid-feedback">Please fill out this field.</div>
+                
             </div>
-            <div>
+            <div class="select_opt">
             <label for="variant">Select Variant:</label>
-								<select class="custom-select" id="variant" name="variant" required>
-                <option value="">Choose variant</option>
+								<select class="custom-select required" id="variant" name="variant">
+                <option value="default">Choose variant</option>
 								<option value="Per Box">Per Box</option>
 								<option value="Pieces">Pieces</option>
 								<option value="Others">Others</option>
 								</select>
-                <div class="valid-feedback">Valid.</div>
-                <div class="invalid-feedback">Please choose an option.</div>
+             
             </div>
           <div class="row">
             <div class="col">
-              <label for="productName">Product Name</label>
-              <input class="form-control" type="text" name="productName" id="productName" required>
-              <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please choose an option.</div>
-            </div>
-            <div class="col">
               <label for="user-quantity">Quantity</label>
-              <input class="form-control" type="text" name="quantity" id="quantity" required>
-              <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+              <input class="form-control required" type="text" name="quantity" id="quantity">
+            
             </div>
           </div>
           <div class="note">
              <label for="note">Donor's note</label>
-              <textarea  class="form-control" type="text" name="note" id="note" placeholder="Donors Note" cols="30" rows="10" required></textarea>
-              <div class="valid-feedback">Valid.</div>
-            <div class="invalid-feedback">Please fill out this field.</div>
+              <textarea  class="form-control required" type="text" name="note" id="note" placeholder="Donors Note" cols="30" rows="10" ></textarea>
+            
 						</div>
             <div>
-            <button type="submit" class="btn btn-success submit-request" id="submit-request"> Submit</button>
+            <button type="submit" class="btn btn-success submit-request" > Submit</button>
             </div>
             <div id="#summary">
 
@@ -173,6 +187,6 @@
     <script src="../donors/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
+    <script src="../donors/js/sweetalert2.all.min.js"></script>
   </body>
 </html>
