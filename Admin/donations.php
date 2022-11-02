@@ -350,7 +350,7 @@ session_start();
 		<th>Email</th>
 		<th>Donation Date</th>
 		<th>Category</th>
-		<th>Unit</th>
+		<th>Variant</th>
 		<th>Quantity</th>
 		<th>Operations</th>
 		<th>Certificate</th>
@@ -417,7 +417,7 @@ session_start();
 <script>
 	$(document).ready(function(){
     $('.email_button').click(function(){
-        $(this).attr('disabled','disabled');
+        $(this).attr('disabled',true);
         var donor_id = $(this).attr("id");
         var action=$(this).data("action");
 		var email_data=[];
@@ -441,7 +441,7 @@ session_start();
 			});
 				}
 			});
-		}
+		}console.log(email_data);
 		$.ajax({
 			url:"http://localhost:3000/Admin/include/sendcerti.php" ,
 			method: "POST",
@@ -450,21 +450,26 @@ session_start();
 				$('#'+donor_id).html('Sending...');
 				$('#' + donor_id).addClass('btn-danger');
 			},
-			success: function(data){
-				if (data == 'ok')
+			success: function(response){
+				var res= jQuery.parseJSON(response);
+				if(res.status == 200)
 				{
 					$('#' +donor_id).text("Success");
 					$('#' + donor_id).removeClass('btn-danger');
 					$('#' + donor_id).removeClass('btn-info');
 					$('#' + donor_id).addClass('btn-success');
+					$('#email_button'+ donor_id).attr('disabled', false);
+					console.log(res.message);
 				}
-				else{
+				else if (res.status== 422){
 					$('#' +donor_id).text(data);
+					console.log(res.message);
 				}
-				$('#'+ donor_id).attr('disabled', false);
+				
+				
 			}
 
-		});
+		})
     });
 });
 </script>

@@ -127,9 +127,9 @@ session_start();
     <tbody>
      <?php 
 	 include '../Admin/include/connection.php';
-	 $sql= "SELECT * FROM set_request";
+	 $sql= "SELECT * FROM set_request order by request_id DESC";
 	 $result =mysqli_query($conn,$sql);
-	 while ($row = mysqli_fetch_assoc($result)){
+	 while ($row = mysqli_fetch_array($result)){
 		echo '<tr>
 		<td>'.$row['req_name'].'</td>
 		<td>'.$row['req_street'].'</td>

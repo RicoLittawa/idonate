@@ -1,5 +1,5 @@
 <?php 
-    use PHPMailer\PHPMailer\Exception;
+   
     use PHPMailer\PHPMailer\PHPMailer;
   
    
@@ -8,9 +8,8 @@
    require 'phpmailer/src/PHPMailer.php';
    require 'phpmailer/src/SMTP.php';
    require 'fpdf/fpdf.php';
-   require 'connection.php';
-
-  $output='';
+   require 'connection.php'; 
+  
   foreach($_POST['email_data']as $row)
   {
     $image= imagecreatefrompng('D:/App Projects/Source/idonate/Admin/include/Certificate Template/certificate2.png');
@@ -51,25 +50,34 @@
      $mail->Port=465;
    
      $mail->setFrom('testcdrrmo@gmail.com');
-     $mail->addAddress($row['donor_email'],$row['donor_name']);
+     $mail->addAddress($row['donor_email']);
      $mail->isHTML(true);
      $mail->Subject= "Certificate";
      $mail->Body= "This is certificate";
      $mail->addStringAttachment($pdf->Output("S",'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
      $mail->AltBody='';
-     $mail->Send();
-             
-} if($output==''){
-  echo 'ok';
-  }else{
-    echo $output;
+     if ($mail->send()){
+     $res =[
+      'status' => 200,
+      'message' => 'Email sent'
+
+  ];
+  echo json_encode($res);
+  return false;}
+    else if (!$mail->send()) {
+      $res =[
+        'status' => 422,
+        'message' => 'Email not sent'
+
+    ];
+    echo json_encode($res);
+    return false;
+   }
+     }
+    
+    
   }
-            
- }
+
+
 
  
-
-  
-
-
-
