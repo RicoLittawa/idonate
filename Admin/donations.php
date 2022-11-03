@@ -261,11 +261,11 @@ session_start();
               <option value="default">Choose Region</option>
               <?php 
               include '../Admin/include/connection.php';
-                $sql = "SELECT * FROM regions";
+                $sql = "SELECT donor_region FROM donation_items ";
                 $result = mysqli_query($conn,$sql);
                 while($row =mysqli_fetch_array($result))
                 {
-                  echo '<option value="'.$row['region_name'].'">'.$row['region_name'].'</option>';
+                  echo '<option value="'.$row['donor_region'].'">'.$row['donor_region'].'</option>';
                 }
                 
               ?>
@@ -381,20 +381,21 @@ session_start();
 		<button type="button" data-toggle="modal" data-target="updateModal"  class="btnUpdate btn col" value="'.$row['donor_id'].'"><i class="fa-solid fa-pen-to-square" style="color: green;"></i></button>
 		<input type="checkbox" name="single_select" class="single_select col" data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'"></input></td>
 		<td><button type="button" class="btn btn-info email_button" name="email_button" id="'.$count.'"
-		data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'" data-action="single">Send</button></td>
+		data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'" data-action="single">Send</button>
+    </td>
 	
 		</tr>';
 		
 
 	 }
-
 			
 			?>
 			
     </tbody>
 	<tr>
 		<td colspan="10"></td>
-		<td><button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
+		<td>
+     <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
 	</tr>
 	
   </table>
@@ -414,66 +415,63 @@ session_start();
 	
 	<script src="../Admin/scripts/function.js"></script>
 	<script src="../donors/js/sweetalert2.all.min.js"></script>	
-<script>
-	$(document).ready(function(){
-    $('.email_button').click(function(){
-        $(this).attr('disabled',true);
-        var donor_id = $(this).attr("id");
-        var action=$(this).data("action");
-		var email_data=[];
-	
-		if (action=='single')
-		{
-			email_data.push({
-			donor_email: $(this).data("email"),
-			donor_name: $(this).data("name")
-		
-			});
-
-		}
-		else
-		{
-			$('.single_select').each(function(){
-				if($(this).prop("checked")==true){
-					email_data.push({
-					donor_email: $(this).data("email"),
-					donor_name: $(this).data("name")
-			});
-				}
-			});
-		}console.log(email_data);
-		$.ajax({
-			url:"http://localhost:3000/Admin/include/sendcerti.php" ,
-			method: "POST",
-			data: {email_data:email_data},
-			beforeSend:function(){
-				$('#'+donor_id).html('Sending...');
-				$('#' + donor_id).addClass('btn-danger');
-			},
-			success: function(response){
-				var res= jQuery.parseJSON(response);
-				if(res.status == 200)
-				{
-					$('#' +donor_id).text("Success");
-					$('#' + donor_id).removeClass('btn-danger');
-					$('#' + donor_id).removeClass('btn-info');
-					$('#' + donor_id).addClass('btn-success');
-					$('#email_button'+ donor_id).attr('disabled', false);
-					console.log(res.message);
-				}
-				else if (res.status== 422){
-					$('#' +donor_id).text(data);
-					console.log(res.message);
-				}
-				
-				
-			}
-
-		})
-    });
+  <script>
+$(document).ready(function(){
+ $('.email_button').click(function(){
+  $(this).attr('disabled', 'disabled');
+  var id = $(this).attr("id");
+  var action = $(this).data("action");
+  var email_data = [];
+  if(action == 'single')
+  {
+   email_data.push({
+    email: $(this).data("email"),
+    name: $(this).data("name")
+   });
+  }
+  else
+  {
+   $('.single_select').each(function(){
+    if($(this). prop("checked") == true)
+    {
+     email_data.push({
+      email: $(this).data("email"),
+      name: $(this).data('name')
+     });
+ 
+    
+    }
+   
+   });
+  }
+  
+  $.ajax({
+   url:"http://localhost:3000/Admin/include/sendcerti.php",
+   method:"POST",
+   data:{email_data:email_data},
+   beforeSend:function(){
+    $('#'+id).html('Sending...');
+    $('#'+id).addClass('btn-danger');
+   },
+   success:function(data){
+    if(data = 'ok')
+    {
+     $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
+     $('#'+id).removeClass('btn-danger');
+     $('#'+id).removeClass('btn-info');
+     $('#'+id).addClass('btn-success');
+    }
+    else
+    {
+     $('#'+id).text(data);
+    }
+    $('.email_button'+id).attr('disabled', false);
+    
+   }
+   
+  });
+ });
 });
 </script>
-
-
 </body>
 </html>

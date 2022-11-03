@@ -111,15 +111,15 @@ $(document).on('click', '.viewBtn', function (e) {
             var res = jQuery.parseJSON(response);
             if(res.status == 422) {
                $('#recieveReq').modal('show');
-               $('#req_name').text(res.data.req_name);
-               $('#req_city').text(res.data.req_city);
-               $('#req_street').text(res.data.req_street);
-               $('#req_region').text(res.data.req_region);
-               $('#req_email').text(res.data.req_email);
-               $('#req_date').text(res.data.req_date);
-               $('#req_category').text(res.data.req_category);
-               $('#req_variant').text(res.data.req_variant);
-               $('#req_quantity').text(res.data.req_quantity);
+               $('#req_name').val(res.data.req_name);
+               $('#req_city').val(res.data.req_city);
+               $('#req_street').val(res.data.req_street);
+               $('#req_region').val(res.data.req_region);
+               $('#req_email').val(res.data.req_email);
+               $('#req_date').val(res.data.req_date);
+               $('#req_category').val(res.data.req_category);
+               $('#req_variant').val(res.data.req_variant);
+               $('#req_quantity').val(res.data.req_quantity);
                $('#req_note').text(res.data.req_note);
 
                
@@ -198,6 +198,56 @@ $(document).ready(function(){
                                 $('#updateModal').modal('hide');
                                 
                                 $('#table_data').load(location.href+ " #table_data");
+                               
+                            }
+                           
+                            
+                            
+                        }
+            });
+        
+    });
+});
+
+/*add request to donation items*/
+$(document).ready(function(){
+    $("#saveRequest").submit(function(event){
+        event.preventDefault();
+        var id = $('.viewBtn').attr("id");
+        $('.viewBtn').attr('disabled', 'disabled');
+        var formData= new FormData(this);
+        formData.append("send_data",true)
+       
+        
+        
+            $.ajax({
+                url: 'http://localhost:3000/Admin/include/sendrequest.php',
+                method: 'post',
+                data:formData,
+                        processData:false,
+                        contentType:false,  
+                        success: function(response) {
+                            var res= jQuery.parseJSON(response);
+                            if(res.status == 422)
+                            {
+                                Swal.fire('ERROR','','error')
+                            $('#msg').html("<p class='alert alert-danger'>"+ res.message); 
+                            
+                            
+                            }else if (res.status == 200)
+                            {
+                                Swal.fire(
+                                    'Success!',
+                                    res.message,
+                                    'success'
+                                  )
+                                $('#recieveReq').modal('hide');
+                                $('#'+id).addClass('btn-success')
+                                $('#'+id).html('Sent');
+                                $('.viewBtn'+id).attr('disabled', false);
+                                
+                                
+                                
                                
                             }
                            

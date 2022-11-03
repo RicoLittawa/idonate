@@ -120,20 +120,23 @@ session_start();
     <thead>
       <tr>
         <th>Donor Name</th>
-        <th>Address</th>
+        <th>Date</th>
         <th>View</th>
       </tr>
     </thead>
     <tbody>
      <?php 
-	 include '../Admin/include/connection.php';
-	 $sql= "SELECT * FROM set_request order by request_id DESC";
-	 $result =mysqli_query($conn,$sql);
-	 while ($row = mysqli_fetch_array($result)){
+	 require '../Admin/include/connection.php';
+	 $sql = "SELECT * FROM set_request ORDER by request_id DESC";
+	 $result = mysqli_query($conn,$sql);
+	$data = $result->fetch_all(MYSQLI_ASSOC);
+	$count= 0;
+	foreach ($data as $row){
+	   $count = $count+ 1;
 		echo '<tr>
 		<td>'.$row['req_name'].'</td>
-		<td>'.$row['req_street'].'</td>
-		<td><button type:"button" name="viewBtn" class="btn viewBtn" data-toggle="modal" data-target="#recieveReq" value="'.$row['request_id'].'"><i  style="color:green;" class="fa-solid fa-eye"></i></button></td>
+		<td>'.$row['req_date'].'</td>
+		<td><button type:"button" id="'.$count.'" name="viewBtn" class="btn viewBtn" data-toggle="modal" data-target="#recieveReq" value="'.$row['request_id'].'"><i  style="color:green;" class="fa-solid fa-eye "></i></button></td>
 		</tr>';
 	 }
 	 ?>
@@ -154,43 +157,64 @@ session_start();
 
 	<form action="" id="saveRequest">
 	<div class="modal-body">
-	<div class="mb-3">
-		<p id="req_name" name="req_name" class="form-control"></p>
+	<div class="row">
+	<div class="col">
+		<label for="req_name">Fullname</label>
+		<input id="req_name" name="req_name" class="form-control" readonly>
 	</div>
-	<div class="mb-3">
-		<p id="req_city" name="req_city" class="form-control"></p>
+	<div class="col">
+		<label for="req_city">City</label>
+		<input id="req_city" name="req_city" class="form-control" readonly>
 	</div>
-	<div class="mb-3">
-		<p id="req_street" name="req_street" class="form-control"></p>
 	</div>
-	<div class="mb-3">
-		<p id="req_region" name="req_region" class="form-control"></p>
+	<div class="row">
+	<div class="col">
+		<label for="req_street">Street</label>
+		<input id="req_street" name="req_street" class="form-control" readonly>
 	</div>
-	<div class="mb-3">
-		<p id="req_email" name="req_email" class="form-control"></p>
+	<div class="col">
+		<label for="req_region">Region</label>
+		<input id="req_region" name="req_region" class="form-control" readonly>
 	</div>
-	<div class="mb-3">
-		<p id="req_date" name="req_date" class="form-control"></p>
 	</div>
-	<div class="mb-3">
-		<p id="req_category" name="req_category" class="form-control"></p>
+	<div class="row">
+	<div class="col">
+		<label for="req_email">Email</label>
+		<input id="req_email" name="req_email" class="form-control" readonly>
 	</div>
-	<div class="mb-3">
-		<p id="req_variant" name="req_variant" class="form-control"></p>
+	<div class="col">
+		<label for="req_date">Date</label>
+		<input type="date" id="req_date" name="req_date" class="form-control" readonly >
 	</div>
-	<div class="mb-3">
-		<p id="req_quantity" name="req_quantity" class="form-control"></p>
 	</div>
-	<div class="mb-3">
-		<textarea class="form-control" name="req_note" id="req_note" cols="30" rows="5" disabled></textarea>
-		
+	<div class="row">
+	<div class="col">
+		<label for="req_category">Category</label>
+		<input id="req_category" name="req_category" class="form-control" readonly>
+	</div>
+	<div class="col">
+		<label for="req_variant">Variant</label>
+		<input id="req_variant" name="req_variant" class="form-control" readonly>
+	</div>
+	</div>
+	<div class="row">
+	<div class="col">
+		<label for="req_quantity">Quantity</label>
+		<input id="req_quantity" name="req_quantity" class="form-control" readonly>
+	</div>
+	</div>
+	<div class="row">
+	<div class="col">
+		<label for="req_note">Donor's note</label>
+		<textarea class="form-control" name="req_note" id="req_note" cols="30" rows="10" disabled></textarea>
+		</div>
 	</div>
 	  </div>
 
       
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+		<button type="submit" class="btn btn-success">Save</button>
       </div>
 	</form>
 

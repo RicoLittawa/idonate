@@ -8,8 +8,9 @@
    require 'phpmailer/src/PHPMailer.php';
    require 'phpmailer/src/SMTP.php';
    require 'fpdf/fpdf.php';
-   require 'connection.php'; 
   
+  
+  $output= '';
   foreach($_POST['email_data']as $row)
   {
     $image= imagecreatefrompng('D:/App Projects/Source/idonate/Admin/include/Certificate Template/certificate2.png');
@@ -17,7 +18,7 @@
     $black = imagecolorallocate($image, 0, 0, 0);
     $font="D:/App Projects/Source/idonate/Admin/fonts/Roboto-Black.ttf";
     $size =110;
-    $box = imagettfbbox($size, 0, $font, $row['donor_name']);
+    $box = imagettfbbox($size, 0, $font, $row['name']);
     $text_width = abs($box[2]) - abs($box[0]);
     $text_height = abs($box[5]) - abs($box[3]);
     $image_width = imagesx($image);
@@ -26,7 +27,7 @@
     $y = ($image_height + $text_height) / 2;
 
 // add text
-    imagettftext($image, $size, 0, $x, $y, $black,$font, $row['donor_name']);
+    imagettftext($image, $size, 0, $x, $y, $black,$font, $row['name']);
   
    
     
@@ -40,44 +41,37 @@
     $pdf= new FPDF();   
     $pdf->AddPage('L','A5');
     $pdf->Image($file_path,0,0,210,150);
-    $mail=new PHPMailer;
-    $mail->isSMTP();
-     $mail->Host= 'smtp.gmail.com';
-     $mail->SMTPAuth= true;
-     $mail->Username='testcdrrmo@gmail.com' ;
-     $mail->Password= 'mlytxekfgplnhsap';
-     $mail->SMTPSecure='ssl';
-     $mail->Port=465;
-   
-     $mail->setFrom('testcdrrmo@gmail.com');
-     $mail->addAddress($row['donor_email']);
-     $mail->isHTML(true);
-     $mail->Subject= "Certificate";
-     $mail->Body= "This is certificate";
-     $mail->addStringAttachment($pdf->Output("S",'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
-     $mail->AltBody='';
-     if ($mail->send()){
-     $res =[
-      'status' => 200,
-      'message' => 'Email sent'
-
-  ];
-  echo json_encode($res);
-  return false;}
-    else if (!$mail->send()) {
-      $res =[
-        'status' => 422,
-        'message' => 'Email not sent'
-
-    ];
-    echo json_encode($res);
-    return false;
-   }
-     }
-    
-    
-  }
+  $mail = new PHPMailer;
+  $mail->IsSMTP();        //Sets Mailer to send message using SMTP
+  $mail->Host = 'smtp.gmail.com';  //Sets the SMTP hosts of your Email hosting, this for Godaddy
+  $mail->Port = '465';        //Sets the default SMTP server port
+  $mail->SMTPAuth = true;       //Sets SMTP authentication. Utilizes the Username and Password variables
+  $mail->Username = 'testcdrrmo@gmail.com';     //Sets SMTP username
+  $mail->Password = 'mlytxekfgplnhsap';     //Sets SMTP password
+  $mail->SMTPSecure = 'ssl';       //Sets connection prefix. Options are "", "ssl" or "tls"
+  $mail->From = 'testcdrrmo@gmail.com';   //Sets the From email address for the message
+  $mail->FromName = 'Code With Nevil'; 
+  $mail->setFrom('testcdrrmo@gmail.com');    //Sets the From name of the message
+  $mail->AddAddress($row["email"], $row["name"]); //Adds a "To" address
+  $mail->WordWrap = 50;       //Sets word wrapping on the body of the message to a given number of characters
+  $mail->IsHTML(true);       //Sets message type to HTML
+  $mail->Subject = 'Testing'; //Sets the Subject of the message
+  //An HTML or plain text message body
+  $mail->Body = '
+  <p>Certificate...</p>
+  ';
+  $mail->addStringAttachment($pdf->Output("S",'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
+  $mail->Send();      //Send an Email. Return true on success or false on error
 
 
-
- 
+ }
+ if($output == '')
+ {
+  echo 'ok';
+ }
+ else
+ {
+  echo $output;
+ }
+}
+?>

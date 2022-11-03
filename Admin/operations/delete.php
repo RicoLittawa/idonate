@@ -5,7 +5,7 @@ if(isset($_POST['delete_data']))
 {
     $id = mysqli_real_escape_string($conn, $_POST['id']);
 
-    $query = "DELETE FROM items WHERE id='$id'";
+    $query = "DELETE FROM donation_items WHERE donor_id='$id'";
     $query_run = mysqli_query($conn, $query);
 
     if($query_run)
