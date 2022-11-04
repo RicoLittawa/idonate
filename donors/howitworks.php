@@ -60,16 +60,6 @@ session_start()?>
             </div>
           <div class="dashedcircle"></div>
       </div>
-        <span class="dot2"></span>
-          <h1 class="title">You want to<br></h1>
-          <h2 class="con">Donate?</h2>
-        </div>
-        <div class = "parag">
-          <p>You can set <a href="requestform.php">request</a> to inform the staff to<br>
-            your arrival and know what kind of donation<br> 
-            you will donate. Or You can directly drop off<br>
-            your donation to relief hub.</p>
-        </div>
         
         </div>
         <div class="container mt-3">
