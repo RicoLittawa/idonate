@@ -32,10 +32,10 @@ session_start()?>
           <a class="nav-link " href="frontpage.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="donation.php">Donations</a>
+          <a class="nav-linkx" href="donation.php">Donations</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="howitworks.php">How it works?</a>
+          <a class="nav-link active" href="howitworks.php">How it works?</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="">What is needed?</a>
@@ -64,11 +64,11 @@ session_start()?>
         </div>
         <div class="container mt-3">
 
-            <h3>A carousel with slides only</h3>
+            <h3>card only</h3>
         <div id="mySlideshow1" class="carousel slide" data-ride="carousel">
               
         <div class="carousel-inner">
-            <img class="d-block w-100" src="trans.png" alt="Slide 1" height="1500">
+            <img class="d-block w-100" src="trans.png" alt="view" height="1500">
       </div>
   
      <div class="site-footer" id="footer">
