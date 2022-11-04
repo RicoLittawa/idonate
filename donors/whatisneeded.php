@@ -37,7 +37,7 @@ session_start()?>
           <a class="nav-link" href="howitworks.php">How it works?</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="">What is needed?</a>
+          <a class="nav-link active" href="whatisneeded.php">What is needed?</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="requestform.php">Create request<i style="color: #83f28f;" class="fa-solid fa-plus"></i></a>
