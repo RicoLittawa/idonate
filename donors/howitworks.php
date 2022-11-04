@@ -32,7 +32,7 @@ session_start()?>
           <a class="nav-link " href="frontpage.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-linkx" href="donation.php">Donations</a>
+          <a class="nav-link" href="donation.php">Donations</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" href="howitworks.php">How it works?</a>
