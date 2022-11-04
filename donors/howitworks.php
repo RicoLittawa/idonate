@@ -72,6 +72,14 @@ session_start()?>
         </div>
         
         </div>
+        <div class="container mt-3">
+
+            <h3>A carousel with slides only</h3>
+        <div id="mySlideshow1" class="carousel slide" data-ride="carousel">
+              
+        <div class="carousel-inner">
+            <img class="d-block w-100" src="trans.png" alt="Slide 1" height="1500">
+      </div>
   
      <div class="site-footer" id="footer">
       <div class="container">
