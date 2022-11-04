@@ -14,7 +14,6 @@ session_start()?>
     <link rel="stylesheet" href="css/donors.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
         padding-right: 0px !important;
     }</style>
@@ -72,17 +71,6 @@ session_start()?>
         </div>
         
         </div>
-    <div class="container mt-3">
-
-          <h3>A carousel with slides only</h3>
-        <div id="mySlideshow1" class="carousel slide" data-ride="carousel">
-
-          <div class="carousel-inner">
-          <img class="d-block w-100" src="slide1.png" alt="Slide 1" height="500">
-        </div>
-        </div>
-
-</div>
   
      <div class="site-footer" id="footer">
       <div class="container">
