@@ -15,7 +15,7 @@ session_start();
 	<!-- My CSS -->
 	<link rel="stylesheet" href="../Admin/css/donations.css">
 
-	<title>Requests</title>
+	<title>Monetary Donors</title>
 </head>
 <body>
 
@@ -102,11 +102,11 @@ session_start();
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
 						<li>
-							<a class="active" href="#" style="font-size: 18px;">Home</a>
+							<a class="active" href="request.php" style="font-size: 18px;">Back</a>
 						</li>
 					</ul>
 				</div>
-				<span><button class="adddata" type="button" ><a href="moneytable.php">Monetary Donors</a></button></span>
+				
 			</div>
 			
 			<div class="table-data">
@@ -120,24 +120,21 @@ session_start();
     <thead>
       <tr>
         <th>Donor Name</th>
-        <th>Date</th>
+        <th>Province</th>
         <th>View</th>
       </tr>
     </thead>
     <tbody>
      <?php 
 	 require '../Admin/include/connection.php';
-	 $sql = "SELECT * FROM set_request ORDER by request_id DESC";
+	 $sql = "SELECT * FROM monetary_donations ORDER by money_id DESC";
 	 $result = mysqli_query($conn,$sql);
 	$data = $result->fetch_all(MYSQLI_ASSOC);
 	$count= 0;
 	foreach ($data as $row){
 	   $count = $count+ 1;
-		echo '<tr>
-		<td>'.$row['req_name'].'</td>
-		<td>'.$row['req_date'].'</td>
-		<td><button type:"button" id="'.$count.'" name="viewBtn" class="btn viewBtn" data-toggle="modal" data-target="#recieveReq" value="'.$row['request_id'].'"><i  style="color:green;" class="fa-solid fa-eye "></i></button></td>
-		</tr>';
+	echo '<tr>
+	<td><img src="data:image/jpg;charset=utf8;base64,'.base64_encode($row['money_img']).'"></td></tr>';
 	 }
 	 ?>
 	  </tbody>

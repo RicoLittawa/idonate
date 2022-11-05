@@ -12,12 +12,11 @@
     $Email=  $_POST['money_email'];
     $Date= date('Y-m-d', strtotime($_POST['money_date']));
     $Reference=$_POST['money_reference'];
-    $File= (file_get_contents($_FILES['money_img']["tmp_name"]));
     $Amount=$_POST['money_amount'];
     $Note=$_POST['money_note'];
     $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";  
     if (empty($Fullname)||empty($Province)||empty($Street)||empty($Region)||empty($Contact)||empty($Email)||empty($Date)||
-    empty($Reference)||empty($File)||empty($Amount)||empty($Note)){
+    empty($Reference)||empty($Amount)||empty($Note)){
         $res =[
             'status' => 422,
             'message' => 'All fields are required'
@@ -42,38 +41,56 @@
         ];
         echo json_encode($res);
         return false;
-    }
-    else{
-        $sql = "INSERT INTO monetary_donations (money_name,money_province,money_street,money_region,money_contact,money_email,money_date,money_reference,money_img,money_amount,money_note)
-        VALUES (?,?,?,?,?,?,?,?,?,?,?)" ;
-       $stmt= mysqli_stmt_init($conn);
-       if(!mysqli_stmt_prepare($stmt,$sql)){
-           $res =[
-               'status' => 422,
-               'message' => 'Request error'
+    }else if(empty($File)){
+        $filename= basename($_FILES['money_img']['name']);
+        $filetype=pathinfo($filename,PATHINFO_EXTENSION);
+        $allowtypes= array('jpg','png','jpeg','gif');
+        if (in_array($filetype,$allowtypes)){
+            $Image= (file_get_contents($_FILES['money_img']["tmp_name"]));
+            $sql = "INSERT INTO monetary_donations (money_name,money_province,money_street,money_region,money_contact,money_email,money_date,money_reference,money_img,money_amount,money_note)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?)" ;
+           $stmt= mysqli_stmt_init($conn);
+           if(!mysqli_stmt_prepare($stmt,$sql)){
+               $res =[
+                   'status' => 422,
+                   'message' => 'Request error'
+        
+               ];
+               echo json_encode($res);
+               return false;
+           }
+           else{
+               mysqli_stmt_bind_param($stmt,"sssssssssss",$Fullname,$Province,$Street,$Region,$Contact,$Email,$Date,$Reference,$Image,$Amount,$Note);
+               mysqli_stmt_execute($stmt);
+               $res =[
+                   'status' => 200,
+                   'message' => 'Request has been sent'
+        
+               ];
+               echo json_encode($res);
+               return false;
+             
+           }
+           
     
-           ];
-           echo json_encode($res);
-           return false;
-       }
-       else{
-           mysqli_stmt_bind_param($stmt,"sssssssssss",$Fullname,$Province,$Street,$Region,$Contact,$Email,$Date,$Reference,$File,$Amount,$Note);
-           mysqli_stmt_execute($stmt);
-           $res =[
-               'status' => 200,
-               'message' => 'Request has been sent'
-    
-           ];
-           echo json_encode($res);
-           return false;
-         
-       }
-       }
-
-   
-     
        
+         
+           
+         
+         mysqli_stmt_close($stmt);
+         mysqli_close($conn);
+        } else{
+            $res =[
+                'status' => 422,
+                'message' => 'File type error'
      
-     mysqli_stmt_close($stmt);
-     mysqli_close($conn);
+            ];
+            echo json_encode($res);
+            return false;
+        }
+
+        }
+       
     }
+    
+      
