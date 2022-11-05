@@ -14,6 +14,7 @@ session_start()?>
     <link rel="stylesheet" href="css/donors.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
     <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
         padding-right: 0px !important;
     }</style>
@@ -31,10 +32,10 @@ session_start()?>
           <a class="nav-link " href="frontpage.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="donation.php">Donations</a>
+          <a class="nav-link" href="donation.php">Donations</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="howitworks.php">How it works?</a>
+          <a class="nav-link active" href="howitworks.php">How it works?</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="">What is needed?</a>
@@ -59,18 +60,16 @@ session_start()?>
             </div>
           <div class="dashedcircle"></div>
       </div>
-        <span class="dot2"></span>
-          <h1 class="title">You want to<br></h1>
-          <h2 class="con">Donate?</h2>
-        </div>
-        <div class = "parag">
-          <p>You can set <a href="requestform.php">request</a> to inform the staff to<br>
-            your arrival and know what kind of donation<br> 
-            you will donate. Or You can directly drop off<br>
-            your donation to relief hub.</p>
-        </div>
         
         </div>
+        <div class="container mt-3">
+
+            <h3>card only</h3>
+        <div id="mySlideshow1" class="carousel slide" data-ride="carousel">
+              
+        <div class="carousel-inner">
+            <img class="d-block w-100" src="trans.png" alt="view" height="1500">
+      </div>
   
      <div class="site-footer" id="footer">
       <div class="container">
