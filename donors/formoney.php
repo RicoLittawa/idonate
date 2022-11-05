@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/request.css">
+    <link rel="stylesheet" href="css/money.css">
     <link rel="stylesheet" href="css/donors.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -42,98 +42,131 @@
     </div>
   </div>
 </nav>
-
+<div>
+  <span class="moneydot"></span>
+</div>
+<div>
+<span class="moneydot2"></span>
+</div>
+<div>
+  <div ><a class="back" href="donation.php"><i style="font-size: 50px;" class="fa-solid fa-arrow-left"></i></a></div>
+  <p class="paragleft">Thank you for <br>donating</p>
+</div>
 <div class="container" id="container">
- 
-	<!-- Request Form -->
-       <div class="donorForm"> 
-       <form id="requestform" class="needs-validation" novalidate method="POST">
+ <!-- Request Form -->
+  <div class="moneyForm"> 
+    <form id="monetaryform" method="POST" enctype="multipart/form-data">
        <span id="msg" class="text-center"></span>
           <div class="row">
             <div class="col">
-            <label for="fname">Fullname</label>
-            <input class="form-control required error-fname" type="text" name="fname" id="fname" placeholder="">
-      
+              <div class="form-group">
+                <label for="money_name">Fullname</label>
+                <input class="form-control" type="text" name="money_name" id="money_name" placeholder="">
+                </div>
+              </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="money_province">City</label>
+                <input class="form-control" type="text" name="money_province" id="money_province">
+              </div>
             </div>
             <div class="col">
-            <label for="city">City</label>
-            <input class="form-control required" type="text" name="city" id="city">
-            
-            </div>
+              <div class="form-group">
+                <label for="money_street">Street</label>
+                <input class="form-control" type="text" name="money_street" id="money_street">
+                </div>
+              </div>
             </div>
             <div class="row">
-            <div class="col">
-            <label for="street">Street</label>
-            <input class="form-control required" type="text" name="street" id="street">
-            
-            </div>
-            <div class="col">
-              <label for="region">Contact Number</label>
-              <input class="form-control" type="text" name="contact" id="contact">
-              
-            </select>
-            
-						</div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="money_region">Select Region</label>
+                  <select class="custom-select" name="money_region" id="money_region">
+                    <option value="default">Choose Region</option>
+                      <?php 
+                        include '../Admin/include/connection.php';
+                        $sql = "SELECT * FROM regions";
+                        $result = mysqli_query($conn,$sql);
+                        while($row =mysqli_fetch_array($result))
+                        {
+                          echo '<option value="'.$row['region_name'].'">'.$row['region_name'].'</option>';
+                        } 
+                        ?>
+                   </select>
+                  </div>
+						    </div>
+              <div class="col">
+               <div class="form-group">
+                  <label for="money_contact">Contact Number</label>
+                  <input class="form-control" type="text" name="money_contact" id="money_contact">
+                </div>
+						  </div>
             </div>	  
             <div class="row">
-            <div class="col">
-            <label for="email">Email</label>
-            <input class="form-control required error-email" type="text" name="email" id="email">
-            
-            </div>
-            <div class="col">
-            <label for="donation_date">Donation Date</label>
-            <input class="form-control required" type="date" name="donation_date" id="donation_date">
-            
-            </div>
-            </div>
-            <div class="select_opt">
-            <label for="reference">Reference number that Reference number can be seen in the e-receipt</label>
-                <input class="form-control" type="text" id="reference" name="reference">
-            </div>
-            <div class="select_opt">
-            <label for="variant">Select Variant:</label>
-								<select class="custom-select required" id="variant" name="variant">
-                <option value="default">Choose variant</option>
-								<option value="Per Box">Per Box</option>
-								<option value="Pieces">Pieces</option>
-								<option value="Others">Others</option>
-								</select>
-             
+              <div class="col">
+                <div class="form-group">
+                  <label for="money_email">Email</label>
+                  <input class="form-control" type="text" name="money_email" id="money_email">
+                  </div>
+                </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="money_date">Donation Date</label>
+                  <input class="form-control" type="date" name="money_date" id="money_date">
+                  </div>
+                </div>
+              </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="money_reference">Reference number</label>
+                  <input class="form-control" type="text" id="money_reference" name="money_reference">
+                </div>
+              </div>
             </div>
           <div class="row">
             <div class="col">
-              <label for="user-quantity">Quantity</label>
-              <input class="form-control required" type="text" name="quantity" id="quantity">
-            
+              <div class="form-group">
+                <spa>*Screen shot of receipt/reference number</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+                <input type="file" class="custom-file-input" id="money_img" name="money_img">
+             </div>
+            </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="money_amount">Amount</label>
+                <input class="form-control" type="text" name="money_amount" id="money_amount">
+              </div>
             </div>
           </div>
           <div class="note">
-             <label for="note">Donor's note</label>
-              <textarea  class="form-control required" type="text" name="note" id="note" placeholder="Donors Note" cols="30" rows="10" ></textarea>
-            
-						</div>
+            <div class="form-group">
+              <label for="money_note">Donor's note (Optional)</label>
+              <textarea  class="form-control" type="text" name="money_note" id="money_note" placeholder="Donors Note" cols="30" rows="10" ></textarea>
+                </div>
+						  </div>
             <div>
-            <button type="submit" class="btn btn-success submit-request" id="submit-request"> Submit</button>
+              <button type="submit" class="btn btn-success monetary">Submit</button>
             </div>
-            <div id="#summary">
-
-            </div> 			
-      </form>
+          	
+          </form>
+        </div>
         
-      </div>
+     </div>
     
-  <div class="send_request"><p>Thank you for<br> donating</p></div>
-  <div><a class="backbtn" href="donation.php"><i style="font-size: 50px;" class="fa-solid fa-arrow-left"></i></a><span class="reqdot"></span><span class="reqdot2">   </span></div>
-      </div>
-      
-      
-         <div class="site-footer" id="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-md-6"> 
-            <h6>About</h6>
-            <p class="text-justify">IDONATE is an online platform created for CDRRMO. With the use of the internet, 
+<!---Footer --->
+<div class="site-footer" id="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6"> 
+          <h6>About</h6>
+          <p class="text-justify">IDONATE is an online platform created for CDRRMO. With the use of the internet, 
             this web-based system will lessen the manual process. It will also automate sending the acknowledgement receipt to the donors.
              Donors may see how their donations are used with the help of a web-based donation system.</p>
           </div>
@@ -165,6 +198,13 @@
     <script src="../donors/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
+    <script src="../donors/js/sweetalert2.all.min.js"></script>
+   <script>
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
   </body>
 </html>

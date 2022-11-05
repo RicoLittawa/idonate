@@ -42,7 +42,16 @@
     </div>
   </div>
 </nav>
-
+<div>
+  <span class="moneydot"></span>
+</div>
+<div>
+<span class="moneydot2"></span>
+</div>
+<div>
+  <div ><a class="back" href="donation.php"><i style="font-size: 50px;" class="fa-solid fa-arrow-left"></i></a></div>
+  <p class="paragleft">Set Request </p>
+</div>
 <div class="container" id="container">
  
 	<!-- Request Form -->
@@ -74,7 +83,7 @@
               <option value="default">Choose Region</option>
               <?php 
               include '../Admin/include/connection.php';
-                $sql = "SELECT * FROM regions";
+                $sql = "SELECT * from regions ";
                 $result = mysqli_query($conn,$sql);
                 while($row =mysqli_fetch_array($result))
                 {
@@ -99,33 +108,40 @@
             </div>
             </div>
             <div class="select_opt">
-            <label for="category">Select Category:</label>
-								<select class="custom-select required" id="category" name="category">
-                <option value="default" >Choose category</option>
-								<option value="Ready-to-eat goods">Ready-to-eat goods</option>
-                <option value="Canned goods, Noodles">Canned goods, Noodles</option>
-								<option value="clothes">Clothes</option>
-								<option value="Hygiene Essentials">Hygiene Essentials</option>
-                <option value="Infant Items">Infant Items</option>
-								<option value="Drinking water">Drinking water</option>
-                <option value="First Aid Kits">First Aid Kits</option>
-                <option value="Medicine">Medicine</option>
-								</select>
+            <label for="category">Select Category</label>
+              <select class="custom-select required" name="category" id="category">
+              <option value="default">Choosse Category</option>
+              <?php 
+              include '../Admin/include/connection.php';
+                $sql = "SELECT *FROM category";
+                $result = mysqli_query($conn,$sql);
+                while($row =mysqli_fetch_array($result))
+                {
+                  echo '<option value="'.$row['category'].'">'.$row['category'].'</option>';
+                }
                 
+              ?>
+            </select>
             </div>
             <div class="select_opt">
-            <label for="variant">Select Variant:</label>
-								<select class="custom-select required" id="variant" name="variant">
-                <option value="default">Choose variant</option>
-								<option value="Per Box">Per Box</option>
-								<option value="Pieces">Pieces</option>
-								<option value="Others">Others</option>
-								</select>
-             
+            <label for="variant">Select Variant</label>
+              <select class="custom-select required" name="variant" id="variant">
+              <option value="default">Choosse Variant</option>
+              <?php 
+              include '../Admin/include/connection.php';
+                $sql = "SELECT *FROM variant";
+                $result = mysqli_query($conn,$sql);
+                while($row =mysqli_fetch_array($result))
+                {
+                  echo '<option value="'.$row['variant'].'">'.$row['variant'].'</option>';
+                }
+                
+              ?>
+            </select>
             </div>
           <div class="row">
             <div class="col">
-              <label for="user-quantity">Quantity</label>
+              <label for="quantity">Quantity</label>
               <input class="form-control required" type="text" name="quantity" id="quantity">
             
             </div>
@@ -138,15 +154,10 @@
             <div>
             <button type="submit" class="btn btn-success submit-request" > Submit</button>
             </div>
-            <div id="#summary">
-
-            </div> 			
+        	
       </form>
         
       </div>
-    
-  <div class="send_request"><p>Set Request</p></div>
-  <div><a class="backbtn" href="donation.php"><i style="font-size: 50px;" class="fa-solid fa-arrow-left"></i></a><span class="reqdot"></span><span class="reqdot2">   </span></div>
       </div>
       
       

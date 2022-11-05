@@ -197,7 +197,7 @@ $(document).ready(function(){
                                   )
                                 $('#updateModal').modal('hide');
                                 
-                                $('#table_data').load(location.href+ " #table_data");
+                              
                                
                             }
                            
