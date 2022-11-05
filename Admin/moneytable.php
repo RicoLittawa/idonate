@@ -121,7 +121,15 @@ session_start();
       <tr>
         <th>Donor Name</th>
         <th>Province</th>
-        <th>View</th>
+        <th>Street</th>
+		<th>Region</th>
+		<th>Contact Number</th>
+		<th>Email</th>
+		<th>Date</th>
+		<th>Reference Number</th>
+		<th>Amount</th>
+		<th>Action</th>
+
       </tr>
     </thead>
     <tbody>
@@ -134,79 +142,124 @@ session_start();
 	foreach ($data as $row){
 	   $count = $count+ 1;
 	echo '<tr>
-	<td><img src="data:image/jpg;charset=utf8;base64,'.base64_encode($row['money_img']).'"></td></tr>';
+	<td>'.$row['money_name'].'</td>
+	<td>'.$row['money_province'].'</td>
+	<td>'.$row['money_street'].'</td>
+	<td>'.$row['money_region'].'</td>
+	<td>'.$row['money_contact'].'</td>
+	<td>'.$row['money_email'].'</td>
+	<td>'.$row['money_date'].'</td>
+	<td><button type:"button" id="'.$count.'" name=" referenceNum" class="btn referenceNum" data-toggle="modal" data-target="#referenceImg" value="'.$row['money_id'].'">'.$row['money_reference'].'</button></td>
+	<td>₱'.$row['money_amount'].'</td>
+	<td><button type:"button" id="'.$count.'" name="viewMoney" class="btn viewMoney" data-toggle="modal" data-target="#moneyRecieve" value="'.$row['money_id'].'"><i  style="color:green;" class="fa-solid fa-eye"></i></button></td>
+	</tr>';
 	 }
 	 ?>
 	  </tbody>
   </table>
-  <div class="modal fade" id="recieveReq">
+  <!--Money Form --->
+  <div class="modal fade" id="moneyRecieve">
   <div class="modal-dialog">
     <div class="modal-content">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">View Requests</h4>
+        <h4 class="modal-title">Donor Information</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
 		
       </div>
 	
 	
 
-	<form action="" id="saveRequest">
+	<form action="" id="">
 	<div class="modal-body">
 	<div class="row">
+
 	<div class="col">
-		<label for="req_name">Fullname</label>
-		<input id="req_name" name="req_name" class="form-control" readonly>
+		<label for="money_name">Fullname</label>
+		<input id="money_name" name="money_name" class="form-control" readonly>
 	</div>
 	<div class="col">
-		<label for="req_city">City</label>
-		<input id="req_city" name="req_city" class="form-control" readonly>
+		<label for="money_province">City</label>
+		<input id="" name="" class="form-control" readonly>
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
-		<label for="req_street">Street</label>
-		<input id="req_street" name="req_street" class="form-control" readonly>
+		<label for="">Street</label>
+		<input id="" name="" class="form-control" readonly>
 	</div>
 	<div class="col">
-		<label for="req_region">Region</label>
-		<input id="req_region" name="req_region" class="form-control" readonly>
+		<label for="">Region</label>
+		<input id="" name="" class="form-control" readonly>
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
-		<label for="req_email">Email</label>
-		<input id="req_email" name="req_email" class="form-control" readonly>
+		<label for="">Email</label>
+		<input id="" name="" class="form-control" readonly>
 	</div>
 	<div class="col">
-		<label for="req_date">Date</label>
-		<input type="date" id="req_date" name="req_date" class="form-control" readonly >
+		<label for="">Date</label>
+		<input type="date" id="" name="" class="form-control" readonly >
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
-		<label for="req_category">Category</label>
-		<input id="req_category" name="req_category" class="form-control" readonly>
+		<label for="">Category</label>
+		<input id="" name="" class="form-control" readonly>
 	</div>
 	<div class="col">
-		<label for="req_variant">Variant</label>
-		<input id="req_variant" name="req_variant" class="form-control" readonly>
+		<label for="">Variant</label>
+		<input id="" name="" class="form-control" readonly>
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
-		<label for="req_quantity">Quantity</label>
-		<input id="req_quantity" name="req_quantity" class="form-control" readonly>
+		<label for="">Quantity</label>
+		<input id="" name="" class="form-control" readonly>
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
-		<label for="req_note">Donor's note</label>
-		<textarea class="form-control" name="req_note" id="req_note" cols="30" rows="10" disabled></textarea>
+		<label for="">Donor's note</label>
+		<textarea class="form-control" name="" id="" cols="30" rows="10" disabled></textarea>
 		</div>
 	</div>
 	  </div>
+
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-success">Save</button>
+      </div>
+	</form>
+
+		
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Reference Photo--->
+<div class="modal fade" id="referenceImg">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Reference Number</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		
+      </div>
+	
+	
+
+	<form action="" id="">
+	<div class="modal-body">
+	
+	  
 
       
       <div class="modal-footer">

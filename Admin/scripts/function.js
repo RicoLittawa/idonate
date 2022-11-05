@@ -258,3 +258,26 @@ $(document).ready(function(){
         
     });
 });
+/*request page money data */
+
+$(document).on('click', '.viewMoney', function (e) {
+    e.preventDefault();
+    var money_id = $(this).val();
+    alert(money_id);
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:3000/Admin/operations/viewmoney.php?money_id="+ money_id,
+        success: function (response) {
+            var res = jQuery.parseJSON(response);
+            if(res.status == 422) {
+                $('#moneyRecieve').modal('show');
+                $('#money_name').val(res.data.money_name);
+
+               
+            }else if(res.status == 404){
+                alert(res.message);
+            }
+        }
+    });
+});
