@@ -134,7 +134,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="custom-file-label" for="customFile">Choose file</label>
-                <input type="file" class="custom-file-input" id="money_img" name="money_img">
+                <input type="file" class="custom-file-input" id="money_image" name="money_image">
              </div>
             </div>
           <div class="row">

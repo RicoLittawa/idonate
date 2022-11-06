@@ -208,8 +208,7 @@ $(document).ready(function(){
         
     });
 });
-
-/*add request to donation items*/
+/* save request*/
 $(document).ready(function(){
     $("#saveRequest").submit(function(event){
         event.preventDefault();
@@ -258,22 +257,61 @@ $(document).ready(function(){
         
     });
 });
+		
 /*request page money data */
 
 $(document).on('click', '.viewMoney', function (e) {
     e.preventDefault();
     var money_id = $(this).val();
-    alert(money_id);
+
 
     $.ajax({
         type: "GET",
         url: "http://localhost:3000/Admin/operations/viewmoney.php?money_id="+ money_id,
         success: function (response) {
-            var res = jQuery.parseJSON(response);
+            var res = $.parseJSON(response);
             if(res.status == 422) {
+             
                 $('#moneyRecieve').modal('show');
                 $('#money_name').val(res.data.money_name);
+                $('#money_province').val(res.data.money_province);
+                $('#money_street').val(res.data.money_street);
+                $('#money_region').val(res.data.money_region);
+                $('#money_contact').val(res.data.money_contact);
+                $('#money_email').val(res.data.money_email);
+                $('#money_date').val(res.data.money_date);
+                $('#money_amount').val(res.data.money_amount);
+                $('#money_note').val(res.data.money_note);
 
+ 
+               
+            }else if(res.status == 404){
+                alert(res.message);
+            }
+        }
+    });
+});
+
+/**reference number */
+$(document).on('click', '.viewRef', function (e) {
+    e.preventDefault();
+    var money_id = $(this).val();
+
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:3000/Admin/operations/viewmoney.php?money_id="+ money_id,
+        success: function (response) {
+            var res = $.parseJSON(response);
+            if(res.status == 422) {
+             
+                $('#referenceImg').modal('show');
+                
+          
+                $('#imageContainer').attr('src','../donors/ReferencePhoto/'+res.data.money_img);
+            
+            
+ 
                
             }else if(res.status == 404){
                 alert(res.message);

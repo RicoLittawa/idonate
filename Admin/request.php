@@ -106,7 +106,7 @@ session_start();
 						</li>
 					</ul>
 				</div>
-				<span><button class="adddata" type="button" ><a href="moneytable.php">Monetary Donors</a></button></span>
+				<span><button class="btn success" type="button" ><a href="moneytable.php">Monetary Donors</a></button></span>
 			</div>
 			
 			<div class="table-data">

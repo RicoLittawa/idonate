@@ -142,6 +142,7 @@ session_start();
 	foreach ($data as $row){
 	   $count = $count+ 1;
 	echo '<tr>
+	
 	<td>'.$row['money_name'].'</td>
 	<td>'.$row['money_province'].'</td>
 	<td>'.$row['money_street'].'</td>
@@ -149,14 +150,18 @@ session_start();
 	<td>'.$row['money_contact'].'</td>
 	<td>'.$row['money_email'].'</td>
 	<td>'.$row['money_date'].'</td>
-	<td><button type:"button" id="'.$count.'" name=" referenceNum" class="btn referenceNum" data-toggle="modal" data-target="#referenceImg" value="'.$row['money_id'].'">'.$row['money_reference'].'</button></td>
+	<td><button type:"button" id="'.$count.' "class="btn viewRef" data-toggle="modal" data-target="#referenceImg" value="'.$row['money_id'].'">'.$row['money_reference'].'</button></td>
 	<td>₱'.$row['money_amount'].'</td>
-	<td><button type:"button" id="'.$count.'" name="viewMoney" class="btn viewMoney" data-toggle="modal" data-target="#moneyRecieve" value="'.$row['money_id'].'"><i  style="color:green;" class="fa-solid fa-eye"></i></button></td>
+
+	<td><button type:"button" id="'.$count.'"class="btn viewMoney" data-toggle="modal" data-target="#moneyRecieve" value="'.$row['money_id'].'"><i  style="color:green;" class="fa-solid fa-eye"></i></button></td>
 	</tr>';
 	 }
 	 ?>
+	 
 	  </tbody>
   </table>
+
+
   <!--Money Form --->
   <div class="modal fade" id="moneyRecieve">
   <div class="modal-dialog">
@@ -168,9 +173,6 @@ session_start();
         <button type="button" class="close" data-dismiss="modal">&times;</button>
 		
       </div>
-	
-	
-
 	<form action="" id="">
 	<div class="modal-body">
 	<div class="row">
@@ -180,50 +182,45 @@ session_start();
 		<input id="money_name" name="money_name" class="form-control" readonly>
 	</div>
 	<div class="col">
-		<label for="money_province">City</label>
-		<input id="" name="" class="form-control" readonly>
+		<label for="money_province">Province</label>
+		<input id="money_province" name="money_province" class="form-control" readonly>
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
-		<label for="">Street</label>
-		<input id="" name="" class="form-control" readonly>
+		<label for="money_street">Street</label>
+		<input id="money_street" name="money_street" class="form-control" readonly>
 	</div>
 	<div class="col">
-		<label for="">Region</label>
-		<input id="" name="" class="form-control" readonly>
+		<label for="money_region">Region</label>
+		<input id="money_region" name="money_region" class="form-control" readonly>
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
-		<label for="">Email</label>
-		<input id="" name="" class="form-control" readonly>
+		<label for="money_contact">Contact Number</label>
+		<input id="money_contact" name="money_contact" class="form-control" readonly>
 	</div>
 	<div class="col">
-		<label for="">Date</label>
-		<input type="date" id="" name="" class="form-control" readonly >
+		<label for="money_email">Email</label>
+		<input id="money_email" name="money_email" class="form-control" readonly>
+		
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
-		<label for="">Category</label>
-		<input id="" name="" class="form-control" readonly>
+		<label for="money_date">Date</label>
+		<input type="date" id="money_date" name="money_date" class="form-control" readonly >
 	</div>
 	<div class="col">
-		<label for="">Variant</label>
-		<input id="" name="" class="form-control" readonly>
+		<label for="money_amount">Amount</label>
+		<input id="money_amount" name="money_amount" class="form-control" readonly>
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
-		<label for="">Quantity</label>
-		<input id="" name="" class="form-control" readonly>
-	</div>
-	</div>
-	<div class="row">
-	<div class="col">
-		<label for="">Donor's note</label>
-		<textarea class="form-control" name="" id="" cols="30" rows="10" disabled></textarea>
+		<label for="money_note">Donor's note</label>
+		<textarea class="form-control" name="money_note" id="money_note" cols="30" rows="10" disabled></textarea>
 		</div>
 	</div>
 	  </div>
@@ -241,15 +238,15 @@ session_start();
   </div>
 </div>
 
-
 <!-- Reference Photo--->
+
 <div class="modal fade" id="referenceImg">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Reference Number</h4>
+        <h4 class="modal-title">Reference/Transaction Reciept</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
 		
       </div>
@@ -258,10 +255,7 @@ session_start();
 
 	<form action="" id="">
 	<div class="modal-body">
-	
-	  
-
-      
+	<img src="" id="imageContainer" alt="" width="465px" height="100%" style="border-radius:10px;">
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 		<button type="submit" class="btn btn-success">Save</button>
@@ -273,7 +267,7 @@ session_start();
     </div>
   </div>
 </div>
-  			
+	
 			</div>
 		</main>
 	
@@ -285,12 +279,10 @@ session_start();
 	<script src="../Admin/scripts/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	
 	<script src="../Admin/scripts/function.js"></script>
 	<script src="../donors/js/sweetalert2.all.min.js"></script>	
 	
 
-	
 
 </body>
 </html>
