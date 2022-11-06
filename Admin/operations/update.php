@@ -7,7 +7,7 @@ if (isset($_POST['update_data'])){
 
   $Id= $_POST['donor_id'];
   $Fname= $_POST['donor_name'];
-  $City= $_POST['donor_city'];
+  $Province= $_POST['donor_province'];
   $Street= $_POST['donor_street'];
   $Region= $_POST['donor_region'];
   $Email = $_POST['donor_email'];
@@ -16,7 +16,7 @@ if (isset($_POST['update_data'])){
   $Variant= $_POST['donation_variant'];
   $Quantity= $_POST['donation_quantity'];
   $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^"; 
-  if(empty($Fname)||empty($City)||empty($Street)||empty($Region)||empty($Email)||empty($Date)||empty($Category)||empty($Variant)||empty($Quantity)){
+  if(empty($Fname)||empty($Province)||empty($Street)||empty($Region)||empty($Email)||empty($Date)||empty($Category)||empty($Variant)||empty($Quantity)){
     $res =[
       'status' => 404,
       'message' => 'All fields are required'
@@ -53,10 +53,10 @@ else if (!preg_match ($pattern, $Email) ){
 }
 else{
 
-    $sql ="UPDATE donation_items SET donor_name=?,donor_city=?,donor_street=?,donor_region=?,donor_email=?,donationDate=?,donation_category=?,
+    $sql ="UPDATE donation_items SET donor_name=?,donor_province=?,donor_street=?,donor_region=?,donor_email=?,donationDate=?,donation_category=?,
     donation_variant=?,donation_quantity=? WHERE donor_id=?";
     $stmt= $conn->prepare($sql);
-    $stmt->bind_param("sssssssssi", $Fname, $City,$Street,$Region, $Email,$Date,$Category,$Variant,$Quantity, $Id);
+    $stmt->bind_param("sssssssssi", $Fname, $Province,$Street,$Region, $Email,$Date,$Category,$Variant,$Quantity, $Id);
     $stmt->execute();
     $res =[
       'status' => 422,

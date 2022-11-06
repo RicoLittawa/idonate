@@ -66,8 +66,8 @@
       
             </div>
             <div class="col">
-            <label for="city">City</label>
-            <input class="form-control required" type="text" name="city" id="city">
+            <label for="province">Province</label>
+            <input class="form-control required" type="text" name="province" id="province">
             
             </div>
             </div>

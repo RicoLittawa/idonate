@@ -95,7 +95,7 @@ session_start();
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Requests</h1>
+					<h1>Money Donations</h1>
 					<ul class="breadcrumb">
 						<li>
 							<a href="#" style="font-size: 18px;">Dashboard</a>
@@ -112,7 +112,7 @@ session_start();
 			<div class="table-data">
 				<div class="add">
 					<div class="head">
-						<h3>Requests</h3>
+						<h3>Monetary Donors</h3>
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
 					</div>
@@ -120,11 +120,6 @@ session_start();
     <thead>
       <tr>
         <th>Donor Name</th>
-        <th>Province</th>
-        <th>Street</th>
-		<th>Region</th>
-		<th>Contact Number</th>
-		<th>Email</th>
 		<th>Date</th>
 		<th>Reference Number</th>
 		<th>Amount</th>
@@ -144,15 +139,9 @@ session_start();
 	echo '<tr>
 	
 	<td>'.$row['money_name'].'</td>
-	<td>'.$row['money_province'].'</td>
-	<td>'.$row['money_street'].'</td>
-	<td>'.$row['money_region'].'</td>
-	<td>'.$row['money_contact'].'</td>
-	<td>'.$row['money_email'].'</td>
 	<td>'.$row['money_date'].'</td>
 	<td><button type:"button" id="'.$count.' "class="btn viewRef" data-toggle="modal" data-target="#referenceImg" value="'.$row['money_id'].'">'.$row['money_reference'].'</button></td>
-	<td>₱'.$row['money_amount'].'</td>
-
+	<td>₱'.$row['money_amount'].'.00</td>
 	<td><button type:"button" id="'.$count.'"class="btn viewMoney" data-toggle="modal" data-target="#moneyRecieve" value="'.$row['money_id'].'"><i  style="color:green;" class="fa-solid fa-eye"></i></button></td>
 	</tr>';
 	 }
@@ -173,7 +162,7 @@ session_start();
         <button type="button" class="close" data-dismiss="modal">&times;</button>
 		
       </div>
-	<form action="" id="">
+	<form action="" id="saveMoneyDonations">
 	<div class="modal-body">
 	<div class="row">
 
@@ -224,11 +213,11 @@ session_start();
 		</div>
 	</div>
 	  </div>
-
-      
+	  <input id="money_category" type="hidden" name="money_category" class="form-control" value="Cash Donations" readonly>
+      <input id="money_variant" type="hidden"  name="money_variant" class="form-control" value="Money" readonly>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-success">Save</button>
+		<button type="submit" class="btn btn-success">Accept</button>
       </div>
 	</form>
 
@@ -258,7 +247,6 @@ session_start();
 	<img src="" id="imageContainer" alt="" width="465px" height="100%" style="border-radius:10px;">
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-success">Save</button>
       </div>
 	</form>
 

@@ -5,7 +5,7 @@
     if (isset($_POST["request_data"]))
     {
     $Fname=$_POST['fname'];
-    $City= $_POST['city'];
+    $Province= $_POST['province'];
     $Street= $_POST['street'];
     $Region=  $_POST['region'];
     $Email=  $_POST['email'];
@@ -15,7 +15,7 @@
     $Quantity= $_POST['quantity'];
     $DNote=$_POST['note'];
     $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";  
-    if (empty($Fname)||empty($City)||empty($Street)||empty($Region)||empty($Email)||empty($Date)||
+    if (empty($Fname)||empty($Province)||empty($Street)||empty($Region)||empty($Email)||empty($Date)||
     empty($Categ)||empty($Variant)||empty($Quantity)||empty($DNote)){
         $res =[
             'status' => 422,
@@ -52,7 +52,7 @@
         return false;
     }
     else{
-        $sql = "INSERT INTO set_request (req_name,req_city,req_street,req_region,req_email,req_date,req_category,req_variant,req_quantity,req_note)
+        $sql = "INSERT INTO set_request (req_name,req_province,req_street,req_region,req_email,req_date,req_category,req_variant,req_quantity,req_note)
         VALUES (?,?,?,?,?,?,?,?,?,?)" ;
        $stmt= mysqli_stmt_init($conn);
        if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -65,7 +65,7 @@
            return false;
        }
        else{
-           mysqli_stmt_bind_param($stmt,"ssssssssss",$Fname,$City,$Street,$Region,$Email,$Date,$Categ,$Variant,$Quantity,$DNote);
+           mysqli_stmt_bind_param($stmt,"ssssssssss",$Fname,$Province,$Street,$Region,$Email,$Date,$Categ,$Variant,$Quantity,$DNote);
            mysqli_stmt_execute($stmt);
            $res =[
                'status' => 200,

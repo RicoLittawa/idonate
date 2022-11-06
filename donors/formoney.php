@@ -66,7 +66,7 @@
               </div>
             <div class="col">
               <div class="form-group">
-                <label for="money_province">City</label>
+                <label for="money_province">Province</label>
                 <input class="form-control" type="text" name="money_province" id="money_province">
               </div>
             </div>

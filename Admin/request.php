@@ -163,8 +163,8 @@ session_start();
 		<input id="req_name" name="req_name" class="form-control" readonly>
 	</div>
 	<div class="col">
-		<label for="req_city">City</label>
-		<input id="req_city" name="req_city" class="form-control" readonly>
+		<label for="req_province">Province</label>
+		<input id="req_province" name="req_province" class="form-control" readonly>
 	</div>
 	</div>
 	<div class="row">
@@ -214,7 +214,7 @@ session_start();
       
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-success">Save</button>
+		<button type="submit" class="btn btn-success">Accept</button>
       </div>
 	</form>
 

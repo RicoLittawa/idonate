@@ -130,24 +130,24 @@ session_start();
           <div class="row">
             <div class="col">
             <label for="fname">Fullname</label>
-            <input class="form-control required error-fname" type="text" name="fname" id="fname" placeholder="">
+            <input class="form-control" type="text" name="fname" id="fname" placeholder="">
       
             </div>
             <div class="col">
-            <label for="city">City</label>
-            <input class="form-control required" type="text" name="city" id="city">
+            <label for="province">Province</label>
+            <input class="form-control" type="text" name="province" id="province">
             
             </div>
             </div>
             <div class="row">
             <div class="col">
             <label for="street">Street</label>
-            <input class="form-control required" type="text" name="street" id="street">
+            <input class="form-control" type="text" name="street" id="street">
             
             </div>
             <div class="col">
               <label for="region">Select Region</label>
-              <select class="custom-select required" name="region" id="region">
+              <select class="custom-select" name="region" id="region">
               <option value="default">Choose Region</option>
               <?php 
               include '../Admin/include/connection.php';
@@ -166,18 +166,18 @@ session_start();
             <div class="row">
             <div class="col">
             <label for="email">Email</label>
-            <input class="form-control required error-email" type="text" name="email" id="email">
+            <input class="form-control" type="text" name="email" id="email">
             
             </div>
             <div class="col">
             <label for="donation_date">Donation Date</label>
-            <input class="form-control required" type="date" name="donation_date" id="donation_date">
+            <input class="form-control" type="date" name="donation_date" id="donation_date">
             
             </div>
             </div>
             <div class="select_opt">
             <label for="category">Select Category</label>
-              <select class="custom-select required" name="category" id="category">
+              <select class="custom-select" name="category" id="category">
               <option value="default">Choose Category</option>
               <?php 
               include '../Admin/include/connection.php';
@@ -195,7 +195,7 @@ session_start();
             </div>
             <div class="select_opt">
             <label for="variant">Select Variant</label>
-              <select class="custom-select required" name="variant" id="variant">
+              <select class="custom-select" name="variant" id="variant">
               <option value="default">Choose Variant</option>
               <?php 
               include '../Admin/include/connection.php';
@@ -213,7 +213,7 @@ session_start();
           <div class="row">
             <div class="col">
               <label for="user-quantity">Quantity</label>
-              <input class="form-control required" type="text" name="quantity" id="quantity">
+              <input class="form-control" type="text" name="quantity" id="quantity">
             
             </div>
           </div>
@@ -250,12 +250,12 @@ session_start();
           <div class="row">
             <div class="col">
             <label for="fname">Fullname</label>
-            <input class="form-control required error-fname" type="text" name="donor_name" id="donor_name" placeholder="">
+            <input class="form-control" type="text" name="donor_name" id="donor_name" placeholder="">
       
             </div>
             <div class="col">
-            <label for="city">City</label>
-            <input class="form-control required" type="text" name="donor_city" id="donor_city">
+            <label for="province">Province</label>
+            <input class="form-control required" type="text" name="donor_province" id="donor_province">
             
             </div>
             </div>
@@ -361,14 +361,14 @@ session_start();
       <tr>
 	  	
         <th>Fullname</th>
-        <th>City</th>
+        <th>Province</th>
         <th>Street</th>
 		<th>Region</th>
 		<th>Email</th>
 		<th>Donation Date</th>
 		<th>Category</th>
 		<th>Variant</th>
-		<th>Quantity</th>
+		<th>Quantity/Amount</th>
 		<th>Operations</th>
 		<th>Certificate</th>
       </tr>
@@ -385,7 +385,7 @@ session_start();
 		$count = $count+ 1;
 		echo'<tr>
 		<td>'.$row['donor_name'].'</td>
-		<td>'.$row['donor_city'].'</td>
+		<td>'.$row['donor_province'].'</td>
 		<td>'.$row['donor_street'].'</td>
 		<td>'.$row['donor_region'].'</td>
 		<td>'.$row['donor_email'].'</td>

@@ -112,7 +112,7 @@ $(document).on('click', '.viewBtn', function (e) {
             if(res.status == 422) {
                $('#recieveReq').modal('show');
                $('#req_name').val(res.data.req_name);
-               $('#req_city').val(res.data.req_city);
+               $('#req_province').val(res.data.req_province);
                $('#req_street').val(res.data.req_street);
                $('#req_region').val(res.data.req_region);
                $('#req_email').val(res.data.req_email);
@@ -143,7 +143,7 @@ $(document).on('click', '.btnUpdate', function (e) {
             if(res.status == 200) {
                 $('#donor_id').val(res.data.donor_id);
                 $('#donor_name').val(res.data.donor_name);
-                $('#donor_city').val(res.data.donor_city);
+                $('#donor_province').val(res.data.donor_province);
                 $('#donor_street').val(res.data.donor_street);
                 $('#donor_region').val(res.data.donor_region);
                 $('#donor_email').val(res.data.donor_email);
@@ -196,7 +196,7 @@ $(document).ready(function(){
                                     'success'
                                   )
                                 $('#updateModal').modal('hide');
-                                
+                                $('#table_data').load(location.href+ " #table_data");
                               
                                
                             }
@@ -317,5 +317,51 @@ $(document).on('click', '.viewRef', function (e) {
                 alert(res.message);
             }
         }
+    });
+});
+
+
+/* save money donations*/
+$(document).ready(function(){
+    $("#saveMoneyDonations").submit(function(event){
+        event.preventDefault();
+        var id = $('.viewMoney').attr("id");
+        $('.viewMoney').attr('disabled', 'disabled');
+        var formData= new FormData(this);
+        formData.append("send_money",true)
+       
+        
+        
+            $.ajax({
+                url: 'http://localhost:3000/Admin/include/savemoney.php',
+                method: 'post',
+                data:formData,
+                        processData:false,
+                        contentType:false,  
+                        success: function(response) {
+                            var res= jQuery.parseJSON(response);
+                            if(res.status == 422)
+                            {
+                                Swal.fire('ERROR','','error')
+                            $('#msg').html("<p class='alert alert-danger'>"+ res.message); 
+                            
+                            
+                            }else if (res.status == 200)
+                            {
+                                Swal.fire(
+                                    'Success!',
+                                    res.message,
+                                    'success'
+                                  )
+                                $('#moneyRecieve').modal('hide');
+                                $('#'+id).addClass('btn-success')
+                                $('#'+id).html('Sent');
+                                $('.viewMoney'+id).attr('disabled', false);    
+                               
+                            }              
+                            
+                        }
+            });
+        
     });
 });
