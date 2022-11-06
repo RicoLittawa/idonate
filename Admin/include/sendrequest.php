@@ -4,7 +4,7 @@
     if (isset($_POST["send_data"]))
     {
         $Fname= $_POST['req_name'];
-        $City= $_POST['req_city'];
+        $Province= $_POST['req_province'];
         $Street = $_POST['req_street'];
         $Region = $_POST['req_region'];
         $Email= $_POST['req_email'];
@@ -13,7 +13,7 @@
         $Variant= $_POST['req_variant'];
         $Quantity= $_POST['req_quantity'];
         $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^"; 
-        if (empty($Fname)||empty($City)||empty($Street)||empty($Region)||empty($Email)||empty($Date)||empty($Category)||empty($Variant)||empty($Quantity))
+        if (empty($Fname)||empty($Province)||empty($Street)||empty($Region)||empty($Email)||empty($Date)||empty($Category)||empty($Variant)||empty($Quantity))
         {
             $res =[
                 'status' => 422,
@@ -49,7 +49,7 @@
             echo json_encode($res);
             return false;
         }else{
-            $sql = "INSERT INTO donation_items (donor_name,donor_city,donor_street,donor_region,donor_email,donationDate,donation_category,donation_variant,donation_quantity)
+            $sql = "INSERT INTO donation_items (donor_name,donor_province,donor_street,donor_region,donor_email,donationDate,donation_category,donation_variant,donation_quantity)
         VALUES (?,?,?,?,?,?,?,?,?)" ;
        $stmt= mysqli_stmt_init($conn);
        if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -62,7 +62,7 @@
         return false;
        }
    else{
-           mysqli_stmt_bind_param($stmt,"sssssssss",$Fname,$City,$Street,$Region,$Email,$Date,$Category,$Variant,$Quantity);
+           mysqli_stmt_bind_param($stmt,"sssssssss",$Fname,$Province,$Street,$Region,$Email,$Date,$Category,$Variant,$Quantity);
            mysqli_stmt_execute($stmt);
            $res =[
             'status' => 200,

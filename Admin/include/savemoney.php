@@ -40,7 +40,7 @@
             echo json_encode($res);
             return false;
         }else{
-            $sql = "INSERT INTO donation_items (donor_name,donor_city,donor_street,donor_region,donor_email,donationDate,donation_category,donation_variant,donation_quantity)
+            $sql = "INSERT INTO donation_items (donor_name,donor_province,donor_street,donor_region,donor_email,donationDate,donation_category,donation_variant,donation_quantity)
         VALUES (?,?,?,?,?,?,?,?,?)" ;
        $stmt= mysqli_stmt_init($conn);
        if(!mysqli_stmt_prepare($stmt,$sql)){
