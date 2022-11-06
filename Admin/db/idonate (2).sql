@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2022 at 10:51 PM
+-- Generation Time: Nov 06, 2022 at 11:12 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -86,7 +86,9 @@ INSERT INTO `donation_items` (`donor_id`, `donor_name`, `donor_province`, `donor
 (53, 'Justin Gaethji', 'Cebu', 'Cebu', 'rico.littawa@g.batstate-u.edu.ph', 'Region VII – Central Visayas', '2022-11-06', 'Cash Donations', 'Money', 1500),
 (54, 'Conor Mc Gregor', 'Mindoro', 'Mindoro Sample Street', 'jeffersondetorres@gmail.com', 'MIMAROPA Region', '2022-11-06', 'Cash Donations', 'Money', 1000),
 (55, 'Conor Mc Gregor', 'Mindoro', 'Mindoro Sample Street', 'jeffersondetorres@gmail.com', 'MIMAROPA Region', '2022-11-06', 'Cash Donations', 'Money', 1000),
-(56, 'deser pereda', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', 'decierclyn.pereda@g.batstate-u.edu.ph', 'Region IV‑A – CALABARZON', '2022-11-06', 'Nebulizer kits', 'Per-pieces', 56);
+(56, 'deser pereda', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', 'decierclyn.pereda@g.batstate-u.edu.ph', 'Region IV‑A – CALABARZON', '2022-11-06', 'Nebulizer kits', 'Per-pieces', 56),
+(57, 'deser', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', 'decierclyn.pereda@g.batstate-u.edu.ph', 'Region IV‑A – CALABARZON', '2022-11-06', 'Clothes', 'Per-box', 5),
+(58, 'teslaan', 'batangas', 'Balagtas Sitio 7 Tramo Pulo', 'try@gmail.com', 'Region IV‑A – CALABARZON', '2022-11-05', 'Cash Donations', 'Money', 121);
 
 -- --------------------------------------------------------
 
@@ -296,7 +298,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `donation_items`
 --
 ALTER TABLE `donation_items`
-  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `monetary_donations`
