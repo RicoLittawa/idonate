@@ -14,7 +14,7 @@ session_start()?>
     <link rel="stylesheet" href="css/donors.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
         padding-right: 0px !important;
     }</style>
@@ -61,16 +61,22 @@ session_start()?>
           <div class="dashedcircle"></div>
       </div>
         
+    <div class ="container">
+      <div class="card">
+        <div class="imgBx">
+          <a href="#">
+            <img src="request.png">
+          </a>
+          <h2>Set Request </h2>
+          <p><br>Go to "Set Request" and create
+          a form, for you and us to have detailed 
+          information about you for our
+          acknowledgement after the
+          successfull transactions with you. </p>
         </div>
-        <div class="container mt-3">
-
-            <h3>card only</h3>
-        <div id="mySlideshow1" class="carousel slide" data-ride="carousel">
-              
-        <div class="carousel-inner">
-            <img class="d-block w-100" src="over.jpsg" alt="view" height="1500">
       </div>
-  
+  </div>
+
      <div class="site-footer" id="footer">
       <div class="container">
         <div class="row">
