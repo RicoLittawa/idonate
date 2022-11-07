@@ -77,6 +77,30 @@ session_start()?>
       </div>
   </div>
 
+  <div class ="container">
+      <div class="card">
+        <div class="imgBx">
+          <a href="#">
+            <img src="./img/fillup.png">
+          </a>
+          <h2>Set Request </h2>
+          <p><br>Filled up all the necessary data to have a profile. </p>
+        </div>
+      </div>
+  </div>
+
+  <div class ="container">
+      <div class="card">
+        <div class="imgBx">
+          <a href="#">
+            <img src="./img/submit.jpg">
+          </a>
+          <h2>Set Request </h2>
+          <p><br>Submit and wait for the approval of the admin. </p>
+        </div>
+      </div>
+  </div>
+
      <div class="site-footer" id="footer">
       <div class="container">
         <div class="row">
