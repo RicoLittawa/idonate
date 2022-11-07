@@ -23,7 +23,7 @@ session_start();
 	<section id="sidebar">
 		<a href="#" class="brand">
 			
-			<span ><img class="img" src="/Admin/img/logo.png" alt=""></span>
+			<span ><img class="img" src="img/logo.png" alt=""></span>
 		</a>
 		<ul class="side-menu top">
 			<li  class="active">
