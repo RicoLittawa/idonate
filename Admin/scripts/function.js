@@ -103,10 +103,9 @@ $(document).on('click', '.btnDel', function (e) {
 $(document).on('click', '.viewBtn', function (e) {
     e.preventDefault();
     var request_id = $(this).val();
-
     $.ajax({
         type: "GET",
-        url: "http://localhost:3000/Admin/operations/view.php?request_id="+ request_id,
+        url: "operations/view.php?request_id="+ request_id,
         success: function (response) {
             var res = jQuery.parseJSON(response);
             if(res.status == 422) {
