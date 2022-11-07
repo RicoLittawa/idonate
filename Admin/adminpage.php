@@ -145,21 +145,11 @@ session_start();
 
 				</div>
 			</div>
-			<div class="table-data">
-			<div id="dashboard_div">
-      <!--Divs that will hold each control and chart-->
-      <div id="filter_div"></div>
-      <div id="chart_div"></div>
-    </div>
-	</div>
+			
 			<div class="table-data">
 				<div class="add">
 					<div class="head">
-						<h3>Add Donations</h3>
-						
-						<i class='bx bx-search' ></i>	
-						<i class='bx bx-filter' ></i>
-						
+						<iframe title="idonate" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=6bb64495-1d2a-48bc-8b13-1634ff62a794&autoAuth=true&ctid=3846e0dc-10ee-4999-9125-5ca8d87e2931" frameborder="0" allowFullScreen="true"></iframe>
 
 					</div>
 
@@ -175,65 +165,7 @@ session_start();
 	<script src="../Admin/scripts/jQuery.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-
-      // Load the Visualization API and the controls package.
-      google.charts.load('current', {'packages':['corechart', 'controls']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawDashboard);
-
-      // Callback that creates and populates a data table,
-      // instantiates a dashboard, a range slider and a pie chart,
-      // passes in the data and draws it.
-      function drawDashboard() {
-
-        // Create our data table.
-        var data = google.visualization.arrayToDataTable([
-          ['Name', 'Donuts eaten'],
-          ['Michael' , 5],
-          ['Elisa', 7],
-          ['Robert', 3],
-          ['John', 2],
-          ['Jessica', 6],
-          ['Aaron', 1],
-          ['Margareth', 8]
-        ]);
-
-        // Create a dashboard.
-        var dashboard = new google.visualization.Dashboard(
-            document.getElementById('dashboard_div'));
-
-        // Create a range slider, passing some options
-        var donutRangeSlider = new google.visualization.ControlWrapper({
-          'controlType': 'NumberRangeFilter',
-          'containerId': 'filter_div',
-          'options': {
-            'filterColumnLabel': 'Donuts eaten'
-          }
-        });
-
-        // Create a pie chart, passing some options
-        var pieChart = new google.visualization.ChartWrapper({
-          'chartType': 'PieChart',
-          'containerId': 'chart_div',
-          'options': {
-            'width': 300,
-            'height': 300,
-            'pieSliceText': 'value',
-            'legend': 'right'
-          }
-        });
-
-        // Establish dependencies, declaring that 'filter' drives 'pieChart',
-        // so that the pie chart will only display entries that are let through
-        // given the chosen slider range.
-        dashboard.bind(donutRangeSlider, pieChart);
-
-        // Draw the dashboard.
-        dashboard.draw(data);
-      }
-    </script>
+    
 	
 </body>
 </html>

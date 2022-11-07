@@ -405,6 +405,12 @@ body {
 	padding: 24px;
 	overflow-x: auto;
 }
+#content main .dashboard_div {
+	border-radius: 20px;
+	background: var(--light);
+	padding: 24px;
+	overflow-x: auto;
+}
 #content main .table-data .head {
 	display: flex;
 	align-items: center;
