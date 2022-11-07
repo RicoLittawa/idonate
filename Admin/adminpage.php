@@ -95,15 +95,7 @@ session_start();
 			<div class="head-title">
 				<div class="left">
 					<h1>Dashboard</h1>
-					<ul class="breadcrumb">
-						<li>
-							<a href="#" style="font-size: 18px;">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="active" href="#" style="font-size: 18px;">Home</a>
-						</li>
-					</ul>
+					
 				</div>
 				<a href="#" class="btn-download">
 					<i class='bx bxs-cloud-download' ></i>
@@ -149,8 +141,8 @@ session_start();
 			<div class="table-data">
 				<div class="add">
 					<div class="head">
-						<iframe title="idonate" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=6bb64495-1d2a-48bc-8b13-1634ff62a794&autoAuth=true&ctid=3846e0dc-10ee-4999-9125-5ca8d87e2931" frameborder="0" allowFullScreen="true"></iframe>
-
+						
+							<iframe title="idonate - Page 1" width="1024" height="1060" src="https://app.powerbi.com/view?r=eyJrIjoiMDNjMGUyZWYtMWU2ZS00ODc0LWIxMTQtOWM0ZmRhYjU0MTRmIiwidCI6IjYxMTExODkxLTNkYzgtNDVmZi1hZjcwLWZjMGFmM2NjYjBmOCIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
 					</div>
 
 					

@@ -303,6 +303,7 @@ body {
 	justify-content: space-between;
 	grid-gap: 16px;
 	flex-wrap: wrap;
+	
 }
 #content main .head-title .left h1 {
 	font-size: 50px;
@@ -317,6 +318,8 @@ body {
 }
 #content main .head-title .left .breadcrumb li {
 	color: var(--dark);
+	
+	
 }
 #content main .head-title .left .breadcrumb li a {
 	color: var(--dark-grey);
@@ -401,16 +404,11 @@ body {
 }
 #content main .table-data > div {
 	border-radius: 20px;
-	background: var(--light);
+	background: white;
 	padding: 24px;
 	overflow-x: auto;
 }
-#content main .dashboard_div {
-	border-radius: 20px;
-	background: var(--light);
-	padding: 24px;
-	overflow-x: auto;
-}
+
 #content main .table-data .head {
 	display: flex;
 	align-items: center;
