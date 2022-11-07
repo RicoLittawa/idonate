@@ -65,7 +65,7 @@ session_start()?>
       <div class="card">
         <div class="imgBx">
           <a href="#">
-            <img src="request.png">
+            <img src="./image/request.png">
           </a>
           <h2>Set Request </h2>
           <p><br>Go to "Set Request" and create
