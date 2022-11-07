@@ -68,7 +68,7 @@ session_start()?>
         <div id="mySlideshow1" class="carousel slide" data-ride="carousel">
               
         <div class="carousel-inner">
-            <img class="d-block w-100" src="trans.png" alt="view" height="1500">
+            <img class="d-block w-100" src="over.jpsg" alt="view" height="1500">
       </div>
   
      <div class="site-footer" id="footer">
