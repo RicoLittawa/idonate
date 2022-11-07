@@ -40,6 +40,7 @@ $(document).ready(function(){
                                 $('#add').modal('hide');
                                 $('#add-form')[0].reset();
                                 $('#table_data').load(location.href+ " #table_data");
+                                
                                
                             }
                            
