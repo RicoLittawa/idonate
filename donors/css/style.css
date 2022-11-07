@@ -1,0 +1,37 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'Alfa Slab One', cursive;
+}
+body{
+    display:flex;
+    justify-content: center;
+    background: #a8a8a8a8;
+}
+
+.container{
+
+    position: relative;
+    width:1100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 30px;
+    margin-top: 8%;
+}
+
+.container{
+    width: 308px;
+    position: relative;
+    height: 400px;
+    background: #f0f0f0;
+    marign:30px 10px;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0.5px 10px #e6e6e6;
+    transition: 0.3s ease-in-out;
+    margin-top: 5%;
+}
