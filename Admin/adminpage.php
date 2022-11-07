@@ -113,6 +113,7 @@ session_start();
 
 			<ul class="box-info">
 				<li>
+
 					<i class='bx bxs-calendar-check' ></i>
 					<span class="text">
 						
@@ -141,7 +142,10 @@ session_start();
 						
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
+						<iframe title="idonate" width="1280" height="721" src="https://app.powerbi.com/reportEmbed?reportId=e866aa67-9182-4850-aef0-aad25dc50f90&autoAuth=true&ctid=3846e0dc-10ee-4999-9125-5ca8d87e2931" frameborder="0" allowFullScreen="true"></iframe>
+
 					</div>
+
 					
 			</div>
 		</main>
@@ -152,5 +156,8 @@ session_start();
 
 	<script src="../Admin/scripts/sidemenu.js"></script>
 	<script src="../Admin/scripts/jQuery.js"></script>
+	<script>
+		
+	</script>
 </body>
 </html>
