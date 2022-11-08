@@ -14,7 +14,7 @@ session_start()?>
     <link rel="stylesheet" href="css/donors.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <link rel="stylesheet" href="howitworks.css">
+    <link rel="stylesheet" href="css/howitworks.css">
     <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
         padding-right: 0px !important;
     }</style>
@@ -49,8 +49,19 @@ session_start()?>
   </div>
 </nav>
 
-
-<div class="container-fluid">
+<div class="container" id="container">
+  <div class="circles">
+        <div class="dot" >
+           <div class="photos">
+            <img class="photo1" src="img/water.png" alt=""> 
+            <img class="photo2" src="img/money.png" alt="">
+            <img class="photo3" src="img/food.png" alt="">
+            <img class="photo4" src="img/clothes.png" alt="">
+            </div>
+          <div class="dashedcircle"></div>
+      </div>
+        
+    <div class ="container">
       <div class="card">
         <div class="imgBx">
           <a href="#">
@@ -64,7 +75,9 @@ session_start()?>
           successfull transactions with you. </p>
         </div>
       </div>
+  </div>
 
+  <div class ="container">
       <div class="card">
         <div class="imgBx">
           <a href="#">
@@ -74,9 +87,9 @@ session_start()?>
           <p><br>Filled up all the necessary data to have a profile. </p>
         </div>
       </div>
+  </div>
 
-
-
+  <div class ="container">
       <div class="card">
         <div class="imgBx">
           <a href="#">
@@ -85,9 +98,10 @@ session_start()?>
           <h2>Set Request </h2>
           <p><br>Submit and wait for the approval of the admin. </p>
         </div>
-    
+      </div>
   </div>
-  </div>
+
+
      <div class="site-footer" id="footer">
       <div class="container">
         <div class="row">
