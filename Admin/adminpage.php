@@ -13,7 +13,7 @@ session_start();
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
 	<link rel="stylesheet" href="../Admin/css/landing.css">
-
+	
 	<title>Dashboard</title>
 </head>
 <body>
@@ -95,15 +95,7 @@ session_start();
 			<div class="head-title">
 				<div class="left">
 					<h1>Dashboard</h1>
-					<ul class="breadcrumb">
-						<li>
-							<a href="#" style="font-size: 18px;">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="active" href="#" style="font-size: 18px;">Home</a>
-						</li>
-					</ul>
+					
 				</div>
 				<a href="#" class="btn-download">
 					<i class='bx bxs-cloud-download' ></i>
@@ -113,37 +105,44 @@ session_start();
 
 			<ul class="box-info">
 				<li>
-
-					<i class='bx bxs-calendar-check' ></i>
-					<span class="text">
-						
-					</span>
-				</li>
-				<li>
-					<i class='bx bxs-group' ></i>
-					<span class="text">
-					
+				<i class='bx bxs-group' ></i>
+				<span class="text">
+				<?php
+				include '../Admin/include/connection.php'; 
+			 $sql="select count('1') from donation_items";
+			 $result=mysqli_query($conn,$sql);
+			 $row=mysqli_fetch_array($result);
+			 echo "<h3 style=font-size:45px>$row[0]</h3>";
+			 mysqli_close($conn); ?>
+		
+						<h4 style="color: grey;">Donor</h4>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-dollar-circle' ></i>
+
 					<span class="text">
-					
+					<?php
+				include '../Admin/include/connection.php'; 
+			 $sql="select sum(money_amount) from monetary_donations";
+			 $result=mysqli_query($conn,$sql);
+			 $row=mysqli_fetch_array($result);
+			 echo "<h3 style=font-size:45px>₱ $row[0]</h3>";
+			 mysqli_close($conn); ?>
+		
+					<h4 style="color: grey;">Funds</h4>
 					</span>
 				</li>
 			</ul>
 
 				</div>
 			</div>
+			
 			<div class="table-data">
-				<div class="add">
+				<div class="add"></div>
 					<div class="head">
-						<h3>Add Donations</h3>
 						
-						<i class='bx bx-search' ></i>	
-						<i class='bx bx-filter' ></i>
-						<iframe title="idonate" width="1280" height="721" src="https://app.powerbi.com/reportEmbed?reportId=e866aa67-9182-4850-aef0-aad25dc50f90&autoAuth=true&ctid=3846e0dc-10ee-4999-9125-5ca8d87e2931" frameborder="0" allowFullScreen="true"></iframe>
-
+							<iframe title="idonate - Page 1" width="1024" height="1060" src="https://app.powerbi.com/view?r=eyJrIjoiMDNjMGUyZWYtMWU2ZS00ODc0LWIxMTQtOWM0ZmRhYjU0MTRmIiwidCI6IjYxMTExODkxLTNkYzgtNDVmZi1hZjcwLWZjMGFmM2NjYjBmOCIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
 					</div>
 
 					
@@ -156,8 +155,9 @@ session_start();
 
 	<script src="../Admin/scripts/sidemenu.js"></script>
 	<script src="../Admin/scripts/jQuery.js"></script>
-	<script>
-		
-	</script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+	
 </body>
 </html>
