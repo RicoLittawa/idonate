@@ -48,8 +48,8 @@ session_start();
 			</li>
 			<li>
 				<a href="#">
-					<i class='bx bxs-chat' ></i>
-					<span class="text">Announcement</span>
+				<i class="fa-solid fa-folder"></i>
+					<span class="text">Archive</span>
 				</a>
 			</li>
 		</ul>

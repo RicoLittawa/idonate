@@ -2,6 +2,29 @@
 session_start();
 
 	?>
+  <?php 
+  include '../Admin/include/connection.php';
+  function fill_category_select_box($conn)
+  {
+    $output= '';
+    $sql= "SELECT * From category order by categ_id ASC";
+    $result = mysqli_query($conn,$sql);
+    foreach($result as $row){
+      $output .= '<option value="'.$row['category'].'">"'.$row['category'].'"</option>';
+    }
+    return $output;
+  }
+  
+  function fill_variant_select_box($conn){
+    $output= '';
+    $sql= "SELECT * From variant order by variant_id ASC";
+    $result = mysqli_query($conn,$sql);
+    foreach($result as $row){
+      $output .= '<option value="'.$row['variant'].'">"'.$row['variant'].'"</option>';
+    }
+    return $output;
+  }
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +72,7 @@ session_start();
 			<li>
 				<a href="#">
 					<i class='bx bxs-chat' ></i>
-					<span class="text">Announcement</span>
+					<span class="text">Archive</span>
 				</a>
 			</li>
 		</ul>
@@ -79,13 +102,7 @@ session_start();
 			<i class='bx bx-menu' ></i>
 			<form action="#">
 				<div class="form-input">
-					<input type="text" placeholder="Search..." name="search" value="<?php 
-            include '../Admin/include/connection.php';
-            if(isset($_GET['search'])){
-              echo $_GET['search'];
-            }
-          
-          ?>">
+					<input type="text" placeholder="Search..." name="search" >
 					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
 				</div>
 			</form>
@@ -130,10 +147,11 @@ session_start();
 
       <!-- Modal body -->
      
-	  <form class="validate-form" id="add-form" method="POST">
+	  <form id="add-form" method="POST">
 		<div class="modal-body">
 		<span id="msg" class="text-center"></span>
-		
+  
+		<input type="text"  value="" readonly>
           <div class="row">
             <div class="col">
             <label for="fname">Fullname</label>
@@ -182,49 +200,31 @@ session_start();
             
             </div>
             </div>
-            <div class="select_opt">
-            <label for="category">Select Category</label>
-              <select class="custom-select" name="category" id="category">
-              <option value="default">Choose Category</option>
-              <?php 
-              include '../Admin/include/connection.php';
-                $sql = "SELECT * FROM category";
-                $result = mysqli_query($conn,$sql);
-                while($row =mysqli_fetch_array($result))
-                {
-                  echo '<option value="'.$row['category'].'">'.$row['category'].'</option>';
-                }
-                
-              ?>
-            </select>
-            
-                
-            </div>
-            <div class="select_opt">
-            <label for="variant">Select Variant</label>
-              <select class="custom-select" name="variant" id="variant">
-              <option value="default">Choose Variant</option>
-              <?php 
-              include '../Admin/include/connection.php';
-                $sql = "SELECT * FROM variant";
-                $result = mysqli_query($conn,$sql);
-                while($row =mysqli_fetch_array($result))
-                {
-                  echo '<option value="'.$row['variant'].'">'.$row['variant'].'</option>';
-                }
-                
-              ?>
-            </select>
-             
-            </div>
           <div class="row">
+          
             <div class="col">
               <label for="user-quantity">Quantity</label>
               <input class="form-control" type="text" name="quantity" id="quantity">
             
+           
             </div>
-          </div>
-					  
+            </div>
+            <div class="row">
+                        <div class="col">
+                        <button type="button" name="btn_additem" class="btn btn-primary" id="btn_additem">Add  
+                          </button>
+                        </div>
+                      </div>
+                 
+
+         
+          
+
+           
+           
+
+
+					  </div>
       </div>
 
       <!-- Modal footer -->
@@ -378,8 +378,9 @@ session_start();
     <thead>
       <tr>
         <th><input type="checkbox" name="" id="selectAll" class="col"></th>
+        <th>Reference Number</th>
         <th>Fullname</th>
-
+      
         <th>Donation Date</th>
         <th>Category</th>
         <th>Quantity</th>
@@ -399,7 +400,8 @@ session_start();
 		$count = $count+ 1;
 		echo'<tr>
     <td><input type="checkbox" name="single_select" class="single_select col" data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'"></input></td>
-		<td>'.$row['donor_name'].'</td>
+		<td>1234567</td>
+    <td>'.$row['donor_name'].'</td>
 		<td>'.$row['donationDate'].'</td>
 		<td>'.$row['donation_category'].'</td>
 		<td>'.$row['donation_quantity'].'</td>
@@ -527,12 +529,37 @@ $(document).ready(function(){
     });
 });
 </script>
+
+
 <script>
   $(document).ready(function(){
-    $('#refresh').click(function(){
-      location.reload();
+    var count= 0;
+    function add_input_field(count){
+      var html='';
+      html += '<div class row>';
+      html+= '<select class="form-control" name="category[]" id="category"><option value="">Choose Category</option><?php echo fill_category_select_box($conn); ?></select>';
+      html += ' <select class="form-control" name="variant[]" id="variant"><option value="">Choose Variant</option><?php echo fill_variant_select_box($conn); ?></select>';
+      html += '<input class="form-control" type="text" name="quantity[]" id="quantity">';
+      html += '</div>';
+      var remove_button='';
+      if(count>0)
+      {
+        remove_button='<button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button>'
+      }
+      html+='<span>'+remove_button+'</span>';
+      return html;
+    }
+    $('#add-form').append(add_input_field(0));
+    $(document).on('click', '#btn_additem',function(){
+      count++;
+      $('#add-form').append(add_input_field(count));
+
+    });
+    $(document).on('click','#remove', function(){
+      $(this).closest('div').remove();
     });
   });
 </script>
+
 </body>
 </html>
