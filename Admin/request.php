@@ -14,6 +14,7 @@ session_start();
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
 	<link rel="stylesheet" href="../Admin/css/donations.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
 	<title>Requests</title>
 </head>
@@ -106,7 +107,6 @@ session_start();
 						</li>
 					</ul>
 				</div>
-				<span><button class="btn success" type="button" ><a href="moneytable.php">Monetary Donors</a></button></span>
 			</div>
 			
 			<div class="table-data">
@@ -116,7 +116,7 @@ session_start();
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
 					</div>
-					<table class="table table-striped">
+					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
     <thead>
       <tr>
         <th>Donor Name</th>
@@ -137,7 +137,9 @@ session_start();
 		<td>'.$row['req_name'].'</td>
 		<td>'.$row['req_date'].'</td>
 		<td><button type:"button" id="'.$count.'" name="viewBtn" class="btn viewBtn" data-toggle="modal" data-target="#recieveReq" value="'.$row['request_id'].'"><i  style="color:green;" class="fa-solid fa-eye "></i></button></td>
-		</tr>';
+		
+		</tr>'
+		;
 	 }
 	 ?>
 	  </tbody>
@@ -160,53 +162,53 @@ session_start();
 	<div class="row">
 	<div class="col">
 		<label for="req_name">Fullname</label>
-		<input id="req_name" name="req_name" class="form-control" readonly>
+		<input id="req_name" name="req_name" class="form-control" >
 	</div>
 	<div class="col">
 		<label for="req_province">Province</label>
-		<input id="req_province" name="req_province" class="form-control" readonly>
+		<input id="req_province" name="req_province" class="form-control" >
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
 		<label for="req_street">Street</label>
-		<input id="req_street" name="req_street" class="form-control" readonly>
+		<input id="req_street" name="req_street" class="form-control" >
 	</div>
 	<div class="col">
 		<label for="req_region">Region</label>
-		<input id="req_region" name="req_region" class="form-control" readonly>
+		<input id="req_region" name="req_region" class="form-control" >
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
 		<label for="req_email">Email</label>
-		<input id="req_email" name="req_email" class="form-control" readonly>
+		<input id="req_email" name="req_email" class="form-control" >
 	</div>
 	<div class="col">
 		<label for="req_date">Date</label>
-		<input type="date" id="req_date" name="req_date" class="form-control" readonly >
+		<input type="date" id="req_date" name="req_date" class="form-control" >
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
 		<label for="req_category">Category</label>
-		<input id="req_category" name="req_category" class="form-control" readonly>
+		<input id="req_category" name="req_category" class="form-control" >
 	</div>
 	<div class="col">
 		<label for="req_variant">Variant</label>
-		<input id="req_variant" name="req_variant" class="form-control" readonly>
+		<input id="req_variant" name="req_variant" class="form-control" >
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
 		<label for="req_quantity">Quantity</label>
-		<input id="req_quantity" name="req_quantity" class="form-control" readonly>
+		<input id="req_quantity" name="req_quantity" class="form-control" >
 	</div>
 	</div>
 	<div class="row">
 	<div class="col">
 		<label for="req_note">Donor's note</label>
-		<textarea class="form-control" name="req_note" id="req_note" cols="30" rows="10" disabled></textarea>
+		<textarea class="form-control" name="req_note" id="req_note" cols="30" rows="10" ></textarea>
 		</div>
 	</div>
 	  </div>
@@ -215,6 +217,8 @@ session_start();
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 		<button type="submit" class="btn btn-success">Accept</button>
+		
+
       </div>
 	</form>
 
@@ -238,6 +242,24 @@ session_start();
 	
 	<script src="../Admin/scripts/function.js"></script>
 	<script src="../donors/js/sweetalert2.all.min.js"></script>	
+	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+	  <script>
+	  $(document).ready(function () {
+    $('#table_data').DataTable({
+      "pagingType":"full_numbers",
+      "lengthMenu":[
+      [10,25,50,-1],
+      [10,25,50,"All"]],
+      responsive:true,
+      language:{
+        search:"_INPUT_",
+        searchPlaceholder: "Search Records",
+      }
+
+    });
+});
+</script>
 	
 
 	

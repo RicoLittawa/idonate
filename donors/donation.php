@@ -39,8 +39,17 @@ session_start()?>
         <li class="nav-item">
           <a class="nav-link" href="">What is needed?</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="requestform.php">Create request<i style="color: #83f28f;" class="fa-solid fa-plus"></i></a>
+        <li class="nav-item dropdown">
+          
+       
+  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+    Create
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="donations.php">Donations</a>
+    <a class="dropdown-item" href="moneytable.php">Money Donors</a>
+
+</div>
         </li>
       </ul>
   

@@ -139,12 +139,11 @@ session_start();
 			</div>
 			
 			<div class="table-data">
-				<div class="add"></div>
-					<div class="head">
-						
-							<iframe title="idonate - Page 1" width="1024" height="1060" src="https://app.powerbi.com/view?r=eyJrIjoiMDNjMGUyZWYtMWU2ZS00ODc0LWIxMTQtOWM0ZmRhYjU0MTRmIiwidCI6IjYxMTExODkxLTNkYzgtNDVmZi1hZjcwLWZjMGFmM2NjYjBmOCIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
-					</div>
 
+				<div class="add">
+				<iframe title="idonate" width="970" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMDNjMGUyZWYtMWU2ZS00ODc0LWIxMTQtOWM0ZmRhYjU0MTRmIiwidCI6IjYxMTExODkxLTNkYzgtNDVmZi1hZjcwLWZjMGFmM2NjYjBmOCIsImMiOjEwfQ%3D%3D&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>	
+				</div>
+					
 					
 			</div>
 		</main>

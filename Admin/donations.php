@@ -14,6 +14,7 @@ session_start();
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
 	<link rel="stylesheet" href="../Admin/css/donations.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
 	<title>Donations</title>
 </head>
@@ -78,7 +79,13 @@ session_start();
 			<i class='bx bx-menu' ></i>
 			<form action="#">
 				<div class="form-input">
-					<input type="search" placeholder="Search...">
+					<input type="text" placeholder="Search..." name="search" value="<?php 
+            include '../Admin/include/connection.php';
+            if(isset($_GET['search'])){
+              echo $_GET['search'];
+            }
+          
+          ?>">
 					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
 				</div>
 			</form>
@@ -351,26 +358,33 @@ session_start();
 				<div class="add">
 					<div class="head">
 						<h3>Donations</h3>
-						<i class='bx bx-search' ></i>	
-						<i class='bx bx-filter' ></i>
+
+					<button class="btn" id="refresh"><i class="fa-solid fa-rotate-right"></i></button>
+						
+            <div class="dropdown">
+     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+       Select Table
+      </button>
+     <div class="dropdown-menu">
+        <a class="dropdown-item" href="donations.php">Donations</a>
+        <a class="dropdown-item" href="moneytable.php">Money Donors</a>
+      
+  </div>
+</div>
 					</div>
 					
-					<table class="table table-striped" id="table_data">
-					
+					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
+			
     <thead>
       <tr>
-	  	
+        <th><input type="checkbox" name="" id="selectAll" class="col"></th>
         <th>Fullname</th>
-        <th>Province</th>
-        <th>Street</th>
-		<th>Region</th>
-		<th>Email</th>
-		<th>Donation Date</th>
-		<th>Category</th>
-		<th>Variant</th>
-		<th>Quantity/Amount</th>
-		<th>Operations</th>
-		<th>Certificate</th>
+
+        <th>Donation Date</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Operations</th>
+        <th>Certificate</th>
       </tr>
     </thead>
     <tbody>
@@ -384,19 +398,15 @@ session_start();
 	 foreach ($data as $row){
 		$count = $count+ 1;
 		echo'<tr>
+    <td><input type="checkbox" name="single_select" class="single_select col" data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'"></input></td>
 		<td>'.$row['donor_name'].'</td>
-		<td>'.$row['donor_province'].'</td>
-		<td>'.$row['donor_street'].'</td>
-		<td>'.$row['donor_region'].'</td>
-		<td>'.$row['donor_email'].'</td>
 		<td>'.$row['donationDate'].'</td>
 		<td>'.$row['donation_category'].'</td>
-		<td>'.$row['donation_variant'].'</td>
-		<td class="text-center">'.$row['donation_quantity'].'</td>
+		<td>'.$row['donation_quantity'].'</td>
 		<td>
 		<button type="button" class="btnDel btn col" value="'.$row['donor_id'].'"><i class="fa-solid fa-trash " style="color: red;"></i></button>
 		<button type="button" data-toggle="modal" data-target="updateModal"  class="btnUpdate btn col" value="'.$row['donor_id'].'"><i class="fa-solid fa-pen-to-square" style="color: green;"></i></button>
-		<input type="checkbox" name="single_select" class="single_select col" data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'"></input></td>
+		</td>
 		<td><button type="button" class="btn btn-info email_button" name="email_button" id="'.$count.'"
 		data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'" data-action="single">Send</button>
     </td>
@@ -410,7 +420,7 @@ session_start();
 			
     </tbody>
 	<tr>
-		<td colspan="10"></td>
+		<td colspan="6"></td>
 		<td>
      <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
 	</tr>
@@ -432,10 +442,14 @@ session_start();
 	
 	<script src="../Admin/scripts/function.js"></script>
 	<script src="../donors/js/sweetalert2.all.min.js"></script>	
+  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+  <!--Send certificate --->
   <script>
 $(document).ready(function(){
  $('.email_button').click(function(){
-  $(this).attr('disabled', 'disabled');
+  $(this).attr('disabled', true);
+  
   var id = $(this).attr("id");
   var action = $(this).data("action");
   var email_data = [];
@@ -463,7 +477,7 @@ $(document).ready(function(){
   }
   
   $.ajax({
-   url:"http://localhost:3000/Admin/include/sendcerti.php",
+   url:"include/sendcerti.php",
    method:"POST",
    data:{email_data:email_data},
    beforeSend:function(){
@@ -482,13 +496,43 @@ $(document).ready(function(){
     {
      $('#'+id).text(data);
     }
-    $('.email_button'+id).attr('disabled', false);
+    $('.email_button='+id).attr('disabled', false);
     
    }
    
   });
  });
 });
+</script>
+  <!--Select all checkbox --->
+<script>
+ $("#selectAll").click(function(){
+        $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+
+});
+</script>
+<script>
+  $(document).ready(function () {
+    $('#table_data').DataTable({
+      "pagingType":"full_numbers",
+      "lengthMenu":[
+      [10,25,50,-1],
+      [10,25,50,"All"]],
+      responsive:true,
+      language:{
+        search:"_INPUT_",
+        searchPlaceholder: "Search Records",
+      }
+
+    });
+});
+</script>
+<script>
+  $(document).ready(function(){
+    $('#refresh').click(function(){
+      location.reload();
+    });
+  });
 </script>
 </body>
 </html>

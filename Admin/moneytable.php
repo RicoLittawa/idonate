@@ -14,6 +14,7 @@ session_start();
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
 	<link rel="stylesheet" href="../Admin/css/donations.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
 	<title>Monetary Donors</title>
 </head>
@@ -33,14 +34,14 @@ session_start();
 					<span class="text">Dashboard</span>
 				</a>
 			</li>
-			<li>
+			<li class="active">
 				<a href="donations.php">
 					<i class='bx bxs-box' ></i>
 					<span class="text">Donations</span>
 				</a>
 			</li>
-			<li class="active">
-				<a href="#">
+			<li>
+				<a href="request.php">
 					<i class='bx bxs-envelope' ></i>
 					<span class="text">Requests</span>
 				</a>
@@ -102,7 +103,7 @@ session_start();
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
 						<li>
-							<a class="active" href="request.php" style="font-size: 18px;">Back</a>
+							<a class="active" href="donations.php" style="font-size: 18px;">Back</a>
 						</li>
 					</ul>
 				</div>
@@ -115,15 +116,27 @@ session_start();
 						<h3>Monetary Donors</h3>
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
+						<div class="dropdown">
+  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+    Select Table
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="donations.php">Donations</a>
+    <a class="dropdown-item" href="moneytable.php">Money Donors</a>
+   
+  </div>
+</div>
 					</div>
-					<table class="table table-striped">
+<table class="table table-striped table-bordered" style="width:100%" id="table_data">
     <thead>
       <tr>
+		<th><input type="checkbox" name="" id="selectAll" class="col"></th>
         <th>Donor Name</th>
 		<th>Date</th>
 		<th>Reference Number</th>
 		<th>Amount</th>
-		<th>Action</th>
+		<th>View</th>
+		<th>Send Certificate</th>
 
       </tr>
     </thead>
@@ -137,18 +150,31 @@ session_start();
 	foreach ($data as $row){
 	   $count = $count+ 1;
 	echo '<tr>
-	
-	<td>'.$row['money_name'].'</td>
+	<td><input class="col" type="checkbox" name="single_select" class="single_select" data-email="'.$row['money_email'].'" data-name="'.$row['money_name'].'"></input></td>
+	<td>' .$row['money_name'].'</td>
 	<td>'.$row['money_date'].'</td>
-	<td><button type:"button" id="'.$count.' "class="btn viewRef" data-toggle="modal" data-target="#referenceImg" value="'.$row['money_id'].'">'.$row['money_reference'].'</button></td>
+	<td><button type="button" data-toggle="modal" data-target="referenceImg"  class="viewRef btn col" value="'.$row['money_id'].'">'.$row['money_reference'].'</button></td>
 	<td>₱'.$row['money_amount'].'.00</td>
-	<td><button type:"button" id="'.$count.'"class="btn viewMoney" data-toggle="modal" data-target="#moneyRecieve" value="'.$row['money_id'].'"><i  style="color:green;" class="fa-solid fa-eye"></i></button></td>
+	<td><button type="button" data-toggle="modal" data-target="moneyRecieve"  class="viewMoney btn col" value="'.$row['money_id'].'"><i class="fa-solid fa-solid fa-eye" style="color: green;"></i></button>
+	
+		
+    </td>
+
+	<td><button type="button" class="btn btn-info email_button" name="email_button" id="'.$count.'"
+	data-email="'.$row['money_email'].'" data-name="'.$row['money_name'].'" data-action="single">Send</button>
+	</td>
 	</tr>';
 	 }
 	 ?>
 	 
 	  </tbody>
+	  
   </table>
+  <tr>
+		<td colspan="8"></td>
+		<td>
+     <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
+	</tr>
 
 
   <!--Money Form --->
@@ -165,7 +191,7 @@ session_start();
 	<form action="" id="saveMoneyDonations">
 	<div class="modal-body">
 	<div class="row">
-
+	<input type="hidden" name="money_id" id="money_id">
 	<div class="col">
 		<label for="money_name">Fullname</label>
 		<input id="money_name" name="money_name" class="form-control" readonly>
@@ -217,7 +243,6 @@ session_start();
       <input id="money_variant" type="hidden"  name="money_variant" class="form-control" value="Money" readonly>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-success">Accept</button>
       </div>
 	</form>
 
@@ -269,8 +294,89 @@ session_start();
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="../Admin/scripts/function.js"></script>
 	<script src="../donors/js/sweetalert2.all.min.js"></script>	
-	
+	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+	<script>
+$(document).ready(function(){
+ $('.email_button').click(function(){
+  $(this).attr('disabled', 'disabled');
+  var id = $(this).attr("id");
+  var action = $(this).data("action");
+  var email_data = [];
+  if(action == 'single')
+  {
+   email_data.push({
+    email: $(this).data("email"),
+    name: $(this).data("name")
+   });
+  }
+  else
+  {
+   $('.single_select').each(function(){
+    if($(this). prop("checked") == true)
+    {
+     email_data.push({
+      email: $(this).data("email"),
+      name: $(this).data('name')
+     });
+ 
+    
+    }
+   
+   });
+  }
+  
+  $.ajax({
+   url:"http://localhost:3000/Admin/include/sendcerti.php",
+   method:"POST",
+   data:{email_data:email_data},
+   beforeSend:function(){
+    $('#'+id).html('Sending...');
+    $('#'+id).addClass('btn-danger');
+   },
+   success:function(data){
+    if(data = 'ok')
+    {
+     $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
+     $('#'+id).removeClass('btn-danger');
+     $('#'+id).removeClass('btn-info');
+     $('#'+id).addClass('btn-success');
+    }
+    else
+    {
+     $('#'+id).text(data);
+    }
+    $('.email_button'+id).attr('disabled', false);
+    
+   }
+   
+  });
+ });
+});
+</script>
 
+<script>
+ $("#selectAll").click(function(){
+        $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
 
+});
+</script>
+
+<script>
+	  $(document).ready(function () {
+    $('#table_data').DataTable({
+      "pagingType":"full_numbers",
+      "lengthMenu":[
+      [10,25,50,-1],
+      [10,25,50,"All"]],
+      responsive:true,
+      language:{
+        search:"_INPUT_",
+        searchPlaceholder: "Search Records",
+      }
+
+    });
+});
+</script>
 </body>
 </html>

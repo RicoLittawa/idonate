@@ -16,7 +16,7 @@ $(document).ready(function(){
         
         
             $.ajax({
-                url: 'http://localhost:3000/Admin/include/add.inc.php',
+                url: 'include/add.inc.php',
                 method: 'post',
                 data:formData,
                         processData:false,
@@ -68,7 +68,7 @@ $(document).on('click', '.btnDel', function (e) {
         if (result.isConfirmed) {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:3000/Admin/operations/delete.php",
+                url: "operations/delete.php",
                 data: {
                     'delete_data': true,
                     'id': id
@@ -90,9 +90,10 @@ $(document).on('click', '.btnDel', function (e) {
                             'Deleted!',
                            res.message,
                             'success'
+                            
                           )
     
-                        $('#table_data').load(location.href + " #table_data");
+                          $('#table_data').load(location.href + " #table_data");
                     }
                 }
             });
@@ -137,7 +138,7 @@ $(document).on('click', '.btnUpdate', function (e) {
     var donor_id = $(this).val();
     $.ajax({
         type: "GET",
-        url: "http://localhost:3000/Admin/operations/updateData.php?donor_id="+ donor_id,
+        url: "operations/updateData.php?donor_id="+ donor_id,
         success: function (response) {
             var res = jQuery.parseJSON(response);
             if(res.status == 200) {
@@ -174,7 +175,7 @@ $(document).ready(function(){
         
         
             $.ajax({
-                url: 'http://localhost:3000/Admin/operations/update.php',
+                url: 'operations/update.php',
                 method: 'post',
                 data:formData,
                         processData:false,
@@ -220,7 +221,7 @@ $(document).ready(function(){
         
         
             $.ajax({
-                url: 'http://localhost:3000/Admin/include/sendrequest.php',
+                url: 'include/sendrequest.php',
                 method: 'post',
                 data:formData,
                         processData:false,
@@ -267,12 +268,13 @@ $(document).on('click', '.viewMoney', function (e) {
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:3000/Admin/operations/viewmoney.php?money_id="+ money_id,
+        url: "operations/viewmoney.php?money_id="+ money_id,
         success: function (response) {
             var res = $.parseJSON(response);
             if(res.status == 422) {
              
                 $('#moneyRecieve').modal('show');
+                $('#money_name').val(res.data.money_id);
                 $('#money_name').val(res.data.money_name);
                 $('#money_province').val(res.data.money_province);
                 $('#money_street').val(res.data.money_street);
@@ -300,7 +302,7 @@ $(document).on('click', '.viewRef', function (e) {
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:3000/Admin/operations/viewmoney.php?money_id="+ money_id,
+        url: "operations/viewmoney.php?money_id="+ money_id,
         success: function (response) {
             var res = $.parseJSON(response);
             if(res.status == 422) {
@@ -317,51 +319,5 @@ $(document).on('click', '.viewRef', function (e) {
                 alert(res.message);
             }
         }
-    });
-});
-
-
-/* save money donations*/
-$(document).ready(function(){
-    $("#saveMoneyDonations").submit(function(event){
-        event.preventDefault();
-        var id = $('.viewMoney').attr("id");
-        $('.viewMoney').attr('disabled', 'disabled');
-        var formData= new FormData(this);
-        formData.append("send_money",true)
-       
-        
-        
-            $.ajax({
-                url: 'http://localhost:3000/Admin/include/savemoney.php',
-                method: 'post',
-                data:formData,
-                        processData:false,
-                        contentType:false,  
-                        success: function(response) {
-                            var res= jQuery.parseJSON(response);
-                            if(res.status == 422)
-                            {
-                                Swal.fire('ERROR','','error')
-                            $('#msg').html("<p class='alert alert-danger'>"+ res.message); 
-                            
-                            
-                            }else if (res.status == 200)
-                            {
-                                Swal.fire(
-                                    'Success!',
-                                    res.message,
-                                    'success'
-                                  )
-                                $('#moneyRecieve').modal('hide');
-                                $('#'+id).addClass('btn-success')
-                                $('#'+id).html('Sent');
-                                $('.viewMoney'+id).attr('disabled', false);    
-                               
-                            }              
-                            
-                        }
-            });
-        
     });
 });
