@@ -14,7 +14,6 @@ session_start()?>
     <link rel="stylesheet" href="css/donors.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <link rel="stylesheet" href="css/howitworks.css">
     <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
         padding-right: 0px !important;
     }</style>
@@ -32,13 +31,13 @@ session_start()?>
           <a class="nav-link " href="frontpage.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="donation.php">Donations</a>
+          <a class="nav-link active" href="donation.php">Donations</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="howitworks.php">How it works?</a>
+          <a class="nav-link" href="howitworks.php">How it works?</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="whatisneeded.php">What is needed?</a>
+          <a class="nav-link" href="">What is needed?</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="requestform.php">Create request<i style="color: #83f28f;" class="fa-solid fa-plus"></i></a>
@@ -60,49 +59,22 @@ session_start()?>
             </div>
           <div class="dashedcircle"></div>
       </div>
+        <span class="dot2"></span>
+          <h1 class="title">You want to<br></h1>
+          <h2 class="con">Donate?</h2>
+        </div>
+        <div class="parag">
+          <p class="text-justify">You can set <a style="font-weight:bold ;" href="requestform.php">request</a> to inform the staff to
+            your arrival and know what kind of donation
+            you will donate. Or You can directly drop off
+            your donation to relief hub. If you donated money kind inform us by
+          filling up the <a style="font-weight:bold ;" href="formoney.php">form</a> with transaction/reference number and screen shot
+        of the reciept to recive acknowledgement certificate.</p>
+        </div>
         
-    <div class ="container">
-      <div class="card">
-        <div class="imgBx">
-          <a href="#">
-            <img src="./img/request.png">
-          </a>
-          <h2>Set Request </h2>
-          <p><br>Go to "Set Request" and create
-          a form, for you and us to have detailed 
-          information about you for our
-          acknowledgement after the
-          successfull transactions with you. </p>
         </div>
-      </div>
-  </div>
-
-  <div class ="container">
-      <div class="card">
-        <div class="imgBx">
-          <a href="#">
-            <img src="./img/fillup.png">
-          </a>
-          <h2>Set Request </h2>
-          <p><br>Filled up all the necessary data to have a profile. </p>
-        </div>
-      </div>
-  </div>
-
-  <div class ="container">
-      <div class="card">
-        <div class="imgBx">
-          <a href="#">
-            <img src="./img/submit.jpg">
-          </a>
-          <h2>Set Request </h2>
-          <p><br>Submit and wait for the approval of the admin. </p>
-        </div>
-      </div>
-  </div>
-
-
-     <div class="site-footer" id="footer">
+  
+    <div class="site-footer" id="footer">
       <div class="container">
         <div class="row">
           <div class="col-sm-12 col-md-6"> 
@@ -132,12 +104,13 @@ session_start()?>
           </div>
         </div>
       </div>
-</div>
+    </div>
      <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../donors/js/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="../donors/js/main.js"></script>
     <script src="../donors/js/sweetalert2.all.min.js"></script>
     
  
