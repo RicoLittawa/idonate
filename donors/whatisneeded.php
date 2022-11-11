@@ -17,7 +17,7 @@ session_start()?>
     <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
         padding-right: 0px !important;
     }</style>
-    
+      
   </head>
   <body> 
 

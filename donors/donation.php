@@ -37,19 +37,22 @@ session_start()?>
           <a class="nav-link" href="howitworks.php">How it works?</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="whatisneeded.php">What is needed?</a>
+          <a class="nav-link" href="whatisneeded">What is needed?</a>
+        </li>
+        <li class="nav-item dropdown">
+          
+       
+  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+    Create
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="donations.php">Donations</a>
+    <a class="dropdown-item" href="moneytable.php">Money Donors</a>
+
+</div>
         </li>
       </ul>
-<div class="dropdown">
-    <button class="dropbtn">Dropdown
-      <i class="Create"></i>
-    </button>
-    <div class="dropdown-content">
-      <a href="#">Request Form</a>
-      <a href="#">Monetary Form</a>
-    </div>
-  </div>
-</div>
+  
     </div>
   </div>
 </nav>

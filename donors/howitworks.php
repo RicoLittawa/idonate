@@ -14,12 +14,19 @@ session_start()?>
     <link rel="stylesheet" href="css/donors.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="css/howitworks.css">
     <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
         padding-right: 0px !important;
-    }</style>
+    }
+    body {
+      background: url('img/bg2circle.png');
+      background-repeat: no-repeat;
+      background-size: 1500px 765px;
+    }
+    </style>
     
   </head>
-  <body> 
+  <body > 
 
   <nav class="navbar bg-light" id="myNavbar">
   <div class="container-fluid">
@@ -31,10 +38,10 @@ session_start()?>
           <a class="nav-link " href="frontpage.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="donation.php">Donations</a>
+          <a class="nav-link " href="donation.php">Donations</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="howitworks.php">How it works?</a>
+          <a class="nav-link active" href="howitworks.php">How it works?</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="">What is needed?</a>
@@ -48,33 +55,53 @@ session_start()?>
   </div>
 </nav>
 
-<div class="container" id="container">
-  <div class="circles">
-        <div class="dot" >
-           <div class="photos">
-            <img class="photo1" src="img/water.png" alt=""> 
-            <img class="photo2" src="img/money.png" alt="">
-            <img class="photo3" src="img/food.png" alt="">
-            <img class="photo4" src="img/clothes.png" alt="">
-            </div>
-          <div class="dashedcircle"></div>
+<div class="container w-100" style="padding-top:6.5rem;">
+  <div class="row text-center">
+    <div class="col d-flex justify-content-center">
+      <div class="card" style="border-radius:50px;">
+        <div class="imgBx">
+          <a href="#">
+            <img src="./img/request.png">
+          </a>
+          <h2>Set Request </h2>
+          <p><br>Go to "Set Request" and create
+          a form, <br>for you and us to have detailed 
+          information about you for our
+          acknowledgement after the
+          successfull transactions with you. </p>
+        </div>
+      </div>     
+    </div>
+    <div class="col d-flex justify-content-center">
+      <div class="card" style="border-radius:50px;">
+        <div class="imgBx">
+          <a href="#">
+            <img src="./img/fillup.png">
+          </a>
+          <h2>Fill Up</h2>
+          <p><br>Filled up all the necessary data
+          to have a profile. </p>
+        </div>
       </div>
-        <span class="dot2"></span>
-          <h1 class="title">You want to<br></h1>
-          <h2 class="con">Donate?</h2>
+    </div>
+    <div class="col d-flex justify-content-center">
+      <div class="card" style="border-radius:50px;">
+        <div class="imgBx">
+          <a href="#">
+            <img src="./img/submit.png">
+          </a>
+          <h2>Submit </h2>
+          <p><br>Submit and wait for the approval of the admin. </p>
         </div>
-        <div class="parag">
-          <p class="text-justify">You can set <a style="font-weight:bold ;" href="requestform.php">request</a> to inform the staff to
-            your arrival and know what kind of donation
-            you will donate. Or You can directly drop off
-            your donation to relief hub. If you donated money kind inform us by
-          filling up the <a style="font-weight:bold ;" href="formoney.php">form</a> with transaction/reference number and screen shot
-        of the reciept to recive acknowledgement certificate.</p>
-        </div>
-        
-        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+
+
   
-    <div class="site-footer" id="footer">
+     <div class="site-footer" id="footer">
       <div class="container">
         <div class="row">
           <div class="col-sm-12 col-md-6"> 
