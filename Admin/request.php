@@ -48,8 +48,8 @@ session_start();
 			</li>
 			<li>
 				<a href="#">
-					<i class='bx bxs-chat' ></i>
-					<span class="text">Announcement</span>
+				<i class="fa-solid fa-folder"></i>
+					<span class="text">Archive</span>
 				</a>
 			</li>
 		</ul>
@@ -136,8 +136,9 @@ session_start();
 		echo '<tr>
 		<td>'.$row['req_name'].'</td>
 		<td>'.$row['req_date'].'</td>
-		<td><button type:"button" id="'.$count.'" name="viewBtn" class="btn viewBtn" data-toggle="modal" data-target="#recieveReq" value="'.$row['request_id'].'"><i  style="color:green;" class="fa-solid fa-eye "></i></button></td>
-		
+		<td><button type:"button" id="'.$count.'" name="viewBtn" class="btn viewBtn" data-toggle="modal" data-target="#recieveReq" value="'.$row['request_id'].'"><i  style="color:green;" class="fa-solid fa-eye "></i></button>
+		<button type="button" value="Submit" id="myButton" class="btn btn-success">Accept</button>
+		</td>
 		</tr>'
 		;
 	 }
@@ -160,6 +161,7 @@ session_start();
 	<form  id="saveRequest">
 	<div class="modal-body">
 	<div class="row">
+		<input type="hidden" id="request_id" name="request_id">
 	<div class="col">
 		<label for="req_name">Fullname</label>
 		<input id="req_name" name="req_name" class="form-control" >
@@ -216,7 +218,7 @@ session_start();
       
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-success">Accept</button>
+		<button type="submit" class="btn btn-success">Update</button>
 		
 
       </div>

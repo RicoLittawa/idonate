@@ -112,6 +112,7 @@ $(document).on('click', '.viewBtn', function (e) {
             var res = jQuery.parseJSON(response);
             if(res.status == 422) {
                $('#recieveReq').modal('show');
+               $('#request_id').val(res.data.request_id);
                $('#req_name').val(res.data.req_name);
                $('#req_province').val(res.data.req_province);
                $('#req_street').val(res.data.req_street);
@@ -209,56 +210,7 @@ $(document).ready(function(){
         
     });
 });
-/* save request*/
-$(document).ready(function(){
-    $("#saveRequest").submit(function(event){
-        event.preventDefault();
-        var id = $('.viewBtn').attr("id");
-        $('.viewBtn').attr('disabled', 'disabled');
-        var formData= new FormData(this);
-        formData.append("send_data",true)
-       
-        
-        
-            $.ajax({
-                url: 'include/sendrequest.php',
-                method: 'post',
-                data:formData,
-                        processData:false,
-                        contentType:false,  
-                        success: function(response) {
-                            var res= jQuery.parseJSON(response);
-                            if(res.status == 422)
-                            {
-                                Swal.fire('ERROR','','error')
-                            $('#msg').html("<p class='alert alert-danger'>"+ res.message); 
-                            
-                            
-                            }else if (res.status == 200)
-                            {
-                                Swal.fire(
-                                    'Success!',
-                                    res.message,
-                                    'success'
-                                  )
-                                $('#recieveReq').modal('hide');
-                                $('#'+id).addClass('btn-success')
-                                $('#'+id).html('Sent');
-                                $('.viewBtn'+id).attr('disabled', false);
-                                
-                                
-                                
-                               
-                            }
-                           
-                            
-                            
-                        }
-            });
-        
-    });
-});
-		
+	
 /*request page money data */
 
 $(document).on('click', '.viewMoney', function (e) {
@@ -321,3 +273,100 @@ $(document).on('click', '.viewRef', function (e) {
         }
     });
 });
+
+
+/**update request */
+$(document).ready(function(){
+    $("#saveRequest").submit(function(event){
+        event.preventDefault();
+        var formData= new FormData(this);
+        formData.append("update_request",true)
+       
+        
+        
+            $.ajax({
+                url: 'operations/updaterequest.php',
+                method: 'post',
+                data:formData,
+                        processData:false,
+                        contentType:false,  
+                        
+                        success: function(response) {
+                            var res= jQuery.parseJSON(response);
+                            if(res.status == 404)
+                            {
+                                Swal.fire('ERROR','','error')
+                            $('#msgupdate').html("<p class='alert alert-danger'>"+ res.message); 
+                            
+                            
+                            }else if (res.status == 422)
+                            {
+                                Swal.fire(
+                                    'Success!',
+                                    res.message,
+                                    'success'
+                                  )
+                                $('#recieveReq').modal('hide');
+                                $('#table_data').load(location.href+ " #table_data");
+                              
+                               
+                            }
+                           
+                            
+                            
+                        }
+            });
+        
+    });
+});
+
+/* save request*/
+$(document).ready(function(){
+    $("#myButton").click(function(event){
+        event.preventDefault();
+        $("#saveRequest").submit();
+        var id = $('.viewBtn').attr("id");
+        $('.viewBtn').attr('disabled', 'disabled');
+        var formData= new FormData(this);
+        formData.append("send_data",true)
+       
+        
+        
+            $.ajax({
+                url: 'include/sendrequest.php',
+                method: 'post',
+                data:formData,
+                        processData:false,
+                        contentType:false,  
+                        success: function(response) {
+                            var res= jQuery.parseJSON(response);
+                            if(res.status == 422)
+                            {
+                                Swal.fire('ERROR','','error')
+                            $('#msg').html("<p class='alert alert-danger'>"+ res.message); 
+                            
+                            
+                            }else if (res.status == 200)
+                            {
+                                Swal.fire(
+                                    'Success!',
+                                    res.message,
+                                    'success'
+                                  )
+                                $('#recieveReq').modal('hide');
+                                $('#'+id).addClass('btn-success')
+                                $('#'+id).html('Sent');
+                                $('.viewBtn'+id).attr('disabled', false);
+                                
+                                
+                                
+                               
+                            }
+                           
+                            
+                            
+                        }
+            });
+        
+    });
+})
