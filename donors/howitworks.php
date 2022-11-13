@@ -64,11 +64,11 @@ session_start()?>
             <img src="./img/request.png">
           </a>
           <h2>Set Request </h2>
-          <p><br>Go to "Set Request" and create
+          <p><br>"Go to "Set Request" and create
           a form, <br>for you and us to have detailed 
           information about you for our
           acknowledgement after the
-          successfull transactions with you. </p>
+          successfull transactions with you."</p>
         </div>
       </div>     
     </div>
@@ -79,8 +79,8 @@ session_start()?>
             <img src="./img/fillup.png">
           </a>
           <h2>Fill Up</h2>
-          <p><br>Filled up all the necessary data
-          to have a profile. </p>
+          <p><br>"Filled up all the necessary data
+          to have a profile."</p>
         </div>
       </div>
     </div>
@@ -91,7 +91,8 @@ session_start()?>
             <img src="./img/submit.png">
           </a>
           <h2>Submit </h2>
-          <p><br>Submit and wait for the approval of the admin. </p>
+          <p><br>"Once all the fields are filled up, submit
+            and wait for the admin's approval."</p>
         </div>
       </div>
     </div>
