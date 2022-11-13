@@ -144,10 +144,8 @@ session_start();
     <thead>
       <tr>
         <th><input type="checkbox" name="" id="selectAll" class="col"></th>
-        <th>Reference Number</th>
         <th>Fullname</th>
-      
-        <th>Donation Date</th>
+      	<th>Donation Date</th>
         <th>Category</th>
         <th>Quantity</th>
         <th>Operations</th>
@@ -163,9 +161,8 @@ session_start();
 		   {  
 			$count = $count+ 1;
 			echo'<tr>
-    <td><input type="checkbox" name="single_select" class="single_select col" data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'"></input></td>
-		<td>1234567</td>
-    <td>'.$row['donor_name'].'</td>
+   		<td><input type="checkbox" name="single_select" class="single_select col" data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'"></input></td>
+    	<td>'.$row['donor_name'].'</td>
 		<td>'.$row['donationDate'].'</td>
 		<td>'.$row['category'].'</td>
 		<td>'.$row['quantity'].'</td>
