@@ -46,7 +46,7 @@ session_start();
 			</li>
 			<li>
 				<a href="#">
-				<i class="fa-solid fa-folder"></i>
+				<i class='bx bxs-file-archive'></i>
 					<span class="text">Archive</span>
 				</a>
 			</li>

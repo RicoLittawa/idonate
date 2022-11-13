@@ -9,7 +9,7 @@ session_start();
     $output= '';
     $sql= "SELECT * From category order by categ_id ASC";
     $result = mysqli_query($conn,$sql);
-    foreach($result as $row){
+	    foreach($result as $row){
       $output .= '<option value="'.$row['category'].'">'.$row['category'].'</option>';
     }
     return $output;
@@ -37,9 +37,9 @@ session_start();
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
 	<link rel="stylesheet" href="../Admin/css/donations.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+  	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
-	<title>Donations</title>
+	<title>Add donations</title>
 </head>
 <body>
 
@@ -71,7 +71,7 @@ session_start();
 			</li>
 			<li>
 				<a href="#">
-					<i class='bx bxs-chat' ></i>
+				<i class='bx bxs-file-archive'></i>
 					<span class="text">Archive</span>
 				</a>
 			</li>
@@ -126,7 +126,7 @@ session_start();
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
 						<li>
-							<a class="active" href="#" style="font-size: 18px;">Home</a>
+							<a class="active" href="donations.php" style="font-size: 18px;">Back</a>
 						</li>
 					</ul>
 				</div>   
@@ -135,72 +135,86 @@ session_start();
 <div class="table-data">
 				<div class="add">
 					<div class="head">
-						<h3>Donations</h3>
+						<h3>Add Donations</h3>
 
 					
 						
         <div>
-        <button type="button" name="btn_additem" class="btn btn-primary" id="btn_additem"><i class="fa-sharp fa-solid fa-plus"></i> 
+        <button type="button" name="btn_additem" class="btn btn-success" id="btn_additem"><i class="fa-sharp fa-solid fa-plus"></i> 
                           </button>
                           
         </div>
 					</div>
-					<form action="../Admin/include/add.inc.php" method="post" id="add-form">
+					<form id="add-form">
           <div>
-          <input type="text"  value="" readonly>
-          <div class="row">
-            <div class="col">
+  			<?php 
+				$referenceId = "";
+				$sql = "SELECT * FROM donation_items_picking";
+                $result = mysqli_query($conn,$sql);
+				if (mysqli_num_rows($result)){
+					while($row =mysqli_fetch_assoc($result))
+					{
+						$referenceId = $row['reference_id'];
+					}
+				}else{
+					echo'No records found';
+				}
+                
+			?>
+          <input type="hidden"  id="reference_id" value="<?php echo $referenceId; ?>" readonly>
+            <div class="form-group">
             <label for="fname">Fullname</label>
             <input class="form-control" type="text" name="fname" id="fname" placeholder="">
       
             </div>
-            <div class="col">
+            <div class="form-group">
             <label for="province">Province</label>
             <input class="form-control" type="text" name="province" id="province">
-            
             </div>
-            </div>
-            <div class="row">
-            <div class="col">
+            <div class="form-group">
             <label for="street">Street</label>
             <input class="form-control" type="text" name="street" id="street">
             
             </div>
-            <div class="col">
+            <div class="form-group">
               <label for="region">Select Region</label>
               <select class="custom-select" name="region" id="region">
               <option value="default">Choose Region</option>
               <?php 
-              include '../Admin/include/connection.php';
                 $sql = "SELECT * FROM regions";
                 $result = mysqli_query($conn,$sql);
-                while($row =mysqli_fetch_array($result))
-                {
-                  echo '<option value="'.$row['region_name'].'">'.$row['region_name'].'</option>';
-                }
+				if(mysqli_num_rows($result)>0){
+					while($row =mysqli_fetch_array($result)){
+						$region= $row['region_name'];
+						echo '<option value="'.$region.'">'.$region.'</option>';
+					}
+					
+				}else{
+					echo "No records found";
+				}
+                
+                
+                 
                 
               ?>
             </select>
-            
-						</div>
-            </div>	  
-            <div class="row">
-            <div class="col">
+			</div>    
+            <div class="form-group">
             <label for="email">Email</label>
             <input class="form-control" type="text" name="email" id="email">
             
             </div>
-            <div class="col">
+            <div class="form-group">
             <label for="donation_date">Donation Date</label>
             <input class="form-control" type="date" name="donation_date" id="donation_date">
-            
             </div>
-            </div>
+         
            
             </div>
-            <button class="btn btn-success">Save</button>
+			<label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>
+            
           </form>
-       
+				
   			
 			</div>
 		</main>
@@ -213,41 +227,139 @@ session_start();
 	<script src="../Admin/scripts/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	
-	<script src="../Admin/scripts/function.js"></script>
 	<script src="../donors/js/sweetalert2.all.min.js"></script>	
-  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
-  
-<script>
-  $(document).ready(function(){
+  	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+ 	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+  <script>  
+   $(document).ready(function(){
     var count= 0;
     function add_input_field(count){
+	  $('#testBtn').remove();
       var html='';
       html+= '<div>'
-      html+= '<select class="form-control" name="category[]" id="category"><option value="">Choose Category</option><?php echo fill_category_select_box($conn); ?></select>';
-      html += ' <select class="form-control" name="variant[]" id="variant"><option value="">Choose Variant</option><?php echo fill_variant_select_box($conn); ?></select>';
-      html += '<input class="form-control" type="text" name="quantity[]" id="quantity">';
+      html+= '<div class="form-group"><select class="form-control category" name="category" id="category"><option value="">Choose Category</option><?php echo fill_category_select_box($conn); ?></select></div>';
+      html += '<div class="form-group"><select class="form-control variant" name="variant" id="variant"><option value="">Choose Variant</option><?php echo fill_variant_select_box($conn); ?></select></div>';
+      html += '<div class="form-group"><input class="form-control quantity" type="text" name="quantity" id="quantity"></div>';
      
       var remove_button='';
       if(count>0)
       {
-        remove_button='<button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button>';
+        remove_button='<button type="button" name="remove" id="remove" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>';
       }
       html+='<span>'+remove_button+'</span></div>';
       return html;
     }
     $('#add-form').append(add_input_field(0));
+	$('#add-form').append('<button  type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Save</button>');
     $(document).on('click', '#btn_additem',function(){
       count++;
       $('#add-form').append(add_input_field(count));
+	  $('#add-form').append('<button type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Save</button>');
+	  $('#testBtn').click(function(e){
+		e.preventDefault();
+		var variant_arr=[];
+		var quantity_arr=[];
+		var category_arr=[];
+		var category = $('.category');
+		var variant = $('.variant');
+		var quantity = $('.quantity');
 
+		for (var i = 0;i<category.length;i++){
+			category_arr.push($(category[i]).val());
+			variant_arr.push($(variant[i]).val());
+			quantity_arr.push($(quantity[i]).val());
+		}
+		var reference_id= $('#reference_id').val();
+		var fname = $('#fname').val();
+		var province = $('#province').val();
+		var street = $('#street').val();
+		var region = $('#region').val();
+		var email = $('#email').val();
+		var donation_date = $('#donation_date').val();
+
+		var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr}
+		$.ajax({
+			url:'include/add.inc.php',
+			method:'POST',
+			data: data,
+			success:function(data){
+				var data = jQuery.parseJSON(data);
+				if(data.status==404){
+					Swal.fire({
+						icon: 'error',
+						title: 'Ooops..',
+						text: data.message,
+						})
+				}else if(data.status == 422) {
+					Swal.fire({
+						icon: 'success',
+						title: 'Success',
+						text: data.message,
+						}).then(function() {
+							window.location = "donations.php";
+						});
+				}	
+			}
+
+		});
+	});
     });
+	
     $(document).on('click','#remove', function(){
       $(this).closest('div').remove();
     });
+	$('#testBtn').click(function(e){
+		
+		e.preventDefault();
+		var variant_arr=[];
+		var quantity_arr=[];
+		var category_arr=[];
+		var category = $('.category');
+		var variant = $('.variant');
+		var quantity = $('.quantity');
+
+		for (var i = 0;i<category.length;i++){
+			category_arr.push($(category[i]).val());
+			variant_arr.push($(variant[i]).val());
+			quantity_arr.push($(quantity[i]).val());
+		}
+		var reference_id= $('#reference_id').val();
+		var fname = $('#fname').val();
+		var province = $('#province').val();
+		var street = $('#street').val();
+		var region = $('#region').val();
+		var email = $('#email').val();
+		var donation_date = $('#donation_date').val();
+
+		var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr}
+		$.ajax({
+			url:'include/add.inc.php',
+			method:'POST',
+			data: data,
+			success:function(data){
+				var data = jQuery.parseJSON(data);
+				if(data.status==404){
+					Swal.fire({
+						icon: 'error',
+						title: 'Ooops..',
+						text: data.message,
+						})
+				}else if(data.status == 422) {
+					Swal.fire({
+						icon: 'success',
+						title: 'Success',
+						text: data.message,
+						}).then(function() {
+							window.location = "donations.php";
+						});
+				}	
+			}
+
+		});
+	});
+	
   });
-</script>
+</script>  
 
 </body>
 </html>

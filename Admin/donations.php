@@ -1,30 +1,14 @@
 <?php
 session_start();
-
-	?>
-  <?php 
-  include '../Admin/include/connection.php';
-  function fill_category_select_box($conn)
-  {
-    $output= '';
-    $sql= "SELECT * From category order by categ_id ASC";
+?>
+ <?php
+	  include "../Admin/include/connection.php";
+	    
+    $sql = "SELECT * FROM donation_items INNER JOIN donation_items10 ON donation_items.donor_id = donation_items10.id";
     $result = mysqli_query($conn,$sql);
-    foreach($result as $row){
-      $output .= '<option value="'.$row['category'].'">"'.$row['category'].'"</option>';
-    }
-    return $output;
-  }
+	
   
-  function fill_variant_select_box($conn){
-    $output= '';
-    $sql= "SELECT * From variant order by variant_id ASC";
-    $result = mysqli_query($conn,$sql);
-    foreach($result as $row){
-      $output .= '<option value="'.$row['variant'].'">"'.$row['variant'].'"</option>';
-    }
-    return $output;
-  }
-  ?>
+	?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,7 +55,7 @@ session_start();
 			</li>
 			<li>
 				<a href="#">
-					<i class='bx bxs-chat' ></i>
+        <i class='bx bxs-file-archive'></i>
 					<span class="text">Archive</span>
 				</a>
 			</li>
@@ -132,228 +116,10 @@ session_start();
 				</div>
 				<!--Add modal -->
 				
-					<span><button class="adddata" type="button" data-toggle="modal" data-target="add"><i class="fa-solid fa-plus"></i> Add donations</button></span>
+					<span><button class="btn adddata" type="button" ><a href="additemdonations.php">Add Donations<i class="fa-solid fa-plus"></i> </a></button></span>
 				   
 			</div>
-<div class="modal fade" id="add">
-  <div class="modal-dialog">
-    <div class="modal-content">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Add Donations</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-     
-	  <form id="add-form" method="POST">
-		<div class="modal-body">
-		<span id="msg" class="text-center"></span>
-  
-		<input type="text"  value="" readonly>
-          <div class="row">
-            <div class="col">
-            <label for="fname">Fullname</label>
-            <input class="form-control" type="text" name="fname" id="fname" placeholder="">
-      
-            </div>
-            <div class="col">
-            <label for="province">Province</label>
-            <input class="form-control" type="text" name="province" id="province">
-            
-            </div>
-            </div>
-            <div class="row">
-            <div class="col">
-            <label for="street">Street</label>
-            <input class="form-control" type="text" name="street" id="street">
-            
-            </div>
-            <div class="col">
-              <label for="region">Select Region</label>
-              <select class="custom-select" name="region" id="region">
-              <option value="default">Choose Region</option>
-              <?php 
-              include '../Admin/include/connection.php';
-                $sql = "SELECT * FROM regions";
-                $result = mysqli_query($conn,$sql);
-                while($row =mysqli_fetch_array($result))
-                {
-                  echo '<option value="'.$row['region_name'].'">'.$row['region_name'].'</option>';
-                }
-                
-              ?>
-            </select>
-            
-						</div>
-            </div>	  
-            <div class="row">
-            <div class="col">
-            <label for="email">Email</label>
-            <input class="form-control" type="text" name="email" id="email">
-            
-            </div>
-            <div class="col">
-            <label for="donation_date">Donation Date</label>
-            <input class="form-control" type="date" name="donation_date" id="donation_date">
-            
-            </div>
-            </div>
-          <div class="row">
-          
-            <div class="col">
-              <label for="user-quantity">Quantity</label>
-              <input class="form-control" type="text" name="quantity" id="quantity">
-            
-           
-            </div>
-            </div>
-            <div class="row">
-                        <div class="col">
-                        <button type="button" name="btn_additem" class="btn btn-primary" id="btn_additem">Add  
-                          </button>
-                        </div>
-                      </div>
-                 
-
-         
-          
-
-           
-           
-
-
-					  </div>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-primary">Save</button>
-      </div>
-	  </form>	
-
-    </div>
-  </div>
-</div>
-<!-- Update Modal-->
-<div class="modal fade" id="updateModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Update Donations</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-     
-	  <form class="validate-form" id="update-form" method="POST">
-		<div class="modal-body">
-		<span id="msgupdate" class="text-center"></span>
-		<input type="hidden" name="donor_id" id="donor_id">
-          <div class="row">
-            <div class="col">
-            <label for="fname">Fullname</label>
-            <input class="form-control" type="text" name="donor_name" id="donor_name" placeholder="">
-      
-            </div>
-            <div class="col">
-            <label for="province">Province</label>
-            <input class="form-control required" type="text" name="donor_province" id="donor_province">
-            
-            </div>
-            </div>
-            <div class="row">
-            <div class="col">
-            <label for="street">Street</label>
-            <input class="form-control required" type="text" name="donor_street" id="donor_street">
-            
-            </div>
-            <div class="col">
-              <label for="region">Select Region</label>
-              <select class="custom-select required" name="donor_region" id="donor_region">
-              <option value="default">Choose Region</option>
-              <?php 
-              include '../Admin/include/connection.php';
-                $sql = "SELECT * from regions ";
-                $result = mysqli_query($conn,$sql);
-                while($row =mysqli_fetch_array($result))
-                {
-                  echo '<option value="'.$row['region_name'].'">'.$row['region_name'].'</option>';
-                }
-                
-              ?>
-            </select>
-            
-						</div>
-            </div>	  
-            <div class="row">
-            <div class="col">
-            <label for="email">Email</label>
-            <input class="form-control required error-email" type="text" name="donor_email" id="donor_email">
-            
-            </div>
-            <div class="col">
-            <label for="donation-date">Donation Date</label>
-            <input class="form-control required" type="date" name="donationDate" id="donationDate">
-            
-            </div>
-            </div>
-            <div class="select_opt">
-            <label for="donation_category">Select Category</label>
-              <select class="custom-select required" name="donation_category" id="donation_category">
-              <option value="default">Choose Category</option>
-              <?php 
-              include '../Admin/include/connection.php';
-                $sql = "SELECT * from category ";
-                $result = mysqli_query($conn,$sql);
-                while($row =mysqli_fetch_array($result))
-                {
-                  echo '<option value="'.$row['category'].'">'.$row['category'].'</option>';
-                }
-                
-              ?>
-            </select>
-            </div>
-            <div class="select_opt">
-            <label for="donation_variant">Select Variant</label>
-              <select class="custom-select required" name="donation_variant" id="donation_variant">
-              <option value="default">Choose Variant</option>
-              <?php 
-              include '../Admin/include/connection.php';
-                $sql = "SELECT * from variant ";
-                $result = mysqli_query($conn,$sql);
-                while($row =mysqli_fetch_array($result))
-                {
-                  echo '<option value="'.$row['variant'].'">'.$row['variant'].'</option>';
-                }
-                
-              ?>
-            </select>
-            </div>
-          <div class="row">
-            <div class="col">
-              <label for="user-quantity">Quantity</label>
-              <input class="form-control required" type="text" name="donation_quantity" id="donation_quantity">
-            
-            </div>
-          </div>
-					  
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-primary">Save</button>
-      </div>
-	  </form>	
-
-    </div>
-  </div>
-</div>
 <div class="table-data">
 				<div class="add">
 					<div class="head">
@@ -389,22 +155,20 @@ session_start();
       </tr>
     </thead>
     <tbody>
-      <?php
-	   require ("../Admin/include/connection.php");
-	    
-	  $sql = "SELECT * FROM donation_items ORDER by donor_id DESC";
-	  $result = mysqli_query($conn,$sql);
-	 $data = $result->fetch_all(MYSQLI_ASSOC);
-	 $count= 0;
-	 foreach ($data as $row){
-		$count = $count+ 1;
-		echo'<tr>
+     <?php
+      if(mysqli_num_rows($result) > 0)  
+	  {  
+		$count=0;
+		   while($row = mysqli_fetch_array($result))  
+		   {  
+			$count = $count+ 1;
+			echo'<tr>
     <td><input type="checkbox" name="single_select" class="single_select col" data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'"></input></td>
 		<td>1234567</td>
     <td>'.$row['donor_name'].'</td>
 		<td>'.$row['donationDate'].'</td>
-		<td>'.$row['donation_category'].'</td>
-		<td>'.$row['donation_quantity'].'</td>
+		<td>'.$row['category'].'</td>
+		<td>'.$row['quantity'].'</td>
 		<td>
 		<button type="button" class="btnDel btn col" value="'.$row['donor_id'].'"><i class="fa-solid fa-trash " style="color: red;"></i></button>
 		<button type="button" data-toggle="modal" data-target="updateModal"  class="btnUpdate btn col" value="'.$row['donor_id'].'"><i class="fa-solid fa-pen-to-square" style="color: green;"></i></button>
@@ -414,10 +178,10 @@ session_start();
     </td>
 	
 		</tr>';
+		   }
+		  }
+	
 		
-
-	 }
-			
 			?>
 			
     </tbody>
@@ -528,37 +292,6 @@ $(document).ready(function(){
 
     });
 });
-</script>
-
-
-<script>
-  $(document).ready(function(){
-    var count= 0;
-    function add_input_field(count){
-      var html='';
-      html += '<div class row>';
-      html+= '<select class="form-control" name="category[]" id="category"><option value="">Choose Category</option><?php echo fill_category_select_box($conn); ?></select>';
-      html += ' <select class="form-control" name="variant[]" id="variant"><option value="">Choose Variant</option><?php echo fill_variant_select_box($conn); ?></select>';
-      html += '<input class="form-control" type="text" name="quantity[]" id="quantity">';
-      html += '</div>';
-      var remove_button='';
-      if(count>0)
-      {
-        remove_button='<button type="button" name="remove" id="remove" class="btn btn-danger">Remove</button>'
-      }
-      html+='<span>'+remove_button+'</span>';
-      return html;
-    }
-    $('#add-form').append(add_input_field(0));
-    $(document).on('click', '#btn_additem',function(){
-      count++;
-      $('#add-form').append(add_input_field(count));
-
-    });
-    $(document).on('click','#remove', function(){
-      $(this).closest('div').remove();
-    });
-  });
 </script>
 
 </body>

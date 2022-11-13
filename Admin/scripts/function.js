@@ -6,51 +6,6 @@ $(document).ready(function(){
     });
 });
 
-/*add data */
-$(document).ready(function(){
-    $("#add-form").submit(function(event){
-        event.preventDefault();
-        var formData= new FormData(this);
-        formData.append("save_data",true)
-       
-        
-        
-            $.ajax({
-                url: 'include/add.inc.php',
-                method: 'post',
-                data:formData,
-                        processData:false,
-                        contentType:false,  
-                        
-                        success: function(response) {
-                            var res= jQuery.parseJSON(response);
-                            if(res.status == 422)
-                            {
-                                Swal.fire('ERROR','','error')
-                            $('#msg').html("<p class='alert alert-danger'>"+ res.message); 
-                            
-                            
-                            }else if (res.status == 200)
-                            {
-                                Swal.fire(
-                                    'Success!',
-                                    res.message,
-                                    'success'
-                                  )
-                                $('#add').modal('hide');
-                                $('#add-form')[0].reset();
-                                $('#table_data').load(location.href+ " #table_data");
-                                
-                               
-                            }
-                           
-                            
-                            
-                        }
-            });
-        
-    });
-});
 
 /*delete data */
 $(document).on('click', '.btnDel', function (e) {
