@@ -2,12 +2,22 @@
 session_start();
 ?>
  <?php
-	  include "../Admin/include/connection.php";
+	 include "include/connection.php";
 	    
-    $sql = "SELECT * FROM donation_items INNER JOIN donation_items10 ON donation_items.donor_id = donation_items10.id";
-    $result = mysqli_query($conn,$sql);
+    if (isset($_GET["editdonate"]))
 	
-  
+    {
+       $update_id= $_GET['editdonate'];
+	 $sql = "SELECT * FROM donation_items where donor_id=$update_id";
+	 $result= mysqli_query($conn,$sql);
+	 if (mysqli_num_rows($result)>0){
+		while ($row = mysqli_fetch_assoc($result) ){
+			echo $row['donor_ name'];
+		}
+
+	 }
+    }
+return;
 	?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +33,7 @@ session_start();
 	<link rel="stylesheet" href="../Admin/css/donations.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
-	<title>Donations</title>
+	<title>Update Donations</title>
 </head>
 <body>
 
@@ -123,7 +133,7 @@ session_start();
 <div class="table-data">
 				<div class="add">
 					<div class="head">
-						<h3>Donations</h3>
+						<h3>Update Donations</h3>
 
 					
 						
@@ -138,57 +148,10 @@ session_start();
   </div>
 </div>
 					</div>
+					<form action="">
 					
-					<table class="table table-bordered table-hover" style="width:100%" id="table_data">
-			
-    <thead>
-      <tr>
-        <th><input type="checkbox" name="" id="selectAll" class="col"></th>
-        <th>Fullname</th>
-      	<th>Donation Date</th>
-        <th>Category</th>
-        <th>Quantity</th>
-        <th>Operations</th>
-        <th>Certificate</th>
-      </tr>
-    </thead>
-    <tbody>
-     <?php
-      if(mysqli_num_rows($result) > 0)  
-	  {  
-		$count=0;
-		   while($row = mysqli_fetch_array($result))  
-		   {  
-			$count = $count+ 1;
-			echo'<tr class="clickable-row" data-href="updatedonate.php?editdonate.php='.$row['donor_id'].'">
-   		<td><input type="checkbox" name="single_select" class="single_select col" data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'"></input></td>
-    	<td>'.$row['donor_name'].'</td>
-		<td>'.$row['donationDate'].'</td>
-		<td>'.$row['category'].'</td>
-		<td>'.$row['quantity'].'</td>
-		<td>
-		<button type="button" class="btnDel btn col" value="'.$row['donor_id'].'"><i class="fa-solid fa-trash " style="color: red;"></i></button>
-		<button type="button" data-toggle="modal" data-target="updateModal"  class="btnUpdate btn col" value="'.$row['donor_id'].'"><i class="fa-solid fa-pen-to-square" style="color: green;"></i></button>
-		</td>
-		<td><button type="button" class="btn btn-info email_button" name="email_button" id="'.$count.'"
-		data-email="'.$row['donor_email'].'" data-name="'.$row['donor_name'].'" data-action="single">Send</button>
-    </td>
-	
-		</tr>';
-		   }
-		  }
-	
-		
-			?>
-			
-    </tbody>
-	<tr>
-		<td colspan="6"></td>
-		<td>
-     <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
-	</tr>
-	
-  </table>
+					</form>
+					
  
   			
 			</div>
@@ -290,12 +253,6 @@ $(document).ready(function(){
     });
 });
 </script>
-<script>
-	$(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
-    });
-});
-</script>
+
 </body>
 </html>
