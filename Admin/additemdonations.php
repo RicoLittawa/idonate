@@ -10,7 +10,7 @@ session_start();
     $sql= "SELECT * From category order by categ_id ASC";
     $result = mysqli_query($conn,$sql);
 	    foreach($result as $row){
-      $output .= '<option value="'.$row['category'].'">'.$row['category'].'</option>';
+      $output .= '<option value="'.$row['categ_id'].'">'.$row['category'].'</option>';
     }
     return $output;
   }
@@ -20,7 +20,7 @@ session_start();
     $sql= "SELECT * From variant order by variant_id ASC";
     $result = mysqli_query($conn,$sql);
     foreach($result as $row){
-      $output .= '<option value="'.$row['variant'].'">'.$row['variant'].'</option>';
+      $output .= '<option value="'.$row['variant_id'].'">'.$row['variant'].'</option>';
     }
     return $output;
   }
@@ -164,7 +164,7 @@ session_start();
           <input type="hidden"  id="reference_id" value="<?php echo $referenceId; ?>" readonly>
             <div class="form-group">
             <label for="fname">Fullname</label>
-            <input class="form-control" type="text" name="fname" id="fname" placeholder="">
+            <input class="form-control" type="text" name="fname" id="fname">
       
             </div>
             <div class="form-group">
@@ -185,8 +185,8 @@ session_start();
                 $result = mysqli_query($conn,$sql);
 				if(mysqli_num_rows($result)>0){
 					while($row =mysqli_fetch_array($result)){
-						$region= $row['region_name'];
-						echo '<option value="'.$region.'">'.$region.'</option>';
+						
+						echo '<option value="'.$row['region_id'].'">'.$row['region_name'].'</option>';
 					}
 					
 				}else{
@@ -236,7 +236,7 @@ session_start();
     function add_input_field(count){
 	  $('#testBtn').remove();
       var html='';
-      html+= '<div>'
+      html+= '<div>';
       html+= '<div class="form-group"><select class="form-control category" name="category" id="category"><option value="">Choose Category</option><?php echo fill_category_select_box($conn); ?></select></div>';
       html += '<div class="form-group"><select class="form-control variant" name="variant" id="variant"><option value="">Choose Variant</option><?php echo fill_variant_select_box($conn); ?></select></div>';
       html += '<div class="form-group"><input class="form-control quantity" type="text" name="quantity" id="quantity"></div>';
