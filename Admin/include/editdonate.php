@@ -3,5 +3,5 @@
     include 'connection.php';
     if (isset($_GET["update_donate"]))
     {
-       
+       $id= $_GET['update_donate'];
     }
