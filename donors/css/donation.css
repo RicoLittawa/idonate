@@ -240,3 +240,17 @@ nav{
       left:1000px;
       bottom: 150px;
   }
+.dropbtn {
+  border-style: solid;
+  border-color: transparent !important;
+}
+.dropbtn:hover{
+  background-color: transparent !important;
+  border-style: solid;
+  border-color: rgb(135, 241, 135) !important;
+}
+.btn_active {
+  color: rgb(59, 189, 59) !important;
+  background-color: transparent !important;
+}
+  

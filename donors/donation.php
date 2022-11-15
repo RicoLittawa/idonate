@@ -7,9 +7,9 @@ session_start()?>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/donation.css">
     <link rel="stylesheet" href="css/donors.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
@@ -39,20 +39,18 @@ session_start()?>
         <li class="nav-item">
           <a class="nav-link" href="whatisneeded">What is needed?</a>
         </li>
-        <li class="nav-item dropdown">
-          
        
-  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-    Create
-  </button>
+        <div class="dropdown">
+          <li class="nav-item">
+            <button type="button" class="nav-link dropbtn" data-toggle="dropdown">Create<i style="color: #696969;" class="fa-solid fa-plus"></i>
+            </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="donations.php">Donations</a>
-    <a class="dropdown-item" href="moneytable.php">Money Donors</a>
-
+    <a class="dropdown-item" href="requestform.php">Request Form</a>
+    <a class="dropdown-item" href="formoney.php">Monetary Form</a>
+  </div>
+  </li>
 </div>
-        </li>
-      </ul>
-  
+  </ul>
     </div>
   </div>
 </nav>

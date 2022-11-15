@@ -61,7 +61,7 @@ session_start()?>
       <div class="card" style="border-radius:50px;">
         <div class="imgBx">
           <a href="#">
-            <img src="./img/request.png">
+            <img src="./img/3.jpg">
           </a>
           <h2>Set Request </h2>
           <p><br>"Go to "Set Request" and create
@@ -76,7 +76,7 @@ session_start()?>
       <div class="card" style="border-radius:50px;">
         <div class="imgBx">
           <a href="#">
-            <img src="./img/fillup.png">
+            <img src="./img/2.jpg">
           </a>
           <h2>Fill Up</h2>
           <p><br>"Filled up all the necessary data
@@ -88,7 +88,7 @@ session_start()?>
       <div class="card" style="border-radius:50px;">
         <div class="imgBx">
           <a href="#">
-            <img src="./img/submit.png">
+            <img src="./img/1.jpg">
           </a>
           <h2>Submit </h2>
           <p><br>"Once all the fields are filled up, submit
