@@ -233,6 +233,7 @@ session_start();
   <script>  
    $(document).ready(function(){
     var count= 0;
+	
     function add_input_field(count){
 	  $('#testBtn').remove();
       var html='';
@@ -276,8 +277,7 @@ session_start();
 		var region = $('#region').val();
 		var email = $('#email').val();
 		var donation_date = $('#donation_date').val();
-
-		var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr}
+		var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
 		$.ajax({
 			url:'include/add.inc.php',
 			method:'POST',
@@ -330,8 +330,7 @@ session_start();
 		var region = $('#region').val();
 		var email = $('#email').val();
 		var donation_date = $('#donation_date').val();
-
-		var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr}
+		var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
 		$.ajax({
 			url:'include/add.inc.php',
 			method:'POST',
