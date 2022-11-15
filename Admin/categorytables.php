@@ -2,9 +2,9 @@
 session_start();
 ?>
  <?php
-	  include "include/connection.php";
+	  include "../Admin/include/connection.php";
 	    
-    $sql = "SELECT * FROM donation_items";
+    $sql = "SELECT * FROM donation_items10";
     $result = mysqli_query($conn,$sql);
 	
   
@@ -114,16 +114,13 @@ session_start();
 						</li>
 					</ul>
 				</div>
-				<!--Add modal -->
-				
-					<span><button class="btn adddata" type="button" ><a href="additemdonations.php">Add Donations<i class="fa-solid fa-plus"></i> </a></button></span>
 				   
 			</div>
 
 <div class="table-data">
 				<div class="add">
 					<div class="head">
-						<h3>Donor Information</h3>
+						<h3>Donation Items</h3>
 
 					
 						
@@ -134,7 +131,6 @@ session_start();
      <div class="dropdown-menu">
         <a class="dropdown-item" href="donations.php">Donations</a>
         <a class="dropdown-item" href="moneytable.php">Money Donors</a>
-		<a class="dropdown-item" href="categorytables.php">Donation Items</a>
       
   </div>
 </div>
@@ -144,66 +140,54 @@ session_start();
 			
     <thead>
       <tr>
-        <th><input type="checkbox" name="" id="selectAll" class="col"></th>
-		<th>ID</th>
-        <th>Fullname</th>
-		<th>Province</th>
-		<th>Street</th>
-		<th>Region</th>
-		<th>Email</th>
-      	<th>Donation Date</th>
-        <th>Status</th>
-        <th>Certificate</th>
-		
+        <th>ID</th>
+		<th>Category</th>
+		<th>Variant</th>
+		<th>Quantity</th>
       </tr>
     </thead>
     <tbody>
+		<?php if (mysqli_num_rows($result)):?>
+			<?php while($row= mysqli_fetch_assoc($result)): ?>
+				<tr>
+					<td><?php echo $row['id']; ?></td>
+					<?php 
+					$categM =$row['category'];
+					$sql2 = "SELECT * from category";
+					$result2= mysqli_query($conn, $sql2);
+					foreach($result2 as $row1):
+					?>
+					<?php if($categM == $row1['categ_id']): ?>
+						<td><?php echo $row1['category'] ?></td>
+						<?php endif; ?>
+
+					<?php endforeach; ?>
+					<?php
+					$variantM= $row['variant'];
+					$sql3="SELECT * from variant";
+					$result3=mysqli_query($conn,$sql3);
+					foreach($result3 as $row2):
+					?>
+					<?php if($variantM== $row2['variant_id']): ?>
+						<td><?php echo $row2['variant'] ?></td>
+						<?php endif;?>
+					<?php endforeach; ?>
+					<td><?php echo $row['quantity']; ?></td>
+				</tr>
+				<?php endwhile; ?>
+
+		<?php endif; ?>
 	
-     <?php
-       
-		$count=0;
-		   foreach($result as $row):?>
-		   
-			<php $count++; ?>
-			<tr class="clickable-row" data-href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>">
-   		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo $row['donor_email'];?>" data-name="<?php echo $row['donor_name']; ?>"></input></td>
-		<td><?php echo  $row['donor_id'];?></td>
-		<td><?php echo  $row['donor_name'];?></td>
-		<td><?php echo  $row['donor_province'];?></td>
-		<td><?php echo  $row['donor_street'];?></td>
-		<?php 
-		$regionM= $row['donor_region'];
-		 $sql2="SELECT * From regions";
-		 $result2=mysqli_query($conn,$sql2);
+ 
 		
-		 foreach($result2 as $row1){
-			if ($regionM== $row1['region_id']){
-				echo "<td>".$row1['region_name']."</td>
-				";
-			}
-		 }
 		
-		?>
-		<td><?php echo  $row['donor_email'];?></td>
-		<td><?php echo  $row['donationDate'];?></td>
-		<td>Recieved</td>
-		<td><button type="button" class="btn btn-info email_button" name="email_button" id="<?php echo $count; ?>"
-		data-email="<?php echo $row['donor_email']; ?>" data-name="<?php echo $row['donor_name']; ?>" data-action="single">Send</button>
-    </td>
 	
-		</tr>
-		   
+	
 		  
 	
 		
-		<?php endforeach; 	?>
 			
     </tbody>
-	<tr>
-		<td colspan="6"></td>
-		<td>
-     <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
-	</tr>
 	
   </table>
  
@@ -219,78 +203,9 @@ session_start();
 	<script src="../Admin/scripts/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	
-	<script src="../Admin/scripts/function.js"></script>
 	<script src="../donors/js/sweetalert2.all.min.js"></script>	
   <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
-  <!--Send certificate --->
-  <script>
-$(document).ready(function(){
- $('.email_button').click(function(){
-  $(this).attr('disabled', true);
-  
-  var id = $(this).attr("id");
-  var action = $(this).data("action");
-  var email_data = [];
-  if(action == 'single')
-  {
-   email_data.push({
-    email: $(this).data("email"),
-    name: $(this).data("name")
-   });
-  }
-  else
-  {
-   $('.single_select').each(function(){
-    if($(this). prop("checked") == true)
-    {
-     email_data.push({
-      email: $(this).data("email"),
-      name: $(this).data('name')
-     });
- 
-    
-    }
-   
-   });
-  }
-  
-  $.ajax({
-   url:"include/sendcerti.php",
-   method:"POST",
-   data:{email_data:email_data},
-   beforeSend:function(){
-    $('#'+id).html('Sending...');
-    $('#'+id).addClass('btn-danger');
-   },
-   success:function(data){
-    if(data = 'ok')
-    {
-     $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
-     $('#'+id).removeClass('btn-danger');
-     $('#'+id).removeClass('btn-info');
-     $('#'+id).addClass('btn-success');
-    }
-    else
-    {
-     $('#'+id).text(data);
-    }
-    $('.email_button='+id).attr('disabled', false);
-    
-   }
-   
-  });
- });
-});
-</script>
-  <!--Select all checkbox --->
-<script>
- $("#selectAll").click(function(){
-        $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
-
-});
-</script>
 <script>
   $(document).ready(function () {
     $('#table_data').DataTable({
@@ -304,13 +219,6 @@ $(document).ready(function(){
         searchPlaceholder: "Search Records",
       }
 
-    });
-});
-</script>
-<script>
-	$(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
     });
 });
 </script>

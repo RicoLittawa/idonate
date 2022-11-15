@@ -255,12 +255,14 @@ body {
 	border-radius: 0 36px 36px 0;
 	cursor: pointer;
 }
-.btnUpdate{
-	float: right;
-	font-family:'IBM Plex Sans', sans-serif;
-	font-weight: bold;
+.addDonate{
+	padding: 1rem;
+	width: 100px;
 	
 }
+.clickable-row{
+	cursor:pointer;
+	}
 #content nav .notification {
 	font-size: 20px;
 	position: relative;
@@ -417,16 +419,6 @@ table td{
 	  opacity: 1;
 	}
   }
-
-/* MAIN */
-/* CONTENT */
-
-
-
-
-
-
-
 
 
 @media screen and (max-width: 768px) {

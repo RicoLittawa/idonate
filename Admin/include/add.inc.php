@@ -1,80 +1,90 @@
 <?php
 
-    require 'connection.php';
-    if (isset($_POST["save_data"]))
+    include 'connection.php';
+    if (isset($_POST["saveBtn"]))
     {
+        $reference_id= $_POST['reference_id'];
         $Fname= $_POST['fname'];
         $Province= $_POST['province'];
         $Street = $_POST['street'];
         $Region = $_POST['region'];
         $Email= $_POST['email'];
         $Date= date('Y-m-d', strtotime($_POST['donation_date']));
-        $Category= $_POST['category'];
-        $Variant= $_POST['variant'];
-        $Quantity= $_POST['quantity'];
-        $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^"; 
-        if (empty($Fname)||empty($Province)||empty($Street)||empty($Region)||empty($Email)||empty($Date)||empty($Category)||empty($Variant)||empty($Quantity))
-        {
-            $res =[
-                'status' => 422,
+        $Category= $_POST['category_arr'];
+        $Variant= $_POST['variant_arr'];
+        $Quantity= $_POST['quantity_arr'];
+        if (empty($Fname)||empty($Province)||empty($Street)||empty($Region)||empty($Email)||empty($Date)||empty($Category)||empty($Variant)||empty($Quantity)){
+            $data =[
+                'status' => 404,
                 'message' => 'All fields are required'
-
             ];
-            echo json_encode($res);
+            echo json_encode($data);
             return false;
         }
-        else if($Region =="default"||$Category=="default"||$Variant=="default"){
-            $res =[
-                'status' => 422,
-                'message' => 'Please select an option'
-     
+        else{
+            $sql1 = "INSERT INTO donation_items (Reference,donor_name,donor_province,donor_street,donor_region,donor_email,donationDate)
+        VALUES (?,?,?,?,?,?,?)" ;
+        $stmt= mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$sql1)){
+            $data =[
+                'status' => 404,
+                'message' => 'SQL error'
             ];
-            echo json_encode($res);
+            echo json_encode($data);
             return false;
-        
-        }else if (!preg_match ($pattern, $Email) ){  
-            $res =[
-                'status' => 422,
-                'message' => 'Email is not valid'
-     
-            ];
-            echo json_encode($res);
-            return false;
-        }else if (!is_numeric($Quantity)){
-            $res =[
-                'status' => 422,
-                'message' => 'Only enter numeric values'
-     
-            ];
-            echo json_encode($res);
-            return false;
-        }else{
-            $sql = "INSERT INTO donation_items (donor_name,donor_province,donor_street,donor_region,donor_email,donationDate,donation_category,donation_variant,donation_quantity)
-        VALUES (?,?,?,?,?,?,?,?,?)" ;
-       $stmt= mysqli_stmt_init($conn);
-       if(!mysqli_stmt_prepare($stmt,$sql)){
-        $res =[
-            'status' => 422,
-            'message' => 'Sql Error'
+        }
+        else {
+            mysqli_stmt_bind_param($stmt,"sssssss",$reference_id,$Fname,$Province,$Street,$Region,$Email,$Date);
+            mysqli_stmt_execute($stmt);
+        }
 
-        ];
-        echo json_encode($res);
-        return false;
-       }
-   else{
-           mysqli_stmt_bind_param($stmt,"sssssssss",$Fname,$Province,$Street,$Region,$Email,$Date,$Category,$Variant,$Quantity);
-           mysqli_stmt_execute($stmt);
-           $res =[
-            'status' => 200,
-            'message' => 'Data has been added'
-
-        ];
-        echo json_encode($res);
-        return false;
+        $count = 0;
+        $resultCount = 0;
+        foreach($Category as $item){
+            $sql2= "INSERT INTO donation_items10 (Reference,category,variant,quantity) Values (?,?,?,?)";
+            $stmt=mysqli_stmt_init($conn);
+            if(!mysqli_stmt_prepare($stmt,$sql2)){
+                $data =[
+                    'status' => 404,
+                    'message' => 'SQL error'
+                ];
+                echo json_encode($data);
+                return false;
+            }
+            else{
+                mysqli_stmt_bind_param($stmt, 'ssss', $reference_id, $item, $Variant[$count], $Quantity[$count]);
+                $result = mysqli_stmt_execute($stmt);
+                if($result) {
+                    $resultCount = $resultCount + 1;
+                    $count=$count+1;
+                }
+            }
+        }
        
-       }
-    
+        
+        $reference_id=$reference_id+1;
+       $sql3="UPDATE donation_items_picking  set reference_id=? "; 
+       $stmt=mysqli_stmt_init($conn);
+       if(!mysqli_stmt_prepare($stmt,$sql3)){
+        $data =[
+            'status' => 404,
+            'message' => 'SQL error'
+        ];
+        echo json_encode($data);
+        return false;
+    } else{
+        mysqli_stmt_bind_param($stmt, 'i', $reference_id);
+         mysqli_stmt_execute($stmt);
+    }
+        $data =[
+            'status' => 422,
+            'message' => 'Data has been added'
+        ];
+        echo json_encode($data);
+        return false;
         }
+      
+        
         
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
