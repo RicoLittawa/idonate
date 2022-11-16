@@ -70,11 +70,10 @@ nav{
 /* RequestForm */
 .donorForm{
   position: relative;
-  left: 590px;
+  left: 550px;
   top: -100px;
   width:600px;
   padding: auto;
-  overflow: hidden;
  
 }
 

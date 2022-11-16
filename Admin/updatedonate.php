@@ -162,7 +162,7 @@ session_start();
 						</div>
 						<form action="" id="update-form">
 							<div>
-								<input type="text" name="donor_id" name="donor_id" value="<?php echo $donorid;?>">
+								<input type="text" name="donor_id" id="donor_id" value="<?php echo $donorid;?>">
 								<input type="text" value="<?php echo $donorreference;?>" name="reference_id" id="reference_id">
 								<div class="form-group">
 									<label for="fname">Fullname</label>
@@ -219,6 +219,7 @@ session_start();
 									$categM= $row1['category'];
 									$variantM= $row1['variant'];
 									$quantity= $row1['quantity'];
+									
 								?>
 							<div id="prevItem">
 								<div class="item">
@@ -259,6 +260,7 @@ session_start();
 							<div class="form-group">
 								<label for="quantity">Quantity</label>
 								<input class="form-control quantity" type="text" name="quantity" id="quantity" value="<?php echo $quantity; ?>">
+							
 								</div>
 								</div>
 								</div>
@@ -327,18 +329,18 @@ session_start();
 						var region = $('#region').val();
 						var email = $('#email').val();
 						var donation_date = $('#donation_date').val();
+						var ref10 = $('#ref10').val(); 
 
-						var data = {updateBtn: '',donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr}
-						console.log(data);
-		// 				$.ajax({
-		// 	url:'include/edit.inc.php',
-		// 	method:'POST',
-		// 	data: data,
-		// 	success:function(data){
-		// 		alert (data);
-		// 	}
+						var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr,ref10:ref10};
+						$.ajax({
+						url:'include/edit.inc.php',
+						method:'POST',
+						data: data,
+						success:function(data){
+							alert (data);
+		 	}
 
-		// });
+		 });
 						
 					});
 					});
@@ -362,7 +364,7 @@ session_start();
 							variant_arr.push($(variant[i]).val());
 							quantity_arr.push($(quantity[i]).val());		
 						}
-						var donorid=$('#donor_id').val();
+						var donor_id= $('#donor_id').val();
 						var reference_id= $('#reference_id').val();
 						var fname = $('#fname').val();
 						var province = $('#province').val();
@@ -370,10 +372,19 @@ session_start();
 						var region= $('#region').val();
 						var email = $('#email').val();
 						var donation_date = $('#donation_date').val();
-						
+						var ref10= $('#ref10').val();
 
-						var data = {saveBtn: '',donorid:donorid,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr}
-					
+						var data = {updateBtn: '',donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr,ref10:ref10};
+						console.log(data);
+					$.ajax({
+						url:'include/edit.inc.php',
+						method:'POST',
+						data: data,
+						success:function(data){
+							alert (data);
+		 	}
+
+		 });
 					});
 
 
