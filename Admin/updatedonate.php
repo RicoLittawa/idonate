@@ -236,7 +236,9 @@ session_start();
 									?>
 								<option value="<?php echo $row2['categ_id']; ?>"<?php if($categM == $row2['categ_id']) {echo 'selected="selected"';}?>>
 								<?php echo $row2['category'];?></option>
+								
 									<?php endforeach;?>
+									<input type="text" value="<?php echo $row2['categ_id']; ?>">
 								</select>
 								</div>	
 								</div>

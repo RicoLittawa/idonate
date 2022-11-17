@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2022 at 11:12 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Nov 17, 2022 at 04:50 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,8 +48,7 @@ INSERT INTO `category` (`categ_id`, `category`) VALUES
 (9, 'Tents and shelter materials'),
 (10, 'Sleeping kits'),
 (11, 'N95 masks'),
-(12, 'Nebulizer kits'),
-(13, 'Cash Donations');
+(12, 'Nebulizer kits');
 
 -- --------------------------------------------------------
 
@@ -59,36 +58,61 @@ INSERT INTO `category` (`categ_id`, `category`) VALUES
 
 CREATE TABLE `donation_items` (
   `donor_id` int(11) NOT NULL,
+  `Reference` bigint(20) NOT NULL,
   `donor_name` longtext NOT NULL,
   `donor_province` longtext NOT NULL,
   `donor_street` longtext NOT NULL,
-  `donor_email` longtext NOT NULL,
   `donor_region` longtext NOT NULL,
-  `donationDate` date NOT NULL,
-  `donation_category` longtext NOT NULL,
-  `donation_variant` longtext NOT NULL,
-  `donation_quantity` int(11) NOT NULL
+  `donor_email` longtext NOT NULL,
+  `donationDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `donation_items`
 --
 
-INSERT INTO `donation_items` (`donor_id`, `donor_name`, `donor_province`, `donor_street`, `donor_email`, `donor_region`, `donationDate`, `donation_category`, `donation_variant`, `donation_quantity`) VALUES
-(44, 'rico littawa', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', 'sample@gmail.com', 'Region IV‑A – CALABARZON', '2022-11-03', 'Canned goods, Noodles', 'Per-box', 12),
-(45, 'wendel', 'Batangas', 'Rosario Batangas', 'jeffersondetorres@gmail.com', 'Region IV‑A – CALABARZON', '2022-11-03', 'Infant Items', 'Per-box', 5),
-(46, 'Jobilleen Lopez', 'Batangas', 'Sta Maria Bauan', 'rico.littawa@g.batstate-u.edu.ph', 'Region IV‑A – CALABARZON', '2022-11-03', 'Hygiene Essentials', 'Per-box', 4),
-(47, 'Jobilleen Lopez', 'Batangas', 'Sta Maria Bauan', 'rico.littawa@g.batstate-u.edu.ph', 'Region IV‑A – CALABARZON', '2022-11-03', 'Hygiene Essentials', 'Per-box', 4),
-(48, 'Jobilleen Lopez', 'Batangas', 'Sta Maria Bauan', 'rico.littawa@g.batstate-u.edu.ph', 'Region IV‑A – CALABARZON', '2022-11-03', 'Hygiene Essentials', 'Per-box', 4),
-(49, 'Justin Gaethji', 'Cebu', 'Cebu', 'rico.littawa@g.batstate-u.edu.ph', 'Region VII – Central Visayas', '2022-11-06', 'Cash Donations', 'Money', 1500),
-(51, 'This is my name', 'cebu', 'cebu', 'try@gmail.com', 'Region VII – Central Visayas', '2022-11-05', 'Cash Donations', 'Money', 200),
-(52, 'teslaan', 'batangas', 'Balagtas Sitio 7 Tramo Pulo', 'try@gmail.com', 'Region IV‑A – CALABARZON', '2022-11-05', 'Cash Donations', 'Money', 121),
-(53, 'Justin Gaethji', 'Cebu', 'Cebu', 'rico.littawa@g.batstate-u.edu.ph', 'Region VII – Central Visayas', '2022-11-06', 'Cash Donations', 'Money', 1500),
-(54, 'Conor Mc Gregor', 'Mindoro', 'Mindoro Sample Street', 'jeffersondetorres@gmail.com', 'MIMAROPA Region', '2022-11-06', 'Cash Donations', 'Money', 1000),
-(55, 'Conor Mc Gregor', 'Mindoro', 'Mindoro Sample Street', 'jeffersondetorres@gmail.com', 'MIMAROPA Region', '2022-11-06', 'Cash Donations', 'Money', 1000),
-(56, 'deser pereda', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', 'decierclyn.pereda@g.batstate-u.edu.ph', 'Region IV‑A – CALABARZON', '2022-11-06', 'Nebulizer kits', 'Per-pieces', 56),
-(57, 'deser', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', 'decierclyn.pereda@g.batstate-u.edu.ph', 'Region IV‑A – CALABARZON', '2022-11-06', 'Clothes', 'Per-box', 5),
-(58, 'teslaan', 'batangas', 'Balagtas Sitio 7 Tramo Pulo', 'try@gmail.com', 'Region IV‑A – CALABARZON', '2022-11-05', 'Cash Donations', 'Money', 121);
+INSERT INTO `donation_items` (`donor_id`, `Reference`, `donor_name`, `donor_province`, `donor_street`, `donor_region`, `donor_email`, `donationDate`) VALUES
+(1, 26, 'rico littawa', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', '4', 'jeffersondetorres@gmail.com', '2022-11-15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `donation_items10`
+--
+
+CREATE TABLE `donation_items10` (
+  `id` int(11) NOT NULL,
+  `Reference` bigint(20) NOT NULL,
+  `category` longtext NOT NULL,
+  `variant` longtext NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `donation_items10`
+--
+
+INSERT INTO `donation_items10` (`id`, `Reference`, `category`, `variant`, `quantity`) VALUES
+(1, 26, '6', '7', 1),
+(2, 26, '6', '7', 1),
+(3, 26, '6', '7', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `donation_items_picking`
+--
+
+CREATE TABLE `donation_items_picking` (
+  `reference_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `donation_items_picking`
+--
+
+INSERT INTO `donation_items_picking` (`reference_id`) VALUES
+(27);
 
 -- --------------------------------------------------------
 
@@ -164,15 +188,15 @@ INSERT INTO `regions` (`region_id`, `region_name`) VALUES
 
 CREATE TABLE `set_request` (
   `request_id` int(11) NOT NULL,
+  `reference_id` bigint(20) NOT NULL,
   `req_name` longtext NOT NULL,
   `req_province` longtext NOT NULL,
   `req_street` longtext NOT NULL,
   `req_region` varchar(191) NOT NULL,
+  `valid_id` longtext NOT NULL,
   `req_email` longtext NOT NULL,
   `req_date` date NOT NULL,
-  `req_category` longtext NOT NULL,
-  `req_variant` longtext NOT NULL,
-  `req_quantity` int(11) NOT NULL,
+  `req_contact` int(11) NOT NULL,
   `req_note` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -180,9 +204,42 @@ CREATE TABLE `set_request` (
 -- Dumping data for table `set_request`
 --
 
-INSERT INTO `set_request` (`request_id`, `req_name`, `req_province`, `req_street`, `req_region`, `req_email`, `req_date`, `req_category`, `req_variant`, `req_quantity`, `req_note`) VALUES
-(39, 'Jobilleen Lopez', 'Batangas', 'Sta Maria Bauan', 'Region IV‑A – CALABARZON', 'rico.littawa@g.batstate-u.edu.ph', '2022-11-03', 'Hygiene Essentials', 'Per-box', 4, 'this is my note'),
-(40, 'deser', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', 'Region IV‑A – CALABARZON', 'decierclyn.pereda@g.batstate-u.edu.ph', '2022-11-06', 'Clothes', 'Per-box', 5, 'note');
+INSERT INTO `set_request` (`request_id`, `reference_id`, `req_name`, `req_province`, `req_street`, `req_region`, `valid_id`, `req_email`, `req_date`, `req_contact`, `req_note`) VALUES
+(1, 1, '', '', '', '-Select-', 'product.png', '[object HTMLInputElement]', '1970-01-01', 0, ''),
+(2, 1, 'dsadad', 'asdad', 'dasda', '14', 'coffee shop.png', '[object HTMLInputElement]', '2022-11-17', 1223, 'sadfsad'),
+(3, 1, 'rico', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', '3', 'product.png', 'rico.littawa@g.batstate-u.edu.ph', '2022-11-17', 12, '4'),
+(4, 1, 'ric', 'sdad', 'dada', '16', 'product.png', 'dasd', '2022-11-17', 12, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `set_request10`
+--
+
+CREATE TABLE `set_request10` (
+  `id` int(11) NOT NULL,
+  `Reference` bigint(20) NOT NULL,
+  `category` longtext NOT NULL,
+  `variant` longtext NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `set_request_pickings`
+--
+
+CREATE TABLE `set_request_pickings` (
+  `reference_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `set_request_pickings`
+--
+
+INSERT INTO `set_request_pickings` (`reference_id`) VALUES
+(1);
 
 -- --------------------------------------------------------
 
@@ -231,7 +288,8 @@ CREATE TABLE `variant` (
 INSERT INTO `variant` (`variant_id`, `variant`) VALUES
 (1, 'Per-box'),
 (2, 'Per-pieces'),
-(5, 'Money');
+(6, 'No Variant'),
+(7, 'Per-Pack');
 
 --
 -- Indexes for dumped tables
@@ -252,6 +310,18 @@ ALTER TABLE `donation_items`
   ADD KEY `donationDate` (`donationDate`);
 
 --
+-- Indexes for table `donation_items10`
+--
+ALTER TABLE `donation_items10`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `donation_items_picking`
+--
+ALTER TABLE `donation_items_picking`
+  ADD PRIMARY KEY (`reference_id`);
+
+--
 -- Indexes for table `monetary_donations`
 --
 ALTER TABLE `monetary_donations`
@@ -270,6 +340,18 @@ ALTER TABLE `regions`
 --
 ALTER TABLE `set_request`
   ADD PRIMARY KEY (`request_id`);
+
+--
+-- Indexes for table `set_request10`
+--
+ALTER TABLE `set_request10`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `set_request_pickings`
+--
+ALTER TABLE `set_request_pickings`
+  ADD PRIMARY KEY (`reference_id`);
 
 --
 -- Indexes for table `useradmin`
@@ -298,7 +380,19 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `donation_items`
 --
 ALTER TABLE `donation_items`
-  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `donation_items10`
+--
+ALTER TABLE `donation_items10`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `donation_items_picking`
+--
+ALTER TABLE `donation_items_picking`
+  MODIFY `reference_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `monetary_donations`
@@ -316,7 +410,19 @@ ALTER TABLE `regions`
 -- AUTO_INCREMENT for table `set_request`
 --
 ALTER TABLE `set_request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `set_request10`
+--
+ALTER TABLE `set_request10`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `set_request_pickings`
+--
+ALTER TABLE `set_request_pickings`
+  MODIFY `reference_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `useradmin`
@@ -328,7 +434,7 @@ ALTER TABLE `useradmin`
 -- AUTO_INCREMENT for table `variant`
 --
 ALTER TABLE `variant`
-  MODIFY `variant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `variant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

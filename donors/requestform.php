@@ -1,5 +1,5 @@
 <?php 
-  include '../Admin/include/connection.php';
+  include 'include/connection.php';
   function fill_category_select_box($conn)
   {
     $output= '';
@@ -19,6 +19,18 @@
       $output .= '<option value="'.$row['variant_id'].'">'.$row['variant'].'</option>';
     }
     return $output;
+  }
+  function fill_region_select_box($conn){
+    $output='';
+             
+    $sql = "SELECT * from regions ";
+    $result = mysqli_query($conn,$sql);
+    foreach($result as $row){
+      $output .= '<option value="'.$row['region_id'].'">'.$row['region_name'].'</option>';
+    }
+    return $output;
+    
+  
   }
   ?>
 
@@ -86,7 +98,15 @@
        <form id="requestform">
         
           <span id="msg" class="text-center"></span>
-         
+          <?php 
+          $sql="SELECT * from set_request_pickings";
+          $result=mysqli_query($conn,$sql);
+          foreach ($result as $row){
+            $referenceId= $row['reference_id'];
+          }
+          
+          ?>
+         <input type="hidden" name="ref_id" id="ref_id" value="<?php echo $referenceId ?>">
           <div class="row">
             <div class="col">
               <div class="form-group">
@@ -120,31 +140,27 @@
             <input class="form-control" type="date" name="req_date" id="req_date">
             </div>
             </div> 
-            
+            <div class="col">
+              <div class="form-group">
+            <label for="contact">Contact No.</label>
+            <input class="form-control" type="text" name="req_contact" id="req_contact">
+            </div>
             </div>	  
+            </div>
             <div class="row">
             <div class="col">
               <div class="form-group">
               <label for="region">Select Region</label>
               <select class="custom-select" name="req_region" id="req_region">
-              <option value="default">Choose Region</option>
-              <?php 
-             
-                $sql = "SELECT * from regions ";
-                $result = mysqli_query($conn,$sql);
-                while($row =mysqli_fetch_array($result))
-                {
-                  echo '<option value="'.$row['region_name'].'">'.$row['region_name'].'</option>';
-                }
-                
-              ?>
+              <option>-Select-</option>
+              <?php echo fill_region_select_box($conn) ?>             
             </select>
             </div>
 						</div>
            <div class="col">
            <label for="valid_id">Valid Id</label>
             <div class="custom-file">
-            <input type="file" name="valid_id" class="custom-file-input valid_id" id="customFile">
+            <input type="file" name="idImg" class="custom-file-input" id="idImg">
             <label class="custom-file-label" for="customFile">Choose file</label>
             </div>
            </div>
@@ -155,7 +171,7 @@
                 <div class="form-group">
             <label for="category">Select Category</label>
               <select class="custom-select req_category" name="req_category" id="req_category">
-              <option value="default">-Select-</option>
+              <option>-Select-</option>
              <?php echo fill_category_select_box($conn) ?>
             </select>
             </div>
@@ -164,7 +180,7 @@
               <div class="form-group">
             <label for="variant">Select Variant</label>
               <select class="custom-select req_variant" name="req_variant" id="req_variant">
-              <option value="default">-Select-</option>
+              <option>-Select-</option>
              <?php echo  fill_variant_select_box($conn)?>
             </select>
             </div>
@@ -184,7 +200,7 @@
           <div class="col">
             <div class="form-group">
              <label for="note">Donor's note (Optional)</label>
-              <textarea  class="form-control" type="text" name="req_note" id="req_note" placeholder="Donors Note" cols="30" rows="5" ></textarea>
+              <textarea style="display:center ;" class="form-control" type="text" name="req_note" id="req_note" placeholder="Donors Note" cols="80" rows="5" ></textarea>
               </div>
 						</div>
           </div>
@@ -268,6 +284,29 @@
           $('#requestform').append('<button type="button" style="float: right;width:200px;height:70px; " class="btn btn-success" id="testBtn">Save</button>');
           $('#testBtn').click(function(e){
             e.preventDefault();
+            var variant_arr=[];
+        var quantity_arr=[];
+        var category_arr=[];
+        var category = $('.req_category');
+        var variant = $('.req_variant');
+        var quantity = $('#req_quantity');
+        for (var i = 0;i<category.length;i++){
+          category_arr.push($(category[i]).val());
+          variant_arr.push($(variant[i]).val());
+          quantity_arr.push($(quantity[i]).val());
+		}     
+          var reference_id = $('#ref_id').val();
+          var fname = $('#req_fname').val();
+          var province = $('#req_province').val();
+          var street = $('#req_street').val();
+          var region = $('#req_region').val();
+          var id_img = $('#idImg').val();
+          var email = $('#req_email').val();
+          var donation_date = $('#req_date').val();
+          var contact = $('#req_contact').val();
+          var note= $('#req_note').val();
+          var data={saveBtn: '',reference_id:reference_id,fname:fname,province:province,street:street,region:region,id_img:id_img,email:email,donation_date:donation_date,contact:contact,note:note,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
+          console.log(data);
            
           });
         });
@@ -275,9 +314,9 @@
         $(document).on('click','#remove', function(){
           $(this).closest('div').remove();
            });
-      });
-//main page addbtn
-      $(document).on('click', '#testBtn',function(){
+           //main page addbtn
+      $('#testBtn').click(function(e){
+        e.preventDefault
         var variant_arr=[];
         var quantity_arr=[];
         var category_arr=[];
@@ -288,8 +327,55 @@
           category_arr.push($(category[i]).val());
           variant_arr.push($(variant[i]).val());
           quantity_arr.push($(quantity[i]).val());
-		} alert (category_arr);
+		}     
+          var form = $('#requestform')[0];
+          
+          var fd = new FormData(form);
+          var ref_id = $('#ref_id').val();
+          
+          var req_fname = $('#req_fname').val();
+          var req_province = $('#req_province').val();
+          var req_street = $('#req_street').val();
+          var req_region = $('#req_region').val();
+          var req_email = $('#req_email').val();
+          var req_donation_date = $('#req_date').val();
+          var req_contact = $('#req_contact').val();
+          var req_note= $('#req_note').val();
+          var files = $('#idImg')[0].files;
+        
+
+          fd.append('ref_id',ref_id);
+          fd.append('req_fname',req_fname);
+          fd.append('req_street',req_street);
+          fd.append('req_province',req_province);
+          fd.append('req_region',req_region);
+          fd.append('req_email',req_email);
+          fd.append('req_date',req_donation_date);
+          fd.append('req_contact',req_contact);
+          fd.append('req_note',req_note);
+          fd.append('category_arr',category_arr);
+          fd.append('variant_arr',variant_arr);
+          fd.append('quantity_arr',quantity_arr);
+          fd.append('file_img',files[0]);
+          fd.append("saveBtn",true);
+          
+         
+          $.ajax({
+              url: 'addrequest.php',
+              method: 'POST',
+              data:fd,
+              processData:false,
+              contentType:false,  
+              success: function(response) {
+              var res= jQuery.parseJSON(response);
+                       alert (res);
+                      }
       });
+      
+        
+      });
+      });
+
     </script>
   </body>
 </html>

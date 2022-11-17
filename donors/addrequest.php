@@ -1,87 +1,48 @@
 <?php
 
 
-    require '../donors/include/connection.php';
-    if (isset($_POST["request_data"]))
+    include '../donors/include/connection.php';
+    if (isset($_POST["saveBtn"]))
     {
-    $Fname=$_POST['fname'];
-    $Province= $_POST['province'];
-    $Street= $_POST['street'];
-    $Region=  $_POST['region'];
-    $Email=  $_POST['email'];
-    $Date= date('Y-m-d', strtotime($_POST['donation_date']));
-    $Categ= $_POST['category'];
-    $Variant=$_POST['variant'];
-    $Quantity= $_POST['quantity'];
-    $DNote=$_POST['note'];
-    $pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";  
-    if (empty($Fname)||empty($Province)||empty($Street)||empty($Region)||empty($Email)||empty($Date)||
-    empty($Categ)||empty($Variant)||empty($Quantity)||empty($DNote)){
-        $res =[
-            'status' => 422,
-            'message' => 'All fields are required'
- 
-        ];
-        echo json_encode($res);
-        return false;
-    }else if($Region =="default"||$Categ=="default"||$Variant=="default"){
-        $res =[
-            'status' => 422,
-            'message' => 'Please select an option'
- 
-        ];
-        echo json_encode($res);
-        return false;
-    
-    }
-    else if (!preg_match ($pattern, $Email) ){  
-        $res =[
-            'status' => 422,
-            'message' => 'Email is not valid'
- 
-        ];
-        echo json_encode($res);
-        return false;
-    }else if (!is_numeric($Quantity)){
-        $res =[
-            'status' => 422,
-            'message' => 'Only enter numeric values'
- 
-        ];
-        echo json_encode($res);
-        return false;
-    }
-    else{
-        $sql = "INSERT INTO set_request (req_name,req_province,req_street,req_region,req_email,req_date,req_category,req_variant,req_quantity,req_note)
-        VALUES (?,?,?,?,?,?,?,?,?,?)" ;
-       $stmt= mysqli_stmt_init($conn);
-       if(!mysqli_stmt_prepare($stmt,$sql)){
-           $res =[
-               'status' => 422,
-               'message' => 'Request error'
-    
-           ];
-           echo json_encode($res);
-           return false;
-       }
-       else{
-           mysqli_stmt_bind_param($stmt,"ssssssssss",$Fname,$Province,$Street,$Region,$Email,$Date,$Categ,$Variant,$Quantity,$DNote);
-           mysqli_stmt_execute($stmt);
-           $res =[
-               'status' => 200,
-               'message' => 'Request has been sent'
-    
-           ];
-           echo json_encode($res);
-           return false;
-         
-       }
-       }
-
+   $referenceId= $_POST['ref_id'];
+   $fname= $_POST['req_fname'];
+   $province= $_POST['req_province'];
    
-     
-       
-     
-     mysqli_stmt_close($stmt);
-     mysqli_close($conn);
+   $street= $_POST['req_street'];
+  $region= $_POST['req_region'];
+   $email= $_POST['req_email'];
+   $date= date('Y-m-d', strtotime($_POST['req_date']));
+   $contact=$_POST['req_contact'];
+   $note=$_POST['req_note'];
+   $category= $_POST['category_arr'];
+   $variant= $_POST['variant_arr'];
+   $quantity= $_POST['quantity_arr'];
+
+
+  
+   $File = $_FILES['file_img']['name'];
+
+   $filePath='ValidId/';
+   $filename=  $filePath.basename($_FILES['file_img']['name']);
+   $filetype=strtolower(pathinfo($filename,PATHINFO_EXTENSION));
+   $allowtypes= array('jpg','png','jpeg','gif');
+   if (in_array($filetype,$allowtypes)){
+       if(move_uploaded_file($_FILES['file_img']['tmp_name'],$filePath.$File)){
+        $sql= "INSERT into set_request (reference_id,req_name,req_province,req_street,req_region,valid_id,req_email,req_date,req_contact,req_note)
+        Values(?,?,?,?,?,?,?,?,?,?)";
+        $stmt= mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$sql)){
+            
+        }
+        else {
+            mysqli_stmt_bind_param($stmt,"ssssssssss",$referenceId,$fname,$province,$street,$region,$File,$email,$date,$contact,$note);
+            mysqli_stmt_execute($stmt);
+            $res= "save";
+            echo json_encode($res);
+            return false;
+        }
+
+       }
+    }
+
     }
