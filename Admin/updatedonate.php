@@ -21,6 +21,26 @@ session_start();
 			$donoremail= $row['donor_email'];
 			$donordate= $row['donationDate'];
 	}
+	function fill_category_select_box($conn)
+  {
+    $output= '';
+    $sql= "SELECT * From category order by categ_id ASC";
+    $result = mysqli_query($conn,$sql);
+	    foreach($result as $row){
+      $output .= '<option value="'.$row['categ_id'].'">'.$row['category'].'</option>';
+    }
+    return $output;
+  }
+  
+  function fill_variant_select_box($conn){
+    $output= '';
+    $sql= "SELECT * From variant order by variant_id ASC";
+    $result = mysqli_query($conn,$sql);
+    foreach($result as $row){
+      $output .= '<option value="'.$row['variant_id'].'">'.$row['variant'].'</option>';
+    }
+    return $output;
+  }
 	
 ?>
 
@@ -142,34 +162,43 @@ session_start();
 						</div>
 						<form action="" id="update-form">
 							<div>
-								<input type="text" value="<?php echo $donorid;?>">
-								<input type="text" value="<?php echo $donorreference;?>" id="reference_id">
+								<input type="text" name="donor_id" id="donor_id" value="<?php echo $donorid;?>">
+								<input type="text" value="<?php echo $donorreference;?>" name="reference_id" id="reference_id">
 								<div class="form-group">
 									<label for="fname">Fullname</label>
 									<input class="form-control" type="text" name="fname" id="fname" value="<?php echo $donorname; ?>">
 									</div>
+								<div class="row">
+  								<div class="col">
 								<div class="form-group">
 									<label for="province">Province</label>
 									<input class="form-control" type="text" name="province" id="province"value="<?php echo $donorprovince; ?>">
 									</div>
+									</div>
+								<div class="col">
 								<div class="form-group">
 									<label for="street">Street</label>
 									<input class="form-control" type="text" name="street" id="street" value="<?php echo $donorstreet; ?>">
 									</div>
+									</div>
+									</div>
 								<div class="form-group">
 									<label for="region">Select Region</label>
-									<select class="custom-select" name="region" id="region">
+									
+									<select class="custom-select region" name="region" id="region">
+									
 									<option>-Choose Region-</option>
-										<?php 
+									<?php 
 										$sql = "SELECT * FROM regions";
 										$result = mysqli_query($conn,$sql);
-										foreach($result as $row):
+										foreach($result	 as $row):
 										?>
-									<option value="<?php $row['region_name'];?>"
+									<option value="<?php echo $row['region_id'];?>"
 										<?php if($donorregion == $row['region_id']) {echo 'selected="selected"';}?>>
 									<?php echo $row['region_name'];?></option>
-										<?php endforeach;  ?>
+									<?php endforeach;  ?>
 									</select>
+									
 									</div>    
 								<div class="form-group">
 									<label for="email">Email</label>
@@ -190,10 +219,15 @@ session_start();
 									$categM= $row1['category'];
 									$variantM= $row1['variant'];
 									$quantity= $row1['quantity'];
+									
 								?>
-							<div class="form-group categ">
+							<div id="prevItem">
+								<div class="item">
+							<div class="row">
+							<div class="col">
+							<div class="form-group">
 								<label for="category">Select Category</label>
-								<select  class="custom-select" name="category" id="category">
+								<select  class="custom-select category" name="category" id="category">
 								<option>-Choose Category-</option>
 									<?php
 										$sql2= "SELECT * from category";
@@ -205,9 +239,11 @@ session_start();
 									<?php endforeach;?>
 								</select>
 								</div>	
+								</div>
+							<div class="col">
 							<div class="form-group">	
 								<label for="category">Select Variant</label>		
-								<select  class="custom-select" name="variant" id="variant">
+								<select  class="custom-select variant" name="variant" id="variant">
 								<option>-Choose Category-</option>
 									<?php
 										$sql3= "SELECT * from variant";
@@ -219,13 +255,19 @@ session_start();
 									<?php endforeach;?>
 								</select>
 								</div>
+								</div>
+							<div class="col">
 							<div class="form-group">
 								<label for="quantity">Quantity</label>
-								<input class="form-control" type="text" name="quantity" id="quantity" value="<?php echo $quantity; ?>">
+								<input class="form-control quantity" type="text" name="quantity" id="quantity" value="<?php echo $quantity; ?>">
+							
 								</div>
-								
+								</div>
+								</div>
+								</div>	
+								</div>
 								<?php  $counter++; endforeach;?>
-								<div> <button class="btn btn-success">Update</button></div>
+								
 						</form>	
 			</div>
 		</main>	
@@ -237,9 +279,116 @@ session_start();
 	<script src="../donors/js/sweetalert2.all.min.js"></script>	
 	<script>
 		$(document).ready(function(){
-			$('#btn_additem').on('click',function(){
-				$("#item").append().html('<p>this is new</p>');
-			});
+			var count =0;
+			function add_input_field(count){
+				$('#testBtn').remove();
+				var html='';
+				
+				html+='<div>'
+				html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select category" name="category" id="category"><option value="">Choose Category</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
+				html += '<div class="col"><div class="form-group"><select class="custom-select variant" name="variant" id="variant"><option value="">Choose Variant</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
+				html += '<div class="col"><div class="form-group"><input class="form-control quantity" type="text" name="quantity" id="quantity"></div></div></div>';
+				
+				var remove_button='';
+				if(count>0)
+				{
+					remove_button='<button type="button" name="remove" id="remove" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>';
+				}
+				html+='<span>'+remove_button+'</span></div>';
+				return html;
+				}	
+			//button remove for previousdata
+			$('#update-form').append('<button  type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Save</button>');
+			$('.item').append('<button type="button" name="prevremove" id="prevremove" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>');	
+			$(document).on('click','#btn_additem',function(){
+				count++;
+				$('#update-form').append(add_input_field(count))
+				$('#update-form').append('<button type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Save</button>');
+					$('#testBtn').click(function(e){
+						e.preventDefault();
+						var variant_arr=[];
+						var quantity_arr=[];
+						var category_arr=[];
+						var region_arr=[];
+						var category = $('.category');
+						var variant = $('.variant');
+						var quantity = $('.quantity');
+						
+
+						for (var i = 0;i<category.length;i++){
+							category_arr.push($(category[i]).val());
+							variant_arr.push($(variant[i]).val());
+							quantity_arr.push($(quantity[i]).val());
+							
+						}
+						var donor_id= $('#donor_id').val();
+						var reference_id= $('#reference_id').val();
+						var fname = $('#fname').val();
+						var province = $('#province').val();
+						var street = $('#street').val();
+						var region = $('#region').val();
+						var email = $('#email').val();
+						var donation_date = $('#donation_date').val();
+						var ref10 = $('#ref10').val(); 
+
+						var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr,ref10:ref10};
+						$.ajax({
+						url:'include/edit.inc.php',
+						method:'POST',
+						data: data,
+						success:function(data){
+							alert (data);
+		 	}
+
+		 });
+						
+					});
+					});
+			$(document).on('click','#remove', function(){
+				$(this).closest('div').remove();
+				});
+			//remove previous data
+			$(document).on('click','#prevremove', function(){
+				$(this).closest('div').remove();
+				});
+				$('#testBtn').click(function(e){
+						e.preventDefault();
+						var variant_arr=[];
+						var quantity_arr=[];
+						var category_arr=[];
+						var category = $('.category');
+						var variant = $('.variant');
+						var quantity = $('.quantity');
+						for (var i = 0;i<category.length;i++){
+							category_arr.push($(category[i]).val());
+							variant_arr.push($(variant[i]).val());
+							quantity_arr.push($(quantity[i]).val());		
+						}
+						var donor_id= $('#donor_id').val();
+						var reference_id= $('#reference_id').val();
+						var fname = $('#fname').val();
+						var province = $('#province').val();
+						var street = $('#street').val();
+						var region= $('#region').val();
+						var email = $('#email').val();
+						var donation_date = $('#donation_date').val();
+						var ref10= $('#ref10').val();
+
+						var data = {updateBtn: '',donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr,ref10:ref10};
+						console.log(data);
+					$.ajax({
+						url:'include/edit.inc.php',
+						method:'POST',
+						data: data,
+						success:function(data){
+							alert (data);
+		 	}
+
+		 });
+					});
+
+
+					
 		});
 	</script>
 
