@@ -40,16 +40,18 @@ session_start()?>
           <a class="nav-link" href="whatisneeded">What is needed?</a>
         </li>
        
-        <div class="dropdown">
-          <li class="nav-item">
-            <button type="button" class="nav-link dropbtn" data-toggle="dropdown">Create<i class="fa-solid fa-plus"></i>
+        
+     <div class="dropdown"> 
+      <li class="nav-item">      
+            <button type="button" class="nav-link dropbtn" data-toggle="dropdown">Create<i style="color: #83f28f;" class="fa-solid fa-plus"></i>
             </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item123" href="requestform.php">Request Form </a>
-    <a class="dropdown-item123" href="formoney.php">Monetary Form </a>
+      <div class="dropdown-menu">
+      <a class="dropdown-item123" href="requestform.php">Request Form </a>
+      <a class="dropdown-item123" href="formoney.php">Monetary Form </a>
   </div>
   </li>
 </div>
+
   </ul>
     </div>
   </div>
