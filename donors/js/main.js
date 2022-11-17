@@ -62,8 +62,7 @@ $(document).ready(function(){
       event.preventDefault();
       
       var formData= new FormData(this);
-      formData.append("monetary_data",true);
-      
+      formData.append("monetary_data",true);    
       Swal.fire({  
         title: 'Do you want to send this request?',  
         showDenyButton: true,  showCancelButton: true,  
