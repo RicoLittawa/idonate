@@ -243,6 +243,7 @@ nav{
 .dropbtn {
   border-style: solid;
   border-color: transparent !important;
+  background-color: transparent !important;
 }
 .dropbtn:hover{
   background-color: transparent !important;
@@ -254,9 +255,8 @@ nav{
   background-color: transparent !important;
 }
 .dropdown-menu {
-  background-color: #e0fadd;
-  border-color: transparent !important;
-  background-color: transparent !important;
+  background-color: #eeeeee;
+  text-decoration: none;
 }
 .dropdown-item123{
   color: black;
