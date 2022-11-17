@@ -219,6 +219,8 @@ session_start();
 									$categM= $row1['category'];
 									$variantM= $row1['variant'];
 									$quantity= $row1['quantity'];
+									$reference= $row1['Reference'];
+									$donation10 = $row1['id'];
 									
 								?>
 							<div id="prevItem">
@@ -232,21 +234,25 @@ session_start();
 									<?php
 										$sql2= "SELECT * from category";
 										$result2= mysqli_query($conn,$sql2);
-										foreach ($result2 as $row2): 				
+										foreach ($result2 as $row2): 		
+													
 									?>
+									
 								<option value="<?php echo $row2['categ_id']; ?>"<?php if($categM == $row2['categ_id']) {echo 'selected="selected"';}?>>
 								<?php echo $row2['category'];?></option>
 								
-									<?php endforeach;?>
-									<input type="text" value="<?php echo $row2['categ_id']; ?>">
+								
+									<?php endforeach; ?>
+										
 								</select>
+							
 								</div>	
 								</div>
 							<div class="col">
 							<div class="form-group">	
-								<label for="category">Select Variant</label>		
+								<label for="variant">Select Variant</label>		
 								<select  class="custom-select variant" name="variant" id="variant">
-								<option>-Choose Category-</option>
+								<option>-Choose Variant-</option>
 									<?php
 										$sql3= "SELECT * from variant";
 										$result3= mysqli_query($conn,$sql3);
@@ -262,12 +268,12 @@ session_start();
 							<div class="form-group">
 								<label for="quantity">Quantity</label>
 								<input class="form-control quantity" type="text" name="quantity" id="quantity" value="<?php echo $quantity; ?>">
-							
 								</div>
 								</div>
 								</div>
 								</div>	
 								</div>
+								<input type="hidden" class="donationUID" value="<?php echo $donation10; ?>"/>
 								<?php  $counter++; endforeach;?>
 								
 						</form>	
@@ -291,12 +297,14 @@ session_start();
 				html += '<div class="col"><div class="form-group"><select class="custom-select variant" name="variant" id="variant"><option value="">Choose Variant</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
 				html += '<div class="col"><div class="form-group"><input class="form-control quantity" type="text" name="quantity" id="quantity"></div></div></div>';
 				
+				
 				var remove_button='';
 				if(count>0)
 				{
 					remove_button='<button type="button" name="remove" id="remove" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>';
 				}
 				html+='<span>'+remove_button+'</span></div>';
+				html+= '<input type="hidden" class="donationUID" value="<?php echo $donation10; ?>"/>'
 				return html;
 				}	
 			//button remove for previousdata
@@ -312,15 +320,21 @@ session_start();
 						var quantity_arr=[];
 						var category_arr=[];
 						var region_arr=[];
+						var donationUID_arr=[];
 						var category = $('.category');
 						var variant = $('.variant');
 						var quantity = $('.quantity');
+						var donationUID= $('.donationUID');
+						
+						
+						
 						
 
 						for (var i = 0;i<category.length;i++){
 							category_arr.push($(category[i]).val());
 							variant_arr.push($(variant[i]).val());
 							quantity_arr.push($(quantity[i]).val());
+							donationUID_arr.push($(donationUID[i]).val());
 							
 						}
 						var donor_id= $('#donor_id').val();
@@ -331,15 +345,25 @@ session_start();
 						var region = $('#region').val();
 						var email = $('#email').val();
 						var donation_date = $('#donation_date').val();
-						var ref10 = $('#ref10').val(); 
+						
 
-						var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr,ref10:ref10};
+						var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr,
+							donationUID_arr:donationUID_arr};
 						$.ajax({
 						url:'include/edit.inc.php',
 						method:'POST',
 						data: data,
 						success:function(data){
-							alert (data);
+							var data = jQuery.parseJSON(data);
+							if(data.status == 422) {
+							Swal.fire({
+						icon: 'success',
+						title: 'Success',
+						text: data.message,
+						}).then(function() {
+							window.location = "donations.php";
+						});
+				}	
 		 	}
 
 		 });
@@ -358,13 +382,19 @@ session_start();
 						var variant_arr=[];
 						var quantity_arr=[];
 						var category_arr=[];
+						var donationUID_arr=[];
+						
+						var donationUID= $('.donationUID');
 						var category = $('.category');
 						var variant = $('.variant');
 						var quantity = $('.quantity');
 						for (var i = 0;i<category.length;i++){
 							category_arr.push($(category[i]).val());
 							variant_arr.push($(variant[i]).val());
-							quantity_arr.push($(quantity[i]).val());		
+							quantity_arr.push($(quantity[i]).val());
+							donationUID_arr.push($(donationUID[i]).val());
+							
+
 						}
 						var donor_id= $('#donor_id').val();
 						var reference_id= $('#reference_id').val();
@@ -374,16 +404,26 @@ session_start();
 						var region= $('#region').val();
 						var email = $('#email').val();
 						var donation_date = $('#donation_date').val();
-						var ref10= $('#ref10').val();
-
-						var data = {updateBtn: '',donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr,ref10:ref10};
-						console.log(data);
+						
+						
+						var data = {updateBtn: '',donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr,
+							donationUID_arr:donationUID_arr};
+						
 					$.ajax({
 						url:'include/edit.inc.php',
 						method:'POST',
 						data: data,
 						success:function(data){
-							alert (data);
+							var data = jQuery.parseJSON(data);
+							if(data.status == 422) {
+							Swal.fire({
+						icon: 'success',
+						title: 'Success',
+						text: data.message,
+						}).then(function() {
+							window.location = "donations.php";
+						});
+				}	
 		 	}
 
 		 });
