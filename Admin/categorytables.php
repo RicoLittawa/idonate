@@ -85,10 +85,7 @@ session_start();
 		<nav>
 			<i class='bx bx-menu' ></i>
 			<form action="#">
-				<div class="form-input">
-					<input type="text" placeholder="Search..." name="search" >
-					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-				</div>
+				
 			</form>
 			<a href="#" class="notification">
 				<i class='bx bxs-bell' ></i>
@@ -129,14 +126,15 @@ session_start();
        Select Table
       </button>
      <div class="dropdown-menu">
-        <a class="dropdown-item" href="donations.php">Donations</a>
+		 <a class="dropdown-item" href="donations.php">Donations</a>
         <a class="dropdown-item" href="moneytable.php">Money Donors</a>
+		<a class="dropdown-item" href="categorytables.php">Donation Items</a>
       
   </div>
 </div>
 					</div>
 					
-					<table class="table table-bordered table-hover" style="width:100%" id="table_data">
+					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
 			
     <thead>
       <tr>

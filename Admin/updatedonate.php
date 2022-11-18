@@ -120,10 +120,7 @@ session_start();
 		<nav>
 			<i class='bx bx-menu' ></i>
 			<form action="#">
-				<div class="form-input">
-					<input type="text" placeholder="Search..." name="search" >
-					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-				</div>
+				
 			</form>
 			<a href="#" class="notification">
 				<i class='bx bxs-bell' ></i>
@@ -141,11 +138,11 @@ session_start();
 					<h1>Donations</h1>
 					<ul class="breadcrumb">
 						<li>
-							<a href="#" style="font-size: 18px;">Dashboard</a>
+							<a href="adminpage.php" style="font-size: 18px;">Dashboard</a>
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
 						<li>
-							<a class="active" href="#" style="font-size: 18px;">Home</a>
+							<a class="active" href="donations.php" style="font-size: 18px;">Back</a>
 						</li>
 					</ul>
 				</div>
@@ -157,13 +154,12 @@ session_start();
 				<div class="add">
 					<div class="head">
 						<h3>Update Donations</h3>
-						<button type="button" name="btn_additem" class="btn btn-success" id="btn_additem"><i class="fa-sharp fa-solid fa-plus"></i> 
-                          </button>
+						
 						</div>
 						<form action="" id="update-form">
 							<div>
-								<input type="text" name="donor_id" id="donor_id" value="<?php echo $donorid;?>">
-								<input type="text" value="<?php echo $donorreference;?>" name="reference_id" id="reference_id">
+								<input type="hidden" name="donor_id" id="donor_id" value="<?php echo $donorid;?>" readonly	>
+								<input type="hidden" value="<?php echo $donorreference;?>" name="reference_id" id="reference_id" readonly>
 								<div class="form-group">
 									<label for="fname">Fullname</label>
 									<input class="form-control" type="text" name="fname" id="fname" value="<?php echo $donorname; ?>">
@@ -210,7 +206,16 @@ session_start();
 									</div>
 							</div>
 							
+							
+							<div class="row">
+								<div class="col">
+							<div class="form-group">
 							<label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>
+							<button style="float: right;" type="button" name="btn_additem" class="btn" id="btn_additem"><i style="color: green;font-size:40px;" class="fa-sharp fa-solid fa-plus"></i> 
+								</button>
+							</div>
+							</div>
+							</div>
 								<?php 
 								$sql1="SELECT * from donation_items10 where Reference= $donorreference";
 								$result1=mysqli_query($conn,$sql1);
@@ -223,7 +228,9 @@ session_start();
 									$donation10 = $row1['id'];
 									
 								?>
+								
 							<div id="prevItem">
+							
 								<div class="item">
 							<div class="row">
 							<div class="col">

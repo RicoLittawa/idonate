@@ -101,10 +101,7 @@ session_start();
 		<nav>
 			<i class='bx bx-menu' ></i>
 			<form action="#">
-				<div class="form-input">
-					<input type="text" placeholder="Search..." name="search" >
-					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-				</div>
+				
 			</form>
 			<a href="#" class="notification">
 				<i class='bx bxs-bell' ></i>
@@ -140,42 +137,42 @@ session_start();
 					
 						
         <div>
-        <button type="button" name="btn_additem" class="btn btn-success" id="btn_additem"><i class="fa-sharp fa-solid fa-plus"></i> 
-                          </button>
+       
                           
         </div>
 					</div>
 					<form id="add-form">
-          <div>
+          
   			<?php 
 				$referenceId = "";
 				$sql = "SELECT * FROM donation_items_picking";
                 $result = mysqli_query($conn,$sql);
-				if (mysqli_num_rows($result)){
-					while($row =mysqli_fetch_assoc($result))
-					{
-						$referenceId = $row['reference_id'];
-					}
-				}else{
-					echo'No records found';
+				foreach($result as $row){
+					$referenceId = $row['reference_id'];
 				}
                 
 			?>
           <input type="hidden"  id="reference_id" value="<?php echo $referenceId; ?>" readonly>
-            <div class="form-group">
-            <label for="fname">Fullname</label>
-            <input class="form-control" type="text" name="fname" id="fname">
-      
+		  <div class="row">
+			<div class="col">
+				<div class="form-group">
+				<label for="fname">Fullname</label>
+				<input class="form-control" type="text" name="fname" id="fname">
             </div>
-            <div class="form-group">
-            <label for="province">Province</label>
-            <input class="form-control" type="text" name="province" id="province">
-            </div>
-            <div class="form-group">
-            <label for="street">Street</label>
-            <input class="form-control" type="text" name="street" id="street">
-            
-            </div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+				<label for="province">Province</label>
+				<input class="form-control" type="text" name="province" id="province">
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+				<label for="street">Street</label>
+				<input class="form-control" type="text" name="street" id="street">
+				</div>
+			</div>
+		  </div>	
             <div class="form-group">
               <label for="region">Select Region</label>
               <select class="custom-select" name="region" id="region">
@@ -183,36 +180,33 @@ session_start();
               <?php 
                 $sql = "SELECT * FROM regions";
                 $result = mysqli_query($conn,$sql);
-				if(mysqli_num_rows($result)>0){
-					while($row =mysqli_fetch_array($result)){
-						
-						echo '<option value="'.$row['region_id'].'">'.$row['region_name'].'</option>';
-					}
-					
-				}else{
-					echo "No records found";
-				}
-                
-                
-                 
-                
+				foreach($result as $row){
+					echo '<option value="'.$row['region_id'].'">'.$row['region_name'].'</option>';
+				} 
               ?>
             </select>
-			</div>    
+			</div>   
+			
             <div class="form-group">
             <label for="email">Email</label>
             <input class="form-control" type="text" name="email" id="email">
-            
             </div>
+			
             <div class="form-group">
             <label for="donation_date">Donation Date</label>
             <input class="form-control" type="date" name="donation_date" id="donation_date">
             </div>
-         
            
-            </div>
-			<label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>
-            
+			
+            <div class="row">
+				<div class="col">
+					<div class="form-group">
+					<label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>
+						<button style="float: right;" type="button" name="btn_additem" class="btn" id="btn_additem"><i style="color: green;font-size:40px;" class="fa-sharp fa-solid fa-plus"></i> 
+								</button>
+					</div>
+				</div>
+			</div>
           </form>
 				
   			
@@ -238,9 +232,9 @@ session_start();
 	  $('#testBtn').remove();
       var html='';
       html+= '<div>';
-      html+= '<div class="form-group"><select class="form-control category" name="category" id="category"><option value="">Choose Category</option><?php echo fill_category_select_box($conn); ?></select></div>';
-      html += '<div class="form-group"><select class="form-control variant" name="variant" id="variant"><option value="">Choose Variant</option><?php echo fill_variant_select_box($conn); ?></select></div>';
-      html += '<div class="form-group"><input class="form-control quantity" type="text" name="quantity" id="quantity"></div>';
+      html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="form-control category" name="category" id="category"><option value="">Choose Category</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
+      html += '<div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="form-control variant" name="variant" id="variant"><option value="">Choose Variant</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
+      html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity" type="text" name="quantity" id="quantity"></div></div></div>';
      
       var remove_button='';
       if(count>0)

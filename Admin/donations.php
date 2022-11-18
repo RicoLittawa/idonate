@@ -85,10 +85,7 @@ session_start();
 		<nav>
 			<i class='bx bx-menu' ></i>
 			<form action="#">
-				<div class="form-input">
-					<input type="text" placeholder="Search..." name="search" >
-					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-				</div>
+				
 			</form>
 			<a href="#" class="notification">
 				<i class='bx bxs-bell' ></i>
@@ -140,7 +137,7 @@ session_start();
 </div>
 					</div>
 					
-					<table class="table table-bordered table-hover" style="width:100%" id="table_data">
+					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
 			
     <thead>
       <tr>
@@ -152,7 +149,6 @@ session_start();
 		<th>Region</th>
 		<th>Email</th>
       	<th>Donation Date</th>
-        <th>Status</th>
         <th>Certificate</th>
 		
       </tr>
@@ -165,8 +161,10 @@ session_start();
 		   foreach($result as $row):?>
 		   
 			<php $count++; ?>
-			<tr class="clickable-row" data-href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>">
-   		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo $row['donor_email'];?>" data-name="<?php echo $row['donor_name']; ?>"></input></td>
+			<tr>
+   		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo $row['donor_email'];?>" data-name="<?php echo $row['donor_name']; ?>"></input>
+	    <button class="btn"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
+		</td>
 		<td><?php echo  $row['donor_id'];?></td>
 		<td><?php echo  $row['donor_name'];?></td>
 		<td><?php echo  $row['donor_province'];?></td>
@@ -186,7 +184,6 @@ session_start();
 		?>
 		<td><?php echo  $row['donor_email'];?></td>
 		<td><?php echo  $row['donationDate'];?></td>
-		<td>Recieved</td>
 		<td><button type="button" class="btn btn-info email_button" name="email_button" id="<?php echo $count; ?>"
 		data-email="<?php echo $row['donor_email']; ?>" data-name="<?php echo $row['donor_name']; ?>" data-action="single">Send</button>
     </td>
@@ -200,7 +197,7 @@ session_start();
 			
     </tbody>
 	<tr>
-		<td colspan="6"></td>
+		<td colspan="8"></td>
 		<td>
      <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
 	</tr>

@@ -106,7 +106,7 @@
           }
           
           ?>
-         <input type="hidden" name="ref_id" id="ref_id" value="<?php echo $referenceId ?>">
+         <input type="text" name="ref_id" id="ref_id" value="<?php echo $referenceId ?>" readonly>
           <div class="row">
             <div class="col">
               <div class="form-group">
@@ -165,6 +165,16 @@
             </div>
            </div>
             </div>
+            
+            
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                <label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>  
+            <button style="float: right;" class="btn btnAdditem" type="button" id="btnAdditem"><i style="color:green;font-size:40px;" class="fa-solid fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
             <div class="choices">
             <div class="row">
               <div class="col">
@@ -188,11 +198,8 @@
             <div class="col">
               <div class="form-group">
               <label for="quantity">Quantity</label>
-              <input class="form-control" type="text" name="req_quantity" id="req_quantity">
+              <input class="form-control req_quantity" type="text" name="req_quantity" id="req_quantity">
               </div>
-            </div>
-            <div class="form-group">
-            <button class="btn btnAdditem" type="button" id="btnAdditem"><i style="color:green;" class="fa-solid fa-plus"></i></button>
             </div>
             </div>
             </div>
@@ -264,10 +271,10 @@
         function add_input_field(count){
           $('#testBtn').remove();
           var html='';
-          
-          html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select"><option>-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-          html+='<div class="col"><div class="form-group"><select class="custom-select"><option>-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
-          html+='<div class="col"><div class="form-group"></label><input class="form-control"></div></div>';
+          html+='<div>'
+          html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select req_category"><option>-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
+          html+='<div class="col"><div class="form-group"><select class="custom-select req_variant"><option>-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
+          html+='<div class="col"><div class="form-group"></label><input class="form-control req_quantity"></div></div></div>';
           var remove_button='';
            if(count>0)
            {
@@ -284,30 +291,64 @@
           $('#requestform').append('<button type="button" style="float: right;width:200px;height:70px; " class="btn btn-success" id="testBtn">Save</button>');
           $('#testBtn').click(function(e){
             e.preventDefault();
-            var variant_arr=[];
+        var variant_arr=[];
         var quantity_arr=[];
         var category_arr=[];
         var category = $('.req_category');
         var variant = $('.req_variant');
-        var quantity = $('#req_quantity');
+        var quantity = $('.req_quantity');
         for (var i = 0;i<category.length;i++){
           category_arr.push($(category[i]).val());
           variant_arr.push($(variant[i]).val());
           quantity_arr.push($(quantity[i]).val());
 		}     
-          var reference_id = $('#ref_id').val();
-          var fname = $('#req_fname').val();
-          var province = $('#req_province').val();
-          var street = $('#req_street').val();
-          var region = $('#req_region').val();
-          var id_img = $('#idImg').val();
-          var email = $('#req_email').val();
-          var donation_date = $('#req_date').val();
-          var contact = $('#req_contact').val();
-          var note= $('#req_note').val();
-          var data={saveBtn: '',reference_id:reference_id,fname:fname,province:province,street:street,region:region,id_img:id_img,email:email,donation_date:donation_date,contact:contact,note:note,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
-          console.log(data);
-           
+          var form = $('#requestform')[0];
+          
+          var fd = new FormData(form);
+          var ref_id = $('#ref_id').val();
+          
+          var req_fname = $('#req_fname').val();
+          var req_province = $('#req_province').val();
+          var req_street = $('#req_street').val();
+          var req_region = $('#req_region').val();
+          var req_email = $('#req_email').val();
+          var req_donation_date = $('#req_date').val();
+          var req_contact = $('#req_contact').val();
+          var req_note= $('#req_note').val();
+          var files = $('#idImg')[0].files;
+        
+
+          fd.append('ref_id',ref_id);
+          fd.append('req_fname',req_fname);
+          fd.append('req_street',req_street);
+          fd.append('req_province',req_province);
+          fd.append('req_region',req_region);
+          fd.append('req_email',req_email);
+          fd.append('req_date',req_donation_date);
+          fd.append('req_contact',req_contact);
+          fd.append('req_note',req_note);
+          fd.append('category_arr',category_arr);
+          fd.append('variant_arr',variant_arr);
+          fd.append('quantity_arr',quantity_arr);
+          fd.append('file_img',files[0]);
+          fd.append("saveBtn",true);
+          var extension = $('#idImg').val().split('.').pop().toLowerCase();
+          // for ( var pair of fd.entries()){
+          //   console.log(pair[0]+','+pair[1]);
+          // }
+          $.ajax({
+              url: 'addrequest.php',
+              method: 'POST',
+              data:fd,
+              dataType:'text',
+              processData:false,
+              contentType:false,  
+              success: function(data) {
+                console.log(data);
+                       
+                      }
+      });
+      
           });
         });
 //remove 
@@ -316,13 +357,14 @@
            });
            //main page addbtn
       $('#testBtn').click(function(e){
-        e.preventDefault
+        e.preventDefault();
         var variant_arr=[];
         var quantity_arr=[];
         var category_arr=[];
         var category = $('.req_category');
         var variant = $('.req_variant');
-        var quantity = $('#req_quantity');
+        var quantity = $('.req_quantity');
+        
         for (var i = 0;i<category.length;i++){
           category_arr.push($(category[i]).val());
           variant_arr.push($(variant[i]).val());
@@ -359,16 +401,20 @@
           fd.append('file_img',files[0]);
           fd.append("saveBtn",true);
           
-         
+        //   for ( var pair of fd.entries()){
+        //     console.log(pair[0]+','+pair[1]);
+        //   }
+        //  return;
           $.ajax({
               url: 'addrequest.php',
               method: 'POST',
               data:fd,
+              dataType:'text',
               processData:false,
               contentType:false,  
-              success: function(response) {
-              var res= jQuery.parseJSON(response);
-                       alert (res);
+              success: function(data) {
+              
+                alert(data);
                       }
       });
       
