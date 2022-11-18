@@ -76,7 +76,7 @@ session_start();
 	<section id="content">
 		<!-- NAVBAR -->
 		<nav>
-			<i class='bx bx-menu' ></i>
+			<i style="font-size:40px;" class='bx bx-menu' ></i>
 			<form action="#">
 				<div class="form-input">
 					<input type="search" placeholder="Search...">

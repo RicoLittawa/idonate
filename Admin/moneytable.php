@@ -76,7 +76,7 @@ session_start();
 	<section id="content">
 		<!-- NAVBAR -->
 		<nav>
-			<i class='bx bx-menu' ></i>
+			<i style="font-size:40px;" class='bx bx-menu' ></i>
 			<form action="#">
 				
 			</form>
@@ -167,13 +167,13 @@ session_start();
 	 
 	  </tbody>
 	  
-  </table>
+  
   <tr>
-		<td colspan="8"></td>
+		<td colspan="6"></td>
 		<td>
      <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
 	</tr>
-
+	</table>
 
   <!--Money Form --->
   <div class="modal fade" id="moneyRecieve">

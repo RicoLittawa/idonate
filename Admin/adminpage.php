@@ -74,7 +74,7 @@ session_start();
 	<section id="content">
 		<!-- NAVBAR -->
 		<nav>
-			<i class='bx bx-menu' ></i>
+			<i style="font-size:40px;" class='bx bx-menu' ></i>
 			<form action="#">
 			</form>
 			<a href="#" class="notification">

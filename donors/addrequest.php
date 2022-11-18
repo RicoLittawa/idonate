@@ -15,21 +15,21 @@
    $contact=$_POST['req_contact'];
    $note=$_POST['req_note'];
    $category= $_POST['category_arr'];
-    $variant= $_POST['variant_arr'];
-    $quantity= $_POST['quantity_arr'];
-    $categ =explode(",",$category);
-    $vari= explode(",",$variant);
-    $quanti =explode(",",$quantity);
-;
-   $File = $_FILES['file_img']['name'];
+   $variant= $_POST['variant_arr'];
+   $quantity= $_POST['quantity_arr'];
+   $categ =explode(",",$category);
+   $vari= explode(",",$variant);
+   $quanti =explode(",",$quantity);
+
+   $Image = $_FILES['idImg']['name'];
    
 
    $filePath='ValidId/';
-   $filename=  $filePath.basename($_FILES['file_img']['name']);
+   $filename=  $filePath.basename($_FILES['idImg']['name']);
    $filetype=strtolower(pathinfo($filename,PATHINFO_EXTENSION));
    $allowtypes= array('jpg','png','jpeg','gif');
    if (in_array($filetype,$allowtypes)){
-       if(move_uploaded_file($_FILES['file_img']['tmp_name'],$filePath.$File)){
+       if(move_uploaded_file($_FILES['idImg']['tmp_name'],$filePath.$Image)){
         $sql= "INSERT into set_request (reference_id,req_name,req_province,req_street,req_region,valid_id,req_email,req_date,req_contact,req_note)
         Values(?,?,?,?,?,?,?,?,?,?)";
         $stmt= mysqli_stmt_init($conn);
@@ -37,7 +37,7 @@
             
         }
         else {
-            mysqli_stmt_bind_param($stmt,"ssssssssss",$referenceId,$fname,$province,$street,$region,$File,$email,$date,$contact,$note);
+            mysqli_stmt_bind_param($stmt,"ssssssssss",$referenceId,$fname,$province,$street,$region,$Image,$email,$date,$contact,$note);
             mysqli_stmt_execute($stmt);
             
         }

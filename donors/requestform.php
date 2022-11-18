@@ -95,7 +95,7 @@
 	<!-- Request Form -->
        <div class="donorForm"> 
 
-       <form id="requestform">
+       <form id="requestform" enctype="multipart/form-data">
         
           <span id="msg" class="text-center"></span>
           <?php 
@@ -111,7 +111,7 @@
             <div class="col">
               <div class="form-group">
             <label for="fname">Fullname</label>
-            <input class="form-control" type="text" name="req_fname" id="req_fname" placeholder="">
+            <input class="form-control border-dark" type="text" name="req_fname" id="req_fname" placeholder="">
             </div>
             </div>
             <div class="col">
@@ -315,7 +315,7 @@
           var req_donation_date = $('#req_date').val();
           var req_contact = $('#req_contact').val();
           var req_note= $('#req_note').val();
-          var files = $('#idImg')[0].files;
+          
         
 
           fd.append('ref_id',ref_id);
@@ -330,9 +330,9 @@
           fd.append('category_arr',category_arr);
           fd.append('variant_arr',variant_arr);
           fd.append('quantity_arr',quantity_arr);
-          fd.append('file_img',files[0]);
+         
           fd.append("saveBtn",true);
-          var extension = $('#idImg').val().split('.').pop().toLowerCase();
+         
           // for ( var pair of fd.entries()){
           //   console.log(pair[0]+','+pair[1]);
           // }
@@ -340,7 +340,6 @@
               url: 'addrequest.php',
               method: 'POST',
               data:fd,
-              dataType:'text',
               processData:false,
               contentType:false,  
               success: function(data) {
@@ -383,7 +382,7 @@
           var req_donation_date = $('#req_date').val();
           var req_contact = $('#req_contact').val();
           var req_note= $('#req_note').val();
-          var files = $('#idImg')[0].files;
+          
         
 
           fd.append('ref_id',ref_id);
@@ -398,13 +397,26 @@
           fd.append('category_arr',category_arr);
           fd.append('variant_arr',variant_arr);
           fd.append('quantity_arr',quantity_arr);
-          fd.append('file_img',files[0]);
+         
           fd.append("saveBtn",true);
           
         //   for ( var pair of fd.entries()){
         //     console.log(pair[0]+','+pair[1]);
         //   }
         //  return;
+        if(req_fname == ""){
+          $('#req_fname').removeClass('border-dark');
+          $('#req_fname').addClass('border-danger');
+          $('#msg').html('<p class="form-group alert-danger">Fullname is required!</p>');
+
+        }else if (req_street==""){
+          $('#req_street').removeClass('border-dark');
+          $('#req_street').addClass('border-danger');
+          $('#msg').html('<p class="alert-danger">Fullname is required!</p>');
+        }
+       else if($('#idImg').val()==''){
+          Swal.fire('Image', "Please select image",'warning');
+        }else {
           $.ajax({
               url: 'addrequest.php',
               method: 'POST',
@@ -418,6 +430,8 @@
                       }
       });
       
+        }
+          
         
       });
       });
