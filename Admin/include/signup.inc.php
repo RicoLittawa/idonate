@@ -9,21 +9,21 @@ if (isset($_POST['signup-submit'])){
     $Fname=$_POST['fName'];
     
     if(empty($Email)||empty($Password)||empty($ConfirmPass)||empty($Fname)){
-      header("Location: ../login/signup.php?error=emptyfields&email=".$Email);
+      header("Location: login/signup.php?error=emptyfields&email=".$Email);
    }
    else if (!filter_var($Email, FILTER_VALIDATE_EMAIL)){
-       header("Location: ../login/signup.php?error=emptyfield&email=".$Email);
+       header("Location: login/signup.php?error=emptyfield&email=".$Email);
        exit();
    }
    else if ($Password !== $ConfirmPass){
-       header("Location: ../login/signup.php?error=passwordcheck");
+       header("Location: login/signup.php?error=passwordcheck");
        exit();
    }
    else{
        $sql = "SELECT email  FROM useradmin WHERE email=?";
        $stmt = mysqli_stmt_init($conn);
        if(!mysqli_stmt_prepare($stmt, $sql)){
-           header("Location: ../login/signup.php?error=sqlerror");
+           header("Location: login/signup.php?error=sqlerror");
            exit();
        }
        else{
@@ -32,14 +32,14 @@ if (isset($_POST['signup-submit'])){
          mysqli_stmt_store_result($stmt);
            $resultCheck= mysqli_stmt_num_rows($stmt);
            if($resultCheck > 0){
-               header("Location: ../login/signup.php?error=usertaken&email=".$Email);
+               header("Location: .login/signup.php?error=usertaken&email=".$Email);
                exit();
            }
            else {
                $sql = "INSERT INTO useradmin (name,email,pwdUsers) VALUES (?,?,?)" ;
                $stmt= mysqli_stmt_init($conn);
                if(!mysqli_stmt_prepare($stmt,$sql)){
-                   header("Location: ../login/signup.php?error=sqlerror");
+                   header("Location: login/signup.php?error=sqlerror");
                    exit();
                }
                else{
@@ -47,7 +47,7 @@ if (isset($_POST['signup-submit'])){
    
                    mysqli_stmt_bind_param($stmt,"sss",$Fname,$Email, $hashedPwd);
                    mysqli_stmt_execute($stmt);
-                   header("Location: ../login/signup.php?signup=success");
+                   header("Location: login/signup.php?signup=success");
                    exit();
                }
            }
@@ -58,6 +58,6 @@ if (isset($_POST['signup-submit'])){
    mysqli_close($conn);
 }
 else {
-   header("Location: ../login/signup.php");
+   header("Location: login/signup.php");
                exit();
 }

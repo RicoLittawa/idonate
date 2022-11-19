@@ -1,8 +1,10 @@
 <?php
 
 
-    include '../donors/include/connection.php';
-    if (isset($_POST["saveBtn"]))
+    require 'include/connection.php';
+    try{
+
+        if (isset($_POST["saveBtn"]))
     {
    $referenceId= $_POST['ref_id'];
    $fname= $_POST['req_fname'];
@@ -27,14 +29,17 @@
    $filePath='ValidId/';
    $filename=  $filePath.basename($_FILES['idImg']['name']);
    $filetype=strtolower(pathinfo($filename,PATHINFO_EXTENSION));
-   $allowtypes= array('jpg','png','jpeg','gif');
-   if (in_array($filetype,$allowtypes)){
+   $fileSize = $_FILES['idImg']['size'];
+   $fileError = $_FILES['idImg']['error'];
        if(move_uploaded_file($_FILES['idImg']['tmp_name'],$filePath.$Image)){
+        if($fileError === 0){
+            if($fileSize < 1000000) {
         $sql= "INSERT into set_request (reference_id,req_name,req_province,req_street,req_region,valid_id,req_email,req_date,req_contact,req_note)
         Values(?,?,?,?,?,?,?,?,?,?)";
         $stmt= mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$sql)){
-            
+            throw new Exception("Sql error");
+            exit();
         }
         else {
             mysqli_stmt_bind_param($stmt,"ssssssssss",$referenceId,$fname,$province,$street,$region,$Image,$email,$date,$contact,$note);
@@ -43,8 +48,13 @@
         }
         
         
-    
-       }
+            }
+            throw new Exception("File is too large");
+            exit();
+        }
+        throw new Exception("Error uploading file");
+        exit(); 
+       
        
     }
     $count = 0;
@@ -53,7 +63,8 @@
             $sql2= "INSERT INTO set_request10 (req_reference,req_category,req_variant,req_quantity) Values (?,?,?,?)";
             $stmt=mysqli_stmt_init($conn);
             if(!mysqli_stmt_prepare($stmt,$sql2)){
-               
+                throw new Exception("Sql error");
+                exit();
             }
             else{
                 mysqli_stmt_bind_param($stmt, 'ssss', $referenceId, $item, $vari[$count], $quanti[$count]);
@@ -70,15 +81,21 @@
        $sql3="UPDATE set_request_pickings  set reference_id=? "; 
        $stmt=mysqli_stmt_init($conn);
        if(!mysqli_stmt_prepare($stmt,$sql3)){
-        
+        throw new Exception("Sql error");
+        exit();
     } else{
         mysqli_stmt_bind_param($stmt, 'i', $referenceId);
          mysqli_stmt_execute($stmt);
-    }
-        $data="";
-        $data.= "Success";
-        echo $data;
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
+
+    }echo"Success";
+    exit();
+    
+   
         
     }
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
+    }
+    catch(Exception $e){
+        echo $e->getMessage();}
+    

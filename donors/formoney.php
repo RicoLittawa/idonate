@@ -255,19 +255,19 @@ $(document).ready(function(){
 
         
           if (money_name==""){
-            Swal.fire('Fields', "Fullname are empty",'warning');
+            Swal.fire('Fields', "Fullname is empty",'warning');
             $('#money_name').removeClass('border-success');
             $('#money_name').addClass('border-danger');
             return false;
           }
           else if(money_province==""){
-            Swal.fire('Fields', "Province are empty",'warning');
+            Swal.fire('Fields', "Province is empty",'warning');
             $('#money_province').removeClass('border-success');
             $('#money_province').addClass('border-danger');
             return false;
           }
           else if(money_street==""){
-            Swal.fire('Fields', "Street are empty",'warning');
+            Swal.fire('Fields', "Street is empty",'warning');
             $('#money_province').removeClass('border-success');
             $('#money_province').addClass('border-danger');
             return false;
@@ -279,7 +279,7 @@ $(document).ready(function(){
             return false;
           }
           else if(money_contact==""){
-            Swal.fire('Fields', "Contact are empty",'warning');
+            Swal.fire('Fields', "Contact is empty",'warning');
             $('#money_contact').removeClass('border-success');
             $('#money_contact').addClass('border-danger');
             return false;
@@ -303,7 +303,7 @@ $(document).ready(function(){
             return false;
           }
           else if (money_email==""){
-            Swal.fire('Fields', "Email are empty",'warning');
+            Swal.fire('Fields', "Email is empty",'warning');
             $('#money_email').removeClass('border-success');
             $('#money_email').addClass('border-danger');
           }
@@ -319,7 +319,7 @@ $(document).ready(function(){
             $('#money_date').addClass('border-danger');
           }
           else if(money_reference==""){
-            Swal.fire('Fields', "Reference are empty",'warning');
+            Swal.fire('Fields', "Reference is empty",'warning');
             $('#money_reference').removeClass('border-success');
             $('#money_reference').addClass('border-danger');
           }
@@ -341,15 +341,15 @@ $(document).ready(function(){
           }
           else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {
             Swal.fire('Image', "Invalid file extension.",'warning');
-            $('#money_image').val('');
+            $("#monetaryform").find('[type=file]').val('').trigger('change');
             return false;
           } 
           else if(money_amount==""){
-            Swal.fire('Fields', "Amount are empty",'warning');
+            Swal.fire('Fields', "Amount is empty",'warning');
             $('#money_amount').removeClass('border-success');
             $('#money_amount').addClass('border-danger');
           }
-          else if (inValid.test($('#money_amount').val())==false){
+          else if (inValid.test($('#money_amount').val())==true){
             Swal.fire('Amount', "Whitespace is prohibited.",'warning');
             $('#money_amount').removeClass('border-success');
             $('#money_amount').addClass('border-danger');
@@ -360,21 +360,63 @@ $(document).ready(function(){
             $('#money_amount').removeClass('border-success');
             $('#money_amount').addClass('border-danger');
             return false;
-          }  
+          }
+          
+            
           else {
+            Swal.fire({
+            title: 'Confirmation',
+            text: "Are sure that all the informations are correct?",
+            icon: 'warning',
+            showDenyButton: true,
+            confirmButtonColor: '#48bf53',
+            confirmButtonText: 'Send',
+            denyButtonText: `Back`,
+          }).then((result) => {
+          if (result.isConfirmed) {
             $.ajax({
-                  url: 'monetary.php',
-                  method: 'post',
-                  data:fd,
-                          processData:false,
-                          contentType:false,  
-                          success: function(data) {
-                          
-                          
-                              alert(data);
-                          }
-              });
-          } 
+             url: 'monetary.php',
+              method: 'POST',
+               data:fd,
+              dataType:'text',
+               processData:false,
+              contentType:false,  
+              success: function(data) {
+                if(data == "Success"){
+                  $("#monetaryform")[0].reset();
+                  $("#monetaryform").find('[type=file]').val('').trigger('change');
+
+                  Swal.fire({
+                  title: data,
+                  text: "Thank you for donating",
+                  icon: 'success',
+                  confirmButtonColor: '#48bf53',
+                  confirmButtonText: 'Continue',
+                  allowOutsideClick: false
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.location.href="whatisneeded.php?inserted";
+                    }
+                  }) 
+                } else {
+                  Swal.fire('Error', data,'error')
+                }
+              
+            
+                 
+            }
+       });
+
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+          }
+        })
+       
+
+            
+           
+      
+        }
          }    
   });
 

@@ -269,9 +269,9 @@
           $('#testBtn').remove();
           var html='';
           html+='<div>'
-          html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select req_category"><option value="">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-          html+='<div class="col"><div class="form-group"><select class="custom-select req_variant"><option value="">-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
-          html+='<div class="col"><div class="form-group"></label><input class="form-control req_quantity"></div></div></div>';
+          html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select req_category border-success"><option value="">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
+          html+='<div class="col"><div class="form-group"><select class="custom-select req_variant border-success"><option value="">-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
+          html+='<div class="col"><div class="form-group"></label><input class="form-control req_quantity border-success"></div></div></div>';
           var remove_button='';
            if(count>0)
            {
@@ -343,47 +343,112 @@
         //     console.log(pair[0]+','+pair[1]);
         //   }
         //  return;
-      if (req_fname==""||req_street==""||req_province==""||req_email==""||req_contact==""||req_donation_date==""||quantity_arr== ""){
-        Swal.fire('Fields', "All fields are required",'warning');
-        return false;
+      if(req_fname==""){
+        Swal.fire('Fields', "Fullname is empty",'warning');
+            $('#req_fname').removeClass('border-success');
+            $('#req_fname').addClass('border-danger');
+            return false;
       }
-      else if (category_arr== ""||variant_arr== ""||req_region==""){
-        Swal.fire('Select', "Please select an option",'warning');  
-        return false;
-        }
-      else if (emailVali.test($('#req_email').val())==false){
+      else if(req_province==""){
+        Swal.fire('Fields', "Province is empty",'warning');
+            $('#req_province').removeClass('border-success');
+            $('#req_province').addClass('border-danger');
+            return false;
+      }
+      else if(req_street==""){
+        Swal.fire('Fields', "Street is empty",'warning');
+            $('#req_street').removeClass('border-success');
+            $('#req_street').addClass('border-danger');
+            return false;
+      }
+      else if(req_email==""){
+        Swal.fire('Fields', "Street is empty",'warning');
+            $('#req_email').removeClass('border-success');
+            $('#req_email').addClass('border-danger');
+            return false;
+      }
+      else if(emailVali.test($('#req_email').val())==false){
         Swal.fire('Email', "Invalid email address",'warning'); 
-        return false;
+            $('#req_email').removeClass('border-success');
+            $('#req_email').addClass('border-danger');
+            return false;
       }
-      else if(req_contact.length !=11){
-        Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-        return false;
+      else if(req_date==""){
+        Swal.fire('Fields', "Please select a date",'warning');
+            $('#req_date').removeClass('border-success');
+            $('#req_date').addClass('border-danger');
+            return false;
       }
-      else if($('#idImg').val()==''){
-        Swal.fire('Image', "Please select image",'warning');
-        return false;
-        }
-      else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {
-        Swal.fire('Image', "Invalid file extension.",'warning');
-        $('#idImg').val('');
-        return false;
-          } 
+      else if(req_contact==""){
+        Swal.fire('Fields', "Contact is empty",'warning');
+            $('#req_contact').removeClass('border-success');
+            $('#req_contact').addClass('border-danger');
+            return false;
+      }
       else if (inValid.test($('#req_contact').val())==true){
-        Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-        return false;
-        }
-      else if(varnumbers.test($('#req_contact').val())==false) {
-        Swal.fire('Contact', "Numbers only.",'warning');
-        return false;
+            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+            $('#req_contact').removeClass('border-success');
+            $('#req_contact').addClass('border-danger');
+            return false;
+          }
+          else if(varnumbers.test($('#req_contact').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#req_contact').removeClass('border-success');
+            $('#req_contact').addClass('border-danger');
+            return false;
           } 
-      else if (inValid.test($('#req_quantity').val())==true){
-        Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-        return false;
-        }
-      else if(varnumbers.test($('#req_quantity').val())==false) {
-        Swal.fire('Quantity', "Numbers only.",'warning');
-        return false;
-          } 
+          else if(req_contact.length !=11){
+            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+            $('#req_contact').removeClass('border-success');
+            $('#req_contact').addClass('border-danger');
+            return false;
+          }
+          else if(req_region==""){
+            Swal.fire('Select', "Please select a region",'warning');
+            $('#req_region').removeClass('border-success');
+            $('#req_region').addClass('border-danger');
+            return false;
+          }
+          else if($('#idImg').val()==''){
+            Swal.fire('Fields', "Please insert an image",'warning');
+          }
+          else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
+            Swal.fire('Image', "Invalid file extension.",'warning');
+            $("#requestform").find('[type=file]').val('').trigger('change');
+            return false;
+          }
+          else if(category_arr==""){
+            Swal.fire('Select', "Please select a category",'warning');
+            $('#req_category').removeClass('border-success');
+            $('#req_category').addClass('border-danger');
+            return false;
+          }
+          else if(variant_arr==""){
+            Swal.fire('Select', "Please select a variant",'warning');
+            $('#req_variant').removeClass('border-success');
+            $('#req_variant').addClass('border-danger');
+            return false;
+          }
+          else if(quantity_arr==""){
+            Swal.fire('Select', "Quantity is empty",'warning');
+            $('#req_quantity').removeClass('border-success');
+            $('#req_quantity').addClass('border-danger');
+            return false;
+          }
+          else if(inValid.test($('#req_quantity').val())==true){
+            Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+            $('#req_quantity').removeClass('border-success');
+            $('#req_quantity').addClass('border-danger');
+            return false;
+          }
+          else if(varnumbers.test($('#req_quantity').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#req_quantity').removeClass('border-success');
+            $('#req_quantity').addClass('border-danger');
+            return false;
+
+          }
+     
         else {
           Swal.fire({
             title: 'Confirmation',
@@ -391,7 +456,7 @@
             icon: 'warning',
             showDenyButton: true,
             confirmButtonColor: '#48bf53',
-            confirmButtonText: 'Send',
+            confirmButtonText: 'Submit',
             denyButtonText: `Back`,
           }).then((result) => {
           if (result.isConfirmed) {
@@ -432,17 +497,113 @@
             Swal.fire('Changes are not saved', '', 'info')
           }
         })
-       
-
-            
-           
-      
-        }
-
-        }
+       }
+      }
       
           });
+          $('#req_fname').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#req_province').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#req_street').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#req_email').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#req_date').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#req_contact').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#req_region').bind('change keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else{
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#idImg').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('.req_category').bind('change keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else{
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('.req_variant').bind('change keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else{
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('.req_quantity').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+          
+          
         });
+        
 //remove 
         $(document).on('click','#remove', function(){
           $(this).closest('div').remove();
@@ -505,47 +666,112 @@
         //     console.log(pair[0]+','+pair[1]);
         //   }
         //  return;
-      if (req_fname==""||req_street==""||req_province==""||req_email==""||req_contact==""||req_donation_date==""||quantity_arr== ""){
-        Swal.fire('Fields', "All fields are required",'warning');
-        return false;
+      if(req_fname==""){
+        Swal.fire('Fields', "Fullname is empty",'warning');
+            $('#req_fname').removeClass('border-success');
+            $('#req_fname').addClass('border-danger');
+            return false;
       }
-      else if (category_arr== ""||variant_arr== ""||req_region==""){
-        Swal.fire('Select', "Please select an option",'warning');  
-        return false;
-        }
-      else if (emailVali.test($('#req_email').val())==false){
+      else if(req_province==""){
+        Swal.fire('Fields', "Province is empty",'warning');
+            $('#req_province').removeClass('border-success');
+            $('#req_province').addClass('border-danger');
+            return false;
+      }
+      else if(req_street==""){
+        Swal.fire('Fields', "Street is empty",'warning');
+            $('#req_street').removeClass('border-success');
+            $('#req_street').addClass('border-danger');
+            return false;
+      }
+      else if(req_email==""){
+        Swal.fire('Fields', "Street is empty",'warning');
+            $('#req_email').removeClass('border-success');
+            $('#req_email').addClass('border-danger');
+            return false;
+      }
+      else if(emailVali.test($('#req_email').val())==false){
         Swal.fire('Email', "Invalid email address",'warning'); 
-        return false;
+            $('#req_email').removeClass('border-success');
+            $('#req_email').addClass('border-danger');
+            return false;
       }
-      else if(req_contact.length !=11){
-        Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-        return false;
+      else if(req_date==""){
+        Swal.fire('Fields', "Please select a date",'warning');
+            $('#req_date').removeClass('border-success');
+            $('#req_date').addClass('border-danger');
+            return false;
       }
-      else if($('#idImg').val()==''){
-        Swal.fire('Image', "Please select image",'warning');
-        return false;
-        }
-      else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {
-        Swal.fire('Image', "Invalid file extension.",'warning');
-        $('#idImg').val('');
-        return false;
-          } 
+      else if(req_contact==""){
+        Swal.fire('Fields', "Contact is empty",'warning');
+            $('#req_contact').removeClass('border-success');
+            $('#req_contact').addClass('border-danger');
+            return false;
+      }
       else if (inValid.test($('#req_contact').val())==true){
-        Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-        return false;
-        }
-      else if(varnumbers.test($('#req_contact').val())==false) {
-        Swal.fire('Contact', "Numbers only.",'warning');
-        return false;
+            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+            $('#req_contact').removeClass('border-success');
+            $('#req_contact').addClass('border-danger');
+            return false;
+          }
+          else if(varnumbers.test($('#req_contact').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#req_contact').removeClass('border-success');
+            $('#req_contact').addClass('border-danger');
+            return false;
           } 
-      else if (inValid.test($('#req_quantity').val())==true){
-        Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-        return false;
-        }
-      else if(varnumbers.test($('#req_quantity').val())==false) {
-        Swal.fire('Quantity', "Numbers only.",'warning');
-        return false;
-          } 
+          else if(req_contact.length !=11){
+            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+            $('#req_contact').removeClass('border-success');
+            $('#req_contact').addClass('border-danger');
+            return false;
+          }
+          else if(req_region==""){
+            Swal.fire('Select', "Please select a region",'warning');
+            $('#req_region').removeClass('border-success');
+            $('#req_region').addClass('border-danger');
+            return false;
+          }
+          else if($('#idImg').val()==''){
+            Swal.fire('Fields', "Please insert an image",'warning');
+          }
+          else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
+            Swal.fire('Image', "Invalid file extension.",'warning');
+            $("#requestform").find('[type=file]').val('').trigger('change');
+            return false;
+          }
+          else if(category_arr==""){
+            Swal.fire('Select', "Please select a category",'warning');
+            $('#req_category').removeClass('border-success');
+            $('#req_category').addClass('border-danger');
+            return false;
+          }
+          else if(variant_arr==""){
+            Swal.fire('Select', "Please select a variant",'warning');
+            $('#req_variant').removeClass('border-success');
+            $('#req_variant').addClass('border-danger');
+            return false;
+          }
+          else if(quantity_arr==""){
+            Swal.fire('Select', "Quantity is empty",'warning');
+            $('#req_quantity').removeClass('border-success');
+            $('#req_quantity').addClass('border-danger');
+            return false;
+          }
+          else if(inValid.test($('#req_quantity').val())==true){
+            Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+            $('#req_quantity').removeClass('border-success');
+            $('#req_quantity').addClass('border-danger');
+            return false;
+          }
+          else if(varnumbers.test($('#req_quantity').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#req_quantity').removeClass('border-success');
+            $('#req_quantity').addClass('border-danger');
+            return false;
+
+          }
+     
         else {
           Swal.fire({
             title: 'Confirmation',
@@ -594,17 +820,108 @@
             Swal.fire('Changes are not saved', '', 'info')
           }
         })
-       
+       }
+      }
+     });
 
-            
-           
-      
+     $('#req_fname').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
         }
-
+      });
+      $('#req_province').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
         }
-        
-          
-        
+      });
+      $('#req_street').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#req_email').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#req_date').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#req_contact').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#req_region').bind('change keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else{
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#idImg').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('.req_category').bind('change keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else{
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('.req_variant').bind('change keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else{
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('.req_quantity').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
       });
       });
 
