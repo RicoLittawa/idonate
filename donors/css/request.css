@@ -27,16 +27,6 @@ nav{
   color: grey;
 }
 
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-.sticky + .content {
-  padding-top: 60px;
-}
-
 #container{
 
     margin-bottom: 2em;
@@ -52,9 +42,7 @@ nav{
   left: -400px;
   top: 120px;
   border-radius: 50%;
-  display: inline-block;
   background-color: #83f28f;
-  z-index: -1000;
 }
 .moneydot2{
   position: absolute;
@@ -63,20 +51,30 @@ nav{
   left: 900px;
   top: 600px;
   border-radius: 50%;
-  display: inline-block;
   background-color: #83f28f;
-  z-index: -1000;
+
 }
 /* RequestForm */
 .donorForm{
   position: relative;
   left: 550px;
-  top: -100px;
+  top: -60px;
   width:600px;
   padding: auto;
  
 }
-
+.reqbtn{
+  margin-top: 20px;
+  padding: 20px;
+  width: 200px;
+  border-radius: 30px;
+  position: relative;
+  left: 390px;
+  background-color: #48bf53;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: bold;
+}
+.reqbtn:hover {background-color: #11823b}
 .col label{
   font-family:'Kantumruy Pro', sans-serif;
   font-weight: bold

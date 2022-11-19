@@ -1,3 +1,20 @@
+<?php  
+include 'include/connection.php';
+
+function fill_region_select_box($conn){
+  $output='';
+           
+  $sql = "SELECT * from regions ";
+  $result = mysqli_query($conn,$sql);
+  foreach($result as $row){
+    $output .= '<option value="'.$row['region_id'].'">'.$row['region_name'].'</option>';
+  }
+  return $output;
+  
+
+}
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -55,25 +72,25 @@
 <div class="container" id="container">
  <!-- Request Form -->
   <div class="moneyForm"> 
-    <form id="monetaryform" method="POST" enctype="multipart/form-data">
+    <form id="monetaryform" enctype="multipart/form-data">
        <span id="msg" class="text-center"></span>
           <div class="row">
             <div class="col">
               <div class="form-group">
                 <label for="money_name">Fullname</label>
-                <input class="form-control" type="text" name="money_name" id="money_name" placeholder="">
+                <input class="form-control border-success" type="text" name="money_name" id="money_name" placeholder="">
                 </div>
               </div>
             <div class="col">
               <div class="form-group">
                 <label for="money_province">Province</label>
-                <input class="form-control" type="text" name="money_province" id="money_province">
+                <input class="form-control border-success" type="text" name="money_province" id="money_province">
               </div>
             </div>
             <div class="col">
               <div class="form-group">
                 <label for="money_street">Street</label>
-                <input class="form-control" type="text" name="money_street" id="money_street">
+                <input class="form-control border-success" type="text" name="money_street" id="money_street">
                 </div>
               </div>
             </div>
@@ -81,24 +98,16 @@
               <div class="col">
                 <div class="form-group">
                   <label for="money_region">Select Region</label>
-                  <select class="custom-select" name="money_region" id="money_region">
-                    <option value="default">Choose Region</option>
-                      <?php 
-                        include '../Admin/include/connection.php';
-                        $sql = "SELECT * FROM regions";
-                        $result = mysqli_query($conn,$sql);
-                        while($row =mysqli_fetch_array($result))
-                        {
-                          echo '<option value="'.$row['region_name'].'">'.$row['region_name'].'</option>';
-                        } 
-                        ?>
+                  <select class="custom-select border-success" name="money_region" id="money_region">
+                    <option value="">-Select-</option>
+                    <?php echo htmlspecialchars_decode( Fill_region_select_box($conn) );?>
                    </select>
                   </div>
 						    </div>
               <div class="col">
                <div class="form-group">
                   <label for="money_contact">Contact Number</label>
-                  <input class="form-control" type="text" name="money_contact" id="money_contact">
+                  <input class="form-control border-success" type="text" name="money_contact" id="money_contact">
                 </div>
 						  </div>
             </div>	  
@@ -106,13 +115,13 @@
               <div class="col">
                 <div class="form-group">
                   <label for="money_email">Email</label>
-                  <input class="form-control" type="text" name="money_email" id="money_email">
+                  <input class="form-control border-success" type="text" name="money_email" id="money_email">
                   </div>
                 </div>
               <div class="col">
                 <div class="form-group">
                   <label for="money_date">Donation Date</label>
-                  <input class="form-control" type="date" name="money_date" id="money_date">
+                  <input class="form-control border-success" type="date" name="money_date" id="money_date">
                   </div>
                 </div>
               </div>
@@ -120,7 +129,7 @@
               <div class="col">
                 <div class="form-group">
                   <label for="money_reference">Reference number</label>
-                  <input class="form-control" type="text" id="money_reference" name="money_reference">
+                  <input class="form-control border-success" type="text" id="money_reference" name="money_reference">
                 </div>
               </div>
             </div>
@@ -141,18 +150,18 @@
             <div class="col">
               <div class="form-group">
                 <label for="money_amount">Amount</label>
-                <input class="form-control" type="text" name="money_amount" id="money_amount">
+                <input class="form-control border-success" type="text" name="money_amount" id="money_amount">
               </div>
             </div>
           </div>
           <div class="note">
             <div class="form-group">
               <label for="money_note">Donor's note (Optional)</label>
-              <textarea  class="form-control" type="text" name="money_note" id="money_note" placeholder="Donors Note" cols="30" rows="10" ></textarea>
+              <textarea  class="form-control border-success" type="text" name="money_note" id="money_note" placeholder="Donors Note" cols="30" rows="10" ></textarea>
                 </div>
 						  </div>
             <div>
-              <button type="submit" class="btn btn-success monetary">Submit</button>
+              <button type="button" id="submitBtn" class="btn btn-success monetary">Submit</button>
             </div>
           	
           </form>
@@ -194,17 +203,264 @@
 </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="../donors/js/jQuery.js"></script>
-    <script src="../donors/js/main.js"></script>
+    <script src="js/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="../donors/js/sweetalert2.all.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
    <script>
 // Add the following code if you want the name of the file appear on select
 $(".custom-file-input").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
+</script>
+<script>
+  /*Add monetary */
+$(document).ready(function(){
+  $("#submitBtn").click(function(event){
+      event.preventDefault();
+      var valid = this.form.checkValidity();
+        if(valid) {
+          var money_name = $('#money_name').val();
+          var money_province = $('#money_province').val();
+          var money_street = $('#money_street').val();
+          var money_region = $('#money_region').val();
+          var money_contact = $('#money_contact').val();
+          var money_email = $('#money_email').val();
+          var money_date = $('#money_date').val();
+          var money_reference = $('#money_reference').val();
+          var money_amount = $('#money_amount').val();
+          var money_note = $('#money_note').val();
+          
+
+      
+          var form = $('#monetaryform')[0];
+          var fd = new FormData(form);
+          var extension = $('#money_image').val().split('.').pop().toLowerCase();
+          var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+          var varnumbers = /^\d+$/;
+          var inValid = /\s/;
+          
+          fd.append("monetary_data",true); 
+          fd.append("money_name",money_name); 
+          fd.append("money_province",money_province); 
+          fd.append("money_street",money_street); 
+          fd.append("money_region",money_region); 
+          fd.append("money_contact",money_contact); 
+          fd.append("money_email",money_email); 
+          fd.append("money_date",money_date); 
+          fd.append("money_reference",money_reference);
+          fd.append("money_amount",money_amount); 
+          fd.append("money_note",money_note); 
+
+        
+          if (money_name==""){
+            Swal.fire('Fields', "Fullname are empty",'warning');
+            $('#money_name').removeClass('border-success');
+            $('#money_name').addClass('border-danger');
+            return false;
+          }
+          else if(money_province==""){
+            Swal.fire('Fields', "Province are empty",'warning');
+            $('#money_province').removeClass('border-success');
+            $('#money_province').addClass('border-danger');
+            return false;
+          }
+          else if(money_street==""){
+            Swal.fire('Fields', "Street are empty",'warning');
+            $('#money_province').removeClass('border-success');
+            $('#money_province').addClass('border-danger');
+            return false;
+          }
+          else if(money_region==""){
+            Swal.fire('Select', "Please select an option",'warning');
+            $('#money_region').removeClass('border-success');
+            $('#money_region').addClass('border-danger');
+            return false;
+          }
+          else if(money_contact==""){
+            Swal.fire('Fields', "Contact are empty",'warning');
+            $('#money_contact').removeClass('border-success');
+            $('#money_contact').addClass('border-danger');
+            return false;
+          }
+          else if (inValid.test($('#money_contact').val())==true){
+            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+            $('#money_contact').removeClass('border-success');
+            $('#money_contact').addClass('border-danger');
+            return false;
+          }
+          else if(varnumbers.test($('#money_contact').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#money_contact').removeClass('border-success');
+            $('#money_contact').addClass('border-danger');
+            return false;
+          } 
+          else if(money_contact.length !=11){
+            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+            $('#money_contact').removeClass('border-success');
+            $('#money_contact').addClass('border-danger');
+            return false;
+          }
+          else if (money_email==""){
+            Swal.fire('Fields', "Email are empty",'warning');
+            $('#money_email').removeClass('border-success');
+            $('#money_email').addClass('border-danger');
+          }
+          else if(emailVali.test($('#money_email').val())==false){
+            Swal.fire('Email', "Invalid email address",'warning'); 
+            $('#money_email').removeClass('border-success');
+            $('#money_email').addClass('border-danger');
+            return false;
+          }
+          else if (money_date==""){
+            Swal.fire('Fields', "Please select a date",'warning');
+            $('#money_date').removeClass('border-success');
+            $('#money_date').addClass('border-danger');
+          }
+          else if(money_reference==""){
+            Swal.fire('Fields', "Reference are empty",'warning');
+            $('#money_reference').removeClass('border-success');
+            $('#money_reference').addClass('border-danger');
+          }
+          else if (inValid.test($('#money_reference').val())==true){
+            Swal.fire('Reference', "Whitespace is prohibited.",'warning');
+            $('#money_reference').removeClass('border-success');
+            $('#money_reference').addClass('border-danger');
+            return false;
+          }
+          else if(varnumbers.test($('#money_reference').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#money_reference').removeClass('border-success');
+            $('#money_reference').addClass('border-danger');
+            return false;
+          } 
+         
+          else if($('#money_image').val()==''){
+            Swal.fire('Fields', "Please insert an image",'warning');
+          }
+          else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {
+            Swal.fire('Image', "Invalid file extension.",'warning');
+            $('#money_image').val('');
+            return false;
+          } 
+          else if(money_amount==""){
+            Swal.fire('Fields', "Amount are empty",'warning');
+            $('#money_amount').removeClass('border-success');
+            $('#money_amount').addClass('border-danger');
+          }
+          else if (inValid.test($('#money_amount').val())==false){
+            Swal.fire('Amount', "Whitespace is prohibited.",'warning');
+            $('#money_amount').removeClass('border-success');
+            $('#money_amount').addClass('border-danger');
+            return false;
+          }
+          else if(varnumbers.test($('#money_amount').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#money_amount').removeClass('border-success');
+            $('#money_amount').addClass('border-danger');
+            return false;
+          }  
+          else {
+            $.ajax({
+                  url: 'monetary.php',
+                  method: 'post',
+                  data:fd,
+                          processData:false,
+                          contentType:false,  
+                          success: function(data) {
+                          
+                          
+                              alert(data);
+                          }
+              });
+          } 
+         }    
+  });
+
+  $('#money_name').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#money_province').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#money_street').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#money_region').bind('change keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else{
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#money_contact').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#money_email').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#money_date').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#money_reference').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+      $('#money_amount').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+});
+
 </script>
   </body>
 </html>

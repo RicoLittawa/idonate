@@ -75,7 +75,9 @@
         mysqli_stmt_bind_param($stmt, 'i', $referenceId);
          mysqli_stmt_execute($stmt);
     }
-        
+        $data="";
+        $data.= "Success";
+        echo $data;
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
         

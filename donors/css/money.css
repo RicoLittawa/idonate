@@ -26,17 +26,6 @@ nav{
   letter-spacing:2pt;
   color: grey;
 }
-
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-.sticky + .content {
-  padding-top: 60px;
-}
-
 #container{
 
     margin-bottom: 2em;
@@ -54,31 +43,40 @@ nav{
   left: -400px;
   top: 120px;
   border-radius: 50%;
-  display: inline-block;
   background-color: #83f28f;
-  z-index: -1000;
+
 }
 .moneydot2{
   position: absolute;
   width: 600px;
   height: 600px;
   left: 900px;
-  top: 600px;
+  top: 900px;
   border-radius: 50%;
-  display: inline-block;
   background-color: #83f28f;
-  z-index: -1000;
+
 }
-/* RequestForm */
+
 
 .moneyForm{
   position: relative;
-  left: 590px;
-  top: -215px;
+  left: 530px;
+  top: -170px;
   width:600px;
   padding: auto;
-  overflow: hidden;
+  
  
+}
+
+.paragleft{
+  position: relative;
+  left: 200px;
+  bottom: -250px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: bold;
+  font-size: 70px;
+  color: #3B5347;
+
 }
 .col label{
   font-family:'Kantumruy Pro', sans-serif;
@@ -104,21 +102,11 @@ nav{
   font-weight: bold;
   
 }
-.submit-request:hover {background-color: #11823b}
+.monetary:hover {background-color: #11823b}
 
-.paragleft{
-  position: relative;
-  left: 250px;
-  bottom: -250px;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: bold;
-  font-size: 70px;
-  color: #3B5347;
-
-}
 .back{
   position: relative;
-  left: 180px;
+  left: 150px;
   bottom: -330px;
   color: #3B5347;
  

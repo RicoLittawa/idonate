@@ -97,7 +97,7 @@
 
        <form id="requestform" enctype="multipart/form-data">
         
-          <span id="msg" class="text-center"></span>
+          
           <?php 
           $sql="SELECT * from set_request_pickings";
           $result=mysqli_query($conn,$sql);
@@ -106,24 +106,24 @@
           }
           
           ?>
-         <input type="text" name="ref_id" id="ref_id" value="<?php echo $referenceId ?>" readonly>
+         <input type="hidden" name="ref_id" id="ref_id" value="<?php echo $referenceId ?>" readonly>
           <div class="row">
             <div class="col">
               <div class="form-group">
             <label for="fname">Fullname</label>
-            <input class="form-control border-dark" type="text" name="req_fname" id="req_fname" placeholder="">
+            <input class="form-control border-success" type="text" name="req_fname" id="req_fname" placeholder="">
             </div>
             </div>
             <div class="col">
               <div class="form-group">
             <label for="province">Province</label>
-            <input class="form-control" type="text" name="req_province" id="req_province">
+            <input class="form-control border-success" type="text" name="req_province" id="req_province">
             </div>
             </div>
             <div class="col">
               <div class="form-group">
             <label for="street">Street</label>
-            <input class="form-control" type="text" name="req_street" id="req_street">
+            <input class="form-control border-success" type="text" name="req_street" id="req_street">
             </div>
             </div>
             </div>
@@ -131,19 +131,19 @@
             <div class="col">
               <div class="form-group">
             <label for="email">Email</label>
-            <input class="form-control" type="text" name="req_email" id="req_email">
+            <input class="form-control border-success" type="text" name="req_email" id="req_email">
             </div>
               </div>
               <div class="col">
               <div class="form-group">
             <label for="donation_date">Donation Date</label>
-            <input class="form-control" type="date" name="req_date" id="req_date">
+            <input class="form-control border-success" type="date" name="req_date" id="req_date">
             </div>
             </div> 
             <div class="col">
               <div class="form-group">
             <label for="contact">Contact No.</label>
-            <input class="form-control" type="text" name="req_contact" id="req_contact">
+            <input class="form-control border-success" type="text" name="req_contact" id="req_contact">
             </div>
             </div>	  
             </div>
@@ -151,8 +151,8 @@
             <div class="col">
               <div class="form-group">
               <label for="region">Select Region</label>
-              <select class="custom-select" name="req_region" id="req_region">
-              <option>-Select-</option>
+              <select class="custom-select border-success" name="req_region" id="req_region">
+              <option value="">-Select-</option>
               <?php echo fill_region_select_box($conn) ?>             
             </select>
             </div>
@@ -180,8 +180,8 @@
               <div class="col">
                 <div class="form-group">
             <label for="category">Select Category</label>
-              <select class="custom-select req_category" name="req_category" id="req_category">
-              <option>-Select-</option>
+              <select class="custom-select req_category border-success" name="req_category" id="req_category">
+              <option value="">-Select-</option>
              <?php echo fill_category_select_box($conn) ?>
             </select>
             </div>
@@ -189,8 +189,8 @@
             <div class="col">
               <div class="form-group">
             <label for="variant">Select Variant</label>
-              <select class="custom-select req_variant" name="req_variant" id="req_variant">
-              <option>-Select-</option>
+              <select class="custom-select req_variant border-success" name="req_variant" id="req_variant">
+              <option value="">-Select-</option>
              <?php echo  fill_variant_select_box($conn)?>
             </select>
             </div>
@@ -198,7 +198,7 @@
             <div class="col">
               <div class="form-group">
               <label for="quantity">Quantity</label>
-              <input class="form-control req_quantity" type="text" name="req_quantity" id="req_quantity">
+              <input class="form-control req_quantity border-success" type="text" name="req_quantity" id="req_quantity">
               </div>
             </div>
             </div>
@@ -207,7 +207,7 @@
           <div class="col">
             <div class="form-group">
              <label for="note">Donor's note (Optional)</label>
-              <textarea style="display:center ;" class="form-control" type="text" name="req_note" id="req_note" placeholder="Donors Note" cols="80" rows="5" ></textarea>
+              <textarea style="display:center ;" class="form-control border-success" type="text" name="req_note" id="req_note" placeholder="Donors Note" cols="80" rows="5" ></textarea>
               </div>
 						</div>
           </div>
@@ -253,27 +253,24 @@
 </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="../donors/js/jQuery.js"></script>
+    <script src="js/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="../donors/js/sweetalert2.all.min.js"></script>
+    <script src="js/sweetalert2.all.min.js"></script>
+   
     <script>
-    // Add the following code if you want the name of the file appear on select
-    $(".custom-file-input").on("change", function() {
+      $(document).ready(function(){
+        $(".custom-file-input").on("change", function() {
       var fileName = $(this).val().split("\\").pop();
       $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
-    </script>
-    <script>
-      $(document).ready(function(){
-        
         count=0;
         function add_input_field(count){
           $('#testBtn').remove();
           var html='';
           html+='<div>'
-          html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select req_category"><option>-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-          html+='<div class="col"><div class="form-group"><select class="custom-select req_variant"><option>-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
+          html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select req_category"><option value="">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
+          html+='<div class="col"><div class="form-group"><select class="custom-select req_variant"><option value="">-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
           html+='<div class="col"><div class="form-group"></label><input class="form-control req_quantity"></div></div></div>';
           var remove_button='';
            if(count>0)
@@ -283,20 +280,23 @@
          html+='<span>'+remove_button+'</span></div>';
           return html;
         }
-        $('#requestform').append('<button  type="button" style="float: right;width:200px;height:70px; " class="btn btn-success" id="testBtn">Save</button>');
+        $('#requestform').append('<button  type="button"  class="btn btn-success reqbtn" id="testBtn">Submit</button>');
        
         $(document).on('click','#btnAdditem',function(){
           count++;
           $('.choices').append(add_input_field(count));
-          $('#requestform').append('<button type="button" style="float: right;width:200px;height:70px; " class="btn btn-success" id="testBtn">Save</button>');
+          $('#requestform').append('<button type="button" class="btn btn-success reqbtn" id="testBtn">Submit</button>');
           $('#testBtn').click(function(e){
-            e.preventDefault();
+            var valid = this.form.checkValidity();
+        if(valid) {
+          e.preventDefault();
         var variant_arr=[];
         var quantity_arr=[];
         var category_arr=[];
         var category = $('.req_category');
         var variant = $('.req_variant');
         var quantity = $('.req_quantity');
+        
         for (var i = 0;i<category.length;i++){
           category_arr.push($(category[i]).val());
           variant_arr.push($(variant[i]).val());
@@ -332,21 +332,114 @@
           fd.append('quantity_arr',quantity_arr);
          
           fd.append("saveBtn",true);
+          var extension = $('#idImg').val().split('.').pop().toLowerCase();
+          var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+          var varnumbers = /^\d+$/;
+          var inValid = /\s/;
          
-          // for ( var pair of fd.entries()){
-          //   console.log(pair[0]+','+pair[1]);
-          // }
-          $.ajax({
-              url: 'addrequest.php',
+         
+          
+        //   for ( var pair of fd.entries()){
+        //     console.log(pair[0]+','+pair[1]);
+        //   }
+        //  return;
+      if (req_fname==""||req_street==""||req_province==""||req_email==""||req_contact==""||req_donation_date==""||quantity_arr== ""){
+        Swal.fire('Fields', "All fields are required",'warning');
+        return false;
+      }
+      else if (category_arr== ""||variant_arr== ""||req_region==""){
+        Swal.fire('Select', "Please select an option",'warning');  
+        return false;
+        }
+      else if (emailVali.test($('#req_email').val())==false){
+        Swal.fire('Email', "Invalid email address",'warning'); 
+        return false;
+      }
+      else if(req_contact.length !=11){
+        Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+        return false;
+      }
+      else if($('#idImg').val()==''){
+        Swal.fire('Image', "Please select image",'warning');
+        return false;
+        }
+      else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {
+        Swal.fire('Image', "Invalid file extension.",'warning');
+        $('#idImg').val('');
+        return false;
+          } 
+      else if (inValid.test($('#req_contact').val())==true){
+        Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+        return false;
+        }
+      else if(varnumbers.test($('#req_contact').val())==false) {
+        Swal.fire('Contact', "Numbers only.",'warning');
+        return false;
+          } 
+      else if (inValid.test($('#req_quantity').val())==true){
+        Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+        return false;
+        }
+      else if(varnumbers.test($('#req_quantity').val())==false) {
+        Swal.fire('Quantity', "Numbers only.",'warning');
+        return false;
+          } 
+        else {
+          Swal.fire({
+            title: 'Confirmation',
+            text: "Are sure that all the informations are correct?",
+            icon: 'warning',
+            showDenyButton: true,
+            confirmButtonColor: '#48bf53',
+            confirmButtonText: 'Send',
+            denyButtonText: `Back`,
+          }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+             url: 'addrequest.php',
               method: 'POST',
-              data:fd,
-              processData:false,
+               data:fd,
+              dataType:'text',
+               processData:false,
               contentType:false,  
               success: function(data) {
-                console.log(data);
-                       
-                      }
-      });
+                if(data == "Success"){
+                  $("#requestform")[0].reset();
+                  $("#requestform").find('[type=file]').val('').trigger('change');
+
+                  Swal.fire({
+                  title: 'Success',
+                  text: "Thank you for donating",
+                  icon: 'success',
+                  confirmButtonColor: '#48bf53',
+                  confirmButtonText: 'Continue',
+                  allowOutsideClick: false
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.location.href="whatisneeded.php?inserted";
+                    }
+                  }) 
+                } else {
+                  Swal.fire('Error', data,'error')
+                }
+              
+            
+                 
+            }
+       });
+
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+          }
+        })
+       
+
+            
+           
+      
+        }
+
+        }
       
           });
         });
@@ -356,7 +449,9 @@
            });
            //main page addbtn
       $('#testBtn').click(function(e){
-        e.preventDefault();
+        var valid = this.form.checkValidity();
+        if(valid) {
+          e.preventDefault();
         var variant_arr=[];
         var quantity_arr=[];
         var category_arr=[];
@@ -399,38 +494,115 @@
           fd.append('quantity_arr',quantity_arr);
          
           fd.append("saveBtn",true);
+          var extension = $('#idImg').val().split('.').pop().toLowerCase();
+          var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+          var varnumbers = /^\d+$/;
+          var inValid = /\s/;
+         
+         
           
         //   for ( var pair of fd.entries()){
         //     console.log(pair[0]+','+pair[1]);
         //   }
         //  return;
-        if(req_fname == ""){
-          $('#req_fname').removeClass('border-dark');
-          $('#req_fname').addClass('border-danger');
-          $('#msg').html('<p class="form-group alert-danger">Fullname is required!</p>');
-
-        }else if (req_street==""){
-          $('#req_street').removeClass('border-dark');
-          $('#req_street').addClass('border-danger');
-          $('#msg').html('<p class="alert-danger">Fullname is required!</p>');
+      if (req_fname==""||req_street==""||req_province==""||req_email==""||req_contact==""||req_donation_date==""||quantity_arr== ""){
+        Swal.fire('Fields', "All fields are required",'warning');
+        return false;
+      }
+      else if (category_arr== ""||variant_arr== ""||req_region==""){
+        Swal.fire('Select', "Please select an option",'warning');  
+        return false;
         }
-       else if($('#idImg').val()==''){
-          Swal.fire('Image', "Please select image",'warning');
-        }else {
-          $.ajax({
-              url: 'addrequest.php',
+      else if (emailVali.test($('#req_email').val())==false){
+        Swal.fire('Email', "Invalid email address",'warning'); 
+        return false;
+      }
+      else if(req_contact.length !=11){
+        Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+        return false;
+      }
+      else if($('#idImg').val()==''){
+        Swal.fire('Image', "Please select image",'warning');
+        return false;
+        }
+      else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {
+        Swal.fire('Image', "Invalid file extension.",'warning');
+        $('#idImg').val('');
+        return false;
+          } 
+      else if (inValid.test($('#req_contact').val())==true){
+        Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+        return false;
+        }
+      else if(varnumbers.test($('#req_contact').val())==false) {
+        Swal.fire('Contact', "Numbers only.",'warning');
+        return false;
+          } 
+      else if (inValid.test($('#req_quantity').val())==true){
+        Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+        return false;
+        }
+      else if(varnumbers.test($('#req_quantity').val())==false) {
+        Swal.fire('Quantity', "Numbers only.",'warning');
+        return false;
+          } 
+        else {
+          Swal.fire({
+            title: 'Confirmation',
+            text: "Are sure that all the informations are correct?",
+            icon: 'warning',
+            showDenyButton: true,
+            confirmButtonColor: '#48bf53',
+            confirmButtonText: 'Submit',
+            denyButtonText: `Back`,
+          }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+             url: 'addrequest.php',
               method: 'POST',
-              data:fd,
+               data:fd,
               dataType:'text',
-              processData:false,
+               processData:false,
               contentType:false,  
               success: function(data) {
+                if(data == "Success"){
+                  $("#requestform")[0].reset();
+                  $("#requestform").find('[type=file]').val('').trigger('change');
+
+                  Swal.fire({
+                  title: 'Success',
+                  text: "Thank you for donating",
+                  icon: 'success',
+                  confirmButtonColor: '#48bf53',
+                  confirmButtonText: 'Continue',
+                  allowOutsideClick: false
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.location.href="whatisneeded.php?inserted";
+                    }
+                  }) 
+                } else {
+                  Swal.fire('Error', data,'error')
+                }
               
-                alert(data);
-                      }
-      });
+            
+                 
+            }
+       });
+
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+          }
+        })
+       
+
+            
+           
       
         }
+
+        }
+        
           
         
       });
