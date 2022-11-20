@@ -152,7 +152,7 @@
               <div class="form-group">
               <label for="region">Select Region</label>
               <select class="custom-select border-success" name="req_region" id="req_region">
-              <option value="">-Select-</option>
+              <option value="-Select-">-Select-</option>
               <?php echo fill_region_select_box($conn) ?>             
             </select>
             </div>
@@ -181,7 +181,7 @@
                 <div class="form-group">
             <label for="category">Select Category</label>
               <select class="custom-select req_category border-success" name="req_category" id="req_category">
-              <option value="">-Select-</option>
+              <option value="-Select-">-Select-</option>
              <?php echo fill_category_select_box($conn) ?>
             </select>
             </div>
@@ -190,7 +190,7 @@
               <div class="form-group">
             <label for="variant">Select Variant</label>
               <select class="custom-select req_variant border-success" name="req_variant" id="req_variant">
-              <option value="">-Select-</option>
+              <option value="-Select-">-Select-</option>
              <?php echo  fill_variant_select_box($conn)?>
             </select>
             </div>
@@ -269,8 +269,8 @@
           $('#testBtn').remove();
           var html='';
           html+='<div>'
-          html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select req_category border-success"><option value="">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-          html+='<div class="col"><div class="form-group"><select class="custom-select req_variant border-success"><option value="">-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
+          html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select req_category border-success"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
+          html+='<div class="col"><div class="form-group"><select class="custom-select req_variant border-success"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
           html+='<div class="col"><div class="form-group"></label><input class="form-control req_quantity border-success"></div></div></div>';
           var remove_button='';
            if(count>0)
@@ -301,7 +301,7 @@
           category_arr.push($(category[i]).val());
           variant_arr.push($(variant[i]).val());
           quantity_arr.push($(quantity[i]).val());
-		}     
+		      }     
           var form = $('#requestform')[0];
           
           var fd = new FormData(form);
@@ -417,47 +417,36 @@
             $("#requestform").find('[type=file]').val('').trigger('change');
             return false;
           }
-          else if(category_arr==""){
-            Swal.fire('Select', "Please select a category",'warning');
-            $('#req_category').removeClass('border-success');
-            $('#req_category').addClass('border-danger');
-            return false;
-          }
-          else if(variant_arr==""){
-            Swal.fire('Select', "Please select a variant",'warning');
-            $('#req_variant').removeClass('border-success');
-            $('#req_variant').addClass('border-danger');
-            return false;
-          }
-          else if(quantity_arr==""){
-            Swal.fire('Select', "Quantity is empty",'warning');
-            $('#req_quantity').removeClass('border-success');
-            $('#req_quantity').addClass('border-danger');
-            return false;
-          }
-          else if(inValid.test($('#req_quantity').val())==true){
-            Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-            $('#req_quantity').removeClass('border-success');
-            $('#req_quantity').addClass('border-danger');
-            return false;
-          }
-          else if(varnumbers.test($('#req_quantity').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#req_quantity').removeClass('border-success');
-            $('#req_quantity').addClass('border-danger');
-            return false;
-
-          }
-     
-        else {
-          Swal.fire({
+          else{
+            for (var j=0;j<category.length;j++){
+                if ($(category[j]).val()=="-Select-"){
+                  Swal.fire('Select', "Please select a category",'warning');
+                }
+                else if($(variant[j]).val()=="-Select-"){
+                  Swal.fire('Select', "Please select a variant",'warning');
+                  return false;
+                }
+                else if($(quantity[j]).val()==""){
+                  Swal.fire('Select', "Quantity is empty",'warning');
+                  return false;
+                }
+                else if (inValid.test($(quantity[j]).val())==true){	
+                  Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+                  return false;
+                }
+                else if(varnumbers.test($(quantity[j]).val())==false) {
+                  Swal.fire('Number', "Numbers only.",'warning');
+                  return false;			
+                }
+            }
+            Swal.fire({
             title: 'Confirmation',
             text: "Are sure that all the informations are correct?",
             icon: 'warning',
             showDenyButton: true,
             confirmButtonColor: '#48bf53',
             confirmButtonText: 'Submit',
-            denyButtonText: `Back`,
+            denyButtonText: 'Back',
           }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
@@ -496,8 +485,9 @@
           } else if (result.isDenied) {
             Swal.fire('Changes are not saved', '', 'info')
           }
-        })
-       }
+        });
+          }  
+          
       }
       
           });
@@ -555,52 +545,6 @@
           $(this).removeClass('border-danger');
         }
       });
-      $('#req_region').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-      $('#idImg').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-      $('.req_category').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-      $('.req_variant').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-      $('.req_quantity').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-          
           
         });
         
@@ -624,7 +568,7 @@
           category_arr.push($(category[i]).val());
           variant_arr.push($(variant[i]).val());
           quantity_arr.push($(quantity[i]).val());
-		}     
+		      }     
           var form = $('#requestform')[0];
           
           var fd = new FormData(form);
@@ -740,47 +684,36 @@
             $("#requestform").find('[type=file]').val('').trigger('change');
             return false;
           }
-          else if(category_arr==""){
-            Swal.fire('Select', "Please select a category",'warning');
-            $('#req_category').removeClass('border-success');
-            $('#req_category').addClass('border-danger');
-            return false;
-          }
-          else if(variant_arr==""){
-            Swal.fire('Select', "Please select a variant",'warning');
-            $('#req_variant').removeClass('border-success');
-            $('#req_variant').addClass('border-danger');
-            return false;
-          }
-          else if(quantity_arr==""){
-            Swal.fire('Select', "Quantity is empty",'warning');
-            $('#req_quantity').removeClass('border-success');
-            $('#req_quantity').addClass('border-danger');
-            return false;
-          }
-          else if(inValid.test($('#req_quantity').val())==true){
-            Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-            $('#req_quantity').removeClass('border-success');
-            $('#req_quantity').addClass('border-danger');
-            return false;
-          }
-          else if(varnumbers.test($('#req_quantity').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#req_quantity').removeClass('border-success');
-            $('#req_quantity').addClass('border-danger');
-            return false;
-
-          }
-     
-        else {
-          Swal.fire({
+          else{
+            for (var j=0;j<category.length;j++){
+                if ($(category[j]).val()=="-Select-"){
+                  Swal.fire('Select', "Please select a category",'warning');
+                }
+                else if($(variant[j]).val()=="-Select-"){
+                  Swal.fire('Select', "Please select a variant",'warning');
+                  return false;
+                }
+                else if($(quantity[j]).val()==""){
+                  Swal.fire('Select', "Quantity is empty",'warning');
+                  return false;
+                }
+                else if (inValid.test($(quantity[j]).val())==true){	
+                  Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+                  return false;
+                }
+                else if(varnumbers.test($(quantity[j]).val())==false) {
+                  Swal.fire('Number', "Numbers only.",'warning');
+                  return false;			
+                }
+            }
+            Swal.fire({
             title: 'Confirmation',
             text: "Are sure that all the informations are correct?",
             icon: 'warning',
             showDenyButton: true,
             confirmButtonColor: '#48bf53',
             confirmButtonText: 'Submit',
-            denyButtonText: `Back`,
+            denyButtonText: 'Back',
           }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
@@ -819,12 +752,11 @@
           } else if (result.isDenied) {
             Swal.fire('Changes are not saved', '', 'info')
           }
-        })
-       }
-      }
-     });
-
-     $('#req_fname').on('keyup', function() {
+        });
+          }  
+        }
+      });
+      $('#req_fname').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
           $(this).addClass('border-danger');
@@ -870,51 +802,6 @@
         }
       });
       $('#req_contact').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-      $('#req_region').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-      $('#idImg').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-      $('.req_category').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-      $('.req_variant').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-      $('.req_quantity').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
           $(this).addClass('border-danger');

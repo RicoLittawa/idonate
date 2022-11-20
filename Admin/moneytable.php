@@ -286,70 +286,68 @@ session_start();
 	
 	
 
-	<script src="../Admin/scripts/sidemenu.js"></script>
-	<script src="../Admin/scripts/jQuery.js"></script>
+	<script src="scripts/sidemenu.js"></script>
+	<script src="scripts/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="../Admin/scripts/function.js"></script>
-	<script src="../donors/js/sweetalert2.all.min.js"></script>	
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>	
 	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
   	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
 	<script>
 $(document).ready(function(){
- $('.email_button').click(function(){
-  $(this).attr('disabled', 'disabled');
-  var id = $(this).attr("id");
-  var action = $(this).data("action");
-  var email_data = [];
-  if(action == 'single')
-  {
-   email_data.push({
-    email: $(this).data("email"),
-    name: $(this).data("name")
-   });
-  }
-  else
-  {
-   $('.single_select').each(function(){
-    if($(this). prop("checked") == true)
-    {
-     email_data.push({
-      email: $(this).data("email"),
-      name: $(this).data('name')
-     });
- 
-    
-    }
-   
-   });
-  }
-  
-  $.ajax({
-   url:"http://localhost:3000/Admin/include/sendcerti.php",
-   method:"POST",
-   data:{email_data:email_data},
-   beforeSend:function(){
-    $('#'+id).html('Sending...');
-    $('#'+id).addClass('btn-danger');
-   },
-   success:function(data){
-    if(data = 'ok')
-    {
-     $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
-     $('#'+id).removeClass('btn-danger');
-     $('#'+id).removeClass('btn-info');
-     $('#'+id).addClass('btn-success');
-    }
-    else
-    {
-     $('#'+id).text(data);
-    }
-    $('.email_button'+id).attr('disabled', false);
-    
-   }
-   
-  });
- });
+	$('.email_button').click(function(){
+	$(this).attr('disabled', 'disabled');
+	var id = $(this).attr("id");
+	var action = $(this).data("action");
+	var email_data = [];
+	if(action == 'single')
+	{
+	email_data.push({
+		email: $(this).data("email"),
+		name: $(this).data("name")
+	});
+	}
+	else
+	{
+	$('.single_select').each(function(){
+		if($(this). prop("checked") == true)
+		{
+		email_data.push({
+		email: $(this).data("email"),
+		name: $(this).data('name')
+		});
+	
+		
+		}
+	
+	});
+	}
+	
+	$.ajax({
+	url:"http://localhost:3000/Admin/include/sendcerti.php",
+	method:"POST",
+	data:{email_data:email_data},
+	beforeSend:function(){
+		$('#'+id).html('Sending...');
+		$('#'+id).addClass('btn-danger');
+	},
+	success:function(data){
+		if(data = 'ok')
+		{
+		$('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
+		$('#'+id).removeClass('btn-danger');
+		$('#'+id).removeClass('btn-info');
+		$('#'+id).addClass('btn-success');
+		}
+		else
+		{
+		$('#'+id).text(data);
+		}
+		$('.email_button'+id).attr('disabled', false);
+		
+	}
+	
+	});
+	});
 });
 </script>
 
@@ -373,6 +371,72 @@ $(document).ready(function(){
         searchPlaceholder: "Search Records",
       }
 
+    });
+});
+</script>
+
+<script>
+	
+	
+/* money data */
+
+$(document).on('click', '.viewMoney', function (e) {
+    e.preventDefault();
+    var money_id = $(this).val();
+
+
+    $.ajax({
+        type: "GET",
+        url: "operations/viewmoney.php?money_id="+ money_id,
+        success: function (response) {
+            var res = $.parseJSON(response);
+            if(res.status == 422) {
+             
+                $('#moneyRecieve').modal('show');
+                $('#money_name').val(res.data.money_id);
+                $('#money_name').val(res.data.money_name);
+                $('#money_province').val(res.data.money_province);
+                $('#money_street').val(res.data.money_street);
+                $('#money_region').val(res.data.money_region);
+                $('#money_contact').val(res.data.money_contact);
+                $('#money_email').val(res.data.money_email);
+                $('#money_date').val(res.data.money_date);
+                $('#money_amount').val(res.data.money_amount);
+                $('#money_note').val(res.data.money_note);
+
+ 
+               
+            }else if(res.status == 404){
+                alert(res.message);
+            }
+        }
+    });
+});
+</script>
+
+<script>
+	
+/**reference number */
+$(document).on('click', '.viewRef', function (e) {
+    e.preventDefault();
+    var money_id = $(this).val();
+
+
+    $.ajax({
+        type: "GET",
+        url: "operations/viewmoney.php?money_id="+ money_id,
+        success: function (response) {
+            var res = $.parseJSON(response);
+            if(res.status == 422) {
+             
+                $('#referenceImg').modal('show');
+             
+                $('#imageContainer').attr('src','../donors/ReferencePhoto/'+res.data.money_img);
+            
+            }else if(res.status == 404){
+                alert(res.message);
+            }
+        }
     });
 });
 </script>

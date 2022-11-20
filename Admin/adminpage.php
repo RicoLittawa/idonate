@@ -148,10 +148,9 @@ session_start();
 	
 	
 
-	<script src="../Admin/scripts/sidemenu.js"></script>
-	<script src="../Admin/scripts/jQuery.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="scripts/sidemenu.js"></script>
+	<script src="scripts/jQuery.js"></script>
+	
     
 	
 </body>

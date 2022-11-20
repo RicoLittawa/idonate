@@ -412,14 +412,6 @@ table td{
 	text-decoration: none;
 }
 
-  
-  @media (max-width: 992px) {
-	.alert-validate::before {
-	  visibility: visible;
-	  opacity: 1;
-	}
-  }
-
 
 @media screen and (max-width: 768px) {
 	#sidebar {

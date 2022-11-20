@@ -145,19 +145,13 @@ session_start();
 			</div>
 
 <div class="table-data">
-				<div class="add">
-					<div class="head">
-						<h3>Add Donations</h3>
-
-					
-						
+	<div class="add">
+		<div class="head">
+			<h3>Add Donations</h3>					
         <div>
-       
-                          
         </div>
-					</div>
-					<form id="add-form">
-          
+		</div>
+		<form id="add-form">
   			<?php 
 				$referenceId = "";
 				$sql = "SELECT * FROM donation_items_picking";
@@ -216,6 +210,7 @@ session_start();
 					</div>
 				</div>
 			</div>
+			
           </form>
 				
   			
@@ -226,23 +221,25 @@ session_start();
 	
 	
 
-	<script src="../Admin/scripts/sidemenu.js"></script>
-	<script src="../Admin/scripts/jQuery.js"></script>
+	<script src="scripts/sidemenu.js"></script>
+	<script src="scripts/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="../donors/js/sweetalert2.all.min.js"></script>	
+	<script src="scripts/sweetalert2.all.min.js"></script>	
   	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
  	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
-  <script>  
+ 
+ 
+ <script>  
    $(document).ready(function(){
     var count= 0;
 	
     function add_input_field(count){
 	  $('#testBtn').remove();
       var html='';
-      html+= '<div>';
-      html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-      html += '<div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
+      html+= '<div id="items">';
+      html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
+      html += '<div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
       html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
      
       var remove_button='';
@@ -253,29 +250,38 @@ session_start();
       html+='<span>'+remove_button+'</span></div>';
       return html;
     }
-    $('#add-form').append(add_input_field(0));
+	$('#add-form').append(add_input_field(count[0]))
 	$('#add-form').append('<button  type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Save</button>');
     $(document).on('click', '#btn_additem',function(){
-      count++;
+		count++;
       $('#add-form').append(add_input_field(count));
+
 	  $('#add-form').append('<button type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Save</button>');
 	  
 	  $('#testBtn').click(function(e){
+		
 		var valid = this.form.checkValidity();
         if(valid) {	
 			e.preventDefault();
+			var fd = new FormData();
 		var variant_arr=[];
 		var quantity_arr=[];
 		var category_arr=[];
 		var category = $('.category');
 		var variant = $('.variant');
 		var quantity = $('.quantity');
+		
 
 		for (var i = 0;i<category.length;i++){
-			category_arr.push($(category[i]).val());
+			categtest =category_arr.push($(category[i]).val());
+			
 			variant_arr.push($(variant[i]).val());
 			quantity_arr.push($(quantity[i]).val());
+			
 		}
+
+		
+
 		var reference_id= $('#reference_id').val();
 		var fname = $('#fname').val();
 		var province = $('#province').val();
@@ -283,36 +289,32 @@ session_start();
 		var region = $('#region').val();
 		var email = $('#email').val();
 		var donation_date = $('#donation_date').val();
-		var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
+		
+
 		var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var varnumbers = /^\d+$/;
         var inValid = /\s/;
+
 		if(fname==""){
-			Swal.fire('Fields', "Fullname is empty",'warning');
 			$('#fname').removeClass('border-success');
             $('#fname').addClass('border-danger');
             return false;
 		}
-		if(province==""){
-			Swal.fire('Fields', "Province is empty",'warning');
+		else if(province==""){
 			$('#province').removeClass('border-success');
             $('#province').addClass('border-danger');
             return false;
 		}
 		else if(street==""){
-			Swal.fire('Fields', "Street is empty",'warning');
 			$('#fname').removeClass('border-success');
             $('#fname').addClass('border-danger');
             return false;
 		}
 		else if(region==""){
 			Swal.fire('Fields', "Please select a region",'warning');
-			$('#region').removeClass('border-success');
-            $('#region').addClass('border-danger');
             return false;
 		}
 		else if(email==""){
-			Swal.fire('Fields', "Email is empty",'warning');
 			$('#email').removeClass('border-success');
             $('#email').addClass('border-danger');
             return false;
@@ -324,42 +326,41 @@ session_start();
             return false;
 		}
 		else if(donation_date==""){
-			Swal.fire('Fields', "Please select a date",'warning');
+
 			$('#donation_date').removeClass('border-success');
             $('#donation_date').addClass('border-danger');
             return false;
 		}
-		else if(category_arr==""){
-			Swal.fire('Fields', "Please select a category",'warning');
-			$('#category').removeClass('border-success');
-            $('#category').addClass('border-danger');
-            return false;
-		}
-		else if(variant_arr==""){
-			Swal.fire('Fields', "Please select a variant",'warning');
-			$('#variant').removeClass('border-success');
-            $('#variant').addClass('border-danger');
-            return false;
-		}
-		else if(quantity_arr==""){
-			Swal.fire('Fields', "Quantity is empty",'warning');
-			$('#quantity').removeClass('border-success');
-            $('#quantity').addClass('border-danger');
-            return false;
-		}
-		else if (inValid.test($('#quantity').val())==true){
-            Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-            $('#quantity').removeClass('border-success');
-            $('#quantity').addClass('border-danger');
-            return false;
-          }
-		else if(varnumbers.test($('#quantity').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#quantity').removeClass('border-success');
-            $('#quantity').addClass('border-danger');
-            return false;
-          }   
 		else{
+			for(var j=0;j<category.length;j++){
+			
+			 if ($(category[j]).val()=="-Select-"){
+				Swal.fire('Fields', "Please select a category",'warning');
+				return false;
+			}
+			else if ($(variant[j]).val()=="-Select-"){
+				Swal.fire('Fields', "Please select a variant",'warning');
+				return false;
+			}
+			else if ($(quantity[j]).val()==""){
+				Swal.fire('Fields', "Quantity is empty",'warning');
+				return false;
+			}
+			else if (inValid.test($(quantity[j]).val())==true){	
+				Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+				return false;
+			}
+			else if(varnumbers.test($(quantity[j]).val())==false) {
+				Swal.fire('Number', "Numbers only.",'warning');
+				return false;
+						
+			  }
+			
+			 
+			
+			}
+			var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
+			
 			$.ajax({
 			url:'include/add.inc.php',
 			method:'POST',
@@ -389,9 +390,12 @@ session_start();
 		});
 		}
 			
+			
 		}
+			
 		
 	});
+	
 	$('#fname').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
@@ -419,15 +423,6 @@ session_start();
           $(this).removeClass('border-danger');
         }
       });
-	  $('#region').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
 	  $('#email').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
@@ -446,33 +441,7 @@ session_start();
           $(this).removeClass('border-danger');
         }
       });
-	  $('.category').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  $('.variant').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  $('.quantity').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
+	 
     });
 	
     $(document).on('click','#remove', function(){
@@ -483,18 +452,25 @@ session_start();
 		var valid = this.form.checkValidity();
         if(valid) {	
 			e.preventDefault();
+			var fd = new FormData();
 		var variant_arr=[];
 		var quantity_arr=[];
 		var category_arr=[];
 		var category = $('.category');
 		var variant = $('.variant');
 		var quantity = $('.quantity');
+		
 
 		for (var i = 0;i<category.length;i++){
-			category_arr.push($(category[i]).val());
+			categtest =category_arr.push($(category[i]).val());
+			
 			variant_arr.push($(variant[i]).val());
 			quantity_arr.push($(quantity[i]).val());
+			
 		}
+
+		
+
 		var reference_id= $('#reference_id').val();
 		var fname = $('#fname').val();
 		var province = $('#province').val();
@@ -502,36 +478,32 @@ session_start();
 		var region = $('#region').val();
 		var email = $('#email').val();
 		var donation_date = $('#donation_date').val();
-		var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
+		
+
 		var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var varnumbers = /^\d+$/;
         var inValid = /\s/;
+
 		if(fname==""){
-			Swal.fire('Fields', "Fullname is empty",'warning');
 			$('#fname').removeClass('border-success');
             $('#fname').addClass('border-danger');
             return false;
 		}
-		if(province==""){
-			Swal.fire('Fields', "Province is empty",'warning');
+		else if(province==""){
 			$('#province').removeClass('border-success');
             $('#province').addClass('border-danger');
             return false;
 		}
 		else if(street==""){
-			Swal.fire('Fields', "Street is empty",'warning');
 			$('#fname').removeClass('border-success');
             $('#fname').addClass('border-danger');
             return false;
 		}
 		else if(region==""){
 			Swal.fire('Fields', "Please select a region",'warning');
-			$('#region').removeClass('border-success');
-            $('#region').addClass('border-danger');
             return false;
 		}
 		else if(email==""){
-			Swal.fire('Fields', "Email is empty",'warning');
 			$('#email').removeClass('border-success');
             $('#email').addClass('border-danger');
             return false;
@@ -543,42 +515,37 @@ session_start();
             return false;
 		}
 		else if(donation_date==""){
-			Swal.fire('Fields', "Please select a date",'warning');
 			$('#donation_date').removeClass('border-success');
             $('#donation_date').addClass('border-danger');
             return false;
 		}
-		else if(category_arr==""){
-			Swal.fire('Fields', "Please select a category",'warning');
-			$('#category').removeClass('border-success');
-            $('#category').addClass('border-danger');
-            return false;
-		}
-		else if(variant_arr==""){
-			Swal.fire('Fields', "Please select a variant",'warning');
-			$('#variant').removeClass('border-success');
-            $('#variant').addClass('border-danger');
-            return false;
-		}
-		else if(quantity_arr==""){
-			Swal.fire('Fields', "Quantity is empty",'warning');
-			$('#quantity').removeClass('border-success');
-            $('#quantity').addClass('border-danger');
-            return false;
-		}
-		else if (inValid.test($('#quantity').val())==true){
-            Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-            $('#quantity').removeClass('border-success');
-            $('#quantity').addClass('border-danger');
-            return false;
-          }
-		else if(varnumbers.test($('#quantity').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#quantity').removeClass('border-success');
-            $('#quantity').addClass('border-danger');
-            return false;
-          }   
 		else{
+			for(var j=0;j<category.length;j++){
+			
+			 if ($(category[j]).val()=="-Select-"){
+				Swal.fire('Fields', "Please select a category",'warning');
+				return false;
+			}
+			else if ($(variant[j]).val()=="-Select-"){
+				Swal.fire('Fields', "Please select a variant",'warning');
+				return false;
+			}
+			else if ($(quantity[j]).val()==""){
+				Swal.fire('Fields', "Quantity is empty",'warning');
+				return false;
+			}
+			else if (inValid.test($(quantity[j]).val())==true){	
+				Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+				return false;
+			}
+			else if(varnumbers.test($(quantity[j]).val())==false) {
+				Swal.fire('Number', "Numbers only.",'warning');
+				return false;
+						
+			  }		
+			}
+			var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
+			
 			$.ajax({
 			url:'include/add.inc.php',
 			method:'POST',
@@ -608,10 +575,12 @@ session_start();
 		});
 		}
 			
+			
 		}
-		
-		
-	});
+			
+
+   });
+	
 	$('#fname').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
@@ -639,15 +608,6 @@ session_start();
           $(this).removeClass('border-danger');
         }
       });
-	  $('#region').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
 	  $('#email').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
@@ -666,35 +626,6 @@ session_start();
           $(this).removeClass('border-danger');
         }
       });
-	  $('.category').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  $('.variant').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  $('.quantity').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  
-	
   });
 </script>  
 
