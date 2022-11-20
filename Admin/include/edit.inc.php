@@ -14,7 +14,6 @@
       $Category= $_POST['category_arr'];
       $Variant= $_POST['variant_arr'];
       $Quantity= $_POST['quantity_arr'];
-      $donationUID=$_POST['donationUID_arr'];
         
       
     

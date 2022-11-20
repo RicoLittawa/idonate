@@ -256,7 +256,8 @@ body {
 }
 .addDonate{
 	padding: 1rem;
-	width: 100px;
+	width: 200px;
+	border-radius: 30px;
 	
 }
 .clickable-row{

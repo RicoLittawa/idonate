@@ -148,15 +148,16 @@ session_start();
 		<?php if (mysqli_num_rows($result)):?>
 			<?php while($row= mysqli_fetch_assoc($result)): ?>
 				<tr>
-					<td><?php echo $row['id']; ?></td>
+					<td><?php echo $row['Reference']; ?></td>
 					<?php 
 					$categM =$row['category'];
+					
 					$sql2 = "SELECT * from category";
 					$result2= mysqli_query($conn, $sql2);
 					foreach($result2 as $row1):
 					?>
 					<?php if($categM == $row1['categ_id']): ?>
-						<td><?php echo $row1['category'] ?></td>
+						<td><?php echo htmlentities($row1['category']); ?></td>
 						<?php endif; ?>
 
 					<?php endforeach; ?>
@@ -167,10 +168,10 @@ session_start();
 					foreach($result3 as $row2):
 					?>
 					<?php if($variantM== $row2['variant_id']): ?>
-						<td><?php echo $row2['variant'] ?></td>
+						<td><?php echo htmlentities($row2['variant']); ?></td>
 						<?php endif;?>
 					<?php endforeach; ?>
-					<td><?php echo $row['quantity']; ?></td>
+					<td><?php echo htmlentities($row['quantity']); ?></td>
 				</tr>
 				<?php endwhile; ?>
 

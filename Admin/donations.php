@@ -165,7 +165,7 @@ session_start();
    		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo $row['donor_email'];?>" data-name="<?php echo $row['donor_name']; ?>"></input>
 	    <button class="btn"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
 		</td>
-		<td><?php echo  $row['donor_id'];?></td>
+		<td><?php echo  $row['Reference'];?></td>
 		<td><?php echo  $row['donor_name'];?></td>
 		<td><?php echo  $row['donor_province'];?></td>
 		<td><?php echo  $row['donor_street'];?></td>
