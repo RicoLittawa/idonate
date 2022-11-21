@@ -1,6 +1,6 @@
 <?php
 
-    require 'connection.php';
+    require_once 'connection.php';
     if (isset($_POST["send_data"]))
     {
         $Fname= $_POST['req_name'];

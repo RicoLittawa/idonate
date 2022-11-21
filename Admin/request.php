@@ -2,6 +2,13 @@
 session_start();
 
 	?>
+<?php 
+require_once 'include/connection.php';
+$sql = "SELECT * from set_request";
+$result= mysqli_query($conn,$sql);
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +16,11 @@ session_start();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
-	<link rel="stylesheet" href="../Admin/css/donations.css">
+	<link rel="stylesheet" href="css/donations.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
 	<title>Requests</title>
@@ -116,112 +123,100 @@ session_start();
 					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
     <thead>
       <tr>
+		<th>Id</th>
+		<th>Date</th>
         <th>Donor Name</th>
-        <th>Date</th>
-        <th>View</th>
+		<th>Province</th>
+		<th>Street</th>
+		<th>Region</th>
+		<th>Contact Number</th>
+		<th>Email</th>
+		<th></th>
+        
+        
       </tr>
     </thead>
     <tbody>
-     <?php 
-	 require '../Admin/include/connection.php';
-	 $sql = "SELECT * FROM set_request ORDER by request_id DESC";
-	 $result = mysqli_query($conn,$sql);
-	$data = $result->fetch_all(MYSQLI_ASSOC);
-	$count= 0;
-	foreach ($data as $row){
-	   $count = $count+ 1;
-		echo '<tr>
-		<td>'.$row['req_name'].'</td>
-		<td>'.$row['req_date'].'</td>
-		<td><button type:"button" id="'.$count.'" name="viewBtn" class="btn viewBtn" data-toggle="modal" data-target="#recieveReq" value="'.$row['request_id'].'"><i  style="color:green;" class="fa-solid fa-eye "></i></button>
-		<button type="button" value="Submit" id="myButton" class="btn btn-success">Accept</button>
-		</td>
-		</tr>'
-		;
-	 }
-	 ?>
+		<?php foreach ($result as $row): ?>
+			<?php 
+				$reference_id= $row['reference_id'];
+				$req_id= $row['request_id'];
+				$reqName= $row['req_name'];
+				$reqDate= $row['req_date'];
+				$reqStreet= $row['req_street'];
+				$reqProvince= $row['req_province'];
+				$reqRegion= $row['req_region'];
+				$reqContact= $row['req_contact'];
+				$reqEmail= $row['req_email'];
+				
+				?>
+		<tr>
+			<td><?php echo htmlentities($reference_id); ?></td>
+			<td><?php echo htmlentities($reqDate); ?></td>
+			<td><?php echo htmlentities($reqName); ?></td>
+			<td><?php echo htmlentities($reqProvince); ?></td>
+			<td><?php echo htmlentities($reqStreet); ?></td>
+			<td><?php echo htmlentities($reqRegion); ?></td>
+			<td><?php echo htmlentities($reqContact); ?></td>
+			<td><?php echo htmlentities($reqEmail); ?></td>
+			<td><button type="button" id="btnNote" class="btn col btnNote" data-toggle="modal" data-target="viewMessage" value="<?php echo htmlentities($req_id); ?>"><i style="color: green;" class="fa-solid fa-message"></i></button>
+			<button type="button" class="btn col  validId"  data-toggle="modal" data-target="validImg" value="<?php echo htmlentities($req_id); ?>"><i style="color:green ;" class="fa-regular fa-id-badge"></i></button>
+			<a  class="btn col" href="acceptrequest.php?acceptReq=<?php echo htmlentities($req_id); ?>"><i style="color: red;" class="fa-solid fa-circle-check"></i></a>
+			</td>
+		</tr>
+	<?php endforeach; ?>
 	  </tbody>
   </table>
-  <div class="modal fade" id="recieveReq">
-  <div class="modal-dialog">
+ <!--Valid id -->
+<div class="modal fade" id="validImg">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">View Requests</h4>
+        <h4 class="modal-title">Reference/Transaction Reciept</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
 		
       </div>
 	
 	
 
-	<form  id="saveRequest">
+	<form>
 	<div class="modal-body">
-	<div class="row">
-		<input type="hidden" id="request_id" name="request_id">
-	<div class="col">
-		<label for="req_name">Fullname</label>
-		<input id="req_name" name="req_name" class="form-control" >
+	<img src="" id="imageContainer" alt="" width="465px" height="100%" style="border-radius:10px;">
 	</div>
-	<div class="col">
-		<label for="req_province">Province</label>
-		<input id="req_province" name="req_province" class="form-control" >
-	</div>
-	</div>
-	<div class="row">
-	<div class="col">
-		<label for="req_street">Street</label>
-		<input id="req_street" name="req_street" class="form-control" >
-	</div>
-	<div class="col">
-		<label for="req_region">Region</label>
-		<input id="req_region" name="req_region" class="form-control" >
-	</div>
-	</div>
-	<div class="row">
-	<div class="col">
-		<label for="req_email">Email</label>
-		<input id="req_email" name="req_email" class="form-control" >
-	</div>
-	<div class="col">
-		<label for="req_date">Date</label>
-		<input type="date" id="req_date" name="req_date" class="form-control" >
-	</div>
-	</div>
-	<div class="row">
-	<div class="col">
-		<label for="req_category">Category</label>
-		<input id="req_category" name="req_category" class="form-control" >
-	</div>
-	<div class="col">
-		<label for="req_variant">Variant</label>
-		<input id="req_variant" name="req_variant" class="form-control" >
-	</div>
-	</div>
-	<div class="row">
-	<div class="col">
-		<label for="req_quantity">Quantity</label>
-		<input id="req_quantity" name="req_quantity" class="form-control" >
-	</div>
-	</div>
-	<div class="row">
-	<div class="col">
-		<label for="req_note">Donor's note</label>
-		<textarea class="form-control" name="req_note" id="req_note" cols="30" rows="10" ></textarea>
-		</div>
-	</div>
-	  </div>
-
-      
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-success">Update</button>
-		
-
       </div>
 	</form>
 
 		
+
+    </div>
+  </div>
+</div>
+<div class="modal" id="viewMessage">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Donor's Note</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+		<div class="form-group">
+			<label for="req_note">Note</label>
+		<textarea class="form-control" name="req_note" id="req_note" cols="50" rows="5"></textarea>
+		</div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
 
     </div>
   </div>
@@ -257,7 +252,46 @@ session_start();
     });
 });
 </script>
-	
+
+<!-- Valid Id-->
+<script> 
+	$(document).ready(function(){
+		$('.validId').click(function(){
+			var valueBtn = $(this);
+			var request_id =valueBtn.val();
+			$.ajax({
+				url:'include/viewid.php?viewID='+request_id,
+				type: 'GET',
+				success: function(data){
+						$('#validImg').modal('show');
+			 			$('#imageContainer').attr('src','../donors/ValidId/'+data);
+				}
+			});
+
+		});
+	});
+</script>
+<script> 
+	$(document).ready(function(){
+		$('.btnNote').click(function(){
+
+			var valueBtn = $(this);
+			var request_id =valueBtn.val();
+			
+			  $.ajax({
+			  	url:'include/viewid.php?viewNote='+request_id,
+			  	type: 'GET',
+			  	success: function(data){
+			  			$('#viewMessage').modal('show');
+						  $('#req_note').val(data);
+						
+			  			
+			  	}
+			  });
+
+		});
+	});
+</script>
 
 	
 

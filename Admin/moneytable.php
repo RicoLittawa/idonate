@@ -13,7 +13,7 @@ session_start();
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
-	<link rel="stylesheet" href="../Admin/css/donations.css">
+	<link rel="stylesheet" href="css/donations.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
 	<title>Monetary Donors</title>
@@ -265,13 +265,14 @@ session_start();
 	
 	
 
-	<form action="" id="">
+
 	<div class="modal-body">
 	<img src="" id="imageContainer" alt="" width="465px" height="100%" style="border-radius:10px;">
+	</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
-	</form>
+	 
 
 		
 
@@ -376,10 +377,6 @@ $(document).ready(function(){
 </script>
 
 <script>
-	
-	
-/* money data */
-
 $(document).on('click', '.viewMoney', function (e) {
     e.preventDefault();
     var money_id = $(this).val();
@@ -415,8 +412,6 @@ $(document).on('click', '.viewMoney', function (e) {
 </script>
 
 <script>
-	
-/**reference number */
 $(document).on('click', '.viewRef', function (e) {
     e.preventDefault();
     var money_id = $(this).val();

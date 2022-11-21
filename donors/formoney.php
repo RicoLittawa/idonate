@@ -255,31 +255,25 @@ $(document).ready(function(){
 
         
           if (money_name==""){
-            Swal.fire('Fields', "Fullname is empty",'warning');
             $('#money_name').removeClass('border-success');
             $('#money_name').addClass('border-danger');
             return false;
           }
           else if(money_province==""){
-            Swal.fire('Fields', "Province is empty",'warning');
             $('#money_province').removeClass('border-success');
             $('#money_province').addClass('border-danger');
             return false;
           }
           else if(money_street==""){
-            Swal.fire('Fields', "Street is empty",'warning');
-            $('#money_province').removeClass('border-success');
-            $('#money_province').addClass('border-danger');
+            $('#money_street').removeClass('border-success');
+            $('#money_street').addClass('border-danger');
             return false;
           }
           else if(money_region==""){
             Swal.fire('Select', "Please select an option",'warning');
-            $('#money_region').removeClass('border-success');
-            $('#money_region').addClass('border-danger');
             return false;
           }
           else if(money_contact==""){
-            Swal.fire('Fields', "Contact is empty",'warning');
             $('#money_contact').removeClass('border-success');
             $('#money_contact').addClass('border-danger');
             return false;
@@ -303,7 +297,6 @@ $(document).ready(function(){
             return false;
           }
           else if (money_email==""){
-            Swal.fire('Fields', "Email is empty",'warning');
             $('#money_email').removeClass('border-success');
             $('#money_email').addClass('border-danger');
           }
@@ -314,12 +307,10 @@ $(document).ready(function(){
             return false;
           }
           else if (money_date==""){
-            Swal.fire('Fields', "Please select a date",'warning');
             $('#money_date').removeClass('border-success');
             $('#money_date').addClass('border-danger');
           }
           else if(money_reference==""){
-            Swal.fire('Fields', "Reference is empty",'warning');
             $('#money_reference').removeClass('border-success');
             $('#money_reference').addClass('border-danger');
           }
@@ -345,7 +336,6 @@ $(document).ready(function(){
             return false;
           } 
           else if(money_amount==""){
-            Swal.fire('Fields', "Amount is empty",'warning');
             $('#money_amount').removeClass('border-success');
             $('#money_amount').addClass('border-danger');
           }
@@ -443,15 +433,6 @@ $(document).ready(function(){
           $(this).removeClass('border-success');
           $(this).addClass('border-danger');
         } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-      $('#money_region').bind('change keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else{
           $(this).addClass('border-success');
           $(this).removeClass('border-danger');
         }

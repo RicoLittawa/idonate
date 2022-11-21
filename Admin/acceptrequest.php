@@ -9,14 +9,14 @@ session_start();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
 	<link rel="stylesheet" href="css/donations.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
-	<title>Requests</title>
+	<title>Accept Requests</title>
 </head>
 <body>
 
@@ -78,10 +78,7 @@ session_start();
 		<nav>
 			<i style="font-size:40px;" class='bx bx-menu' ></i>
 			<form action="#">
-				<div class="form-input">
-					<input type="search" placeholder="Search...">
-					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-				</div>
+				
 			</form>
 			<a href="#" class="notification">
 				<i class='bx bxs-bell' ></i>
@@ -116,10 +113,40 @@ session_start();
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
 					</div>
-				<form action="">
-					<label for="addcategory"></label>
-					<input type="text" name="addcategory" id="addcategory">
-				</form>	
+					<?php 
+					require_once 'include/connection.php';
+					if (isset($_GET['acceptReq'])):
+						$request_id= $_GET['acceptReq'];
+						$sql ="SELECT * from set_request where request_id=?";
+						$stmt= $conn->prepare($sql);
+						$stmt->bind_param('i',$request_id);
+						$stmt->execute();
+						$result = $stmt->get_result();
+						$data = $result->fetch_all(MYSQLI_ASSOC);
+						foreach ($data as $row):
+						
+						
+					?>
+					<?php 
+					$reference= $row['reference_id'];
+					$req_name= $row['req_name'];
+					?>
+					<form action="">
+						<input type="text" id="" name="" value="<?php echo htmlentities($request_id); ?>">
+						<input type="text" id="" name="" value="<?php echo htmlentities($reference); ?>">
+						<div class="row">
+							<div class="col">
+								<div class="form-group">
+									<label for=""></label>
+									<input type="text" class="form-control" name="" id="" value="<?php echo htmlentities($req_name); ?>">
+								</div>
+							</div>
+						</div>
+
+
+					<?php endforeach; ?>
+					</form>
+  			<?php endif; ?>
 			</div>
 		</main>
 	

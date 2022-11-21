@@ -2,7 +2,7 @@
 
 
 if (isset($_POST['signup-submit'])){
-   require 'connection.php';
+   require_once 'connection.php';
     $Email= $_POST['email'];
     $Password= $_POST['pwd'];
     $ConfirmPass= $_POST['pwd-repeat'];

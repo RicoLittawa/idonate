@@ -344,25 +344,21 @@
         //   }
         //  return;
       if(req_fname==""){
-        Swal.fire('Fields', "Fullname is empty",'warning');
             $('#req_fname').removeClass('border-success');
             $('#req_fname').addClass('border-danger');
             return false;
       }
       else if(req_province==""){
-        Swal.fire('Fields', "Province is empty",'warning');
             $('#req_province').removeClass('border-success');
             $('#req_province').addClass('border-danger');
             return false;
       }
       else if(req_street==""){
-        Swal.fire('Fields', "Street is empty",'warning');
             $('#req_street').removeClass('border-success');
             $('#req_street').addClass('border-danger');
             return false;
       }
       else if(req_email==""){
-        Swal.fire('Fields', "Street is empty",'warning');
             $('#req_email').removeClass('border-success');
             $('#req_email').addClass('border-danger');
             return false;
@@ -380,7 +376,6 @@
             return false;
       }
       else if(req_contact==""){
-        Swal.fire('Fields', "Contact is empty",'warning');
             $('#req_contact').removeClass('border-success');
             $('#req_contact').addClass('border-danger');
             return false;
@@ -405,8 +400,6 @@
           }
           else if(req_region==""){
             Swal.fire('Select', "Please select a region",'warning');
-            $('#req_region').removeClass('border-success');
-            $('#req_region').addClass('border-danger');
             return false;
           }
           else if($('#idImg').val()==''){
@@ -611,25 +604,21 @@
         //   }
         //  return;
       if(req_fname==""){
-        Swal.fire('Fields', "Fullname is empty",'warning');
             $('#req_fname').removeClass('border-success');
             $('#req_fname').addClass('border-danger');
             return false;
       }
       else if(req_province==""){
-        Swal.fire('Fields', "Province is empty",'warning');
             $('#req_province').removeClass('border-success');
             $('#req_province').addClass('border-danger');
             return false;
       }
       else if(req_street==""){
-        Swal.fire('Fields', "Street is empty",'warning');
             $('#req_street').removeClass('border-success');
             $('#req_street').addClass('border-danger');
             return false;
       }
       else if(req_email==""){
-        Swal.fire('Fields', "Street is empty",'warning');
             $('#req_email').removeClass('border-success');
             $('#req_email').addClass('border-danger');
             return false;
@@ -642,12 +631,9 @@
       }
       else if(req_date==""){
         Swal.fire('Fields', "Please select a date",'warning');
-            $('#req_date').removeClass('border-success');
-            $('#req_date').addClass('border-danger');
             return false;
       }
       else if(req_contact==""){
-        Swal.fire('Fields', "Contact is empty",'warning');
             $('#req_contact').removeClass('border-success');
             $('#req_contact').addClass('border-danger');
             return false;
@@ -672,8 +658,6 @@
           }
           else if(req_region==""){
             Swal.fire('Select', "Please select a region",'warning');
-            $('#req_region').removeClass('border-success');
-            $('#req_region').addClass('border-danger');
             return false;
           }
           else if($('#idImg').val()==''){
@@ -688,6 +672,7 @@
             for (var j=0;j<category.length;j++){
                 if ($(category[j]).val()=="-Select-"){
                   Swal.fire('Select', "Please select a category",'warning');
+                  return false;
                 }
                 else if($(variant[j]).val()=="-Select-"){
                   Swal.fire('Select', "Please select a variant",'warning');

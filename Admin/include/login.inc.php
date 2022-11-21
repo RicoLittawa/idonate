@@ -1,6 +1,6 @@
 <?php 
 if(isset($_POST['login-submit'])){
-    require 'connection.php';
+    require_once 'connection.php';
     $Email = $_POST['userEmail'];
     $Password = $_POST['userPassword'];
     if (empty($Email)||empty($Password)){
