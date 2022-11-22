@@ -164,13 +164,13 @@ session_start();
 		   
 			<?php  $count = $count + 1  ?>
 			<tr>
-   		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo $row['donor_email'];?>" data-name="<?php echo $row['donor_name']; ?>"></input>
+   		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['donor_email']);?>" data-name="<?php echo htmlentities($row['donor_name']); ?>"></input>
 	    <button class="btn"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
 		</td>
-		<td><?php echo  $row['Reference'];?></td>
-		<td><?php echo  $row['donor_name'];?></td>
-		<td><?php echo  $row['donor_province'];?></td>
-		<td><?php echo  $row['donor_street'];?></td>
+		<td><?php echo  htmlentities($row['Reference']);?></td>
+		<td><?php echo  htmlentities($row['donor_name']);?></td>
+		<td><?php echo  htmlentities($row['donor_province']);?></td>
+		<td><?php echo  htmlentities($row['donor_street']);?></td>
 		<?php 
 		$regionM= $row['donor_region'];
 		 $sql2="SELECT * From regions";
@@ -178,17 +178,17 @@ session_start();
 		
 		 foreach($result2 as $row1){
 			if ($regionM== $row1['region_id']){
-				echo "<td>".$row1['region_name']."</td>
+				echo "<td>".htmlentities($row1['region_name'])."</td>
 				";
 			}
 		 }
 		
 		?>
-		<td><?php echo  $row['donor_email'];?></td>
-		<td><?php echo  $row['donor_contact'];?></td>
-		<td><?php echo  $row['donationDate'];?></td>
+		<td><?php echo  htmlentities($row['donor_email']) ;?></td>
+		<td><?php echo  htmlentities($row['donor_contact']);?></td>
+		<td><?php echo  htmlentities($row['donationDate']);?></td>
 		<td><button type="button" class="btn btn-info email_button" name="email_button" id="<?php echo $count; ?>"
-		data-email="<?php echo $row['donor_email']; ?>" data-name="<?php echo $row['donor_name']; ?>" data-action="single">Send</button>
+		data-email="<?php echo htmlentities($row['donor_email']); ?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-action="single">Send</button>
     </td>
 	
 		</tr>

@@ -13,10 +13,10 @@
   $output= '';
   foreach($_POST['email_data']as $row)
   {
-    $image= imagecreatefrompng('D:/App Projects/Source/idonate/Admin/include/Certificate Template/certificate2.png');
+    $image= imagecreatefrompng('Certificate Template/certificate2.png');
     $white = imagecolorallocate($image, 255, 255, 255);
     $black = imagecolorallocate($image, 0, 0, 0);
-    $font="D:/App Projects/Source/idonate/Admin/fonts/Roboto-Black.ttf";
+    $font="fonts/Roboto-Black.ttf";
     $size =110;
     $box = imagettfbbox($size, 0, $font, $row['name']);
     $text_width = abs($box[2]) - abs($box[0]);
