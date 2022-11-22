@@ -148,6 +148,7 @@ session_start();
 		<th>Street</th>
 		<th>Region</th>
 		<th>Email</th>
+		<th>Contact</th>
       	<th>Donation Date</th>
         <th>Certificate</th>
 		
@@ -158,9 +159,10 @@ session_start();
      <?php
        
 		$count=0;
-		   foreach($result as $row):?>
+		   foreach($result as $row)
+		   :?>
 		   
-			<php $count++; ?>
+			<?php  $count = $count + 1  ?>
 			<tr>
    		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo $row['donor_email'];?>" data-name="<?php echo $row['donor_name']; ?>"></input>
 	    <button class="btn"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
@@ -183,6 +185,7 @@ session_start();
 		
 		?>
 		<td><?php echo  $row['donor_email'];?></td>
+		<td><?php echo  $row['donor_contact'];?></td>
 		<td><?php echo  $row['donationDate'];?></td>
 		<td><button type="button" class="btn btn-info email_button" name="email_button" id="<?php echo $count; ?>"
 		data-email="<?php echo $row['donor_email']; ?>" data-name="<?php echo $row['donor_name']; ?>" data-action="single">Send</button>

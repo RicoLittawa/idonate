@@ -14,15 +14,17 @@
       $Category= $_POST['category_arr'];
       $Variant= $_POST['variant_arr'];
       $Quantity= $_POST['quantity_arr'];
+      $Contact= $_POST['contact'];
+    
         
       
     
-      $sql ="UPDATE donation_items set Reference=?,donor_name=?,donor_province=?,donor_street=?,donor_region=?,donor_email=?,donationDate=? where donor_id=?";
+      $sql ="UPDATE donation_items set Reference=?,donor_name=?,donor_province=?,donor_street=?,donor_region=?,donor_email=?,donor_contact=?,donationDate=? where donor_id=?";
       $stmt=mysqli_stmt_init($conn);
       if(!mysqli_stmt_prepare($stmt,$sql)){
          
       }else{
-         mysqli_stmt_bind_param($stmt, 'issssssi', $reference_id,$Fname,$Province,$Street,$Region,$Email,$Date,$donorid);
+         mysqli_stmt_bind_param($stmt, 'isssssssi', $reference_id,$Fname,$Province,$Street,$Region,$Email,$Contact,$Date,$donorid);
           mysqli_stmt_execute($stmt);
           
      }
@@ -44,25 +46,11 @@
                     $resultCount = $resultCount + 1;
                     $count=$count+1;
                 }else {
-   
+                  echo 'Data not updated';
                 }
             }
         }
-        $reference_id=$reference_id+1;
-        $sql3="UPDATE donation_items_picking  set reference_id=? "; 
-        $stmt=mysqli_stmt_init($conn);
-        if(!mysqli_stmt_prepare($stmt,$sql3)){
-         
-     } else{
-         mysqli_stmt_bind_param($stmt, 'i', $reference_id);
-          mysqli_stmt_execute($stmt);
-          
-     }$data =[
-        'status' => 422,
-        'message' => 'Data has been updated'
-    ];
-    echo json_encode($data);
-    return false;
+       echo "Data-updated";
     
     
       } else {

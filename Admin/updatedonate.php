@@ -2,7 +2,7 @@
 session_start();
 ?>
  <?php
-	 include "include/connection.php";
+	 require_once "include/connection.php";
     if (isset($_GET["editdonate"]))
     {
        	$update_id= $_GET['editdonate'];
@@ -20,7 +20,8 @@ session_start();
 			$donorregion= $row['donor_region'];
 			$donoremail= $row['donor_email'];
 			$donordate= $row['donationDate'];
-	}
+			$donorcontact= $row['donor_contact'];
+			}
 	function fill_category_select_box($conn)
   {
     $output= '';
@@ -178,6 +179,8 @@ session_start();
 									</div>
 									</div>
 									</div>
+								<div class="row">
+									<div class="col">
 								<div class="form-group">
 									<label for="region">Select Region</label>
 									
@@ -194,8 +197,15 @@ session_start();
 									<?php echo htmlentities($row['region_name']);?></option>
 									<?php endforeach;  ?>
 									</select>
-									
-									</div>    
+									</div>
+									</div> 
+									<div class="col">
+										<div class="form-group">
+											<label for="contact">Contact</label>
+											<input class="form-control border-success" type="text" name="contact" id="contact" value="<?php echo htmlentities($donorcontact); ?>">
+										</div>
+									</div>
+									</div>   
 								<div class="form-group">
 									<label for="email">Email</label>
 									<input class="form-control border-success" type="text" name="email" id="email" value="<?php echo $donoremail; ?>">
@@ -219,7 +229,7 @@ session_start();
 								<?php 
 								$sql1="SELECT * from donation_items10 where Reference= $donorreference";
 								$result1=mysqli_query($conn,$sql1);
-								$counter=1;
+							
 								foreach($result1 as $row1):
 									$categM= $row1['category'];
 									$variantM= $row1['variant'];
@@ -280,7 +290,7 @@ session_start();
 								</div>
 								</div>	
 								</div>
-								<?php  $counter++; endforeach;?>
+								<?php endforeach;?>
 								
 						</form>	
 			</div>
@@ -343,7 +353,9 @@ session_start();
 						var street = $('#street').val();
 						var region = $('#region').val();
 						var email = $('#email').val();
+						var contact= $('#contact').val();
 						var donation_date = $('#donation_date').val();
+					
 						
 						var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
        					var varnumbers = /^\d+$/;
@@ -359,14 +371,36 @@ session_start();
             return false;
 		}
 		else if(street==""){
-			$('#fname').removeClass('border-success');
-            $('#fname').addClass('border-danger');
+			$('#street').removeClass('border-success');
+            $('#street').addClass('border-danger');
             return false;
 		}
 		else if(region==""){
 			Swal.fire('Fields', "Please select a region",'warning');
             return false;
 		}
+		else if(contact==""){
+			$('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+		}
+		else if (inValid.test($('#contact').val())==true){
+            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          }
+        else if(varnumbers.test($('#contact').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          } 
+        else if(contact.length !=11){
+            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          }
 		else if(email==""){
 			$('#email').removeClass('border-success');
             $('#email').addClass('border-danger');
@@ -406,27 +440,28 @@ session_start();
 				else if(varnumbers.test($(quantity[j]).val())==false) {
 					Swal.fire('Number', "Numbers only.",'warning');
 					return false;			
-			 	}
-			}
-		}var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
-		$.ajax({
-						url:'include/edit.inc.php',
-						method:'POST',
-						data: data,
-						success:function(data){
-							var data = jQuery.parseJSON(data);
-							if(data.status == 422) {
-							Swal.fire({
-						icon: 'success',
-						title: 'Success',
-						text: data.message,
-						}).then(function() {
-							window.location = "donations.php";
-						});
-				}	
-		 	}
+			 	}var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
+					variant_arr:variant_arr,quantity_arr:quantity_arr};
+	
+	$.ajax({
+					url:'include/edit.inc.php',
+					method:'POST',
+					data: data,
+					success:function(data){
+						if(data == 'Data-updated') {
+						Swal.fire({
+					icon: 'success',
+					title: 'Success',
+					text:data,
+					}).then(function() {
+						window.location = "donations.php";
+					});
+			}	
+		 }
 
-		 });
+	 });
+			}
+		}
 		
 	}
 				
@@ -450,6 +485,15 @@ session_start();
         }
       });
 	$('#province').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+	  $('#contact').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
           $(this).addClass('border-danger');
@@ -510,8 +554,9 @@ session_start();
 						var street = $('#street').val();
 						var region = $('#region').val();
 						var email = $('#email').val();
+						var contact= $('#contact').val();
 						var donation_date = $('#donation_date').val();
-						
+				
 						var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
        					var varnumbers = /^\d+$/;
         				var inValid = /\s/;
@@ -526,14 +571,36 @@ session_start();
             return false;
 		}
 		else if(street==""){
-			$('#fname').removeClass('border-success');
-            $('#fname').addClass('border-danger');
+			$('#street').removeClass('border-success');
+            $('#street').addClass('border-danger');
             return false;
 		}
 		else if(region==""){
 			Swal.fire('Fields', "Please select a region",'warning');
             return false;
 		}
+		else if(contact==""){
+			$('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+		}
+		else if (inValid.test($('#contact').val())==true){
+            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          }
+        else if(varnumbers.test($('#contact').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          } 
+        else if(contact.length !=11){
+            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          }
 		else if(email==""){
 			$('#email').removeClass('border-success');
             $('#email').addClass('border-danger');
@@ -575,18 +642,20 @@ session_start();
 					return false;			
 			 	}
 			}
-		}var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
+		}var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
+			variant_arr:variant_arr,quantity_arr:quantity_arr};
+		
 		$.ajax({
 						url:'include/edit.inc.php',
 						method:'POST',
 						data: data,
 						success:function(data){
-							var data = jQuery.parseJSON(data);
-							if(data.status == 422) {
+							
+							if(data == 'Data-updated') {
 							Swal.fire({
 						icon: 'success',
 						title: 'Success',
-						text: data.message,
+						text:data,
 						}).then(function() {
 							window.location = "donations.php";
 						});
@@ -595,8 +664,7 @@ session_start();
 
 		 });
 		
-	}
-		
+	}	
 						
     });
 	$('#fname').on('keyup', function() {
@@ -618,6 +686,15 @@ session_start();
         }
       });
 	  $('#province').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+	  $('#contact').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
           $(this).addClass('border-danger');

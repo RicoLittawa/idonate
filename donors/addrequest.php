@@ -2,7 +2,7 @@
 
 
     require_once 'include/connection.php';
-    try{
+
 
         if (isset($_POST["saveBtn"]))
     {
@@ -38,33 +38,20 @@
         Values(?,?,?,?,?,?,?,?,?,?)";
         $stmt= mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$sql)){
-            throw new Exception("Sql error");
-            exit();
+           
         }
         else {
             mysqli_stmt_bind_param($stmt,"ssssssssss",$referenceId,$fname,$province,$street,$region,$Image,$email,$date,$contact,$note);
             mysqli_stmt_execute($stmt);
             
         }
-        
-        
-            }
-            throw new Exception("File is too large");
-            exit();
-        }
-        throw new Exception("Error uploading file");
-        exit(); 
-       
-       
-    }
-    $count = 0;
+        $count = 0;
         $resultCount = 0;
         foreach($categ as $item){
             $sql2= "INSERT INTO set_request10 (req_reference,req_category,req_variant,req_quantity) Values (?,?,?,?)";
             $stmt=mysqli_stmt_init($conn);
             if(!mysqli_stmt_prepare($stmt,$sql2)){
-                throw new Exception("Sql error");
-                exit();
+              
             }
             else{
                 mysqli_stmt_bind_param($stmt, 'ssss', $referenceId, $item, $vari[$count], $quanti[$count]);
@@ -87,7 +74,15 @@
         mysqli_stmt_bind_param($stmt, 'i', $referenceId);
          mysqli_stmt_execute($stmt);
 
-    }echo"Success";
+    }
+        
+            }
+           
+        }
+       
+       
+    }
+   echo"Success";
     exit();
     
    
@@ -95,7 +90,5 @@
     }
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
-    }
-    catch(Exception $e){
-        echo $e->getMessage();}
+   
     

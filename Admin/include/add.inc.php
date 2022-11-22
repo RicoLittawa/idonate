@@ -1,7 +1,6 @@
 <?php
 
     require_once 'connection.php';
-    try{
 
         if (isset($_POST["saveBtn"]))
     {
@@ -15,17 +14,18 @@
         $Category= $_POST['category_arr'];
         $Variant= $_POST['variant_arr'];
         $Quantity= $_POST['quantity_arr'];
+        $Contact= $_POST['contact'];
         
-            $sql1 = "INSERT INTO donation_items (Reference,donor_name,donor_province,donor_street,donor_region,donor_email,donationDate)
-        VALUES (?,?,?,?,?,?,?)" ;
+            $sql1 = "INSERT INTO donation_items (Reference,donor_name,donor_province,donor_street,donor_region,donor_email,donor_contact,donationDate)
+        VALUES (?,?,?,?,?,?,?,?)" ;
         $stmt= mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$sql1)){
-            throw new Exception('Sql error'). $mysqli -> connect_list;
+         echo ''. $mysqli -> connect_list;
             exit();
-            return;
+           
         }
         else {
-            mysqli_stmt_bind_param($stmt,"sssssss",$reference_id,$Fname,$Province,$Street,$Region,$Email,$Date);
+            mysqli_stmt_bind_param($stmt,"ssssssss",$reference_id,$Fname,$Province,$Street,$Region,$Email,$Contact,$Date);
             mysqli_stmt_execute($stmt);
         }
 
@@ -62,8 +62,5 @@
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
     }
-    }
-    catch(Exception $e){
-        echo $e->getMessage();
-    }
+    
     

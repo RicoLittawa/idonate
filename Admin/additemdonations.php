@@ -182,13 +182,23 @@ session_start();
 				</div>
 			</div>
 		  </div>	
+		  <div class="row"> 
+			<div class="col">
             <div class="form-group">
               <label for="region">Select Region</label>
               <select class="custom-select border-success" name="region" id="region">
               <option value="">-Select-</option>
               <?php echo fill_region_select_box($conn); ?>
             </select>
-			</div>   
+			</div>  
+		</div> 
+		<div class="col">
+			<div class="form-group">
+				<label for="donor_contact"> Contact</label>
+				<input class="form-control border-success" type="text" id="contact" name="contact">
+			</div>
+		</div>
+	</div>
 			
             <div class="form-group">
             <label for="email">Email</label>
@@ -289,6 +299,7 @@ session_start();
 		var region = $('#region').val();
 		var email = $('#email').val();
 		var donation_date = $('#donation_date').val();
+		var contact= $('#contact').val();
 		
 
 		var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -306,14 +317,36 @@ session_start();
             return false;
 		}
 		else if(street==""){
-			$('#fname').removeClass('border-success');
-            $('#fname').addClass('border-danger');
+			$('#street').removeClass('border-success');
+            $('#street').addClass('border-danger');
             return false;
 		}
 		else if(region==""){
 			Swal.fire('Fields', "Please select a region",'warning');
             return false;
 		}
+		else if(contact==""){
+			$('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+		}
+		else if (inValid.test($('#contact').val())==true){
+            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          }
+        else if(varnumbers.test($('#contact').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          } 
+        else if(contact.length !=11){
+            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          }
 		else if(email==""){
 			$('#email').removeClass('border-success');
             $('#email').addClass('border-danger');
@@ -325,6 +358,7 @@ session_start();
             $('#email').addClass('border-danger');
             return false;
 		}
+		
 		else if(donation_date==""){
 
 			$('#donation_date').removeClass('border-success');
@@ -359,7 +393,7 @@ session_start();
 			 
 			
 			}
-			var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
+			var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
 			
 			$.ajax({
 			url:'include/add.inc.php',
@@ -423,6 +457,15 @@ session_start();
           $(this).removeClass('border-danger');
         }
       });
+	  $('#contact').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
 	  $('#email').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
@@ -432,6 +475,7 @@ session_start();
           $(this).removeClass('border-danger');
         }
       });
+	 
 	  $('#donation_date').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
@@ -478,6 +522,7 @@ session_start();
 		var region = $('#region').val();
 		var email = $('#email').val();
 		var donation_date = $('#donation_date').val();
+		var contact= $('#contact').val();
 		
 
 		var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -495,14 +540,36 @@ session_start();
             return false;
 		}
 		else if(street==""){
-			$('#fname').removeClass('border-success');
-            $('#fname').addClass('border-danger');
+			$('#street').removeClass('border-success');
+            $('#street').addClass('border-danger');
             return false;
 		}
 		else if(region==""){
 			Swal.fire('Fields', "Please select a region",'warning');
             return false;
 		}
+		else if(contact==""){
+			$('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+		}
+		else if (inValid.test($('#contact').val())==true){
+            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          }
+        else if(varnumbers.test($('#contact').val())==false) {
+            Swal.fire('Number', "Numbers only.",'warning');
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          } 
+        else if(contact.length !=11){
+            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+            $('#contact').removeClass('border-success');
+            $('#contact').addClass('border-danger');
+            return false;
+          }
 		else if(email==""){
 			$('#email').removeClass('border-success');
             $('#email').addClass('border-danger');
@@ -514,7 +581,9 @@ session_start();
             $('#email').addClass('border-danger');
             return false;
 		}
+		
 		else if(donation_date==""){
+
 			$('#donation_date').removeClass('border-success');
             $('#donation_date').addClass('border-danger');
             return false;
@@ -542,9 +611,12 @@ session_start();
 				Swal.fire('Number', "Numbers only.",'warning');
 				return false;
 						
-			  }		
+			  }
+			
+			 
+			
 			}
-			var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
+			var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
 			
 			$.ajax({
 			url:'include/add.inc.php',
@@ -577,8 +649,6 @@ session_start();
 			
 			
 		}
-			
-
    });
 	
 	$('#fname').on('keyup', function() {
@@ -609,6 +679,15 @@ session_start();
         }
       });
 	  $('#email').on('keyup', function() {
+        if($(this).val() == '') {
+          $(this).removeClass('border-success');
+          $(this).addClass('border-danger');
+        } else {
+          $(this).addClass('border-success');
+          $(this).removeClass('border-danger');
+        }
+      });
+	  $('#contact').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');
           $(this).addClass('border-danger');
