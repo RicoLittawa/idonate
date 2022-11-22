@@ -306,12 +306,13 @@ session_start();
 			var count =0;
 			function add_input_field(count){
 				$('#testBtn').remove();
+				$('#cancelBtn').remove();
 				var html='';
 				
 				html+='<div>'
-				html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-				html += '<div class="col"><div class="form-group"><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
-				html += '<div class="col"><div class="form-group"><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
+				html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
+				html += '<div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
+				html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
 				
 				
 				var remove_button='';
@@ -322,14 +323,18 @@ session_start();
 				html+='<span>'+remove_button+'</span></div>';
 				return html;
 				}	
+			
+			
+			$('#update-form').append('<button  type="button" class="btn addDonate" id="testBtn">Save</button>');
+			$('#update-form').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
 			//button remove for previousdata
-			$('#update-form').append('<button  type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Save</button>');
 			$('.item').append('<button type="button" name="prevremove" id="prevremove" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>');	
 			$(document).on('click','#btn_additem',function(e){
 				e.preventDefault();
 				count++;
 				$('#update-form').append(add_input_field(count))
-				$('#update-form').append('<button type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Save</button>');
+				$('#update-form').append('<button type="button" class="btn addDonate" id="testBtn">Save</button>');
+				$('#update-form').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
 					$('#testBtn').click(function(e){
 						var valid = this.form.checkValidity();
 						if(valid) {	
@@ -519,7 +524,15 @@ session_start();
           $(this).removeClass('border-danger');
         }
       });
-	  
+	  //cancel button
+	  $('#cancelBtn').click(function(){
+		Swal.fire({
+			icon: 'question',
+			title: 'Go back to main page?',
+			}).then(function() {
+			window.location = "donations.php";
+			});
+	  });
 	});
 	$(document).on('click','#remove', function(){
 		$(this).closest('div').remove();
@@ -720,7 +733,15 @@ session_start();
           $(this).removeClass('border-danger');
         }
       });
-			
+	  //cancel button
+	  $('#cancelBtn').click(function(){
+		Swal.fire({
+			icon: 'question',
+			title: 'Go back to main page?',
+			}).then(function() {
+			window.location = "donations.php";
+			});
+	  });
 					
 		});
 	</script>

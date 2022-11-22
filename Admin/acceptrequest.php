@@ -167,11 +167,11 @@ function fill_category_select_box($conn)
 					foreach($result as $refR):
 					?>
 					<form id="requestform">
-						<input type="text" id="donateRefId" name="donateRefId" value="<?php echo htmlentities($refR['reference_id']); ?>" readonly>
+						<input type="hidden" id="donateRefId" name="donateRefId" value="<?php echo htmlentities($refR['reference_id']); ?>" readonly>
 						<?php endforeach; ?>
-						<input type="text" id="request_id" name="request_id" value="<?php echo htmlentities($request_id); ?>"readonly>
-						<input type="text" id="req_reference" name="req_reference" value="<?php echo htmlentities($reference); ?>"readonly>
-						<input type="text" id="valid_id" name="valid_id" value="<?php echo htmlentities($valid_id); ?>"readonly>
+						<input type="hidden" id="request_id" name="request_id" value="<?php echo htmlentities($request_id); ?>"readonly>
+						<input type="hidden" id="req_reference" name="req_reference" value="<?php echo htmlentities($reference); ?>"readonly>
+						<input type="hidden" id="valid_id" name="valid_id" value="<?php echo htmlentities($valid_id); ?>"readonly>
 						<div class="row">
 							<div class="col">
 								<div class="form-group">
@@ -336,6 +336,7 @@ function fill_category_select_box($conn)
 		var count = 0;
 		function add_request_field (count){
 			$('#testBtn').remove();
+			$('#cancelBtn').remove();
 			var html='';
 			html+='<div>'
 				html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
@@ -354,7 +355,8 @@ function fill_category_select_box($conn)
 	$(document).on('click','#btnAdd',function(){
 		count++;
 		$('#requestform').append(add_request_field(count));
-		$('#requestform').append('<button type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Accept</button>');
+		$('#requestform').append('<button type="button" class="btn addDonate" id="testBtn">Accept</button>');
+		$('#requestform').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
 		$('#testBtn').click(function(e){
 			e.preventDefault();
 			var valid = this.form.checkValidity();
@@ -578,12 +580,22 @@ function fill_category_select_box($conn)
           $(this).removeClass('border-danger');
         }
       });
+	  //cancel button
+	  $('#cancelBtn').click(function(){
+		Swal.fire({
+			icon: 'question',
+			title: 'Go back to request page?',
+			}).then(function() {
+			window.location = "request.php";
+			});
+	  });
 	});
 
 
 	
 
-	$('#requestform').append('<button type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Accept</button>');
+	$('#requestform').append('<button type="button" class="btn addDonate" id="testBtn">Accept</button>');
+	$('#requestform').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
 	$(document).on('click','#remove', function(){
 		$(this).closest('div').remove();
 	});
@@ -812,7 +824,15 @@ function fill_category_select_box($conn)
           $(this).removeClass('border-danger');
         }
       });
-
+//cancel button
+		$('#cancelBtn').click(function(){
+		Swal.fire({
+			icon: 'question',
+			title: 'Go back to request page?',
+			}).then(function() {
+			window.location = "request.php";
+			});
+	  });
 	});
 </script>
 	

@@ -255,14 +255,47 @@ body {
 	cursor: pointer;
 }
 .addDonate{
-	padding: 1rem;
-	width: 200px;
+	float: right;
+	width: 170px;
 	border-radius: 30px;
-	
+	color: green;
+	height: 50px;
+	padding: 0 16px;
+	border-radius: 36px;
+	background: #83f28f;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family:'Kantumruy Pro', sans-serif ;
+	font-weight: 800;
+	font-size: 15px;	
 }
-.clickable-row{
-	cursor:pointer;
-	}
+.addDonate:hover{
+	color: var(--light);
+	background: green;
+}
+.cancelBtn{
+	float: right;
+	width: 170px;
+	border-radius: 30px;
+	background: #FF9F9F;
+	color: var(--light);
+	height: 50px;
+	padding: 10 16px;
+	border-radius: 36px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family:'Kantumruy Pro', sans-serif ;
+	font-weight: 800;
+	font-size: 15px;
+	position: relative;
+	left: -20px;		
+}
+.cancelBtn:hover{
+	background: var(--red);
+	color: var(--light);
+}
 #content nav .notification {
 	font-size: 20px;
 	position: relative;

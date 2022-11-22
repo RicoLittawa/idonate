@@ -113,7 +113,7 @@ session_start();
 				</div>
 				<!--Add modal -->
 				
-					<span><button class="btn adddata" type="button" ><a href="additemdonations.php">Add Donations<i class="fa-solid fa-plus"></i> </a></button></span>
+					<span><button class="btn adddata" type="button" style=" width:200px;height:50px;"><a style="color:white;" href="additemdonations.php">Add Donations<i class="fa-solid fa-plus"></i> </a></button></span>
 				   
 			</div>
 

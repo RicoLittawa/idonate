@@ -246,6 +246,7 @@ session_start();
 	
     function add_input_field(count){
 	  $('#testBtn').remove();
+	  $('#cancelBtn').remove();
       var html='';
       html+= '<div id="items">';
       html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
@@ -261,12 +262,14 @@ session_start();
       return html;
     }
 	$('#add-form').append(add_input_field(count[0]))
-	$('#add-form').append('<button  type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Save</button>');
+	$('#add-form').append('<button  type="button" class="btn addDonate" id="testBtn">Save</button>');
+	$('#add-form').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
     $(document).on('click', '#btn_additem',function(){
 		count++;
       $('#add-form').append(add_input_field(count));
 
-	  $('#add-form').append('<button type="button" style="float: right;" class="btn btn-success addDonate" id="testBtn">Save</button>');
+	  $('#add-form').append('<button type="button" class="btn addDonate" id="testBtn">Save</button>');
+	  $('#add-form').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
 	  
 	  $('#testBtn').click(function(e){
 		
@@ -485,7 +488,15 @@ session_start();
           $(this).removeClass('border-danger');
         }
       });
-	 
+	   //cancel button
+	   $('#cancelBtn').click(function(){
+		Swal.fire({
+			icon: 'question',
+			title: 'Go back to main page?',
+			}).then(function() {
+			window.location = "donations.php";
+			});
+	  });
     });
 	
     $(document).on('click','#remove', function(){
@@ -705,6 +716,16 @@ session_start();
           $(this).removeClass('border-danger');
         }
       });
+
+	  //cancel button
+	  $('#cancelBtn').click(function(){
+		Swal.fire({
+			icon: 'question',
+			title: 'Go back to main page?',
+			}).then(function() {
+			window.location = "donations.php";
+			});
+	  });
   });
 </script>  
 
