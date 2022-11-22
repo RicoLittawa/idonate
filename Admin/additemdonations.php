@@ -322,7 +322,7 @@ session_start();
             return false;
 		}
 		else if(region==""){
-			Swal.fire('Fields', "Please select a region",'warning');
+			Swal.fire('Select', "Please select a region",'warning');
             return false;
 		}
 		else if(contact==""){
@@ -545,7 +545,7 @@ session_start();
             return false;
 		}
 		else if(region==""){
-			Swal.fire('Fields', "Please select a region",'warning');
+			Swal.fire('Select', "Please select a region",'warning');
             return false;
 		}
 		else if(contact==""){

@@ -355,8 +355,7 @@ session_start();
 						var email = $('#email').val();
 						var contact= $('#contact').val();
 						var donation_date = $('#donation_date').val();
-					
-						
+				
 						var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
        					var varnumbers = /^\d+$/;
         				var inValid = /\s/;
@@ -390,7 +389,7 @@ session_start();
             return false;
           }
         else if(varnumbers.test($('#contact').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
+            Swal.fire('Contact', "Numbers only.",'warning');
             $('#contact').removeClass('border-success');
             $('#contact').addClass('border-danger');
             return false;
@@ -440,31 +439,31 @@ session_start();
 				else if(varnumbers.test($(quantity[j]).val())==false) {
 					Swal.fire('Number', "Numbers only.",'warning');
 					return false;			
-			 	}var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
-					variant_arr:variant_arr,quantity_arr:quantity_arr};
-	
-	$.ajax({
-					url:'include/edit.inc.php',
-					method:'POST',
-					data: data,
-					success:function(data){
-						if(data == 'Data-updated') {
-						Swal.fire({
-					icon: 'success',
-					title: 'Success',
-					text:data,
-					}).then(function() {
-						window.location = "donations.php";
-					});
-			}	
-		 }
-
-	 });
+			 	}
 			}
-		}
+		}var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
+			variant_arr:variant_arr,quantity_arr:quantity_arr};
 		
-	}
-				
+		$.ajax({
+						url:'include/edit.inc.php',
+						method:'POST',
+						data: data,
+						success:function(data){
+							
+							if(data == 'Data-updated') {
+							Swal.fire({
+						icon: 'success',
+						title: 'Success',
+						text:data,
+						}).then(function() {
+							window.location = "donations.php";
+						});
+				}	
+		 	}
+
+		 });
+		
+	}			
 					});
 	$('#fname').on('keyup', function() {
         if($(this).val() == '') {

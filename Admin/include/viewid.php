@@ -104,17 +104,17 @@ if (isset($_GET['viewNote'])){
                 $valid_id = $_POST['valid_id'];
                 $validPath= '../../donors/ValidId/'.$valid_id;
                 unlink($validPath);
-                echo "Record deleted successfully";
+                
               } else {
                 echo "Error deleting record: " . $conn->error;
               }
             $sql5="DELETE from set_request10 where req_reference = $reference_id";
             if ($conn->query($sql5) === TRUE) {
-                echo "Record deleted successfully";
+                
               } else {
                 echo "Error deleting record: " . $conn->error;
               }
-        }
+        }echo 'Data-submitted';
     }
 
 

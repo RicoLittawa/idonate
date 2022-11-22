@@ -200,7 +200,7 @@ session_start();
 			
     </tbody>
 	<tr>
-		<td colspan="8"></td>
+		<td colspan="9"></td>
 		<td>
      <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
 	</tr>

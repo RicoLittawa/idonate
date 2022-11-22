@@ -371,8 +371,6 @@
       }
       else if(req_date==""){
         Swal.fire('Fields', "Please select a date",'warning');
-            $('#req_date').removeClass('border-success');
-            $('#req_date').addClass('border-danger');
             return false;
       }
       else if(req_contact==""){
@@ -414,6 +412,7 @@
             for (var j=0;j<category.length;j++){
                 if ($(category[j]).val()=="-Select-"){
                   Swal.fire('Select', "Please select a category",'warning');
+                  return false;
                 }
                 else if($(variant[j]).val()=="-Select-"){
                   Swal.fire('Select', "Please select a variant",'warning');
@@ -480,9 +479,7 @@
           }
         });
           }  
-          
-      }
-      
+        }
           });
           $('#req_fname').on('keyup', function() {
         if($(this).val() == '') {
