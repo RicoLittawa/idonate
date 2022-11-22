@@ -53,11 +53,12 @@ if (isset($_GET['viewNote'])){
     $Variant= $_POST['variant_arr'];
     $Quantity= $_POST['quantity_arr'];
     $donateRefId= $_POST['donateRefId'];
+    $req_contact= $_POST['req_contact'];
     
 
 
-    $sql1 = "INSERT INTO donation_items (Reference,donor_name,donor_province,donor_street,donor_region,donor_email,donationDate)
-        VALUES (?,?,?,?,?,?,?)" ;
+    $sql1 = "INSERT INTO donation_items (Reference,donor_name,donor_province,donor_street,donor_region,donor_email,donor_contact,donationDate)
+        VALUES (?,?,?,?,?,?,?,?)" ;
         $stmt= mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$sql1)){
            echo'Sql error';
@@ -65,7 +66,7 @@ if (isset($_GET['viewNote'])){
           
         }
         else {
-            mysqli_stmt_bind_param($stmt,"sssssss",$donateRefId,$req_name,$req_province,$req_street,$req_region,$req_email,$req_date);
+            mysqli_stmt_bind_param($stmt,"ssssssss",$donateRefId,$req_name,$req_province,$req_street,$req_region,$req_email,$req_contact,$req_date);
             mysqli_stmt_execute($stmt);
         }
         $count = 0;

@@ -158,6 +158,7 @@ function fill_category_select_box($conn)
 					$req_email= $row['req_email'];
 					$req_date= $row['req_date'];
 					$valid_id= $row['valid_id'];
+					$contact= $row['req_contact'];
 					
 					?>
 					<?php 
@@ -207,6 +208,12 @@ function fill_category_select_box($conn)
 										<?php endforeach; ?>
 									</select>
 									
+								</div>
+							</div>
+							<div class="col">
+								<div class="form-group">
+									<label for="req_contact">Contact</label>
+									<input class="form-control border-success" type="text" name="req_contact" id="req_contact" value="<?php echo htmlentities($contact); ?>">
 								</div>
 							</div>
 						</div>
@@ -375,8 +382,9 @@ function fill_category_select_box($conn)
 				var req_date = $('#req_date').val();
 				var req_date = $('#req_date').val();
 				var valid_id = $('#valid_id').val();
+				var req_contact =$('#req_contact').val();
 				var data={acceptBtn:'',donateRefId:donateRefId,request_id:request_id,reference_id:reference_id,req_name:req_name,req_province:req_province,req_street:req_street,req_region:req_region,req_email:req_email,req_date:req_date,category_arr:category_arr,
-				variant_arr:variant_arr,quantity_arr:quantity_arr,valid_id:valid_id};
+				variant_arr:variant_arr,quantity_arr:quantity_arr,valid_id:valid_id,req_contact:req_contact};
 				
 				alert(valid_id);
 				$.ajax({
