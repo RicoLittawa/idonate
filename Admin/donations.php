@@ -2,7 +2,7 @@
 session_start();
 ?>
  <?php
-	  include "include/connection.php";
+	  require_once "include/connection.php";
 	    
     $sql = "SELECT * FROM donation_items";
     $result = mysqli_query($conn,$sql);
@@ -54,7 +54,7 @@ session_start();
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="archieve.php">
         <i class='bx bxs-file-archive'></i>
 					<span class="text">Archive</span>
 				</a>
@@ -62,7 +62,7 @@ session_start();
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="archieve.php">
+				<a href="">
 					<i class='bx bxs-cog' ></i>
 					<span class="text">Settings</span>
 				</a>
@@ -166,7 +166,7 @@ session_start();
 			<?php  $count = $count + 1  ?>
 			<tr>
 		
-   		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['donor_email']);?>" data-name="<?php echo htmlentities($row['donor_name']); ?>"></input>
+   		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['donor_email']);?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"></input>
 	    <button class="btn"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
 		</td>
 		<td><?php echo  htmlentities($row['Reference']);?></td>
@@ -189,15 +189,12 @@ session_start();
 		<td><?php echo  htmlentities($row['donor_email']) ;?></td>
 		<td><?php echo  htmlentities($row['donor_contact']);?></td>
 		<td><?php echo  htmlentities($row['donationDate']);?></td>
-		<td><button type="button" class="btn btn-info email_button" name="email_button" id="<?php echo $count; ?>"
-		data-email="<?php echo htmlentities($row['donor_email']); ?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-action="single" value="<?php echo htmlentities($row['donor_id']); ?>">Send</button>
+		<td><button type="button" class="btn btn-info email_button" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"
+		data-email="<?php echo htmlentities($row['donor_email']); ?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-action="single">Send</button>
     </td>
 	
 		</tr>
 		   
-		  
-	
-		
 		<?php endforeach; 	?>
 			
     </tbody>
@@ -233,12 +230,13 @@ $(document).ready(function(){
   var id = $(this).attr("id");
   var action = $(this).data("action");
   var email_data = [];
+  
   if(action == 'single')
   {
    email_data.push({
     email: $(this).data("email"),
     name: $(this).data("name"),
-	id: $(this).attr('value')
+	uID: $(this).data('id')
    });
   }
   else
@@ -249,49 +247,49 @@ $(document).ready(function(){
      email_data.push({
       email: $(this).data("email"),
       name: $(this).data('name'),
-	  id: $(this).attr('value')
+	  uID: $(this).data('id')
      });
- 
-    
+
+    return;
     }
    
    });
   }
-  
-  $.ajax({
-   url:"include/sendcerti.php",
-   method:"POST",
-   data:{email_data:email_data},
-   beforeSend:function(){
-    $('#'+id).html('Sending...');
-    $('#'+id).addClass('btn-danger');
-   },
-   success:function(data){
-	
-     if(data = 'Cert-sent')
-     {
-    //   $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
-    //   $('#'+id).removeClass('btn-danger');
-    //   $('#'+id).removeClass('btn-info');
-    //   $('#'+id).addClass('btn-success');
+  console.log(email_data);
+   $.ajax({
+    url:"include/sendcerti.php",
+    method:"POST",
+    data:{email_data:email_data},
+    beforeSend:function(){
+     $('#'+id).html('Sending...');
+     $('#'+id).addClass('btn-danger');
+    },
+    success:function(data){
+ 	
+         if(data = 'Inserted')
+         {
+            $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
+            $('#'+id).removeClass('btn-danger');
+            $('#'+id).removeClass('btn-info');
+            $('#'+id).addClass('btn-success');
 
-	Swal.fire({
-		icon: 'success',
-		title: 'Sent',
-		text:'Email has been sent',
-		}).then(function() {
-		window.location = "archieve.php";
-		});
-     }
-     else
-     {
-      $('#'+id).text(data);
-     }
-     $('.email_button='+id).attr('disabled', false);
+ 	   Swal.fire({
+ 	   	icon: 'success',
+ 	   	title: 'Sent',
+ 	   	text:'Email has been sent',
+ 	   	}).then(function() {
+ 	   	window.location = "archieve.php";
+ 	   	});
+         }
+         else
+         {
+          $('#'+id).text(data);
+         }
+         $('.email_button='+id).attr('disabled', false);
     
-   }
+    }
    
-  });
+   });
  });
 });
 </script>

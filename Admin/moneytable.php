@@ -130,126 +130,56 @@ session_start();
       <tr>
 		<th><input type="checkbox" name="" id="selectAll" class="col"></th>
         <th>Donor Name</th>
+		<th>Province</th>
+		<th>Street</th>
+		<th>Region</th>
+		<th>Email</th>
+		<th>Contact</th>
 		<th>Date</th>
 		<th>Reference Number</th>
 		<th>Amount</th>
-		<th>View</th>
+		<th>Note</th>
 		<th>Send Certificate</th>
 
       </tr>
     </thead>
     <tbody>
      <?php 
-	 require 'include/connection.php';
+	 require_once 'include/connection.php';
 	 $sql = "SELECT * FROM monetary_donations ORDER by money_id DESC";
 	 $result = mysqli_query($conn,$sql);
 	$data = $result->fetch_all(MYSQLI_ASSOC);
 	$count= 0;
-	foreach ($data as $row){
-	   $count = $count+ 1;
-	echo '<tr>
-	<td><input class="col" type="checkbox" name="single_select" class="single_select" data-email="'.$row['money_email'].'" data-name="'.$row['money_name'].'"></input></td>
-	<td>' .$row['money_name'].'</td>
-	<td>'.$row['money_date'].'</td>
-	<td><button type="button" data-toggle="modal" data-target="referenceImg"  class="viewRef btn col" value="'.$row['money_id'].'">'.$row['money_reference'].'</button></td>
-	<td>₱'.$row['money_amount'].'.00</td>
-	<td><button type="button" data-toggle="modal" data-target="moneyRecieve"  class="viewMoney btn col" value="'.$row['money_id'].'"><i class="fa-solid fa-solid fa-eye" style="color: green;"></i></button>
-	
-		
-    </td>
-
-	<td><button type="button" class="btn btn-info email_button" name="email_button" id="'.$count.'"
-	data-email="'.$row['money_email'].'" data-name="'.$row['money_name'].'" data-action="single">Send</button>
+	foreach ($data as $row): ?>
+	 <?php   $count = $count+ 1; ?>
+	<tr>
+	<td><input class="col" type="checkbox" name="single_select" class="single_select" data-email="<?php htmlentities($row['money_email']); ?>" data-name="<?php echo htmlentities($row['money_name']); ?>"data-id="<?php echo htmlentities($row['money_id']); ?>"></input></td>
+	<td><?php echo htmlentities($row['money_name']) ;?></td>
+	<td><?php echo htmlentities($row['money_province']); ?></td>
+	<td><?php echo htmlentities($row['money_street']); ?></td>
+	<td><?php echo htmlentities($row['money_region']); ?></td>
+	<td><?php echo htmlentities($row['money_email']); ?></td>
+	<td><?php echo htmlentities($row['money_contact']) ;?></td>
+	<td><?php echo htmlentities($row['money_date']); ?></td>
+	<td><button type="button" data-toggle="modal" data-target="referenceImg"  class="viewRef btn col" value="<?php echo htmlentities($row['money_id']); ?>"><?php echo htmlentities($row['money_reference']); ?></button></td>
+	<td>₱<?php echo htmlentities($row['money_amount']) ;?></td>
+	<td><button class="btn Note" data-toggle="modal" data-target="viewNote" value="<?php echo htmlentities($row['money_id']); ?>"><i style="color: green;" class="fa-solid fa-message"></i></button></td>
+	<td><button type="button" class="btn btn-info email_button" name="email_button" id="<?php echo $count;?>"
+	data-email="<?php echo htmlentities($row['money_email']); ?>" data-name="<?php echo htmlentities($row['money_name']);  ?>" data-action="single" data-id="<?php echo htmlentities($row['money_id']); ?>">Send</button>
 	</td>
-	</tr>';
-	 }
-	 ?>
+	</tr>
 	 
+	
+	 <?php endforeach; ?>
 	  </tbody>
 	  
   
   <tr>
-		<td colspan="6"></td>
+		<td colspan="10"></td>
 		<td>
      <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
 	</tr>
 	</table>
-
-  <!--Money Form --->
-  <div class="modal fade" id="moneyRecieve">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Donor Information</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		
-      </div>
-	<form action="" id="saveMoneyDonations">
-	<div class="modal-body">
-	<div class="row">
-	<input type="hidden" name="money_id" id="money_id">
-	<div class="col">
-		<label for="money_name">Fullname</label>
-		<input id="money_name" name="money_name" class="form-control" readonly>
-	</div>
-	<div class="col">
-		<label for="money_province">Province</label>
-		<input id="money_province" name="money_province" class="form-control" readonly>
-	</div>
-	</div>
-	<div class="row">
-	<div class="col">
-		<label for="money_street">Street</label>
-		<input id="money_street" name="money_street" class="form-control" readonly>
-	</div>
-	<div class="col">
-		<label for="money_region">Region</label>
-		<input id="money_region" name="money_region" class="form-control" readonly>
-	</div>
-	</div>
-	<div class="row">
-	<div class="col">
-		<label for="money_contact">Contact Number</label>
-		<input id="money_contact" name="money_contact" class="form-control" readonly>
-	</div>
-	<div class="col">
-		<label for="money_email">Email</label>
-		<input id="money_email" name="money_email" class="form-control" readonly>
-		
-	</div>
-	</div>
-	<div class="row">
-	<div class="col">
-		<label for="money_date">Date</label>
-		<input type="date" id="money_date" name="money_date" class="form-control" readonly >
-	</div>
-	<div class="col">
-		<label for="money_amount">Amount</label>
-		<input id="money_amount" name="money_amount" class="form-control" readonly>
-	</div>
-	</div>
-	<div class="row">
-	<div class="col">
-		<label for="money_note">Donor's note</label>
-		<textarea class="form-control" name="money_note" id="money_note" cols="30" rows="10" disabled></textarea>
-		</div>
-	</div>
-	  </div>
-	  <input id="money_category" type="hidden" name="money_category" class="form-control" value="Cash Donations" readonly>
-      <input id="money_variant" type="hidden"  name="money_variant" class="form-control" value="Money" readonly>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-	</form>
-
-		
-
-    </div>
-  </div>
-</div>
-
 <!-- Reference Photo--->
 
 <div class="modal fade" id="referenceImg">
@@ -279,7 +209,34 @@ session_start();
     </div>
   </div>
 </div>
-	
+
+<!--Note -->
+<div class="modal" id="viewNote">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Donor's Note</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+		<div class="form-group">
+			<label for="money_note">Note</label>
+		<textarea class="form-control" name="money_note" id="money_note" cols="50" rows="5"></textarea>
+		</div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 			</div>
 		</main>
 	
@@ -292,6 +249,7 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>	
 	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+	<script src="scripts/sweetalert2.all.min.js"></script>
   	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
 	<script>
 $(document).ready(function(){
@@ -299,12 +257,13 @@ $(document).ready(function(){
 	$(this).attr('disabled', 'disabled');
 	var id = $(this).attr("id");
 	var action = $(this).data("action");
-	var email_data = [];
+	var money_data = [];
 	if(action == 'single')
 	{
-	email_data.push({
+	money_data.push({
 		email: $(this).data("email"),
-		name: $(this).data("name")
+		name: $(this).data("name"),
+		uID: $(this).data('id')
 	});
 	}
 	else
@@ -312,9 +271,10 @@ $(document).ready(function(){
 	$('.single_select').each(function(){
 		if($(this). prop("checked") == true)
 		{
-		email_data.push({
+		money_data.push({
 		email: $(this).data("email"),
-		name: $(this).data('name')
+		name: $(this).data('name'),
+		uID: $(this).data('id')
 		});
 	
 		
@@ -326,24 +286,33 @@ $(document).ready(function(){
 	$.ajax({
 	url:"http://localhost:3000/Admin/include/sendcerti.php",
 	method:"POST",
-	data:{email_data:email_data},
+	data:{money_data:money_data},
 	beforeSend:function(){
 		$('#'+id).html('Sending...');
 		$('#'+id).addClass('btn-danger');
 	},
 	success:function(data){
-		if(data = 'ok')
-		{
-		$('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
-		$('#'+id).removeClass('btn-danger');
-		$('#'+id).removeClass('btn-info');
-		$('#'+id).addClass('btn-success');
-		}
-		else
-		{
-		$('#'+id).text(data);
-		}
-		$('.email_button'+id).attr('disabled', false);
+
+		if(data = 'Inserted')
+         {
+            $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
+            $('#'+id).removeClass('btn-danger');
+            $('#'+id).removeClass('btn-info');
+            $('#'+id).addClass('btn-success');
+
+ 	   Swal.fire({
+ 	   	icon: 'success',
+ 	   	title: 'Sent',
+ 	   	text:'Email has been sent',
+ 	   	}).then(function() {
+ 	   	window.location = "archieve.php";
+ 	   	});
+         }
+         else
+         {
+          $('#'+id).text(data);
+         }
+         $('.email_button='+id).attr('disabled', false);
 		
 	}
 	
@@ -376,47 +345,14 @@ $(document).ready(function(){
 });
 </script>
 
-<script>
-$(document).on('click', '.viewMoney', function (e) {
-    e.preventDefault();
-    var money_id = $(this).val();
-
-
-    $.ajax({
-        type: "GET",
-        url: "operations/viewmoney.php?money_id="+ money_id,
-        success: function (response) {
-            var res = $.parseJSON(response);
-            if(res.status == 422) {
-             
-                $('#moneyRecieve').modal('show');
-                $('#money_name').val(res.data.money_id);
-                $('#money_name').val(res.data.money_name);
-                $('#money_province').val(res.data.money_province);
-                $('#money_street').val(res.data.money_street);
-                $('#money_region').val(res.data.money_region);
-                $('#money_contact').val(res.data.money_contact);
-                $('#money_email').val(res.data.money_email);
-                $('#money_date').val(res.data.money_date);
-                $('#money_amount').val(res.data.money_amount);
-                $('#money_note').val(res.data.money_note);
-
- 
-               
-            }else if(res.status == 404){
-                alert(res.message);
-            }
-        }
-    });
-});
 </script>
-
+<!--View reference id -->
 <script> 
 	$(document).ready(function(){
 		$('.viewRef').click(function(){
 
-			var valueBtn = $(this);
-			var request_id =valueBtn.val();
+			var request_id = $(this).val();
+			
 		
 			  $.ajax({
 			  	url:'include/viewid.php?money_id='+request_id,
@@ -425,6 +361,26 @@ $(document).on('click', '.viewMoney', function (e) {
 					
 			  			  $('#referenceImg').modal('show');
 						    $('#imageContainer').attr('src','../donors/ReferencePhoto/'+data);		   		
+			  	}
+			  });
+
+		});
+	});
+</script>
+<script> 
+	$(document).ready(function(){
+		$('.Note').click(function(){
+
+			var request_id = $(this).val();
+		
+			  $.ajax({
+			  	url:'include/viewid.php?moneyNote='+request_id,
+			  	type: 'GET',
+			  	success: function(data){
+			  			 $('#viewNote').modal('show');
+						 $('#money_note').val(data);
+						
+			  			
 			  	}
 			  });
 

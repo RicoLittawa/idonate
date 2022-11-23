@@ -104,12 +104,12 @@ session_start();
 				<i class='bx bxs-group' ></i>
 				<span class="text">
 				<?php
-				include '../Admin/include/connection.php'; 
-			 $sql="select count('1') from donation_items";
+				include 'include/connection.php'; 
+			 $sql="SELECT count('1') from total_donor";
 			 $result=mysqli_query($conn,$sql);
 			 $row=mysqli_fetch_array($result);
 			 echo "<h3 style=font-size:45px>$row[0]</h3>";
-			 mysqli_close($conn); ?>
+			 ?>
 		
 						<h4 style="color: grey;">Donor</h4>
 					</span>
@@ -119,8 +119,8 @@ session_start();
 
 					<span class="text">
 					<?php
-				include '../Admin/include/connection.php'; 
-			 $sql="select sum(money_amount) from monetary_donations";
+		
+			 $sql="SELECT sum(amount) from total_funds";
 			 $result=mysqli_query($conn,$sql);
 			 $row=mysqli_fetch_array($result);
 			 echo "<h3 style=font-size:45px>₱ $row[0]</h3>";

@@ -4,7 +4,7 @@ session_start();
 	?>
 <?php 
 require_once 'include/connection.php';
-$sql = "SELECT * from donor_record";
+$sql = "SELECT * from donor_recordm";
 $result= mysqli_query($conn,$sql);
 
 
@@ -116,7 +116,7 @@ $result= mysqli_query($conn,$sql);
 			<div class="table-data">
 				<div class="add">
 					<div class="head">
-						<h3>Donor Records</h3>
+						<h3>Money Donor Records</h3>
 						<i class='bx bx-search' ></i>	
 						<i class='bx bx-filter' ></i>
 					</div>
@@ -133,7 +133,7 @@ $result= mysqli_query($conn,$sql);
 		<th>Date</th>
 		<th>Certificate</th>
 		<th>Status</th>
-		
+		<th></th>
 		
 		
 		
@@ -144,31 +144,30 @@ $result= mysqli_query($conn,$sql);
     <tbody>
 		<?php foreach ($result as $row): ?>
 			<?php 
-				$reference_id= $row['rD_reference'];
-				$rd_id= $row['id'];
-				$rd_name= $row['rD_name'];
-				$rd_province= $row['rD_province'];
-				$rd_street= $row['rD_street'];
-				$rd_region= $row['rD_region'];
-				$rd_email= $row['rD_email'];
-				$rd_contact= $row['rD_contact'];
-				$rd_date= $row['rD_date'];
-				$rd_certificate= $row['rD_certificate'];
+				$rdm_id= $row['id'];
+				$rdm_name= $row['rDM_name'];
+				$rdm_province= $row['rDM_province'];
+				$rdm_street= $row['rDM_street'];
+				$rdm_region= $row['rDM_region'];
+				$rdm_email= $row['rDM_email'];
+				$rdm_contact= $row['rDM_contact'];
+				$rdm_date= $row['rDM_date'];
+				$rdm_certificate= $row['rDM_certificate'];
 				
 				
 				?>
 		<tr>
-			<td><?php echo htmlentities($rd_id) ?></td>
-			<td><?php echo htmlentities($rd_name) ?></td>
-			<td><?php echo htmlentities($rd_province) ?></td>
-			<td><?php echo htmlentities($rd_street) ?></td>
-			<td><?php echo htmlentities($rd_region) ?></td>
-			<td><?php echo htmlentities($rd_email) ?></td>
-			<td><?php echo htmlentities($rd_contact) ?></td>
-			<td><?php echo htmlentities($rd_date) ?></td>
-			<td><button class="btn btnCert" data-toggle="modal" data-target="Certi"  value="<?php echo htmlentities($rd_id) ?>"><?php echo htmlentities($rd_certificate) ?></button></td>
-			<td><span><i style="color:green ;" class="fa-solid fa-envelope-circle-check"></i></span><button class="btn"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
-		
+			<td><?php echo htmlentities($rdm_id) ?></td>
+			<td><?php echo htmlentities($rdm_name) ?></td>
+			<td><?php echo htmlentities($rdm_province) ?></td>
+			<td><?php echo htmlentities($rdm_street) ?></td>
+			<td><?php echo htmlentities($rdm_region) ?></td>
+			<td><?php echo htmlentities($rdm_email) ?></td>
+			<td><?php echo htmlentities($rdm_contact) ?></td>
+			<td><?php echo htmlentities($rdm_date) ?></td>
+			<td><button class="btn btnCert" data-toggle="modal" data-target="Certi"  value="<?php echo htmlentities($rdm_id) ?>"><?php echo htmlentities($rdm_certificate) ?></button></td>
+			<td><span><i style="color:green ;" class="fa-solid fa-envelope-circle-check"></i></span></td>
+			<td><button class="btn"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
 		</tr>
 	<?php endforeach; ?>
 	  </tbody>

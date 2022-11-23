@@ -195,6 +195,8 @@ $result= mysqli_query($conn,$sql);
     </div>
   </div>
 </div>
+
+<!--Note --->
 <div class="modal" id="viewMessage">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -271,6 +273,7 @@ $result= mysqli_query($conn,$sql);
 		});
 	});
 </script>
+<!--Note -->
 <script> 
 	$(document).ready(function(){
 		$('.btnNote').click(function(){

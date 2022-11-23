@@ -38,6 +38,25 @@ if (isset($_GET['viewNote'])){
      
  
  }
+ //view money
+if (isset($_GET['moneyNote'])){
+    $request_id= $_GET['moneyNote'];
+    $sql= "SELECT money_note from monetary_donations where money_id=?";
+    $stmt = $conn->prepare($sql); 
+    $stmt->bind_param("i", $request_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+ 
+     if ( $donor = $result->fetch_assoc()){
+      
+             echo $donor['money_note'];
+        
+     }else{
+         echo 'Data not found';
+     }
+     
+ 
+ }
 
  //accept request
  if (isset($_POST['acceptBtn'])){
