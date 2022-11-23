@@ -47,7 +47,7 @@ session_start();
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="archieve.php">
 				<i class='bx bxs-file-archive'></i>
 					<span class="text">Archive</span>
 				</a>

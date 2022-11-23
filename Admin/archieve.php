@@ -23,7 +23,7 @@ $result= mysqli_query($conn,$sql);
 	<link rel="stylesheet" href="css/donations.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
-	<title>Requests</title>
+	<title>Donor Records</title>
 </head>
 <body>
 
@@ -48,7 +48,7 @@ $result= mysqli_query($conn,$sql);
 				</a>
 			</li>
 			<li >
-				<a href="#">
+				<a href="request.php">
 					<i class='bx bxs-envelope' ></i>
 					<span class="text">Requests</span>
 				</a>
@@ -158,7 +158,7 @@ $result= mysqli_query($conn,$sql);
 				
 				?>
 		<tr>
-			<td><?php echo htmlentities($reference_id) ?></td>
+			<td><?php echo htmlentities($rd_id) ?></td>
 			<td><?php echo htmlentities($rd_name) ?></td>
 			<td><?php echo htmlentities($rd_province) ?></td>
 			<td><?php echo htmlentities($rd_street) ?></td>
@@ -180,7 +180,7 @@ $result= mysqli_query($conn,$sql);
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Reference/Transaction Reciept</h4>
+        <h4 class="modal-title">Acknowledgement Reciept</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
 		
       </div>

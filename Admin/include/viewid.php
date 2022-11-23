@@ -139,3 +139,23 @@ if (isset($_GET['viewNote'])){
      
  
  }
+
+ //view valid id
+if (isset($_GET['money_id'])){
+    $request_id= $_GET['money_id'];
+    $sql= "SELECT money_img from monetary_donations where money_id=?";
+    $stmt = $conn->prepare($sql); 
+    $stmt->bind_param("i", $request_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+ 
+     if ( $donor = $result->fetch_assoc()){
+      
+             echo $donor['money_img'];
+        
+     }else{
+         echo 'Data not found';
+     }
+     
+ 
+ }

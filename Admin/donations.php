@@ -62,7 +62,7 @@ session_start();
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#">
+				<a href="archieve.php">
 					<i class='bx bxs-cog' ></i>
 					<span class="text">Settings</span>
 				</a>
@@ -267,19 +267,27 @@ $(document).ready(function(){
     $('#'+id).addClass('btn-danger');
    },
    success:function(data){
-	alert (data);
-    // if(data = 'ok')
-    // {
-    //  $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
-    //  $('#'+id).removeClass('btn-danger');
-    //  $('#'+id).removeClass('btn-info');
-    //  $('#'+id).addClass('btn-success');
-    // }
-    // else
-    // {
-    //  $('#'+id).text(data);
-    // }
-    // $('.email_button='+id).attr('disabled', false);
+	
+     if(data = 'Cert-sent')
+     {
+    //   $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
+    //   $('#'+id).removeClass('btn-danger');
+    //   $('#'+id).removeClass('btn-info');
+    //   $('#'+id).addClass('btn-success');
+
+	Swal.fire({
+		icon: 'success',
+		title: 'Sent',
+		text:'Email has been sent',
+		}).then(function() {
+		window.location = "archieve.php";
+		});
+     }
+     else
+     {
+      $('#'+id).text(data);
+     }
+     $('.email_button='+id).attr('disabled', false);
     
    }
    
@@ -310,12 +318,6 @@ $(document).ready(function(){
     });
 });
 </script>
-<script>
-	$(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
-    });
-});
-</script>
+
 </body>
 </html>

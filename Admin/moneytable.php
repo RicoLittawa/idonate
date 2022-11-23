@@ -47,7 +47,7 @@ session_start();
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="archieve.php">
 				<i class='bx bxs-file-archive'></i>
 					<span class="text">Archive</span>
 				</a>
@@ -140,7 +140,7 @@ session_start();
     </thead>
     <tbody>
      <?php 
-	 require '../Admin/include/connection.php';
+	 require 'include/connection.php';
 	 $sql = "SELECT * FROM monetary_donations ORDER by money_id DESC";
 	 $result = mysqli_query($conn,$sql);
 	$data = $result->fetch_all(MYSQLI_ASSOC);
@@ -411,29 +411,25 @@ $(document).on('click', '.viewMoney', function (e) {
 });
 </script>
 
-<script>
-$(document).on('click', '.viewRef', function (e) {
-    e.preventDefault();
-    var money_id = $(this).val();
+<script> 
+	$(document).ready(function(){
+		$('.viewRef').click(function(){
 
+			var valueBtn = $(this);
+			var request_id =valueBtn.val();
+		
+			  $.ajax({
+			  	url:'include/viewid.php?money_id='+request_id,
+			  	type: 'GET',
+			  	success: function(data){
+					
+			  			  $('#referenceImg').modal('show');
+						    $('#imageContainer').attr('src','../donors/ReferencePhoto/'+data);		   		
+			  	}
+			  });
 
-    $.ajax({
-        type: "GET",
-        url: "operations/viewmoney.php?money_id="+ money_id,
-        success: function (response) {
-            var res = $.parseJSON(response);
-            if(res.status == 422) {
-             
-                $('#referenceImg').modal('show');
-             
-                $('#imageContainer').attr('src','../donors/ReferencePhoto/'+res.data.money_img);
-            
-            }else if(res.status == 404){
-                alert(res.message);
-            }
-        }
-    });
-});
+		});
+	});
 </script>
 </body>
 </html>
