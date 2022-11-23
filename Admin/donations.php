@@ -142,6 +142,7 @@ session_start();
     <thead>
       <tr>
         <th><input type="checkbox" name="" id="selectAll" class="col"></th>
+	
 		<th>ID</th>
         <th>Fullname</th>
 		<th>Province</th>
@@ -164,6 +165,7 @@ session_start();
 		   
 			<?php  $count = $count + 1  ?>
 			<tr>
+		
    		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['donor_email']);?>" data-name="<?php echo htmlentities($row['donor_name']); ?>"></input>
 	    <button class="btn"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
 		</td>
@@ -188,7 +190,7 @@ session_start();
 		<td><?php echo  htmlentities($row['donor_contact']);?></td>
 		<td><?php echo  htmlentities($row['donationDate']);?></td>
 		<td><button type="button" class="btn btn-info email_button" name="email_button" id="<?php echo $count; ?>"
-		data-email="<?php echo htmlentities($row['donor_email']); ?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-action="single">Send</button>
+		data-email="<?php echo htmlentities($row['donor_email']); ?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-action="single" value="<?php echo htmlentities($row['donor_id']); ?>">Send</button>
     </td>
 	
 		</tr>
@@ -235,7 +237,8 @@ $(document).ready(function(){
   {
    email_data.push({
     email: $(this).data("email"),
-    name: $(this).data("name")
+    name: $(this).data("name"),
+	id: $(this).attr('value')
    });
   }
   else
@@ -245,7 +248,8 @@ $(document).ready(function(){
     {
      email_data.push({
       email: $(this).data("email"),
-      name: $(this).data('name')
+      name: $(this).data('name'),
+	  id: $(this).attr('value')
      });
  
     
@@ -263,18 +267,19 @@ $(document).ready(function(){
     $('#'+id).addClass('btn-danger');
    },
    success:function(data){
-    if(data = 'ok')
-    {
-     $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
-     $('#'+id).removeClass('btn-danger');
-     $('#'+id).removeClass('btn-info');
-     $('#'+id).addClass('btn-success');
-    }
-    else
-    {
-     $('#'+id).text(data);
-    }
-    $('.email_button='+id).attr('disabled', false);
+	alert (data);
+    // if(data = 'ok')
+    // {
+    //  $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
+    //  $('#'+id).removeClass('btn-danger');
+    //  $('#'+id).removeClass('btn-info');
+    //  $('#'+id).addClass('btn-success');
+    // }
+    // else
+    // {
+    //  $('#'+id).text(data);
+    // }
+    // $('.email_button='+id).attr('disabled', false);
     
    }
    

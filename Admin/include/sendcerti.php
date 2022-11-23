@@ -8,11 +8,13 @@
    require 'phpmailer/src/PHPMailer.php';
    require 'phpmailer/src/SMTP.php';
    require 'fpdf/fpdf.php';
+   require_once 'connection.php';
   
   
   $output= '';
   foreach($_POST['email_data']as $row)
   {
+   
     $image= imagecreatefrompng('Certificate Template/certificate2.png');
     $white = imagecolorallocate($image, 255, 255, 255);
     $black = imagecolorallocate($image, 0, 0, 0);
@@ -32,6 +34,7 @@
    
     
     $file=time();
+    $genImage= $file.'.png';
     $file_path="download-certificate/".$file.".png";
     $file_path_pdf= "download-certificate/".$file.".pdf";
     
@@ -40,7 +43,31 @@
 
     $pdf= new FPDF();   
     $pdf->AddPage('L','A5');
-    $pdf->Image($file_path,0,0,210,150);
+   $pdf->Image($file_path,0,0,210,150);
+
+     $donor_id= $row['id'];
+     $sql= "SELECT * from donation_items where donor_id=?";
+     $stmt= $conn->prepare($sql);
+     $stmt-> bind_param('i',$donor_id);
+     $stmt->execute();
+     $result = $stmt->get_result(); 
+     $user = $result->fetch_assoc(); 
+
+    $rd_name= $user['donor_name'];
+    $rd_reference= $user['Reference'];
+    $rd_province= $user['donor_province'];
+    $rd_street= $user['donor_street'];
+    $rd_region= $user['donor_region'];
+    $rd_email= $user['donor_email'];
+    $rd_contact= $user['donor_contact'];
+    $rd_date= date('Y-m-d', strtotime($user['donationDate']));
+ 
+     $sql2= "INSERT into donor_record(rD_name,rD_reference,rD_province,rD_street,rD_region,rD_email,rD_contact,rD_date,rd_certificate)
+      value (?,?,?,?,?,?,?,?,?)";
+     $stmt=$conn->prepare($sql2);
+     $stmt->bind_param('sssssssss',$rd_name,$rd_reference,$rd_province,$rd_street,$rd_region,$rd_email,$rd_contact,$rd_date,  $genImage);
+     $stmt->execute();
+    
   $mail = new PHPMailer;
   $mail->IsSMTP();        //Sets Mailer to send message using SMTP
   $mail->Host = 'smtp.gmail.com';  //Sets the SMTP hosts of your Email hosting, this for Godaddy
@@ -61,17 +88,18 @@
   <p>Certificate...</p>
   ';
   $mail->addStringAttachment($pdf->Output("S",'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
-  $mail->Send();      //Send an Email. Return true on success or false on error
-
-
+   $result= $mail->Send();      //Send an Email. Return true on success or false on error
+   if($result){
+    $sql3 ="DELETE from donation_items where donor_id =  ?";
+    $stmt= $conn->prepare($sql3);
+    $stmt->bind_param('i',$donor_id);
+    $result1= $stmt->execute();
+    if($result1){
+      echo "CERT sent";
+    }
+  }
+  
  }
- if($output == '')
- {
-  echo 'ok';
- }
- else
- {
-  echo $output;
- }
+ 
 }
 ?>

@@ -116,15 +116,26 @@ if (isset($_GET['viewNote'])){
               }
         }echo 'Data-submitted';
     }
-
-
-
-
-
-
-
-
-
-
     
+ }
+
+ //view certificate
+ if (isset($_GET['viewCert'])){
+    $request_id= $_GET['viewCert'];
+    $message='';
+    $sql= "SELECT rD_certificate from donor_record where id=?";
+    $stmt = $conn->prepare($sql); 
+    $stmt->bind_param("i", $request_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+ 
+     if ( $donor = $result->fetch_assoc()){
+      
+             echo $donor['rD_certificate'];
+        
+     }else{
+         echo 'Data not found';
+     }
+     
+ 
  }
