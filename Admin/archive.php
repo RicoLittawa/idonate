@@ -56,7 +56,7 @@ $result= mysqli_query($conn,$sql);
 			<li class="active">
 				<a href="#">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archieve</span>
+					<span class="text">Archive</span>
 				</a>
 			</li>
 		</ul>
@@ -100,7 +100,7 @@ $result= mysqli_query($conn,$sql);
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Archieves</h1>
+					<h1>Archive</h1>
 					<ul class="breadcrumb">
 						<li>
 							<a href="#" style="font-size: 18px;">Dashboard</a>
@@ -122,8 +122,8 @@ $result= mysqli_query($conn,$sql);
 			Select Table
 			</button>
 			<div class="dropdown-menu">
-				<a class="dropdown-item" href="archieve.php">Recent Donors</a>
-				<a class="dropdown-item" href="archieveM.php">Recent Money Donors</a>
+				<a class="dropdown-item" href="archive.php">Recent Donors</a>
+				<a class="dropdown-item" href="archiveM.php">Recent Money Donors</a>
 				
 			
 			</div>
