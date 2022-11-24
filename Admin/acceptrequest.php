@@ -601,7 +601,7 @@ function fill_category_select_box($conn)
 	});
 
 //single 
-	 $('#testBtn').click(function(){
+	 $('#testBtn').click(function(e){
 		e.preventDefault();
 			var valid = this.form.checkValidity();
 			if(valid) {
