@@ -56,7 +56,7 @@ $result= mysqli_query($conn,$sql);
 			<li class="active">
 				<a href="#">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+					<span class="text">Archieve</span>
 				</a>
 			</li>
 		</ul>
@@ -117,8 +117,17 @@ $result= mysqli_query($conn,$sql);
 				<div class="add">
 					<div class="head">
 						<h3>Donor Records</h3>
-						<i class='bx bx-search' ></i>	
-						<i class='bx bx-filter' ></i>
+						<div class="dropdown">
+			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+			Select Table
+			</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="archieve.php">Recent Donors</a>
+				<a class="dropdown-item" href="archieveM.php">Recent Money Donors</a>
+				
+			
+			</div>
+			</div>
 					</div>
 					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
     <thead>
@@ -162,7 +171,19 @@ $result= mysqli_query($conn,$sql);
 			<td><?php echo htmlentities($rd_name) ?></td>
 			<td><?php echo htmlentities($rd_province) ?></td>
 			<td><?php echo htmlentities($rd_street) ?></td>
-			<td><?php echo htmlentities($rd_region) ?></td>
+			<?php 
+			
+			 $sql2="SELECT * From regions";
+		 	$result2=mysqli_query($conn,$sql2);
+		
+		 	foreach($result2 as $row1){
+			if ($rd_region== $row1['region_id']){
+				echo "<td>".htmlentities($row1['region_name'])."</td>
+				";
+				}
+			}
+		
+		?>
 			<td><?php echo htmlentities($rd_email) ?></td>
 			<td><?php echo htmlentities($rd_contact) ?></td>
 			<td><?php echo htmlentities($rd_date) ?></td>

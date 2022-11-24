@@ -56,7 +56,7 @@ $result= mysqli_query($conn,$sql);
 			<li class="active">
 				<a href="#">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+					<span class="text">Archieve</span>
 				</a>
 			</li>
 		</ul>
@@ -117,8 +117,17 @@ $result= mysqli_query($conn,$sql);
 				<div class="add">
 					<div class="head">
 						<h3>Money Donor Records</h3>
-						<i class='bx bx-search' ></i>	
-						<i class='bx bx-filter' ></i>
+						<div class="dropdown">
+			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+			Select Table
+			</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="archieve.php">Recent Donors</a>
+				<a class="dropdown-item" href="archieveM.php">Recent Money Donors</a>
+				
+			
+			</div>
+			</div>
 					</div>
 					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
     <thead>
@@ -131,9 +140,10 @@ $result= mysqli_query($conn,$sql);
 		<th>Email</th>
 		<th>Contact</th>
 		<th>Date</th>
+		<th>Donated</th>
 		<th>Certificate</th>
 		<th>Status</th>
-		<th></th>
+	
 		
 		
 		
@@ -152,6 +162,7 @@ $result= mysqli_query($conn,$sql);
 				$rdm_email= $row['rDM_email'];
 				$rdm_contact= $row['rDM_contact'];
 				$rdm_date= $row['rDM_date'];
+				$donated= $row['donated'];
 				$rdm_certificate= $row['rDM_certificate'];
 				
 				
@@ -161,13 +172,26 @@ $result= mysqli_query($conn,$sql);
 			<td><?php echo htmlentities($rdm_name) ?></td>
 			<td><?php echo htmlentities($rdm_province) ?></td>
 			<td><?php echo htmlentities($rdm_street) ?></td>
-			<td><?php echo htmlentities($rdm_region) ?></td>
+			<?php 
+			
+			 $sql2="SELECT * From regions";
+		 	$result2=mysqli_query($conn,$sql2);
+		
+		 	foreach($result2 as $row1){
+			if ($rdm_region== $row1['region_id']){
+				echo "<td>".htmlentities($row1['region_name'])."</td>
+				";
+				}
+			}
+		
+		?>
 			<td><?php echo htmlentities($rdm_email) ?></td>
 			<td><?php echo htmlentities($rdm_contact) ?></td>
 			<td><?php echo htmlentities($rdm_date) ?></td>
+			<td>₱<?php echo htmlentities($donated) ?></td>
 			<td><button class="btn btnCert" data-toggle="modal" data-target="Certi"  value="<?php echo htmlentities($rdm_id) ?>"><?php echo htmlentities($rdm_certificate) ?></button></td>
-			<td><span><i style="color:green ;" class="fa-solid fa-envelope-circle-check"></i></span></td>
-			<td><button class="btn"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
+			<td><span><i style="color:green ;" class="fa-solid fa-envelope-circle-check"></i></span><button class="btn"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
+			
 		</tr>
 	<?php endforeach; ?>
 	  </tbody>
@@ -242,12 +266,12 @@ $result= mysqli_query($conn,$sql);
 			
 		
 			  $.ajax({
-			  	url:'include/viewid.php?viewCert='+request_id,
+			  	url:'include/viewid.php?viewMoney='+request_id,
 			  	type: 'GET',
 			  	success: function(data){
-					
+			
 			  			 $('#Certi').modal('show');
-						   $('#imageContainer').attr('src','include/download-certificate/'+data);		   		
+						   $('#imageContainer').attr('src','include/money_donor/'+data);		   		
 			  	}
 			  });
 

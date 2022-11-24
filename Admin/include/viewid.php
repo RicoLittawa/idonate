@@ -57,7 +57,25 @@ if (isset($_GET['moneyNote'])){
      
  
  }
-
+ //view reference
+ if (isset($_GET['money_id'])){
+    $request_id= $_GET['money_id'];
+    $sql= "SELECT money_img from monetary_donations where money_id=?";
+    $stmt = $conn->prepare($sql); 
+    $stmt->bind_param("i", $request_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+ 
+     if ( $donor = $result->fetch_assoc()){
+      
+             echo $donor['money_img'];
+        
+     }else{
+         echo 'Data not found';
+     }
+     
+ 
+ }
  //accept request
  if (isset($_POST['acceptBtn'])){
     $request_id= $_POST['request_id'];
@@ -159,18 +177,20 @@ if (isset($_GET['moneyNote'])){
  
  }
 
- //view valid id
-if (isset($_GET['money_id'])){
-    $request_id= $_GET['money_id'];
-    $sql= "SELECT money_img from monetary_donations where money_id=?";
+
+
+ //view money certi
+if (isset($_GET['viewMoney'])){
+    $request_id= $_GET['viewMoney'];
+    $sql= "SELECT rDM_certificate from donor_recordm where id=?";
     $stmt = $conn->prepare($sql); 
     $stmt->bind_param("i", $request_id);
     $stmt->execute();
     $result = $stmt->get_result();
  
-     if ( $donor = $result->fetch_assoc()){
+     if ( $money = $result->fetch_assoc()){
       
-             echo $donor['money_img'];
+             echo $money['rDM_certificate'];
         
      }else{
          echo 'Data not found';

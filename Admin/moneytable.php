@@ -49,7 +49,7 @@ session_start();
 			<li>
 				<a href="archieve.php">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+					<span class="text">Archieve</span>
 				</a>
 			</li>
 		</ul>
@@ -153,11 +153,23 @@ session_start();
 	foreach ($data as $row): ?>
 	 <?php   $count = $count+ 1; ?>
 	<tr>
-	<td><input class="col" type="checkbox" name="single_select" class="single_select" data-email="<?php htmlentities($row['money_email']); ?>" data-name="<?php echo htmlentities($row['money_name']); ?>"data-id="<?php echo htmlentities($row['money_id']); ?>"></input></td>
+	<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['money_email']); ?>" data-name="<?php echo htmlentities($row['money_name']); ?>"data-id="<?php echo htmlentities($row['money_id']); ?>"></input></td>
 	<td><?php echo htmlentities($row['money_name']) ;?></td>
 	<td><?php echo htmlentities($row['money_province']); ?></td>
 	<td><?php echo htmlentities($row['money_street']); ?></td>
-	<td><?php echo htmlentities($row['money_region']); ?></td>
+	<?php 
+			
+			 $sql2="SELECT * From regions";
+		 	$result2=mysqli_query($conn,$sql2);
+		
+		 	foreach($result2 as $row1){
+			if ($row['money_region']== $row1['region_id']){
+				echo "<td>".htmlentities($row1['region_name'])."</td>
+				";
+				}
+			}
+		
+		?>
 	<td><?php echo htmlentities($row['money_email']); ?></td>
 	<td><?php echo htmlentities($row['money_contact']) ;?></td>
 	<td><?php echo htmlentities($row['money_date']); ?></td>
@@ -175,7 +187,7 @@ session_start();
 	  
   
   <tr>
-		<td colspan="10"></td>
+		<td colspan="11"></td>
 		<td>
      <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
 	</tr>
@@ -282,41 +294,41 @@ $(document).ready(function(){
 	
 	});
 	}
-	
-	$.ajax({
-	url:"http://localhost:3000/Admin/include/sendcerti.php",
-	method:"POST",
-	data:{money_data:money_data},
-	beforeSend:function(){
-		$('#'+id).html('Sending...');
-		$('#'+id).addClass('btn-danger');
-	},
-	success:function(data){
+	console.log(money_data);
+	 $.ajax({
+	 url:"include/moneycerti.php",
+	 method:"POST",
+	 data:{money_data:money_data},
+	 beforeSend:function(){
+	 	$('#'+id).html('Sending...');
+	 	$('#'+id).addClass('btn-danger');
+	 },
+	 success:function(data){
 
-		if(data = 'Inserted')
-         {
-            $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
-            $('#'+id).removeClass('btn-danger');
-            $('#'+id).removeClass('btn-info');
-            $('#'+id).addClass('btn-success');
+	 	if(data = 'Inserted')
+          {
+             $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
+             $('#'+id).removeClass('btn-danger');
+             $('#'+id).removeClass('btn-info');
+             $('#'+id).addClass('btn-success');
 
- 	   Swal.fire({
- 	   	icon: 'success',
- 	   	title: 'Sent',
- 	   	text:'Email has been sent',
- 	   	}).then(function() {
- 	   	window.location = "archieve.php";
- 	   	});
-         }
-         else
-         {
-          $('#'+id).text(data);
-         }
-         $('.email_button='+id).attr('disabled', false);
+ 	    Swal.fire({
+ 	    	icon: 'success',
+ 	    	title: 'Sent',
+ 	    	text:'Email has been sent',
+ 	    	}).then(function() {
+ 	    	window.location = "archieveM.php";
+ 	    	});
+          }
+          else
+          {
+           $('#'+id).text(data);
+          }
+          $('.email_button='+id).attr('disabled', false);
 		
-	}
+	 }
 	
-	});
+	 });
 	});
 });
 </script>

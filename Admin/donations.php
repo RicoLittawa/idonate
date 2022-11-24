@@ -56,7 +56,7 @@ session_start();
 			<li>
 				<a href="archieve.php">
         <i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+					<span class="text">Archieve</span>
 				</a>
 			</li>
 		</ul>
@@ -133,9 +133,9 @@ session_start();
         <a class="dropdown-item" href="moneytable.php">Money Donors</a>
 		<a class="dropdown-item" href="categorytables.php">Donation Items</a>
       
-  </div>
-</div>
-					</div>
+ 	 </div>
+	</div>
+	</div>
 					
 					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
 			
