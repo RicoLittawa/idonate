@@ -54,9 +54,9 @@ $result= mysqli_query($conn,$sql);
 				</a>
 			</li>
 			<li>
-				<a href="archieve.php">
+				<a href="archive.php">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archieve</span>
+					<span class="text">Archive</span>
 				</a>
 			</li>
 		</ul>

@@ -56,13 +56,13 @@ session_start();
 			<li>
 				<a href="#">
         <i class='bx bxs-file-archive'></i>
-					<span class="text">Archieve</span>
+					<span class="text">Archive</span>
 				</a>
 			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="archieve.php">
+				<a href="archive.php">
 					<i class='bx bxs-cog' ></i>
 					<span class="text">Settings</span>
 				</a>
