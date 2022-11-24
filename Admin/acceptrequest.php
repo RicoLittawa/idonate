@@ -72,7 +72,7 @@ function fill_category_select_box($conn)
 			<li>
 				<a href="#">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archieve</span>
+					<span class="text">Archive</span>
 				</a>
 			</li>
 		</ul>
