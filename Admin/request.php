@@ -132,6 +132,7 @@ $result= mysqli_query($conn,$sql);
 		<th>Contact Number</th>
 		<th>Email</th>
 		<th></th>
+		<th>Status</th>
         
         
       </tr>
@@ -163,6 +164,7 @@ $result= mysqli_query($conn,$sql);
 			<button type="button" class="btn col  validId"  data-toggle="modal" data-target="validImg" value="<?php echo htmlentities($req_id); ?>"><i style="color:green ;" class="fa-regular fa-id-badge"></i></button>
 			<a  class="btn col" href="acceptrequest.php?acceptReq=<?php echo htmlentities($req_id); ?>"><i style="color: red;" class="fa-solid fa-circle-check"></i></a>
 			</td>
+			<td><button class="btn verify" id="verify" data-action="verify" data-email="<?php echo htmlentities($reqEmail); ?>" data-id="<?php echo htmlentities($req_id); ?>" data-name="<?php echo htmlentities($reqName); ?>"><i id="icon" style="color: red ;" class="fa-solid fa-check-double"></i></button></td>
 		</tr>
 	<?php endforeach; ?>
 	  </tbody>
@@ -295,7 +297,37 @@ $result= mysqli_query($conn,$sql);
 		});
 	});
 </script>
+<script>
+	$(document).ready(function(){
+		$('#verify').click(function(){
+			var id=  $(this).val();
+			var email_data=[];
+			var action = $(this).data("action");
+			if (action=="verify"){
+				email_data.push({
+					email: $(this).data("email"),
+					uID: $(this).data("id"),
+					name: $(this).data("name"),
+				});
+			}console.log (email_data);
 
+			 $.ajax({
+			 	url:'include/verify.php'	,
+			 	type:'POST',
+			 	data: {email_data:email_data},
+				success:function(data){
+					if (data== "success"){
+						alert(data);
+						$('#icon').removeAttr('style','color:red;');
+						$('#icon').attr('style','color:green;');
+
+					}
+				}
+			 });
+		});
+
+	});
+</script>
 	
 
 </body>

@@ -21,7 +21,8 @@ session_start()?>
     body {
       background: url('img/bg2circle.png');
       background-repeat: no-repeat;
-      background-size: 1500px 765px;
+      background-size: 2000px;
+     
     }
     </style>
     

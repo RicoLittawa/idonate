@@ -1,26 +1,20 @@
-<?php 
-session_start()?>
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Donation</title>
+    <title>frontpage</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/donation.css">
     <link rel="stylesheet" href="css/donors.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <style>body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
-        padding-right: 0px !important;
-    }</style>
-      
-  </head>
-  <body> 
+    <link rel="stylesheet" href="css/frontpage.css">
 
+  </head>
+  <body>
   <nav class="navbar bg-light" id="myNavbar">
   <div class="container-fluid">
     
@@ -31,48 +25,66 @@ session_start()?>
           <a class="nav-link " href="frontpage.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="donation.php">Donations</a>
+          <a class="nav-link " href="donation.php">Donations</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="howitworks.php">How it works?</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" >
           <a class="nav-link active" href="whatisneeded.php">What is needed?</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="">Create request<i style="color: #83f28f;" class="fa-solid fa-plus"></i></a>
+          <a class="nav-link" href="requestform.php">Create request<i style="color: #83f28f;" class="fa-solid fa-plus"></i></a>
         </li>
       </ul>
   
     </div>
   </div>
 </nav>
-
-<div class="container" id="container">
-  <div class="circles">
-        <div class="dot" >
-           <div class="photos">
-            <img class="photo1" src="img/water.png" alt=""> 
-            <img class="photo2" src="img/money.png" alt="">
-            <img class="photo3" src="img/food.png" alt="">
-            <img class="photo4" src="img/clothes.png" alt="">
-            </div>
-          <div class="dashedcircle"></div>
-      </div>
-        <span class="dot2"></span>
-          <h1 class="title">You want to<br></h1>
-          <h2 class="con">Donate?</h2>
-        </div>
-        <div class = "parag">
-          <p>You can set <a href="requestform.php">request</a> to inform the staff to<br>
-            your arrival and know what kind of donation<br> 
-            you will donate. Or You can directly drop off<br>
-            your donation to relief hub.</p>
-        </div>
-        
-        </div>
+<div class="container-fluid">
+  <span class="dot">   
+    </span>
+    <div class="scrollText">
+      <span>  <marquee style="color: red ;font-size:30px;"  width="100%" direction="right" height="100px">
+     
+      <?php 
+    include 'include/connection.php';
+    $sql= "SELECT * from announcement_template";
+    $result= mysqli_query($conn,$sql);
+    foreach ($result as $row){
+      echo "<i class='fa-sharp fa-solid fa-bullhorn'></i>".  $row['announcement'];
+    }
+    ?>
+    </marquee></span>
+      
+    </div>
+  <div class="reports">
+  <div class="box-info">
+     <div class="container">
+     <iframe style="position:absolute ;bottom:10px;" title="idonate" width="775" height="480" src="https://app.powerbi.com/view?r=eyJrIjoiMDNjMGUyZWYtMWU2ZS00ODc0LWIxMTQtOWM0ZmRhYjU0MTRmIiwidCI6IjYxMTExODkxLTNkYzgtNDVmZi1hZjcwLWZjMGFmM2NjYjBmOCIsImMiOjEwfQ%3D%3D&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>	
+     </div> 
   
-     <div class="site-footer" id="footer">
+
+    </div>
+    <div class="box-info2">
+  
+    </div>
+    <div class="box-info3">
+      <p>test</p>
+
+    </div>
+  </div>
+    
+
+</div>
+       
+      
+
+
+
+
+
+      <div class="site-footer" id="footer">
       <div class="container">
         <div class="row">
           <div class="col-sm-12 col-md-6"> 
@@ -103,13 +115,11 @@ session_start()?>
         </div>
       </div>
 </div>
-     <!-- Optional JavaScript -->
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="js/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    
-    
- 
+  
   </body>
 </html>

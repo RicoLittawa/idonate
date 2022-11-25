@@ -294,7 +294,7 @@ $(document).ready(function(){
 	
 	});
 	}
-	console.log(money_data);
+	
 	 $.ajax({
 	 url:"include/moneycerti.php",
 	 method:"POST",
