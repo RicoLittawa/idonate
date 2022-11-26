@@ -44,21 +44,21 @@
 <div class="container-fluid">
   <span class="dot">   
     </span>
-    <div class="scrollText">
-      <span>  <marquee style="color: red ;font-size:30px;"  width="100%" direction="right" height="100px">
-     
-      <?php 
-    include 'include/connection.php';
-    $sql= "SELECT * from announcement_template";
-    $result= mysqli_query($conn,$sql);
-    foreach ($result as $row){
-      echo "<i class='fa-sharp fa-solid fa-bullhorn'></i>".  $row['announcement'];
-    }
-    ?>
-    </marquee></span>
-      
-    </div>
   <div class="reports">
+  <div class="box-info4">
+      <p class="whatneeded">What is needed?</p>
+       <marquee class="scrolling" style="color: red ;font-size:35px; font-weight:bold;"  width="100%" direction="left" height="100px">
+     
+     <?php 
+   include 'include/connection.php';
+   $sql= "SELECT * from announcement_template";
+   $result= mysqli_query($conn,$sql);
+   foreach ($result as $row){
+     echo "<i class='fa-sharp fa-solid fa-bullhorn'></i>".  $row['announcement'];
+   }
+   ?>
+   </marquee>
+    </div>
   <div class="box-info">
      <div class="container">
      <iframe style="position:absolute ;bottom:10px;" title="idonate" width="775" height="480" src="https://app.powerbi.com/view?r=eyJrIjoiMDNjMGUyZWYtMWU2ZS00ODc0LWIxMTQtOWM0ZmRhYjU0MTRmIiwidCI6IjYxMTExODkxLTNkYzgtNDVmZi1hZjcwLWZjMGFmM2NjYjBmOCIsImMiOjEwfQ%3D%3D&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>	

@@ -19,9 +19,18 @@
    $category= $_POST['category_arr'];
    $variant= $_POST['variant_arr'];
    $quantity= $_POST['quantity_arr'];
+   $ItemName= $_POST['itemName_arr'];
+   $ItemsQuanti= $_POST['items_arr'];
+   $TotalItems= $_POST['totalItem'];
+   $status= 'For verification';
+
    $categ =explode(",",$category);
    $vari= explode(",",$variant);
    $quanti =explode(",",$quantity);
+   $itemname =explode(",",$ItemName);
+   $itemnumber =explode(",",$ItemsQuanti);
+   $totalitem =explode(",",$TotalItems);
+
 
    $Image = $_FILES['idImg']['name'];
    
@@ -34,27 +43,27 @@
        if(move_uploaded_file($_FILES['idImg']['tmp_name'],$filePath.$Image)){
         if($fileError === 0){
             if($fileSize < 1000000) {
-        $sql= "INSERT into set_request (reference_id,req_name,req_province,req_street,req_region,valid_id,req_email,req_date,req_contact,req_note)
-        Values(?,?,?,?,?,?,?,?,?,?)";
+        $sql= "INSERT into set_request (reference_id,req_name,req_province,req_street,req_region,valid_id,req_email,req_date,req_contact,req_note,status)
+        Values(?,?,?,?,?,?,?,?,?,?,?)";
         $stmt= mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$sql)){
            
         }
         else {
-            mysqli_stmt_bind_param($stmt,"ssssssssss",$referenceId,$fname,$province,$street,$region,$Image,$email,$date,$contact,$note);
+            mysqli_stmt_bind_param($stmt,"sssssssssss",$referenceId,$fname,$province,$street,$region,$Image,$email,$date,$contact,$note,$status);
             mysqli_stmt_execute($stmt);
             
         }
         $count = 0;
         $resultCount = 0;
         foreach($categ as $item){
-            $sql2= "INSERT INTO set_request10 (req_reference,req_category,req_variant,req_quantity) Values (?,?,?,?)";
+            $sql2= "INSERT INTO set_request10 (req_reference,req_category,req_nameItem,req_variant,req_quantity,req_item,req_totalItem) Values (?,?,?,?,?,?,?)";
             $stmt=mysqli_stmt_init($conn);
             if(!mysqli_stmt_prepare($stmt,$sql2)){
               
             }
             else{
-                mysqli_stmt_bind_param($stmt, 'ssss', $referenceId, $item, $vari[$count], $quanti[$count]);
+                mysqli_stmt_bind_param($stmt, 'sssssss', $referenceId, $item,$itemname[$count], $vari[$count], $quanti[$count],$itemnumber[$count],$totalitem[$count]);
                 $result = mysqli_stmt_execute($stmt);
                 if($result) {
                     $resultCount = $resultCount + 1;

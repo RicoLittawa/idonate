@@ -165,44 +165,6 @@
             </div>
            </div>
             </div>
-            
-            
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-                <label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>  
-            <button style="float: right;" class="btn btnAdditem" type="button" id="btnAdditem"><i style="color:green;font-size:40px;" class="fa-solid fa-plus"></i></button>
-                </div>
-              </div>
-            </div>
-            <div class="choices">
-            <div class="row">
-              <div class="col">
-                <div class="form-group">
-            <label for="category">Select Category</label>
-              <select class="custom-select req_category border-success" name="req_category" id="req_category">
-              <option value="-Select-">-Select-</option>
-             <?php echo fill_category_select_box($conn) ?>
-            </select>
-            </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-            <label for="variant">Select Variant</label>
-              <select class="custom-select req_variant border-success" name="req_variant" id="req_variant">
-              <option value="-Select-">-Select-</option>
-             <?php echo  fill_variant_select_box($conn)?>
-            </select>
-            </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-              <label for="quantity">Quantity</label>
-              <input class="form-control req_quantity border-success" type="text" name="req_quantity" id="req_quantity">
-              </div>
-            </div>
-            </div>
-            </div>
           <div class="row">
           <div class="col">
             <div class="form-group">
@@ -211,6 +173,14 @@
               </div>
 						</div>
           </div>
+          <div class="row">
+              <div class="col">
+                <div class="form-group">
+                <label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>  
+            <button style="float: right;" class="btn btnAdditem" type="button" id="btnAdditem"><i style="color:green;font-size:40px;" class="fa-solid fa-plus"></i></button>
+                </div>
+              </div>
+            </div>
             
             
         	
@@ -269,9 +239,11 @@
           $('#testBtn').remove();
           var html='';
           html+='<div>'
-          html+= '<div class="row"><div class="col"><div class="form-group"><select class="custom-select req_category border-success"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-          html+='<div class="col"><div class="form-group"><select class="custom-select req_variant border-success"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
-          html+='<div class="col"><div class="form-group"></label><input class="form-control req_quantity border-success"></div></div></div>';
+          html+= '<div class="row"><div class="col"><div class="form-group"><label>Select Category</label><select class="custom-select req_category border-success"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
+          html += '<div class="col"><div class="form-group"><label>Name of items</label><textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50" ></textarea></div></div></div>'
+          html+='<div class="row"><div class="col"><div class="form-group"><label>Select Variant</label><select class="custom-select req_variant border-success"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
+          html+='<div class="col"><div class="form-group"><label>Quantity</label><input class="form-control req_quantity border-success"></div></div></div>';
+          html+='<div class="row"><div class="col"><div class="form-group"><label>Number of Items</label><input class="form-control border-success noPerItems" id="noPerItems" name="noPerItems" ></div></div></div>';
           var remove_button='';
            if(count>0)
            {
@@ -280,11 +252,12 @@
          html+='<span>'+remove_button+'</span></div>';
           return html;
         }
+        $('#requestform').append(add_input_field(count[0]))
         $('#requestform').append('<button  type="button"  class="btn btn-success reqbtn" id="testBtn">Submit</button>');
-       
+     
         $(document).on('click','#btnAdditem',function(){
           count++;
-          $('.choices').append(add_input_field(count));
+          $('#requestform').append(add_input_field(count))
           $('#requestform').append('<button type="button" class="btn btn-success reqbtn" id="testBtn">Submit</button>');
           $('#testBtn').click(function(e){
             var valid = this.form.checkValidity();
@@ -293,14 +266,22 @@
         var variant_arr=[];
         var quantity_arr=[];
         var category_arr=[];
+        var items_arr=[];
+				var itemName_arr=[];
+				var totalItem=[];
         var category = $('.req_category');
         var variant = $('.req_variant');
         var quantity = $('.req_quantity');
+        var item_names=$('.name_items');
+        var noPerItems=$('.noPerItems');
         
         for (var i = 0;i<category.length;i++){
           category_arr.push($(category[i]).val());
           variant_arr.push($(variant[i]).val());
           quantity_arr.push($(quantity[i]).val());
+          itemName_arr.push($(name_items[i]).val());
+					items_arr.push($(noPerItems[i]).val());
+					totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());
 		      }     
           var form = $('#requestform')[0];
           
@@ -330,6 +311,11 @@
           fd.append('category_arr',category_arr);
           fd.append('variant_arr',variant_arr);
           fd.append('quantity_arr',quantity_arr);
+          fd.append('itemName_arr',itemName_arr);
+          fd.append('items_arr',items_arr);
+          fd.append('totalItem',totalItem);
+
+
          
           fd.append("saveBtn",true);
           var extension = $('#idImg').val().split('.').pop().toLowerCase();
@@ -343,94 +329,98 @@
         //     console.log(pair[0]+','+pair[1]);
         //   }
         //  return;
-      if(req_fname==""){
-            $('#req_fname').removeClass('border-success');
-            $('#req_fname').addClass('border-danger');
-            return false;
-      }
-      else if(req_province==""){
-            $('#req_province').removeClass('border-success');
-            $('#req_province').addClass('border-danger');
-            return false;
-      }
-      else if(req_street==""){
-            $('#req_street').removeClass('border-success');
-            $('#req_street').addClass('border-danger');
-            return false;
-      }
-      else if(req_email==""){
-            $('#req_email').removeClass('border-success');
-            $('#req_email').addClass('border-danger');
-            return false;
-      }
-      else if(emailVali.test($('#req_email').val())==false){
-        Swal.fire('Email', "Invalid email address",'warning'); 
-            $('#req_email').removeClass('border-success');
-            $('#req_email').addClass('border-danger');
-            return false;
-      }
-      else if(req_date==""){
-        Swal.fire('Fields', "Please select a date",'warning');
-            return false;
-      }
-      else if(req_contact==""){
-            $('#req_contact').removeClass('border-success');
-            $('#req_contact').addClass('border-danger');
-            return false;
-      }
-      else if (inValid.test($('#req_contact').val())==true){
-            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-            $('#req_contact').removeClass('border-success');
-            $('#req_contact').addClass('border-danger');
-            return false;
-          }
-          else if(varnumbers.test($('#req_contact').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#req_contact').removeClass('border-success');
-            $('#req_contact').addClass('border-danger');
-            return false;
-          } 
-          else if(req_contact.length !=11){
-            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-            $('#req_contact').removeClass('border-success');
-            $('#req_contact').addClass('border-danger');
-            return false;
-          }
-          else if(req_region==""){
-            Swal.fire('Select', "Please select a region",'warning');
-            return false;
-          }
-          else if($('#idImg').val()==''){
-            Swal.fire('Fields', "Please insert an image",'warning');
-          }
-          else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
-            Swal.fire('Image', "Invalid file extension.",'warning');
-            $("#requestform").find('[type=file]').val('').trigger('change');
-            return false;
-          }
-          else{
-            for (var j=0;j<category.length;j++){
-                if ($(category[j]).val()=="-Select-"){
-                  Swal.fire('Select', "Please select a category",'warning');
+       if(req_fname==""){
+             $('#req_fname').removeClass('border-success');
+             $('#req_fname').addClass('border-danger');
+             return false;
+       }
+       else if(req_province==""){
+             $('#req_province').removeClass('border-success');
+             $('#req_province').addClass('border-danger');
+             return false;
+       }
+       else if(req_street==""){
+             $('#req_street').removeClass('border-success');
+             $('#req_street').addClass('border-danger');
+             return false;
+       }
+       else if(req_email==""){
+             $('#req_email').removeClass('border-success');
+             $('#req_email').addClass('border-danger');
+             return false;
+       }
+       else if(emailVali.test($('#req_email').val())==false){
+         Swal.fire('Email', "Invalid email address",'warning'); 
+             $('#req_email').removeClass('border-success');
+             $('#req_email').addClass('border-danger');
+             return false;
+       }
+       else if(req_date==""){
+         Swal.fire('Fields', "Please select a date",'warning');
+             return false;
+       }
+       else if(req_contact==""){
+             $('#req_contact').removeClass('border-success');
+             $('#req_contact').addClass('border-danger');
+             return false;
+       }
+       else if (inValid.test($('#req_contact').val())==true){
+             Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+             $('#req_contact').removeClass('border-success');
+             $('#req_contact').addClass('border-danger');
+             return false;
+           }
+           else if(varnumbers.test($('#req_contact').val())==false) {
+             Swal.fire('Number', "Numbers only.",'warning');
+             $('#req_contact').removeClass('border-success');
+             $('#req_contact').addClass('border-danger');
+             return false;
+           } 
+           else if(req_contact.length !=11){
+             Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+             $('#req_contact').removeClass('border-success');
+             $('#req_contact').addClass('border-danger');
+             return false;
+           }
+           else if(req_region==""){
+             Swal.fire('Select', "Please select a region",'warning');
+             return false;
+           }
+           else if($('#idImg').val()==''){
+             Swal.fire('Fields', "Please insert an image",'warning');
+           }
+           else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
+             Swal.fire('Image', "Invalid file extension.",'warning');
+             $("#requestform").find('[type=file]').val('').trigger('change');
+             return false;
+           }
+           else{
+             for (var j=0;j<category.length;j++){
+                 if ($(category[j]).val()=="-Select-"){
+                   Swal.fire('Select', "Please select a category",'warning');
+                   return false;
+                 }
+                 else if ($(name_items[j]).val()==""){
+                  Swal.fire('Fields', "Item name is empty",'warning');
                   return false;
                 }
-                else if($(variant[j]).val()=="-Select-"){
-                  Swal.fire('Select', "Please select a variant",'warning');
-                  return false;
-                }
-                else if($(quantity[j]).val()==""){
-                  Swal.fire('Select', "Quantity is empty",'warning');
-                  return false;
-                }
-                else if (inValid.test($(quantity[j]).val())==true){	
-                  Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-                  return false;
-                }
-                else if(varnumbers.test($(quantity[j]).val())==false) {
-                  Swal.fire('Number', "Numbers only.",'warning');
-                  return false;			
-                }
-            }
+                 else if($(variant[j]).val()=="-Select-"){
+                   Swal.fire('Select', "Please select a variant",'warning');
+                   return false;
+                 }
+                 else if($(quantity[j]).val()==""){
+                   Swal.fire('Select', "Quantity is empty",'warning');
+                   return false;
+                 }
+                 else if (inValid.test($(quantity[j]).val())==true){	
+                   Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+                   return false;
+                 }
+                 else if(varnumbers.test($(quantity[j]).val())==false) {
+                   Swal.fire('Number', "Numbers only.",'warning');
+                   return false;			
+                 }
+             }
             Swal.fire({
             title: 'Confirmation',
             text: "Are sure that all the informations are correct?",
@@ -478,7 +468,7 @@
             Swal.fire('Changes are not saved', '', 'info')
           }
         });
-          }  
+           }  
         }
           });
           $('#req_fname').on('keyup', function() {
@@ -550,14 +540,22 @@
         var variant_arr=[];
         var quantity_arr=[];
         var category_arr=[];
+        var items_arr=[];
+				var itemName_arr=[];
+				var totalItem=[];
         var category = $('.req_category');
         var variant = $('.req_variant');
         var quantity = $('.req_quantity');
+        var item_names=$('.name_items');
+        var noPerItems=$('.noPerItems');
         
         for (var i = 0;i<category.length;i++){
           category_arr.push($(category[i]).val());
           variant_arr.push($(variant[i]).val());
           quantity_arr.push($(quantity[i]).val());
+          itemName_arr.push($(name_items[i]).val());
+					items_arr.push($(noPerItems[i]).val());
+					totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());
 		      }     
           var form = $('#requestform')[0];
           
@@ -587,6 +585,11 @@
           fd.append('category_arr',category_arr);
           fd.append('variant_arr',variant_arr);
           fd.append('quantity_arr',quantity_arr);
+          fd.append('itemName_arr',itemName_arr);
+          fd.append('items_arr',items_arr);
+          fd.append('totalItem',totalItem);
+
+
          
           fd.append("saveBtn",true);
           var extension = $('#idImg').val().split('.').pop().toLowerCase();
@@ -600,94 +603,98 @@
         //     console.log(pair[0]+','+pair[1]);
         //   }
         //  return;
-      if(req_fname==""){
-            $('#req_fname').removeClass('border-success');
-            $('#req_fname').addClass('border-danger');
-            return false;
-      }
-      else if(req_province==""){
-            $('#req_province').removeClass('border-success');
-            $('#req_province').addClass('border-danger');
-            return false;
-      }
-      else if(req_street==""){
-            $('#req_street').removeClass('border-success');
-            $('#req_street').addClass('border-danger');
-            return false;
-      }
-      else if(req_email==""){
-            $('#req_email').removeClass('border-success');
-            $('#req_email').addClass('border-danger');
-            return false;
-      }
-      else if(emailVali.test($('#req_email').val())==false){
-        Swal.fire('Email', "Invalid email address",'warning'); 
-            $('#req_email').removeClass('border-success');
-            $('#req_email').addClass('border-danger');
-            return false;
-      }
-      else if(req_date==""){
-        Swal.fire('Fields', "Please select a date",'warning');
-            return false;
-      }
-      else if(req_contact==""){
-            $('#req_contact').removeClass('border-success');
-            $('#req_contact').addClass('border-danger');
-            return false;
-      }
-      else if (inValid.test($('#req_contact').val())==true){
-            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-            $('#req_contact').removeClass('border-success');
-            $('#req_contact').addClass('border-danger');
-            return false;
-          }
-          else if(varnumbers.test($('#req_contact').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#req_contact').removeClass('border-success');
-            $('#req_contact').addClass('border-danger');
-            return false;
-          } 
-          else if(req_contact.length !=11){
-            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-            $('#req_contact').removeClass('border-success');
-            $('#req_contact').addClass('border-danger');
-            return false;
-          }
-          else if(req_region==""){
-            Swal.fire('Select', "Please select a region",'warning');
-            return false;
-          }
-          else if($('#idImg').val()==''){
-            Swal.fire('Fields', "Please insert an image",'warning');
-          }
-          else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
-            Swal.fire('Image', "Invalid file extension.",'warning');
-            $("#requestform").find('[type=file]').val('').trigger('change');
-            return false;
-          }
-          else{
-            for (var j=0;j<category.length;j++){
-                if ($(category[j]).val()=="-Select-"){
-                  Swal.fire('Select', "Please select a category",'warning');
+       if(req_fname==""){
+             $('#req_fname').removeClass('border-success');
+             $('#req_fname').addClass('border-danger');
+             return false;
+       }
+       else if(req_province==""){
+             $('#req_province').removeClass('border-success');
+             $('#req_province').addClass('border-danger');
+             return false;
+       }
+       else if(req_street==""){
+             $('#req_street').removeClass('border-success');
+             $('#req_street').addClass('border-danger');
+             return false;
+       }
+       else if(req_email==""){
+             $('#req_email').removeClass('border-success');
+             $('#req_email').addClass('border-danger');
+             return false;
+       }
+       else if(emailVali.test($('#req_email').val())==false){
+         Swal.fire('Email', "Invalid email address",'warning'); 
+             $('#req_email').removeClass('border-success');
+             $('#req_email').addClass('border-danger');
+             return false;
+       }
+       else if(req_date==""){
+         Swal.fire('Fields', "Please select a date",'warning');
+             return false;
+       }
+       else if(req_contact==""){
+             $('#req_contact').removeClass('border-success');
+             $('#req_contact').addClass('border-danger');
+             return false;
+       }
+       else if (inValid.test($('#req_contact').val())==true){
+             Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+             $('#req_contact').removeClass('border-success');
+             $('#req_contact').addClass('border-danger');
+             return false;
+           }
+           else if(varnumbers.test($('#req_contact').val())==false) {
+             Swal.fire('Number', "Numbers only.",'warning');
+             $('#req_contact').removeClass('border-success');
+             $('#req_contact').addClass('border-danger');
+             return false;
+           } 
+           else if(req_contact.length !=11){
+             Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+             $('#req_contact').removeClass('border-success');
+             $('#req_contact').addClass('border-danger');
+             return false;
+           }
+           else if(req_region==""){
+             Swal.fire('Select', "Please select a region",'warning');
+             return false;
+           }
+           else if($('#idImg').val()==''){
+             Swal.fire('Fields', "Please insert an image",'warning');
+           }
+           else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
+             Swal.fire('Image', "Invalid file extension.",'warning');
+             $("#requestform").find('[type=file]').val('').trigger('change');
+             return false;
+           }
+           else{
+             for (var j=0;j<category.length;j++){
+                 if ($(category[j]).val()=="-Select-"){
+                   Swal.fire('Select', "Please select a category",'warning');
+                   return false;
+                 }
+                 else if ($(name_items[j]).val()==""){
+                  Swal.fire('Fields', "Item name is empty",'warning');
                   return false;
                 }
-                else if($(variant[j]).val()=="-Select-"){
-                  Swal.fire('Select', "Please select a variant",'warning');
-                  return false;
-                }
-                else if($(quantity[j]).val()==""){
-                  Swal.fire('Select', "Quantity is empty",'warning');
-                  return false;
-                }
-                else if (inValid.test($(quantity[j]).val())==true){	
-                  Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-                  return false;
-                }
-                else if(varnumbers.test($(quantity[j]).val())==false) {
-                  Swal.fire('Number', "Numbers only.",'warning');
-                  return false;			
-                }
-            }
+                 else if($(variant[j]).val()=="-Select-"){
+                   Swal.fire('Select', "Please select a variant",'warning');
+                   return false;
+                 }
+                 else if($(quantity[j]).val()==""){
+                   Swal.fire('Select', "Quantity is empty",'warning');
+                   return false;
+                 }
+                 else if (inValid.test($(quantity[j]).val())==true){	
+                   Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+                   return false;
+                 }
+                 else if(varnumbers.test($(quantity[j]).val())==false) {
+                   Swal.fire('Number', "Numbers only.",'warning');
+                   return false;			
+                 }
+             }
             Swal.fire({
             title: 'Confirmation',
             text: "Are sure that all the informations are correct?",
@@ -735,7 +742,7 @@
             Swal.fire('Changes are not saved', '', 'info')
           }
         });
-          }  
+           }  
         }
       });
       $('#req_fname').on('keyup', function() {

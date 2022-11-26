@@ -166,65 +166,61 @@ session_start();
 									<input class="form-control border-success" type="text" name="fname" id="fname" value="<?php echo htmlentities($donorname); ?>">
 									</div>
 								<div class="row">
-  								<div class="col">
-								<div class="form-group">
-									<label for="province">Province</label>
-									<input class="form-control border-success" type="text" name="province" id="province"value="<?php echo htmlentities($donorprovince); ?>">
+  									<div class="col">
+										<div class="form-group">
+											<label for="province">Province</label>
+											<input class="form-control border-success" type="text" name="province" id="province"value="<?php echo htmlentities($donorprovince); ?>">
+										</div>
 									</div>
-									</div>
-								<div class="col">
-								<div class="form-group">
-									<label for="street">Street</label>
-									<input class="form-control border-success" type="text" name="street" id="street" value="<?php echo htmlentities($donorstreet); ?>">
-									</div>
-									</div>
+									<div class="col">
+									<div class="form-group">
+										<label for="street">Street</label>
+										<input class="form-control border-success" type="text" name="street" id="street" value="<?php echo htmlentities($donorstreet); ?>">
+											</div>
+										</div>
 									</div>
 								<div class="row">
 									<div class="col">
-								<div class="form-group">
-									<label for="region">Select Region</label>
-									
-									<select class="custom-select region border-success" name="region" id="region">
-									
-									<option value="-Select-">-Select-</option>
-									<?php 
-										$sql = "SELECT * FROM regions";
-										$result = mysqli_query($conn,$sql);
-										foreach($result	 as $row):
-										?>
-									<option value="<?php echo htmlentities($row['region_id']);?>"
-										<?php if($donorregion == $row['region_id']) {echo 'selected="selected"';}?>>
-									<?php echo htmlentities($row['region_name']);?></option>
-									<?php endforeach;  ?>
-									</select>
-									</div>
+										<div class="form-group">
+											<label for="region">Select Region</label>
+											<select class="custom-select region border-success" name="region" id="region">
+											<option value="-Select-">-Select-</option>
+											<?php 
+												$sql = "SELECT * FROM regions";
+												$result = mysqli_query($conn,$sql);
+												foreach($result	 as $row):
+												?>
+											<option value="<?php echo htmlentities($row['region_id']);?>"
+											<?php if($donorregion == $row['region_id']) {echo 'selected="selected"';}?>>
+											<?php echo htmlentities($row['region_name']);?></option>
+											<?php endforeach;  ?>
+											</select>
+										</div>
 									</div> 
 									<div class="col">
 										<div class="form-group">
 											<label for="contact">Contact</label>
 											<input class="form-control border-success" type="text" name="contact" id="contact" value="<?php echo htmlentities($donorcontact); ?>">
+											</div>
+										</div>
+									</div>   
+									<div class="form-group">
+										<label for="email">Email</label>
+										<input class="form-control border-success" type="text" name="email" id="email" value="<?php echo $donoremail; ?>">
+									</div>
+									<div class="form-group">
+										<label for="donation_date">Donation Date</label>
+										<input class="form-control border-success" type="date" name="donation_date" id="donation_date" value="<?php echo $donordate; ?>">
 										</div>
 									</div>
-									</div>   
-								<div class="form-group">
-									<label for="email">Email</label>
-									<input class="form-control border-success" type="text" name="email" id="email" value="<?php echo $donoremail; ?>">
-									</div>
-								<div class="form-group">
-									<label for="donation_date">Donation Date</label>
-									<input class="form-control border-success" type="date" name="donation_date" id="donation_date" value="<?php echo $donordate; ?>">
-									</div>
-							</div>
-							
-							
 							<div class="row">
 								<div class="col">
-							<div class="form-group">
-							<label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>
-							<button style="float: right;" type="button" name="btn_additem" class="btn" id="btn_additem"><i style="color: green;font-size:40px;" class="fa-sharp fa-solid fa-plus"></i> 
-								</button>
-							</div>
-							</div>
+									<div class="form-group">
+									<label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>
+									<button style="float: right;" type="button" name="btn_additem" class="btn" id="btn_additem"><i style="color: green;font-size:40px;" class="fa-sharp fa-solid fa-plus"></i> 
+										</button>
+									</div>
+								</div>
 							</div>
 								<?php 
 								$sql1="SELECT * from donation_items10 where Reference= $donorreference";
@@ -235,64 +231,80 @@ session_start();
 									$variantM= $row1['variant'];
 									$quantity= $row1['quantity'];
 									$reference= $row1['Reference'];
-									$donation10 = $row1['id'];
+									$item_names= $row1['name_items'];
+									$noPerItems= $row1['Items'];
 									
 								?>
 								
 							<div id="prevItem">
-							
 								<div class="item">
-							<div class="row">
-							<div class="col">
-							<div class="form-group">
-								<label for="category">Select Category</label>
-								<select  class="custom-select border-success category" name="category" id="category">
-								<option value="-Select-">-Select-</option>
-									<?php
-										$sql2= "SELECT * from category";
-										$result2= mysqli_query($conn,$sql2);
-										foreach ($result2 as $row2): 		
-													
-									?>
+									<div class="row">
+										<div class="col">
+											<div class="form-group">
+												<label for="category">Select Category</label>
+												<select  class="custom-select border-success category" name="category" id="category">
+												<option value="-Select-">-Select-</option>
+												<?php
+													$sql2= "SELECT * from category";
+													$result2= mysqli_query($conn,$sql2);
+													foreach ($result2 as $row2): 		
+																
+												?>
 									
-								<option value="<?php echo htmlentities($row2['categ_id']); ?>"<?php if($categM == $row2['categ_id']) {echo 'selected="selected"';}?>>
-								<?php echo htmlentities($row2['category']);?></option>
-								
-								
-									<?php endforeach; ?>
+												<option value="<?php echo htmlentities($row2['categ_id']); ?>"<?php if($categM == $row2['categ_id']) {echo 'selected="selected"';}?>>
+												<?php echo htmlentities($row2['category']);?></option>
+												
+												
+													<?php endforeach; ?>
 										
-								</select>
+													</select>
 							
-								</div>	
-								</div>
-							<div class="col">
-							<div class="form-group">	
-								<label for="variant">Select Variant</label>		
-								<select  class="custom-select border-success variant" name="variant" id="variant">
-								<option value="-Select-">-Select-</option>
-									<?php
-										$sql3= "SELECT * from variant";
-										$result3= mysqli_query($conn,$sql3);
-										foreach ($result3 as $row3): 				
-									?>
-								<option value="<?php echo htmlentities($row3['variant_id']); ?>"<?php if($variantM == $row3['variant_id']) {echo 'selected="selected"';}?>>
-								<?php echo htmlentities($row3['variant']);?></option>
-									<?php endforeach;?>
-								</select>
-								</div>
-								</div>
-							<div class="col">
-							<div class="form-group">
-								<label for="quantity">Quantity</label>
-								<input class="form-control border-success quantity" type="text" name="quantity" id="quantity" value="<?php echo htmlentities($quantity); ?>">
-								</div>
-								</div>
-								</div>
-								</div>	
-								</div>
-								<?php endforeach;?>
-								
-						</form>	
+													</div>	
+												</div>
+											<div class="col">
+												<div class="form-group">
+													<label>Name of items</label>
+													<textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50" ><?php echo htmlentities($item_names); ?></textarea>
+														</div>
+													</div>
+												</div>
+										<div class="row">
+											<div class="col">
+												<div class="form-group">	
+													<label for="variant">Select Variant</label>		
+													<select  class="custom-select border-success variant" name="variant" id="variant">
+													<option value="-Select-">-Select-</option>
+													<?php
+														$sql3= "SELECT * from variant";
+														$result3= mysqli_query($conn,$sql3);
+														foreach ($result3 as $row3): 				
+													?>
+													<option value="<?php echo htmlentities($row3['variant_id']); ?>"<?php if($variantM == $row3['variant_id']) {echo 'selected="selected"';}?>>
+													<?php echo htmlentities($row3['variant']);?></option>
+														<?php endforeach;?>
+													</select>
+														</div>
+													</div>
+												<div class="col">
+													<div class="form-group">
+														<label for="quantity">Quantity</label>
+														<input class="form-control border-success quantity" type="text" name="quantity" id="quantity" value="<?php echo htmlentities($quantity); ?>">
+															</div>
+														</div>
+													</div>
+											<div class="row">
+												<div class="col">
+													<div class="form-group">
+														<label for="">No. of items</label>
+														<input class="form-control border-success noPerItems" name="noPerItems" id="noPerItems" type="text" value="<?php echo htmlentities($noPerItems);?>">
+													</div>
+												</div>
+
+											</div>
+												</div>	
+											</div>
+										<?php endforeach;?>
+									</form>	
 			</div>
 		</main>	
 	</section>
@@ -311,8 +323,10 @@ session_start();
 				
 				html+='<div>'
 				html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-				html += '<div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
-				html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
+	  html+= '<div class="col"><div class="form-group"><label>Name of items</label><textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50"></textarea></div></div></div>'
+      html += '<div class="row"><div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
+      html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
+	  html+='<div class="row"><div class="col"><div class="form-group"><label>Number of Items</label><input class="form-control border-success noPerItems" id="noPerItems" name="noPerItems" ></div></div></div>';
 				
 				
 				var remove_button='';
@@ -342,14 +356,22 @@ session_start();
 						var variant_arr=[];
 						var quantity_arr=[];
 						var category_arr=[];
+						var items_arr=[];
+						var itemName_arr=[];
+						var totalItem=[];
 						var category = $('.category');
 						var variant = $('.variant');
 						var quantity = $('.quantity');
+						var name_items = $('.name_items');
+						var noPerItems = $('.noPerItems');
 					
 						for (var i = 0;i<category.length;i++){
 							category_arr.push($(category[i]).val());
 							variant_arr.push($(variant[i]).val());
-							quantity_arr.push($(quantity[i]).val());	
+							quantity_arr.push($(quantity[i]).val());
+							itemName_arr.push($(name_items[i]).val());
+							items_arr.push($(noPerItems[i]).val());
+							totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());	
 						}
 						var donor_id= $('#donor_id').val();
 						var reference_id= $('#reference_id').val();
@@ -364,90 +386,105 @@ session_start();
 						var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
        					var varnumbers = /^\d+$/;
         				var inValid = /\s/;
-		if(fname==""){
-			$('#fname').removeClass('border-success');
-            $('#fname').addClass('border-danger');
-            return false;
-		}
-		if(province==""){
-			$('#province').removeClass('border-success');
-            $('#province').addClass('border-danger');
-            return false;
-		}
-		else if(street==""){
-			$('#street').removeClass('border-success');
-            $('#street').addClass('border-danger');
-            return false;
-		}
-		else if(region==""){
-			Swal.fire('Fields', "Please select a region",'warning');
-            return false;
-		}
-		else if(contact==""){
-			$('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-		}
-		else if (inValid.test($('#contact').val())==true){
-            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          }
-        else if(varnumbers.test($('#contact').val())==false) {
-            Swal.fire('Contact', "Numbers only.",'warning');
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          } 
-        else if(contact.length !=11){
-            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          }
-		else if(email==""){
-			$('#email').removeClass('border-success');
-            $('#email').addClass('border-danger');
-            return false;
-		}
-		else if(emailVali.test($('#email').val())==false){
-			Swal.fire('Email', "Invalid email address",'warning'); 
-            $('#email').removeClass('border-success');
-            $('#email').addClass('border-danger');
-            return false;
-		}
-		else if(donation_date==""){
-			$('#donation_date').removeClass('border-success');
-            $('#donation_date').addClass('border-danger');
-            return false;
-		}
+		 if(fname==""){
+		 	$('#fname').removeClass('border-success');
+             $('#fname').addClass('border-danger');
+             return false;
+		 }
+		 if(province==""){
+		 	$('#province').removeClass('border-success');
+             $('#province').addClass('border-danger');
+             return false;
+		 }
+		 else if(street==""){
+		 	$('#street').removeClass('border-success');
+             $('#street').addClass('border-danger');
+             return false;
+		 }
+		 else if(region==""){
+		 	Swal.fire('Fields', "Please select a region",'warning');
+             return false;
+		 }
+		 else if(contact==""){
+		 	$('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+		 }
+		 else if (inValid.test($('#contact').val())==true){
+             Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           }
+         else if(varnumbers.test($('#contact').val())==false) {
+             Swal.fire('Contact', "Numbers only.",'warning');
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           } 
+         else if(contact.length !=11){
+             Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           }
+		 else if(email==""){
+		 	$('#email').removeClass('border-success');
+             $('#email').addClass('border-danger');
+             return false;
+		 }
+		 else if(emailVali.test($('#email').val())==false){
+		 	Swal.fire('Email', "Invalid email address",'warning'); 
+             $('#email').removeClass('border-success');
+             $('#email').addClass('border-danger');
+             return false;
+		 }
+		 else if(donation_date==""){
+		 	$('#donation_date').removeClass('border-success');
+             $('#donation_date').addClass('border-danger');
+             return false;
+		 }
 		  
-		else{
-			for (var j=0;j<category.length;j++)
-			{
-				if($(category[j]).val()=="-Select-"){
-					Swal.fire('Select', "Please select a category",'warning');
-					return false;
-				}
-				else if($(variant[j]).val()=="-Select-"){
-					Swal.fire('Select', "Please select a variant",'warning');
-					return false;
-				}
-				else if($(quantity[j]).val()==""){
-					Swal.fire('Select', "Quantity is empty",'warning');
-					return false;
-				}
-				else if (inValid.test($(quantity[j]).val())==true){	
-					Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-					return false;
-				}
-				else if(varnumbers.test($(quantity[j]).val())==false) {
-					Swal.fire('Number', "Numbers only.",'warning');
-					return false;			
-			 	}
-			}
-		}var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
-			variant_arr:variant_arr,quantity_arr:quantity_arr};
+		 else{
+		 	for (var j=0;j<category.length;j++)
+		 	{
+				if ($(category[j]).val()=="-Select-"){
+		 		Swal.fire('Fields', "Please select a category",'warning');
+		 		return false;
+		 	}
+			 else if ($(name_items[j]).val()==""){
+		 		Swal.fire('Fields', "Item name is empty",'warning');
+		 		return false;
+		 	}
+		 	else if ($(variant[j]).val()=="-Select-"){
+		 		Swal.fire('Fields', "Please select a variant",'warning');
+		 		return false;
+		 	}
+		 	else if ($(quantity[j]).val()==""){
+		 		Swal.fire('Fields', "Quantity is empty",'warning');
+		 		return false;
+		 	}
+		 	else if (inValid.test($(quantity[j]).val())==true){	
+		 		Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+		 		return false;
+		 	}
+		 	
+			else if(varnumbers.test($(noPerItems[j]).val())=="") {
+		 		Swal.fire('Number', "Number of item is empty",'warning');
+		 		return false;
+						
+		 	  }
+			   else if (inValid.test($(noPerItems[j]).val())==true){	
+		 		Swal.fire('Items', "Whitespace is prohibited.",'warning');
+		 		return false;
+		 	}
+			 else if(varnumbers.test($(noPerItems[j]).val())==false) {
+		 		Swal.fire('Items', "Numbers only.",'warning');
+		 		return false;
+						
+		 	  }
+		 	}
+			 var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
+			variant_arr:variant_arr,quantity_arr:quantity_arr,itemName_arr:itemName_arr,items_arr:items_arr,totalItem:totalItem};
 		
 		$.ajax({
 						url:'include/edit.inc.php',
@@ -467,6 +504,8 @@ session_start();
 		 	}
 
 		 });
+		 }
+		
 		
 	}			
 					});
@@ -550,14 +589,22 @@ session_start();
 						var variant_arr=[];
 						var quantity_arr=[];
 						var category_arr=[];
+						var items_arr=[];
+						var itemName_arr=[];
+						var totalItem=[];
 						var category = $('.category');
 						var variant = $('.variant');
 						var quantity = $('.quantity');
+						var name_items = $('.name_items');
+						var noPerItems = $('.noPerItems');
 					
 						for (var i = 0;i<category.length;i++){
 							category_arr.push($(category[i]).val());
 							variant_arr.push($(variant[i]).val());
-							quantity_arr.push($(quantity[i]).val());	
+							quantity_arr.push($(quantity[i]).val());
+							itemName_arr.push($(name_items[i]).val());
+							items_arr.push($(noPerItems[i]).val());
+							totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());	
 						}
 						var donor_id= $('#donor_id').val();
 						var reference_id= $('#reference_id').val();
@@ -572,90 +619,105 @@ session_start();
 						var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
        					var varnumbers = /^\d+$/;
         				var inValid = /\s/;
-		if(fname==""){
-			$('#fname').removeClass('border-success');
-            $('#fname').addClass('border-danger');
-            return false;
-		}
-		if(province==""){
-			$('#province').removeClass('border-success');
-            $('#province').addClass('border-danger');
-            return false;
-		}
-		else if(street==""){
-			$('#street').removeClass('border-success');
-            $('#street').addClass('border-danger');
-            return false;
-		}
-		else if(region==""){
-			Swal.fire('Fields', "Please select a region",'warning');
-            return false;
-		}
-		else if(contact==""){
-			$('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-		}
-		else if (inValid.test($('#contact').val())==true){
-            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          }
-        else if(varnumbers.test($('#contact').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          } 
-        else if(contact.length !=11){
-            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          }
-		else if(email==""){
-			$('#email').removeClass('border-success');
-            $('#email').addClass('border-danger');
-            return false;
-		}
-		else if(emailVali.test($('#email').val())==false){
-			Swal.fire('Email', "Invalid email address",'warning'); 
-            $('#email').removeClass('border-success');
-            $('#email').addClass('border-danger');
-            return false;
-		}
-		else if(donation_date==""){
-			$('#donation_date').removeClass('border-success');
-            $('#donation_date').addClass('border-danger');
-            return false;
-		}
+		 if(fname==""){
+		 	$('#fname').removeClass('border-success');
+             $('#fname').addClass('border-danger');
+             return false;
+		 }
+		 if(province==""){
+		 	$('#province').removeClass('border-success');
+             $('#province').addClass('border-danger');
+             return false;
+		 }
+		 else if(street==""){
+		 	$('#street').removeClass('border-success');
+             $('#street').addClass('border-danger');
+             return false;
+		 }
+		 else if(region==""){
+		 	Swal.fire('Fields', "Please select a region",'warning');
+             return false;
+		 }
+		 else if(contact==""){
+		 	$('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+		 }
+		 else if (inValid.test($('#contact').val())==true){
+             Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           }
+         else if(varnumbers.test($('#contact').val())==false) {
+             Swal.fire('Contact', "Numbers only.",'warning');
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           } 
+         else if(contact.length !=11){
+             Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           }
+		 else if(email==""){
+		 	$('#email').removeClass('border-success');
+             $('#email').addClass('border-danger');
+             return false;
+		 }
+		 else if(emailVali.test($('#email').val())==false){
+		 	Swal.fire('Email', "Invalid email address",'warning'); 
+             $('#email').removeClass('border-success');
+             $('#email').addClass('border-danger');
+             return false;
+		 }
+		 else if(donation_date==""){
+		 	$('#donation_date').removeClass('border-success');
+             $('#donation_date').addClass('border-danger');
+             return false;
+		 }
 		  
-		else{
-			for (var j=0;j<category.length;j++)
-			{
-				if($(category[j]).val()=="-Select-"){
-					Swal.fire('Select', "Please select a category",'warning');
-					return false;
-				}
-				else if($(variant[j]).val()=="-Select-"){
-					Swal.fire('Select', "Please select a variant",'warning');
-					return false;
-				}
-				else if($(quantity[j]).val()==""){
-					Swal.fire('Select', "Quantity is empty",'warning');
-					return false;
-				}
-				else if (inValid.test($(quantity[j]).val())==true){	
-					Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-					return false;
-				}
-				else if(varnumbers.test($(quantity[j]).val())==false) {
-					Swal.fire('Number', "Numbers only.",'warning');
-					return false;			
-			 	}
-			}
-		}var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
-			variant_arr:variant_arr,quantity_arr:quantity_arr};
+		 else{
+		 	for (var j=0;j<category.length;j++)
+		 	{
+				if ($(category[j]).val()=="-Select-"){
+		 		Swal.fire('Fields', "Please select a category",'warning');
+		 		return false;
+		 	}
+			 else if ($(name_items[j]).val()==""){
+		 		Swal.fire('Fields', "Item name is empty",'warning');
+		 		return false;
+		 	}
+		 	else if ($(variant[j]).val()=="-Select-"){
+		 		Swal.fire('Fields', "Please select a variant",'warning');
+		 		return false;
+		 	}
+		 	else if ($(quantity[j]).val()==""){
+		 		Swal.fire('Fields', "Quantity is empty",'warning');
+		 		return false;
+		 	}
+		 	else if (inValid.test($(quantity[j]).val())==true){	
+		 		Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+		 		return false;
+		 	}
+		 	
+			else if(varnumbers.test($(noPerItems[j]).val())=="") {
+		 		Swal.fire('Number', "Number of item is empty",'warning');
+		 		return false;
+						
+		 	  }
+			   else if (inValid.test($(noPerItems[j]).val())==true){	
+		 		Swal.fire('Items', "Whitespace is prohibited.",'warning');
+		 		return false;
+		 	}
+			 else if(varnumbers.test($(noPerItems[j]).val())==false) {
+		 		Swal.fire('Items', "Numbers only.",'warning');
+		 		return false;
+						
+		 	  }
+		 	}
+			 var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
+			variant_arr:variant_arr,quantity_arr:quantity_arr,itemName_arr:itemName_arr,items_arr:items_arr,totalItem:totalItem};
 		
 		$.ajax({
 						url:'include/edit.inc.php',
@@ -675,8 +737,10 @@ session_start();
 		 	}
 
 		 });
+		 }
 		
-	}	
+		
+	}
 						
     });
 	$('#fname').on('keyup', function() {

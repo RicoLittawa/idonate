@@ -250,8 +250,11 @@ session_start();
       var html='';
       html+= '<div id="items">';
       html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-      html += '<div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
+	  html+= '<div class="col"><div class="form-group"><label>Name of items</label><textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50"></textarea></div></div></div>'
+      html += '<div class="row"><div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
       html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
+	  html+='<div class="row"><div class="col"><div class="form-group"><label>Number of Items</label><input class="form-control border-success noPerItems" id="noPerItems" name="noPerItems" ></div></div></div>';
+	
      
       var remove_button='';
       if(count>0)
@@ -280,21 +283,31 @@ session_start();
 		var variant_arr=[];
 		var quantity_arr=[];
 		var category_arr=[];
+		var items_arr=[];
+		var itemName_arr=[];
+		var totalItem=[];
 		var category = $('.category');
 		var variant = $('.variant');
 		var quantity = $('.quantity');
+		var name_items = $('.name_items');
+		var noPerItems = $('.noPerItems');
+
 		
 
 		for (var i = 0;i<category.length;i++){
-			categtest =category_arr.push($(category[i]).val());
+			category_arr.push($(category[i]).val());
 			
 			variant_arr.push($(variant[i]).val());
 			quantity_arr.push($(quantity[i]).val());
+			itemName_arr.push($(name_items[i]).val());
+			items_arr.push($(noPerItems[i]).val());
+			totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());
+
+
 			
 		}
-
 		
-
+	
 		var reference_id= $('#reference_id').val();
 		var fname = $('#fname').val();
 		var province = $('#province').val();
@@ -309,123 +322,138 @@ session_start();
         var varnumbers = /^\d+$/;
         var inValid = /\s/;
 
-		if(fname==""){
-			$('#fname').removeClass('border-success');
-            $('#fname').addClass('border-danger');
-            return false;
-		}
-		else if(province==""){
-			$('#province').removeClass('border-success');
-            $('#province').addClass('border-danger');
-            return false;
-		}
-		else if(street==""){
-			$('#street').removeClass('border-success');
-            $('#street').addClass('border-danger');
-            return false;
-		}
-		else if(region==""){
-			Swal.fire('Select', "Please select a region",'warning');
-            return false;
-		}
-		else if(contact==""){
-			$('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-		}
-		else if (inValid.test($('#contact').val())==true){
-            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          }
-        else if(varnumbers.test($('#contact').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          } 
-        else if(contact.length !=11){
-            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          }
-		else if(email==""){
-			$('#email').removeClass('border-success');
-            $('#email').addClass('border-danger');
-            return false;
-		}
-		else if(emailVali.test($('#email').val())==false){
-			Swal.fire('Email', "Invalid email address",'warning'); 
-            $('#email').removeClass('border-success');
-            $('#email').addClass('border-danger');
-            return false;
-		}
+		 if(fname==""){
+		 	$('#fname').removeClass('border-success');
+             $('#fname').addClass('border-danger');
+             return false;
+		 }
+		 else if(province==""){
+		 	$('#province').removeClass('border-success');
+             $('#province').addClass('border-danger');
+             return false;
+		 }
+		 else if(street==""){
+		 	$('#street').removeClass('border-success');
+             $('#street').addClass('border-danger');
+             return false;
+		 }
+		 else if(region==""){
+		 	Swal.fire('Select', "Please select a region",'warning');
+             return false;
+		 }
+		 else if(contact==""){
+		 	$('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+		 }
+		 else if (inValid.test($('#contact').val())==true){
+             Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           }
+         else if(varnumbers.test($('#contact').val())==false) {
+             Swal.fire('Number', "Numbers only.",'warning');
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           } 
+         else if(contact.length !=11){
+             Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           }
+		 else if(email==""){
+		 	$('#email').removeClass('border-success');
+             $('#email').addClass('border-danger');
+             return false;
+		 }
+		 else if(emailVali.test($('#email').val())==false){
+		 	Swal.fire('Email', "Invalid email address",'warning'); 
+             $('#email').removeClass('border-success');
+             $('#email').addClass('border-danger');
+             return false;
+		 }
 		
-		else if(donation_date==""){
+		 else if(donation_date==""){
 
-			$('#donation_date').removeClass('border-success');
-            $('#donation_date').addClass('border-danger');
-            return false;
-		}
-		else{
-			for(var j=0;j<category.length;j++){
+		 	$('#donation_date').removeClass('border-success');
+             $('#donation_date').addClass('border-danger');
+             return false;
+		 }
+		 else{
+		 	for(var j=0;j<category.length;j++){
 			
-			 if ($(category[j]).val()=="-Select-"){
-				Swal.fire('Fields', "Please select a category",'warning');
-				return false;
-			}
-			else if ($(variant[j]).val()=="-Select-"){
-				Swal.fire('Fields', "Please select a variant",'warning');
-				return false;
-			}
-			else if ($(quantity[j]).val()==""){
-				Swal.fire('Fields', "Quantity is empty",'warning');
-				return false;
-			}
-			else if (inValid.test($(quantity[j]).val())==true){	
-				Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-				return false;
-			}
-			else if(varnumbers.test($(quantity[j]).val())==false) {
-				Swal.fire('Number', "Numbers only.",'warning');
-				return false;
+		 	 if ($(category[j]).val()=="-Select-"){
+		 		Swal.fire('Fields', "Please select a category",'warning');
+		 		return false;
+		 	}
+			 else if ($(name_items[j]).val()==""){
+		 		Swal.fire('Fields', "Item name is empty",'warning');
+		 		return false;
+		 	}
+		 	else if ($(variant[j]).val()=="-Select-"){
+		 		Swal.fire('Fields', "Please select a variant",'warning');
+		 		return false;
+		 	}
+		 	else if ($(quantity[j]).val()==""){
+		 		Swal.fire('Fields', "Quantity is empty",'warning');
+		 		return false;
+		 	}
+		 	else if (inValid.test($(quantity[j]).val())==true){	
+		 		Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+		 		return false;
+		 	}
+		 	
+			else if(varnumbers.test($(noPerItems[j]).val())=="") {
+		 		Swal.fire('Number', "Number of item is empty",'warning');
+		 		return false;
 						
-			  }
-			
+		 	  }
+			   else if (inValid.test($(noPerItems[j]).val())==true){	
+		 		Swal.fire('Items', "Whitespace is prohibited.",'warning');
+		 		return false;
+		 	}
+			 else if(varnumbers.test($(noPerItems[j]).val())==false) {
+		 		Swal.fire('Items', "Numbers only.",'warning');
+		 		return false;
+						
+		 	  }
 			 
 			
-			}
-			var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
+		 	}
+			var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr,
+				itemName_arr:itemName_arr,items_arr:items_arr,totalItem:totalItem};
+				console.log(data);
 			
-			$.ajax({
-			url:'include/add.inc.php',
-			method:'POST',
-			data: data,
-			success:function(data){
-				if(data == "Data added"){
-                  Swal.fire({
-                  title: 'Success',
-                  text: "Successfully Added",
-                  icon: 'success',
-                  confirmButtonColor: '#3085d6',
-                  confirmButtonText: 'OK',
-                  allowOutsideClick: false
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      window.location.href="donations.php?inserted";
-                    }
-                  }) 
-                } else {
-                  Swal.fire('Error', data,'error')
-                }
-			},
-			error: function(data){
-                Swal.fire('Error', "There were some errors while inserting the data.",'error')
-              }
+		 	$.ajax({
+		 	url:'include/add.inc.php',
+		 	method:'POST',
+		 	data: data,
+		 	success:function(data){
+		 		if(data == "Data added"){
+                   Swal.fire({
+                   title: 'Success',
+                   text: "Successfully Added",
+                   icon: 'success',
+                   confirmButtonColor: '#3085d6',
+                   confirmButtonText: 'OK',
+                   allowOutsideClick: false
+                   }).then((result) => {
+                     if (result.isConfirmed) {
+                       window.location.href="donations.php?inserted";
+                     }
+                   }) 
+                 } else {
+                   Swal.fire('Error', data,'error')
+                 }
+		 	},
+		 	error: function(data){
+                 Swal.fire('Error', "There were some errors while inserting the data.",'error')
+               }
 
-		});
-		}
+		 });
+		 }
 			
 			
 		}
@@ -511,21 +539,31 @@ session_start();
 		var variant_arr=[];
 		var quantity_arr=[];
 		var category_arr=[];
+		var items_arr=[];
+		var itemName_arr=[];
+		var totalItem=[];
 		var category = $('.category');
 		var variant = $('.variant');
 		var quantity = $('.quantity');
+		var name_items = $('.name_items');
+		var noPerItems = $('.noPerItems');
+
 		
 
 		for (var i = 0;i<category.length;i++){
-			categtest =category_arr.push($(category[i]).val());
+			category_arr.push($(category[i]).val());
 			
 			variant_arr.push($(variant[i]).val());
 			quantity_arr.push($(quantity[i]).val());
+			itemName_arr.push($(name_items[i]).val());
+			items_arr.push($(noPerItems[i]).val());
+			totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());
+
+
 			
 		}
-
 		
-
+	
 		var reference_id= $('#reference_id').val();
 		var fname = $('#fname').val();
 		var province = $('#province').val();
@@ -540,123 +578,138 @@ session_start();
         var varnumbers = /^\d+$/;
         var inValid = /\s/;
 
-		if(fname==""){
-			$('#fname').removeClass('border-success');
-            $('#fname').addClass('border-danger');
-            return false;
-		}
-		else if(province==""){
-			$('#province').removeClass('border-success');
-            $('#province').addClass('border-danger');
-            return false;
-		}
-		else if(street==""){
-			$('#street').removeClass('border-success');
-            $('#street').addClass('border-danger');
-            return false;
-		}
-		else if(region==""){
-			Swal.fire('Select', "Please select a region",'warning');
-            return false;
-		}
-		else if(contact==""){
-			$('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-		}
-		else if (inValid.test($('#contact').val())==true){
-            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          }
-        else if(varnumbers.test($('#contact').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          } 
-        else if(contact.length !=11){
-            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-            $('#contact').removeClass('border-success');
-            $('#contact').addClass('border-danger');
-            return false;
-          }
-		else if(email==""){
-			$('#email').removeClass('border-success');
-            $('#email').addClass('border-danger');
-            return false;
-		}
-		else if(emailVali.test($('#email').val())==false){
-			Swal.fire('Email', "Invalid email address",'warning'); 
-            $('#email').removeClass('border-success');
-            $('#email').addClass('border-danger');
-            return false;
-		}
+		 if(fname==""){
+		 	$('#fname').removeClass('border-success');
+             $('#fname').addClass('border-danger');
+             return false;
+		 }
+		 else if(province==""){
+		 	$('#province').removeClass('border-success');
+             $('#province').addClass('border-danger');
+             return false;
+		 }
+		 else if(street==""){
+		 	$('#street').removeClass('border-success');
+             $('#street').addClass('border-danger');
+             return false;
+		 }
+		 else if(region==""){
+		 	Swal.fire('Select', "Please select a region",'warning');
+             return false;
+		 }
+		 else if(contact==""){
+		 	$('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+		 }
+		 else if (inValid.test($('#contact').val())==true){
+             Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           }
+         else if(varnumbers.test($('#contact').val())==false) {
+             Swal.fire('Number', "Numbers only.",'warning');
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           } 
+         else if(contact.length !=11){
+             Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+             $('#contact').removeClass('border-success');
+             $('#contact').addClass('border-danger');
+             return false;
+           }
+		 else if(email==""){
+		 	$('#email').removeClass('border-success');
+             $('#email').addClass('border-danger');
+             return false;
+		 }
+		 else if(emailVali.test($('#email').val())==false){
+		 	Swal.fire('Email', "Invalid email address",'warning'); 
+             $('#email').removeClass('border-success');
+             $('#email').addClass('border-danger');
+             return false;
+		 }
 		
-		else if(donation_date==""){
+		 else if(donation_date==""){
 
-			$('#donation_date').removeClass('border-success');
-            $('#donation_date').addClass('border-danger');
-            return false;
-		}
-		else{
-			for(var j=0;j<category.length;j++){
+		 	$('#donation_date').removeClass('border-success');
+             $('#donation_date').addClass('border-danger');
+             return false;
+		 }
+		 else{
+		 	for(var j=0;j<category.length;j++){
 			
-			 if ($(category[j]).val()=="-Select-"){
-				Swal.fire('Fields', "Please select a category",'warning');
-				return false;
-			}
-			else if ($(variant[j]).val()=="-Select-"){
-				Swal.fire('Fields', "Please select a variant",'warning');
-				return false;
-			}
-			else if ($(quantity[j]).val()==""){
-				Swal.fire('Fields', "Quantity is empty",'warning');
-				return false;
-			}
-			else if (inValid.test($(quantity[j]).val())==true){	
-				Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-				return false;
-			}
-			else if(varnumbers.test($(quantity[j]).val())==false) {
-				Swal.fire('Number', "Numbers only.",'warning');
-				return false;
+		 	 if ($(category[j]).val()=="-Select-"){
+		 		Swal.fire('Fields', "Please select a category",'warning');
+		 		return false;
+		 	}
+			 else if ($(name_items[j]).val()==""){
+		 		Swal.fire('Fields', "Item name is empty",'warning');
+		 		return false;
+		 	}
+		 	else if ($(variant[j]).val()=="-Select-"){
+		 		Swal.fire('Fields', "Please select a variant",'warning');
+		 		return false;
+		 	}
+		 	else if ($(quantity[j]).val()==""){
+		 		Swal.fire('Fields', "Quantity is empty",'warning');
+		 		return false;
+		 	}
+		 	else if (inValid.test($(quantity[j]).val())==true){	
+		 		Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+		 		return false;
+		 	}
+		 	
+			else if(varnumbers.test($(noPerItems[j]).val())=="") {
+		 		Swal.fire('Number', "Number of item is empty",'warning');
+		 		return false;
 						
-			  }
-			
+		 	  }
+			   else if (inValid.test($(noPerItems[j]).val())==true){	
+		 		Swal.fire('Items', "Whitespace is prohibited.",'warning');
+		 		return false;
+		 	}
+			 else if(varnumbers.test($(noPerItems[j]).val())==false) {
+		 		Swal.fire('Items', "Numbers only.",'warning');
+		 		return false;
+						
+		 	  }
 			 
 			
-			}
-			var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr};
+		 	}
+			var data = {saveBtn: '',reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,variant_arr:variant_arr,quantity_arr:quantity_arr,
+				itemName_arr:itemName_arr,items_arr:items_arr,totalItem:totalItem};
+				console.log(data);
 			
-			$.ajax({
-			url:'include/add.inc.php',
-			method:'POST',
-			data: data,
-			success:function(data){
-				if(data == "Data added"){
-                  Swal.fire({
-                  title: 'Success',
-                  text: "Successfully Added",
-                  icon: 'success',
-                  confirmButtonColor: '#3085d6',
-                  confirmButtonText: 'OK',
-                  allowOutsideClick: false
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      window.location.href="donations.php?inserted";
-                    }
-                  }) 
-                } else {
-                  Swal.fire('Error', data,'error')
-                }
-			},
-			error: function(data){
-                Swal.fire('Error', "There were some errors while inserting the data.",'error')
-              }
+		 	$.ajax({
+		 	url:'include/add.inc.php',
+		 	method:'POST',
+		 	data: data,
+		 	success:function(data){
+		 		if(data == "Data added"){
+                   Swal.fire({
+                   title: 'Success',
+                   text: "Successfully Added",
+                   icon: 'success',
+                   confirmButtonColor: '#3085d6',
+                   confirmButtonText: 'OK',
+                   allowOutsideClick: false
+                   }).then((result) => {
+                     if (result.isConfirmed) {
+                       window.location.href="donations.php?inserted";
+                     }
+                   }) 
+                 } else {
+                   Swal.fire('Error', data,'error')
+                 }
+		 	},
+		 	error: function(data){
+                 Swal.fire('Error', "There were some errors while inserting the data.",'error')
+               }
 
-		});
-		}
+		 });
+		 }
 			
 			
 		}

@@ -76,12 +76,21 @@ if(isset($_POST['money_data'])){
      $stmt->bind_param('sssssssss',$rdm_name,$rdm_province,$rdm_street,$rdm_region,$rdm_contact,$rdm_contact,$rdm_date,$amount, $genImage);
      $result= $stmt->execute();
     
+    
 
      if($result){
-      $fundSQL= "INSERT into total_funds(amount) value(?)";
-      $stmt=$conn->prepare($fundSQL);
-      $stmt->bind_param('s',$amount);
-      $stmt->execute();
+     $newAmount= "SELECT * from total_funds";
+     $newResult= mysqli_query($conn,$newAmount);
+     foreach ($newResult as $addFund){
+      $addnewFund = $addFund['amount'];
+      $fundID= $addFund['id'];
+     }
+     $combFund= $amount+$addnewFund;
+     $addNew= "UPDATE total_funds set amount=? where id= ?";
+     $stmt= $conn->prepare($addNew);
+     $stmt->bind_param('is',$combFund,$fundID);
+     $stmt->execute();
+
 
       $mail = new PHPMailer;
       $mail->IsSMTP();        //Sets Mailer to send message using SMTP
