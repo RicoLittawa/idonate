@@ -91,6 +91,9 @@ if (isset($_GET['moneyNote'])){
     $Quantity= $_POST['quantity_arr'];
     $donateRefId= $_POST['donateRefId'];
     $req_contact= $_POST['req_contact'];
+    $ItemName= $_POST['itemName_arr'];
+    $ItemsQuanti= $_POST['items_arr'];
+    $TotalItems= $_POST['totalItem'];
     
 
 
@@ -109,13 +112,13 @@ if (isset($_GET['moneyNote'])){
         $count = 0;
         $resultCount = 0;
         foreach($Category as $item){
-            $sql2= "INSERT INTO donation_items10 (Reference,category,variant,quantity) Values (?,?,?,?)";
+            $sql2= "INSERT INTO donation_items10 (Reference,category,name_items,variant,quantity,Items,total_items) Values (?,?,?,?,?,?,?)";
             $stmt=mysqli_stmt_init($conn);
             if(!mysqli_stmt_prepare($stmt,$sql2)){
                 
             }
             else{
-                mysqli_stmt_bind_param($stmt, 'ssss', $donateRefId, $item, $Variant[$count], $Quantity[$count]);
+                mysqli_stmt_bind_param($stmt, 'sssssss', $donateRefId, $item,$ItemName[$count], $Variant[$count], $Quantity[$count],  $ItemsQuanti[$count],$TotalItems[$count]);
                 $result = mysqli_stmt_execute($stmt);
                 if($result) {
                     $resultCount = $resultCount + 1;

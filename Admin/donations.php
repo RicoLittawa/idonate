@@ -4,7 +4,7 @@ session_start();
  <?php
 	  require_once "include/connection.php";
 	    
-    $sql = "SELECT * FROM donation_items";
+    $sql = "SELECT * FROM donation_items ORDER BY donor_id DESC";
     $result = mysqli_query($conn,$sql);
 	
   
@@ -189,7 +189,7 @@ session_start();
 		<td><?php echo  htmlentities($row['donor_email']) ;?></td>
 		<td><?php echo  htmlentities($row['donor_contact']);?></td>
 		<td><?php echo  htmlentities($row['donationDate']);?></td>
-		<td><button type="button" class="btn btn-info email_button" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"
+		<td><button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"
 		data-email="<?php echo htmlentities($row['donor_email']); ?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-action="single">Send</button>
     </td>
 	

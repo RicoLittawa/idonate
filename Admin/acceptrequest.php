@@ -254,6 +254,9 @@ function fill_category_select_box($conn)
 						$req_category= $row3['req_category'];
 						$req_variant=$row3['req_variant'];
 						$req_quantity=$row3['req_quantity'];
+						$ItemName= $row3['req_nameItem'];
+						$req_item= $row3['req_item'];
+						$totalItem= $row3['req_totalItem'];
 
 						?>
 						<div class="row">
@@ -276,6 +279,14 @@ function fill_category_select_box($conn)
 							</div>
 							<div class="col">
 								<div class="form-group">
+									<label for="">Name of item</label>
+									<textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50" ><?php echo htmlentities($ItemName); ?></textarea>
+								</div>			
+							</div>
+							</div>
+							<div class="row">
+							<div class="col">
+								<div class="form-group">
 									<label for="req_email">Select Variant</label>
 									<select class="custom-select border-success variant" name="variant" id="variant">
 									<option value="-Select-">-Select-</option>
@@ -294,6 +305,14 @@ function fill_category_select_box($conn)
 								<div class="form-group">
 									<label for="req_quantity">Quantity</label>
 									<input class="form-control border-success quantity" type="text" name="quantity" id="quantity" value="<?php echo htmlentities($req_quantity); ?>">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="form-group">
+									<label for="">Number of items</label>
+									<input class="form-control border-success noPerItems" name="noPerItems" id="noPerItems" type="text" value="<?php echo htmlentities($req_item);?>">
 								</div>
 							</div>
 						</div>
@@ -340,9 +359,10 @@ function fill_category_select_box($conn)
 			var html='';
 			html+='<div>'
 				html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-				html += '<div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
+				html+= '<div class="col"><div class="form-group"><label>Name of items</label><textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50"></textarea></div></div></div>'
+				html += '<div class="row"><div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
 				html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
-
+				html+='<div class="row"><div class="col"><div class="form-group"><label>Number of Items</label><input class="form-control border-success noPerItems" id="noPerItems" name="noPerItems" ></div></div></div>';
 			var remove_button='';
 				if(count>0)
 				{
@@ -364,14 +384,22 @@ function fill_category_select_box($conn)
 				var variant_arr=[];
 				var quantity_arr=[];
 				var category_arr=[];
+				var items_arr=[];
+				var itemName_arr=[];
+				var totalItem=[];
 				var category = $('.category');
 				var variant = $('.variant');
 				var quantity = $('.quantity');
+				var name_items = $('.name_items');
+				var noPerItems = $('.noPerItems');
 					
 				for (var i = 0;i<category.length;i++){
 				category_arr.push($(category[i]).val());
 				variant_arr.push($(variant[i]).val());
-				quantity_arr.push($(quantity[i]).val());	
+				quantity_arr.push($(quantity[i]).val());
+				itemName_arr.push($(name_items[i]).val());
+				items_arr.push($(noPerItems[i]).val());
+				totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());	
 				}
 				var donateRefId= $('#donateRefId').val();
 				var request_id= $('#request_id').val();
@@ -386,99 +414,117 @@ function fill_category_select_box($conn)
 				var valid_id = $('#valid_id').val();
 				var req_contact =$('#req_contact').val();
 				var data={acceptBtn:'',donateRefId:donateRefId,request_id:request_id,reference_id:reference_id,req_name:req_name,req_province:req_province,req_street:req_street,req_region:req_region,req_email:req_email,req_date:req_date,category_arr:category_arr,
-				variant_arr:variant_arr,quantity_arr:quantity_arr,valid_id:valid_id,req_contact:req_contact};
+				variant_arr:variant_arr,quantity_arr:quantity_arr,valid_id:valid_id,req_contact:req_contact,itemName_arr:itemName_arr,items_arr:items_arr,totalItem:totalItem};
 				
 				var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 				var varnumbers = /^\d+$/;
 				var inValid = /\s/;
 
-				if (req_name==""){
-					$('#req_name').removeClass('border-success');
-					$('#req_name').addClass('border-danger');
-					return false;
+				 if (req_name==""){
+				 	$('#req_name').removeClass('border-success');
+				 	$('#req_name').addClass('border-danger');
+				 	return false;
 
-				}
-				else if (req_province==""){
-					$('#req_province').removeClass('border-success');
-					$('#req_province').addClass('border-danger');
-					return false;
+				 }
+				 else if (req_province==""){
+				 	$('#req_province').removeClass('border-success');
+				 	$('#req_province').addClass('border-danger');
+				 	return false;
 
-				}
-				else if (req_street==""){
-					$('#req_street').removeClass('border-success');
-					$('#req_street').addClass('border-danger');
-					return false;
-				}
-				else if (req_region=="-Select-"){
-					Swal.fire('Select', "Please select a region",'warning');
-					return false;
-				}
-				else if(req_contact==""){
-					$('#req_contact').removeClass('border-success');
-					$('#req_contact').addClass('border-danger');
-					return false;
-				}
-				else if (inValid.test($('#req_contact').val())==true){
-				Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-					$('#req_contact').removeClass('border-success');
-					$('#req_contact').addClass('border-danger');
-					return false;
-				}
-        		else if(varnumbers.test($('#req_contact').val())==false) {
-					Swal.fire('Number', "Numbers only.",'warning');
-					$('#req_contact').removeClass('border-success');
-					$('#req_contact').addClass('border-danger');
-					return false;
-          		} 
-       			else if(req_contact.length !=11){
-					Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-					$('#req_contact').removeClass('border-success');
-					$('#req_contact').addClass('border-danger');
-					return false;
-				}
-				else if(req_email==""){
-					$('#req_email').removeClass('border-success');
-					$('#req_email').addClass('border-danger');
-					return false;
-				}
-				else if(emailVali.test($('#req_email').val())==false){
-					Swal.fire('Email', "Invalid email address",'warning'); 
-					$('#req_email').removeClass('border-success');
-					$('#req_email').addClass('border-danger');
-					return false;
-				}
+				 }
+				 else if (req_street==""){
+				 	$('#req_street').removeClass('border-success');
+				 	$('#req_street').addClass('border-danger');
+				 	return false;
+				 }
+				 else if (req_region=="-Select-"){
+				 	Swal.fire('Select', "Please select a region",'warning');
+				 	return false;
+				 }
+				 else if(req_contact==""){
+				 	$('#req_contact').removeClass('border-success');
+				 	$('#req_contact').addClass('border-danger');
+				 	return false;
+				 }
+				 else if (inValid.test($('#req_contact').val())==true){
+				 Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+				 	$('#req_contact').removeClass('border-success');
+				 	$('#req_contact').addClass('border-danger');
+				 	return false;
+				 }
+        		 else if(varnumbers.test($('#req_contact').val())==false) {
+				 	Swal.fire('Number', "Numbers only.",'warning');
+				 	$('#req_contact').removeClass('border-success');
+				 	$('#req_contact').addClass('border-danger');
+				 	return false;
+          		 } 
+       			 else if(req_contact.length !=11){
+				 	Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+				 	$('#req_contact').removeClass('border-success');
+				 	$('#req_contact').addClass('border-danger');
+				 	return false;
+				 }
+				 else if(req_email==""){
+				 	$('#req_email').removeClass('border-success');
+				 	$('#req_email').addClass('border-danger');
+				 	return false;
+				 }
+				 else if(emailVali.test($('#req_email').val())==false){
+				 	Swal.fire('Email', "Invalid email address",'warning'); 
+				 	$('#req_email').removeClass('border-success');
+				 	$('#req_email').addClass('border-danger');
+				 	return false;
+				 }
 		
-				else if(req_date==""){
+				 else if(req_date==""){
 
-					$('#donation_date').removeClass('border-success');
-					$('#donation_date').addClass('border-danger');
-					return false;
-				}
+				 	$('#donation_date').removeClass('border-success');
+				 	$('#donation_date').addClass('border-danger');
+				 	return false;
+				 }
 
-				else{
-					for (var j = 0;j<category.length;j++){
-						if($(category[j]).val()=="-Select-"){
-							Swal.fire('Select', "Please select a category",'warning');
+				 else{
+				 	for (var j = 0;j<category.length;j++){
+				 		if($(category[j]).val()=="-Select-"){
+				 			Swal.fire('Select', "Please select a category",'warning');
+				 			return false;
+				 		}
+						 else if ($(name_items[j]).val()==""){
+							Swal.fire('Fields', "Item name is empty",'warning');
 							return false;
 						}
-						else if($(variant[j]).val()=="-Select-"){
-							Swal.fire('Select', "Please select a variant",'warning');
+				 		else if($(variant[j]).val()=="-Select-"){
+				 			Swal.fire('Select', "Please select a variant",'warning');
+				 			return false;
+				 		}
+				 		else if($(quantity[j]).val()==""){
+				 			Swal.fire('Fields', "Quantity is empty",'warning');
+				 			return false;
+				 		}
+				 		else if (inValid.test($(quantity[j]).val())==true){	
+				 			Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+				 			return false;
+				 		}
+				 		else if(varnumbers.test($(quantity[j]).val())==false) {
+				 			Swal.fire('Number', "Numbers only.",'warning');
+				 			return false;			
+			 	 		 }
+						else if(varnumbers.test($(noPerItems[j]).val())=="") {
+							Swal.fire('Number', "Number of item is empty",'warning');
+							return false;
+									
+						}
+						else if (inValid.test($(noPerItems[j]).val())==true){	
+							Swal.fire('Items', "Whitespace is prohibited.",'warning');
 							return false;
 						}
-						else if($(quantity[j]).val()==""){
-							Swal.fire('Fields', "Quantity is empty",'warning');
+						else if(varnumbers.test($(noPerItems[j]).val())==false) {
+							Swal.fire('Items', "Numbers only.",'warning');
 							return false;
+									
 						}
-						else if (inValid.test($(quantity[j]).val())==true){	
-							Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-							return false;
-						}
-						else if(varnumbers.test($(quantity[j]).val())==false) {
-							Swal.fire('Number', "Numbers only.",'warning');
-							return false;			
-			 			 }
-			
-					}
+						
+				 	}
 					Swal.fire({
             title: 'Confirmation',
             text: "Are sure that all the informations are correct?",
@@ -520,7 +566,7 @@ function fill_category_select_box($conn)
             Swal.fire('Changes are not saved', '', 'info')
           }
         });
-				}
+				 }
 				
 				
 				
@@ -603,19 +649,28 @@ function fill_category_select_box($conn)
 //single 
 	 $('#testBtn').click(function(e){
 		e.preventDefault();
+		e.preventDefault();
 			var valid = this.form.checkValidity();
 			if(valid) {
 				var variant_arr=[];
 				var quantity_arr=[];
 				var category_arr=[];
+				var items_arr=[];
+				var itemName_arr=[];
+				var totalItem=[];
 				var category = $('.category');
 				var variant = $('.variant');
 				var quantity = $('.quantity');
+				var name_items = $('.name_items');
+				var noPerItems = $('.noPerItems');
 					
 				for (var i = 0;i<category.length;i++){
 				category_arr.push($(category[i]).val());
 				variant_arr.push($(variant[i]).val());
-				quantity_arr.push($(quantity[i]).val());	
+				quantity_arr.push($(quantity[i]).val());
+				itemName_arr.push($(name_items[i]).val());
+				items_arr.push($(noPerItems[i]).val());
+				totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());	
 				}
 				var donateRefId= $('#donateRefId').val();
 				var request_id= $('#request_id').val();
@@ -630,99 +685,117 @@ function fill_category_select_box($conn)
 				var valid_id = $('#valid_id').val();
 				var req_contact =$('#req_contact').val();
 				var data={acceptBtn:'',donateRefId:donateRefId,request_id:request_id,reference_id:reference_id,req_name:req_name,req_province:req_province,req_street:req_street,req_region:req_region,req_email:req_email,req_date:req_date,category_arr:category_arr,
-				variant_arr:variant_arr,quantity_arr:quantity_arr,valid_id:valid_id,req_contact:req_contact};
+				variant_arr:variant_arr,quantity_arr:quantity_arr,valid_id:valid_id,req_contact:req_contact,itemName_arr:itemName_arr,items_arr:items_arr,totalItem:totalItem};
 				
 				var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 				var varnumbers = /^\d+$/;
 				var inValid = /\s/;
 
-				if (req_name==""){
-					$('#req_name').removeClass('border-success');
-					$('#req_name').addClass('border-danger');
-					return false;
+				 if (req_name==""){
+				 	$('#req_name').removeClass('border-success');
+				 	$('#req_name').addClass('border-danger');
+				 	return false;
 
-				}
-				else if (req_province==""){
-					$('#req_province').removeClass('border-success');
-					$('#req_province').addClass('border-danger');
-					return false;
+				 }
+				 else if (req_province==""){
+				 	$('#req_province').removeClass('border-success');
+				 	$('#req_province').addClass('border-danger');
+				 	return false;
 
-				}
-				else if (req_street==""){
-					$('#req_street').removeClass('border-success');
-					$('#req_street').addClass('border-danger');
-					return false;
-				}
-				else if (req_region=="-Select-"){
-					Swal.fire('Select', "Please select a region",'warning');
-					return false;
-				}
-				else if(req_contact==""){
-					$('#req_contact').removeClass('border-success');
-					$('#req_contact').addClass('border-danger');
-					return false;
-				}
-				else if (inValid.test($('#req_contact').val())==true){
-				Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-					$('#req_contact').removeClass('border-success');
-					$('#req_contact').addClass('border-danger');
-					return false;
-				}
-        		else if(varnumbers.test($('#req_contact').val())==false) {
-					Swal.fire('Number', "Numbers only.",'warning');
-					$('#req_contact').removeClass('border-success');
-					$('#req_contact').addClass('border-danger');
-					return false;
-          		} 
-       			else if(req_contact.length !=11){
-					Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-					$('#req_contact').removeClass('border-success');
-					$('#req_contact').addClass('border-danger');
-					return false;
-				}
-				else if(req_email==""){
-					$('#req_email').removeClass('border-success');
-					$('#req_email').addClass('border-danger');
-					return false;
-				}
-				else if(emailVali.test($('#req_email').val())==false){
-					Swal.fire('Email', "Invalid email address",'warning'); 
-					$('#req_email').removeClass('border-success');
-					$('#req_email').addClass('border-danger');
-					return false;
-				}
+				 }
+				 else if (req_street==""){
+				 	$('#req_street').removeClass('border-success');
+				 	$('#req_street').addClass('border-danger');
+				 	return false;
+				 }
+				 else if (req_region=="-Select-"){
+				 	Swal.fire('Select', "Please select a region",'warning');
+				 	return false;
+				 }
+				 else if(req_contact==""){
+				 	$('#req_contact').removeClass('border-success');
+				 	$('#req_contact').addClass('border-danger');
+				 	return false;
+				 }
+				 else if (inValid.test($('#req_contact').val())==true){
+				 Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+				 	$('#req_contact').removeClass('border-success');
+				 	$('#req_contact').addClass('border-danger');
+				 	return false;
+				 }
+        		 else if(varnumbers.test($('#req_contact').val())==false) {
+				 	Swal.fire('Number', "Numbers only.",'warning');
+				 	$('#req_contact').removeClass('border-success');
+				 	$('#req_contact').addClass('border-danger');
+				 	return false;
+          		 } 
+       			 else if(req_contact.length !=11){
+				 	Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+				 	$('#req_contact').removeClass('border-success');
+				 	$('#req_contact').addClass('border-danger');
+				 	return false;
+				 }
+				 else if(req_email==""){
+				 	$('#req_email').removeClass('border-success');
+				 	$('#req_email').addClass('border-danger');
+				 	return false;
+				 }
+				 else if(emailVali.test($('#req_email').val())==false){
+				 	Swal.fire('Email', "Invalid email address",'warning'); 
+				 	$('#req_email').removeClass('border-success');
+				 	$('#req_email').addClass('border-danger');
+				 	return false;
+				 }
 		
-				else if(req_date==""){
+				 else if(req_date==""){
 
-					$('#donation_date').removeClass('border-success');
-					$('#donation_date').addClass('border-danger');
-					return false;
-				}
+				 	$('#donation_date').removeClass('border-success');
+				 	$('#donation_date').addClass('border-danger');
+				 	return false;
+				 }
 
-				else{
-					for (var j = 0;j<category.length;j++){
-						if($(category[j]).val()=="-Select-"){
-							Swal.fire('Select', "Please select a category",'warning');
+				 else{
+				 	for (var j = 0;j<category.length;j++){
+				 		if($(category[j]).val()=="-Select-"){
+				 			Swal.fire('Select', "Please select a category",'warning');
+				 			return false;
+				 		}
+						 else if ($(name_items[j]).val()==""){
+							Swal.fire('Fields', "Item name is empty",'warning');
 							return false;
 						}
-						else if($(variant[j]).val()=="-Select-"){
-							Swal.fire('Select', "Please select a variant",'warning');
+				 		else if($(variant[j]).val()=="-Select-"){
+				 			Swal.fire('Select', "Please select a variant",'warning');
+				 			return false;
+				 		}
+				 		else if($(quantity[j]).val()==""){
+				 			Swal.fire('Fields', "Quantity is empty",'warning');
+				 			return false;
+				 		}
+				 		else if (inValid.test($(quantity[j]).val())==true){	
+				 			Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+				 			return false;
+				 		}
+				 		else if(varnumbers.test($(quantity[j]).val())==false) {
+				 			Swal.fire('Number', "Numbers only.",'warning');
+				 			return false;			
+			 	 		 }
+						else if(varnumbers.test($(noPerItems[j]).val())=="") {
+							Swal.fire('Number', "Number of item is empty",'warning');
+							return false;
+									
+						}
+						else if (inValid.test($(noPerItems[j]).val())==true){	
+							Swal.fire('Items', "Whitespace is prohibited.",'warning');
 							return false;
 						}
-						else if($(quantity[j]).val()==""){
-							Swal.fire('Fields', "Quantity is empty",'warning');
+						else if(varnumbers.test($(noPerItems[j]).val())==false) {
+							Swal.fire('Items', "Numbers only.",'warning');
 							return false;
+									
 						}
-						else if (inValid.test($(quantity[j]).val())==true){	
-							Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-							return false;
-						}
-						else if(varnumbers.test($(quantity[j]).val())==false) {
-							Swal.fire('Number', "Numbers only.",'warning');
-							return false;			
-			 			 }
-			
-					}
+						
+				 	}
 					Swal.fire({
             title: 'Confirmation',
             text: "Are sure that all the informations are correct?",
@@ -764,7 +837,7 @@ function fill_category_select_box($conn)
             Swal.fire('Changes are not saved', '', 'info')
           }
         });
-				}
+				 }
 				
 				
 				

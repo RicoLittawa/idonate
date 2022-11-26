@@ -12,12 +12,9 @@
         $Email= $_POST['email'];
         $Date= date('Y-m-d', strtotime($_POST['donation_date']));
         $Category= $_POST['category_arr'];
-        $Variant= $_POST['variant_arr'];
         $Quantity= $_POST['quantity_arr'];
         $Contact= $_POST['contact'];
         $ItemName= $_POST['itemName_arr'];
-        $ItemsQuanti= $_POST['items_arr'];
-        $TotalItems= $_POST['totalItem'];
 
        
         
@@ -37,13 +34,13 @@
         $count = 0;
         $resultCount = 0;
         foreach($Category as $item){
-            $sql2= "INSERT INTO donation_items10 (Reference,category,name_items,variant,quantity,Items,total_items) Values (?,?,?,?,?,?,?)";
+            $sql2= "INSERT INTO donation_items10 (Reference,category,name_items,quantity) Values (?,?,?,?)";
             $stmt=mysqli_stmt_init($conn);
             if(!mysqli_stmt_prepare($stmt,$sql2)){
                 
             }
             else{
-                mysqli_stmt_bind_param($stmt, 'sssssss', $reference_id, $item, $ItemName[$count], $Variant[$count], $Quantity[$count],$ItemsQuanti[$count],$TotalItems[$count]);
+                mysqli_stmt_bind_param($stmt, 'ssss', $reference_id, $item, $ItemName[$count], $Quantity[$count]);
                 $result = mysqli_stmt_execute($stmt);
                 if($result) {
                     $resultCount = $resultCount + 1;

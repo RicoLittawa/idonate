@@ -131,8 +131,8 @@ $result= mysqli_query($conn,$sql);
 		<th>Region</th>
 		<th>Contact Number</th>
 		<th>Email</th>
-		<th></th>
 		<th>Status</th>
+		<th></th>
         
         
       </tr>
@@ -149,6 +149,7 @@ $result= mysqli_query($conn,$sql);
 				$reqRegion= $row['req_region'];
 				$reqContact= $row['req_contact'];
 				$reqEmail= $row['req_email'];
+				$status= $row['status'];
 				
 				?>
 		<tr>
@@ -160,11 +161,12 @@ $result= mysqli_query($conn,$sql);
 			<td><?php echo htmlentities($reqRegion); ?></td>
 			<td><?php echo htmlentities($reqContact); ?></td>
 			<td><?php echo htmlentities($reqEmail); ?></td>
+			<td><?php echo htmlentities($status); ?></td>
 			<td><button type="button" id="btnNote" class="btn col btnNote" data-toggle="modal" data-target="viewMessage" value="<?php echo htmlentities($req_id); ?>"><i style="color: green;" class="fa-solid fa-message"></i></button>
 			<button type="button" class="btn col  validId"  data-toggle="modal" data-target="validImg" value="<?php echo htmlentities($req_id); ?>"><i style="color:green ;" class="fa-regular fa-id-badge"></i></button>
-			<a  class="btn col" href="acceptrequest.php?acceptReq=<?php echo htmlentities($req_id); ?>"><i style="color: red;" class="fa-solid fa-circle-check"></i></a>
+			<button class="btn btn-info verify col" id="verify" data-action="verify" data-email="<?php echo htmlentities($reqEmail); ?>" data-id="<?php echo htmlentities($req_id); ?>" data-name="<?php echo htmlentities($reqName); ?>"><i class="fa-solid fa-check"></i></button>
+			<a  class="btn btn-success col" href="acceptrequest.php?acceptReq=<?php echo htmlentities($req_id); ?>">Accept</a>
 			</td>
-			<td><button class="btn verify" id="verify" data-action="verify" data-email="<?php echo htmlentities($reqEmail); ?>" data-id="<?php echo htmlentities($req_id); ?>" data-name="<?php echo htmlentities($reqName); ?>"><i id="icon" style="color: red ;" class="fa-solid fa-check-double"></i></button></td>
 		</tr>
 	<?php endforeach; ?>
 	  </tbody>
@@ -309,21 +311,50 @@ $result= mysqli_query($conn,$sql);
 					uID: $(this).data("id"),
 					name: $(this).data("name"),
 				});
-			}console.log (email_data);
+			}
+			Swal.fire({
+            title: 'Confirmation',
+            text: "Do you want to verify the request?",
+            icon: 'warning',
+            showDenyButton: true,
+            confirmButtonColor: '#48bf53',
+            confirmButtonText: 'Ok',
+            denyButtonText: 'Back',
+          }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+             url: 'include/verify.php',
+              method: 'POST',
+               data:{email_data:email_data},
+              success: function(data) {
+                if(data == "verified"){
+                  Swal.fire({
+                  title: 'Success',
+                  text: "Status has been" +data,
+                  icon: 'success',
+                  confirmButtonColor: '#48bf53',
+                  confirmButtonText: 'Continue',
+                  allowOutsideClick: false
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.location.href="request.php?inserted";
+                    }
+                  }) 
+                } else {
+                  Swal.fire('Error','Status is not changed','error')
+                }
+              
+            
+                 
+            }
+       });
 
-			 $.ajax({
-			 	url:'include/verify.php'	,
-			 	type:'POST',
-			 	data: {email_data:email_data},
-				success:function(data){
-					if (data== "success"){
-						alert(data);
-						$('#icon').removeAttr('style','color:red;');
-						$('#icon').attr('style','color:green;');
+          } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+          }
+        });
 
-					}
-				}
-			 });
+			
 		});
 
 	});

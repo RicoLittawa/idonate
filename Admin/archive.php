@@ -140,6 +140,7 @@ $result= mysqli_query($conn,$sql);
 		<th>Email</th>
 		<th>Contact</th>
 		<th>Date</th>
+		<th>Donated Items</th>
 		<th>Certificate</th>
 		<th>Status</th>
 		
@@ -165,9 +166,10 @@ $result= mysqli_query($conn,$sql);
 				$rd_certificate= $row['rD_certificate'];
 				
 				
+				
 				?>
 		<tr>
-			<td><?php echo htmlentities($rd_id) ?></td>
+			<td><?php echo htmlentities($reference_id) ?></td>
 			<td><?php echo htmlentities($rd_name) ?></td>
 			<td><?php echo htmlentities($rd_province) ?></td>
 			<td><?php echo htmlentities($rd_street) ?></td>
@@ -187,6 +189,32 @@ $result= mysqli_query($conn,$sql);
 			<td><?php echo htmlentities($rd_email) ?></td>
 			<td><?php echo htmlentities($rd_contact) ?></td>
 			<td><?php echo htmlentities($rd_date) ?></td>
+			<td>
+				<?php 
+					$donatedItems = "SELECT * FROM donation_items10 WHERE Reference=?";
+					$stmt = $conn->prepare($donatedItems); 
+					$stmt->bind_param("s", $reference_id);
+					$stmt->execute();
+					$itemResult = $stmt->get_result();
+					$data = [];
+					
+					$data = $itemResult->fetch_all(MYSQLI_ASSOC);
+					
+					if($data):?>
+			<?php $itemName= []; ?>
+			<?php  foreach($data as $items){
+				$itemName= $items['name_items'];
+				
+				
+				echo $itemName.",&nbsp";
+			
+				// $people = array("Peter", "Joe", "Glenn", "Cleveland");
+				// echo current($people) . "<br>";
+			}?>
+				
+			</td>
+			
+		<?php endif; ?>
 			<td><button class="btn btnCert" data-toggle="modal" data-target="Certi"  value="<?php echo htmlentities($rd_id) ?>"><?php echo htmlentities($rd_certificate) ?></button></td>
 			<td><span><i style="color:green ;" class="fa-solid fa-envelope-circle-check"></i></span><button class="btn"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
 		

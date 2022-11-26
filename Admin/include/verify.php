@@ -14,7 +14,16 @@
 
   foreach($_POST['email_data']as $row)
   {
- 
+      $id= $row['uID'];
+      // $statusSql= "SELECT status from set_request where request_id=?";
+      // $stmt= $conn->prepare($statusSql);
+      // $stmt->bind_param('i',$id);
+      // $stmt->execute();
+      // $result = $stmt->get_result(); 
+      // $user = $result->fetch_assoc();
+      // $message= $user['status'];
+      $message= 'Verified';
+    
       $mail = new PHPMailer;
       $mail->IsSMTP();        //Sets Mailer to send message using SMTP
       $mail->Host = 'smtp.gmail.com';  //Sets the SMTP hosts of your Email hosting, this for Godaddy
@@ -35,7 +44,11 @@
       <p>Certificate...</p>
       ';
       $mail->Send();      //Send an Email. Return true on success or false on error
-echo "success";
+      $sql="UPDATE set_request set status=? where request_id=?";
+      $stmt= $conn->prepare($sql);
+      $stmt->bind_param('si',$message,$id);
+      $stmt->execute();
+      echo "verified";
   }
  
 }
