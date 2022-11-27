@@ -10,16 +10,7 @@
     }
     return $output;
   }
-  
-  function fill_variant_select_box($conn){
-    $output= '';
-    $sql= "SELECT * From variant order by variant_id ASC";
-    $result = mysqli_query($conn,$sql);
-    foreach($result as $row){
-      $output .= '<option value="'.$row['variant_id'].'">'.$row['variant'].'</option>';
-    }
-    return $output;
-  }
+ 
   function fill_region_select_box($conn){
     $output='';
              
@@ -273,7 +264,7 @@
         for (var i = 0;i<category.length;i++){
           category_arr.push($(category[i]).val());
           quantity_arr.push($(quantity[i]).val());
-          itemName_arr.push($(name_items[i]).val());
+          itemName_arr.push($(item_names[i]).val());
 		      }     
           var form = $('#requestform')[0];
           
@@ -288,7 +279,7 @@
           var req_donation_date = $('#req_date').val();
           var req_contact = $('#req_contact').val();
           var req_note= $('#req_note').val();
-          
+         
         
 
           fd.append('ref_id',ref_id);
@@ -519,9 +510,10 @@
            });
            //main page addbtn
       $('#testBtn').click(function(e){
+        e.preventDefault();
         var valid = this.form.checkValidity();
         if(valid) {
-          e.preventDefault();
+        e.preventDefault();
         var quantity_arr=[];
         var category_arr=[];
 				var itemName_arr=[];
@@ -533,7 +525,7 @@
         for (var i = 0;i<category.length;i++){
           category_arr.push($(category[i]).val());
           quantity_arr.push($(quantity[i]).val());
-          itemName_arr.push($(name_items[i]).val());
+          itemName_arr.push($(item_names[i]).val());
 		      }     
           var form = $('#requestform')[0];
           
@@ -549,7 +541,7 @@
           var req_contact = $('#req_contact').val();
           var req_note= $('#req_note').val();
           
-        
+          
 
           fd.append('ref_id',ref_id);
           fd.append('req_fname',req_fname);

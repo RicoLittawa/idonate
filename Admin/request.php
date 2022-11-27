@@ -6,7 +6,7 @@ session_start();
 require_once 'include/connection.php';
 $sql = "SELECT * from set_request";
 $result= mysqli_query($conn,$sql);
-
+$count=0;
 
 ?>
 <!DOCTYPE html>
@@ -150,7 +150,7 @@ $result= mysqli_query($conn,$sql);
 				$reqContact= $row['req_contact'];
 				$reqEmail= $row['req_email'];
 				$status= $row['req_status'];
-				
+				$count = $count + 1;
 				?>
 		<tr>
 			<td><?php echo htmlentities($reference_id); ?></td>
@@ -164,7 +164,7 @@ $result= mysqli_query($conn,$sql);
 			<td><?php echo htmlentities($status); ?></td>
 			<td><button type="button" id="btnNote" class="btn col btnNote" data-toggle="modal" data-target="viewMessage" value="<?php echo htmlentities($req_id); ?>"><i style="color: green;" class="fa-solid fa-message"></i></button>
 			<button type="button" class="btn col  validId"  data-toggle="modal" data-target="validImg" value="<?php echo htmlentities($req_id); ?>"><i style="color:green ;" class="fa-regular fa-id-badge"></i></button>
-			<button class="btn btn-info verify col" id="verify" data-action="verify" data-email="<?php echo htmlentities($reqEmail); ?>" data-id="<?php echo htmlentities($req_id); ?>" data-name="<?php echo htmlentities($reqName); ?>"><i class="fa-solid fa-check"></i></button>
+			<button class="btn btn-info verify col" id="<?php echo $count; ?>" data-action="verify" data-email="<?php echo htmlentities($reqEmail); ?>" data-id="<?php echo htmlentities($req_id); ?>" data-name="<?php echo htmlentities($reqName); ?>"><i class="fa-solid fa-check"></i></button>
 			<a  class="btn btn-success col" href="acceptrequest.php?acceptReq=<?php echo htmlentities($req_id); ?>">Accept</a>
 			</td>
 		</tr>
@@ -301,7 +301,7 @@ $result= mysqli_query($conn,$sql);
 </script>
 <script>
 	$(document).ready(function(){
-		$('#verify').click(function(){
+		$('.verify').click(function(){
 			var id=  $(this).val();
 			var email_data=[];
 			var action = $(this).data("action");
@@ -330,7 +330,7 @@ $result= mysqli_query($conn,$sql);
                 if(data == "verified"){
                   Swal.fire({
                   title: 'Success',
-                  text: "Status has been" +data,
+                  text: "Status has been changed" ,
                   icon: 'success',
                   confirmButtonColor: '#48bf53',
                   confirmButtonText: 'Continue',

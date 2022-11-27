@@ -38,7 +38,7 @@
       $mail->AddAddress($row["email"], $row["name"]); //Adds a "To" address
       $mail->WordWrap = 50;       //Sets word wrapping on the body of the message to a given number of characters
       $mail->IsHTML(true);       //Sets message type to HTML
-      $mail->Subject = 'Verifide'; //Sets the Subject of the message
+      $mail->Subject = 'Verified'; //Sets the Subject of the message
       //An HTML or plain text message body
       $mail->Body = '
       <p>Certificate...</p>
@@ -48,7 +48,7 @@
       $stmt= $conn->prepare($sql);
       $stmt->bind_param('si',$message,$id);
       $stmt->execute();
-      echo " verified";
+      echo "verified";
   }
  
 }
