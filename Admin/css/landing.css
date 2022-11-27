@@ -391,9 +391,6 @@ body {
 }
 
 
-
-
-
 #content main .table-data {
 	display: flex;
 	flex-wrap: wrap;
@@ -527,7 +524,5 @@ body {
 	#content main .table-data .order table {
 		min-width: 420px;
 	}
-	#content main .table-data .todo .todo-list {
-		min-width: 420px;
-	}
+	
 }
