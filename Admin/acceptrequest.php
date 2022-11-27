@@ -14,16 +14,6 @@ function fill_category_select_box($conn)
     }
     return $output;
   }
-  
-  function fill_variant_select_box($conn){
-    $output= '';
-    $sql= "SELECT * From variant order by variant_id ASC";
-    $result = mysqli_query($conn,$sql);
-    foreach($result as $row){
-      $output .= '<option value="'.$row['variant_id'].'">'.$row['variant'].'</option>';
-    }
-    return $output;
-  }
 	?>
 <!DOCTYPE html>
 <html lang="en">
@@ -252,12 +242,8 @@ function fill_category_select_box($conn)
 						?>
 						<?php
 						$req_category= $row3['req_category'];
-						$req_variant=$row3['req_variant'];
 						$req_quantity=$row3['req_quantity'];
 						$ItemName= $row3['req_nameItem'];
-						$req_item= $row3['req_item'];
-						$totalItem= $row3['req_totalItem'];
-
 						?>
 						<div class="row">
 							<div class="col">
@@ -280,27 +266,11 @@ function fill_category_select_box($conn)
 							<div class="col">
 								<div class="form-group">
 									<label for="">Name of item</label>
-									<textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50" ><?php echo htmlentities($ItemName); ?></textarea>
+									<input type="text" class="form-control border-success name_items" id="name_items" name="name_items" value="<?php echo htmlentities($ItemName); ?>">
 								</div>			
 							</div>
 							</div>
 							<div class="row">
-							<div class="col">
-								<div class="form-group">
-									<label for="req_email">Select Variant</label>
-									<select class="custom-select border-success variant" name="variant" id="variant">
-									<option value="-Select-">-Select-</option>
-									<?php 
-									$sql4="SELECT * from variant ";
-									$result2= mysqli_query($conn,$sql4);
-									foreach ($result2 as $row5):
-									?>
-									<option value="<?php echo htmlentities($row5['variant_id']); ?>"<?php if ($req_variant== $row5['variant_id']){echo 'selected="selected"';} ?>>
-								<?php echo htmlentities($row5['variant']); ?></option>
-									<?php endforeach; ?>
-									</select>
-								</div>
-							</div>
 							<div class="col">
 								<div class="form-group">
 									<label for="req_quantity">Quantity</label>
@@ -308,14 +278,7 @@ function fill_category_select_box($conn)
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col">
-								<div class="form-group">
-									<label for="">Number of items</label>
-									<input class="form-control border-success noPerItems" name="noPerItems" id="noPerItems" type="text" value="<?php echo htmlentities($req_item);?>">
-								</div>
-							</div>
-						</div>
+						
 						<?php endforeach; ?>
 						<?php endforeach; ?>
 					</form>
@@ -359,10 +322,10 @@ function fill_category_select_box($conn)
 			var html='';
 			html+='<div>'
 				html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-				html+= '<div class="col"><div class="form-group"><label>Name of items</label><textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50"></textarea></div></div></div>'
-				html += '<div class="row"><div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
-				html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
-				html+='<div class="row"><div class="col"><div class="form-group"><label>Number of Items</label><input class="form-control border-success noPerItems" id="noPerItems" name="noPerItems" ></div></div></div>';
+				html+= '<div class="col"><div class="form-group"><label>Name of items</label><input type="text" class="form-control border-success name_items" id="name_items" name="name_items"></div></div></div>';
+				html += '<div class="row"><div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
+
+
 			var remove_button='';
 				if(count>0)
 				{
@@ -381,25 +344,20 @@ function fill_category_select_box($conn)
 			e.preventDefault();
 			var valid = this.form.checkValidity();
 			if(valid) {
-				var variant_arr=[];
 				var quantity_arr=[];
 				var category_arr=[];
-				var items_arr=[];
 				var itemName_arr=[];
-				var totalItem=[];
+			
 				var category = $('.category');
 				var variant = $('.variant');
 				var quantity = $('.quantity');
 				var name_items = $('.name_items');
-				var noPerItems = $('.noPerItems');
+				
 					
 				for (var i = 0;i<category.length;i++){
 				category_arr.push($(category[i]).val());
-				variant_arr.push($(variant[i]).val());
 				quantity_arr.push($(quantity[i]).val());
 				itemName_arr.push($(name_items[i]).val());
-				items_arr.push($(noPerItems[i]).val());
-				totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());	
 				}
 				var donateRefId= $('#donateRefId').val();
 				var request_id= $('#request_id').val();
@@ -414,7 +372,7 @@ function fill_category_select_box($conn)
 				var valid_id = $('#valid_id').val();
 				var req_contact =$('#req_contact').val();
 				var data={acceptBtn:'',donateRefId:donateRefId,request_id:request_id,reference_id:reference_id,req_name:req_name,req_province:req_province,req_street:req_street,req_region:req_region,req_email:req_email,req_date:req_date,category_arr:category_arr,
-				variant_arr:variant_arr,quantity_arr:quantity_arr,valid_id:valid_id,req_contact:req_contact,itemName_arr:itemName_arr,items_arr:items_arr,totalItem:totalItem};
+				quantity_arr:quantity_arr,valid_id:valid_id,req_contact:req_contact,itemName_arr:itemName_arr};
 				
 				var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 				var varnumbers = /^\d+$/;
@@ -493,10 +451,6 @@ function fill_category_select_box($conn)
 							Swal.fire('Fields', "Item name is empty",'warning');
 							return false;
 						}
-				 		else if($(variant[j]).val()=="-Select-"){
-				 			Swal.fire('Select', "Please select a variant",'warning');
-				 			return false;
-				 		}
 				 		else if($(quantity[j]).val()==""){
 				 			Swal.fire('Fields', "Quantity is empty",'warning');
 				 			return false;
@@ -509,20 +463,6 @@ function fill_category_select_box($conn)
 				 			Swal.fire('Number', "Numbers only.",'warning');
 				 			return false;			
 			 	 		 }
-						else if(varnumbers.test($(noPerItems[j]).val())=="") {
-							Swal.fire('Number', "Number of item is empty",'warning');
-							return false;
-									
-						}
-						else if (inValid.test($(noPerItems[j]).val())==true){	
-							Swal.fire('Items', "Whitespace is prohibited.",'warning');
-							return false;
-						}
-						else if(varnumbers.test($(noPerItems[j]).val())==false) {
-							Swal.fire('Items', "Numbers only.",'warning');
-							return false;
-									
-						}
 						
 				 	}
 					Swal.fire({
@@ -649,28 +589,22 @@ function fill_category_select_box($conn)
 //single 
 	 $('#testBtn').click(function(e){
 		e.preventDefault();
-		e.preventDefault();
-			var valid = this.form.checkValidity();
+		var valid = this.form.checkValidity();
 			if(valid) {
-				var variant_arr=[];
 				var quantity_arr=[];
 				var category_arr=[];
-				var items_arr=[];
 				var itemName_arr=[];
-				var totalItem=[];
+			
 				var category = $('.category');
 				var variant = $('.variant');
 				var quantity = $('.quantity');
 				var name_items = $('.name_items');
-				var noPerItems = $('.noPerItems');
+				
 					
 				for (var i = 0;i<category.length;i++){
 				category_arr.push($(category[i]).val());
-				variant_arr.push($(variant[i]).val());
 				quantity_arr.push($(quantity[i]).val());
 				itemName_arr.push($(name_items[i]).val());
-				items_arr.push($(noPerItems[i]).val());
-				totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());	
 				}
 				var donateRefId= $('#donateRefId').val();
 				var request_id= $('#request_id').val();
@@ -685,7 +619,7 @@ function fill_category_select_box($conn)
 				var valid_id = $('#valid_id').val();
 				var req_contact =$('#req_contact').val();
 				var data={acceptBtn:'',donateRefId:donateRefId,request_id:request_id,reference_id:reference_id,req_name:req_name,req_province:req_province,req_street:req_street,req_region:req_region,req_email:req_email,req_date:req_date,category_arr:category_arr,
-				variant_arr:variant_arr,quantity_arr:quantity_arr,valid_id:valid_id,req_contact:req_contact,itemName_arr:itemName_arr,items_arr:items_arr,totalItem:totalItem};
+				quantity_arr:quantity_arr,valid_id:valid_id,req_contact:req_contact,itemName_arr:itemName_arr};
 				
 				var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 				var varnumbers = /^\d+$/;
@@ -764,10 +698,6 @@ function fill_category_select_box($conn)
 							Swal.fire('Fields', "Item name is empty",'warning');
 							return false;
 						}
-				 		else if($(variant[j]).val()=="-Select-"){
-				 			Swal.fire('Select', "Please select a variant",'warning');
-				 			return false;
-				 		}
 				 		else if($(quantity[j]).val()==""){
 				 			Swal.fire('Fields', "Quantity is empty",'warning');
 				 			return false;
@@ -780,20 +710,6 @@ function fill_category_select_box($conn)
 				 			Swal.fire('Number', "Numbers only.",'warning');
 				 			return false;			
 			 	 		 }
-						else if(varnumbers.test($(noPerItems[j]).val())=="") {
-							Swal.fire('Number', "Number of item is empty",'warning');
-							return false;
-									
-						}
-						else if (inValid.test($(noPerItems[j]).val())==true){	
-							Swal.fire('Items', "Whitespace is prohibited.",'warning');
-							return false;
-						}
-						else if(varnumbers.test($(noPerItems[j]).val())==false) {
-							Swal.fire('Items', "Numbers only.",'warning');
-							return false;
-									
-						}
 						
 				 	}
 					Swal.fire({

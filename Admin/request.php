@@ -149,7 +149,7 @@ $result= mysqli_query($conn,$sql);
 				$reqRegion= $row['req_region'];
 				$reqContact= $row['req_contact'];
 				$reqEmail= $row['req_email'];
-				$status= $row['status'];
+				$status= $row['req_status'];
 				
 				?>
 		<tr>

@@ -228,12 +228,10 @@ session_start();
 							
 								foreach($result1 as $row1):
 									$categM= $row1['category'];
-									$variantM= $row1['variant'];
 									$quantity= $row1['quantity'];
 									$reference= $row1['Reference'];
 									$item_names= $row1['name_items'];
-									$noPerItems= $row1['Items'];
-									
+								
 								?>
 								
 							<div id="prevItem">
@@ -264,27 +262,11 @@ session_start();
 											<div class="col">
 												<div class="form-group">
 													<label>Name of items</label>
-													<textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50" ><?php echo htmlentities($item_names); ?></textarea>
+													<input type="text" class="form-control border-success name_items" id="name_items" name="name_items" value="<?php echo htmlentities($item_names); ?>">
 														</div>
 													</div>
 												</div>
 										<div class="row">
-											<div class="col">
-												<div class="form-group">	
-													<label for="variant">Select Variant</label>		
-													<select  class="custom-select border-success variant" name="variant" id="variant">
-													<option value="-Select-">-Select-</option>
-													<?php
-														$sql3= "SELECT * from variant";
-														$result3= mysqli_query($conn,$sql3);
-														foreach ($result3 as $row3): 				
-													?>
-													<option value="<?php echo htmlentities($row3['variant_id']); ?>"<?php if($variantM == $row3['variant_id']) {echo 'selected="selected"';}?>>
-													<?php echo htmlentities($row3['variant']);?></option>
-														<?php endforeach;?>
-													</select>
-														</div>
-													</div>
 												<div class="col">
 													<div class="form-group">
 														<label for="quantity">Quantity</label>
@@ -292,15 +274,7 @@ session_start();
 															</div>
 														</div>
 													</div>
-											<div class="row">
-												<div class="col">
-													<div class="form-group">
-														<label for="">No. of items</label>
-														<input class="form-control border-success noPerItems" name="noPerItems" id="noPerItems" type="text" value="<?php echo htmlentities($noPerItems);?>">
-													</div>
-												</div>
-
-											</div>
+											
 												</div>	
 											</div>
 										<?php endforeach;?>
@@ -323,11 +297,11 @@ session_start();
 				
 				html+='<div>'
 				html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-	  html+= '<div class="col"><div class="form-group"><label>Name of items</label><textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50"></textarea></div></div></div>'
-      html += '<div class="row"><div class="col"><div class="form-group"><label for="variant">Select Variant</label><select class="custom-select variant border-success" name="variant" id="variant"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn); ?></select></div></div>';
-      html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
-	  html+='<div class="row"><div class="col"><div class="form-group"><label>Number of Items</label><input class="form-control border-success noPerItems" id="noPerItems" name="noPerItems" ></div></div></div>';
+				html+= '<div class="col"><div class="form-group"><label>Name of items</label><input type="text" class="form-control border-success name_items" id="name_items" name="name_items"></div></div></div>'
+				html += '<div class="row"><div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
+			
 				
+							
 				
 				var remove_button='';
 				if(count>0)
@@ -353,25 +327,17 @@ session_start();
 						var valid = this.form.checkValidity();
 						if(valid) {	
 							e.preventDefault();
-						var variant_arr=[];
 						var quantity_arr=[];
 						var category_arr=[];
-						var items_arr=[];
 						var itemName_arr=[];
-						var totalItem=[];
 						var category = $('.category');
-						var variant = $('.variant');
 						var quantity = $('.quantity');
 						var name_items = $('.name_items');
-						var noPerItems = $('.noPerItems');
-					
+			
 						for (var i = 0;i<category.length;i++){
 							category_arr.push($(category[i]).val());
-							variant_arr.push($(variant[i]).val());
 							quantity_arr.push($(quantity[i]).val());
 							itemName_arr.push($(name_items[i]).val());
-							items_arr.push($(noPerItems[i]).val());
-							totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());	
 						}
 						var donor_id= $('#donor_id').val();
 						var reference_id= $('#reference_id').val();
@@ -455,10 +421,6 @@ session_start();
 		 		Swal.fire('Fields', "Item name is empty",'warning');
 		 		return false;
 		 	}
-		 	else if ($(variant[j]).val()=="-Select-"){
-		 		Swal.fire('Fields', "Please select a variant",'warning');
-		 		return false;
-		 	}
 		 	else if ($(quantity[j]).val()==""){
 		 		Swal.fire('Fields', "Quantity is empty",'warning');
 		 		return false;
@@ -468,23 +430,9 @@ session_start();
 		 		return false;
 		 	}
 		 	
-			else if(varnumbers.test($(noPerItems[j]).val())=="") {
-		 		Swal.fire('Number', "Number of item is empty",'warning');
-		 		return false;
-						
-		 	  }
-			   else if (inValid.test($(noPerItems[j]).val())==true){	
-		 		Swal.fire('Items', "Whitespace is prohibited.",'warning');
-		 		return false;
-		 	}
-			 else if(varnumbers.test($(noPerItems[j]).val())==false) {
-		 		Swal.fire('Items', "Numbers only.",'warning');
-		 		return false;
-						
-		 	  }
 		 	}
 			 var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
-			variant_arr:variant_arr,quantity_arr:quantity_arr,itemName_arr:itemName_arr,items_arr:items_arr,totalItem:totalItem};
+			quantity_arr:quantity_arr,itemName_arr:itemName_arr};
 		
 		$.ajax({
 						url:'include/edit.inc.php',
@@ -586,25 +534,17 @@ session_start();
 		var valid = this.form.checkValidity();
 						if(valid) {	
 							e.preventDefault();
-						var variant_arr=[];
 						var quantity_arr=[];
 						var category_arr=[];
-						var items_arr=[];
 						var itemName_arr=[];
-						var totalItem=[];
 						var category = $('.category');
-						var variant = $('.variant');
 						var quantity = $('.quantity');
 						var name_items = $('.name_items');
-						var noPerItems = $('.noPerItems');
-					
+			
 						for (var i = 0;i<category.length;i++){
 							category_arr.push($(category[i]).val());
-							variant_arr.push($(variant[i]).val());
 							quantity_arr.push($(quantity[i]).val());
 							itemName_arr.push($(name_items[i]).val());
-							items_arr.push($(noPerItems[i]).val());
-							totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());	
 						}
 						var donor_id= $('#donor_id').val();
 						var reference_id= $('#reference_id').val();
@@ -688,10 +628,6 @@ session_start();
 		 		Swal.fire('Fields', "Item name is empty",'warning');
 		 		return false;
 		 	}
-		 	else if ($(variant[j]).val()=="-Select-"){
-		 		Swal.fire('Fields', "Please select a variant",'warning');
-		 		return false;
-		 	}
 		 	else if ($(quantity[j]).val()==""){
 		 		Swal.fire('Fields', "Quantity is empty",'warning');
 		 		return false;
@@ -701,23 +637,9 @@ session_start();
 		 		return false;
 		 	}
 		 	
-			else if(varnumbers.test($(noPerItems[j]).val())=="") {
-		 		Swal.fire('Number', "Number of item is empty",'warning');
-		 		return false;
-						
-		 	  }
-			   else if (inValid.test($(noPerItems[j]).val())==true){	
-		 		Swal.fire('Items', "Whitespace is prohibited.",'warning');
-		 		return false;
-		 	}
-			 else if(varnumbers.test($(noPerItems[j]).val())==false) {
-		 		Swal.fire('Items', "Numbers only.",'warning');
-		 		return false;
-						
-		 	  }
 		 	}
 			 var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
-			variant_arr:variant_arr,quantity_arr:quantity_arr,itemName_arr:itemName_arr,items_arr:items_arr,totalItem:totalItem};
+			quantity_arr:quantity_arr,itemName_arr:itemName_arr};
 		
 		$.ajax({
 						url:'include/edit.inc.php',
@@ -740,8 +662,7 @@ session_start();
 		 }
 		
 		
-	}
-						
+	}				
     });
 	$('#fname').on('keyup', function() {
         if($(this).val() == '') {

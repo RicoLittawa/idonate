@@ -240,10 +240,9 @@
           var html='';
           html+='<div>'
           html+= '<div class="row"><div class="col"><div class="form-group"><label>Select Category</label><select class="custom-select req_category border-success"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-          html += '<div class="col"><div class="form-group"><label>Name of items</label><textarea class="form-control border-success name_items" id="name_items" name="name_items" rows="2" cols="50" ></textarea></div></div></div>'
-          html+='<div class="row"><div class="col"><div class="form-group"><label>Select Variant</label><select class="custom-select req_variant border-success"><option value="-Select-">-Select-</option><?php echo fill_variant_select_box($conn) ?></select></div></div>';
-          html+='<div class="col"><div class="form-group"><label>Quantity</label><input class="form-control req_quantity border-success"></div></div></div>';
-          html+='<div class="row"><div class="col"><div class="form-group"><label>Number of Items</label><input class="form-control border-success noPerItems" id="noPerItems" name="noPerItems" ></div></div></div>';
+          html += '<div class="col"><div class="form-group"><label>Name of items</label><input class="form-control border-success name_items" id="name_items" name="name_items"></div></div></div>'
+          html+='<div class="row"><div class="col"><div class="form-group"><label>Quantity</label><input class="form-control req_quantity border-success"></div></div></div>';
+          
           var remove_button='';
            if(count>0)
            {
@@ -263,25 +262,18 @@
             var valid = this.form.checkValidity();
         if(valid) {
           e.preventDefault();
-        var variant_arr=[];
         var quantity_arr=[];
         var category_arr=[];
-        var items_arr=[];
 				var itemName_arr=[];
-				var totalItem=[];
+			
         var category = $('.req_category');
-        var variant = $('.req_variant');
         var quantity = $('.req_quantity');
         var item_names=$('.name_items');
-        var noPerItems=$('.noPerItems');
         
         for (var i = 0;i<category.length;i++){
           category_arr.push($(category[i]).val());
-          variant_arr.push($(variant[i]).val());
           quantity_arr.push($(quantity[i]).val());
           itemName_arr.push($(name_items[i]).val());
-					items_arr.push($(noPerItems[i]).val());
-					totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());
 		      }     
           var form = $('#requestform')[0];
           
@@ -309,11 +301,8 @@
           fd.append('req_contact',req_contact);
           fd.append('req_note',req_note);
           fd.append('category_arr',category_arr);
-          fd.append('variant_arr',variant_arr);
           fd.append('quantity_arr',quantity_arr);
           fd.append('itemName_arr',itemName_arr);
-          fd.append('items_arr',items_arr);
-          fd.append('totalItem',totalItem);
 
 
          
@@ -404,10 +393,6 @@
                   Swal.fire('Fields', "Item name is empty",'warning');
                   return false;
                 }
-                 else if($(variant[j]).val()=="-Select-"){
-                   Swal.fire('Select', "Please select a variant",'warning');
-                   return false;
-                 }
                  else if($(quantity[j]).val()==""){
                    Swal.fire('Select', "Quantity is empty",'warning');
                    return false;
@@ -537,25 +522,18 @@
         var valid = this.form.checkValidity();
         if(valid) {
           e.preventDefault();
-        var variant_arr=[];
         var quantity_arr=[];
         var category_arr=[];
-        var items_arr=[];
 				var itemName_arr=[];
-				var totalItem=[];
+			
         var category = $('.req_category');
-        var variant = $('.req_variant');
         var quantity = $('.req_quantity');
         var item_names=$('.name_items');
-        var noPerItems=$('.noPerItems');
         
         for (var i = 0;i<category.length;i++){
           category_arr.push($(category[i]).val());
-          variant_arr.push($(variant[i]).val());
           quantity_arr.push($(quantity[i]).val());
           itemName_arr.push($(name_items[i]).val());
-					items_arr.push($(noPerItems[i]).val());
-					totalItem.push($(quantity[i]).val() * $(noPerItems[i]).val());
 		      }     
           var form = $('#requestform')[0];
           
@@ -583,11 +561,8 @@
           fd.append('req_contact',req_contact);
           fd.append('req_note',req_note);
           fd.append('category_arr',category_arr);
-          fd.append('variant_arr',variant_arr);
           fd.append('quantity_arr',quantity_arr);
           fd.append('itemName_arr',itemName_arr);
-          fd.append('items_arr',items_arr);
-          fd.append('totalItem',totalItem);
 
 
          
@@ -678,10 +653,6 @@
                   Swal.fire('Fields', "Item name is empty",'warning');
                   return false;
                 }
-                 else if($(variant[j]).val()=="-Select-"){
-                   Swal.fire('Select', "Please select a variant",'warning');
-                   return false;
-                 }
                  else if($(quantity[j]).val()==""){
                    Swal.fire('Select', "Quantity is empty",'warning');
                    return false;

@@ -40,7 +40,7 @@
                 
             }
             else{
-                mysqli_stmt_bind_param($stmt, 'ssss', $reference_id, $item, $ItemName[$count], $Quantity[$count]);
+                mysqli_stmt_bind_param($stmt, 'ssss', $reference_id,$ItemName[$count],  $item, $Quantity[$count]);
                 $result = mysqli_stmt_execute($stmt);
                 if($result) {
                     $resultCount = $resultCount + 1;
