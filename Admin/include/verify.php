@@ -44,11 +44,11 @@
       <p>Certificate...</p>
       ';
       $mail->Send();      //Send an Email. Return true on success or false on error
-      $sql="UPDATE set_request set status=? where request_id=?";
+      $sql="UPDATE set_request set req_status=? where request_id=?";
       $stmt= $conn->prepare($sql);
       $stmt->bind_param('si',$message,$id);
       $stmt->execute();
-      echo "verified";
+      echo " verified";
   }
  
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2022 at 11:51 AM
+-- Generation Time: Nov 27, 2022 at 01:19 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -32,6 +32,13 @@ CREATE TABLE `announcement_template` (
   `announcement` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `announcement_template`
+--
+
+INSERT INTO `announcement_template` (`id`, `announcement`) VALUES
+(1, 'Attention! There is a massive fire near this sample street. We need clothes, ready-to eat foods for the victims of fire');
+
 -- --------------------------------------------------------
 
 --
@@ -48,15 +55,12 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`categ_id`, `category`) VALUES
-(1, 'Ready-to-eat goods'),
 (2, 'Canned goods, Noodles'),
-(3, 'Clothes'),
 (4, 'Hygiene Essentials'),
 (5, 'Infant Items'),
 (6, 'Drinking water'),
 (7, 'First Aid Kits'),
 (8, 'Medicine'),
-(9, 'Tents and shelter materials'),
 (10, 'Sleeping kits'),
 (11, 'N95 masks'),
 (12, 'Nebulizer kits');
@@ -79,6 +83,13 @@ CREATE TABLE `donation_items` (
   `donationDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `donation_items`
+--
+
+INSERT INTO `donation_items` (`donor_id`, `Reference`, `donor_name`, `donor_province`, `donor_street`, `donor_region`, `donor_email`, `donor_contact`, `donationDate`) VALUES
+(1, 1, 'try name', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', '4', 'rico.littawa@g.batstate-u.edu.ph', '09298289932', '2022-11-27');
+
 -- --------------------------------------------------------
 
 --
@@ -89,7 +100,7 @@ CREATE TABLE `donation_items10` (
   `id` int(11) NOT NULL,
   `Reference` bigint(20) NOT NULL,
   `category` longtext NOT NULL,
-  `variant` longtext NOT NULL,
+  `name_items` longtext NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -97,22 +108,8 @@ CREATE TABLE `donation_items10` (
 -- Dumping data for table `donation_items10`
 --
 
-INSERT INTO `donation_items10` (`id`, `Reference`, `category`, `variant`, `quantity`) VALUES
-(1, 1, '6', '2', 12),
-(2, 2, '8', '2', 10),
-(3, 2, '12', '1', 2),
-(4, 3, '6', '6', 12),
-(5, 3, '12', '1', 1),
-(6, 4, '9', '2', 1),
-(9, 6, '7', '1', 12),
-(10, 5, '8', '6', 1),
-(11, 7, '8', '6', 2),
-(12, 8, '6', '6', 100),
-(13, 9, '10', '2', 1),
-(14, 9, '9', '7', 2),
-(16, 10, '8', '2', 1),
-(17, 11, '8', '1', 100),
-(18, 12, '8', '6', 1);
+INSERT INTO `donation_items10` (`id`, `Reference`, `category`, `name_items`, `quantity`) VALUES
+(1, 1, 'sardines', '2', 30);
 
 -- --------------------------------------------------------
 
@@ -129,7 +126,7 @@ CREATE TABLE `donation_items_picking` (
 --
 
 INSERT INTO `donation_items_picking` (`reference_id`) VALUES
-(13);
+(2);
 
 -- --------------------------------------------------------
 
@@ -150,24 +147,6 @@ CREATE TABLE `donor_record` (
   `rD_certificate` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `donor_record`
---
-
-INSERT INTO `donor_record` (`id`, `rD_reference`, `rD_name`, `rD_province`, `rD_street`, `rD_region`, `rD_email`, `rD_contact`, `rD_date`, `rD_certificate`) VALUES
-(1, 1, 'rico littawa', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', '12', 'rico.littawa@g.batstate-u.edu.ph', '09392560014', '2022-11-23', 'rico littawa1669252571.png'),
-(2, 2, 'wendel', 'Batangas', 'Rosario Batangas', '4', 'jeffersondetorres@gmail.com', '09392560001', '2022-11-23', 'wendel1669252576.png'),
-(3, 3, 'new request', 'Batangas', 'Sta Maria Bauan', '11', 'sample@gmail.com', '12345678912', '2022-11-23', 'new request1669266663.png'),
-(4, 4, 'to powerbi', 'Laguna', 'Brgy Balagtas Sitio 7 Tramo Pulo', '12', 'sample@gmail.com', '09392560014', '2022-10-25', 'to powerbi1669267738.png'),
-(5, 5, 'test1', 'Batangas', 'Rosario Batangas', '15', 'rico.littawa@g.batstate-u.edu.ph', '09392560001', '2022-10-13', 'test11669268713.png'),
-(6, 6, 'test2', 'cebu', 'Brgy Balagtas Sitio 7 Tramo Pulo', '12', 'rico.littawa@g.batstate-u.edu.ph', '09392560000', '2022-10-18', 'test21669268718.png'),
-(7, 7, 'test3', 'Laguna', 'dasd', '8', 'rico.littawa@g.batstate-u.edu.ph', '09392560000', '2022-11-23', 'test31669268723.png'),
-(8, 8, 'test5', 'Batangas', 'Sta Maria Bauan', '14', 'jeffersondetorres@gmail.com', '09392560001', '2022-10-27', 'test51669268885.png'),
-(9, 9, 'test6', 'cebu', 'Sta Maria Bauan', '10', 'xyz@email.com', '09392560014', '2022-10-19', 'test61669268891.png'),
-(10, 10, 'test8', 'cebu', 'Brgy Balagtas Sitio 7 Tramo Pulo', '13', 'jeffersondetorres@gmail.com', '09392560014', '2022-10-08', 'test81669268895.png'),
-(11, 11, 'test10', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', '13', 'sample@gmail.com', '09392560014', '2022-10-20', 'test101669268900.png'),
-(12, 12, 'this is september', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', '10', 'sample@gmail.com', '09392560001', '2022-09-22', 'this is september1669280644.png');
-
 -- --------------------------------------------------------
 
 --
@@ -186,18 +165,6 @@ CREATE TABLE `donor_recordm` (
   `rDM_date` date NOT NULL,
   `rDM_certificate` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `donor_recordm`
---
-
-INSERT INTO `donor_recordm` (`id`, `rDM_name`, `rDM_province`, `rDM_street`, `rDM_region`, `rDM_contact`, `rDM_email`, `donated`, `rDM_date`, `rDM_certificate`) VALUES
-(1, 'This is my real name', 'Batangas', 'Balagtas Sitio 7 Tramo Pulo', '4', '2147483647', '2147483647', 0, '2022-11-23', 'This is my real name1669255015.png'),
-(2, 'tommy shelby', 'Mindoro', 'Mindoro Sample Street', '7', '2147483647', '2147483647', 121, '2022-11-23', 'tommy shelby1669256549.png'),
-(3, 'october test', 'Batangas', 'Cebu', '15', '2147483647', '2147483647', 300, '2022-10-25', 'october test1669281942.png'),
-(4, 'october test 4', 'Cebu', 'Balagtas Sitio 7 Tramo Pulo', '14', '09298289932', '09298289932', 200, '2022-10-27', 'october test 41669282365.png'),
-(5, 'october test3', 'Mindoro', 'Mindoro Sample Street', '13', '2147483647', '2147483647', 10, '2022-10-17', 'october test31669282371.png'),
-(6, 'october test2', 'Batangas', 'Cebu', '12', '2147483647', '2147483647', 200, '2022-10-25', 'october test21669282376.png');
 
 -- --------------------------------------------------------
 
@@ -219,6 +186,35 @@ CREATE TABLE `monetary_donations` (
   `money_amount` bigint(20) NOT NULL,
   `money_note` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `month`
+--
+
+CREATE TABLE `month` (
+  `id` int(11) NOT NULL,
+  `name_month` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `month`
+--
+
+INSERT INTO `month` (`id`, `name_month`) VALUES
+(1, 'January'),
+(2, 'February'),
+(3, 'March'),
+(4, 'April '),
+(5, 'May'),
+(6, 'June'),
+(7, 'July'),
+(8, 'August'),
+(9, 'September'),
+(10, 'October'),
+(11, 'November'),
+(12, 'December');
 
 -- --------------------------------------------------------
 
@@ -271,15 +267,17 @@ CREATE TABLE `set_request` (
   `req_email` longtext NOT NULL,
   `req_date` date NOT NULL,
   `req_contact` varchar(11) NOT NULL,
-  `req_note` varchar(1000) NOT NULL
+  `req_note` varchar(1000) NOT NULL,
+  `req_status` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `set_request`
 --
 
-INSERT INTO `set_request` (`request_id`, `reference_id`, `req_name`, `req_province`, `req_street`, `req_region`, `valid_id`, `req_email`, `req_date`, `req_contact`, `req_note`) VALUES
-(2, 2, 'new request from future', 'cebu', 'cebu city', '11', 'minimalist.png', 'xyz@email.com', '2022-11-23', '09298289932', 'my note');
+INSERT INTO `set_request` (`request_id`, `reference_id`, `req_name`, `req_province`, `req_street`, `req_region`, `valid_id`, `req_email`, `req_date`, `req_contact`, `req_note`, `req_status`) VALUES
+(1, 1, 'mariestella', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', '8', 'coffee shop.png', 'mariestella.suarez@g.bat-state-u.edu.ph', '2022-11-27', '09298289932', '', 'Verified'),
+(2, 2, 'rico', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', '4', 'product.png', 'rico.littawa@g.batstate-u.edu.ph', '2022-11-27', '09298289932', '', 'For verification');
 
 -- --------------------------------------------------------
 
@@ -291,7 +289,7 @@ CREATE TABLE `set_request10` (
   `id` int(11) NOT NULL,
   `req_reference` bigint(20) NOT NULL,
   `req_category` longtext NOT NULL,
-  `req_variant` longtext NOT NULL,
+  `req_nameItem` longtext NOT NULL,
   `req_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -299,8 +297,11 @@ CREATE TABLE `set_request10` (
 -- Dumping data for table `set_request10`
 --
 
-INSERT INTO `set_request10` (`id`, `req_reference`, `req_category`, `req_variant`, `req_quantity`) VALUES
-(2, 2, '6', '2', 12);
+INSERT INTO `set_request10` (`id`, `req_reference`, `req_category`, `req_nameItem`, `req_quantity`) VALUES
+(1, 4, 'sardines', '6', 23),
+(2, 4, 'sardines', '7', 4),
+(4, 1, '6', '', 30),
+(5, 2, '4', '', 20);
 
 -- --------------------------------------------------------
 
@@ -341,34 +342,6 @@ CREATE TABLE `total_donor` (
   `Tdonor_name` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `total_donor`
---
-
-INSERT INTO `total_donor` (`id`, `Tdonor_name`) VALUES
-(1, 'Justin Gaethji'),
-(2, 'rico littawa'),
-(3, 'wendel'),
-(4, 'teslaan'),
-(5, 'Conor Mc Gregor'),
-(6, 'Try Name'),
-(7, 'This is my real name'),
-(8, 'tommy shelby'),
-(9, 'new request'),
-(10, 'to powerbi'),
-(11, 'test1'),
-(12, 'test2'),
-(13, 'test3'),
-(14, 'test5'),
-(15, 'test6'),
-(16, 'test8'),
-(17, 'test10'),
-(18, 'this is september'),
-(19, 'october test'),
-(20, 'october test 4'),
-(21, 'october test3'),
-(22, 'october test2');
-
 -- --------------------------------------------------------
 
 --
@@ -385,12 +358,7 @@ CREATE TABLE `total_funds` (
 --
 
 INSERT INTO `total_funds` (`id`, `amount`) VALUES
-(1, 1000),
-(2, 121),
-(3, 300),
-(4, 200),
-(5, 10),
-(6, 200);
+(1, 200);
 
 -- --------------------------------------------------------
 
@@ -437,10 +405,43 @@ CREATE TABLE `variant` (
 --
 
 INSERT INTO `variant` (`variant_id`, `variant`) VALUES
-(1, 'Per-box'),
-(2, 'Per-pieces'),
-(6, 'No Variant'),
-(7, 'Per-Pack');
+(1, 'Per Pack'),
+(3, 'Per Box');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `year`
+--
+
+CREATE TABLE `year` (
+  `id` int(11) NOT NULL,
+  `year_name` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `year`
+--
+
+INSERT INTO `year` (`id`, `year_name`) VALUES
+(1, '2022'),
+(2, '2023'),
+(3, '2024'),
+(4, '2025'),
+(5, '2026'),
+(6, '2027'),
+(7, '2028'),
+(8, '2029'),
+(9, '2030'),
+(10, '2022'),
+(11, '2023'),
+(12, '2024'),
+(13, '2025'),
+(14, '2026'),
+(15, '2027'),
+(16, '2028'),
+(17, '2029'),
+(18, '2030');
 
 --
 -- Indexes for dumped tables
@@ -495,6 +496,12 @@ ALTER TABLE `donor_recordm`
 --
 ALTER TABLE `monetary_donations`
   ADD PRIMARY KEY (`money_id`);
+
+--
+-- Indexes for table `month`
+--
+ALTER TABLE `month`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `regions`
@@ -554,6 +561,12 @@ ALTER TABLE `variant`
   ADD KEY `variant` (`variant`(768));
 
 --
+-- Indexes for table `year`
+--
+ALTER TABLE `year`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -561,7 +574,7 @@ ALTER TABLE `variant`
 -- AUTO_INCREMENT for table `announcement_template`
 --
 ALTER TABLE `announcement_template`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -573,13 +586,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `donation_items`
 --
 ALTER TABLE `donation_items`
-  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `donation_items10`
 --
 ALTER TABLE `donation_items10`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `donation_items_picking`
@@ -591,19 +604,25 @@ ALTER TABLE `donation_items_picking`
 -- AUTO_INCREMENT for table `donor_record`
 --
 ALTER TABLE `donor_record`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `donor_recordm`
 --
 ALTER TABLE `donor_recordm`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `monetary_donations`
 --
 ALTER TABLE `monetary_donations`
-  MODIFY `money_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `money_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `month`
+--
+ALTER TABLE `month`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `regions`
@@ -621,7 +640,7 @@ ALTER TABLE `set_request`
 -- AUTO_INCREMENT for table `set_request10`
 --
 ALTER TABLE `set_request10`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `set_request_pickings`
@@ -639,13 +658,13 @@ ALTER TABLE `template_certi`
 -- AUTO_INCREMENT for table `total_donor`
 --
 ALTER TABLE `total_donor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `total_funds`
 --
 ALTER TABLE `total_funds`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `useradmin`
@@ -657,7 +676,13 @@ ALTER TABLE `useradmin`
 -- AUTO_INCREMENT for table `variant`
 --
 ALTER TABLE `variant`
-  MODIFY `variant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `variant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `year`
+--
+ALTER TABLE `year`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
