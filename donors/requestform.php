@@ -376,6 +376,7 @@
            }
            else if($('#idImg').val()==''){
              Swal.fire('Fields', "Please insert an image",'warning');
+             return false;
            }
            else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
              Swal.fire('Image', "Invalid file extension.",'warning');
@@ -637,6 +638,7 @@
            }
            else if($('#idImg').val()==''){
              Swal.fire('Fields', "Please insert an image",'warning');
+             return false;
            }
            else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
              Swal.fire('Image', "Invalid file extension.",'warning');

@@ -271,27 +271,26 @@ $(document).ready(function(){
      $('#'+id).addClass('btn-danger');
     },
     success:function(data){
- 	
-         if(data = 'Inserted')
-         {
-            $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
-            $('#'+id).removeClass('btn-danger');
-            $('#'+id).removeClass('btn-info');
-            $('#'+id).addClass('btn-success');
+          if(data = 'Inserted')
+          {
+             $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
+             $('#'+id).removeClass('btn-danger');
+             $('#'+id).removeClass('btn-info');
+             $('#'+id).addClass('btn-success');
 
- 	   Swal.fire({
- 	   	icon: 'success',
- 	   	title: 'Sent',
- 	   	text:'Email has been sent',
- 	   	}).then(function() {
- 	   	window.location = "archive.php";
- 	   	});
-         }
-         else
-         {
-          $('#'+id).text(data);
-         }
-         $('.email_button='+id).attr('disabled', false);
+ 	    Swal.fire({
+ 	    	icon: 'success',
+ 	    	title: 'Sent',
+ 	    	text:'Email has been sent',
+ 	    	}).then(function() {
+ 	    	window.location = "archive.php";
+ 	    	});
+          }
+          else
+          {
+           $('#'+id).text(data);
+          }
+          $('.email_button='+id).attr('disabled', false);
     
     }
    

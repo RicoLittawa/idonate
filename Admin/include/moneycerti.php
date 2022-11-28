@@ -11,8 +11,12 @@ if(isset($_POST['money_data'])){
   $output= '';
   foreach($_POST['money_data']as $row)
   {
-   
-    $image= imagecreatefrompng('Certificate Template/certificate2.png');
+    $template= "SELECT * from template_certi";
+    $result = mysqli_query($conn,$template);
+    foreach($result as $rowTemp){
+    $tempCert= $rowTemp['template'];
+    } 
+    $image= imagecreatefrompng('Certificate Template/'.$tempCert);
     $white = imagecolorallocate($image, 255, 255, 255);
     $black = imagecolorallocate($image, 0, 0, 0);
     $font="fonts/Roboto-Black.ttf";

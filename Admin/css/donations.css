@@ -453,6 +453,9 @@ table td{
 	font-family: 'IBM Plex Sans', sans-serif;
 	font-weight: bold;
 }
+.modal-custom {
+    max-width: inherit;
+}
 .icon{
 	text-decoration: none;
 }

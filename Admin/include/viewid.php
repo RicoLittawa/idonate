@@ -199,3 +199,46 @@ if (isset($_GET['viewMoney'])){
      
  
  }
+
+ //upload certi template
+ if (isset($_POST['upload'])){
+    $id = $_POST['tempId'];
+    $Image = $_FILES['customFile']['name'];
+    $filePath='Certificate Template/';
+    $filename=  $filePath.basename($_FILES['customFile']['name']);
+    $filetype=strtolower(pathinfo($filename,PATHINFO_EXTENSION));
+    $fileSize = $_FILES['customFile']['size'];
+    $fileError = $_FILES['customFile']['error'];
+        if(move_uploaded_file($_FILES['customFile']['tmp_name'],$filePath.$Image)){
+         if($fileError === 0){
+             if($fileSize < 1000000) {
+                $template= "UPDATE template_certi set template=? where id=?";
+                $stmt=$conn->prepare($template);
+                $stmt->bind_param('si',$Image,$id);
+                $stmt->execute();
+                echo "uploaded";
+             }
+         }
+        
+        }
+ }
+
+  //view template certi
+if (isset($_GET['viewTemp'])){
+    $id= $_GET['viewTemp'];
+    $sql= "SELECT template from template_certi where id=?";
+    $stmt = $conn->prepare($sql); 
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+ 
+     if ( $temp = $result->fetch_assoc()){
+      
+             echo $temp['template'];
+        
+     }else{
+         echo 'Data not found';
+     }
+     
+ 
+ }

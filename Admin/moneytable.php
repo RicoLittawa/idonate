@@ -117,8 +117,6 @@ session_start();
 				<div class="add">
 					<div class="head">
 						<h3>Monetary Donors</h3>
-						<i class='bx bx-search' ></i>	
-						<i class='bx bx-filter' ></i>
 						<div class="dropdown">
   <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
     Select Table

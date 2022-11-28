@@ -119,23 +119,59 @@ session_start();
 						<h3>Settings</h3>
 					</div>	
 				<div class="modify">
-					<form action="" id="add_template">
+					<form id="add_template" enctype="multipart/form-data">
 						<div class="form-group">
 						<label for="">Upload Certificate Template</label>
 						</div>
+						<?php
+						require_once 'include/connection.php';
+						 $sql="SELECT * from template_certi";
+						$result= mysqli_query($conn,$sql);
+						foreach($result as $row):				
+						?>
+						<input type="hidden" value="<?php echo htmlentities($row['id']); ?>" id="tempId">
 						
 						<div class="row">
 							<div class="col">
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="customFile">
+								<input type="file" class="custom-file-input" id="customFile" name="customFile">
 								<label class="custom-file-label" for="customFile">Choose file</label>
 							</div>
 							</div>
 							<div class="col">
-      						<button  type="button" class="btn mt-0"><i style="color:green ;font-size:30px;" class="fa-solid fa-file-import"></i></button>
-							<button type="button" class="btn mt-0"><i style="color:green ;font-size:30px;" class="fa-solid fa-image"></i></button>
+      						<button  type="button" id="upload" class="btn mt-0"><i style="color:green ;font-size:30px;" class="fa-solid fa-file-import"></i></button>
+							<button type="button" id="viewImage" class="btn mt-0 certImg"  data-toggle="modal" data-target="template" value="<?php echo htmlentities($row['id']); ?>"><i style="color:green ;font-size:30px;" class="fa-solid fa-image"></i></button>
+							<?php endforeach; ?>
 						 </div>
 						</div>	
+						<!-- View Template -->
+						<div class="modal fade" id="template">
+							<div class="modal-dialog modal-dialog-centered d-flex modal-custom">
+								<div class="modal-content flex-shrink-1 w-auto mx-auto">
+
+								<!-- Modal Header -->
+								<div class="modal-header">
+									<h4 class="modal-title">Template</h4>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									
+								</div>
+								
+								
+
+								<form>
+								<div class="modal-body">
+								<img src="" id="imageContainer" alt="" width="800px" height="100%" style="border-radius:10px;">
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+								</div>
+								</form>
+
+									
+
+								</div>
+							</div>
+							</div>	
 					</form>
 					<form action=""id="upCateg">
 					<div class="form-group">
@@ -192,8 +228,67 @@ session_start();
     });
 });
 </script>
+<!--Upload template -->
 <script>
+	$(document).ready(function(){
+		$(".custom-file-input").on("change", function() {
+      var fileName = $(this).val().split("\\").pop();
+      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    	});
+		$("#upload").click(function(){
+			
+			var form = $('#add_template')[0];
+          	var fd = new FormData(form);
+			var tempId= $("#tempId").val();
+			fd.append("tempId",tempId);
+			fd.append("upload",true);
+			var extension = $('#customFile').val().split('.').pop().toLowerCase();
+			if($('#customFile').val()==''){
+             Swal.fire('Fields', "Please insert an image",'warning');
+			 return false;
+           }
+           else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
+             Swal.fire('Image', "Invalid file extension.",'warning');
+             $("#requestform").find('[type=file]').val('').trigger('change');
+             return false;
+           }
+		   else{
+			$.ajax({
+				url: 'include/viewid.php',
+              method: 'POST',
+               data:fd,
+              dataType:'text',
+               processData:false,
+              contentType:false,  
+              success: function(data) {
+				swal.fire('Photo',data,'success');
+			  }
+			});
+		   }
+			
+		});
+	});
+</script>
+<script>
+	$(document).ready(function(){
+		$('.certImg').click(function(){
+			var valueBtn = $(this);
+			var id =valueBtn.val();
+			
+			  $.ajax({
+			  	url:'include/viewid.php?viewTemp='+id,
+			  	type: 'GET',
+			  	success: function(data){
+					
+			  			 $('#template').modal('show');
+						   $('#imageContainer').attr('src','include/Certificate Template/'+data);		   		
+			  	}
+			  });
 
+
+
+		});
+	});
 </script>
 	
 
