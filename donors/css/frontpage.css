@@ -196,7 +196,7 @@ display:block;
 .box-info3{
   background-color: white;
   width: 350px;
-  height: 135px;
+  height: 180px;
   border-radius: 20px;
   box-shadow: 3px 5px 10px #888888;
   position: absolute;
@@ -232,7 +232,22 @@ display:block;
   position: absolute;
   top: 40px;
 }
-
+.cashD{
+  font-size: 16px;
+  margin: 1rem;
+}
+.detailsD{
+  margin: 1rem;
+  font-weight: 400;
+}
+.categD{
+  font-size: 16px;
+  margin: 1rem;
+}
+.categDetails{
+  margin: 1rem;
+  font-weight: 400;
+}
 @media all and (min-width: 992px) {
 	.navbar .nav-item .dropdown-menu{ display: none; }
 	.navbar .nav-item:hover .dropdown-menu{ display: block; }

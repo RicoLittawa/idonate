@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>frontpage</title>
+    <title>What is needed?</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,16 +75,19 @@
 
     </div>
     <div class="box-info2">
-  
+      <h1 class="categD">Encouraged donations include the following:</h1>
+      <p class="categDetails"> Hygiene kits <br>
+          Bottled water <br>
+          Food <br>
+          Tents and shelter materials <br>
+          Sleeping kits <br>
+          Medicine (anti-hypertension, cough remedies, anti-histamine, anti-vertigo)<br>
+          N95 masks<br>
+          Nebulizer kits</p>
     </div>
     <div class="box-info3">
-      <?php
-      
-      $sql="SELECT count('1') from total_donor";
-			 $result=mysqli_query($conn,$sql);
-			 $row=mysqli_fetch_array($result);
-			 echo "<h3 style=font-size:45px>$row[0]</h3>";?>
-
+    <h1 class="cashD">Cash donations may be deposited to the following accounts:</h1>
+      <p class="detailsD">Peso account: Provincial Government of Batangas, Account No. 0-05010-656-3, Development Bank of the Philippines (DBP), Batangas City Branch</p>
     </div>
   </div>
     
