@@ -41,7 +41,7 @@ session_start();
 					<span class="text">Dashboard</span>
 				</a>
 			</li>
-			<li class="active">
+			<li>
 				<a href="#">
 					<i class='bx bxs-box' ></i>
 					<span class="text">Donations</span>
@@ -54,21 +54,27 @@ session_start();
 				</a>
 			</li>
 			<li>
-				<a href="#">
-        <i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+				<a href="archive.php">
+        			<i class='bx bxs-file-archive'></i>
+					<span class="text">Records</span>
+				</a>
+			</li>
+			<li class="active">
+				<a href="categorytables.php">
+					<i class='bx bxs-package'></i>
+					<span class="text">Stocks</span>
 				</a>
 			</li>
 		</ul>
-		<ul class="side-menu">
+		<ul class="side-menu ">
 			<li>
-				<a href="archive.php">
+				<a class="settings" href="settings.php">
 					<i class='bx bxs-cog' ></i>
 					<span class="text">Settings</span>
 				</a>
 			</li>
 			<li>
-				<a href="/Admin/login/logout.php" class="logout">
+				<a href="include/logout.php" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>
@@ -120,18 +126,7 @@ session_start();
 						<h3>Donation Items</h3>
 
 					
-						
-            <div class="dropdown">
-     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-       Select Table
-      </button>
-     <div class="dropdown-menu">
-		 <a class="dropdown-item" href="donations.php">Donations</a>
-        <a class="dropdown-item" href="moneytable.php">Money Donors</a>
-		<a class="dropdown-item" href="categorytables.php">Donation Items</a>
-      
-  </div>
-</div>
+			
 					</div>
 					
 					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
@@ -161,16 +156,9 @@ session_start();
 						<?php endif; ?>
 
 					<?php endforeach; ?>
-					<?php
-					$variantM= $row['variant'];
-					$sql3="SELECT * from variant";
-					$result3=mysqli_query($conn,$sql3);
-					foreach($result3 as $row2):
-					?>
-					<?php if($variantM== $row2['variant_id']): ?>
-						<td><?php echo htmlentities($row2['variant']); ?></td>
-						<?php endif;?>
-					<?php endforeach; ?>
+					
+						<td><?php echo htmlentities($row['name_items']); ?></td>
+						
 					<td><?php echo htmlentities($row['quantity']); ?></td>
 				</tr>
 				<?php endwhile; ?>

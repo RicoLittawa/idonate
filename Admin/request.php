@@ -56,19 +56,25 @@ $count=0;
 			<li>
 				<a href="archive.php">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+					<span class="text">Records</span>
+				</a>
+			</li>
+			<li>
+				<a href="categorytables.php">
+					<i class='bx bxs-package'></i>
+					<span class="text">Stocks</span>
 				</a>
 			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#">
+				<a class="settings" href="settings.php">
 					<i class='bx bxs-cog' ></i>
 					<span class="text">Settings</span>
 				</a>
 			</li>
 			<li>
-				<a href="/Admin/login/logout.php" class="logout">
+				<a href="include/logout.php" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>
@@ -117,8 +123,7 @@ $count=0;
 				<div class="add">
 					<div class="head">
 						<h3>Requests</h3>
-						<i class='bx bx-search' ></i>	
-						<i class='bx bx-filter' ></i>
+						<i class="fa-solid fa-arrows-rotate"></i>
 					</div>
 					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
     <thead>
@@ -164,7 +169,7 @@ $count=0;
 			<td><?php echo htmlentities($status); ?></td>
 			<td><button type="button" id="btnNote" class="btn col btnNote" data-toggle="modal" data-target="viewMessage" value="<?php echo htmlentities($req_id); ?>"><i style="color: green;" class="fa-solid fa-message"></i></button>
 			<button type="button" class="btn col  validId"  data-toggle="modal" data-target="validImg" value="<?php echo htmlentities($req_id); ?>"><i style="color:green ;" class="fa-regular fa-id-badge"></i></button>
-			<button class="btn btn-info verify col" id="<?php echo $count; ?>" data-action="verify" data-email="<?php echo htmlentities($reqEmail); ?>" data-id="<?php echo htmlentities($req_id); ?>" data-name="<?php echo htmlentities($reqName); ?>"><i class="fa-solid fa-check"></i></button>
+			<button class="btn verify col" id="<?php echo $count; ?>" data-action="verify" data-email="<?php echo htmlentities($reqEmail); ?>" data-id="<?php echo htmlentities($req_id); ?>" data-name="<?php echo htmlentities($reqName); ?>"><i class="fa-solid fa-check"></i></button>
 			<a  class="btn btn-success col" href="acceptrequest.php?acceptReq=<?php echo htmlentities($req_id); ?>">Accept</a>
 			</td>
 		</tr>

@@ -239,8 +239,8 @@
           var html='';
           html+='<div>'
           html+= '<div class="row"><div class="col"><div class="form-group"><label>Select Category</label><select class="custom-select req_category border-success"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-          html += '<div class="col"><div class="form-group"><label>Name of items</label><input class="form-control border-success name_items" id="name_items" name="name_items"></div></div></div>'
-          html+='<div class="row"><div class="col"><div class="form-group"><label>Quantity</label><input class="form-control req_quantity border-success"></div></div></div>';
+          html += '<div class="col"><div class="form-group"><label>Name of items</label><input class="form-control border-success name_items" id="name_items" name="name_items"></div></div>'
+          html+='<div class="col"><div class="form-group"><label>Quantity</label><input class="form-control req_quantity border-success"></div></div></div>';
           
           var remove_button='';
            if(count>0)

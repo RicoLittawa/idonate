@@ -47,19 +47,25 @@ session_start();
 			<li>
 				<a href="archive.php">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+					<span class="text">Records</span>
+				</a>
+			</li>
+			<li>
+				<a href="categorytables.php">
+					<i class='bx bxs-package'></i>
+					<span class="text">Stocks</span>
 				</a>
 			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#">
+				<a class="settings"  href="settings.php">
 					<i class='bx bxs-cog' ></i>
 					<span class="text">Settings</span>
 				</a>
 			</li>
 			<li>
-				<a href="/Admin/login/logout.php" class="logout">
+				<a href="include/logout.php" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>
@@ -90,13 +96,8 @@ session_start();
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Dashboard</h1>
-					
+					<h1>Dashboard</h1>	
 				</div>
-				<a href="#" class="btn-download">
-					<i class='bx bxs-cloud-download' ></i>
-					<span class="text">Download PDF</span>
-				</a>
 			</div>
 
 			<ul class="box-info">
@@ -104,7 +105,7 @@ session_start();
 				<i class='bx bxs-group' ></i>
 				<span class="text">
 				<?php
-				include 'include/connection.php'; 
+				require 'include/connection.php'; 
 			 $sql="SELECT count('1') from total_donor";
 			 $result=mysqli_query($conn,$sql);
 			 $row=mysqli_fetch_array($result);

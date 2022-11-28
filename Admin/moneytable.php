@@ -49,19 +49,25 @@ session_start();
 			<li>
 				<a href="archive.php">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+					<span class="text">Records</span>
+				</a>
+			</li>
+			<li>
+				<a href="categorytables.php">
+					<i class='bx bxs-package'></i>
+					<span class="text">Stocks</span>
 				</a>
 			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#">
+				<a class="settings" href="settings.php">
 					<i class='bx bxs-cog' ></i>
 					<span class="text">Settings</span>
 				</a>
 			</li>
 			<li>
-				<a href="/Admin/login/logout.php" class="logout">
+				<a href="include/logout.php" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>
@@ -120,7 +126,6 @@ session_start();
   <div class="dropdown-menu">
   		<a class="dropdown-item" href="donations.php">Donations</a>
         <a class="dropdown-item" href="moneytable.php">Money Donors</a>
-		<a class="dropdown-item" href="categorytables.php">Donation Items</a>
    
   </div>
 </div>

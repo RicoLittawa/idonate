@@ -4,14 +4,14 @@ if(isset($_POST['login-submit'])){
     $Email = $_POST['userEmail'];
     $Password = $_POST['userPassword'];
     if (empty($Email)||empty($Password)){
-        header("Location: login/login.php?error=emptyfields");
+        header("Location: ../loginforms/login.php?error=emptyfields");
         exit();
     }   
     else{
         $sql = "SELECT *FROM useradmin WHERE email=?";
         $stmt = mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$sql)){
-            header("Location: login/login.php?error=sqlerror");
+            header("Location: ../loginforms/login.php?error=sqlerror");
             exit();
         }
         else{
@@ -22,7 +22,7 @@ if(isset($_POST['login-submit'])){
         if($row= mysqli_fetch_assoc($result)){
             $pwdCheck = password_verify($Password, $row['pwdUsers']);
             if ($pwdCheck == false){
-                header("Location: login/login.php?error=wrongpassword");
+                header("Location: ../loginforms/login.php?error=wrongpassword");
                 exit();
 
             }
@@ -40,7 +40,7 @@ if(isset($_POST['login-submit'])){
             }
              }
              else{
-                header("Location: login/login.php?error=nouser");
+                header("Location: ../loginforms/login.php?error=nouser");
                 exit();
              }
         }
@@ -48,6 +48,6 @@ if(isset($_POST['login-submit'])){
 }
 
 else{
-    header("Location: login/login.php");
+    header("Location: ../loginforms/login.php.php");
     exit();
 }

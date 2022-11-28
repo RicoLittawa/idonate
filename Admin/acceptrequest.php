@@ -68,18 +68,20 @@ function fill_category_select_box($conn)
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#">
+				<a class="settings"  href="settings.php">
 					<i class='bx bxs-cog' ></i>
 					<span class="text">Settings</span>
 				</a>
 			</li>
+		</ul>
+		<ul class="side-menu">
 			<li>
-				<a href="/Admin/login/logout.php" class="logout">
+				<a href="include/logout.php" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>
 			</li>
-		</ul>
+			</ul>
 	</section>
 	<!-- SIDEBAR -->
 
@@ -322,8 +324,8 @@ function fill_category_select_box($conn)
 			var html='';
 			html+='<div>'
 				html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-				html+= '<div class="col"><div class="form-group"><label>Name of items</label><input type="text" class="form-control border-success name_items" id="name_items" name="name_items"></div></div></div>';
-				html += '<div class="row"><div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
+				html+= '<div class="col"><div class="form-group"><label>Name of items</label><input type="text" class="form-control border-success name_items" id="name_items" name="name_items"></div></div>';
+				html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
 
 
 			var remove_button='';

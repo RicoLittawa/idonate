@@ -16,7 +16,7 @@ session_start();
 	<link rel="stylesheet" href="css/donations.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
 
-	<title>Requests</title>
+	<title>Settings</title>
 </head>
 <body>
 
@@ -40,8 +40,8 @@ session_start();
 					<span class="text">Donations</span>
 				</a>
 			</li>
-			<li class="active">
-				<a href="#">
+			<li>
+				<a href="request.php">
 					<i class='bx bxs-envelope' ></i>
 					<span class="text">Requests</span>
 				</a>
@@ -49,19 +49,25 @@ session_start();
 			<li>
 				<a href="archive.php">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+					<span class="text">Records</span>
+				</a>
+			</li>
+			<li>
+				<a href="categorytables.php">
+					<i class='bx bxs-package'></i>
+					<span class="text">Stocks</span>
 				</a>
 			</li>
 		</ul>
 		<ul class="side-menu">
-			<li>
-				<a href="#">
+			<li class="active">
+				<a class="settings" href="settings.php">
 					<i class='bx bxs-cog' ></i>
 					<span class="text">Settings</span>
 				</a>
 			</li>
 			<li>
-				<a href="/Admin/login/logout.php" class="logout">
+				<a href="include/logout.php" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>
@@ -79,8 +85,6 @@ session_start();
 			<i style="font-size:40px;" class='bx bx-menu' ></i>
 			<form action="#">
 				<div class="form-input">
-					<input type="search" placeholder="Search...">
-					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
 				</div>
 			</form>
 			<a href="#" class="notification">
@@ -96,7 +100,7 @@ session_start();
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Requests</h1>
+					<h1>Settings</h1>
 					<ul class="breadcrumb">
 						<li>
 							<a href="#" style="font-size: 18px;">Dashboard</a>
@@ -112,14 +116,52 @@ session_start();
 			<div class="table-data">
 				<div class="add">
 					<div class="head">
-						<h3>Requests</h3>
-						<i class='bx bx-search' ></i>	
-						<i class='bx bx-filter' ></i>
-					</div>
-				<form action="">
-					<label for="addcategory"></label>
-					<input type="text" name="addcategory" id="addcategory">
-				</form>	
+						<h3>Settings</h3>
+					</div>	
+				<div class="modify">
+					<form action="" id="add_template">
+						<div class="form-group">
+						<label for="">Upload Certificate Template</label>
+						</div>
+						
+						<div class="row">
+							<div class="col">
+							<div class="custom-file">
+								<input type="file" class="custom-file-input" id="customFile">
+								<label class="custom-file-label" for="customFile">Choose file</label>
+							</div>
+							</div>
+							<div class="col">
+      						<button  type="button" class="btn mt-0"><i style="color:green ;font-size:30px;" class="fa-solid fa-file-import"></i></button>
+							<button type="button" class="btn mt-0"><i style="color:green ;font-size:30px;" class="fa-solid fa-image"></i></button>
+						 </div>
+						</div>	
+					</form>
+					<form action=""id="upCateg">
+					<div class="form-group">
+						<label for="">Add new category</label>
+						</div>
+						
+						<div class="row">
+							<div class="col">
+								
+								<input class="form-control" type="text" name="" id="">
+							</div>
+							<div class="col">
+							<button  type="button" class="btn btn-success mt-0">Add</button>
+							</div>
+						</div>
+					</form>
+					<form action="" id="announce">
+						<div class="form-group">
+							<label for="">Announcement</label>
+							<textarea class="form-control" name="" id="" cols="5" rows="4"></textarea>
+						</div>
+						<div class="mt-3">
+							<button style="float: right;" class="btn btn-primary">Update</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</main>
 	
@@ -149,6 +191,9 @@ session_start();
 
     });
 });
+</script>
+<script>
+
 </script>
 	
 
