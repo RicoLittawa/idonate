@@ -28,7 +28,6 @@ session_start()?>
     
   </head>
   <body > 
-
   <nav class="navbar bg-light" id="myNavbar">
   <div class="container-fluid">
     
@@ -47,11 +46,17 @@ session_start()?>
         <li class="nav-item">
           <a class="nav-link" href="whatisneeded.php">What is needed?</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="requestform.php">Create request<i style="color: #83f28f;" class="fa-solid fa-plus"></i></a>
-        </li>
-      </ul>
-  
+        <li class="nav-item dropdown">
+		   <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown">  Fill Up  </a>
+		    <ul class="dropdown-menu">
+			  <li><a class="dropdown-item" href="requestform.php">Request Form</a></li>
+			  <li><a class="dropdown-item" href="formoney.php">Money Donor Forms</a></li>
+			 
+		    </ul>
+		</li>
+
+
+  </ul>
     </div>
   </div>
 </nav>

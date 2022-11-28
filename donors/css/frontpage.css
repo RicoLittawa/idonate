@@ -178,6 +178,10 @@ display:block;
   left:400px ;
   margin-left: 6rem;
 }
+.container .powerbi{
+  position: relative;
+  bottom: -10px;
+}
 .box-info2{
   background-color: white;
   width: 350px;
@@ -227,4 +231,10 @@ display:block;
 .scrolling{
   position: absolute;
   top: 40px;
+}
+
+@media all and (min-width: 992px) {
+	.navbar .nav-item .dropdown-menu{ display: none; }
+	.navbar .nav-item:hover .dropdown-menu{ display: block; }
+	.navbar .nav-item .dropdown-menu{ margin-top:0; }
 }
