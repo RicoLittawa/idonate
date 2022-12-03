@@ -131,9 +131,10 @@ $count=0;
 		<th>Id</th>
 		<th>Date</th>
         <th>Donor Name</th>
-		<th>Province</th>
-		<th>Street</th>
 		<th>Region</th>
+		<th>Province</th>
+		<th>Municipality</th>
+		<th>Barangay</th>
 		<th>Contact Number</th>
 		<th>Email</th>
 		<th>Status</th>
@@ -149,7 +150,8 @@ $count=0;
 				$req_id= $row['request_id'];
 				$reqName= $row['req_name'];
 				$reqDate= $row['req_date'];
-				$reqStreet= $row['req_street'];
+				$reqMunicipality= $row['req_municipality'];
+				$reqBarangay= $row['req_barangay'];
 				$reqProvince= $row['req_province'];
 				$reqRegion= $row['req_region'];
 				$reqContact= $row['req_contact'];
@@ -161,9 +163,43 @@ $count=0;
 			<td><?php echo htmlentities($reference_id); ?></td>
 			<td><?php echo htmlentities($reqDate); ?></td>
 			<td><?php echo htmlentities($reqName); ?></td>
-			<td><?php echo htmlentities($reqProvince); ?></td>
-			<td><?php echo htmlentities($reqStreet); ?></td>
-			<td><?php echo htmlentities($reqRegion); ?></td>
+			<?php 
+			$reg ="SELECT * from refregion";
+			$result= mysqli_query($conn,$reg);
+			foreach($result as $row){
+				if ($reqRegion== $row['regCode']){
+					echo '<td>'.$row['regDesc'].'</td>';
+				}
+			}
+			?>
+			<?php 
+			$prov ="SELECT * from refprovince";
+			$result= mysqli_query($conn,$prov);
+			foreach($result as $row){
+				if ($reqProvince== $row['provCode']){
+					echo '<td>'.$row['provDesc'].'</td>';
+				}
+			}
+			?>
+			<?php 
+			$citymun ="SELECT * from refcitymun";
+			$result= mysqli_query($conn,$citymun);
+			foreach($result as $row){
+				if ($reqMunicipality== $row['citymunCode']){
+					echo '<td>'.$row['citymunDesc'].'</td>';
+				}
+			}
+			?>
+			<?php 
+			$brgy ="SELECT * from refbrgy";
+			$result= mysqli_query($conn,$brgy);
+			foreach($result as $row){
+				if ($reqBarangay== $row['brgyCode']){
+					echo '<td>'.$row['brgyDesc'].'</td>';
+				}
+			}
+			?>
+			
 			<td><?php echo htmlentities($reqContact); ?></td>
 			<td><?php echo htmlentities($reqEmail); ?></td>
 			<td><?php echo htmlentities($status); ?></td>

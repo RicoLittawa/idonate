@@ -99,7 +99,10 @@ nav{
   font-weight: bold;
   
 }
-.submit-request:hover {background-color: #11823b}
+.submit-request:hover {
+  background-color: #11823b;
+  color: white;
+}
 
 .paragleft{
   position: relative;

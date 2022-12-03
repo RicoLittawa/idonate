@@ -279,7 +279,7 @@ session_start();
  	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
  
  <script>
-$(document).ready(function(){
+	$(document).ready(function(){
     function add_input_field(){
 	  $('#testBtn').remove();
 	  $('#cancelBtn').remove();
