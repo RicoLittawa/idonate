@@ -459,6 +459,20 @@ table td{
 .icon{
 	text-decoration: none;
 }
+.ui-autocomplete-row{
+	padding: 8px;
+	background-color: #f4f4f4;
+	border-bottom: 1px solid #ccc;
+	font-family: 'Kantumruy Pro', sans-serif;
+	font-weight: 700;
+	font-size: 12px;
+	color: #2C3333;
+	
+}
+.ui-autocomplete-row:hover{
+	background-color: #ddd;
+}
+
 
 
 @media screen and (max-width: 768px) {

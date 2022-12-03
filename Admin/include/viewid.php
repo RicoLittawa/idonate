@@ -242,3 +242,23 @@ if (isset($_GET['viewTemp'])){
      
  
  }
+
+ if(isset($_GET["term"])){
+    $search= "%".$_GET['term']."%";
+    $autoS= 'SELECT * from categ_products WHERE product_name LIKE ?';
+    $stmt= $conn->prepare($autoS);
+    $stmt->bind_param('s',$search);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_all(MYSQLI_ASSOC);
+    $output= array();
+    foreach ($data as $row){
+        $temp_array=array();
+        $temp_array['value']=$row['product_name'];
+        $temp_array['label'] =$row['product_name'];
+
+        $output[]= $temp_array;
+    }
+    echo json_encode($output);
+ }
+ 

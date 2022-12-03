@@ -151,13 +151,14 @@ session_start();
 	
 		<th>ID</th>
         <th>Fullname</th>
-		<th>Province</th>
-		<th>Street</th>
 		<th>Region</th>
+		<th>Province</th>
+		<th>Municipality</th>
+		<th>Barangay</th>
 		<th>Email</th>
 		<th>Contact</th>
       	<th>Donation Date</th>
-        <th>Certificate</th>
+		<th>Send</th>
 		
       </tr>
     </thead>
@@ -177,16 +178,53 @@ session_start();
 		</td>
 		<td><?php echo  htmlentities($row['Reference']);?></td>
 		<td><?php echo  htmlentities($row['donor_name']);?></td>
-		<td><?php echo  htmlentities($row['donor_province']);?></td>
-		<td><?php echo  htmlentities($row['donor_street']);?></td>
 		<?php 
-		$regionM= $row['donor_region'];
-		 $sql2="SELECT * From regions";
-		 $result2=mysqli_query($conn,$sql2);
+		$regCode= $row['donor_region'];
+		 $region="SELECT * From refregion";
+		 $result=mysqli_query($conn,$region);
 		
-		 foreach($result2 as $row1){
-			if ($regionM== $row1['region_id']){
-				echo "<td>".htmlentities($row1['region_name'])."</td>
+		 foreach($result as $row1){
+			if ($regCode== $row1['regCode']){
+				echo "<td>".htmlentities($row1['regDesc'])."</td>
+				";
+			}
+		 }
+		
+		?>
+		<?php 
+		$provCode= $row['donor_province'];
+		 $province="SELECT * From refprovince";
+		 $result=mysqli_query($conn,$province);
+		
+		 foreach($result as $row1){
+			if ($provCode== $row1['provCode']){
+				echo "<td>".htmlentities($row1['provDesc'])."</td>
+				";
+			}
+		 }
+		
+		?>
+		<?php 
+		$citymunCode= $row['donor_municipality'];
+		 $municipality="SELECT * From refcitymun";
+		 $result=mysqli_query($conn,$municipality);
+		
+		 foreach($result as $row1){
+			if ($citymunCode== $row1['citymunCode']){
+				echo "<td>".htmlentities($row1['citymunDesc'])."</td>
+				";
+			}
+		 }
+		
+		?>
+		<?php 
+		$brgyCode= $row['donor_barangay'];
+		 $barangay="SELECT * From refbrgy";
+		 $result=mysqli_query($conn,$barangay);
+		
+		 foreach($result as $row1){
+			if ($brgyCode== $row1['brgyCode']){
+				echo "<td>".htmlentities($row1['brgyDesc'])."</td>
 				";
 			}
 		 }

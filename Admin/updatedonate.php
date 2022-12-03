@@ -16,8 +16,9 @@ session_start();
 			$donorreference= $row['Reference'];
 			$donorname= $row['donor_name'];
 			$donorprovince= $row['donor_province'];
-			$donorstreet= $row['donor_street'];
 			$donorregion= $row['donor_region'];
+			$donormunicipality= $row['donor_municipality'];
+			$donorbarangay= $row['donor_barangay'];
 			$donoremail= $row['donor_email'];
 			$donordate= $row['donationDate'];
 			$donorcontact= $row['donor_contact'];
@@ -156,37 +157,78 @@ session_start();
 									<input class="form-control border-success" type="text" name="fname" id="fname" value="<?php echo htmlentities($donorname); ?>">
 									</div>
 								<div class="row">
-  									<div class="col">
-										<div class="form-group">
-											<label for="province">Province</label>
-											<input class="form-control border-success" type="text" name="province" id="province"value="<?php echo htmlentities($donorprovince); ?>">
-										</div>
-									</div>
-									<div class="col">
-									<div class="form-group">
-										<label for="street">Street</label>
-										<input class="form-control border-success" type="text" name="street" id="street" value="<?php echo htmlentities($donorstreet); ?>">
-											</div>
-										</div>
-									</div>
-								<div class="row">
 									<div class="col">
 										<div class="form-group">
 											<label for="region">Select Region</label>
 											<select class="custom-select region border-success" name="region" id="region">
 											<option value="-Select-">-Select-</option>
 											<?php 
-												$sql = "SELECT * FROM regions";
+												$sql = "SELECT * FROM refregion";
 												$result = mysqli_query($conn,$sql);
 												foreach($result	 as $row):
 												?>
-											<option value="<?php echo htmlentities($row['region_id']);?>"
-											<?php if($donorregion == $row['region_id']) {echo 'selected="selected"';}?>>
-											<?php echo htmlentities($row['region_name']);?></option>
+											<option value="<?php echo htmlentities($row['regCode']);?>"
+											<?php if($donorregion == $row['regCode']) {echo 'selected="selected"';}?>>
+											<?php echo htmlentities($row['regDesc']);?></option>
 											<?php endforeach;  ?>
 											</select>
 										</div>
 									</div> 
+									<div class="col">
+										<div class="form-group">
+										<label for="province">Select Province</label>
+											<select class="custom-select province border-success" name="province" id="province">
+											<option value="-Select-">-Select-</option>
+											<?php 
+												$sql = "SELECT * FROM refprovince";
+												$result = mysqli_query($conn,$sql);
+												foreach($result	 as $row):
+												?>
+											<option value="<?php echo htmlentities($row['provCode']);?>"
+											<?php if($donorprovince == $row['provCode']) {echo 'selected="selected"';}?>>
+											<?php echo htmlentities($row['provDesc']);?></option>
+											<?php endforeach;  ?>
+											</select>
+										</div>
+									</div>
+									<div class="col">
+										<div class="form-group">
+										<label for="municipality">Select Municipality</label>
+											<select class="custom-select municipality border-success" name="municipality" id="municipality">
+											<option value="-Select-">-Select-</option>
+											<?php 
+												$sql = "SELECT * FROM refcitymun";
+												$result = mysqli_query($conn,$sql);
+												foreach($result	 as $row):
+												?>
+											<option value="<?php echo htmlentities($row['citymunCode']);?>"
+											<?php if($donormunicipality == $row['citymunCode']) {echo 'selected="selected"';}?>>
+											<?php echo htmlentities($row['citymunDesc']);?></option>
+											<?php endforeach;  ?>
+											</select>
+										</div>
+									</div>
+									</div>
+								<div class="row">
+								<div class="col">
+										<div class="form-group">
+										<label for="barangay">Select Barangay</label>
+											<select class="custom-select barangay border-success" name="barangay" id="barangay">
+											<option value="-Select-">-Select-</option>
+											<?php 
+												$sql = "SELECT * FROM refbrgy";
+												$result = mysqli_query($conn,$sql);
+												foreach($result	 as $row):
+												?>
+											<option value="<?php echo htmlentities($row['brgyCode']);?>"
+											<?php if($donorbarangay == $row['brgyCode']) {echo 'selected="selected"';}?>>
+											<?php echo htmlentities($row['brgyDesc']);?></option>
+											<?php endforeach;  ?>
+											</select>
+										</div>
+									</div>
+
+
 									<div class="col">
 										<div class="form-group">
 											<label for="contact">Contact</label>
@@ -207,30 +249,85 @@ session_start();
 								<div class="col">
 									<div class="form-group">
 									<label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>
-									<button style="float: right;" type="button" name="btn_additem" class="btn" id="btn_additem"><i style="color: green;font-size:40px;" class="fa-sharp fa-solid fa-plus"></i> 
+									<button style="float: right;" type="button" class="btn btn-success btnAdd" id="btnAdd" name="btnAdd"><i style="color: white;font-size:30px;" class="fa-sharp fa-solid fa-plus"></i> 
 										</button>
 									</div>
 								</div>
 							</div>
-								<?php 
-								$sql1="SELECT * from donation_items10 where Reference= $donorreference";
-								$result1=mysqli_query($conn,$sql1);
+							<div class="row">
+							<div class="col">
+										<div class="form-group">
+										<?php 
+								$sql1="SELECT * from donation_items10 where Reference= ?";
+								$stmt = $conn->prepare($sql1); 
+								$stmt->bind_param("s", $donorreference);
+								$stmt->execute();
+								$result = $stmt->get_result();
+								$data = $result->fetch_all(MYSQLI_ASSOC);
+								foreach ($data as $donor){
+									$variantCode= $donor['variantCode'];
+									$categCode= $donor['category'];
+									$name_items= $donor['name_items'];
+								}
+								
 							
-								foreach($result1 as $row1):
-									$categM= $row1['category'];
-									$quantity= $row1['quantity'];
-									$reference= $row1['Reference'];
-									$item_names= $row1['name_items'];
-								
+							
 								?>
-								
-							<div id="prevItem">
-								<div class="item">
-									<div class="row">
-										<div class="col">
-											<div class="form-group">
-												<label for="category">Select Category</label>
-												<select  class="custom-select border-success category" name="category" id="category">
+										<label for="variant">Select Variant</label>
+											<select class="custom-select variant border-success" name="variant" id="variant">
+											<option value="-Select-">-Select-</option>
+											<?php 
+												$sql = "SELECT * FROM variant";
+												$result = mysqli_query($conn,$sql);
+												foreach($result	 as $row):
+												?>
+											<option value="<?php echo htmlentities($row['variantCode']);?>"
+											<?php if($variantCode == $row['variantCode']) {echo 'selected="selected"';}?>>
+											<?php echo htmlentities($row['variant']);?></option>
+											<?php endforeach;  ?>
+											</select>
+										</div>
+									</div>
+									<div class="col">
+										<div class="form-group">
+											<label for="">Quantity</label>
+											<?php 
+											$totalVariant= "SELECT quantity from categ_varianttotal where donor_reference=?";
+											$stmt = $conn->prepare($totalVariant);
+											$stmt->bind_param('s',$donorreference);
+											$stmt->execute();
+											$result= $stmt->get_result();
+											$user = $result->fetch_assoc();
+											echo "<input class='form-control border-success quantity' name='quantity' id='quantity' value='".$user['quantity']."'>";
+											?>
+
+										</div>
+									</div>
+							</div>	
+							
+							<table class="table table-bordered">
+								<tr>
+									<th>Category</th>
+									<th>item Name</th>
+									<th>Button</th>
+								</tr>
+								<tbody class="dynamicAdd">
+									<tr>
+									<?php 
+								$total="SELECT * from donation_items10 where Reference= ?";
+								$stmt = $conn->prepare($total); 
+								$stmt->bind_param("s", $donorreference);
+								$stmt->execute();
+								$result = $stmt->get_result();
+								$data = $result->fetch_all(MYSQLI_ASSOC);
+								foreach ($data as $donor):
+									$variantCode= $donor['variantCode'];
+									$categCode= $donor['category'];
+									$name_items= $donor['name_items'];
+									$count=0;
+							
+								?>
+										<td><select  class="custom-select border-success category" name="category" id="category">
 												<option value="-Select-">-Select-</option>
 												<?php
 													$sql2= "SELECT * from category";
@@ -239,36 +336,26 @@ session_start();
 																
 												?>
 									
-												<option value="<?php echo htmlentities($row2['categ_id']); ?>"<?php if($categM == $row2['categ_id']) {echo 'selected="selected"';}?>>
+												<option value="<?php echo htmlentities($row2['categCode']); ?>"<?php if($categCode == $row2['categ_id']) {echo 'selected="selected"';}?>>
 												<?php echo htmlentities($row2['category']);?></option>
 												
 												
 													<?php endforeach; ?>
 										
-													</select>
+													</select></td>
+										<td><input type="text" class="form-control border-success name_items" id="name_items" name="name_items" value="<?php echo htmlentities($name_items); ?>"></td>
+									
+										<td><button type="button" class="btn btn-danger btnRemove" id="btnRemove">Remove</button></td>
+										
+									</tr>
+									<?php $count++; endforeach; ?>
+								</tbody>
 							
-													</div>	
-												</div>
-											<div class="col">
-												<div class="form-group">
-													<label>Name of items</label>
-													<input type="text" class="form-control border-success name_items" id="name_items" name="name_items" value="<?php echo htmlentities($item_names); ?>">
-														</div>
-													</div>
-												</div>
-										<div class="row">
-												<div class="col">
-													<div class="form-group">
-														<label for="quantity">Quantity</label>
-														<input class="form-control border-success quantity" type="text" name="quantity" id="quantity" value="<?php echo htmlentities($quantity); ?>">
-															</div>
-														</div>
-													</div>
-											
-												</div>	
-											</div>
-										<?php endforeach;?>
+							</table>
+							
+							
 									</form>	
+									
 			</div>
 		</main>	
 	</section>
@@ -279,447 +366,228 @@ session_start();
 	<script src="scripts/sweetalert2.all.min.js"></script>	
 	<script>
 		$(document).ready(function(){
-			var count =0;
-			function add_input_field(count){
-				$('#testBtn').remove();
-				$('#cancelBtn').remove();
-				var html='';
-				
-				html+='<div>'
-				html+= '<div class="row"><div class="col"><div class="form-group"><label for="category">Select Category</label><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></div></div>';
-				html+= '<div class="col"><div class="form-group"><label>Name of items</label><input type="text" class="form-control border-success name_items" id="name_items" name="name_items"></div></div>'
-				html += '<div class="col"><div class="form-group"><label for="quantity">Quantity</label><input class="form-control quantity border-success" type="text" name="quantity" id="quantity"></div></div></div>';
-			
-				
-							
-				
-				var remove_button='';
-				if(count>0)
-				{
-					remove_button='<button type="button" name="remove" id="remove" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>';
-				}
-				html+='<span>'+remove_button+'</span></div>';
-				return html;
-				}	
-			
-			
-			$('#update-form').append('<button  type="button" class="btn addDonate" id="testBtn">Save</button>');
-			$('#update-form').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
-			//button remove for previousdata
-			$('.item').append('<button type="button" name="prevremove" id="prevremove" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>');	
-			$(document).on('click','#btn_additem',function(e){
-				e.preventDefault();
-				count++;
-				$('#update-form').append(add_input_field(count))
-				$('#update-form').append('<button type="button" class="btn addDonate" id="testBtn">Save</button>');
-				$('#update-form').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
-					$('#testBtn').click(function(e){
-						var valid = this.form.checkValidity();
-						if(valid) {	
-							e.preventDefault();
-						var quantity_arr=[];
-						var category_arr=[];
-						var itemName_arr=[];
-						var category = $('.category');
-						var quantity = $('.quantity');
-						var name_items = $('.name_items');
-			
-						for (var i = 0;i<category.length;i++){
-							category_arr.push($(category[i]).val());
-							quantity_arr.push($(quantity[i]).val());
-							itemName_arr.push($(name_items[i]).val());
-						}
-						var donor_id= $('#donor_id').val();
-						var reference_id= $('#reference_id').val();
-						var fname = $('#fname').val();
-						var province = $('#province').val();
-						var street = $('#street').val();
-						var region = $('#region').val();
-						var email = $('#email').val();
-						var contact= $('#contact').val();
-						var donation_date = $('#donation_date').val();
-				
-						var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-       					var varnumbers = /^\d+$/;
-        				var inValid = /\s/;
-		 if(fname==""){
-		 	$('#fname').removeClass('border-success');
-             $('#fname').addClass('border-danger');
-             return false;
-		 }
-		 if(province==""){
-		 	$('#province').removeClass('border-success');
-             $('#province').addClass('border-danger');
-             return false;
-		 }
-		 else if(street==""){
-		 	$('#street').removeClass('border-success');
-             $('#street').addClass('border-danger');
-             return false;
-		 }
-		 else if(region==""){
-		 	Swal.fire('Fields', "Please select a region",'warning');
-             return false;
-		 }
-		 else if(contact==""){
-		 	$('#contact').removeClass('border-success');
-             $('#contact').addClass('border-danger');
-		 }
-		 else if (inValid.test($('#contact').val())==true){
-             Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-             $('#contact').removeClass('border-success');
-             $('#contact').addClass('border-danger');
-             return false;
-           }
-         else if(varnumbers.test($('#contact').val())==false) {
-             Swal.fire('Contact', "Numbers only.",'warning');
-             $('#contact').removeClass('border-success');
-             $('#contact').addClass('border-danger');
-             return false;
-           } 
-         else if(contact.length !=11){
-             Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-             $('#contact').removeClass('border-success');
-             $('#contact').addClass('border-danger');
-             return false;
-           }
-		 else if(email==""){
-		 	$('#email').removeClass('border-success');
-             $('#email').addClass('border-danger');
-             return false;
-		 }
-		 else if(emailVali.test($('#email').val())==false){
-		 	Swal.fire('Email', "Invalid email address",'warning'); 
-             $('#email').removeClass('border-success');
-             $('#email').addClass('border-danger');
-             return false;
-		 }
-		 else if(donation_date==""){
-		 	$('#donation_date').removeClass('border-success');
-             $('#donation_date').addClass('border-danger');
-             return false;
-		 }
-		  
-		 else{
-		 	for (var j=0;j<category.length;j++)
-		 	{
-				if ($(category[j]).val()=="-Select-"){
-		 		Swal.fire('Fields', "Please select a category",'warning');
-		 		return false;
-		 	}
-			 else if ($(name_items[j]).val()==""){
-		 		Swal.fire('Fields', "Item name is empty",'warning');
-		 		return false;
-		 	}
-		 	else if ($(quantity[j]).val()==""){
-		 		Swal.fire('Fields', "Quantity is empty",'warning');
-		 		return false;
-		 	}
-		 	else if (inValid.test($(quantity[j]).val())==true){	
-		 		Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-		 		return false;
-		 	}
-		 	
-		 	}
-			 var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
-			quantity_arr:quantity_arr,itemName_arr:itemName_arr};
-		
-		$.ajax({
-						url:'include/edit.inc.php',
-						method:'POST',
-						data: data,
-						success:function(data){
-							
-							if(data == 'Data-updated') {
-							Swal.fire({
-						icon: 'success',
-						title: 'Success',
-						text:data,
-						}).then(function() {
-							window.location = "donations.php";
-						});
-				}	
-		 	}
-
-		 });
-		 }
-		
-		
-	}			
-					});
-	$('#fname').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	$('#street').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	$('#province').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  $('#contact').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	$('#email').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	$('#donation_date').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  //cancel button
-	  $('#cancelBtn').click(function(){
-		Swal.fire({
-			icon: 'question',
-			title: 'Go back to main page?',
-			}).then(function() {
-			window.location = "donations.php";
-			});
-	  });
+	var appendedTable = '<tr>'+
+	'<td><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></td>'+
+	'<td><input class="form-control border-success name_items" id="name_items" name="name_items" autocomplete="off"></td>'+
+	'<td><button type="button" class="btn btn-danger btnRemove" id="btnRemove">Remove</button></td></tr>';
+	$(document).on('click','.btnRemove', function(){
+      $(this).closest('tr').remove();
+    });
+	$('#update-form').append('<button  type="button" class="btn addDonate" id="testBtn">Save</button>');
+	$('#update-form').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
+	
+	$(document).on('click', '.btnAdd',function(){
+		$('.dynamicAdd').append(appendedTable);
 	});
-	$(document).on('click','#remove', function(){
-		$(this).closest('div').remove();
-	});
-			//remove previous data
-	$(document).on('click','#prevremove', function(){
-	$(this).closest('div').remove();
-	});
-
-	//single
 	$('#testBtn').click(function(e){
 		var valid = this.form.checkValidity();
-						if(valid) {	
-							e.preventDefault();
-						var quantity_arr=[];
-						var category_arr=[];
-						var itemName_arr=[];
-						var category = $('.category');
-						var quantity = $('.quantity');
-						var name_items = $('.name_items');
-			
-						for (var i = 0;i<category.length;i++){
-							category_arr.push($(category[i]).val());
-							quantity_arr.push($(quantity[i]).val());
-							itemName_arr.push($(name_items[i]).val());
-						}
-						var donor_id= $('#donor_id').val();
-						var reference_id= $('#reference_id').val();
-						var fname = $('#fname').val();
-						var province = $('#province').val();
-						var street = $('#street').val();
-						var region = $('#region').val();
-						var email = $('#email').val();
-						var contact= $('#contact').val();
-						var donation_date = $('#donation_date').val();
-				
-						var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-       					var varnumbers = /^\d+$/;
-        				var inValid = /\s/;
-		 if(fname==""){
-		 	$('#fname').removeClass('border-success');
-             $('#fname').addClass('border-danger');
-             return false;
-		 }
-		 if(province==""){
-		 	$('#province').removeClass('border-success');
-             $('#province').addClass('border-danger');
-             return false;
-		 }
-		 else if(street==""){
-		 	$('#street').removeClass('border-success');
-             $('#street').addClass('border-danger');
-             return false;
-		 }
-		 else if(region==""){
-		 	Swal.fire('Fields', "Please select a region",'warning');
-             return false;
-		 }
-		 else if(contact==""){
-		 	$('#contact').removeClass('border-success');
-             $('#contact').addClass('border-danger');
-		 }
-		 else if (inValid.test($('#contact').val())==true){
-             Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-             $('#contact').removeClass('border-success');
-             $('#contact').addClass('border-danger');
-             return false;
-           }
-         else if(varnumbers.test($('#contact').val())==false) {
-             Swal.fire('Contact', "Numbers only.",'warning');
-             $('#contact').removeClass('border-success');
-             $('#contact').addClass('border-danger');
-             return false;
-           } 
-         else if(contact.length !=11){
-             Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-             $('#contact').removeClass('border-success');
-             $('#contact').addClass('border-danger');
-             return false;
-           }
-		 else if(email==""){
-		 	$('#email').removeClass('border-success');
-             $('#email').addClass('border-danger');
-             return false;
-		 }
-		 else if(emailVali.test($('#email').val())==false){
-		 	Swal.fire('Email', "Invalid email address",'warning'); 
-             $('#email').removeClass('border-success');
-             $('#email').addClass('border-danger');
-             return false;
-		 }
-		 else if(donation_date==""){
-		 	$('#donation_date').removeClass('border-success');
-             $('#donation_date').addClass('border-danger');
-             return false;
-		 }
-		  
-		 else{
-		 	for (var j=0;j<category.length;j++)
-		 	{
-				if ($(category[j]).val()=="-Select-"){
-		 		Swal.fire('Fields', "Please select a category",'warning');
-		 		return false;
-		 	}
-			 else if ($(name_items[j]).val()==""){
-		 		Swal.fire('Fields', "Item name is empty",'warning');
-		 		return false;
-		 	}
-		 	else if ($(quantity[j]).val()==""){
-		 		Swal.fire('Fields', "Quantity is empty",'warning');
-		 		return false;
-		 	}
-		 	else if (inValid.test($(quantity[j]).val())==true){	
-		 		Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-		 		return false;
-		 	}
-		 	
-		 	}
-			 var data = {updateBtn: '' ,donor_id:donor_id,reference_id:reference_id,fname,province:province,street:street,region:region,email:email,contact:contact,donation_date:donation_date,category_arr:category_arr,
-			quantity_arr:quantity_arr,itemName_arr:itemName_arr};
-		
-		$.ajax({
+        if(valid) { 
+            e.preventDefault();
+            var fd = new FormData();
+        var category_arr=[];
+        var itemName_arr=[];
+
+        var category = $('.category');
+        var name_items = $('.name_items');
+        // var test_qty = 0;
+        for (var i = 0;i<category.length;i++){  
+            category_arr.push($(category[i]).val());
+            itemName_arr.push($(name_items[i]).val());
+            // test_qty += parseInt($(quantity[i]).val());    
+        }
+		var donor_id=$('#donor_id').val();
+        var reference_id= $('#reference_id').val();
+        var fname = $('#fname').val();
+        var province = $('#province').val();
+        var region = $('#region').val();
+		var municipality = $('#municipality').val();
+		var barangay = $('#barangay').val();
+        var email = $('#email').val();
+        var donation_date = $('#donation_date').val();
+        var contact= $('#contact').val();
+		var variant= $('#variant').val();
+		var quantity= $('#quantity').val();
+        var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var varnumbers = /^\d+$/;
+        var inValid = /\s/;
+
+          if(fname==""){
+              $('#fname').removeClass('border-success');
+              $('#fname').addClass('border-danger');
+              return false;
+          }
+          else if(region=="-Select-"){
+              Swal.fire('Select', "Please select a region",'warning');
+              return false;
+          }
+		  else if(province=="-Select-"){
+              Swal.fire('Select', "Please select a province",'warning');
+              return false;
+          }
+		  else if(municipality=="-Select-"){
+              Swal.fire('Select', "Please select a municipality",'warning');
+              return false;
+          }
+		  else if(barangay=="-Select-"){
+              Swal.fire('Select', "Please select a barangay",'warning');
+              return false;
+          }
+          else if(contact==""){
+              $('#contact').removeClass('border-success');
+              $('#contact').addClass('border-danger');
+          }
+          else if (inValid.test($('#contact').val())==true){
+              Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+              $('#contact').removeClass('border-success');
+              $('#contact').addClass('border-danger');
+              return false;
+            }
+          else if(varnumbers.test($('#contact').val())==false) {
+              Swal.fire('Number', "Numbers only.",'warning');
+              $('#contact').removeClass('border-success');
+              $('#contact').addClass('border-danger');
+              return false;
+            } 
+          else if(contact.length !=11){
+              Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+              $('#contact').removeClass('border-success');
+              $('#contact').addClass('border-danger');
+              return false;
+            }
+          else if(email==""){
+              $('#email').removeClass('border-success');
+              $('#email').addClass('border-danger');
+              return false;
+          }
+          else if(emailVali.test($('#email').val())==false){
+              Swal.fire('Email', "Invalid email address",'warning'); 
+              $('#email').removeClass('border-success');
+              $('#email').addClass('border-danger');
+              return false;
+          }
+        
+          else if(donation_date==""){
+
+              $('#donation_date').removeClass('border-success');
+              $('#donation_date').addClass('border-danger');
+              return false;
+          }
+		  else if (quantity==""){
+                  Swal.fire('Fields', "Quantity is empty",'warning');
+                  return false;
+              }
+			  
+		 else if (inValid.test($('#quantity').val())==true){ 
+                  Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+                  return false;
+              }
+		else if(varnumbers.test($('#quantity').val())==false) {
+              Swal.fire('Number', "Numbers only.",'warning');
+              $('#contact').removeClass('border-success');
+              $('#contact').addClass('border-danger');
+              return false;
+            } 
+			else if(variant=="-Select-"){
+              Swal.fire('Select', "Please select a variant",'warning');
+              return false;
+          }
+          else{
+              for(var j=0;j<category.length;j++){
+            
+               if ($(category[j]).val()=="-Select-"){
+                  Swal.fire('Fields', "Please select a category",'warning');
+                  return false;
+              }
+           else if ($(name_items[j]).val()==""){
+                  Swal.fire('Fields', "Item name is empty",'warning');
+                  return false;
+              }
+             
+              }
+            var data = {updateBtn: '',donor_id:donor_id,reference_id:reference_id,fname,province:province,region:region,municipality:municipality,barangay:barangay,contact:contact,
+			email:email,donation_date:donation_date,variant:variant,quantity:quantity,category_arr:category_arr,itemName_arr:itemName_arr};
+            
+			$.ajax({
 						url:'include/edit.inc.php',
 						method:'POST',
 						data: data,
 						success:function(data){
 							
-							if(data == 'Data-updated') {
-							Swal.fire({
-						icon: 'success',
-						title: 'Success',
-						text:data,
-						}).then(function() {
-							window.location = "donations.php";
-						});
-				}	
+				 			if(data == 'Data-updated') {
+				 			Swal.fire({
+				 		icon: 'success',
+				 		title: 'Success',
+				 		text:data,
+				 		}).then(function() {
+				 			window.location = "donations.php";
+				 		});
+				 }	
 		 	}
 
 		 });
-		 }
-		
-		
-	}				
-    });
-	$('#fname').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
+          }
+                      
         }
-      });
-	  $('#street').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  $('#province').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  $('#contact').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  $('#email').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  $('#donation_date').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
-	  //cancel button
-	  $('#cancelBtn').click(function(){
-		Swal.fire({
-			icon: 'question',
-			title: 'Go back to main page?',
-			}).then(function() {
-			window.location = "donations.php";
+	});  
+});
+</script>
+<script>
+	$(document).ready(function(){
+	 $('#region').on('change',function(){
+		var regCode= $(this).val();
+		if (regCode){
+			$.ajax({
+				url:'include/region.php',
+				type:'POST',
+				data: 'regCode='+regCode,
+				success: function (data){
+					$('.province').html(data);
+				}
+
 			});
-	  });
-					
-		});
-	</script>
+		}
+		else{
+			swal.fire('Warning', 'Select region', 'warning');
+		}
+	 });
+	 $('#province').on('change',function(){
+		var provCode= $(this).val();
+		if (provCode){
+			$.ajax({
+				url:'include/region.php',
+				type:'POST',
+				data: 'provCode='+provCode,
+				success: function (data){
+					$('.municipality').html(data);
+				}
+
+			});
+		}
+		else{
+			swal.fire('Warning', 'Select Province', 'warning');
+		}
+	 });
+	 $('#municipality').on('change',function(){
+		var citymunCode= $(this).val();
+		if (citymunCode){
+			$.ajax({
+				url:'include/region.php',
+				type:'POST',
+				data: 'citymunCode='+citymunCode,
+				success: function (data){
+					$('.barangay').html(data);
+				}
+
+			});
+		}
+		else{
+			swal.fire('Warning', 'Select Province', 'warning');
+		}
+	 });
+	
+	});
+</script>
+
 
 </body>
 </html>

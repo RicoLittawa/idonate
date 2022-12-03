@@ -116,7 +116,7 @@ session_start();
 			<div class="table-data">
 				<div class="add">
 					<div class="head">
-						<h3>Settings</h3>
+						<h3>Configure</h3>
 					</div>	
 				<div class="modify">
 					<form id="add_template" enctype="multipart/form-data">
