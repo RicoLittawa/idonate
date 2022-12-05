@@ -143,7 +143,7 @@ session_start();
 	</div>
 	</div>
 					
-					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
+					<table class="table table-striped table-bordered" id="table_data">
 			
     <thead>
       <tr>
@@ -174,7 +174,7 @@ session_start();
 			<tr>
 		
    		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['donor_email']);?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"></input>
-	    <button class="btn"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
+	    <button class="btn col"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
 		</td>
 		<td><?php echo  htmlentities($row['Reference']);?></td>
 		<td><?php echo  htmlentities($row['donor_name']);?></td>

@@ -58,7 +58,8 @@ if(isset($_POST['money_data'])){
 
     $rdm_name= $user['money_name'];
     $rdm_province= $user['money_province'];
-    $rdm_street= $user['money_street'];
+    $rdm_municipality= $user['money_municipality'];
+    $rdm_barangay= $user['money_barangay'];
     $rdm_region= $user['money_region'];
     $rdm_email= $user['money_email'];
     $rdm_contact= $user['money_contact'];
@@ -74,10 +75,10 @@ if(isset($_POST['money_data'])){
       $stmt=$conn->prepare($totalDonor);
       $stmt->bind_param('s',$rdm_name);
       $stmt->execute();
-     $sql2= "INSERT into donor_recordm(rDM_name,rDM_province,rDM_street,rDM_region,rDM_contact,rDM_email,rDM_date,donated,rDM_certificate)
-      value (?,?,?,?,?,?,?,?,?)";
+     $sql2= "INSERT into donor_recordm(rDM_name,rDM_region,rDM_province,rDM_municipality,rDM_barangay,rDM_contact,rDM_email,rDM_date,donated,rDM_certificate)
+      value (?,?,?,?,?,?,?,?,?,?)";
      $stmt=$conn->prepare($sql2);
-     $stmt->bind_param('sssssssss',$rdm_name,$rdm_province,$rdm_street,$rdm_region,$rdm_contact,$rdm_contact,$rdm_date,$amount, $genImage);
+     $stmt->bind_param('ssssssssss',$rdm_name,$rdm_region,$rdm_province,$rdm_municipality,$rdm_barangay,$rdm_contact,$rdm_email,$rdm_date,$amount, $genImage);
      $result= $stmt->execute();
     
     

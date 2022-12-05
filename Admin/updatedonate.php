@@ -180,9 +180,13 @@ session_start();
 											<select class="custom-select province border-success" name="province" id="province">
 											<option value="-Select-">-Select-</option>
 											<?php 
-												$sql = "SELECT * FROM refprovince";
-												$result = mysqli_query($conn,$sql);
-												foreach($result	 as $row):
+												$province = "SELECT provCode, provDesc FROM refprovince where regCode=?";
+												$stmt=$conn->prepare($province);
+												$stmt->bind_param('s',$donorregion);
+												$stmt->execute();
+												$resultProv= $stmt->get_result();
+												$data = $resultProv->fetch_all(MYSQLI_ASSOC);
+												foreach($data as $row):
 												?>
 											<option value="<?php echo htmlentities($row['provCode']);?>"
 											<?php if($donorprovince == $row['provCode']) {echo 'selected="selected"';}?>>
@@ -197,9 +201,13 @@ session_start();
 											<select class="custom-select municipality border-success" name="municipality" id="municipality">
 											<option value="-Select-">-Select-</option>
 											<?php 
-												$sql = "SELECT * FROM refcitymun";
-												$result = mysqli_query($conn,$sql);
-												foreach($result	 as $row):
+												$city = "SELECT citymunCode, citymunDesc FROM refcitymun where provCode=?";
+												$stmt=$conn->prepare($city);
+												$stmt->bind_param('s',$donorprovince);
+												$stmt->execute();
+												$resultProv= $stmt->get_result();
+												$data = $resultProv->fetch_all(MYSQLI_ASSOC);
+												foreach($data as $row):
 												?>
 											<option value="<?php echo htmlentities($row['citymunCode']);?>"
 											<?php if($donormunicipality == $row['citymunCode']) {echo 'selected="selected"';}?>>
@@ -216,9 +224,13 @@ session_start();
 											<select class="custom-select barangay border-success" name="barangay" id="barangay">
 											<option value="-Select-">-Select-</option>
 											<?php 
-												$sql = "SELECT * FROM refbrgy";
-												$result = mysqli_query($conn,$sql);
-												foreach($result	 as $row):
+												$brgy = "SELECT brgyCode, brgyDesc FROM refbrgy where citymunCode=?";
+												$stmt=$conn->prepare($brgy);
+												$stmt->bind_param('s',$donormunicipality);
+												$stmt->execute();
+												$resultProv= $stmt->get_result();
+												$data = $resultProv->fetch_all(MYSQLI_ASSOC);
+												foreach($data as $row):
 												?>
 											<option value="<?php echo htmlentities($row['brgyCode']);?>"
 											<?php if($donorbarangay == $row['brgyCode']) {echo 'selected="selected"';}?>>
@@ -383,7 +395,7 @@ session_start();
 		var valid = this.form.checkValidity();
         if(valid) { 
             e.preventDefault();
-            var fd = new FormData();
+    
         var category_arr=[];
         var itemName_arr=[];
 

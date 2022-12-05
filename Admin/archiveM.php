@@ -142,21 +142,16 @@ $result= mysqli_query($conn,$sql);
       <tr>
 		<th>Id</th>
 		<th>Donor Name</th>
-		<th>Province</th>
-		<th>Street</th>
 		<th>Region</th>
+		<th>Province</th>
+		<th>Municipality</th>
+		<th>Barangay</th>
 		<th>Email</th>
 		<th>Contact</th>
 		<th>Date</th>
 		<th>Donated</th>
 		<th>Certificate</th>
 		<th>Status</th>
-	
-		
-		
-		
-        
-        
       </tr>
     </thead>
     <tbody>
@@ -165,7 +160,8 @@ $result= mysqli_query($conn,$sql);
 				$rdm_id= $row['id'];
 				$rdm_name= $row['rDM_name'];
 				$rdm_province= $row['rDM_province'];
-				$rdm_street= $row['rDM_street'];
+				$rdm_municipality= $row['rDM_municipality'];
+				$rdm_barangay= $row['rDM_barangay'];
 				$rdm_region= $row['rDM_region'];
 				$rdm_email= $row['rDM_email'];
 				$rdm_contact= $row['rDM_contact'];
@@ -178,20 +174,49 @@ $result= mysqli_query($conn,$sql);
 		<tr>
 			<td><?php echo htmlentities($rdm_id) ?></td>
 			<td><?php echo htmlentities($rdm_name) ?></td>
-			<td><?php echo htmlentities($rdm_province) ?></td>
-			<td><?php echo htmlentities($rdm_street) ?></td>
 			<?php 
-			
-			 $sql2="SELECT * From regions";
+			 $sql2="SELECT * From refregion";
 		 	$result2=mysqli_query($conn,$sql2);
 		
 		 	foreach($result2 as $row1){
-			if ($rdm_region== $row1['region_id']){
-				echo "<td>".htmlentities($row1['region_name'])."</td>
+			if ($rdm_region== $row1['regCode']){
+				echo "<td>".htmlentities($row1['regDesc'])."</td>
 				";
 				}
 			}
+		?>
+		<?php 
+			 $sql2="SELECT * From refprovince";
+		 	$result2=mysqli_query($conn,$sql2);
 		
+		 	foreach($result2 as $row1){
+			if ($rdm_province== $row1['provCode']){
+				echo "<td>".htmlentities($row1['provDesc'])."</td>
+				";
+				}
+			}
+		?>
+		<?php 
+			 $sql2="SELECT * From refcitymun";
+		 	$result2=mysqli_query($conn,$sql2);
+		
+		 	foreach($result2 as $row1){
+			if ($rdm_municipality== $row1['citymunCode']){
+				echo "<td>".htmlentities($row1['citymunDesc'])."</td>
+				";
+				}
+			}
+		?>
+		<?php 
+			 $sql2="SELECT * From refbrgy";
+		 	$result2=mysqli_query($conn,$sql2);
+		
+		 	foreach($result2 as $row1){
+			if ($rdm_barangay== $row1['brgyCode']){
+				echo "<td>".htmlentities($row1['brgyDesc'])."</td>
+				";
+				}
+			}
 		?>
 			<td><?php echo htmlentities($rdm_email) ?></td>
 			<td><?php echo htmlentities($rdm_contact) ?></td>

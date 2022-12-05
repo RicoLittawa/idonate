@@ -2,7 +2,7 @@
 session_start();
 ?>
  <?php
-	  include "../Admin/include/connection.php";
+	  include "include/connection.php";
 	    
     $sql = "SELECT * FROM donation_items10";
     $result = mysqli_query($conn,$sql);
@@ -135,8 +135,7 @@ session_start();
       <tr>
         <th>ID</th>
 		<th>Category</th>
-		<th>Variant</th>
-		<th>Quantity</th>
+		<th>Item Name</th>
       </tr>
     </thead>
     <tbody>
@@ -157,9 +156,9 @@ session_start();
 
 					<?php endforeach; ?>
 					
-						<td><?php echo htmlentities($row['name_items']); ?></td>
+					<td><?php echo htmlentities($row['name_items']); ?></td>
 						
-					<td><?php echo htmlentities($row['quantity']); ?></td>
+					
 				</tr>
 				<?php endwhile; ?>
 

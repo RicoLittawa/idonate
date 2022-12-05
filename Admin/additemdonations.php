@@ -315,7 +315,7 @@ session_start();
 		var valid = this.form.checkValidity();
         if(valid) { 
             e.preventDefault();
-            var fd = new FormData();
+  
         var category_arr=[];
         var itemName_arr=[];
 
@@ -507,7 +507,7 @@ session_start();
 			});
 		}
 		else{
-			swal.fire('Warning', 'Select Province', 'warning');
+			swal.fire('Warning', 'Select province', 'warning');
 		}
 	 });
 	 $('#municipality').on('change',function(){
@@ -524,7 +524,7 @@ session_start();
 			});
 		}
 		else{
-			swal.fire('Warning', 'Select Province', 'warning');
+			swal.fire('Warning', 'Select municipality', 'warning');
 		}
 	 });
 	

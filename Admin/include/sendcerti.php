@@ -62,7 +62,8 @@
     $rd_name= $user['donor_name'];
     $rd_reference= $user['Reference'];
     $rd_province= $user['donor_province'];
-    $rd_street= $user['donor_street'];
+    $rd_municipality= $user['donor_municipality'];
+    $rd_barangay= $user['donor_barangay'];
     $rd_region= $user['donor_region'];
     $rd_email= $user['donor_email'];
     $rd_contact= $user['donor_contact'];
@@ -74,10 +75,10 @@
       $stmt->bind_param('s',$rd_name);
       $stmt->execute();
 
-     $sql2= "INSERT into donor_record(rD_name,rD_reference,rD_province,rD_street,rD_region,rD_email,rD_contact,rD_date,rd_certificate)
-      value (?,?,?,?,?,?,?,?,?)";
+     $sql2= "INSERT into donor_record(rD_reference,rD_name,rD_region,rD_province,rD_municipality,rD_barangay,rD_email,rD_contact,rD_date,rd_certificate)
+      value (?,?,?,?,?,?,?,?,?,?)";
      $stmt=$conn->prepare($sql2);
-     $stmt->bind_param('sssssssss',$rd_name,$rd_reference,$rd_province,$rd_street,$rd_region,$rd_email,$rd_contact,$rd_date,  $genImage);
+     $stmt->bind_param('ssssssssss',$rd_reference,$rd_name,$rd_region,$rd_province,$rd_municipality,$rd_barangay,$rd_email,$rd_contact,$rd_date,  $genImage);
      $result= $stmt->execute();
 
      if($result){

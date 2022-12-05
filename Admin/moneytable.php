@@ -133,9 +133,10 @@ session_start();
       <tr>
 		<th><input type="checkbox" name="" id="selectAll" class="col"></th>
         <th>Donor Name</th>
-		<th>Province</th>
-		<th>Street</th>
 		<th>Region</th>
+		<th>Province</th>
+		<th>Municipality</th>
+		<th>Barangay</th>
 		<th>Email</th>
 		<th>Contact</th>
 		<th>Date</th>
@@ -158,21 +159,53 @@ session_start();
 	<tr>
 	<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['money_email']); ?>" data-name="<?php echo htmlentities($row['money_name']); ?>"data-id="<?php echo htmlentities($row['money_id']); ?>"></input></td>
 	<td><?php echo htmlentities($row['money_name']) ;?></td>
-	<td><?php echo htmlentities($row['money_province']); ?></td>
-	<td><?php echo htmlentities($row['money_street']); ?></td>
 	<?php 
-			
-			 $sql2="SELECT * From regions";
+			 $sql2="SELECT * From refregion";
 		 	$result2=mysqli_query($conn,$sql2);
-		
 		 	foreach($result2 as $row1){
-			if ($row['money_region']== $row1['region_id']){
-				echo "<td>".htmlentities($row1['region_name'])."</td>
+			if ($row['money_region']== $row1['regCode']){
+				echo "<td>".htmlentities($row1['regDesc'])."</td>
 				";
 				}
 			}
 		
 		?>
+	<?php 
+			 $sql2="SELECT * From refprovince";
+		 	$result2=mysqli_query($conn,$sql2);
+		 	foreach($result2 as $row1){
+			if ($row['money_province']== $row1['provCode']){
+				echo "<td>".htmlentities($row1['provDesc'])."</td>
+				";
+				}
+			}
+		
+		?>
+		<?php 
+			 $sql2="SELECT * From refcitymun";
+		 	$result2=mysqli_query($conn,$sql2);
+		 	foreach($result2 as $row1){
+			if ($row['money_municipality']== $row1['citymunCode']){
+				echo "<td>".htmlentities($row1['citymunDesc'])."</td>
+				";
+				}
+			}
+		
+		?>
+		<?php 
+			 $sql2="SELECT * From refbrgy";
+		 	$result2=mysqli_query($conn,$sql2);
+		 	foreach($result2 as $row1){
+			if ($row['money_barangay']== $row1['brgyCode']){
+				echo "<td>".htmlentities($row1['brgyDesc'])."</td>
+				";
+				}
+			}
+		
+		?>
+	
+	
+	
 	<td><?php echo htmlentities($row['money_email']); ?></td>
 	<td><?php echo htmlentities($row['money_contact']) ;?></td>
 	<td><?php echo htmlentities($row['money_date']); ?></td>

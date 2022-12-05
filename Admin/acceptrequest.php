@@ -195,9 +195,13 @@ function fill_category_select_box($conn)
 									<select class="custom-select border-success" name="req_province" id="req_province">
 									<option value="-Select-">-Select-</option>
 									<?php 
-									$sql1= "SELECT * from refprovince";
-									$result= mysqli_query($conn,$sql1);
-									foreach ($result as $row1):
+									$province = "SELECT provCode, provDesc FROM refprovince where regCode=?";
+									$stmt=$conn->prepare($province);
+									$stmt->bind_param('s',$req_region);
+									$stmt->execute();
+									$resultProv= $stmt->get_result();
+									$data = $resultProv->fetch_all(MYSQLI_ASSOC);
+									foreach($data as $row1):
 									?>
 									<option value="<?php echo htmlentities($row1['provCode']) ?>"<?php if($req_province== $row1['provCode']){echo 'selected="selected"';} ?>>
 									<?php echo htmlentities($row1['provDesc']); ?></option>
@@ -212,9 +216,14 @@ function fill_category_select_box($conn)
 									<select class="custom-select border-success" name="req_municipality" id="req_municipality">
 									<option value="-Select-">-Select-</option>
 									<?php 
-									$sql1= "SELECT * from refcitymun";
-									$result= mysqli_query($conn,$sql1);
-									foreach ($result as $row1):
+									$city = "SELECT citymunCode, citymunDesc FROM refcitymun where provCode=?";
+									$stmt=$conn->prepare($city);
+									$stmt->bind_param('s',$req_province);
+									$stmt->execute();
+									$resultCity= $stmt->get_result();
+									$data = $resultCity->fetch_all(MYSQLI_ASSOC);
+									foreach($data as $row1):
+									
 									?>
 									<option value="<?php echo htmlentities($row1['citymunCode']) ?>"<?php if($req_municipality== $row1['citymunCode']){echo 'selected="selected"';} ?>>
 									<?php echo htmlentities($row1['citymunDesc']); ?></option>
@@ -226,22 +235,27 @@ function fill_category_select_box($conn)
 						</div>
 						<div class="row">
 						<div class="col">
-								<div class="form-group">
-									<label for="">Barangay</label>
-									<select class="custom-select border-success" name="req_barangay" id="req_barangay">
-									<option value="-Select-">-Select-</option>
-									<?php 
-									$sql1= "SELECT * from refbrgy";
-									$result= mysqli_query($conn,$sql1);
-									foreach ($result as $row1):
-									?>
-									<option value="<?php echo htmlentities($row1['brgyCode']) ?>"<?php if($req_barangay== $row1['brgyCode']){echo 'selected="selected"';} ?>>
-									<?php echo htmlentities($row1['brgyDesc']); ?></option>
-										<?php endforeach; ?>
-									</select>
-									
-								</div>
-							</div>
+										<div class="form-group">
+										<label for="req_barangay">Select Barangay</label>
+											<select class="custom-select border-success" name="req_barangay" id="req_barangay">
+											<option value="-Select-">-Select-</option>
+											<?php 
+												$brgy = "SELECT brgyCode, brgyDesc FROM refbrgy where citymunCode=?";
+												$stmt=$conn->prepare($brgy);
+												$stmt->bind_param('s',$req_municipality);
+												$stmt->execute();
+												$resultBrgy= $stmt->get_result();
+												$data = $resultBrgy->fetch_all(MYSQLI_ASSOC);
+												foreach($data as $row1):
+												?>
+											
+											<option value="<?php echo htmlentities($row1['brgyCode']);?>"
+											<?php if($req_barangay == $row1['brgyCode']) {echo 'selected="selected"';}?>>
+											<?php echo htmlentities($row1['brgyDesc']);?></option>
+											<?php endforeach;  ?>
+											</select>
+										</div>
+									</div>
 							<div class="col">
 								<div class="form-group">
 									<label for="req_contact">Contact</label>
@@ -342,7 +356,7 @@ function fill_category_select_box($conn)
 									$variantCode= $donor['req_variantCode'];
 									$categCode= $donor['req_category'];
 									$name_items= $donor['req_nameItem'];
-									$count=0;
+									
 							
 								?>
 										<td><select  class="custom-select border-success category" name="category" id="category">
@@ -366,11 +380,12 @@ function fill_category_select_box($conn)
 										<td><button type="button" class="btn btn-danger btnRemove" id="btnRemove">Remove</button></td>
 										
 									</tr>
-									<?php $count++; endforeach; ?>
+									<?php endforeach; ?>
 								</tbody>
 							
 							</table>
 						<?php endforeach; ?>
+						<input type="hidden" id="valid_id" name="valid_id" value="<?php echo htmlentities($valid_id) ?>">
 					</form>
   			<?php endif; ?>
 			</div>
@@ -412,17 +427,17 @@ function fill_category_select_box($conn)
 	$(document).on('click','.btnRemove', function(){
       $(this).closest('tr').remove();
     });
-	$('#update-form').append('<button  type="button" class="btn addDonate" id="testBtn">Save</button>');
-	$('#update-form').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
+	$('#requestform').append('<button  type="button" class="btn addDonate" id="testBtn">Save</button>');
+	$('#requestform').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
 	
-	$(document).on('click', '.btnAdd',function(){
+	$('.btnAdd').click(function(){
 		$('.dynamicAdd').append(appendedTable);
 	});
 	$('#testBtn').click(function(e){
+
 		var valid = this.form.checkValidity();
         if(valid) { 
             e.preventDefault();
-            var fd = new FormData();
         var category_arr=[];
         var itemName_arr=[];
 
@@ -434,139 +449,130 @@ function fill_category_select_box($conn)
             itemName_arr.push($(name_items[i]).val());
             // test_qty += parseInt($(quantity[i]).val());    
         }
-		var donateRefId= $('donateRefId').val()
-		var request_id = $('request_id').val();
-		var req_name =$('req_name').val();
-		var req_region =$('req_region').val();
-		var req_province =$('req_province').val();
-		var req_municipality =$('req_municipality').val();
-		var $req_barangay =$('req_barangay').val();
-		var req_name =$('req_name').val();
-		var req_name =$('req_name').val();
-		var req_name =$('req_name').val();
-		var req_name =$('req_name').val();
-		var req_name =$('req_name').val();
-		var req_name =$('req_name').val();
-		var req_name =$('req_name').val();
+		var donateRefId= $('#donateRefId').val()
+		var request_id = $('#request_id').val();
+		var req_reference = $('#req_reference').val();
+		var req_name =$('#req_name').val();
+		var req_region =$('#req_region').val();
+		var req_province =$('#req_province').val();
+		var req_municipality =$('#req_municipality').val();
+		var req_barangay =$('#req_barangay').val();
+		var req_contact =$('#req_contact').val();
+		var req_email =$('#req_email').val();
+		var req_date =$('#req_date').val();
+		var variant =$('#variant').val();
+		var quantity =$('#quantity').val();
+		var valid_id = $('#valid_id').val();
         var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var varnumbers = /^\d+$/;
         var inValid = /\s/;
 
-        //   if(fname==""){
-        //       $('#fname').removeClass('border-success');
-        //       $('#fname').addClass('border-danger');
-        //       return false;
-        //   }
-        //   else if(region=="-Select-"){
-        //       Swal.fire('Select', "Please select a region",'warning');
-        //       return false;
-        //   }
-		//   else if(province=="-Select-"){
-        //       Swal.fire('Select', "Please select a province",'warning');
-        //       return false;
-        //   }
-		//   else if(municipality=="-Select-"){
-        //       Swal.fire('Select', "Please select a municipality",'warning');
-        //       return false;
-        //   }
-		//   else if(barangay=="-Select-"){
-        //       Swal.fire('Select', "Please select a barangay",'warning');
-        //       return false;
-        //   }
-        //   else if(contact==""){
-        //       $('#contact').removeClass('border-success');
-        //       $('#contact').addClass('border-danger');
-        //   }
-        //   else if (inValid.test($('#contact').val())==true){
-        //       Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-        //       $('#contact').removeClass('border-success');
-        //       $('#contact').addClass('border-danger');
-        //       return false;
-        //     }
-        //   else if(varnumbers.test($('#contact').val())==false) {
-        //       Swal.fire('Number', "Numbers only.",'warning');
-        //       $('#contact').removeClass('border-success');
-        //       $('#contact').addClass('border-danger');
-        //       return false;
-        //     } 
-        //   else if(contact.length !=11){
-        //       Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-        //       $('#contact').removeClass('border-success');
-        //       $('#contact').addClass('border-danger');
-        //       return false;
-        //     }
-        //   else if(email==""){
-        //       $('#email').removeClass('border-success');
-        //       $('#email').addClass('border-danger');
-        //       return false;
-        //   }
-        //   else if(emailVali.test($('#email').val())==false){
-        //       Swal.fire('Email', "Invalid email address",'warning'); 
-        //       $('#email').removeClass('border-success');
-        //       $('#email').addClass('border-danger');
-        //       return false;
-        //   }
+           if(req_name==""){
+               $('#req_name').removeClass('border-success');
+               $('#req_name').addClass('border-danger');
+               return false;
+           }
+           else if(req_region=="-Select-"){
+               Swal.fire('Select', "Please select a region",'warning');
+               return false;
+           }
+		   else if(req_province=="-Select-"){
+               Swal.fire('Select', "Please select a province",'warning');
+               return false;
+           }
+		   else if(req_municipality=="-Select-"){
+               Swal.fire('Select', "Please select a municipality",'warning');
+               return false;
+           }
+		   else if(req_barangay=="-Select-"){
+               Swal.fire('Select', "Please select a barangay",'warning');
+               return false;
+           }
+           else if(req_contact==""){
+               $('#req_contact').removeClass('border-success');
+               $('#req_contact').addClass('border-danger');
+           }
+           else if (inValid.test($('#req_contact').val())==true){
+               Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+               $('#req_contact').removeClass('border-success');
+               $('#req_contact').addClass('border-danger');
+               return false;
+             }
+           else if(varnumbers.test($('#req_contact').val())==false) {
+               Swal.fire('Number', "Numbers only.",'warning');
+               $('#req_contact').removeClass('border-success');
+               $('#req_contact').addClass('border-danger');
+               return false;
+             } 
+           else if(req_contact.length !=11){
+               Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+               $('#req_contact').removeClass('border-success');
+               $('#req_contact').addClass('border-danger');
+               return false;
+             }
+           else if(req_email==""){
+               $('#email').removeClass('border-success');
+               $('#email').addClass('border-danger');
+               return false;
+           }
+           else if(emailVali.test($('#req_email').val())==false){
+               Swal.fire('Email', "Invalid email address",'warning'); 
+               $('#req_email').removeClass('border-success');
+               $('#req_email').addClass('border-danger');
+               return false;
+           }
         
-        //   else if(donation_date==""){
+           else if(req_date==""){
 
-        //       $('#donation_date').removeClass('border-success');
-        //       $('#donation_date').addClass('border-danger');
-        //       return false;
-        //   }
-		//   else if (quantity==""){
-        //           Swal.fire('Fields', "Quantity is empty",'warning');
-        //           return false;
-        //       }
+               $('#req_date').removeClass('border-success');
+               $('#req__date').addClass('border-danger');
+               return false;
+           }
+		   else if(variant=="-Select-"){
+               Swal.fire('Select', "Please select a variant",'warning');
+               return false;
+           }
+		   else if (quantity==""){
+                   Swal.fire('Fields', "Quantity is empty",'warning');
+                   return false;
+               }
 			  
-		//  else if (inValid.test($('#quantity').val())==true){ 
-        //           Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-        //           return false;
-        //       }
-		// else if(varnumbers.test($('#quantity').val())==false) {
-        //       Swal.fire('Number', "Numbers only.",'warning');
-        //       $('#contact').removeClass('border-success');
-        //       $('#contact').addClass('border-danger');
-        //       return false;
-        //     } 
-		// 	else if(variant=="-Select-"){
-        //       Swal.fire('Select', "Please select a variant",'warning');
-        //       return false;
-        //   }
-        //   else{
-        //       for(var j=0;j<category.length;j++){
+		  else if (inValid.test($('#quantity').val())==true){ 
+                   Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
+                   return false;
+               }
+		 else if(varnumbers.test($('#quantity').val())==false) {
+               Swal.fire('Number', "Numbers only.",'warning');
+               $('#quantity').removeClass('border-success');
+               $('#quantity').addClass('border-danger');
+               return false;
+             } 
+		 
+           else{
+               for(var j=0;j<category.length;j++){
             
-        //        if ($(category[j]).val()=="-Select-"){
-        //           Swal.fire('Fields', "Please select a category",'warning');
-        //           return false;
-        //       }
-        //    else if ($(name_items[j]).val()==""){
-        //           Swal.fire('Fields', "Item name is empty",'warning');
-        //           return false;
-        //       }
+                if ($(category[j]).val()=="-Select-"){
+                   Swal.fire('Fields', "Please select a category",'warning');
+                   return false;
+               }
+            else if ($(name_items[j]).val()==""){
+                   Swal.fire('Fields', "Item name is empty",'warning');
+                   return false;
+               }
              
-        //       }
-            var data = {acceptBtn: '',donor_id:donor_id,reference_id:reference_id,fname,province:province,region:region,municipality:municipality,barangay:barangay,contact:contact,
-			email:email,donation_date:donation_date,variant:variant,quantity:quantity,category_arr:category_arr,itemName_arr:itemName_arr};
+               }
+            var data = {acceptBtn: '',donateRefId:donateRefId,request_id:request_id,req_reference:req_reference,req_name:req_name,req_region:req_region,req_province:req_province,valid_id:valid_id,
+			req_municipality:req_municipality,req_barangay:req_barangay,req_contact:req_contact,req_email:req_email,req_date:req_date,variant:variant,quantity:quantity,category_arr:category_arr,itemName_arr:itemName_arr};
             
 			$.ajax({
-						url:'include/viewid.php',
-						method:'POST',
-						data: data,
-						success:function(data){
-							
-				 			if(data == 'Data-updated') {
-				 			Swal.fire({
-				 		icon: 'success',
-				 		title: 'Success',
-				 		text:data,
-				 		}).then(function() {
-				 			window.location = "donations.php";
-				 		});
-				 }	
-		 	}
-
-		 });
-        //   }
+				url:'include/accept.inc.php',
+				method:'POST',
+				data:data,
+				success:function(data){
+					alert (data);
+				}
+			});
+           }
                       
         }
 	});  
@@ -574,7 +580,7 @@ function fill_category_select_box($conn)
 </script>
 <script>
 	$(document).ready(function(){
-	 $('#region').on('change',function(){
+	 $('#req_region').on('change',function(){
 		var regCode= $(this).val();
 		if (regCode){
 			$.ajax({
@@ -582,7 +588,7 @@ function fill_category_select_box($conn)
 				type:'POST',
 				data: 'regCode='+regCode,
 				success: function (data){
-					$('.province').html(data);
+					$('#req_province').html(data);
 				}
 
 			});
@@ -591,7 +597,7 @@ function fill_category_select_box($conn)
 			swal.fire('Warning', 'Select region', 'warning');
 		}
 	 });
-	 $('#province').on('change',function(){
+	 $('#req_province').on('change',function(){
 		var provCode= $(this).val();
 		if (provCode){
 			$.ajax({
@@ -599,16 +605,16 @@ function fill_category_select_box($conn)
 				type:'POST',
 				data: 'provCode='+provCode,
 				success: function (data){
-					$('.municipality').html(data);
+					$('#req_municipality').html(data);
 				}
 
 			});
 		}
 		else{
-			swal.fire('Warning', 'Select Province', 'warning');
+			swal.fire('Warning', 'Select province', 'warning');
 		}
 	 });
-	 $('#municipality').on('change',function(){
+	 $('#req_municipality').on('change',function(){
 		var citymunCode= $(this).val();
 		if (citymunCode){
 			$.ajax({
@@ -616,21 +622,18 @@ function fill_category_select_box($conn)
 				type:'POST',
 				data: 'citymunCode='+citymunCode,
 				success: function (data){
-					$('.barangay').html(data);
+					$('#req_barangay').html(data);
 				}
 
 			});
 		}
 		else{
-			swal.fire('Warning', 'Select Province', 'warning');
+			swal.fire('Warning', 'Select municipality', 'warning');
 		}
 	 });
 	
 	});
-
 	</script>
-	
-
 	
 
 </body>

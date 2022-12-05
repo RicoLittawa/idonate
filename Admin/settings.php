@@ -129,7 +129,7 @@ session_start();
 						$result= mysqli_query($conn,$sql);
 						foreach($result as $row):				
 						?>
-						<input type="hidden" value="<?php echo htmlentities($row['id']); ?>" id="tempId">
+						<input type="hidden" id="id" value="<?php echo htmlentities($row['id']); ?>" id="tempId">
 						
 						<div class="row">
 							<div class="col">
@@ -173,30 +173,24 @@ session_start();
 							</div>
 							</div>	
 					</form>
-					<form action=""id="upCateg">
-					<div class="form-group">
-						<label for="">Add new category</label>
-						</div>
-						
-						<div class="row">
-							<div class="col">
-								
-								<input class="form-control" type="text" name="" id="">
-							</div>
-							<div class="col">
-							<button  type="button" class="btn btn-success mt-0">Add</button>
-							</div>
-						</div>
-					</form>
-					<form action="" id="announce">
 						<div class="form-group">
 							<label for="">Announcement</label>
-							<textarea class="form-control" name="" id="" cols="5" rows="4"></textarea>
+							<?php
+							$sql= "SELECT * from announcement_template";
+							$result = mysqli_query($conn,$sql);
+							if ($result->num_rows>0):
+								while($row= $result->fetch_assoc()):
+							?>
+							<input type="hidden" value="<?php echo htmlentities($row['id']); ?>">
+							<textarea class="form-control border-success" name="announceText" id="announceText" cols="5" rows="4" ><?php echo htmlentities($row['announcement']); ?></textarea>
+							<?php endwhile; ?>
+							<?php endif; ?>
 						</div>
+						
 						<div class="mt-3">
-							<button style="float: right;" class="btn btn-primary">Update</button>
+							<button style="float: right;" type="button" class="btn btn-success" id="announceBtn">Update</button>
 						</div>
-					</form>
+					
 				</div>
 			</div>
 		</main>
@@ -212,22 +206,6 @@ session_start();
 	<script src="scripts/sweetalert2.all.min.js"></script>	
 	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
   	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
-	  <script>
-	  $(document).ready(function () {
-    $('#table_data').DataTable({
-      "pagingType":"full_numbers",
-      "lengthMenu":[
-      [10,25,50,-1],
-      [10,25,50,"All"]],
-      responsive:true,
-      language:{
-        search:"_INPUT_",
-        searchPlaceholder: "Search Records",
-      }
-
-    });
-});
-</script>
 <!--Upload template -->
 <script>
 	$(document).ready(function(){
@@ -290,7 +268,29 @@ session_start();
 		});
 	});
 </script>
-	
+<script>
+	$(document).ready(function(){
+		$('#announceBtn').click(function(){
+			var id = $('#id').val();
+			var announce= $('#announceText').val();
+			$.ajax({
+				url:'include/viewid.php?updateAnnounce='+id,
+				type:'POST',
+				data:{announce:announce} ,
+				success:function(data){
+					
+					 if(data=="Announcement updated"){
+					 	swal.fire('Success', data,'success').then((result) => {
+          					if (result.isConfirmed) { window.location.href="settings.php?updated";}
+						});
+					 }else{
+					 	swal.fire('Warning', data,'warning');
+					 }
+				}
+			});
+		})
+	});
+</script>	
 
 	
 

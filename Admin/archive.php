@@ -142,9 +142,10 @@ $result= mysqli_query($conn,$sql);
       <tr>
 		<th>Id</th>
 		<th>Donor Name</th>
-		<th>Province</th>
-		<th>Street</th>
 		<th>Region</th>
+		<th>Province</th>
+		<th>Municipality</th>
+		<th>Barangay</th>
 		<th>Email</th>
 		<th>Contact</th>
 		<th>Date</th>
@@ -166,7 +167,8 @@ $result= mysqli_query($conn,$sql);
 				$rd_id= $row['id'];
 				$rd_name= $row['rD_name'];
 				$rd_province= $row['rD_province'];
-				$rd_street= $row['rD_street'];
+				$rd_municipality= $row['rD_municipality'];
+				$rd_barangay= $row['rD_barangay'];
 				$rd_region= $row['rD_region'];
 				$rd_email= $row['rD_email'];
 				$rd_contact= $row['rD_contact'];
@@ -179,20 +181,45 @@ $result= mysqli_query($conn,$sql);
 		<tr>
 			<td><?php echo htmlentities($reference_id) ?></td>
 			<td><?php echo htmlentities($rd_name) ?></td>
-			<td><?php echo htmlentities($rd_province) ?></td>
-			<td><?php echo htmlentities($rd_street) ?></td>
 			<?php 
-			
-			 $sql2="SELECT * From regions";
+			 $sql2="SELECT * From refregion";
 		 	$result2=mysqli_query($conn,$sql2);
-		
 		 	foreach($result2 as $row1){
-			if ($rd_region== $row1['region_id']){
-				echo "<td>".htmlentities($row1['region_name'])."</td>
+			if ($rd_region== $row1['regCode']){
+				echo "<td>".htmlentities($row1['regDesc'])."</td>
 				";
 				}
 			}
-		
+		?>
+		<?php 
+			 $sql2="SELECT * From refprovince";
+		 	$result2=mysqli_query($conn,$sql2);
+		 	foreach($result2 as $row1){
+			if ($rd_province== $row1['provCode']){
+				echo "<td>".htmlentities($row1['provDesc'])."</td>
+				";
+				}
+			}
+		?>
+		<?php 
+			 $sql2="SELECT * From refcitymun";
+		 	$result2=mysqli_query($conn,$sql2);
+		 	foreach($result2 as $row1){
+			if ($rd_municipality== $row1['citymunCode']){
+				echo "<td>".htmlentities($row1['citymunDesc'])."</td>
+				";
+				}
+			}
+		?>
+		<?php 
+			 $sql2="SELECT * From refbrgy";
+		 	$result2=mysqli_query($conn,$sql2);
+		 	foreach($result2 as $row1){
+			if ($rd_barangay== $row1['brgyCode']){
+				echo "<td>".htmlentities($row1['brgyDesc'])."</td>
+				";
+				}
+			}
 		?>
 			<td><?php echo htmlentities($rd_email) ?></td>
 			<td><?php echo htmlentities($rd_contact) ?></td>

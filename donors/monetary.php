@@ -7,7 +7,8 @@
     {
     $Fullname= $_POST['money_name'];
     $Province= $_POST['money_province'];
-    $Street= $_POST['money_street'];
+    $Municipality= $_POST['money_municipality'];
+    $Barangay= $_POST['money_barangay'];
     $Region=  $_POST['money_region'];
     $Contact= $_POST['money_contact'];
     $Email=  $_POST['money_email'];
@@ -29,8 +30,8 @@
                 
                 if($fileError === 0){
                     if($fileSize < 1000000) {
-                        $sql = "INSERT INTO monetary_donations (money_name,money_province,money_street,money_region,money_contact,money_email,money_date,money_reference,money_img,money_amount,money_note)
-                                VALUES (?,?,?,?,?,?,?,?,?,?,?)" ;
+                        $sql = "INSERT INTO monetary_donations (money_name,money_region,money_province,money_municipality,money_barangay,money_contact,money_email,money_date,money_reference,money_img,money_amount,money_note)
+                                VALUES (?,?,?,?,?,?,?,?,?,?,?,?)" ;
                                 
                         $stmt= mysqli_stmt_init($conn);
                             if(!mysqli_stmt_prepare($stmt,$sql)){
@@ -38,7 +39,7 @@
                                     exit();
                             }
                         else{
-                             mysqli_stmt_bind_param($stmt,"sssssssssss",$Fullname,$Province,$Street,$Region,$Contact,$Email,$Date,$Reference,$File,$Amount,$Note);
+                             mysqli_stmt_bind_param($stmt,"ssssssssssss",$Fullname,$Region,$Province,$Municipality,$Barangay,$Contact,$Email,$Date,$Reference,$File,$Amount,$Note);
                              mysqli_stmt_execute($stmt);
                              echo"Success";
                              exit();

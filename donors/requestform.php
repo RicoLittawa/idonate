@@ -327,7 +327,7 @@
 		    var municipality = $('#municipality').val();
 		    var barangay = $('#barangay').val();
         var email = $('#email').val();
-        var donation_date = $('#donation_date').val();
+        var donation_date = $('#date').val();
         var contact= $('#contact').val();
 	    	var variant= $('#variant').val();
         var note= $('#note').val();
@@ -338,8 +338,8 @@
         var extension = $('#idImg').val().split('.').pop().toLowerCase();
         var form = $('#requestform')[0];
         var fd = new FormData(form);
-
-
+alert (donation_date)
+        return;
         fd.append('ref_id',ref_id);
           fd.append('fname',fname);
           fd.append('municipality',municipality);

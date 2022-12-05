@@ -4,10 +4,10 @@ require_once 'include/connection.php';
 function fill_region_select_box($conn){
   $output='';
            
-  $sql = "SELECT * from regions ";
+  $sql = "SELECT * from refregion ";
   $result = mysqli_query($conn,$sql);
   foreach($result as $row){
-    $output .= '<option value="'.$row['region_id'].'">'.$row['region_name'].'</option>';
+    $output .= '<option value="'.$row['regCode'].'">'.$row['regDesc'].'</option>';
   }
   return $output;
   
@@ -88,20 +88,6 @@ function fill_region_select_box($conn){
                 <input class="form-control border-success" type="text" name="money_name" id="money_name" placeholder="">
                 </div>
               </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="money_province">Province</label>
-                <input class="form-control border-success" type="text" name="money_province" id="money_province">
-              </div>
-            </div>
-            <div class="col">
-              <div class="form-group">
-                <label for="money_street">Street</label>
-                <input class="form-control border-success" type="text" name="money_street" id="money_street">
-                </div>
-              </div>
-            </div>
-            <div class="row">
               <div class="col">
                 <div class="form-group">
                   <label for="money_region">Select Region</label>
@@ -111,6 +97,29 @@ function fill_region_select_box($conn){
                    </select>
                   </div>
 						    </div>
+                <div class="col">
+				          <div class="form-group">
+                    <label for="money_province">Province</label>
+                    <select class="custom-select border-success" name="money_province" id="money_province">
+				            </select>
+				          </div>
+			          </div>
+                <div class="col">
+				          <div class="form-group">
+                    <label for="money_municipality">Municipality</label>
+                    <select class="custom-select border-success" name="money_municipality" id="money_municipality">
+				            </select>
+				          </div>
+			          </div>
+              </div>
+            <div class="row">
+            <div class="col">
+				          <div class="form-group">
+                    <label for="money_barangay">Barangay</label>
+                    <select class="custom-select border-success" name="money_barangay" id="money_barangay">
+				            </select>
+				          </div>
+			          </div>
               <div class="col">
                <div class="form-group">
                   <label for="money_contact">Contact Number</label>
@@ -221,6 +230,7 @@ $(".custom-file-input").on("change", function() {
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
 </script>
+
 <script>
   /*Add monetary */
 $(document).ready(function(){
@@ -230,7 +240,8 @@ $(document).ready(function(){
         if(valid) {
           var money_name = $('#money_name').val();
           var money_province = $('#money_province').val();
-          var money_street = $('#money_street').val();
+          var money_municipality = $('#money_municipality').val();
+          var money_barangay = $('#money_barangay').val();
           var money_region = $('#money_region').val();
           var money_contact = $('#money_contact').val();
           var money_email = $('#money_email').val();
@@ -251,7 +262,8 @@ $(document).ready(function(){
           fd.append("monetary_data",true); 
           fd.append("money_name",money_name); 
           fd.append("money_province",money_province); 
-          fd.append("money_street",money_street); 
+          fd.append("money_municipality",money_municipality); 
+          fd.append("money_barangay",money_barangay); 
           fd.append("money_region",money_region); 
           fd.append("money_contact",money_contact); 
           fd.append("money_email",money_email); 
@@ -261,106 +273,106 @@ $(document).ready(function(){
           fd.append("money_note",money_note); 
 
         
-          if (money_name==""){
-            $('#money_name').removeClass('border-success');
-            $('#money_name').addClass('border-danger');
-            return false;
-          }
-          else if(money_province==""){
-            $('#money_province').removeClass('border-success');
-            $('#money_province').addClass('border-danger');
-            return false;
-          }
-          else if(money_street==""){
-            $('#money_street').removeClass('border-success');
-            $('#money_street').addClass('border-danger');
-            return false;
-          }
-          else if(money_region==""){
-            Swal.fire('Select', "Please select an option",'warning');
-            return false;
-          }
-          else if(money_contact==""){
-            $('#money_contact').removeClass('border-success');
-            $('#money_contact').addClass('border-danger');
-            return false;
-          }
-          else if (inValid.test($('#money_contact').val())==true){
-            Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-            $('#money_contact').removeClass('border-success');
-            $('#money_contact').addClass('border-danger');
-            return false;
-          }
-          else if(varnumbers.test($('#money_contact').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#money_contact').removeClass('border-success');
-            $('#money_contact').addClass('border-danger');
-            return false;
-          } 
-          else if(money_contact.length !=11){
-            Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-            $('#money_contact').removeClass('border-success');
-            $('#money_contact').addClass('border-danger');
-            return false;
-          }
-          else if (money_email==""){
-            $('#money_email').removeClass('border-success');
-            $('#money_email').addClass('border-danger');
-          }
-          else if(emailVali.test($('#money_email').val())==false){
-            Swal.fire('Email', "Invalid email address",'warning'); 
-            $('#money_email').removeClass('border-success');
-            $('#money_email').addClass('border-danger');
-            return false;
-          }
-          else if (money_date==""){
-            $('#money_date').removeClass('border-success');
-            $('#money_date').addClass('border-danger');
-          }
-          else if(money_reference==""){
-            $('#money_reference').removeClass('border-success');
-            $('#money_reference').addClass('border-danger');
-          }
-          else if (inValid.test($('#money_reference').val())==true){
-            Swal.fire('Reference', "Whitespace is prohibited.",'warning');
-            $('#money_reference').removeClass('border-success');
-            $('#money_reference').addClass('border-danger');
-            return false;
-          }
-          else if(varnumbers.test($('#money_reference').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#money_reference').removeClass('border-success');
-            $('#money_reference').addClass('border-danger');
-            return false;
-          } 
+          // if (money_name==""){
+          //   $('#money_name').removeClass('border-success');
+          //   $('#money_name').addClass('border-danger');
+          //   return false;
+          // }
+          // else if(money_province==""){
+          //   $('#money_province').removeClass('border-success');
+          //   $('#money_province').addClass('border-danger');
+          //   return false;
+          // }
+          // else if(money_street==""){
+          //   $('#money_street').removeClass('border-success');
+          //   $('#money_street').addClass('border-danger');
+          //   return false;
+          // }
+          // else if(money_region==""){
+          //   Swal.fire('Select', "Please select an option",'warning');
+          //   return false;
+          // }
+          // else if(money_contact==""){
+          //   $('#money_contact').removeClass('border-success');
+          //   $('#money_contact').addClass('border-danger');
+          //   return false;
+          // }
+          // else if (inValid.test($('#money_contact').val())==true){
+          //   Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+          //   $('#money_contact').removeClass('border-success');
+          //   $('#money_contact').addClass('border-danger');
+          //   return false;
+          // }
+          // else if(varnumbers.test($('#money_contact').val())==false) {
+          //   Swal.fire('Number', "Numbers only.",'warning');
+          //   $('#money_contact').removeClass('border-success');
+          //   $('#money_contact').addClass('border-danger');
+          //   return false;
+          // } 
+          // else if(money_contact.length !=11){
+          //   Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+          //   $('#money_contact').removeClass('border-success');
+          //   $('#money_contact').addClass('border-danger');
+          //   return false;
+          // }
+          // else if (money_email==""){
+          //   $('#money_email').removeClass('border-success');
+          //   $('#money_email').addClass('border-danger');
+          // }
+          // else if(emailVali.test($('#money_email').val())==false){
+          //   Swal.fire('Email', "Invalid email address",'warning'); 
+          //   $('#money_email').removeClass('border-success');
+          //   $('#money_email').addClass('border-danger');
+          //   return false;
+          // }
+          // else if (money_date==""){
+          //   $('#money_date').removeClass('border-success');
+          //   $('#money_date').addClass('border-danger');
+          // }
+          // else if(money_reference==""){
+          //   $('#money_reference').removeClass('border-success');
+          //   $('#money_reference').addClass('border-danger');
+          // }
+          // else if (inValid.test($('#money_reference').val())==true){
+          //   Swal.fire('Reference', "Whitespace is prohibited.",'warning');
+          //   $('#money_reference').removeClass('border-success');
+          //   $('#money_reference').addClass('border-danger');
+          //   return false;
+          // }
+          // else if(varnumbers.test($('#money_reference').val())==false) {
+          //   Swal.fire('Number', "Numbers only.",'warning');
+          //   $('#money_reference').removeClass('border-success');
+          //   $('#money_reference').addClass('border-danger');
+          //   return false;
+          // } 
          
-          else if($('#money_image').val()==''){
-            Swal.fire('Fields', "Please insert an image",'warning');
-          }
-          else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {
-            Swal.fire('Image', "Invalid file extension.",'warning');
-            $("#monetaryform").find('[type=file]').val('').trigger('change');
-            return false;
-          } 
-          else if(money_amount==""){
-            $('#money_amount').removeClass('border-success');
-            $('#money_amount').addClass('border-danger');
-          }
-          else if (inValid.test($('#money_amount').val())==true){
-            Swal.fire('Amount', "Whitespace is prohibited.",'warning');
-            $('#money_amount').removeClass('border-success');
-            $('#money_amount').addClass('border-danger');
-            return false;
-          }
-          else if(varnumbers.test($('#money_amount').val())==false) {
-            Swal.fire('Number', "Numbers only.",'warning');
-            $('#money_amount').removeClass('border-success');
-            $('#money_amount').addClass('border-danger');
-            return false;
-          }
+          // else if($('#money_image').val()==''){
+          //   Swal.fire('Fields', "Please insert an image",'warning');
+          // }
+          // else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {
+          //   Swal.fire('Image', "Invalid file extension.",'warning');
+          //   $("#monetaryform").find('[type=file]').val('').trigger('change');
+          //   return false;
+          // } 
+          // else if(money_amount==""){
+          //   $('#money_amount').removeClass('border-success');
+          //   $('#money_amount').addClass('border-danger');
+          // }
+          // else if (inValid.test($('#money_amount').val())==true){
+          //   Swal.fire('Amount', "Whitespace is prohibited.",'warning');
+          //   $('#money_amount').removeClass('border-success');
+          //   $('#money_amount').addClass('border-danger');
+          //   return false;
+          // }
+          // else if(varnumbers.test($('#money_amount').val())==false) {
+          //   Swal.fire('Number', "Numbers only.",'warning');
+          //   $('#money_amount').removeClass('border-success');
+          //   $('#money_amount').addClass('border-danger');
+          //   return false;
+          // }
           
             
-          else {
+          // else {
             Swal.fire({
             title: 'Confirmation',
             text: "Are sure that all the informations are correct?",
@@ -413,7 +425,7 @@ $(document).ready(function(){
             
            
       
-        }
+        // }
          }    
   });
 
@@ -490,7 +502,63 @@ $(document).ready(function(){
         }
       });
 });
+</script>
 
+<script>
+  $(document).ready(function(){
+	 $('#money_region').on('change',function(){
+		var regCode= $(this).val();
+		if (regCode){
+			$.ajax({
+				url:'include/region.php',
+				type:'POST',
+				data: 'regCode='+regCode,
+				success: function (data){
+					$('#money_province').html(data);
+				}
+
+			});
+		}
+		else{
+			swal.fire('Warning', 'Select region', 'warning');
+		}
+	 });
+	 $('#money_province').on('change',function(){
+		var provCode= $(this).val();
+		if (provCode){
+			$.ajax({
+				url:'include/region.php',
+				type:'POST',
+				data: 'provCode='+provCode,
+				success: function (data){
+					$('#money_municipality').html(data);
+				}
+
+			});
+		}
+		else{
+			swal.fire('Warning', 'Select province', 'warning');
+		}
+	 });
+	 $('#money_municipality').on('change',function(){
+		var citymunCode= $(this).val();
+		if (citymunCode){
+			$.ajax({
+				url:'include/region.php',
+				type:'POST',
+				data: 'citymunCode='+citymunCode,
+				success: function (data){
+					$('#money_barangay').html(data);
+				}
+
+			});
+		}
+		else{
+			swal.fire('Warning', 'Select municipality', 'warning');
+		}
+	 });
+	
+	});
 </script>
   </body>
 </html>
