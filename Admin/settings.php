@@ -129,17 +129,17 @@ session_start();
 						$result= mysqli_query($conn,$sql);
 						foreach($result as $row):				
 						?>
-						<input type="hidden" id="id" value="<?php echo htmlentities($row['id']); ?>" id="tempId">
-						
+						<input type="hidden" value="<?php echo $row['imgID']; ?>" id="tempId">
+						<input type="hidden" value="<?php echo $row['id']; ?>" id="id">
 						<div class="row">
 							<div class="col">
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="customFile" name="customFile">
+								<input type="file" class="custom-file-input" id="customFile" name="customFile" value="<?php echo $row['template']; ?>">
 								<label class="custom-file-label" for="customFile">Choose file</label>
 							</div>
 							</div>
 							<div class="col">
-      						<button  type="button" id="upload" class="btn mt-0"><i style="color:green ;font-size:30px;" class="fa-solid fa-file-import"></i></button>
+      						<button  type="button" id="upload" class="btn mt-0 upload" value="<?php echo htmlentities($row['id']); ?>"><i style="color:green ;font-size:30px;" class="fa-solid fa-file-import"  ></i></button>
 							<button type="button" id="viewImage" class="btn mt-0 certImg"  data-toggle="modal" data-target="template" value="<?php echo htmlentities($row['id']); ?>"><i style="color:green ;font-size:30px;" class="fa-solid fa-image"></i></button>
 							<?php endforeach; ?>
 						 </div>
@@ -213,36 +213,41 @@ session_start();
       var fileName = $(this).val().split("\\").pop();
       $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     	});
-		$("#upload").click(function(){
-			
+		$(".upload").click(function(){
+			var tempId= $('#tempId').val();
+			var id= $("#id").val();
 			var form = $('#add_template')[0];
           	var fd = new FormData(form);
-			var tempId= $("#tempId").val();
 			fd.append("tempId",tempId);
+			fd.append("id",id);
 			fd.append("upload",true);
+
 			var extension = $('#customFile').val().split('.').pop().toLowerCase();
-			if($('#customFile').val()==''){
-             Swal.fire('Fields', "Please insert an image",'warning');
-			 return false;
-           }
-           else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
-             Swal.fire('Image', "Invalid file extension.",'warning');
-             $("#requestform").find('[type=file]').val('').trigger('change');
-             return false;
-           }
-		   else{
+		 	if($('#customFile').val()==''){
+              Swal.fire('Fields', "Please insert an image",'warning');
+		 	 return false;
+            }
+            else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1){
+              Swal.fire('Image', "Invalid file extension.",'warning');
+              $("#requestform").find('[type=file]').val('').trigger('change');
+              return false;
+            }
+		    else{
 			$.ajax({
 				url: 'include/viewid.php',
               method: 'POST',
-               data:fd,
               dataType:'text',
+			  data:fd,
                processData:false,
               contentType:false,  
               success: function(data) {
-				swal.fire('Photo',data,'success');
+				swal.fire('Photo',data,'success')
+				.then((result) => {
+          					if (result.isConfirmed) {location.reload();}
+						});;
 			  }
 			});
-		   }
+		    }
 			
 		});
 	});
@@ -281,7 +286,7 @@ session_start();
 					
 					 if(data=="Announcement updated"){
 					 	swal.fire('Success', data,'success').then((result) => {
-          					if (result.isConfirmed) { window.location.href="settings.php?updated";}
+          					if (result.isConfirmed) { location.reload();}
 						});
 					 }else{
 					 	swal.fire('Warning', data,'warning');

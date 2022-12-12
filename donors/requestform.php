@@ -14,7 +14,7 @@
    function fill_region_select_box($conn){
      $output='';
              
-     $sql = "SELECT * from refRegion ";
+     $sql = "SELECT * from refregion ";
      $result = mysqli_query($conn,$sql);
      foreach($result as $row){
        $output .= '<option value="'.$row['regCode'].'">'.$row['regDesc'].'</option>';
@@ -338,8 +338,6 @@
         var extension = $('#idImg').val().split('.').pop().toLowerCase();
         var form = $('#requestform')[0];
         var fd = new FormData(form);
-alert (donation_date)
-        return;
         fd.append('ref_id',ref_id);
           fd.append('fname',fname);
           fd.append('municipality',municipality);

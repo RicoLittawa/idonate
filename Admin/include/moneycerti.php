@@ -111,10 +111,10 @@ if(isset($_POST['money_data'])){
       $mail->AddAddress($row["email"], $row["name"]); //Adds a "To" address
       $mail->WordWrap = 50;       //Sets word wrapping on the body of the message to a given number of characters
       $mail->IsHTML(true);       //Sets message type to HTML
-      $mail->Subject = 'Testing'; //Sets the Subject of the message
+      $mail->Subject = 'Acknowledgement Reciept'; //Sets the Subject of the message
       //An HTML or plain text message body
       $mail->Body = '
-      <p>Certificate...</p>
+      <p>This certificate is given to '.$row["name"].' for donating ₱'.$amount.'. Thank you</p>
       ';
       $mail->addStringAttachment($pdf->Output("S",'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
       $mail->Send();      //Send an Email. Return true on success or false on error

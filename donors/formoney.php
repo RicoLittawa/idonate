@@ -273,106 +273,102 @@ $(document).ready(function(){
           fd.append("money_note",money_note); 
 
         
-          // if (money_name==""){
-          //   $('#money_name').removeClass('border-success');
-          //   $('#money_name').addClass('border-danger');
-          //   return false;
-          // }
-          // else if(money_province==""){
-          //   $('#money_province').removeClass('border-success');
-          //   $('#money_province').addClass('border-danger');
-          //   return false;
-          // }
-          // else if(money_street==""){
-          //   $('#money_street').removeClass('border-success');
-          //   $('#money_street').addClass('border-danger');
-          //   return false;
-          // }
-          // else if(money_region==""){
-          //   Swal.fire('Select', "Please select an option",'warning');
-          //   return false;
-          // }
-          // else if(money_contact==""){
-          //   $('#money_contact').removeClass('border-success');
-          //   $('#money_contact').addClass('border-danger');
-          //   return false;
-          // }
-          // else if (inValid.test($('#money_contact').val())==true){
-          //   Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-          //   $('#money_contact').removeClass('border-success');
-          //   $('#money_contact').addClass('border-danger');
-          //   return false;
-          // }
-          // else if(varnumbers.test($('#money_contact').val())==false) {
-          //   Swal.fire('Number', "Numbers only.",'warning');
-          //   $('#money_contact').removeClass('border-success');
-          //   $('#money_contact').addClass('border-danger');
-          //   return false;
-          // } 
-          // else if(money_contact.length !=11){
-          //   Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-          //   $('#money_contact').removeClass('border-success');
-          //   $('#money_contact').addClass('border-danger');
-          //   return false;
-          // }
-          // else if (money_email==""){
-          //   $('#money_email').removeClass('border-success');
-          //   $('#money_email').addClass('border-danger');
-          // }
-          // else if(emailVali.test($('#money_email').val())==false){
-          //   Swal.fire('Email', "Invalid email address",'warning'); 
-          //   $('#money_email').removeClass('border-success');
-          //   $('#money_email').addClass('border-danger');
-          //   return false;
-          // }
-          // else if (money_date==""){
-          //   $('#money_date').removeClass('border-success');
-          //   $('#money_date').addClass('border-danger');
-          // }
-          // else if(money_reference==""){
-          //   $('#money_reference').removeClass('border-success');
-          //   $('#money_reference').addClass('border-danger');
-          // }
-          // else if (inValid.test($('#money_reference').val())==true){
-          //   Swal.fire('Reference', "Whitespace is prohibited.",'warning');
-          //   $('#money_reference').removeClass('border-success');
-          //   $('#money_reference').addClass('border-danger');
-          //   return false;
-          // }
-          // else if(varnumbers.test($('#money_reference').val())==false) {
-          //   Swal.fire('Number', "Numbers only.",'warning');
-          //   $('#money_reference').removeClass('border-success');
-          //   $('#money_reference').addClass('border-danger');
-          //   return false;
-          // } 
+           if (money_name==""){
+             $('#money_name').removeClass('border-success');
+             $('#money_name').addClass('border-danger');
+             return false;
+           }
+           else if(money_province==""){
+             $('#money_province').removeClass('border-success');
+             $('#money_province').addClass('border-danger');
+             return false;
+           }
+        
+           else if(money_region==""){
+             Swal.fire('Select', "Please select an option",'warning');
+             return false;
+           }
+           else if(money_contact==""){
+             $('#money_contact').removeClass('border-success');
+             $('#money_contact').addClass('border-danger');
+             return false;
+           }
+           else if (inValid.test($('#money_contact').val())==true){
+             Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+             $('#money_contact').removeClass('border-success');
+             $('#money_contact').addClass('border-danger');
+             return false;
+           }
+           else if(varnumbers.test($('#money_contact').val())==false) {
+             Swal.fire('Number', "Numbers only.",'warning');
+             $('#money_contact').removeClass('border-success');
+             $('#money_contact').addClass('border-danger');
+             return false;
+           } 
+           else if(money_contact.length !=11){
+             Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+             $('#money_contact').removeClass('border-success');
+             $('#money_contact').addClass('border-danger');
+             return false;
+           }
+           else if (money_email==""){
+             $('#money_email').removeClass('border-success');
+             $('#money_email').addClass('border-danger');
+           }
+           else if(emailVali.test($('#money_email').val())==false){
+             Swal.fire('Email', "Invalid email address",'warning'); 
+             $('#money_email').removeClass('border-success');
+             $('#money_email').addClass('border-danger');
+             return false;
+           }
+           else if (money_date==""){
+             $('#money_date').removeClass('border-success');
+             $('#money_date').addClass('border-danger');
+           }
+           else if(money_reference==""){
+             $('#money_reference').removeClass('border-success');
+             $('#money_reference').addClass('border-danger');
+           }
+           else if (inValid.test($('#money_reference').val())==true){
+             Swal.fire('Reference', "Whitespace is prohibited.",'warning');
+             $('#money_reference').removeClass('border-success');
+             $('#money_reference').addClass('border-danger');
+             return false;
+           }
+           else if(varnumbers.test($('#money_reference').val())==false) {
+             Swal.fire('Number', "Numbers only.",'warning');
+             $('#money_reference').removeClass('border-success');
+             $('#money_reference').addClass('border-danger');
+             return false;
+           } 
          
-          // else if($('#money_image').val()==''){
-          //   Swal.fire('Fields', "Please insert an image",'warning');
-          // }
-          // else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {
-          //   Swal.fire('Image', "Invalid file extension.",'warning');
-          //   $("#monetaryform").find('[type=file]').val('').trigger('change');
-          //   return false;
-          // } 
-          // else if(money_amount==""){
-          //   $('#money_amount').removeClass('border-success');
-          //   $('#money_amount').addClass('border-danger');
-          // }
-          // else if (inValid.test($('#money_amount').val())==true){
-          //   Swal.fire('Amount', "Whitespace is prohibited.",'warning');
-          //   $('#money_amount').removeClass('border-success');
-          //   $('#money_amount').addClass('border-danger');
-          //   return false;
-          // }
-          // else if(varnumbers.test($('#money_amount').val())==false) {
-          //   Swal.fire('Number', "Numbers only.",'warning');
-          //   $('#money_amount').removeClass('border-success');
-          //   $('#money_amount').addClass('border-danger');
-          //   return false;
-          // }
+           else if($('#money_image').val()==''){
+             Swal.fire('Fields', "Please insert an image",'warning');
+           }
+           else if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1) {
+             Swal.fire('Image', "Invalid file extension.",'warning');
+             $("#monetaryform").find('[type=file]').val('').trigger('change');
+             return false;
+           } 
+           else if(money_amount==""){
+             $('#money_amount').removeClass('border-success');
+             $('#money_amount').addClass('border-danger');
+           }
+           else if (inValid.test($('#money_amount').val())==true){
+             Swal.fire('Amount', "Whitespace is prohibited.",'warning');
+             $('#money_amount').removeClass('border-success');
+             $('#money_amount').addClass('border-danger');
+             return false;
+           }
+           else if(varnumbers.test($('#money_amount').val())==false) {
+             Swal.fire('Number', "Numbers only.",'warning');
+             $('#money_amount').removeClass('border-success');
+             $('#money_amount').addClass('border-danger');
+             return false;
+           }
           
             
-          // else {
+           else {
             Swal.fire({
             title: 'Confirmation',
             text: "Are sure that all the informations are correct?",
@@ -425,7 +421,7 @@ $(document).ready(function(){
             
            
       
-        // }
+         }
          }    
   });
 
@@ -447,15 +443,7 @@ $(document).ready(function(){
           $(this).removeClass('border-danger');
         }
       });
-      $('#money_street').on('keyup', function() {
-        if($(this).val() == '') {
-          $(this).removeClass('border-success');
-          $(this).addClass('border-danger');
-        } else {
-          $(this).addClass('border-success');
-          $(this).removeClass('border-danger');
-        }
-      });
+  
       $('#money_contact').on('keyup', function() {
         if($(this).val() == '') {
           $(this).removeClass('border-success');

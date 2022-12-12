@@ -22,7 +22,7 @@ $result= mysqli_query($conn,$sql);
 	<!-- My CSS -->
 	<link rel="stylesheet" href="css/donations.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
-
+	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<title>Donor Records</title>
 </head>
 <body>
@@ -161,6 +161,7 @@ $result= mysqli_query($conn,$sql);
       </tr>
     </thead>
     <tbody>
+		<?php $count=0; ?>
 		<?php foreach ($result as $row): ?>
 			<?php 
 				$reference_id= $row['rD_reference'];
@@ -175,7 +176,7 @@ $result= mysqli_query($conn,$sql);
 				$rd_date= $row['rD_date'];
 				$rd_certificate= $row['rD_certificate'];
 				
-				
+				$count = $count + 1 
 				
 				?>
 		<tr>
@@ -250,41 +251,16 @@ $result= mysqli_query($conn,$sql);
 			</td>
 			
 		<?php endif; ?>
-			<td><button class="btn btnCert" data-toggle="modal" data-target="Certi"  value="<?php echo htmlentities($rd_id) ?>"><?php echo htmlentities($rd_certificate) ?></button></td>
-			<td><span><i style="color:green ;" class="fa-solid fa-envelope-circle-check"></i></span><button class="btn"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
+			<td><button class="btn btnCert" value="<?php echo htmlentities($rd_id) ?>"><?php echo htmlentities($rd_certificate) ?></button>
+			</td>
+			<td><span><i style="color:green ;" class="fa-solid fa-envelope-circle-check" ></i></span><button type="button" class="btn deleteBtn" id="<?php echo $count; ?>" value="<?php echo htmlentities($reference_id); ?>"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
 		
 		</tr>
 	<?php endforeach; ?>
 	  </tbody>
   </table>
  
-  <div class="modal fade" id="Certi">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Acknowledgement Reciept</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		
-      </div>
-	
-	
-
-	<form>
-	<div class="modal-body">
-	<img src="" id="imageContainer" alt="" width="465px" height="100%" style="border-radius:10px;">
-	</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-	</form>
-
-		
-
-    </div>
-  </div>
-</div>	
+  
 			</div>
 		</main>
 	
@@ -299,6 +275,7 @@ $result= mysqli_query($conn,$sql);
 	<script src="scripts/sweetalert2.all.min.js"></script>	
 	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
   	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	  <script>
 	  $(document).ready(function () {
     $('#table_data').DataTable({
@@ -331,15 +308,55 @@ $result= mysqli_query($conn,$sql);
 			  	type: 'GET',
 			  	success: function(data){
 					
-			  			 $('#Certi').modal('show');
-						   $('#imageContainer').attr('src','include/download-certificate/'+data);		   		
+			  			
+						   printJS('include/download-certificate/'+data, 'image')		   		
 			  	}
 			  });
 
 		});
 	});
 </script>
+<script>
+	$(document).ready(function(){
 
+		$('.deleteBtn').click(function(){
+			var valueBtn= $(this);
+			var donorID= valueBtn.val();
+			var certDelete= $('#certDelete').val();
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "You won't be able to revert this!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						url:'include/viewid.php?deleteBtn='+donorID,
+						type:'POST',
+						data:{certDelete:certDelete},
+						success:function(data){
+							
+							Swal.fire(
+							'Deleted!',
+							'Your file has been deleted.',
+							'success'
+							).then((result)=>{
+								if(result.isConfirmed){
+									location.reload();
+								}
+							});
+						}
+					});
+					
+				}
+				});
+
+		});
+	})
+</script>
 	
 
 </body>

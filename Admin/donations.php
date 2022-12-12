@@ -299,7 +299,6 @@ $(document).ready(function(){
    
    });
   }
-  console.log(email_data);
    $.ajax({
     url:"include/sendcerti.php",
     method:"POST",

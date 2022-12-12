@@ -144,6 +144,7 @@ $count=0;
       </tr>
     </thead>
     <tbody>
+
 		<?php foreach ($result as $row): ?>
 			<?php 
 				$reference_id= $row['reference_id'];
@@ -207,6 +208,7 @@ $count=0;
 			<button type="button" class="btn col  validId"  data-toggle="modal" data-target="validImg" value="<?php echo htmlentities($req_id); ?>"><i style="color:green ;" class="fa-regular fa-id-badge"></i></button>
 			<button class="btn verify col" id="<?php echo $count; ?>" data-action="verify" data-email="<?php echo htmlentities($reqEmail); ?>" data-id="<?php echo htmlentities($req_id); ?>" data-name="<?php echo htmlentities($reqName); ?>"><i class="fa-solid fa-check"></i></button>
 			<a  class="btn btn-success col" href="acceptrequest.php?acceptReq=<?php echo htmlentities($req_id); ?>">Accept</a>
+			<button class="col deleteBtn btn btn-danger" id="<?php echo $count; ?>" value="<?php echo htmlentities($reference_id); ?>">Delete</button>
 			</td>
 		</tr>
 	<?php endforeach; ?>
@@ -400,7 +402,44 @@ $count=0;
 
 	});
 </script>
-	
+<script>
+	$(document).ready(function(){
+		$('.deleteBtn').click(function(){
+			var valueBtn= $(this);
+			var donorID= valueBtn.val();
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "You won't be able to revert this!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						url:'include/viewid.php?deleteReq='+donorID,
+						type:'POST',
+						success:function(data){
+							
+							 Swal.fire(
+							 'Deleted!',
+							 'Your file has been deleted.',
+							 'success'
+							 ).then((result)=>{
+								if(result.isConfirmed){
+									location.reload();
+								}
+							});
+						}
+					});
+					
+				}
+				});
+
+		});
+	})
+</script>
 
 </body>
 </html>

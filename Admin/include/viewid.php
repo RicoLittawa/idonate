@@ -123,7 +123,17 @@ if (isset($_GET['viewMoney'])){
 
  //upload certi template
  if (isset($_POST['upload'])){
-    $id = $_POST['tempId'];
+    $imgID = $_POST['tempId'];
+    $id = $_POST['id'];
+    $selectImg= "SELECT template from template_certi where id=?";
+    $stmt=$conn->prepare($selectImg);
+    $stmt->bind_param('s',$id);
+    $stmt->execute();
+    $result= $stmt->get_result();
+    $img = $result->fetch_assoc();
+     $imgGet= $img['template'];
+    $validPath= '../include/Certificate Template/'.$imgGet;
+    unlink($validPath);
     $Image = $_FILES['customFile']['name'];
     $filePath='Certificate Template/';
     $filename=  $filePath.basename($_FILES['customFile']['name']);
@@ -133,11 +143,12 @@ if (isset($_GET['viewMoney'])){
         if(move_uploaded_file($_FILES['customFile']['tmp_name'],$filePath.$Image)){
          if($fileError === 0){
              if($fileSize < 1000000) {
-                $template= "UPDATE template_certi set template=? where id=?";
+                $template= "UPDATE template_certi set template=?";
                 $stmt=$conn->prepare($template);
-                $stmt->bind_param('si',$Image,$id);
+                $stmt->bind_param('s',$Image);
                 $stmt->execute();
                 echo "uploaded";
+                 
              }
          }
         
@@ -198,4 +209,99 @@ if (isset($_GET['viewTemp'])){
     else{
         echo "Changes not save";
     }
+ }
+
+ //delete item donor
+ if (isset($_GET['deleteBtn'])){
+    $id = $_GET['deleteBtn'];
+    $selectImg= "SELECT rD_certificate from donor_record where rD_reference=?";
+    $stmt=$conn->prepare($selectImg);
+    $stmt->bind_param('s',$id);
+    $stmt->execute();
+    $result= $stmt->get_result();
+    $donor = $result->fetch_assoc();
+    $cert= $donor['rD_certificate'];
+    $validPath= '../include/download-certificate/'.$cert;
+    unlink($validPath);
+    
+    $donor10= "DELETE from donation_items10 where Reference=?";
+    $stmt= $conn->prepare($donor10);
+    $stmt->bind_param('i',$id);
+    $result= $stmt-> execute();
+
+    $donorTotal= "DELETE from categ_varianttotal where donor_reference=?";
+    $stmt= $conn->prepare($donorTotal);
+    $stmt->bind_param('i',$id);
+    $result= $stmt-> execute();
+
+    $donorI = "DELETE from donor_record where rD_reference=?";
+    $stmt= $conn->prepare($donorI);
+    $stmt->bind_param('i',$id);
+    $result= $stmt-> execute();
+    if ($result== true){
+       
+        echo "Data is deleted";
+    }else{
+        echo "Data is not deleted";
+    }
+
+ }
+ //delete money donor
+ if (isset($_GET['deleteBtnM'])){
+    $id = $_GET['deleteBtnM'];
+    $selectImg= "SELECT rDM_certificate from donor_recordm where id=?";
+    $stmt=$conn->prepare($selectImg);
+    $stmt->bind_param('s',$id);
+    $stmt->execute();
+    $result= $stmt->get_result();
+    $donor = $result->fetch_assoc();
+    $cert= $donor['rDM_certificate'];
+    $validPath= '../include/money_donor/'.$cert;
+    unlink($validPath);
+    $donorM = "DELETE from donor_recordm where id=?";
+    $stmt= $conn->prepare($donorM);
+    $stmt->bind_param('i',$id);
+    $result= $stmt-> execute();
+    if ($result== true){
+       
+        echo "Data is deleted";
+    }else{
+        echo "Data is not deleted";
+    }
+
+ }
+ //delete request
+ if (isset($_GET['deleteReq'])){
+    $id = $_GET['deleteReq'];
+    $selectImg= "SELECT valid_id from set_request where reference_id=?";
+    $stmt=$conn->prepare($selectImg);
+    $stmt->bind_param('s',$id);
+    $stmt->execute();
+    $result= $stmt->get_result();
+    $donor = $result->fetch_assoc();
+    $cert= $donor['rDM_certificate'];
+    $validPath= '../../donors/ValidId/'.$cert;
+    unlink($validPath);
+    $donorReqTotal = "DELETE from req_varianttotal where req_reference=?";
+    $stmt= $conn->prepare($donorReqTotal);
+    $stmt->bind_param('i',$id);
+    $result= $stmt-> execute();
+
+    $donorReq10 = "DELETE from set_request10 where req_reference=?";
+    $stmt= $conn->prepare($donorReq10);
+    $stmt->bind_param('i',$id);
+    $result= $stmt-> execute();
+
+    
+    $donorReq = "DELETE from set_request where reference_id=?";
+    $stmt= $conn->prepare($donorReq);
+    $stmt->bind_param('i',$id);
+    $result= $stmt-> execute();
+    if ($result== true){
+       
+        echo "Data is deleted";
+    }else{
+        echo "Data is not deleted";
+    }
+
  }

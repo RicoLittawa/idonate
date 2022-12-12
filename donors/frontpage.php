@@ -33,13 +33,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="whatisneeded.php">What is needed?</a>
-        </li>
-        <li class="nav-item dropdown">
-		   <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown">  Fill Up  </a>
-		    <ul class="dropdown-menu">
-			  <li><a class="dropdown-item" href="requestform.php">Request Form</a></li>
-			  <li><a class="dropdown-item" href="formoney.php">Money Donor Forms</a></li>
-			 
+        </li>	 
 		    </ul>
 		</li>
 
@@ -50,7 +44,7 @@
 </nav>
 
       <div class="bgdesign">
-        <div class="container1">
+        <div class="slideImg">
           <div class="col-md-8">
            <div id="demo" class="carousel slide" data-ride="carousel">
             <ul class="carousel-indicators">
@@ -86,7 +80,7 @@
         <p class="text-justify"> City Disaster Risk Reduction and  Management Office (CDRRMO) is a government organization for 
           disaster risk reduction in Batangas City led by Mayor Beverly Dimacuha. Their office is 
           located in barangay Bolbok, Batangas City. Their mission is to reduce risk and vulnerabilities, mitigate the 
-          negative effects of hazards, and assure Batanguenos' safety and security. .... </p>
+          negative effects of hazards, and assure Batanguenos' safety and security.</p>
           
       </div>
 

@@ -433,6 +433,20 @@ function fill_category_select_box($conn)
 	$('.btnAdd').click(function(){
 		$('.dynamicAdd').append(appendedTable);
 	});
+	$('#cancelBtn').click(function(){
+		Swal.fire({
+                    title: 'Warning',
+                    text: "Go back to previous page?",
+                    icon: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.location.href="request.php";
+                      }
+                    }) 
+	});
 	$('#testBtn').click(function(e){
 
 		var valid = this.form.checkValidity();
@@ -569,8 +583,26 @@ function fill_category_select_box($conn)
 				method:'POST',
 				data:data,
 				success:function(data){
-					alert (data);
-				}
+					if(data == "Data-submitted"){
+                    Swal.fire({
+                    title: 'Success',
+                    text: "Successfully Added",
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.location.href="donations.php?inserted";
+                      }
+                    }) 
+                  } else {
+                    Swal.fire('Error', data,'error')
+                  }
+				},
+				error: function(data){
+                 Swal.fire('Error', "There were some errors while inserting the data.",'error')
+               }
 			});
            }
                       

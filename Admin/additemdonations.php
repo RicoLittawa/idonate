@@ -311,6 +311,20 @@ session_start();
 	$(document).on('click', '.btnAdd',function(){
 		$('.dynamicAdd').append(appendedTable);
 	});
+	$('#cancelBtn').click(function(){
+		Swal.fire({
+                    title: 'Warning',
+                    text: "Go back to previous page?",
+                    icon: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK',
+                    allowOutsideClick: false
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        window.location.href="donations.php";
+                      }
+                    }) ;
+	});
 	$('#testBtn').click(function(e){
 		var valid = this.form.checkValidity();
         if(valid) { 

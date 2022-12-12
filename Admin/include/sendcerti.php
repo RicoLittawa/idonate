@@ -96,11 +96,33 @@
       $mail->AddAddress($row["email"], $row["name"]); //Adds a "To" address
       $mail->WordWrap = 50;       //Sets word wrapping on the body of the message to a given number of characters
       $mail->IsHTML(true);       //Sets message type to HTML
-      $mail->Subject = 'Testing'; //Sets the Subject of the message
+      $mail->Subject = 'Acknowledgement Reciept'; //Sets the Subject of the message
       //An HTML or plain text message body
-      $mail->Body = '
-      <p>Certificate...</p>
-      ';
+      $donatedItems = "SELECT * FROM donation_items10 WHERE Reference=?";
+					$stmt = $conn->prepare($donatedItems); 
+					$stmt->bind_param("s", $rd_reference);
+					$stmt->execute();
+					$itemResult = $stmt->get_result();
+					$data = [];
+					
+					$data = $itemResult->fetch_all(MYSQLI_ASSOC);
+					
+					if($data){
+			 $itemName= [];
+       $count=0;
+			foreach($data as $items){
+        $count++;
+        $message='';
+				$itemName= $items['name_items'];
+				
+				
+       $message.='
+        <p>Thank you for donating a '.$itemName.' This acknowledgement reciept is created as a sign of gratitude for your kindness.</p>
+        ';
+       }
+        }
+			 $mail->Body = $message; 
+  
       $mail->addStringAttachment($pdf->Output("S",'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
       $mail->Send();      //Send an Email. Return true on success or false on error
 
