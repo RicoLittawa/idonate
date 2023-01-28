@@ -12,7 +12,6 @@
         $Region = $_POST['region'];
         $Email= $_POST['email'];
         $Date= date('Y-m-d', strtotime($_POST['donation_date']));
-        $Category= $_POST['category_arr'];
         $Quantity= $_POST['quantity'];
         $Contact= $_POST['contact'];
         $ItemName= $_POST['itemName_arr'];
@@ -49,14 +48,14 @@
         
         $count = 0;
         $resultCount = 0;
-        foreach($Category as $item){
-            $sql2= "INSERT INTO donation_items10 (Reference,category,name_items,variantCode) Values (?,?,?,?)";
+        foreach($ItemName as $item){
+            $sql2= "INSERT INTO donation_items10 (Reference,name_items,variantCode) Values (?,?,?)";
             $stmt=mysqli_stmt_init($conn);
             if(!mysqli_stmt_prepare($stmt,$sql2)){
                 
             }
             else{
-                mysqli_stmt_bind_param($stmt, 'ssss', $reference_id,  $item, $ItemName[$count],$Variant);
+                mysqli_stmt_bind_param($stmt, 'sss', $reference_id, $item,$Variant);
                 $result = mysqli_stmt_execute($stmt);
                 if($result) {
                     $resultCount = $resultCount + 1;

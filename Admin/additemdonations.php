@@ -107,15 +107,14 @@ session_start();
 					<span class="text">Settings</span>
 				</a>
 			</li>
-		</ul>
-		<ul class="side-menu">
 			<li>
 				<a href="include/logout.php" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>
 			</li>
-			</ul>
+		</ul>
+		
 	</section>
 	<!-- SIDEBAR -->
 
@@ -240,25 +239,93 @@ session_start();
 						<!-- <button style="float: right;" type="button" name="addVar" class="btn" id="addVar"><i style="color: green;font-size:40px;" class="fa-sharp fa-solid fa-plus"></i> 
 								</button> -->
 					</div>
+					<div class="form-group">
+						<label for="">Can Goods & Noodles</label>
+						<table class="table canNoodles col" id="canNoodles">
+						<thead><tr>
+							<th>Product Name</th>
+							<th>Quantity</th>
+							<th>Action</th>
+							</tr>
+						</thead>
+						<tbody class="canBody" id="canBody"><tr>
+						<td><input type="text" class="form-control" id="productName"></td>
+						<td><input type="text" class="form-control" id="quantity"></td>
+						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+					</tr>
+					</tbody>
+					</table>
+					</div>
+					<div class="form-group hygineES">
+						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+						<table class="table hygine col" id="hygine">
+						<thead><tr>
+							<th>Product Name</th>
+							<th>Quantity</th>
+							<th>Action</th>
+							</tr>
+						</thead>
+						<tbody class="hygineBody" id="hygineBody"><tr>
+						<td><input type="text" class="form-control" id="productName"></td>
+						<td><input type="text" class="form-control" id="quantity"></td>
+						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+					</tr>
+					</tbody>
+					</table>
+					</div>
+					<div class="form-group">
+						<label for="">Infant Items(*Formula not included)</label>
+						<table class="table infant col" id="infant">
+						<thead><tr>
+							<th>Product Name</th>
+							<th>Quantity</th>
+							<th>Action</th>
+							</tr>
+						</thead>
+						<tbody class="infantBody" id="infantBody"><tr>
+						<td><input type="text" class="form-control" id="productName"></td>
+						<td><input type="text" class="form-control" id="quantity"></td>
+						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+					</tr>
+					</tbody>
+					</table>
+					</div>
+					<div class="form-group">
+						<label for="">Drinking Water</label>
+						<table class="table infant col" id="infant">
+						<thead><tr>
+							<th>Product Name</th>
+							<th>Unit</th>
+							<th>Quantity</th>
+							<th>Action</th>
+							</tr>
+						</thead>
+						<tbody class="infantBody" id="infantBody"><tr>
+						<td><input type="text" class="form-control" id="productName"></td>
+						<td><select class="form-control" name="unitDrink" id="">
+							<option value="">Choose</option>
+							<option value="">250ml</option>
+							<option value="">300ml</option>
+							<option value="">350ml</option>
+							<option value="">500ml</option>
+							<option value="">1L</option>
+							<option value="">1.5L</option>
+							<option value="">2L</option>
+							<option value="">2.5L</option>
+							<option value="">3L</option>
+							<option value="">4L</option>
+							<option value="">5L</option>
+							<option value="">6L</option>
+						</select></td>
+						<td><input type="text" class="form-control" id="quantity"></td>
+						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+					</tr>
+					</tbody>
+					</table>
+					</div>
 				</div>
+
 			</div>
-			<div class="row">
-				<div class="col">
-					<div class="form-group variantSelect">
-						<label for="variant">Select Variant</label>
-						<select class="custom-select border-success variant" name="variant" id="variant">
-							<option value="">Select</option><?php echo fill_variant_box($conn); ?></select>
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							<label for="">Quantity</label>
-							<input class="form-control quantity border-success" type="text" name="quantity" id="quantity">
-						</div>
-					</div>
-
-				</div>
-
           </form>
 				
   			
@@ -277,273 +344,47 @@ session_start();
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
  	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
- 
  <script>
-	$(document).ready(function(){
-    function add_input_field(){
-	  $('#testBtn').remove();
-	  $('#cancelBtn').remove();
+	$(document).ready(function() {
+		var count=0;
+  function add_NewCan(count){
+				
+				var appendCanNoodles='';
+				appendCanNoodles += '<tr><td><input type="text" class="form-control" id="productName"></td><td><input type="text" class="form-control" id="quantity"></td>';
+				var removeBtn='';
+				if (count>0){
+					removeBtn= '<button type="button" name="remove" id="remove" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+				}
+				appendCanNoodles += '<td>'+removeBtn+'</td></tr>';
+				return appendCanNoodles;
+			}
+			
+			$(document).on('click','#addCan',function(){
 
-      var html='';
-	 
-	  html+='<table class="table table-bordered"><tr><th>Category</th><th>Item Name</th><th>Button</th></tr>';
-	  html+='<tbody class="dynamicAdd"><tr>';
-	  html+='<td><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></td>'
-	  html+='<td><input class="form-control border-success name_items" id="name_items" name="name_items" autocomplete="off"></td>';
-	  html+= '<td><button type="button" class="btn btn-success btnAdd" id="btnAdd">Add</button></td>'
-	  html+='</tr></tbody></table>';
+			count++;
+				$('.canBody').append(add_NewCan(count));
+			})
+ 			 $(document).on('click','#remove', function(){
+			$(this).closest('tr').remove();
+				});	
+			//hide hygine
+			$(document).on('click','#removeHY',function(){
+				$('.hygine').hide();
+				$('#removeHY').hide();
+				var showHY= '<button id="showHY" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
+				$('.hygineES').append(showHY);
 
-     
-      return html;
-    }
-	var appendedTable = '<tr>'+
-	'<td><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></td>'+
-	'<td><input class="form-control border-success name_items" id="name_items" name="name_items" autocomplete="off"></td>'+
-	'<td><button type="button" class="btn btn-danger btnRemove" id="btnRemove">Remove</button></td></tr>';
+			})
+			//show hygine
+			$(document).on('click','#showHY',function(){
+				$('.hygine').show();
+				$('#removeHY').show();
+				$('#showHY').remove()	
+					})
 
-	$('#add-form').append(add_input_field());
-	$(document).on('click','.btnRemove', function(){
-      $(this).closest('tr').remove();
-    });
-	$('#add-form').append('<button  type="button" class="btn addDonate" id="testBtn">Save</button>');
-	$('#add-form').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
-	
-	$(document).on('click', '.btnAdd',function(){
-		$('.dynamicAdd').append(appendedTable);
-	});
-	$('#cancelBtn').click(function(){
-		Swal.fire({
-                    title: 'Warning',
-                    text: "Go back to previous page?",
-                    icon: 'warning',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'OK',
-                    allowOutsideClick: false
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        window.location.href="donations.php";
-                      }
-                    }) ;
-	});
-	$('#testBtn').click(function(e){
-		var valid = this.form.checkValidity();
-        if(valid) { 
-            e.preventDefault();
-  
-        var category_arr=[];
-        var itemName_arr=[];
-
-        var category = $('.category');
-        var name_items = $('.name_items');
-        // var test_qty = 0;
-        for (var i = 0;i<category.length;i++){  
-            category_arr.push($(category[i]).val());
-            itemName_arr.push($(name_items[i]).val());
-            // test_qty += parseInt($(quantity[i]).val());    
-        }
-	
-        var reference_id= $('#reference_id').val();
-        var fname = $('#fname').val();
-        var province = $('#province').val();
-        var region = $('#region').val();
-		var municipality = $('#municipality').val();
-		var barangay = $('#barangay').val();
-        var email = $('#email').val();
-        var donation_date = $('#donation_date').val();
-        var contact= $('#contact').val();
-		var variant= $('#variant').val();
-		var quantity= $('#quantity').val();
-        var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        var varnumbers = /^\d+$/;
-        var inValid = /\s/;
-
-          if(fname==""){
-              $('#fname').removeClass('border-success');
-              $('#fname').addClass('border-danger');
-              return false;
-          }
-          else if(region=="-Select-"){
-              Swal.fire('Select', "Please select a region",'warning');
-              return false;
-          }
-		  else if(province=="-Select-"){
-              Swal.fire('Select', "Please select a province",'warning');
-              return false;
-          }
-		  else if(municipality=="-Select-"){
-              Swal.fire('Select', "Please select a municipality",'warning');
-              return false;
-          }
-		  else if(barangay=="-Select-"){
-              Swal.fire('Select', "Please select a barangay",'warning');
-              return false;
-          }
-          else if(contact==""){
-              $('#contact').removeClass('border-success');
-              $('#contact').addClass('border-danger');
-          }
-          else if (inValid.test($('#contact').val())==true){
-              Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-              $('#contact').removeClass('border-success');
-              $('#contact').addClass('border-danger');
-              return false;
-            }
-          else if(varnumbers.test($('#contact').val())==false) {
-              Swal.fire('Number', "Numbers only.",'warning');
-              $('#contact').removeClass('border-success');
-              $('#contact').addClass('border-danger');
-              return false;
-            } 
-          else if(contact.length !=11){
-              Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-              $('#contact').removeClass('border-success');
-              $('#contact').addClass('border-danger');
-              return false;
-            }
-          else if(email==""){
-              $('#email').removeClass('border-success');
-              $('#email').addClass('border-danger');
-              return false;
-          }
-          else if(emailVali.test($('#email').val())==false){
-              Swal.fire('Email', "Invalid email address",'warning'); 
-              $('#email').removeClass('border-success');
-              $('#email').addClass('border-danger');
-              return false;
-          }
-        
-          else if(donation_date==""){
-
-              $('#donation_date').removeClass('border-success');
-              $('#donation_date').addClass('border-danger');
-              return false;
-          }
-		  else if (quantity==""){
-                  Swal.fire('Fields', "Quantity is empty",'warning');
-                  return false;
-              }
-			  
-		 else if (inValid.test($('#quantity').val())==true){ 
-                  Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-                  return false;
-              }
-		else if(varnumbers.test($('#quantity').val())==false) {
-              Swal.fire('Number', "Numbers only.",'warning');
-              $('#contact').removeClass('border-success');
-              $('#contact').addClass('border-danger');
-              return false;
-            } 
-			else if(variant=="-Select-"){
-              Swal.fire('Select', "Please select a variant",'warning');
-              return false;
-          }
-          else{
-              for(var j=0;j<category.length;j++){
-            
-               if ($(category[j]).val()=="-Select-"){
-                  Swal.fire('Fields', "Please select a category",'warning');
-                  return false;
-              }
-           else if ($(name_items[j]).val()==""){
-                  Swal.fire('Fields', "Item name is empty",'warning');
-                  return false;
-              }
-             
-              }
-            var data = {saveBtn: '',reference_id:reference_id,fname,province:province,region:region,municipality:municipality,barangay:barangay,contact:contact,
-			email:email,donation_date:donation_date,variant:variant,quantity:quantity,category_arr:category_arr,itemName_arr:itemName_arr};
-            
-            $.ajax({
-            url:'include/add.inc.php',
-            method:'POST',
-            data: data,
-            success:function(data){
-                 if(data == "Data added"){
-                    Swal.fire({
-                    title: 'Success',
-                    text: "Successfully Added",
-                    icon: 'success',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'OK',
-                    allowOutsideClick: false
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        window.location.href="donations.php?inserted";
-                      }
-                    }) 
-                  } else {
-                    Swal.fire('Error', data,'error')
-                  }
-            },
-            error: function(data){
-                 Swal.fire('Error', "There were some errors while inserting the data.",'error')
-               }
-
-         });
-          }
-                      
-        }
-	});  
 });
 
-
-</script>
-<script>
-	$(document).ready(function(){
-	 $('#region').on('change',function(){
-		var regCode= $(this).val();
-		if (regCode){
-			$.ajax({
-				url:'include/region.php',
-				type:'POST',
-				data: 'regCode='+regCode,
-				success: function (data){
-					$('#province').html(data);
-				}
-
-			});
-		}
-		else{
-			swal.fire('Warning', 'Select region', 'warning');
-		}
-	 });
-	 $('#province').on('change',function(){
-		var provCode= $(this).val();
-		if (provCode){
-			$.ajax({
-				url:'include/region.php',
-				type:'POST',
-				data: 'provCode='+provCode,
-				success: function (data){
-					$('#municipality').html(data);
-				}
-
-			});
-		}
-		else{
-			swal.fire('Warning', 'Select province', 'warning');
-		}
-	 });
-	 $('#municipality').on('change',function(){
-		var citymunCode= $(this).val();
-		if (citymunCode){
-			$.ajax({
-				url:'include/region.php',
-				type:'POST',
-				data: 'citymunCode='+citymunCode,
-				success: function (data){
-					$('#barangay').html(data);
-				}
-
-			});
-		}
-		else{
-			swal.fire('Warning', 'Select municipality', 'warning');
-		}
-	 });
-	
-	});
-</script>
+ </script>
 <Script>
 	$(document).ready(function(){
 		$('#add-form').on('focus', '#name_items', function (e) {
@@ -560,10 +401,10 @@ session_start();
 		.append(item.label)
 		.appendTo(ul);
 
-		};
+		}
 
 
-		})
+		});
 	});
 </Script>
 
