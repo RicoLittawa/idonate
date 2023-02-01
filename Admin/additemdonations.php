@@ -240,15 +240,15 @@ session_start();
 								</button> -->
 					</div>
 					<div class="form-group">
-						<label for="">Can Goods & Noodles</label>
-						<table class="table canNoodles col" id="canNoodles">
+						<label for="">Can Goods & Noodles</label><button class="btn" id="removeCN" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+						<table class="table cnTB col" id="cnTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Quantity</th>
 							<th>Action</th>
 							</tr>
 						</thead>
-						<tbody class="canBody" id="canBody"><tr>
+						<tbody class="cnBody" id="cnBody"><tr>
 						<td><input type="text" class="form-control" id="productName"></td>
 						<td><input type="text" class="form-control" id="quantity"></td>
 						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
@@ -257,15 +257,15 @@ session_start();
 					</table>
 					</div>
 					<div class="form-group hygineES">
-						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
-						<table class="table hygine col" id="hygine">
+						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+						<table class="table hyTB col" id="hyTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Quantity</th>
 							<th>Action</th>
 							</tr>
 						</thead>
-						<tbody class="hygineBody" id="hygineBody"><tr>
+						<tbody class="hyBody" id="hyBody"><tr>
 						<td><input type="text" class="form-control" id="productName"></td>
 						<td><input type="text" class="form-control" id="quantity"></td>
 						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
@@ -274,15 +274,15 @@ session_start();
 					</table>
 					</div>
 					<div class="form-group">
-						<label for="">Infant Items(*Formula not included)</label>
-						<table class="table infant col" id="infant">
+						<label for="">Infant Items(*Formula not included)</label><button class="btn" id="removeII" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+						<table class="table iiTB col" id="iiTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Quantity</th>
 							<th>Action</th>
 							</tr>
 						</thead>
-						<tbody class="infantBody" id="infantBody"><tr>
+						<tbody class="iiBody" id="iiBody"><tr>
 						<td><input type="text" class="form-control" id="productName"></td>
 						<td><input type="text" class="form-control" id="quantity"></td>
 						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
@@ -291,17 +291,18 @@ session_start();
 					</table>
 					</div>
 					<div class="form-group">
-						<label for="">Drinking Water</label>
-						<table class="table infant col" id="infant">
+						<label for="">Drinking Water</label><button class="btn" id="removeDW" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+						<table class="table dwTB col" id="dwTB">
 						<thead><tr>
 							<th>Product Name</th>
+							<th>Quantity</th>
 							<th>Unit</th>
-							<th>Quantity</th>
 							<th>Action</th>
 							</tr>
 						</thead>
-						<tbody class="infantBody" id="infantBody"><tr>
+						<tbody class="dwBody" id="dwBody"><tr>
 						<td><input type="text" class="form-control" id="productName"></td>
+						<td><input type="text" class="form-control" id="quantity"></td>
 						<td><select class="form-control" name="unitDrink" id="">
 							<option value="">Choose</option>
 							<option value="">250ml</option>
@@ -317,14 +318,95 @@ session_start();
 							<option value="">5L</option>
 							<option value="">6L</option>
 						</select></td>
+						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+					</tr>
+					</tbody>
+					</table>
+					</div>
+					<div class="form-group">
+						<label for="">Meats/Grains</label><button class="btn" id="removeMG" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+						<table class="table mgTB col" id="mgTB">
+						<thead><tr>
+							<th>Product Name</th>
+							<th>Type</th>
+							<th>Quantity</th>
+							<th>Unit</th>
+							<th>Action</th>
+							</tr>
+						</thead>
+						<tbody class="mgBody" id="mgBody"><tr>
+						<td><input type="text" class="form-control" id="productName"></td>
+						<td><select class="form-control" name="unitDrink" id="">
+							<option value="">Choose</option>
+							<option value="">Frozen</option>
+							<option value="">Fresh</option>
+							<option value="">None</option>
+						</select></td>
 						<td><input type="text" class="form-control" id="quantity"></td>
+						<td><select class="form-control" name="unitDrink" id="">
+							<option value="">Choose</option>
+							<option value="">Kilograms</option>
+							<option value="">Grams</option>
+						</select></td>
+						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+					</tr>
+					</tbody>
+					</table>
+					</div>
+					<div class="form-group">
+						<label for="">Medicine</label><button class="btn" id="removeME" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+						<table class="table meTB col" id="meTB">
+						<thead><tr>
+							<th>Product Name</th>
+							<th>Type</th>
+							<th>Quantity</th>
+							<th>Unit</th>
+							<th>Action</th>
+							</tr>
+						</thead>
+						<tbody class="meBody" id="meBody"><tr>
+						<td><input type="text" class="form-control" id="productName"></td>
+						<td><select class="form-control" name="unitDrink" id="">
+							<option value="">Choose</option>
+							<option value="">Tablet</option>
+							<option value="">Capsule</option>
+							<option value="">Liquid</option>
+						</select></td>
+						<td><input type="text" class="form-control" id="quantity"></td>
+						<td><select class="form-control" name="unitDrink" id="">
+							<option value="">Choose</option>
+							<option value="">Milligrams</option>
+							<option value="">Grams</option>
+							<option value="">Micrograms</option>
+						</select></td>
+						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+					</tr>
+					</tbody>
+					</table>
+					</div>
+					<div class="form-group">
+						<label for="">Others (Type n/a if there is no type or unit)</label><button class="btn" id="removeO" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+						<table class="table oTB col" id="oTB">
+						<thead><tr>
+							<th>Product Name</th>
+							<th>Type</th>
+							<th>Quantity</th>
+							<th>Unit</th>
+							<th>Action</th>
+							</tr>
+						</thead>
+						<tbody class="oBody" id="oBody"><tr>
+						<td><input type="text" class="form-control" id="productName"></td>
+						<td><input type="text" class="form-control" id="productName"></td>
+						<td><input type="text" class="form-control" id="quantity"></td>
+						<td><input type="text" class="form-control" id="productName"></td>
 						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
 					</div>
 				</div>
-
+				</div>
 			</div>
           </form>
 				
@@ -371,7 +453,7 @@ session_start();
 			$(document).on('click','#removeHY',function(){
 				$('.hygine').hide();
 				$('#removeHY').hide();
-				var showHY= '<button id="showHY" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
+				var showHY= '<button id="showHY" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
 				$('.hygineES').append(showHY);
 
 			})
