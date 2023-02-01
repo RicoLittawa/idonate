@@ -239,7 +239,7 @@ session_start();
 						<!-- <button style="float: right;" type="button" name="addVar" class="btn" id="addVar"><i style="color: green;font-size:40px;" class="fa-sharp fa-solid fa-plus"></i> 
 								</button> -->
 					</div>
-					<div class="form-group">
+					<div class="form-group cn">
 						<label for="">Can Goods & Noodles</label><button class="btn" id="removeCN" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
 						<table class="table cnTB col" id="cnTB">
 						<thead><tr>
@@ -249,14 +249,14 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="cnBody" id="cnBody"><tr>
-						<td><input type="text" class="form-control" id="productName"></td>
-						<td><input type="text" class="form-control" id="quantity"></td>
-						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+						<td><input type="text" class="form-control" id="pnCN"></td>
+						<td><input type="text" class="form-control" id="qCN"></td>
+						<td><button type="button" class="btn btn-success addCN" id="addCN"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
 					</div>
-					<div class="form-group hygineES">
+					<div class="form-group">
 						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
 						<table class="table hyTB col" id="hyTB">
 						<thead><tr>
@@ -266,9 +266,9 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="hyBody" id="hyBody"><tr>
-						<td><input type="text" class="form-control" id="productName"></td>
-						<td><input type="text" class="form-control" id="quantity"></td>
-						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+						<td><input type="text" class="form-control" id="pnHY"></td>
+						<td><input type="text" class="form-control" id="qHY"></td>
+						<td><button type="button" class="btn btn-success addHY" id="addHY"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
@@ -283,9 +283,9 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="iiBody" id="iiBody"><tr>
-						<td><input type="text" class="form-control" id="productName"></td>
-						<td><input type="text" class="form-control" id="quantity"></td>
-						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+						<td><input type="text" class="form-control" id="pnII"></td>
+						<td><input type="text" class="form-control" id="qII"></td>
+						<td><button type="button" class="btn btn-success addII" id="addII"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
@@ -301,9 +301,9 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="dwBody" id="dwBody"><tr>
-						<td><input type="text" class="form-control" id="productName"></td>
-						<td><input type="text" class="form-control" id="quantity"></td>
-						<td><select class="form-control" name="unitDrink" id="">
+						<td><input type="text" class="form-control" id="pnDW"></td>
+						<td><input type="text" class="form-control" id="qDW"></td>
+						<td><select class="form-control" name="unitDW" id="unitDW">
 							<option value="">Choose</option>
 							<option value="">250ml</option>
 							<option value="">300ml</option>
@@ -318,7 +318,7 @@ session_start();
 							<option value="">5L</option>
 							<option value="">6L</option>
 						</select></td>
-						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+						<td><button type="button" class="btn btn-success addDW" id="addDW"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
@@ -335,20 +335,20 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="mgBody" id="mgBody"><tr>
-						<td><input type="text" class="form-control" id="productName"></td>
-						<td><select class="form-control" name="unitDrink" id="">
+						<td><input type="text" class="form-control" id="pnMG"></td>
+						<td><select class="form-control" name="unitMG" id="unitMG">
 							<option value="">Choose</option>
 							<option value="">Frozen</option>
 							<option value="">Fresh</option>
 							<option value="">None</option>
 						</select></td>
-						<td><input type="text" class="form-control" id="quantity"></td>
+						<td><input type="text" class="form-control" id="qMG"></td>
 						<td><select class="form-control" name="unitDrink" id="">
 							<option value="">Choose</option>
 							<option value="">Kilograms</option>
 							<option value="">Grams</option>
 						</select></td>
-						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+						<td><button type="button" class="btn btn-success addMG" id="addMG"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
@@ -365,21 +365,21 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="meBody" id="meBody"><tr>
-						<td><input type="text" class="form-control" id="productName"></td>
-						<td><select class="form-control" name="unitDrink" id="">
+						<td><input type="text" class="form-control" id="pnME"></td>
+						<td><select class="form-control" name="typeME" id="typeME">
 							<option value="">Choose</option>
 							<option value="">Tablet</option>
 							<option value="">Capsule</option>
 							<option value="">Liquid</option>
 						</select></td>
-						<td><input type="text" class="form-control" id="quantity"></td>
-						<td><select class="form-control" name="unitDrink" id="">
+						<td><input type="text" class="form-control" id="qME"></td>
+						<td><select class="form-control" name="unitME" id="unitME">
 							<option value="">Choose</option>
 							<option value="">Milligrams</option>
 							<option value="">Grams</option>
 							<option value="">Micrograms</option>
 						</select></td>
-						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+						<td><button type="button" class="btn btn-success addME" id="addME"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
@@ -396,11 +396,11 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="oBody" id="oBody"><tr>
-						<td><input type="text" class="form-control" id="productName"></td>
-						<td><input type="text" class="form-control" id="productName"></td>
-						<td><input type="text" class="form-control" id="quantity"></td>
-						<td><input type="text" class="form-control" id="productName"></td>
-						<td><button type="button" class="btn btn-success addCan" id="addCan"><i class="fa-solid fa-plus"></i></button></td>
+						<td><input type="text" class="form-control" id="pnO"></td>
+						<td><input type="text" class="form-control" id="typeO"></td>
+						<td><input type="text" class="form-control" id="qO"></td>
+						<td><input type="text" class="form-control" id="unitO"></td>
+						<td><button type="button" class="btn btn-success addO" id="addO"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
@@ -431,37 +431,37 @@ session_start();
 		var count=0;
   function add_NewCan(count){
 				
-				var appendCanNoodles='';
-				appendCanNoodles += '<tr><td><input type="text" class="form-control" id="productName"></td><td><input type="text" class="form-control" id="quantity"></td>';
-				var removeBtn='';
+				var appendCN='';
+				appendCN += '<tr><td><input type="text" class="form-control" id="productName"></td><td><input type="text" class="form-control" id="quantity"></td>';
+				var removeCnBtn='';
 				if (count>0){
-					removeBtn= '<button type="button" name="remove" id="remove" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+					removeCnBtn= '<button type="button" name="remove" id="removeTbCn" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
 				}
-				appendCanNoodles += '<td>'+removeBtn+'</td></tr>';
-				return appendCanNoodles;
+				appendCN += '<td>'+removeCnBtn+'</td></tr>';
+				return appendCN;
 			}
 			
-			$(document).on('click','#addCan',function(){
+			$(document).on('click','#addCN',function(){
 
 			count++;
-				$('.canBody').append(add_NewCan(count));
+				$('.cnBody').append(add_NewCan(count));
 			})
- 			 $(document).on('click','#remove', function(){
+ 			 $(document).on('click','#removeTbCn', function(){
 			$(this).closest('tr').remove();
 				});	
-			//hide hygine
-			$(document).on('click','#removeHY',function(){
-				$('.hygine').hide();
-				$('#removeHY').hide();
-				var showHY= '<button id="showHY" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
-				$('.hygineES').append(showHY);
+			//hide can/noodles
+			$(document).on('click','#removeCN',function(){
+				$('.cnTB').hide();
+				$('#removeCN').hide();
+				var showCN= '<button id="showCN" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
+				$('.cn').append(showCN);
 
 			})
 			//show hygine
-			$(document).on('click','#showHY',function(){
-				$('.hygine').show();
-				$('#removeHY').show();
-				$('#showHY').remove()	
+			$(document).on('click','#showCN',function(){
+				$('.cnTB').show();
+				$('#removeCN').show();
+				$('#showCN').remove()	
 					})
 
 });
