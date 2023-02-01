@@ -256,7 +256,7 @@ session_start();
 					</tbody>
 					</table>
 					</div>
-					<div class="form-group">
+					<div class="form-group hy">
 						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
 						<table class="table hyTB col" id="hyTB">
 						<thead><tr>
@@ -426,13 +426,16 @@ session_start();
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
  	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+	<script>
+		
+	</script>
  <script>
 	$(document).ready(function() {
 		var count=0;
-  function add_NewCan(count){
+  			function add_CN(count){
 				
 				var appendCN='';
-				appendCN += '<tr><td><input type="text" class="form-control" id="productName"></td><td><input type="text" class="form-control" id="quantity"></td>';
+				appendCN += '<tr><td><input type="text" class="form-control" id="newCN"></td><td><input type="text" class="form-control" id="newqCN"></td>';
 				var removeCnBtn='';
 				if (count>0){
 					removeCnBtn= '<button type="button" name="remove" id="removeTbCn" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
@@ -440,13 +443,29 @@ session_start();
 				appendCN += '<td>'+removeCnBtn+'</td></tr>';
 				return appendCN;
 			}
-			
+			function add_HY(count){
+				
+				var appendHY='';
+				appendHY += '<tr><td><input type="text" class="form-control" id="productName"></td><td><input type="text" class="form-control" id="quantity"></td>';
+				var removeHyBtn='';
+				if (count>0){
+					removeHyBtn= '<button type="button" name="remove" id="removeTbHy" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+				}
+				appendHY += '<td>'+removeHyBtn+'</td></tr>';
+				return appendHY;
+			}
 			$(document).on('click','#addCN',function(){
-
-			count++;
-				$('.cnBody').append(add_NewCan(count));
+				count++;
+				$('.cnBody').append(add_CN(count));
 			})
  			 $(document).on('click','#removeTbCn', function(){
+			$(this).closest('tr').remove();
+				});	
+			$(document).on('click','#addHY',function(){
+				count++;
+				$('.hyBody').append(add_HY(count));
+			})
+ 			 $(document).on('click','#removeTbHy', function(){
 			$(this).closest('tr').remove();
 				});	
 			//hide can/noodles
@@ -457,12 +476,27 @@ session_start();
 				$('.cn').append(showCN);
 
 			})
-			//show hygine
+			//show can/noodles
 			$(document).on('click','#showCN',function(){
 				$('.cnTB').show();
 				$('#removeCN').show();
 				$('#showCN').remove()	
 					})
+			//hide hygine
+			$(document).on('click','#removeHY',function(){
+				$('.hyTB').hide();
+				$('#removeHY').hide();
+				var showHY= '<button id="showHY" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
+				$('.hy').append(showHY);
+
+			})
+			//show hygine
+			$(document).on('click','#showHY',function(){
+				$('.hyTB').show();
+				$('#removeHY').show();
+				$('#showHY').remove()	
+					})
+
 
 });
 
