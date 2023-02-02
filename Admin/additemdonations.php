@@ -240,7 +240,7 @@ session_start();
 								</button> -->
 					</div>
 					<div class="form-group cn">
-						<label for="">Can Goods & Noodles</label><button class="btn" id="removeCN" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+						<label for="">Can Goods & Noodles</label><button class="btn" id="removeCN" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table cnTB col" id="cnTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -257,7 +257,7 @@ session_start();
 					</table>
 					</div>
 					<div class="form-group hy">
-						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table hyTB col" id="hyTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -273,8 +273,8 @@ session_start();
 					</tbody>
 					</table>
 					</div>
-					<div class="form-group">
-						<label for="">Infant Items(*Formula not included)</label><button class="btn" id="removeII" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+					<div class="form-group ii">
+						<label for="">Infant Items(*Formula not included)</label><button class="btn" id="removeII" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table iiTB col" id="iiTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -290,8 +290,8 @@ session_start();
 					</tbody>
 					</table>
 					</div>
-					<div class="form-group">
-						<label for="">Drinking Water</label><button class="btn" id="removeDW" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+					<div class="form-group dw">
+						<label for="">Drinking Water</label><button class="btn" id="removeDW" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table dwTB col" id="dwTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -323,8 +323,8 @@ session_start();
 					</tbody>
 					</table>
 					</div>
-					<div class="form-group">
-						<label for="">Meats/Grains</label><button class="btn" id="removeMG" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+					<div class="form-group mg">
+						<label for="">Meats/Grains</label><button class="btn" id="removeMG" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table mgTB col" id="mgTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -336,14 +336,14 @@ session_start();
 						</thead>
 						<tbody class="mgBody" id="mgBody"><tr>
 						<td><input type="text" class="form-control" id="pnMG"></td>
-						<td><select class="form-control" name="unitMG" id="unitMG">
+						<td><select class="form-control" name="typeMG" id="typeMG">
 							<option value="">Choose</option>
 							<option value="">Frozen</option>
 							<option value="">Fresh</option>
 							<option value="">None</option>
 						</select></td>
 						<td><input type="text" class="form-control" id="qMG"></td>
-						<td><select class="form-control" name="unitDrink" id="">
+						<td><select class="form-control" name="unitMG" id="unitMG">
 							<option value="">Choose</option>
 							<option value="">Kilograms</option>
 							<option value="">Grams</option>
@@ -353,8 +353,8 @@ session_start();
 					</tbody>
 					</table>
 					</div>
-					<div class="form-group">
-						<label for="">Medicine</label><button class="btn" id="removeME" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
+					<div class="form-group me">
+						<label for="">Medicine</label><button class="btn" id="removeME" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table meTB col" id="meTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -371,6 +371,7 @@ session_start();
 							<option value="">Tablet</option>
 							<option value="">Capsule</option>
 							<option value="">Liquid</option>
+							<option value="">None</option>
 						</select></td>
 						<td><input type="text" class="form-control" id="qME"></td>
 						<td><select class="form-control" name="unitME" id="unitME">
@@ -378,15 +379,16 @@ session_start();
 							<option value="">Milligrams</option>
 							<option value="">Grams</option>
 							<option value="">Micrograms</option>
+							<option value="">None</option>
 						</select></td>
 						<td><button type="button" class="btn btn-success addME" id="addME"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
 					</div>
-					<div class="form-group">
-						<label for="">Others (Type n/a if there is no type or unit)</label><button class="btn" id="removeO" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></i></button>
-						<table class="table oTB col" id="oTB">
+					<div class="form-group ot">
+						<label for="">Others (Type n/a if there is no type or unit)</label><button class="btn" id="removeOT" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
+						<table class="table otTB col" id="otTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Type</th>
@@ -395,12 +397,12 @@ session_start();
 							<th>Action</th>
 							</tr>
 						</thead>
-						<tbody class="oBody" id="oBody"><tr>
-						<td><input type="text" class="form-control" id="pnO"></td>
-						<td><input type="text" class="form-control" id="typeO"></td>
-						<td><input type="text" class="form-control" id="qO"></td>
-						<td><input type="text" class="form-control" id="unitO"></td>
-						<td><button type="button" class="btn btn-success addO" id="addO"><i class="fa-solid fa-plus"></i></button></td>
+						<tbody class="otBody" id="otBody"><tr>
+						<td><input type="text" class="form-control" id="pnOT"></td>
+						<td><input type="text" class="form-control" id="typeOT"></td>
+						<td><input type="text" class="form-control" id="qOT"></td>
+						<td><input type="text" class="form-control" id="unitOT"></td>
+						<td><button type="button" class="btn btn-success addOT" id="addOT"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
@@ -438,7 +440,7 @@ session_start();
 				appendCN += '<tr><td><input type="text" class="form-control" id="newCN"></td><td><input type="text" class="form-control" id="newqCN"></td>';
 				var removeCnBtn='';
 				if (count>0){
-					removeCnBtn= '<button type="button" name="remove" id="removeTbCn" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+					removeCnBtn= '<button type="button" name="removeCN" id="removeTbCn" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
 				}
 				appendCN += '<td>'+removeCnBtn+'</td></tr>';
 				return appendCN;
@@ -446,14 +448,118 @@ session_start();
 			function add_HY(count){
 				
 				var appendHY='';
-				appendHY += '<tr><td><input type="text" class="form-control" id="productName"></td><td><input type="text" class="form-control" id="quantity"></td>';
+				appendHY += '<tr><td><input type="text" class="form-control" id="newHY"></td><td><input type="text" class="form-control" id="newqHY"></td>';
 				var removeHyBtn='';
 				if (count>0){
-					removeHyBtn= '<button type="button" name="remove" id="removeTbHy" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+					removeHyBtn= '<button type="button" name="removeHY" id="removeTbHy" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
 				}
 				appendHY += '<td>'+removeHyBtn+'</td></tr>';
 				return appendHY;
 			}
+			function add_II(count){
+				
+				var appendII='';
+				appendII += '<tr><td><input type="text" class="form-control" id="newII"></td><td><input type="text" class="form-control" id="newqII"></td>';
+				var removeIiBtn='';
+				if (count>0){
+					removeIiBtn= '<button type="button" name="removeII" id="removeTbIi" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+				}
+				appendII += '<td>'+removeIiBtn+'</td></tr>';
+				return appendII;
+			}
+			function add_DW(count){
+				
+				var appendDW='';
+				appendDW += '<tr><td><input type="text" class="form-control" id="newDW"></td><td><input type="text" class="form-control" id="newqDW"></td>'+
+				'<td><select class="form-control" name="unitDW" id="unitDW">'+
+							'<option value="">Choose</option>'+
+							'<option value="">250ml</option>'+
+							'<option value="">300ml</option>'+
+							'<option value="">350ml</option>'+
+							'<option value="">500ml</option>'+
+							'<option value="">1L</option>'+
+							'<option value="">1.5L</option>'+
+							'<option value="">2L</option>'+
+							'<option value="">2.5L</option>'+
+							'<option value="">3L</option>'+
+							'<option value="">4L</option>'+
+							'<option value="">5L</option>'+
+							'<option value="">6L</option>'+
+						'</select></td>';
+				var removeDwBtn='';
+				if (count>0){
+					removeDwBtn= '<button type="button" name="removeDW" id="removeTbDw" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+				}
+				appendDW += '<td>'+removeDwBtn+'</td></tr>';
+				return appendDW;
+			}
+			function add_MG(count){
+				
+				var appendMG='';
+				appendMG += '<tr><td><input type="text" class="form-control" id="newMG"></td>'+
+				'<td><select class="form-control" name="typeMG" id="typeMG">'+
+							'<option value="">Choose</option>'+
+							'<option value="">Frozen</option>'+
+							'<option value="">Fresh</option>'+
+							'<option value="">None</option>'+
+						'</select></td>'+
+						'<td><input type="text" class="form-control" id="newqMG"></td>'+
+						'<td><select class="form-control" name="unitMG" id="unitMG">'+
+							'<option value="">Choose</option>'+
+							'<option value="">Kilograms</option>'+
+							'<option value="">Grams</option>'+
+						'</select></td>';
+						
+				var removeMgBtn='';
+				if (count>0){
+					removeMgBtn= '<button type="button" name="removeMG" id="removeTbMg" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+				}
+				appendMG += '<td>'+removeMgBtn+'</td></tr>';
+				return appendMG;
+			}
+			function add_ME(count){
+				
+				var appendME='';
+				appendME += '<tr><td><input type="text" class="form-control" id="newME"></td>'+
+				'<td><select class="form-control" name="typeME" id="typeME">'+
+							'<option value="">Choose</option>'+
+							'<option value="">Tablet</option>'+
+							'<option value="">Capsule</option>'+
+							'<option value="">Liquid</option>'+
+							'<option value="">None</option>'+
+						'</select></td>'+
+						'<td><input type="text" class="form-control" id="newqME"></td>'+
+						'<td><select class="form-control" name="unitME" id="unitME">'+
+							'<option value="">Choose</option>'+
+							'<option value="">Milligrams</option>'+
+							'<option value="">Grams</option>'+
+							'<option value="">Micrograms</option>'+
+							'<option value="">None</option>'+
+						'</select></td>';
+						
+				var removeMeBtn='';
+				if (count>0){
+					removeMeBtn= '<button type="button" name="removeME" id="removeTbMe" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+				}
+				appendME += '<td>'+removeMeBtn+'</td></tr>';
+				return appendME;
+			}
+			function add_OT(count){
+				
+				var appendOT='';
+				appendOT += '<tr><td><input type="text" class="form-control" id="newOT"></td>'+
+							'<td><input type="text" class="form-control" id="newOT"></td>'+
+							'<td><input type="text" class="form-control" id="newqOT"></td>'+
+							'<td><input type="text" class="form-control" id="newuOT"></td>';
+	
+				var removeOtBtn='';
+				if (count>0){
+					removeOtBtn= '<button type="button" name="removeOT" id="removeTbOt" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+				}
+				appendOT += '<td>'+removeOtBtn+'</td></tr>';
+				return appendOT;
+			}
+			//add to cn
 			$(document).on('click','#addCN',function(){
 				count++;
 				$('.cnBody').append(add_CN(count));
@@ -461,13 +567,63 @@ session_start();
  			 $(document).on('click','#removeTbCn', function(){
 			$(this).closest('tr').remove();
 				});	
+			//add to hy
 			$(document).on('click','#addHY',function(){
 				count++;
 				$('.hyBody').append(add_HY(count));
 			})
  			 $(document).on('click','#removeTbHy', function(){
 			$(this).closest('tr').remove();
+				});
+			//add to ii
+			$(document).on('click','#addII',function(){
+				count++;
+				$('.iiBody').append(add_II(count));
+			})
+ 			 $(document).on('click','#removeTbIi', function(){
+			$(this).closest('tr').remove();
 				});	
+			//add to dw
+			$(document).on('click','#addDW',function(){
+				count++;
+				$('.dwBody').append(add_DW(count));
+			})
+ 			 $(document).on('click','#removeTbDw', function(){
+			$(this).closest('tr').remove();
+				});	
+			//add to mg
+			$(document).on('click','#addMG',function(){
+				count++;
+				$('.mgBody').append(add_MG(count));
+			})
+ 			 $(document).on('click','#removeTbMg', function(){
+			$(this).closest('tr').remove();
+				});	
+			//add to me
+			$(document).on('click','#addME',function(){
+				count++;
+				$('.meBody').append(add_ME(count));
+			})
+ 			 $(document).on('click','#removeTbMe', function(){
+			$(this).closest('tr').remove();
+				});	
+			//add to ot
+			$(document).on('click','#addOT',function(){
+				count++;
+				$('.otBody').append(add_OT(count));
+			})
+ 			 $(document).on('click','#removeTbOt', function(){
+			$(this).closest('tr').remove();
+				});	
+				
+			
+			
+
+
+
+
+			//remove buttons
+
 			//hide can/noodles
 			$(document).on('click','#removeCN',function(){
 				$('.cnTB').hide();
@@ -475,13 +631,13 @@ session_start();
 				var showCN= '<button id="showCN" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
 				$('.cn').append(showCN);
 
-			})
+			});
 			//show can/noodles
 			$(document).on('click','#showCN',function(){
 				$('.cnTB').show();
 				$('#removeCN').show();
 				$('#showCN').remove()	
-					})
+					});
 			//hide hygine
 			$(document).on('click','#removeHY',function(){
 				$('.hyTB').hide();
@@ -495,8 +651,63 @@ session_start();
 				$('.hyTB').show();
 				$('#removeHY').show();
 				$('#showHY').remove()	
-					})
+					});
+			//hide infant
+			$(document).on('click','#removeII',function(){
+				$('.iiTB').hide();
+				$('#removeII').hide();
+				var showII= '<button id="showII" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
+				$('.ii').append(showII);
 
+			})
+			//show infant
+			$(document).on('click','#showII',function(){
+				$('.iiTB').show();
+				$('#removeII').show();
+				$('#showII').remove()	
+					});
+			//hide drinking water
+			$(document).on('click','#removeDW',function(){
+				$('.dwTB').hide();
+				$('#removeDW').hide();
+				var showDW= '<button id="showDW" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
+				$('.dw').append(showDW);
+
+			})
+			//show drinking water
+			$(document).on('click','#showDW',function(){
+				$('.dwTB').show();
+				$('#removeDW').show();
+				$('#showDW').remove()	
+					});
+			//hide meat/grains
+			$(document).on('click','#removeMG',function(){
+				$('.mgTB').hide();
+				$('#removeMG').hide();
+				var showMG= '<button id="showMG" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
+				$('.mg').append(showMG);
+
+			})
+			//show meat/grains
+			$(document).on('click','#showMG',function(){
+				$('.mgTB').show();
+				$('#removeMG').show();
+				$('#showMG').remove()	
+					});
+			//hide medicine
+			$(document).on('click','#removeME',function(){
+				$('.meTB').hide();
+				$('#removeME').hide();
+				var showME= '<button id="showME" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
+				$('.me').append(showME);
+
+			})
+			//show medicine
+			$(document).on('click','#showME',function(){
+				$('.meTB').show();
+				$('#removeME').show();
+				$('#showME').remove()	
+					});
 
 });
 
