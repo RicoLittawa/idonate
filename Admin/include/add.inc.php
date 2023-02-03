@@ -36,8 +36,9 @@
         $qOT_arr=$_POST['qOT_arr'];
         $unitOT_arr=$_POST['unitOT_arr'];
         $checkRes=$_POST['result'];
-      
-   
+        
+     
+
 
 
          $sql1 = "INSERT INTO donation_items (Reference,donor_name,donor_region,donor_province,donor_municipality,donor_barangay,donor_email,donor_contact,donationDate)
@@ -52,47 +53,42 @@
              mysqli_stmt_bind_param($stmt,"sssssssss",$reference_id,$Fname,$Region,$Province,$Municipality,$Barangay,$Email,$Contact,$Date);
              mysqli_stmt_execute($stmt);
          }
-         foreach($checkRes as $res){
-            if($checkRes=='cannoodles'&&$checkRes=='hygine'){
+         foreach ($checkRes as $res){
+            if ($res=='cannoodles'){
+                $can = "INSERT INTO categdump (referenceID, productName, ptype,quantity,unit) VALUES (?,?,?,?,?)";
+               $stmt= $conn->prepare($can);
+               $stmt->bind_param("sssss", $reference_id, $null1, $null2, $null3, $null4);
+               $stmt->execute();
+               echo"save";
+           }
+           else if($res=='hygine'){
+               $count = 0;
+               $resultCount = 0;
+               foreach($pnHY_arr as $hy){
+                   $hygine = "INSERT INTO categhygineessential (referenceID, productName,quantity) VALUES (?,?,?)";
+                   $stmt=mysqli_stmt_init($conn);
+                   if(!mysqli_stmt_prepare($stmt,$hygine)){
+                       
+                   }
+                   else{
+                       mysqli_stmt_bind_param($stmt, 'sss', $reference_id,  $hy, $qHY_arr[$count],);
+                       $result = mysqli_stmt_execute($stmt);
+                       if($result) {
+                           $resultCount = $resultCount + 1;
+                           $count=$count+1;
+                       }
+                   }
+               }
+             
+               echo"this is for hygine";
+           }
            
-                echo "all";
-            }
-         }
-        
-        
-          if ($checkRes=='cannoodles'){
-                 $can = "INSERT INTO categdump (referenceID, productName, ptype,quantity,unit) VALUES (?,?,?,?,?)";
-                $stmt= $conn->prepare($can);
-                $stmt->bind_param("sssss", $reference_id, $null1, $null2, $null3, $null4);
-                $stmt->execute();
-                echo"save";
-            }
-            else if($checkRes=='hygine'){
-                $count = 0;
-                $resultCount = 0;
-                foreach($pnHY_arr as $hy){
-                    $hygine = "INSERT INTO categhygineessential (referenceID, productName,quantity) VALUES (?,?,?)";
-                    $stmt=mysqli_stmt_init($conn);
-                    if(!mysqli_stmt_prepare($stmt,$hygine)){
-                        
-                    }
-                    else{
-                        mysqli_stmt_bind_param($stmt, 'sss', $reference_id,  $hy, $qHY_arr[$count],);
-                        $result = mysqli_stmt_execute($stmt);
-                        if($result) {
-                            $resultCount = $resultCount + 1;
-                            $count=$count+1;
-                        }
-                    }
-                }
-              
-                echo"this is for hygine";
-            }
-            
-            else{
-                echo"not in the category";
-            }
-        
+           else{
+               echo"not in the category";
+           }
+        }
+          
+     
            
 
       

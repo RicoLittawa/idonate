@@ -241,7 +241,7 @@ session_start();
 					</div>
 					<div class="form-group cn">
 						<div class="form-check form-check-inline">
-							<input class="form-check-input selectCateg" name="selector" type="checkbox" id="inlineCheckbox1" value="cannoodles">
+							<input class="form-check-input selectCateg" name="selector[]" data="selector[]" type="checkbox" id="inlineCheckbox1" value="cannoodles">
 							<label class="form-check-label" for="inlineCheckbox1">1</label>
 							</div>
 						<label for="">Can Goods & Noodles</label><button class="btn" id="removeCN" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
@@ -268,7 +268,7 @@ session_start();
 						</label>
 						</div> -->
 						<div class="form-check form-check-inline">
-							<input class="form-check-input selectCateg" name="selector" type="checkbox" id="inlineCheckbox1" value="hygine">
+							<input class="form-check-input selectCateg" name="selector[]" data="selector[]"  type="checkbox" id="inlineCheckbox1" value="hygine">
 							<label class="form-check-label" for="inlineCheckbox1">1</label>
 							</div>
 						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
@@ -754,13 +754,22 @@ session_start();
 				var qOT_arr=[];
 				var typeOT_arr=[];
 				var unitOT_arr=[];
-				const result=[];
-				 result = $('input[name="selector"]:checked').map( function () { 
-					return $(this).val(); 
-				})
-				.get()
-				.join(', ');
-			
+				
+				// const result = $('input[name="selector"]:checked').map( function () { 
+				// 	return $(this).val(); 
+				// })
+				// .get()
+				// .join(', ');
+				var i=0;
+				var result = [];
+       $('.selectCateg:checked').each(function () {
+           result[i++] = $(this).val();
+       });   
+
+
+
+
+
 				for (var i = 0;i<pnCN.length;i++){  
 					pnCN_arr.push($(pnCN[i]).val());
 					qCN_arr.push($(qCN[i]).val());
