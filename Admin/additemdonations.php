@@ -240,6 +240,10 @@ session_start();
 								</button> -->
 					</div>
 					<div class="form-group cn">
+						<div class="form-check form-check-inline">
+							<input class="form-check-input selectCateg" name="selector" type="checkbox" id="inlineCheckbox1" value="cannoodles">
+							<label class="form-check-label" for="inlineCheckbox1">1</label>
+							</div>
 						<label for="">Can Goods & Noodles</label><button class="btn" id="removeCN" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table cnTB col" id="cnTB">
 						<thead><tr>
@@ -249,14 +253,24 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="cnBody" id="cnBody"><tr>
-						<td><input type="text" class="form-control" id="pnCN"></td>
-						<td><input type="text" class="form-control" id="qCN"></td>
+						<td><input type="text" class="form-control name_items pnCN" id="pnCN"></td>
+						<td><input type="text" class="form-control qCN" id="qCN"></td>
 						<td><button type="button" class="btn btn-success addCN" id="addCN"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
 					</table>
 					</div>
 					<div class="form-group hy">
+					<!-- <div class="form-check">
+						<input class="form-check-input selectCateg" type="radio" name="exampleRadios" id="exampleRadios1" value="hygine" checked>
+						<label class="form-check-label" for="exampleRadios1">
+							Default radio
+						</label>
+						</div> -->
+						<div class="form-check form-check-inline">
+							<input class="form-check-input selectCateg" name="selector" type="checkbox" id="inlineCheckbox1" value="hygine">
+							<label class="form-check-label" for="inlineCheckbox1">1</label>
+							</div>
 						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table hyTB col" id="hyTB">
 						<thead><tr>
@@ -266,8 +280,8 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="hyBody" id="hyBody"><tr>
-						<td><input type="text" class="form-control" id="pnHY"></td>
-						<td><input type="text" class="form-control" id="qHY"></td>
+						<td><input type="text" class="form-control name_items pnHY" id="pnHY"></td>
+						<td><input type="text" class="form-control qHY" id="qHY"></td>
 						<td><button type="button" class="btn btn-success addHY" id="addHY"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
@@ -283,8 +297,8 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="iiBody" id="iiBody"><tr>
-						<td><input type="text" class="form-control" id="pnII"></td>
-						<td><input type="text" class="form-control" id="qII"></td>
+						<td><input type="text" class="form-control name_items pnII" id="pnII"></td>
+						<td><input type="text" class="form-control qII" id="qII"></td>
 						<td><button type="button" class="btn btn-success addII" id="addII"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
@@ -296,28 +310,12 @@ session_start();
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Quantity</th>
-							<th>Unit</th>
 							<th>Action</th>
 							</tr>
 						</thead>
 						<tbody class="dwBody" id="dwBody"><tr>
-						<td><input type="text" class="form-control" id="pnDW"></td>
-						<td><input type="text" class="form-control" id="qDW"></td>
-						<td><select class="form-control" name="unitDW" id="unitDW">
-							<option value="">Choose</option>
-							<option value="">250ml</option>
-							<option value="">300ml</option>
-							<option value="">350ml</option>
-							<option value="">500ml</option>
-							<option value="">1L</option>
-							<option value="">1.5L</option>
-							<option value="">2L</option>
-							<option value="">2.5L</option>
-							<option value="">3L</option>
-							<option value="">4L</option>
-							<option value="">5L</option>
-							<option value="">6L</option>
-						</select></td>
+						<td><input type="text" class="form-control name_items pnDW" id="pnDW"></td>
+						<td><input type="text" class="form-control qDW" id="qDW"></td>
 						<td><button type="button" class="btn btn-success addDW" id="addDW"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
@@ -335,18 +333,18 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="mgBody" id="mgBody"><tr>
-						<td><input type="text" class="form-control" id="pnMG"></td>
-						<td><select class="form-control" name="typeMG" id="typeMG">
+						<td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>
+						<td><select class="form-control typeMG" name="typeMG" id="typeMG">
 							<option value="">Choose</option>
-							<option value="">Frozen</option>
-							<option value="">Fresh</option>
-							<option value="">None</option>
+							<option value="Frozen">Frozen</option>
+							<option value="Fresh">Fresh</option>
+							<option value="None">None</option>
 						</select></td>
-						<td><input type="text" class="form-control" id="qMG"></td>
-						<td><select class="form-control" name="unitMG" id="unitMG">
+						<td><input type="text" class="form-control qMG" id="qMG"></td>
+						<td><select class="form-control unitMG" name="unitMG" id="unitMG">
 							<option value="">Choose</option>
-							<option value="">Kilograms</option>
-							<option value="">Grams</option>
+							<option value="Kilograms">Kilograms</option>
+							<option value="Grams">Grams</option>
 						</select></td>
 						<td><button type="button" class="btn btn-success addMG" id="addMG"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
@@ -365,21 +363,21 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="meBody" id="meBody"><tr>
-						<td><input type="text" class="form-control" id="pnME"></td>
-						<td><select class="form-control" name="typeME" id="typeME">
+						<td><input type="text" class="form-control name_items pnME" id="pnME"></td>
+						<td><select class="form-control typeME" name="typeME" id="typeME">
 							<option value="">Choose</option>
-							<option value="">Tablet</option>
-							<option value="">Capsule</option>
-							<option value="">Liquid</option>
-							<option value="">None</option>
+							<option value="Tablet">Tablet</option>
+							<option value="Capsule">Capsule</option>
+							<option value="Liquid">Liquid</option>
+							<option value="None">None</option>
 						</select></td>
-						<td><input type="text" class="form-control" id="qME"></td>
-						<td><select class="form-control" name="unitME" id="unitME">
+						<td><input type="text" class="form-control qME" id="qME"></td>
+						<td><select class="form-control unitME" name="unitME" id="unitME">
 							<option value="">Choose</option>
-							<option value="">Milligrams</option>
-							<option value="">Grams</option>
-							<option value="">Micrograms</option>
-							<option value="">None</option>
+							<option value="Milligrams">Milligrams</option>
+							<option value="Grams">Grams</option>
+							<option value="Micrograms">Micrograms</option>
+							<option value="None">None</option>
 						</select></td>
 						<td><button type="button" class="btn btn-success addME" id="addME"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
@@ -398,10 +396,10 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="otBody" id="otBody"><tr>
-						<td><input type="text" class="form-control" id="pnOT"></td>
-						<td><input type="text" class="form-control" id="typeOT"></td>
-						<td><input type="text" class="form-control" id="qOT"></td>
-						<td><input type="text" class="form-control" id="unitOT"></td>
+						<td><input type="text" class="form-control pnOT" id="pnOT"></td>
+						<td><input type="text" class="form-control typeOT" id="typeOT"></td>
+						<td><input type="text" class="form-control qOT" id="qOT"></td>
+						<td><input type="text" class="form-control unitOT" id="unitOT"></td>
 						<td><button type="button" class="btn btn-success addOT" id="addOT"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
@@ -418,8 +416,6 @@ session_start();
 	
 	</section>
 	
-	
-
 	<script src="scripts/sidemenu.js"></script>
 	<script src="scripts/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -437,7 +433,7 @@ session_start();
   			function add_CN(count){
 				
 				var appendCN='';
-				appendCN += '<tr><td><input type="text" class="form-control" id="newCN"></td><td><input type="text" class="form-control" id="newqCN"></td>';
+				appendCN += '<tr><td><input type="text" class="form-control name_items pnCN" id="pnCN"></td><td><input type="text" class="form-control qCN" id="qCN"></td>';
 				var removeCnBtn='';
 				if (count>0){
 					removeCnBtn= '<button type="button" name="removeCN" id="removeTbCn" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
@@ -448,7 +444,7 @@ session_start();
 			function add_HY(count){
 				
 				var appendHY='';
-				appendHY += '<tr><td><input type="text" class="form-control" id="newHY"></td><td><input type="text" class="form-control" id="newqHY"></td>';
+				appendHY += '<tr><td><input type="text" class="form-control name_items pnHY" id="pnHY"></td><td><input type="text" class="form-control qHY" id="qHY"></td>';
 				var removeHyBtn='';
 				if (count>0){
 					removeHyBtn= '<button type="button" name="removeHY" id="removeTbHy" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
@@ -459,7 +455,7 @@ session_start();
 			function add_II(count){
 				
 				var appendII='';
-				appendII += '<tr><td><input type="text" class="form-control" id="newII"></td><td><input type="text" class="form-control" id="newqII"></td>';
+				appendII += '<tr><td><input type="text" class="form-control name_items pnII" id="pnII"></td><td><input type="text" class="form-control qII" id="qII"></td>';
 				var removeIiBtn='';
 				if (count>0){
 					removeIiBtn= '<button type="button" name="removeII" id="removeTbIi" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
@@ -470,22 +466,7 @@ session_start();
 			function add_DW(count){
 				
 				var appendDW='';
-				appendDW += '<tr><td><input type="text" class="form-control" id="newDW"></td><td><input type="text" class="form-control" id="newqDW"></td>'+
-				'<td><select class="form-control" name="unitDW" id="unitDW">'+
-							'<option value="">Choose</option>'+
-							'<option value="">250ml</option>'+
-							'<option value="">300ml</option>'+
-							'<option value="">350ml</option>'+
-							'<option value="">500ml</option>'+
-							'<option value="">1L</option>'+
-							'<option value="">1.5L</option>'+
-							'<option value="">2L</option>'+
-							'<option value="">2.5L</option>'+
-							'<option value="">3L</option>'+
-							'<option value="">4L</option>'+
-							'<option value="">5L</option>'+
-							'<option value="">6L</option>'+
-						'</select></td>';
+				appendDW += '<tr><td><input type="text" class="form-control name_items pnDW" id="pnDW"></td><td><input type="text" class="form-control qDW" id="qDW"></td>';
 				var removeDwBtn='';
 				if (count>0){
 					removeDwBtn= '<button type="button" name="removeDW" id="removeTbDw" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
@@ -496,18 +477,18 @@ session_start();
 			function add_MG(count){
 				
 				var appendMG='';
-				appendMG += '<tr><td><input type="text" class="form-control" id="newMG"></td>'+
-				'<td><select class="form-control" name="typeMG" id="typeMG">'+
+				appendMG += '<tr><td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>'+
+				'<td><select class="form-control typeMG" name="typeMG" id="typeMG">'+
 							'<option value="">Choose</option>'+
-							'<option value="">Frozen</option>'+
-							'<option value="">Fresh</option>'+
-							'<option value="">None</option>'+
+							'<option value="Frozen">Frozen</option>'+
+							'<option value="Fresh">Fresh</option>'+
+							'<option value="None">None</option>'+
 						'</select></td>'+
-						'<td><input type="text" class="form-control" id="newqMG"></td>'+
-						'<td><select class="form-control" name="unitMG" id="unitMG">'+
+						'<td><input type="text" class="form-control qMG" id="qMG"></td>'+
+						'<td><select class="form-control unitMG" name="unitMG" id="unitMG">'+
 							'<option value="">Choose</option>'+
-							'<option value="">Kilograms</option>'+
-							'<option value="">Grams</option>'+
+							'<option value="Kilograms">Kilograms</option>'+
+							'<option value="Grams">Grams</option>'+
 						'</select></td>';
 						
 				var removeMgBtn='';
@@ -520,16 +501,16 @@ session_start();
 			function add_ME(count){
 				
 				var appendME='';
-				appendME += '<tr><td><input type="text" class="form-control" id="newME"></td>'+
-				'<td><select class="form-control" name="typeME" id="typeME">'+
+				appendME += '<tr><td><input type="text" class="form-control name_items pnME" id="pnME"></td>'+
+				'<td><select class="form-control typeME" name="typeME" id="typeME">'+
 							'<option value="">Choose</option>'+
-							'<option value="">Tablet</option>'+
-							'<option value="">Capsule</option>'+
-							'<option value="">Liquid</option>'+
-							'<option value="">None</option>'+
+							'<option value="Tablet">Tablet</option>'+
+							'<option value="Capsule">Capsule</option>'+
+							'<option value="Liquid">Liquid</option>'+
+							'<option value="None">None</option>'+
 						'</select></td>'+
-						'<td><input type="text" class="form-control" id="newqME"></td>'+
-						'<td><select class="form-control" name="unitME" id="unitME">'+
+						'<td><input type="text" class="form-control qME" id="qME"></td>'+
+						'<td><select class="form-control unitME" name="unitME" id="unitME">'+
 							'<option value="">Choose</option>'+
 							'<option value="">Milligrams</option>'+
 							'<option value="">Grams</option>'+
@@ -547,10 +528,10 @@ session_start();
 			function add_OT(count){
 				
 				var appendOT='';
-				appendOT += '<tr><td><input type="text" class="form-control" id="newOT"></td>'+
-							'<td><input type="text" class="form-control" id="newOT"></td>'+
-							'<td><input type="text" class="form-control" id="newqOT"></td>'+
-							'<td><input type="text" class="form-control" id="newuOT"></td>';
+				appendOT += '<tr><td><input type="text" class="form-control pnOT" id="pnOT"></td>'+
+							'<td><input type="text" class="form-control typeOT" id="typeOT"></td>'+
+							'<td><input type="text" class="form-control qOT" id="qOT"></td>'+
+							'<td><input type="text" class="form-control unituOT" id="unituOT"></td>';
 	
 				var removeOtBtn='';
 				if (count>0){
@@ -708,27 +689,223 @@ session_start();
 				$('#removeME').show();
 				$('#showME').remove()	
 					});
+			//hide others
+			$(document).on('click','#removeOT',function(){
+				$('.otTB').hide();
+				$('#removeOT').hide();
+				var showOT= '<button id="showOT" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
+				$('.ot').append(showOT);
+
+			})
+			//show others
+			$(document).on('click','#showOT',function(){
+				$('.otTB').show();
+				$('#removeOT').show();
+				$('#showOT').remove()	
+					});
+			var saveBtn= '<button type="button" style="float:right; height:50px;width:100px;" class="btn btn-success" id="saveD">Save</button>';
+			$('#add-form').append(saveBtn);
+			$(document).on('click','#saveD',function(e){
+				e.preventDefault();
+
+				var pnCN= $('.pnCN');
+				var qCN= $('.qCN');
+				var pnHY= $('.pnHY');
+				var qHY= $('.qHY');
+				var pnII= $('.pnII');
+				var qII= $('.qII');
+				var pnDW= $('.pnDW');
+				var qDW= $('.qDW');
+				//get data with select
+				var pnMG= $('.pnMG');
+				var qMG= $('.qMG');
+				var typeMG= $('.typeMG');
+				var unitMG= $('.unitMG');
+				var pnME= $('.pnME');
+				var qME= $('.qME');
+				var typeME= $('.typeME');
+				var unitME= $('.unitME');
+				var pnOT= $('.pnOT');
+				var qOT= $('.qOT');
+				var typeOT= $('.typeOT');
+				var unitOT= $('.unitOT');
+
+
+				//no select
+				var pnCN_arr= [];
+				var qCN_arr= [];
+				var pnHY_arr=[];
+				var qHY_arr=[];
+				var pnII_arr=[];
+				var qII_arr=[];
+				var pnDW_arr=[];
+				var qDW_arr=[];
+
+				//with select options
+				var pnMG_arr=[];
+				var qMG_arr=[];
+				var typeMG_arr=[];
+				var unitMG_arr=[];
+				var pnME_arr=[];
+				var qME_arr=[];
+				var typeME_arr=[];
+				var unitME_arr=[];
+				var pnOT_arr=[];
+				var qOT_arr=[];
+				var typeOT_arr=[];
+				var unitOT_arr=[];
+				const result=[];
+				 result = $('input[name="selector"]:checked').map( function () { 
+					return $(this).val(); 
+				})
+				.get()
+				.join(', ');
+			
+				for (var i = 0;i<pnCN.length;i++){  
+					pnCN_arr.push($(pnCN[i]).val());
+					qCN_arr.push($(qCN[i]).val());
+        		}
+				for (var i = 0;i<pnHY.length;i++){  
+					pnHY_arr.push($(pnHY[i]).val());
+					qHY_arr.push($(qHY[i]).val());
+           
+        		}
+				for (var i = 0;i<pnII.length;i++){  
+					pnII_arr.push($(pnII[i]).val());
+					qII_arr.push($(qII[i]).val());
+           
+        		}
+				for (var i = 0;i<pnDW.length;i++){  
+					pnDW_arr.push($(pnDW[i]).val());
+					qDW_arr.push($(qDW[i]).val());
+           
+        		}
+				for (var i = 0;i<pnMG.length;i++){  
+					pnMG_arr.push($(pnMG[i]).val());
+					typeMG_arr.push($(typeMG[i]).val());
+					qMG_arr.push($(qMG[i]).val());
+					unitMG_arr.push($(unitMG[i]).val());
+           
+        		}
+				for (var i = 0;i<pnME.length;i++){  
+					pnME_arr.push($(pnME[i]).val());
+					typeME_arr.push($(typeME[i]).val());
+					qME_arr.push($(qME[i]).val());
+					unitME_arr.push($(unitME[i]).val());
+           
+        		}
+				for (var i = 0;i<pnOT.length;i++){  
+					pnOT_arr.push($(pnOT[i]).val());
+					typeOT_arr.push($(typeOT[i]).val());
+					qOT_arr.push($(qOT[i]).val());
+					unitOT_arr.push($(unitOT[i]).val());
+           
+        		}
+				var ref_id= $('#reference_id').val();
+				var fname= $('#fname').val();
+				var region= $('#region').val();
+				var province= $('#province').val();
+				var municipality= $('#municipality').val();
+				var barangay= $('#barangay').val();
+				var contact= $('#contact').val();
+				var email= $('#email').val();
+				var donation_date= $('#donation_date').val();
+
+				var data={saveBtn: '',result:result,ref_id:ref_id,fname:fname,region:region,province:province,municipality:municipality,barangay:barangay,
+					contact:contact,email:email,donation_date:donation_date,pnCN_arr:pnCN_arr,qCN_arr:qCN_arr,
+					pnHY_arr:pnHY_arr,qHY_arr:qHY_arr,pnII_arr:pnII_arr,qII_arr:qII_arr,pnDW_arr:pnDW_arr,qDW_arr:qDW_arr,
+					pnMG_arr:pnMG_arr,typeMG_arr:typeMG_arr,qMG_arr:qMG_arr,unitMG_arr:unitMG_arr,
+					pnME_arr:pnME_arr,typeME_arr:typeME_arr,qME_arr:qME_arr,unitME_arr:unitME_arr,
+					pnOT_arr:pnOT_arr,typeOT_arr:typeOT_arr,qOT_arr:qOT_arr,unitOT_arr:unitOT_arr}
+
+				console.log(data);
+				$.ajax({
+					url:'include/add.inc.php',
+					method:'POST',
+					data: data,
+					success: function(data){
+						alert(data);
+					}
+				});
+			})
+
 
 });
 
  </script>
+ <script>
+	$(document).ready(function(){
+	 $('#region').on('change',function(){
+		var regCode= $(this).val();
+		if (regCode){
+			$.ajax({
+				url:'include/region.php',
+				type:'POST',
+				data: 'regCode='+regCode,
+				success: function (data){
+					$('#province').html(data);
+				}
+
+			});
+		}
+		else{
+			swal.fire('Warning', 'Select region', 'warning');
+		}
+	 });
+	 $('#province').on('change',function(){
+		var provCode= $(this).val();
+		if (provCode){
+			$.ajax({
+				url:'include/region.php',
+				type:'POST',
+				data: 'provCode='+provCode,
+				success: function (data){
+					$('#municipality').html(data);
+				}
+
+			});
+		}
+		else{
+			swal.fire('Warning', 'Select province', 'warning');
+		}
+	 });
+	 $('#municipality').on('change',function(){
+		var citymunCode= $(this).val();
+		if (citymunCode){
+			$.ajax({
+				url:'include/region.php',
+				type:'POST',
+				data: 'citymunCode='+citymunCode,
+				success: function (data){
+					$('#barangay').html(data);
+				}
+
+			});
+		}
+		else{
+			swal.fire('Warning', 'Select municipality', 'warning');
+		}
+	 });
+	
+	});
+</script>
 <Script>
 	$(document).ready(function(){
-		$('#add-form').on('focus', '#name_items', function (e) {
+		$('#add-form').on('focus', '.name_items', function (e) {
 
-		$(this).autocomplete({
-		source: 'include/viewid.php',
-		minLength:1,
-		select: function(event,ui){
-			$('#name_items').val(ui.item.value);	
-		}
+			$(this).autocomplete({
+			source: 'include/viewid.php',
+			minLength:1,
+			select: function(event,ui){
+				$('#name_items').val(ui.item.value);	
+			}
 
-		}).data('ui-autocomplete')._renderItem= function(ul, item){
-		return $('<li class="ui-autocomplete-row"></li>').data('item.autocomplete', item)
-		.append(item.label)
-		.appendTo(ul);
+			}).data('ui-autocomplete')._renderItem= function(ul, item){
+			return $('<li class="ui-autocomplete-row"></li>').data('item.autocomplete', item)
+			.append(item.label)
+			.appendTo(ul);
 
-		}
+			}
 
 
 		});
