@@ -241,8 +241,7 @@ session_start();
 					</div>
 					<div class="form-group cn">
 						<div class="form-check form-check-inline">
-							<input class="form-check-input selectCateg" name="selector[]" data="selector[]" type="checkbox" id="inlineCheckbox1" value="cannoodles">
-							<label class="form-check-label" for="inlineCheckbox1">1</label>
+							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box1" value="cannoodles">
 							</div>
 						<label for="">Can Goods & Noodles</label><button class="btn" id="removeCN" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table cnTB col" id="cnTB">
@@ -261,15 +260,8 @@ session_start();
 					</table>
 					</div>
 					<div class="form-group hy">
-					<!-- <div class="form-check">
-						<input class="form-check-input selectCateg" type="radio" name="exampleRadios" id="exampleRadios1" value="hygine" checked>
-						<label class="form-check-label" for="exampleRadios1">
-							Default radio
-						</label>
-						</div> -->
 						<div class="form-check form-check-inline">
-							<input class="form-check-input selectCateg" name="selector[]" data="selector[]"  type="checkbox" id="inlineCheckbox1" value="hygine">
-							<label class="form-check-label" for="inlineCheckbox1">1</label>
+							<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box2" value="hygine">
 							</div>
 						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table hyTB col" id="hyTB">
@@ -288,6 +280,9 @@ session_start();
 					</table>
 					</div>
 					<div class="form-group ii">
+						<div class="form-check form-check-inline">
+							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box3" value="infant">
+							</div>
 						<label for="">Infant Items(*Formula not included)</label><button class="btn" id="removeII" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table iiTB col" id="iiTB">
 						<thead><tr>
@@ -305,6 +300,9 @@ session_start();
 					</table>
 					</div>
 					<div class="form-group dw">
+						<div class="form-check form-check-inline">
+							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box4" value="drink">
+							</div>
 						<label for="">Drinking Water</label><button class="btn" id="removeDW" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table dwTB col" id="dwTB">
 						<thead><tr>
@@ -322,6 +320,9 @@ session_start();
 					</table>
 					</div>
 					<div class="form-group mg">
+						<div class="form-check form-check-inline">
+							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box5" value="meat">
+							</div>
 						<label for="">Meats/Grains</label><button class="btn" id="removeMG" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table mgTB col" id="mgTB">
 						<thead><tr>
@@ -352,6 +353,9 @@ session_start();
 					</table>
 					</div>
 					<div class="form-group me">
+						<div class="form-check form-check-inline">
+							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box6" value="meds">
+							</div>
 						<label for="">Medicine</label><button class="btn" id="removeME" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table meTB col" id="meTB">
 						<thead><tr>
@@ -385,6 +389,9 @@ session_start();
 					</table>
 					</div>
 					<div class="form-group ot">
+						<div class="form-check form-check-inline">
+							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box7" value="other">
+							</div>
 						<label for="">Others (Type n/a if there is no type or unit)</label><button class="btn" id="removeOT" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
 						<table class="table otTB col" id="otTB">
 						<thead><tr>
@@ -597,14 +604,7 @@ session_start();
 			$(this).closest('tr').remove();
 				});	
 				
-			
-			
-
-
-
-
 			//remove buttons
-
 			//hide can/noodles
 			$(document).on('click','#removeCN',function(){
 				$('.cnTB').hide();
@@ -754,21 +754,12 @@ session_start();
 				var qOT_arr=[];
 				var typeOT_arr=[];
 				var unitOT_arr=[];
-				
-				// const result = $('input[name="selector"]:checked').map( function () { 
-				// 	return $(this).val(); 
-				// })
-				// .get()
-				// .join(', ');
+
 				var i=0;
 				var result = [];
-       $('.selectCateg:checked').each(function () {
-           result[i++] = $(this).val();
-       });   
-
-
-
-
+				$('.selectCateg:checked').each(function () {
+					result[i++] = $(this).val();
+				});   
 
 				for (var i = 0;i<pnCN.length;i++){  
 					pnCN_arr.push($(pnCN[i]).val());
