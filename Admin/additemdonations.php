@@ -243,7 +243,7 @@ session_start();
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box1" value="cannoodles">
 							</div>
-						<label for="">Can Goods & Noodles</label><button class="btn" id="removeCN" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
+						<label for="">Can Goods & Noodles</label>
 						<table class="table cnTB col" id="cnTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -263,7 +263,7 @@ session_start();
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box2" value="hygine">
 							</div>
-						<label for="">Hygiene Essentials</label><button class="btn" id="removeHY" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
+						<label for="">Hygiene Essentials</label>
 						<table class="table hyTB col" id="hyTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -283,7 +283,7 @@ session_start();
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box3" value="infant">
 							</div>
-						<label for="">Infant Items(*Formula not included)</label><button class="btn" id="removeII" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
+						<label for="">Infant Items(*Formula not included)</label>
 						<table class="table iiTB col" id="iiTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -303,7 +303,7 @@ session_start();
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box4" value="drink">
 							</div>
-						<label for="">Drinking Water</label><button class="btn" id="removeDW" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
+						<label for="">Drinking Water</label>
 						<table class="table dwTB col" id="dwTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -323,7 +323,7 @@ session_start();
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box5" value="meat">
 							</div>
-						<label for="">Meats/Grains</label><button class="btn" id="removeMG" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
+						<label for="">Meats/Grains</label>
 						<table class="table mgTB col" id="mgTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -356,7 +356,7 @@ session_start();
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box6" value="meds">
 							</div>
-						<label for="">Medicine</label><button class="btn" id="removeME" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
+						<label for="">Medicine</label>
 						<table class="table meTB col" id="meTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -392,7 +392,7 @@ session_start();
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box7" value="other">
 							</div>
-						<label for="">Others (Type n/a if there is no type or unit)</label><button class="btn" id="removeOT" type="button"><i style="color: green;" class="fa-solid fa-eye"></i></button>
+						<label for="">Others (Type n/a if there is no type or unit)</label>
 						<table class="table otTB col" id="otTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -416,8 +416,6 @@ session_start();
 				</div>
 			</div>
           </form>
-				
-  			
 			</div>
 		</main>
 	
@@ -603,106 +601,6 @@ session_start();
  			 $(document).on('click','#removeTbOt', function(){
 			$(this).closest('tr').remove();
 				});	
-				
-			//remove buttons
-			//hide can/noodles
-			$(document).on('click','#removeCN',function(){
-				$('.cnTB').hide();
-				$('#removeCN').hide();
-				var showCN= '<button id="showCN" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
-				$('.cn').append(showCN);
-
-			});
-			//show can/noodles
-			$(document).on('click','#showCN',function(){
-				$('.cnTB').show();
-				$('#removeCN').show();
-				$('#showCN').remove()	
-					});
-			//hide hygine
-			$(document).on('click','#removeHY',function(){
-				$('.hyTB').hide();
-				$('#removeHY').hide();
-				var showHY= '<button id="showHY" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
-				$('.hy').append(showHY);
-
-			})
-			//show hygine
-			$(document).on('click','#showHY',function(){
-				$('.hyTB').show();
-				$('#removeHY').show();
-				$('#showHY').remove()	
-					});
-			//hide infant
-			$(document).on('click','#removeII',function(){
-				$('.iiTB').hide();
-				$('#removeII').hide();
-				var showII= '<button id="showII" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
-				$('.ii').append(showII);
-
-			})
-			//show infant
-			$(document).on('click','#showII',function(){
-				$('.iiTB').show();
-				$('#removeII').show();
-				$('#showII').remove()	
-					});
-			//hide drinking water
-			$(document).on('click','#removeDW',function(){
-				$('.dwTB').hide();
-				$('#removeDW').hide();
-				var showDW= '<button id="showDW" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
-				$('.dw').append(showDW);
-
-			})
-			//show drinking water
-			$(document).on('click','#showDW',function(){
-				$('.dwTB').show();
-				$('#removeDW').show();
-				$('#showDW').remove()	
-					});
-			//hide meat/grains
-			$(document).on('click','#removeMG',function(){
-				$('.mgTB').hide();
-				$('#removeMG').hide();
-				var showMG= '<button id="showMG" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
-				$('.mg').append(showMG);
-
-			})
-			//show meat/grains
-			$(document).on('click','#showMG',function(){
-				$('.mgTB').show();
-				$('#removeMG').show();
-				$('#showMG').remove()	
-					});
-			//hide medicine
-			$(document).on('click','#removeME',function(){
-				$('.meTB').hide();
-				$('#removeME').hide();
-				var showME= '<button id="showME" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
-				$('.me').append(showME);
-
-			})
-			//show medicine
-			$(document).on('click','#showME',function(){
-				$('.meTB').show();
-				$('#removeME').show();
-				$('#showME').remove()	
-					});
-			//hide others
-			$(document).on('click','#removeOT',function(){
-				$('.otTB').hide();
-				$('#removeOT').hide();
-				var showOT= '<button id="showOT" type="button" class="btn"><i style="color:red;" class="fa-sharp fa-solid fa-eye-slash"></i></button>'
-				$('.ot').append(showOT);
-
-			})
-			//show others
-			$(document).on('click','#showOT',function(){
-				$('.otTB').show();
-				$('#removeOT').show();
-				$('#showOT').remove()	
-					});
 			var saveBtn= '<button type="button" style="float:right; height:50px;width:100px;" class="btn btn-success" id="saveD">Save</button>';
 			$('#add-form').append(saveBtn);
 			$(document).on('click','#saveD',function(e){
@@ -810,6 +708,9 @@ session_start();
 				var contact= $('#contact').val();
 				var email= $('#email').val();
 				var donation_date= $('#donation_date').val();
+				var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+				var varnumbers = /^\d+$/;
+				var inValid = /\s/;
 
 				var data={saveBtn: '',result:result,ref_id:ref_id,fname:fname,region:region,province:province,municipality:municipality,barangay:barangay,
 					contact:contact,email:email,donation_date:donation_date,pnCN_arr:pnCN_arr,qCN_arr:qCN_arr,
@@ -817,16 +718,91 @@ session_start();
 					pnMG_arr:pnMG_arr,typeMG_arr:typeMG_arr,qMG_arr:qMG_arr,unitMG_arr:unitMG_arr,
 					pnME_arr:pnME_arr,typeME_arr:typeME_arr,qME_arr:qME_arr,unitME_arr:unitME_arr,
 					pnOT_arr:pnOT_arr,typeOT_arr:typeOT_arr,qOT_arr:qOT_arr,unitOT_arr:unitOT_arr}
+		  	if(fname==""){
+                $('#fname').removeClass('border-success');
+                $('#fname').addClass('border-danger');
+                return false;
+            }
+            else if(region=="-Select-"){
+                Swal.fire('Select', "Please select a region",'warning');
+                return false;
+            }
+		    else if(province=="-Select-"){
+                Swal.fire('Select', "Please select a province",'warning');
+                return false;
+            }
+		    else if(municipality=="-Select-"){
+                Swal.fire('Select', "Please select a municipality",'warning');
+                return false;
+            }
+		    else if(barangay=="-Select-"){
+                Swal.fire('Select', "Please select a barangay",'warning');
+                return false;
+            }
+            else if(contact==""){
+                $('#contact').removeClass('border-success');
+                $('#contact').addClass('border-danger');
+            }
+            else if (inValid.test($('#contact').val())==true){
+                Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+                $('#contact').removeClass('border-success');
+                $('#contact').addClass('border-danger');
+                return false;
+              }
+            else if(varnumbers.test($('#contact').val())==false) {
+                Swal.fire('Number', "Numbers only.",'warning');
+                $('#contact').removeClass('border-success');
+                $('#contact').addClass('border-danger');
+                return false;
+              } 
+            else if(contact.length !=11){
+                Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+                $('#contact').removeClass('border-success');
+                $('#contact').addClass('border-danger');
+                return false;
+              }
+            else if(email==""){
+                $('#email').removeClass('border-success');
+                $('#email').addClass('border-danger');
+                return false;
+            }
+            else if(emailVali.test($('#email').val())==false){
+                Swal.fire('Email', "Invalid email address",'warning'); 
+                $('#email').removeClass('border-success');
+                $('#email').addClass('border-danger');
+                return false;
+            }
+        
+            else if(donation_date==""){
 
-				console.log(data);
+                $('#donation_date').removeClass('border-success');
+                $('#donation_date').addClass('border-danger');
+                return false;
+            }
+		    else if (!$('.selectCateg').is(':checked')){
+			Swal.fire('Category', "Please select a category",'warning'); ;
+       		 return false;
+		   }
+		   else{
+			console.log(data);
 				$.ajax({
 					url:'include/add.inc.php',
 					method:'POST',
 					data: data,
 					success: function(data){
-						alert(data);
+						if (data == "empty"){
+							Swal.fire('Warning','Please input someting','warning');
+							return false;
+						}
+						else{
+							Swal.fire('Succcess','Data added','success');
+							return false;
+						}
 					}
 				});
+		   }
+	
+				
 			})
 
 

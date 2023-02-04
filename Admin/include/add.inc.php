@@ -1,11 +1,8 @@
 <?php
-
     require_once 'connection.php';
 
         if (isset($_POST["saveBtn"]))
     {
-   
-
         $reference_id= $_POST['ref_id'];
         $Fname= $_POST['fname'];
         $Province= $_POST['province'];
@@ -36,74 +33,69 @@
         $qOT_arr=$_POST['qOT_arr'];
         $unitOT_arr=$_POST['unitOT_arr'];
         $checkRes=$_POST['result'];
+        $output= '';
         
-     
-
-
-
-         $sql1 = "INSERT INTO donation_items (Reference,donor_name,donor_region,donor_province,donor_municipality,donor_barangay,donor_email,donor_contact,donationDate)
-         VALUES (?,?,?,?,?,?,?,?,?)" ;
-         $stmt= mysqli_stmt_init($conn);
-         if(!mysqli_stmt_prepare($stmt,$sql1)){
-          echo ''. $mysqli -> connect_list;
-             exit();
-           
-         }
-         else {
-             mysqli_stmt_bind_param($stmt,"sssssssss",$reference_id,$Fname,$Region,$Province,$Municipality,$Barangay,$Email,$Contact,$Date);
-             mysqli_stmt_execute($stmt);
-         }
          foreach ($checkRes as $res){
             if ($res=='cannoodles'){
-                $count = 0;
-                $resultCount = 0;
-                foreach($pnCN_arr as $cn){
-                    $hygine = "INSERT INTO categcannoodles (referenceID, productName,quantity) VALUES (?,?,?)";
-                    $stmt=mysqli_stmt_init($conn);
-                    if(!mysqli_stmt_prepare($stmt,$hygine)){
-                        
-                    }
-                    else{
-                        mysqli_stmt_bind_param($stmt, 'sss', $reference_id,  $cn, $qCN_arr[$count],);
-                        $result = mysqli_stmt_execute($stmt);
-                        if($result) {
-                            $resultCount = $resultCount + 1;
-                            $count=$count+1;
+                 $count = 0;
+                 $resultCount = 0;
+                 foreach($pnCN_arr as $cn){
+                    if (!$cn||!$qCN_arr[$count]){
+                        echo"empty";
+
+                    }else{
+                        $can = "INSERT INTO categcannoodles (referenceID, productName,quantity) VALUES (?,?,?)";
+                        $stmt=mysqli_stmt_init($conn);
+                        if(!mysqli_stmt_prepare($stmt,$can)){
+                           
+                        }
+                        else{
+                            mysqli_stmt_bind_param($stmt, 'sss', $reference_id,  $cn, $qCN_arr[$count],);
+                            $result = mysqli_stmt_execute($stmt);
+                            if($result) {
+                                $resultCount = $resultCount + 1;
+                                $count=$count+1;
+                                $output.="success";
+                            }
                         }
                     }
-                }
-              
-                echo"1";
+                }           
            }
            else if($res=='hygine'){
-               $count = 0;
-               $resultCount = 0;
-               foreach($pnHY_arr as $hy){
-                   $hygine = "INSERT INTO categhygineessential (referenceID, productName,quantity) VALUES (?,?,?)";
-                   $stmt=mysqli_stmt_init($conn);
-                   if(!mysqli_stmt_prepare($stmt,$hygine)){
-                       
-                   }
-                   else{
-                       mysqli_stmt_bind_param($stmt, 'sss', $reference_id,  $hy, $qHY_arr[$count],);
-                       $result = mysqli_stmt_execute($stmt);
-                       if($result) {
-                           $resultCount = $resultCount + 1;
-                           $count=$count+1;
-                       }
-                   }
-               }
-             
-               echo"2";
-           }
+                $count = 0;
+                $resultCount = 0;
+                foreach($pnHY_arr as $hy){
+                    if (!$hy||!$qHY_arr[$count]){
+                        echo"empty";
+                    }
+                    else{
+                        $hygine = "INSERT INTO categhygineessential (referenceID, productName,quantity) VALUES (?,?,?)";
+                        $stmt=mysqli_stmt_init($conn);
+                        if(!mysqli_stmt_prepare($stmt,$hygine)){
+                        }
+                        else{
+                            mysqli_stmt_bind_param($stmt, 'sss', $reference_id,  $hy, $qHY_arr[$count],);
+                            $result = mysqli_stmt_execute($stmt);
+                            if($result) {
+                                $resultCount = $resultCount + 1;
+                                $count=$count+1;
+                                echo"2";
+                            }
+                        }
+                    }   
+                }     
+            }
            else if($res=='infant'){
             $count = 0;
             $resultCount = 0;
             foreach($pnII_arr as $ii){
-                $hygine = "INSERT INTO categinfant (referenceID, productName,quantity) VALUES (?,?,?)";
+                if (!$ii||!$qII_arr[$count]){
+                    echo"empty";
+                }
+                else{
+                    $infant = "INSERT INTO categinfant (referenceID, productName,quantity) VALUES (?,?,?)";
                 $stmt=mysqli_stmt_init($conn);
-                if(!mysqli_stmt_prepare($stmt,$hygine)){
-                    
+                if(!mysqli_stmt_prepare($stmt,$infant)){   
                 }
                 else{
                     mysqli_stmt_bind_param($stmt, 'sss', $reference_id,  $ii, $qII_arr[$count],);
@@ -111,20 +103,23 @@
                     if($result) {
                         $resultCount = $resultCount + 1;
                         $count=$count+1;
+                        echo"3";
+                        }
                     }
                 }
-            }
-          
-            echo"3";
+            }      
         }
         else if($res=='drink'){
             $count = 0;
             $resultCount = 0;
             foreach($pnDW_arr as $dw){
-                $hygine = "INSERT INTO categdrinkingwater (referenceID, productName,quantity) VALUES (?,?,?)";
+                if (!$dw||!$qDW_arr[$count]){
+                    echo"empty";
+                }
+                else{
+                    $drink = "INSERT INTO categdrinkingwater (referenceID, productName,quantity) VALUES (?,?,?)";
                 $stmt=mysqli_stmt_init($conn);
-                if(!mysqli_stmt_prepare($stmt,$hygine)){
-                    
+                if(!mysqli_stmt_prepare($stmt,$drink)){     
                 }
                 else{
                     mysqli_stmt_bind_param($stmt, 'sss', $reference_id,  $dw, $qDW_arr[$count],);
@@ -132,102 +127,119 @@
                     if($result) {
                         $resultCount = $resultCount + 1;
                         $count=$count+1;
+                        echo"4";
+                        }
                     }
                 }
-            }
-          
-            echo"4";
+            }       
         }
         else if($res=='meat'){
             $count = 0;
             $resultCount = 0;
             foreach($pnMG_arr as $mg){
-                $hygine = "INSERT INTO categmeatgrains (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
-                $stmt=mysqli_stmt_init($conn);
-                if(!mysqli_stmt_prepare($stmt,$hygine)){
-                    
+                if (!$mg||!$qMG_arr[$count]){
+                    echo"empty";
                 }
                 else{
-                    mysqli_stmt_bind_param($stmt, 'sssss', $reference_id,  $mg,$typeMG_arr[$count], $qMG_arr[$count],$unitMG_arr[$count]);
-                    $result = mysqli_stmt_execute($stmt);
-                    if($result) {
-                        $resultCount = $resultCount + 1;
-                        $count=$count+1;
+                    $meat = "INSERT INTO categmeatgrains (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
+                    $stmt=mysqli_stmt_init($conn);
+                    if(!mysqli_stmt_prepare($stmt,$meat)){  
+                    }
+                    else{
+                        mysqli_stmt_bind_param($stmt, 'sssss', $reference_id,  $mg,$typeMG_arr[$count], $qMG_arr[$count],$unitMG_arr[$count]);
+                        $result = mysqli_stmt_execute($stmt);
+                        if($result) {
+                            $resultCount = $resultCount + 1;
+                            $count=$count+1;
+                            echo"5";
+                        }
                     }
                 }
-            }
-          
-            echo"5";
+            }      
         }
         else if($res=='meds'){
             $count = 0;
             $resultCount = 0;
             foreach($pnME_arr as $me){
-                $hygine = "INSERT INTO categmedicine (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
-                $stmt=mysqli_stmt_init($conn);
-                if(!mysqli_stmt_prepare($stmt,$hygine)){
-                    
+                if (!$me||!$qME_arr[$count]){
+                    echo"empty";
                 }
                 else{
-                    mysqli_stmt_bind_param($stmt, 'sssss', $reference_id,  $me,$typeME_arr[$count], $qME_arr[$count],$unitME_arr[$count]);
-                    $result = mysqli_stmt_execute($stmt);
-                    if($result) {
-                        $resultCount = $resultCount + 1;
-                        $count=$count+1;
+                    $meds = "INSERT INTO categmedicine (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
+                    $stmt=mysqli_stmt_init($conn);
+                    if(!mysqli_stmt_prepare($stmt,$meds)){      
                     }
-                }
-            }
-          
-            echo"6";
+                    else{
+                        mysqli_stmt_bind_param($stmt, 'sssss', $reference_id,  $me,$typeME_arr[$count], $qME_arr[$count],$unitME_arr[$count]);
+                        $result = mysqli_stmt_execute($stmt);
+                        if($result) {
+                            $resultCount = $resultCount + 1;
+                            $count=$count+1;
+                            echo"6";
+                        }
+                    }
+                } 
+            }      
         }
         else if($res=='other'){
             $count = 0;
             $resultCount = 0;
             foreach($pnOT_arr as $ot){
-                $hygine = "INSERT INTO categothers (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
-                $stmt=mysqli_stmt_init($conn);
-                if(!mysqli_stmt_prepare($stmt,$hygine)){
-                    
+                if (!$ot||!$qOT_arr[$count]){
+                    echo"empty";
                 }
                 else{
-                    mysqli_stmt_bind_param($stmt, 'sssss', $reference_id,  $ot,$typeOT_arr[$count], $qOT_arr[$count],$unitOT_arr[$count]);
-                    $result = mysqli_stmt_execute($stmt);
-                    if($result) {
-                        $resultCount = $resultCount + 1;
-                        $count=$count+1;
+                    $other = "INSERT INTO categothers (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
+                    $stmt=mysqli_stmt_init($conn);
+                    if(!mysqli_stmt_prepare($stmt,$other)){  
                     }
-                }
-            }
-          
-            echo"7";
+                    else{
+                        mysqli_stmt_bind_param($stmt, 'sssss', $reference_id,  $ot,$typeOT_arr[$count], $qOT_arr[$count],$unitOT_arr[$count]);
+                        $result = mysqli_stmt_execute($stmt);
+                        if($result) {
+                            $resultCount = $resultCount + 1;
+                            $count=$count+1;
+                            echo"7";
+                        }
+                    }
+                }  
+            }     
         }
-           else{
-               echo"not in the category";
+        else{
+            echo"not in the category";
            }
         }
-          
-     
-           
 
+   //insert into donor info
+   if ($output=='success'){
+    $sql1 = "INSERT INTO donation_items (Reference,donor_name,donor_region,donor_province,donor_municipality,donor_barangay,donor_email,donor_contact,donationDate)
+    VALUES (?,?,?,?,?,?,?,?,?)" ;
+    $stmt= mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$sql1)){
       
-      return;
-          
-                
-          
-
-        $reference_id=$reference_id+1;
-       $sql3="UPDATE donation_items_picking  set reference_id=? "; 
-       $stmt=mysqli_stmt_init($conn);
-       if(!mysqli_stmt_prepare($stmt,$sql3)){
-        
-    } else{
-        mysqli_stmt_bind_param($stmt, 'i', $reference_id);
-         mysqli_stmt_execute($stmt);
     }
-    echo "Data added";
-    
-    mysqli_stmt_close($stmt);
-    mysqli_close($conn);
+    else {
+        mysqli_stmt_bind_param($stmt,"sssssssss",$reference_id,$Fname,$Region,$Province,$Municipality,$Barangay,$Email,$Contact,$Date);
+        mysqli_stmt_execute($stmt);
     }
+     $reference_id=$reference_id+1;
+     $sql3="UPDATE donation_items_picking  set reference_id=? "; 
+     $stmt=mysqli_stmt_init($conn);
+     if(!mysqli_stmt_prepare($stmt,$sql3)){
+         
+     } else{
+         mysqli_stmt_bind_param($stmt, 'i', $reference_id);
+          mysqli_stmt_execute($stmt);
+     }
+  
+     
+     mysqli_stmt_close($stmt);
+     mysqli_close($conn);
+     }
+   }
+   else{
+    echo "data is not save";
+   }
+   
     
     
