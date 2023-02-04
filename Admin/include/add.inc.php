@@ -79,7 +79,7 @@
                             if($result) {
                                 $resultCount = $resultCount + 1;
                                 $count=$count+1;
-                                echo"2";
+                                $output.="success";
                             }
                         }
                     }   
@@ -103,7 +103,7 @@
                     if($result) {
                         $resultCount = $resultCount + 1;
                         $count=$count+1;
-                        echo"3";
+                        $output.="success";
                         }
                     }
                 }
@@ -127,7 +127,7 @@
                     if($result) {
                         $resultCount = $resultCount + 1;
                         $count=$count+1;
-                        echo"4";
+                        $output.="success";
                         }
                     }
                 }
@@ -151,7 +151,7 @@
                         if($result) {
                             $resultCount = $resultCount + 1;
                             $count=$count+1;
-                            echo"5";
+                            $output.="success";
                         }
                     }
                 }
@@ -175,7 +175,7 @@
                         if($result) {
                             $resultCount = $resultCount + 1;
                             $count=$count+1;
-                            echo"6";
+                            $output.="success";
                         }
                     }
                 } 
@@ -199,7 +199,7 @@
                         if($result) {
                             $resultCount = $resultCount + 1;
                             $count=$count+1;
-                            echo"7";
+                            $output.="success";
                         }
                     }
                 }  

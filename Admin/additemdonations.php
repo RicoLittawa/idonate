@@ -242,8 +242,8 @@ session_start();
 					<div class="form-group cn">
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box1" value="cannoodles">
+							<label class="form-check-label" for="">Can Goods & Noodles</label>
 							</div>
-						<label for="">Can Goods & Noodles</label>
 						<table class="table cnTB col" id="cnTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -262,8 +262,8 @@ session_start();
 					<div class="form-group hy">
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box2" value="hygine">
+							<label class="form-check-label" for="">Hygiene Essentials</label>
 							</div>
-						<label for="">Hygiene Essentials</label>
 						<table class="table hyTB col" id="hyTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -282,8 +282,8 @@ session_start();
 					<div class="form-group ii">
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box3" value="infant">
+							<label class="form-check-label" for="">Infant Items(*Formula not included)</label>
 							</div>
-						<label for="">Infant Items(*Formula not included)</label>
 						<table class="table iiTB col" id="iiTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -302,8 +302,8 @@ session_start();
 					<div class="form-group dw">
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box4" value="drink">
+							<label class="form-check-label" for="">Drinking Water</label>
 							</div>
-						<label for="">Drinking Water</label>
 						<table class="table dwTB col" id="dwTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -322,8 +322,8 @@ session_start();
 					<div class="form-group mg">
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box5" value="meat">
+							<label class="form-check-label" for="">Meats/Grains</label>
 							</div>
-						<label for="">Meats/Grains</label>
 						<table class="table mgTB col" id="mgTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -355,8 +355,8 @@ session_start();
 					<div class="form-group me">
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box6" value="meds">
+							<label class="form-check-label" for="">Medicine</label>
 							</div>
-						<label for="">Medicine</label>
 						<table class="table meTB col" id="meTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -391,8 +391,8 @@ session_start();
 					<div class="form-group ot">
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box7" value="other">
+							<label class="form-check-label" for="">Others (Type n/a if there is no type or unit)</label>
 							</div>
-						<label for="">Others (Type n/a if there is no type or unit)</label>
 						<table class="table otTB col" id="otTB">
 						<thead><tr>
 							<th>Product Name</th>
@@ -795,17 +795,23 @@ session_start();
 							return false;
 						}
 						else{
-							Swal.fire('Succcess','Data added','success');
-							return false;
+							Swal.fire({
+								title: 'Success',
+								text: "Successfully Added",
+								icon: 'success',
+								confirmButtonColor: '#3085d6',
+								confirmButtonText: 'OK',
+								allowOutsideClick: false
+								}).then((result) => {
+								if (result.isConfirmed) {
+									window.location.href="donations.php?inserted";
+								}
+							}) 
 						}
 					}
 				});
 		   }
-	
-				
-			})
-
-
+	})
 });
 
  </script>
