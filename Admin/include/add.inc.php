@@ -39,10 +39,6 @@
                   $count = 0;
                   $resultCount = 0;
                   foreach($pnCN_arr as $cn){
-                     if (!$cn||!$qCN_arr[$count]){
-                         echo"empty";
-                     }
-                     else{
                          $can = "INSERT INTO categcannoodles (referenceID, productName,quantity) VALUES (?,?,?)";
                          $stmt=mysqli_stmt_init($conn);
                          if(!mysqli_stmt_prepare($stmt,$can)){
@@ -53,21 +49,16 @@
                              $result = mysqli_stmt_execute($stmt);
                              if($result) {
                                  $resultCount = $resultCount + 1;
-                                 $count=$count+1;
-                         }
+                                 $count=$count+1;                 
+                        }
                      }
-                     }
-                       
                  }           
             }
             if($res=='hygine'){
                  $count = 0;
                  $resultCount = 0;
                  foreach($pnHY_arr as $hy){
-                     if (!$hy||!$qHY_arr[$count]){
-                         echo"empty";
-                     }
-                     else{
+                    
                          $hygine = "INSERT INTO categhygineessential (referenceID, productName,quantity) VALUES (?,?,?)";
                          $stmt=mysqli_stmt_init($conn);
                          if(!mysqli_stmt_prepare($stmt,$hygine)){
@@ -78,8 +69,6 @@
                              if($result) {
                                  $resultCount = $resultCount + 1;
                                  $count=$count+1;
-                                
-                             }
                          }
                      }   
                  }     
@@ -88,10 +77,6 @@
              $count = 0;
              $resultCount = 0;
              foreach($pnII_arr as $ii){
-                 if (!$ii||!$qII_arr[$count]){
-                     echo"empty";
-                 }
-                 else{
                      $infant = "INSERT INTO categinfant (referenceID, productName,quantity) VALUES (?,?,?)";
                  $stmt=mysqli_stmt_init($conn);
                  if(!mysqli_stmt_prepare($stmt,$infant)){   
@@ -102,8 +87,6 @@
                      if($result) {
                          $resultCount = $resultCount + 1;
                          $count=$count+1;
-                        
-                         }
                      }
                  }
              }      
@@ -112,10 +95,6 @@
              $count = 0;
              $resultCount = 0;
              foreach($pnDW_arr as $dw){
-                 if (!$dw||!$qDW_arr[$count]){
-                     echo"empty";
-                 }
-                 else{
                      $drink = "INSERT INTO categdrinkingwater (referenceID, productName,quantity) VALUES (?,?,?)";
                  $stmt=mysqli_stmt_init($conn);
                  if(!mysqli_stmt_prepare($stmt,$drink)){     
@@ -126,8 +105,6 @@
                      if($result) {
                          $resultCount = $resultCount + 1;
                          $count=$count+1;
-                        
-                         }
                      }
                  }
              }       
@@ -136,10 +113,6 @@
              $count = 0;
              $resultCount = 0;
              foreach($pnMG_arr as $mg){
-                 if (!$mg||!$qMG_arr[$count]){
-                     echo"empty";
-                 }
-                 else{
                      $meat = "INSERT INTO categmeatgrains (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
                      $stmt=mysqli_stmt_init($conn);
                      if(!mysqli_stmt_prepare($stmt,$meat)){  
@@ -150,8 +123,6 @@
                          if($result) {
                              $resultCount = $resultCount + 1;
                              $count=$count+1;
-                            
-                         }
                      }
                  }
              }      
@@ -160,10 +131,6 @@
              $count = 0;
              $resultCount = 0;
              foreach($pnME_arr as $me){
-                 if (!$me||!$qME_arr[$count]){
-                     echo"empty";
-                 }
-                 else{
                      $meds = "INSERT INTO categmedicine (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
                      $stmt=mysqli_stmt_init($conn);
                      if(!mysqli_stmt_prepare($stmt,$meds)){      
@@ -174,8 +141,6 @@
                          if($result) {
                              $resultCount = $resultCount + 1;
                              $count=$count+1;
-                            
-                         }
                      }
                  } 
              }      
@@ -183,11 +148,6 @@
          else if($res=='other'){
              $count = 0;
              $resultCount = 0;
-             foreach($pnOT_arr as $ot){
-                 if (!$ot||!$qOT_arr[$count]){
-                     echo"empty";
-                 }
-                 else{
                      $other = "INSERT INTO categothers (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
                      $stmt=mysqli_stmt_init($conn);
                      if(!mysqli_stmt_prepare($stmt,$other)){  
@@ -198,51 +158,36 @@
                          if($result) {
                              $resultCount = $resultCount + 1;
                              $count=$count+1;
-                            
-                         }
-                     }
-                 }  
-             }     
-         }
-         }
-   $x= 0;
-   foreach($pnCN_arr as $item){
-    if (!empty($item)||!empty($qCN_arr[$x])){
-        echo"not empty";
-       }
-    if(!empty($pnHY_arr[$x])||!empty($qHY_arr[$x])){
-        echo '2 not empty'; 
-    }
-   }     
-         
-       
-   
+                    }  
+                }     
+            }
+        }
      
          //insert into donor info
            
-        //   $sql1 = "INSERT INTO donation_items (Reference,donor_name,donor_region,donor_province,donor_municipality,donor_barangay,donor_email,donor_contact,donationDate)
-        //   VALUES (?,?,?,?,?,?,?,?,?)" ;
-        //   $stmt= mysqli_stmt_init($conn);
-        //   if(!mysqli_stmt_prepare($stmt,$sql1)){
+           $sql1 = "INSERT INTO donation_items (Reference,donor_name,donor_region,donor_province,donor_municipality,donor_barangay,donor_email,donor_contact,donationDate)
+           VALUES (?,?,?,?,?,?,?,?,?)" ;
+           $stmt= mysqli_stmt_init($conn);
+           if(!mysqli_stmt_prepare($stmt,$sql1)){
            
-        //   }
-        //   else {
-        //       mysqli_stmt_bind_param($stmt,"sssssssss",$reference_id,$Fname,$Region,$Province,$Municipality,$Barangay,$Email,$Contact,$Date);
-        //       mysqli_stmt_execute($stmt);
-        //   }
-        //   $reference_id=$reference_id+1;
-        //   $sql3="UPDATE donation_items_picking  set reference_id=? "; 
-        //   $stmt=mysqli_stmt_init($conn);
-        //   if(!mysqli_stmt_prepare($stmt,$sql3)){
+           }
+           else {
+               mysqli_stmt_bind_param($stmt,"sssssssss",$reference_id,$Fname,$Region,$Province,$Municipality,$Barangay,$Email,$Contact,$Date);
+               mysqli_stmt_execute($stmt);
+           }
+           $reference_id=$reference_id+1;
+           $sql3="UPDATE donation_items_picking  set reference_id=? "; 
+           $stmt=mysqli_stmt_init($conn);
+           if(!mysqli_stmt_prepare($stmt,$sql3)){
               
-        //   } else{
-        //       mysqli_stmt_bind_param($stmt, 'i', $reference_id);
-        //        mysqli_stmt_execute($stmt);
-        //   }
+           } else{
+               mysqli_stmt_bind_param($stmt, 'i', $reference_id);
+                mysqli_stmt_execute($stmt);
+           }
        
           
-        //   mysqli_stmt_close($stmt);
-        //   mysqli_close($conn);
+           mysqli_stmt_close($stmt);
+           mysqli_close($conn);
    
      }
    

@@ -252,8 +252,8 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="cnBody" id="cnBody"><tr>
-						<td><input type="text" class="form-control name_items pnCN" id="pnCN"></td>
-						<td><input type="text" class="form-control qCN" id="qCN"></td>
+						<td><input type="text" class="form-control name_items pnCN try" id="pnCN"></td>
+						<td><input type="number" class="form-control qCN" id="qCN"></td>
 						<td><button type="button" class="btn btn-success addCN" id="addCN"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
@@ -272,8 +272,8 @@ session_start();
 							</tr>
 						</thead>
 						<tbody class="hyBody" id="hyBody"><tr>
-						<td><input type="text" class="form-control name_items pnHY" id="pnHY"></td>
-						<td><input type="text" class="form-control qHY" id="qHY"></td>
+						<td><input type="text" class="form-control name_items pnHY try" id="pnHY"></td>
+						<td><input type="number" class="form-control qHY" id="qHY"></td>
 						<td><button type="button" class="btn btn-success addHY" id="addHY"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
@@ -293,7 +293,7 @@ session_start();
 						</thead>
 						<tbody class="iiBody" id="iiBody"><tr>
 						<td><input type="text" class="form-control name_items pnII" id="pnII"></td>
-						<td><input type="text" class="form-control qII" id="qII"></td>
+						<td><input type="number" class="form-control qII" id="qII"></td>
 						<td><button type="button" class="btn btn-success addII" id="addII"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
@@ -313,7 +313,7 @@ session_start();
 						</thead>
 						<tbody class="dwBody" id="dwBody"><tr>
 						<td><input type="text" class="form-control name_items pnDW" id="pnDW"></td>
-						<td><input type="text" class="form-control qDW" id="qDW"></td>
+						<td><input type="number" class="form-control qDW" id="qDW"></td>
 						<td><button type="button" class="btn btn-success addDW" id="addDW"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
 					</tbody>
@@ -341,7 +341,7 @@ session_start();
 							<option value="Fresh">Fresh</option>
 							<option value="None">None</option>
 						</select></td>
-						<td><input type="text" class="form-control qMG" id="qMG"></td>
+						<td><input type="number" class="form-control qMG" id="qMG"></td>
 						<td><select class="form-control unitMG" name="unitMG" id="unitMG">
 							<option value="">Choose</option>
 							<option value="Kilograms">Kilograms</option>
@@ -375,7 +375,7 @@ session_start();
 							<option value="Liquid">Liquid</option>
 							<option value="None">None</option>
 						</select></td>
-						<td><input type="text" class="form-control qME" id="qME"></td>
+						<td><input type="number" class="form-control qME" id="qME"></td>
 						<td><select class="form-control unitME" name="unitME" id="unitME">
 							<option value="">Choose</option>
 							<option value="Milligrams">Milligrams</option>
@@ -405,7 +405,7 @@ session_start();
 						<tbody class="otBody" id="otBody"><tr>
 						<td><input type="text" class="form-control pnOT" id="pnOT"></td>
 						<td><input type="text" class="form-control typeOT" id="typeOT"></td>
-						<td><input type="text" class="form-control qOT" id="qOT"></td>
+						<td><input type="number" class="form-control qOT" id="qOT"></td>
 						<td><input type="text" class="form-control unitOT" id="unitOT"></td>
 						<td><button type="button" class="btn btn-success addOT" id="addOT"><i class="fa-solid fa-plus"></i></button></td>
 					</tr>
@@ -438,7 +438,7 @@ session_start();
   			function add_CN(count){
 				
 				var appendCN='';
-				appendCN += '<tr><td><input type="text" class="form-control name_items pnCN" id="pnCN"></td><td><input type="text" class="form-control qCN" id="qCN"></td>';
+				appendCN += '<tr><td><input type="text" class="form-control name_items pnCN" id="pnCN"></td><td><input type="number" class="form-control qCN" id="qCN"></td>';
 				var removeCnBtn='';
 				if (count>0){
 					removeCnBtn= '<button type="button" name="removeCN" id="removeTbCn" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
@@ -449,7 +449,7 @@ session_start();
 			function add_HY(count){
 				
 				var appendHY='';
-				appendHY += '<tr><td><input type="text" class="form-control name_items pnHY" id="pnHY"></td><td><input type="text" class="form-control qHY" id="qHY"></td>';
+				appendHY += '<tr><td><input type="text" class="form-control name_items pnHY" id="pnHY"></td><td><input type="number" class="form-control qHY" id="qHY"></td>';
 				var removeHyBtn='';
 				if (count>0){
 					removeHyBtn= '<button type="button" name="removeHY" id="removeTbHy" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
@@ -460,7 +460,7 @@ session_start();
 			function add_II(count){
 				
 				var appendII='';
-				appendII += '<tr><td><input type="text" class="form-control name_items pnII" id="pnII"></td><td><input type="text" class="form-control qII" id="qII"></td>';
+				appendII += '<tr><td><input type="text" class="form-control name_items pnII" id="pnII"></td><td><input type="number" class="form-control qII" id="qII"></td>';
 				var removeIiBtn='';
 				if (count>0){
 					removeIiBtn= '<button type="button" name="removeII" id="removeTbIi" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
@@ -471,7 +471,7 @@ session_start();
 			function add_DW(count){
 				
 				var appendDW='';
-				appendDW += '<tr><td><input type="text" class="form-control name_items pnDW" id="pnDW"></td><td><input type="text" class="form-control qDW" id="qDW"></td>';
+				appendDW += '<tr><td><input type="text" class="form-control name_items pnDW" id="pnDW"></td><td><input type="number" class="form-control qDW" id="qDW"></td>';
 				var removeDwBtn='';
 				if (count>0){
 					removeDwBtn= '<button type="button" name="removeDW" id="removeTbDw" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
@@ -489,7 +489,7 @@ session_start();
 							'<option value="Fresh">Fresh</option>'+
 							'<option value="None">None</option>'+
 						'</select></td>'+
-						'<td><input type="text" class="form-control qMG" id="qMG"></td>'+
+						'<td><input type="number" class="form-control qMG" id="qMG"></td>'+
 						'<td><select class="form-control unitMG" name="unitMG" id="unitMG">'+
 							'<option value="">Choose</option>'+
 							'<option value="Kilograms">Kilograms</option>'+
@@ -514,13 +514,13 @@ session_start();
 							'<option value="Liquid">Liquid</option>'+
 							'<option value="None">None</option>'+
 						'</select></td>'+
-						'<td><input type="text" class="form-control qME" id="qME"></td>'+
+						'<td><input type="number" class="form-control qME" id="qME"></td>'+
 						'<td><select class="form-control unitME" name="unitME" id="unitME">'+
 							'<option value="">Choose</option>'+
-							'<option value="">Milligrams</option>'+
-							'<option value="">Grams</option>'+
-							'<option value="">Micrograms</option>'+
-							'<option value="">None</option>'+
+							'<option value="Milligrams">Milligrams</option>'+
+							'<option value="Grams">Grams</option>'+
+							'<option value="Micrograms">Micrograms</option>'+
+							'<option value="None">None</option>'+
 						'</select></td>';
 						
 				var removeMeBtn='';
@@ -535,7 +535,7 @@ session_start();
 				var appendOT='';
 				appendOT += '<tr><td><input type="text" class="form-control pnOT" id="pnOT"></td>'+
 							'<td><input type="text" class="form-control typeOT" id="typeOT"></td>'+
-							'<td><input type="text" class="form-control qOT" id="qOT"></td>'+
+							'<td><input type="number" class="form-control qOT" id="qOT"></td>'+
 							'<td><input type="text" class="form-control unituOT" id="unituOT"></td>';
 	
 				var removeOtBtn='';
@@ -601,7 +601,8 @@ session_start();
  			 $(document).on('click','#removeTbOt', function(){
 			$(this).closest('tr').remove();
 				});	
-			var saveBtn= '<button type="button" style="float:right; height:50px;width:100px;" class="btn btn-success" id="saveD">Save</button>';
+				
+			var saveBtn= '<button type="submit" style="float:right; height:50px;width:100px;" class="btn btn-success" id="saveD">Save</button>';
 			$('#add-form').append(saveBtn);
 			$(document).on('click','#saveD',function(e){
 				e.preventDefault();
@@ -652,16 +653,16 @@ session_start();
 				var qOT_arr=[];
 				var typeOT_arr=[];
 				var unitOT_arr=[];
-
-				var i=0;
+				var x=0;
 				var result = [];
 				$('.selectCateg:checked').each(function () {
-					result[i++] = $(this).val();
+					result[x++] = $(this).val();	
 				});   
-
+					
 				for (var i = 0;i<pnCN.length;i++){  
 					pnCN_arr.push($(pnCN[i]).val());
 					qCN_arr.push($(qCN[i]).val());
+           
         		}
 				for (var i = 0;i<pnHY.length;i++){  
 					pnHY_arr.push($(pnHY[i]).val());
@@ -718,99 +719,215 @@ session_start();
 					pnMG_arr:pnMG_arr,typeMG_arr:typeMG_arr,qMG_arr:qMG_arr,unitMG_arr:unitMG_arr,
 					pnME_arr:pnME_arr,typeME_arr:typeME_arr,qME_arr:qME_arr,unitME_arr:unitME_arr,
 					pnOT_arr:pnOT_arr,typeOT_arr:typeOT_arr,qOT_arr:qOT_arr,unitOT_arr:unitOT_arr}
-		  	if(fname==""){
-                $('#fname').removeClass('border-success');
-                $('#fname').addClass('border-danger');
-                return false;
-            }
+			if($('#box1').is(':checked')){
+				var pn1='';
+				var q1='';
+				
+				$('.pnCN').each(function(){
+					pn1= (this.value);
+					})
+				$('.qCN').each(function(){
+					q1= (this.value);
+					})
+			}
+			if($('#box2').is(':checked')){
+				var pn2='';
+				var q2='';
+				$('.pnHY').each(function(){
+					pn2= (this.value);
+					})
+				$('.qHY').each(function(){
+					q2= (this.value);
+					})
+				}
+			if($('#box3').is(':checked')){
+				var pn3='';
+				var q3='';
+				$('.pnII').each(function(){
+					pn3= (this.value);
+					})
+				$('.qII').each(function(){
+					q3= (this.value);
+					})	
+				}
+			if($('#box4').is(':checked')){
+				var pn4='';
+				var q4='';
+				$('.pnDW').each(function(){
+					pn4= (this.value);
+					})
+				$('.qDW').each(function(){
+					q4= (this.value);
+					})	
+				}
+			if($('#box5').is(':checked')){
+				var pn5='';
+				var q5='';
+				var t1='';
+				var u1='';
+				$('.pnMG').each(function(){
+					pn5= (this.value);
+					})
+				$('.typeMG').each(function(){
+					t1= (this.value);
+					})
+				$('.qMG').each(function(){
+					q5= (this.value);
+					})	
+				$('.unitMG').each(function(){
+					u1= (this.value);
+					})
+				}
+			if($('#box6').is(':checked')){
+				var pn6='';
+				var q6='';
+				var t2='';
+				var u2='';
+				$('.pnME').each(function(){
+					pn6= (this.value);
+					})
+				$('.typeME').each(function(){
+					t2= (this.value);
+					})
+				$('.qME').each(function(){
+					q6= (this.value);
+					})	
+				$('.unitME').each(function(){
+					u2= (this.value);
+					})
+				}
+			if($('#box7').is(':checked')){
+				var pn7='';
+				var q7='';
+				var t3='';
+				var u3='';
+				$('.pnOT').each(function(){
+					pn7= (this.value);
+					})
+				$('.typeOT').each(function(){
+					t3= (this.value);
+					})
+				$('.qOT').each(function(){
+					q7= (this.value);
+					})	
+				$('.unitOT').each(function(){
+					u3= (this.value);
+					})
+				}
+		 	if(fname==""){
+                 $('#fname').removeClass('border-success');
+                 $('#fname').addClass('border-danger');
+                 return false;
+             }
             else if(region=="-Select-"){
-                Swal.fire('Select', "Please select a region",'warning');
-                return false;
-            }
+                 Swal.fire('Select', "Please select a region",'warning');
+                 return false;
+             }
 		    else if(province=="-Select-"){
-                Swal.fire('Select', "Please select a province",'warning');
-                return false;
-            }
+                 Swal.fire('Select', "Please select a province",'warning');
+                 return false;
+             }
 		    else if(municipality=="-Select-"){
-                Swal.fire('Select', "Please select a municipality",'warning');
-                return false;
-            }
+                 Swal.fire('Select', "Please select a municipality",'warning');
+                 return false;
+             }
 		    else if(barangay=="-Select-"){
-                Swal.fire('Select', "Please select a barangay",'warning');
-                return false;
-            }
+                 Swal.fire('Select', "Please select a barangay",'warning');
+                 return false;
+             }
             else if(contact==""){
-                $('#contact').removeClass('border-success');
-                $('#contact').addClass('border-danger');
-            }
+                 $('#contact').removeClass('border-success');
+                 $('#contact').addClass('border-danger');
+             }
             else if (inValid.test($('#contact').val())==true){
-                Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-                $('#contact').removeClass('border-success');
-                $('#contact').addClass('border-danger');
-                return false;
-              }
+                 Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+                 $('#contact').removeClass('border-success');
+                 $('#contact').addClass('border-danger');
+                 return false;
+             }
             else if(varnumbers.test($('#contact').val())==false) {
-                Swal.fire('Number', "Numbers only.",'warning');
-                $('#contact').removeClass('border-success');
-                $('#contact').addClass('border-danger');
-                return false;
-              } 
+                 Swal.fire('Number', "Numbers only.",'warning');
+                 $('#contact').removeClass('border-success');
+                 $('#contact').addClass('border-danger');
+                 return false;
+             } 
             else if(contact.length !=11){
-                Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-                $('#contact').removeClass('border-success');
-                $('#contact').addClass('border-danger');
-                return false;
-              }
+                 Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+                 $('#contact').removeClass('border-success');
+                 $('#contact').addClass('border-danger');
+                 return false;
+             }
             else if(email==""){
-                $('#email').removeClass('border-success');
-                $('#email').addClass('border-danger');
-                return false;
-            }
+                 $('#email').removeClass('border-success');
+                 $('#email').addClass('border-danger');
+                 return false;
+             }
             else if(emailVali.test($('#email').val())==false){
-                Swal.fire('Email', "Invalid email address",'warning'); 
-                $('#email').removeClass('border-success');
-                $('#email').addClass('border-danger');
-                return false;
-            }
-        
+                 Swal.fire('Email', "Invalid email address",'warning'); 
+                 $('#email').removeClass('border-success');
+                 $('#email').addClass('border-danger');
+                 return false;
+             }
             else if(donation_date==""){
-
-                $('#donation_date').removeClass('border-success');
-                $('#donation_date').addClass('border-danger');
-                return false;
-            }
+                 $('#donation_date').removeClass('border-success');
+                 $('#donation_date').addClass('border-danger');
+                 return false;
+             }
 		    else if (!$('.selectCateg').is(':checked')){
-			Swal.fire('Category', "Please select a category",'warning'); ;
-       		 return false;
-		   }
-		   else{
-			console.log(data);
-				$.ajax({
-					url:'include/add.inc.php',
-					method:'POST',
-					data: data,
-					success: function(data){
-						if (data == "empty"){
-							Swal.fire('Warning','Please input someting','warning');
-							return false;
-						}
-						else{
-							Swal.fire({
-								title: 'Success',
-								text: "Successfully Added",
-								icon: 'success',
-								confirmButtonColor: '#3085d6',
-								confirmButtonText: 'OK',
-								allowOutsideClick: false
-								}).then((result) => {
-								if (result.isConfirmed) {
-									window.location.href="donations.php?inserted";
-								}
-							}) 
-						}
-					}
-				});
-		   }
+			 Swal.fire('Category', "Please select a category",'warning')
+		   	 }
+			else if (pn1==''||q1==''){
+				Swal.fire('Warning','Field is empty','warning');
+				return false;
+			}
+			else if (pn2==''||q2==''){
+				Swal.fire('Warning','Field is empty','warning');
+				return false;
+			}
+			else if (pn3==''||q3==''){
+				Swal.fire('Warning','Field is empty','warning');;
+				return false;
+			}
+			else if (pn4==''||q4==''){
+				Swal.fire('Warning','Field is empty','warning');
+				return false;
+			}
+			else if (pn5==''||t1==''||q5==''||u1==''){
+				Swal.fire('Warning','Field is empty','warning');
+				return false;
+			}
+			else if (pn6==''||t2==''||q6==''||u2==''){
+				Swal.fire('Warning','Field is empty','warning');
+				return false;
+			}
+			else if (pn7==''||t3==''||q7==''||u3==''){
+				Swal.fire('Warning','Field is empty','warning');
+				return false;
+			}
+			else {
+				console.log('saved');
+				console.log(data);
+		 	  	$.ajax({
+		 	  		url:'include/add.inc.php',
+		 	  		method:'POST',
+		 	  		data: data,
+		 	  		success: function(data){
+		 	  			 	Swal.fire({
+		 	  			 		title: 'Success',
+		 	  			 		text: "Successfully Added",
+		 	  			 		icon: 'success',
+		 	  			 		confirmButtonColor: '#3085d6',
+		 	  			 		confirmButtonText: 'OK',
+		 	  			 		allowOutsideClick: false
+		 	  			 		}).then((result) => {
+		 	  			 		if (result.isConfirmed) {
+		 	  			 			window.location.href="donations.php?inserted";
+		 	  			 		}
+		 	  			 	}) 
+		 	  			 }
+		 	  		
+		 	  	})
+			}	    
 	})
 });
 
