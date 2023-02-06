@@ -267,82 +267,30 @@ session_start();
 									<table class="table table-bordered">
 										<thead>
 											<tr>
-												<th>Can/Noodles</th>
-												<th>Hygine Essentials</th>
-												<th>Infant Items</th>
-												<th>Drinking Water</th>
-												<th>Meats/Grains</th>
-												<th>Medicine</th>
-												<th>Others</th>
+												<th>Product Name</th>
+												<th>Type</th>
+												<th>Unit</th>
+												<th>Quantity</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td><?php 
-												$sql = "SELECT * FROM categcannoodles WHERE referenceID=?";
+											<tr><?php 
+												$sql = "SELECT * FROM donation_items10 WHERE Reference=?";
 												$stmt = $conn->prepare($sql); 
 												$stmt->bind_param("i", $donorreference);
 												$stmt->execute();
 												$result = $stmt->get_result();
-												while ($row = $result->fetch_assoc()) {
-													echo $row['productName'].': '.$row['quantity'].'pcs'.'<br>';	
-												}?></td>
-												<td><?php 
-												$sql = "SELECT * FROM categhygineessential WHERE referenceID=?";
-												$stmt = $conn->prepare($sql); 
-												$stmt->bind_param("i", $donorreference);
-												$stmt->execute();
-												$result = $stmt->get_result();
-												while ($row = $result->fetch_assoc()) {
-													echo $row['productName'].': '.$row['quantity'].'pcs'.'<br>';	
-												}?></td>
-												<td><?php 
-												$sql = "SELECT * FROM categinfant WHERE referenceID=?";
-												$stmt = $conn->prepare($sql); 
-												$stmt->bind_param("i", $donorreference);
-												$stmt->execute();
-												$result = $stmt->get_result();
-												while ($row = $result->fetch_assoc()) {
-													echo $row['productName'].': '.$row['quantity'].'pcs'.'<br>';	
-												}?></td>
-												<td><?php 
-												$sql = "SELECT * FROM categdrinkingwater WHERE referenceID=?";
-												$stmt = $conn->prepare($sql); 
-												$stmt->bind_param("i", $donorreference);
-												$stmt->execute();
-												$result = $stmt->get_result();
-												while ($row = $result->fetch_assoc()) {
-													echo $row['productName'].': '.$row['quantity'].'pcs'.'<br>';	
-												}?></td>
-												<td><?php 
-												$sql = "SELECT * FROM categmeatgrains WHERE referenceID=?";
-												$stmt = $conn->prepare($sql); 
-												$stmt->bind_param("i", $donorreference);
-												$stmt->execute();
-												$result = $stmt->get_result();
-												while ($row = $result->fetch_assoc()) {
-													echo $row['productName'].': '.$row['quantity'].'/'.$row['unit'].'<br>';	
-												}?></td>
-												<td><?php 
-												$sql = "SELECT * FROM categmedicine WHERE referenceID=?";
-												$stmt = $conn->prepare($sql); 
-												$stmt->bind_param("i", $donorreference);
-												$stmt->execute();
-												$result = $stmt->get_result();
-												while ($row = $result->fetch_assoc()) {
-													echo $row['productName'].': '.$row['quantity'].'/'.$row['unit'].'<br>';	
-												}?></td>
-												<td><?php 
-												$sql = "SELECT * FROM categothers WHERE referenceID=?";
-												$stmt = $conn->prepare($sql); 
-												$stmt->bind_param("i", $donorreference);
-												$stmt->execute();
-												$result = $stmt->get_result();
-												while ($row = $result->fetch_assoc()) {
-													echo $row['productName'].': '.$row['quantity'].'pcs'.'<br>';	
-												}?></td>
+												while ($row = $result->fetch_assoc()):
+													
+												?>
+												<td><?php echo $row['productName'] ?></td>
+												<td><?php echo $row['type'] ?></td>
+												<td><?php echo $row['unit'] ?></td>
+												<td><?php echo $row['quantity'] ?></td>
+												
 											</tr>
-										</tbody>
+											<?php endwhile; ?>
+											</tbody>
 									</table>
 								</div>
 							</div>

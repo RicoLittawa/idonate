@@ -106,7 +106,7 @@ session_start();
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Donations</h1>
+					<h1>Inventory</h1>
 					<ul class="breadcrumb">
 						<li>
 							<a href="#" style="font-size: 18px;">Dashboard</a>
@@ -116,6 +116,7 @@ session_start();
 							<a class="active" href="#" style="font-size: 18px;">Home</a>
 						</li>
 					</ul>
+					
 				</div>
 				   
 			</div>
@@ -123,61 +124,21 @@ session_start();
 <div class="table-data">
 				<div class="add">
 					<div class="head">
-						<h3>Donation Items</h3>
-
-					
-			
+						<h3>Donation Items</h3>	
 					</div>
-					
-					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
-			
-    <thead>
-      <tr>
-        <th>ID</th>
-		<th>Category</th>
-		<th>Item Name</th>
-      </tr>
-    </thead>
-    <tbody>
-		<?php if (mysqli_num_rows($result)):?>
-			<?php while($row= mysqli_fetch_assoc($result)): ?>
-				<tr>
-					<td><?php echo $row['Reference']; ?></td>
-					<?php 
-					$categM =$row['category'];
-					
-					$sql2 = "SELECT * from category";
-					$result2= mysqli_query($conn, $sql2);
-					foreach($result2 as $row1):
-					?>
-					<?php if($categM == $row1['categ_id']): ?>
-						<td><?php echo htmlentities($row1['category']); ?></td>
-						<?php endif; ?>
-
-					<?php endforeach; ?>
-					
-					<td><?php echo htmlentities($row['name_items']); ?></td>
-						
-					
-				</tr>
-				<?php endwhile; ?>
-
-		<?php endif; ?>
-	
- 
-		
-		
-	
-	
-		  
-	
-		
-			
-    </tbody>
-	
-  </table>
- 
-  			
+					<div class="form-group">
+						<select class="form-control form-control-sm" name="category" id="category">Category
+							<option value="can">Can/Noodles</option>
+							<option value="hygine">Hygine Essentials</option>
+							<option value="">Infant Items</option>
+							<option value="">Drinking Water</option>
+							<option value="">Meat/Grains</option>
+							<option value="">Medicine</option>
+							<option value="">Others</option>
+						</select>
+					</div>
+					<div class="categTB">
+					</div>
 			</div>
 		</main>
 	
@@ -204,9 +165,42 @@ session_start();
         search:"_INPUT_",
         searchPlaceholder: "Search Records",
       }
-
     });
 });
+</script>
+<script>
+	$(document).ready(function(){
+		function canNoodles(){
+			var  html='';
+			html+='<table class="table cn"><thead><tr><th>Product Name</th><th>Quantity</th></tr></thead>'+
+			'<tbody><tr><td>try</td></tr></tbody></table>';
+			return html;
+		}
+		function hygineES(){
+			var  html='';
+			html+='<table class="table hy"><thead><tr><th>Hygine Name</th><th>Quantity</th></tr></thead>'+
+			'<tbody><tr><td>not</td></tr></tbody></table>';
+			return html;
+		}
+		$('.categTB').append(canNoodles());
+		$("select").change(function(){
+			$( "select option:selected" ).each(function() {
+			var result='';
+			result+= $( this ).val();
+			if (result=='can'){
+				$('.hy').remove();
+				$('.categTB').append(canNoodles());
+		
+			}
+			if (result=='hygine'){
+				$('.cn').remove();
+				$('.categTB').append(hygineES());
+				
+			}
+			})
+			
+		});
+	});
 </script>
 </body>
 </html>

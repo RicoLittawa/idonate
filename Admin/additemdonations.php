@@ -712,6 +712,7 @@ session_start();
 				var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 				var varnumbers = /^\d+$/;
 				var inValid = /\s/;
+				var name_items= $('.name_items').val();
 
 				var data={saveBtn: '',result:result,ref_id:ref_id,fname:fname,region:region,province:province,municipality:municipality,barangay:barangay,
 					contact:contact,email:email,donation_date:donation_date,pnCN_arr:pnCN_arr,qCN_arr:qCN_arr,
@@ -814,97 +815,97 @@ session_start();
 					u3= (this.value);
 					})
 				}
-		 	if(fname==""){
-                 $('#fname').removeClass('border-success');
-                 $('#fname').addClass('border-danger');
-                 return false;
-             }
-            else if(region=="-Select-"){
-                 Swal.fire('Select', "Please select a region",'warning');
-                 return false;
-             }
-		    else if(province=="-Select-"){
-                 Swal.fire('Select', "Please select a province",'warning');
-                 return false;
-             }
-		    else if(municipality=="-Select-"){
-                 Swal.fire('Select', "Please select a municipality",'warning');
-                 return false;
-             }
-		    else if(barangay=="-Select-"){
-                 Swal.fire('Select', "Please select a barangay",'warning');
-                 return false;
-             }
-            else if(contact==""){
-                 $('#contact').removeClass('border-success');
-                 $('#contact').addClass('border-danger');
-             }
-            else if (inValid.test($('#contact').val())==true){
-                 Swal.fire('Contact', "Whitespace is prohibited.",'warning');
-                 $('#contact').removeClass('border-success');
-                 $('#contact').addClass('border-danger');
-                 return false;
-             }
-            else if(varnumbers.test($('#contact').val())==false) {
-                 Swal.fire('Number', "Numbers only.",'warning');
-                 $('#contact').removeClass('border-success');
-                 $('#contact').addClass('border-danger');
-                 return false;
-             } 
-            else if(contact.length !=11){
-                 Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
-                 $('#contact').removeClass('border-success');
-                 $('#contact').addClass('border-danger');
-                 return false;
-             }
-            else if(email==""){
-                 $('#email').removeClass('border-success');
-                 $('#email').addClass('border-danger');
-                 return false;
-             }
-            else if(emailVali.test($('#email').val())==false){
-                 Swal.fire('Email', "Invalid email address",'warning'); 
-                 $('#email').removeClass('border-success');
-                 $('#email').addClass('border-danger');
-                 return false;
-             }
-            else if(donation_date==""){
-                 $('#donation_date').removeClass('border-success');
-                 $('#donation_date').addClass('border-danger');
-                 return false;
-             }
-		    else if (!$('.selectCateg').is(':checked')){
-			 Swal.fire('Category', "Please select a category",'warning')
-		   	 }
-			else if (pn1==''||q1==''){
-				Swal.fire('Warning','Field is empty','warning');
-				return false;
-			}
-			else if (pn2==''||q2==''){
-				Swal.fire('Warning','Field is empty','warning');
-				return false;
-			}
-			else if (pn3==''||q3==''){
-				Swal.fire('Warning','Field is empty','warning');;
-				return false;
-			}
-			else if (pn4==''||q4==''){
-				Swal.fire('Warning','Field is empty','warning');
-				return false;
-			}
-			else if (pn5==''||t1==''||q5==''||u1==''){
-				Swal.fire('Warning','Field is empty','warning');
-				return false;
-			}
-			else if (pn6==''||t2==''||q6==''||u2==''){
-				Swal.fire('Warning','Field is empty','warning');
-				return false;
-			}
-			else if (pn7==''||t3==''||q7==''||u3==''){
-				Swal.fire('Warning','Field is empty','warning');
-				return false;
-			}
-			else {
+		 	 if(fname==""){
+                  $('#fname').removeClass('border-success');
+                  $('#fname').addClass('border-danger');
+                  return false;
+              }
+             else if(region=="-Select-"){
+                  Swal.fire('Select', "Please select a region",'warning');
+                  return false;
+              }
+		     else if(province=="-Select-"){
+                  Swal.fire('Select', "Please select a province",'warning');
+                  return false;
+              }
+		     else if(municipality=="-Select-"){
+                  Swal.fire('Select', "Please select a municipality",'warning');
+                  return false;
+              }
+		     else if(barangay=="-Select-"){
+                  Swal.fire('Select', "Please select a barangay",'warning');
+                  return false;
+              }
+             else if(contact==""){
+                  $('#contact').removeClass('border-success');
+                  $('#contact').addClass('border-danger');
+              }
+             else if (inValid.test($('#contact').val())==true){
+                  Swal.fire('Contact', "Whitespace is prohibited.",'warning');
+                  $('#contact').removeClass('border-success');
+                  $('#contact').addClass('border-danger');
+                  return false;
+              }
+             else if(varnumbers.test($('#contact').val())==false) {
+                  Swal.fire('Number', "Numbers only.",'warning');
+                  $('#contact').removeClass('border-success');
+                  $('#contact').addClass('border-danger');
+                  return false;
+              } 
+             else if(contact.length !=11){
+                  Swal.fire('Contact', "Enter Valid Contact Number",'warning'); 
+                  $('#contact').removeClass('border-success');
+                  $('#contact').addClass('border-danger');
+                  return false;
+              }
+             else if(email==""){
+                  $('#email').removeClass('border-success');
+                  $('#email').addClass('border-danger');
+                  return false;
+              }
+             else if(emailVali.test($('#email').val())==false){
+                  Swal.fire('Email', "Invalid email address",'warning'); 
+                  $('#email').removeClass('border-success');
+                  $('#email').addClass('border-danger');
+                  return false;
+              }
+             else if(donation_date==""){
+                  $('#donation_date').removeClass('border-success');
+                  $('#donation_date').addClass('border-danger');
+                  return false;
+              }
+		     else if (!$('.selectCateg').is(':checked')){
+			  Swal.fire('Category', "Please select a category",'warning')
+		   	  }
+			 else if (pn1==''||q1==''){
+			 	Swal.fire('Warning','Field is empty','warning');
+			 	return false;
+			 }
+			 else if (pn2==''||q2==''){
+			 	Swal.fire('Warning','Field is empty','warning');
+			 	return false;
+			 }
+			 else if (pn3==''||q3==''){
+			 	Swal.fire('Warning','Field is empty','warning');;
+			 	return false;
+			 }
+			 else if (pn4==''||q4==''){
+			 	Swal.fire('Warning','Field is empty','warning');
+			 	return false;
+			 }
+			 else if (pn5==''||t1==''||q5==''||u1==''){
+			 	Swal.fire('Warning','Field is empty','warning');
+			 	return false;
+			 }
+			 else if (pn6==''||t2==''||q6==''||u2==''){
+			 	Swal.fire('Warning','Field is empty','warning');
+			 	return false;
+			 }
+			 else if (pn7==''||t3==''||q7==''||u3==''){
+			 	Swal.fire('Warning','Field is empty','warning');
+			 	return false;
+			 }
+			 else {
 				console.log('saved');
 				console.log(data);
 		 	  	$.ajax({
@@ -912,22 +913,23 @@ session_start();
 		 	  		method:'POST',
 		 	  		data: data,
 		 	  		success: function(data){
-		 	  			 	Swal.fire({
-		 	  			 		title: 'Success',
-		 	  			 		text: "Successfully Added",
-		 	  			 		icon: 'success',
-		 	  			 		confirmButtonColor: '#3085d6',
-		 	  			 		confirmButtonText: 'OK',
-		 	  			 		allowOutsideClick: false
-		 	  			 		}).then((result) => {
-		 	  			 		if (result.isConfirmed) {
-		 	  			 			window.location.href="donations.php?inserted";
-		 	  			 		}
-		 	  			 	}) 
+						alert('save');
+		 	  			 	 Swal.fire({
+		 	  			 	 	title: 'Success',
+		 	  			 	 	text: "Successfully Added",
+		 	  			 	 	icon: 'success',
+		 	  			 	 	confirmButtonColor: '#3085d6',
+		 	  			 	 	confirmButtonText: 'OK',
+		 	  			 	 	allowOutsideClick: false
+		 	  			 	 	}).then((result) => {
+		 	  			 	 	if (result.isConfirmed) {
+		 	  			 	 		window.location.href="donations.php?inserted";
+		 	  			 	 	}
+		 	  			 	 }) 
 		 	  			 }
 		 	  		
 		 	  	})
-			}	    
+			 }	    
 	})
 });
 
