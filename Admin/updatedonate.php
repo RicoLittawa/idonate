@@ -82,8 +82,20 @@ session_start();
 			</li>
 			<li>
 				<a href="archive.php">
-        <i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+        			<i class='bx bxs-file-archive'></i>
+					<span class="text">Records</span>
+				</a>
+			</li>
+			<li>
+				<a href="categorytables.php">
+					<i class='bx bxs-package'></i>
+					<span class="text">Stocks</span>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<i class='bx bxs-user-plus'></i>
+					<span class="text">Users</span>
 				</a>
 			</li>
 		</ul>

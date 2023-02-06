@@ -55,7 +55,7 @@ session_start();
 			</li>
 			<li>
 				<a href="archive.php">
-        <i class='bx bxs-file-archive'></i>
+        			<i class='bx bxs-file-archive'></i>
 					<span class="text">Records</span>
 				</a>
 			</li>
@@ -63,6 +63,12 @@ session_start();
 				<a href="categorytables.php">
 					<i class='bx bxs-package'></i>
 					<span class="text">Stocks</span>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<i class='bx bxs-user-plus'></i>
+					<span class="text">Users</span>
 				</a>
 			</li>
 		</ul>
@@ -131,63 +137,53 @@ session_start();
 					
 						
             <div class="dropdown">
-     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-       Select Table
-      </button>
-     <div class="dropdown-menu">
-        <a class="dropdown-item" href="donations.php">Donations</a>
-        <a class="dropdown-item" href="moneytable.php">Money Donors</a>
-
-      
- 	 </div>
 	</div>
 	</div>
+	<table class="table table-striped table-bordered" style="width:100%" id="table_data">
+			
+			<thead>
+			  <tr>
+				<th><input type="checkbox" name="" id="selectAll" class="col"></th>
+			
+				<th>ID</th>
+				<th>Fullname</th>
+				<th>Email</th>
+				<th>Contact</th>
+				<th>Donation Date</th>
+				<th>Send</th>
+			  </tr>
+			</thead>
+			<tbody>
+			 <?php
+				$count=0;
+				   foreach($result as $row)
+				   :?>
+					<?php  $count = $count + 1  ?>
+					<tr>
+				   <td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['donor_email']);?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"></input>
+				<button class="btn"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
+				</td>
+				<td><?php echo  htmlentities($row['Reference']);?></td>
+				<td><?php echo  htmlentities($row['donor_name']);?></td>
+				<td><?php echo  htmlentities($row['donor_email']) ;?></td>
+				<td><?php echo  htmlentities($row['donor_contact']);?></td>
+				<td><?php echo  htmlentities($row['donationDate']);?></td>
+				<td><button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"
+				data-email="<?php echo htmlentities($row['donor_email']); ?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-action="single">Send</button>
+			</td>
+			
+				</tr>
+				   
+				<?php endforeach; 	?>
 					
-					<table class="table table-striped table-bordered" id="table_data">
-			
-    <thead>
-      <tr>
-        <th><input type="checkbox" name="" id="selectAll" class="col"></th>
-        <th>Fullname</th>
-		<th>Email</th>
-		<th>Contact</th>
-      	<th>Donation Date</th>
-		<th>Send</th>
-      </tr>
-    </thead>
-    <tbody>
-	
-     <?php
-       
-		$count=0;
-		   foreach($result as $row)
-		   :?>
-		   
-			<?php  $count = $count + 1  ?>
+			</tbody>
 			<tr>
-		
-   		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['donor_email']);?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"></input>
-	    <button class="btn col"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
-		</td>
-		<td><?php echo  htmlentities($row['donor_name']);?></td>
-		<td><?php echo  htmlentities($row['donor_email']) ;?></td>
-		<td><?php echo  htmlentities($row['donor_contact']);?></td>
-		<td><?php echo  htmlentities($row['donationDate']);?></td>
-		<td><button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"
-		data-email="<?php echo htmlentities($row['donor_email']); ?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-action="single">Send</button>
-		</td>
-		</tr>
-		   
-		<?php endforeach; 	?>
+				<td colspan="6"></td>
+				<td>
+			 <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
+			</tr>
 			
-    </tbody>
-	<tr>
-		<td colspan="5"></td>
-		<td>
-     <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
-	</tr>
-	
-  </table>	
+		  </table>	
 			</div>
 		</main>
 	
@@ -233,6 +229,7 @@ $(document).ready(function(){
    
    });
   }
+  console.log(email_data);
    $.ajax({
     url:"include/sendcerti.php",
     method:"POST",

@@ -1,14 +1,14 @@
 <?php
 session_start();
-?>
- <?php
-	  include "include/connection.php";
-	    
-    $sql = "SELECT * FROM donation_items10";
-    $result = mysqli_query($conn,$sql);
-	
-  
+
 	?>
+<?php 
+require_once 'include/connection.php';
+$sql = "SELECT * from donor_record";
+$result= mysqli_query($conn,$sql);
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,14 +16,14 @@ session_start();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
 	<link rel="stylesheet" href="css/donations.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
-
-	<title>Donations</title>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+	<title>User Details</title>
 </head>
 <body>
 
@@ -42,24 +42,24 @@ session_start();
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="donations.php">
 					<i class='bx bxs-box' ></i>
 					<span class="text">Donations</span>
 				</a>
 			</li>
-			<li>
+			<li >
 				<a href="request.php">
 					<i class='bx bxs-envelope' ></i>
 					<span class="text">Requests</span>
 				</a>
 			</li>
-			<li>
-				<a href="archive.php">
-        			<i class='bx bxs-file-archive'></i>
+			<li class="active">
+				<a href="#">
+				<i class='bx bxs-file-archive'></i>
 					<span class="text">Records</span>
 				</a>
 			</li>
-			<li class="active">
+			<li>
 				<a href="categorytables.php">
 					<i class='bx bxs-package'></i>
 					<span class="text">Stocks</span>
@@ -72,7 +72,7 @@ session_start();
 				</a>
 			</li>
 		</ul>
-		<ul class="side-menu ">
+		<ul class="side-menu">
 			<li>
 				<a class="settings" href="settings.php">
 					<i class='bx bxs-cog' ></i>
@@ -112,7 +112,7 @@ session_start();
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Inventory</h1>
+					<h1>Users</h1>
 					<ul class="breadcrumb">
 						<li>
 							<a href="#" style="font-size: 18px;">Dashboard</a>
@@ -122,29 +122,40 @@ session_start();
 							<a class="active" href="#" style="font-size: 18px;">Home</a>
 						</li>
 					</ul>
-					
 				</div>
-				   
 			</div>
-
-<div class="table-data">
+			
+			<div class="table-data">
 				<div class="add">
 					<div class="head">
-						<h3>Donation Items</h3>	
-					</div>
-					<div class="form-group">
-						<select class="form-control form-control-sm" name="category" id="category">Category
-							<option value="can" >Can/Noodles</option>
-							<option value="hygine">Hygine Essentials</option>
-							<option value="">Infant Items</option>
-							<option value="">Drinking Water</option>
-							<option value="">Meat/Grains</option>
-							<option value="">Medicine</option>
-							<option value="">Others</option>
-						</select>
-					</div>
-					<div class="categTB">
-					</div>
+						<h3>Account Details</h3>
+						<div class="dropdown">
+		
+			
+			<div class="add_users">
+				<button class="btn btn-success">Add User</button>
+			</div>
+		</div>
+	</div>
+	<table class="table table-striped table-bordered" style="width:100%" id="table_data">
+    <thead>
+      <tr>
+		<th>Name</th>
+		<th>Email</th>
+		<th>User Type</th>   
+		<th>Status</th> 
+      </tr>
+	</thead>
+		<tbody>
+		<tr>
+			<td>Rico Littawa</td>
+			<td>ricolittawa@gmail.com</td>
+			<td>Admin</td>
+			<td><span class="badge badge-primary">Primary</span></td>
+		</tr>
+				
+		</tbody>
+	</table>
 			</div>
 		</main>
 	
@@ -157,55 +168,28 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<script src="scripts/sweetalert2.all.min.js"></script>	
-  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
-<script>
-  $(document).ready(function () {
-    $('#table_data').DataTable({
-      "pagingType":"full_numbers",
-      "lengthMenu":[
-      [10,25,50,-1],
-      [10,25,50,"All"]],
-      responsive:true,
-      language:{
-        search:"_INPUT_",
-        searchPlaceholder: "Search Records",
-      }
-    });
-});
-</script>
-<script>
-	$(document).ready(function(){
-		function canNoodles(){
-			var  html='';
-			html+='<table class="table cn"><thead><tr><th>Product Name</th><th>Quantity</th></tr></thead>'+
-			'<tbody><tr><td>try</td></tr></tbody></table>';
-			return html;
-		}
-		function hygineES(){
-			var  html='';
-			html+='<table class="table hy"><thead><tr><th>Hygine Name</th><th>Quantity</th></tr></thead>'+
-			'<tbody><tr><td>not</td></tr></tbody></table>';
-			return html;
-		}
-		$("select").change(function(){
-			$( "select option:selected" ).each(function() {
-			var result='';
-			result+= $( this ).val();
-			if (result=='can'){
-				$('.hy').remove();
-				$('.categTB').append(canNoodles());
-		
+	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+	<script>
+	  $(document).ready(function () {
+			$('#table_data').DataTable({
+			"pagingType":"full_numbers",
+			"lengthMenu":[
+			[10,25,50,-1],
+			[10,25,50,"All"]],
+			responsive:true,
+			language:{
+				search:"_INPUT_",
+				searchPlaceholder: "Search Records",
 			}
-			if (result=='hygine'){
-				$('.cn').remove();
-				$('.categTB').append(hygineES());
-				
-			}
-			})
-			
+
+			});
 		});
-	});
-</script>
+	</script>
+
+
+	
+
 </body>
 </html>

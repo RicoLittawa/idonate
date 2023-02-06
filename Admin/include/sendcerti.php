@@ -68,17 +68,11 @@
     $rd_email= $user['donor_email'];
     $rd_contact= $user['donor_contact'];
     $rd_date= date('Y-m-d', strtotime($user['donationDate']));
-    
-
-      $totalDonor="INSERT into total_donor(Tdonor_name) value(?)";
-      $stmt=$conn->prepare($totalDonor);
-      $stmt->bind_param('s',$rd_name);
-      $stmt->execute();
 
      $sql2= "INSERT into donor_record(rD_reference,rD_name,rD_region,rD_province,rD_municipality,rD_barangay,rD_email,rD_contact,rD_date,rd_certificate)
       value (?,?,?,?,?,?,?,?,?,?)";
      $stmt=$conn->prepare($sql2);
-     $stmt->bind_param('ssssssssss',$rd_reference,$rd_name,$rd_region,$rd_province,$rd_municipality,$rd_barangay,$rd_email,$rd_contact,$rd_date,  $genImage);
+     $stmt->bind_param('ssssssssss',$rd_reference,$rd_name,$rd_region,$rd_province,$rd_municipality,$rd_barangay,$rd_email,$rd_contact,$rd_date,$genImage);
      $result= $stmt->execute();
 
      if($result){
@@ -98,31 +92,7 @@
       $mail->IsHTML(true);       //Sets message type to HTML
       $mail->Subject = 'Acknowledgement Reciept'; //Sets the Subject of the message
       //An HTML or plain text message body
-      $donatedItems = "SELECT * FROM donation_items10 WHERE Reference=?";
-					$stmt = $conn->prepare($donatedItems); 
-					$stmt->bind_param("s", $rd_reference);
-					$stmt->execute();
-					$itemResult = $stmt->get_result();
-					$data = [];
-					
-					$data = $itemResult->fetch_all(MYSQLI_ASSOC);
-					
-					if($data){
-			 $itemName= [];
-       $count=0;
-			foreach($data as $items){
-        $count++;
-        $message='';
-				$itemName= $items['name_items'];
-				
-				
-       $message.='
-        <p>Thank you for donating a '.$itemName.' This acknowledgement reciept is created as a sign of gratitude for your kindness.</p>
-        ';
-       }
-        }
-			 $mail->Body = $message; 
-  
+			 $mail->Body = "Thank you"; 
       $mail->addStringAttachment($pdf->Output("S",'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
       $mail->Send();      //Send an Email. Return true on success or false on error
 

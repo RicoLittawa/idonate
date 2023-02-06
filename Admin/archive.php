@@ -65,6 +65,12 @@ $result= mysqli_query($conn,$sql);
 					<span class="text">Stocks</span>
 				</a>
 			</li>
+			<li>
+				<a href="">
+					<i class='bx bxs-user-plus'></i>
+					<span class="text">Users</span>
+				</a>
+			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
@@ -73,15 +79,13 @@ $result= mysqli_query($conn,$sql);
 					<span class="text">Settings</span>
 				</a>
 			</li>
-		</ul>
-		<ul class="side-menu">
 			<li>
 				<a href="include/logout.php" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>
 			</li>
-			</ul>
+		</ul>
 	</section>
 	<!-- SIDEBAR -->
 
@@ -140,24 +144,12 @@ $result= mysqli_query($conn,$sql);
 					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
     <thead>
       <tr>
-		<th>Id</th>
 		<th>Donor Name</th>
-		<th>Region</th>
-		<th>Province</th>
-		<th>Municipality</th>
-		<th>Barangay</th>
 		<th>Email</th>
 		<th>Contact</th>
 		<th>Date</th>
-		<th>Donated Items</th>
 		<th>Certificate</th>
 		<th>Status</th>
-		
-		
-		
-		
-        
-        
       </tr>
     </thead>
     <tbody>
@@ -167,10 +159,6 @@ $result= mysqli_query($conn,$sql);
 				$reference_id= $row['rD_reference'];
 				$rd_id= $row['id'];
 				$rd_name= $row['rD_name'];
-				$rd_province= $row['rD_province'];
-				$rd_municipality= $row['rD_municipality'];
-				$rd_barangay= $row['rD_barangay'];
-				$rd_region= $row['rD_region'];
 				$rd_email= $row['rD_email'];
 				$rd_contact= $row['rD_contact'];
 				$rd_date= $row['rD_date'];
@@ -180,80 +168,13 @@ $result= mysqli_query($conn,$sql);
 				
 				?>
 		<tr>
-			<td><?php echo htmlentities($reference_id) ?></td>
 			<td><?php echo htmlentities($rd_name) ?></td>
-			<?php 
-			 $sql2="SELECT * From refregion";
-		 	$result2=mysqli_query($conn,$sql2);
-		 	foreach($result2 as $row1){
-			if ($rd_region== $row1['regCode']){
-				echo "<td>".htmlentities($row1['regDesc'])."</td>
-				";
-				}
-			}
-		?>
-		<?php 
-			 $sql2="SELECT * From refprovince";
-		 	$result2=mysqli_query($conn,$sql2);
-		 	foreach($result2 as $row1){
-			if ($rd_province== $row1['provCode']){
-				echo "<td>".htmlentities($row1['provDesc'])."</td>
-				";
-				}
-			}
-		?>
-		<?php 
-			 $sql2="SELECT * From refcitymun";
-		 	$result2=mysqli_query($conn,$sql2);
-		 	foreach($result2 as $row1){
-			if ($rd_municipality== $row1['citymunCode']){
-				echo "<td>".htmlentities($row1['citymunDesc'])."</td>
-				";
-				}
-			}
-		?>
-		<?php 
-			 $sql2="SELECT * From refbrgy";
-		 	$result2=mysqli_query($conn,$sql2);
-		 	foreach($result2 as $row1){
-			if ($rd_barangay== $row1['brgyCode']){
-				echo "<td>".htmlentities($row1['brgyDesc'])."</td>
-				";
-				}
-			}
-		?>
 			<td><?php echo htmlentities($rd_email) ?></td>
 			<td><?php echo htmlentities($rd_contact) ?></td>
 			<td><?php echo htmlentities($rd_date) ?></td>
-			<td>
-				<?php 
-					$donatedItems = "SELECT * FROM donation_items10 WHERE Reference=?";
-					$stmt = $conn->prepare($donatedItems); 
-					$stmt->bind_param("s", $reference_id);
-					$stmt->execute();
-					$itemResult = $stmt->get_result();
-					$data = [];
-					
-					$data = $itemResult->fetch_all(MYSQLI_ASSOC);
-					
-					if($data):?>
-			<?php $itemName= []; ?>
-			<?php  foreach($data as $items){
-				$itemName= $items['name_items'];
-				
-				
-				echo $itemName.",&nbsp";
-			
-				// $people = array("Peter", "Joe", "Glenn", "Cleveland");
-				// echo current($people) . "<br>";
-			}?>
-				
-			</td>
-			
-		<?php endif; ?>
 			<td><button class="btn btnCert" value="<?php echo htmlentities($rd_id) ?>"><?php echo htmlentities($rd_certificate) ?></button>
 			</td>
-			<td><span><i style="color:green ;" class="fa-solid fa-envelope-circle-check" ></i></span><button type="button" class="btn deleteBtn" id="<?php echo $count; ?>" value="<?php echo htmlentities($reference_id); ?>"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
+			<td><span class="badge badge-success">Recieved</span><button type="button" class="btn deleteBtn" id="<?php echo $count; ?>" value="<?php echo htmlentities($reference_id); ?>"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
 		
 		</tr>
 	<?php endforeach; ?>
@@ -301,15 +222,11 @@ $result= mysqli_query($conn,$sql);
 
 			var valueBtn = $(this);
 			var request_id =valueBtn.val();
-			
-		
 			  $.ajax({
 			  	url:'include/viewid.php?viewCert='+request_id,
 			  	type: 'GET',
 			  	success: function(data){
-					
-			  			
-						   printJS('include/download-certificate/'+data, 'image')		   		
+				 printJS('include/download-certificate/'+data, 'image')		   		
 			  	}
 			  });
 

@@ -65,6 +65,12 @@ $count=0;
 					<span class="text">Stocks</span>
 				</a>
 			</li>
+			<li>
+				<a href="">
+					<i class='bx bxs-user-plus'></i>
+					<span class="text">Users</span>
+				</a>
+			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>

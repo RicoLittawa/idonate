@@ -62,7 +62,19 @@ function fill_category_select_box($conn)
 			<li>
 				<a href="#">
 				<i class='bx bxs-file-archive'></i>
-					<span class="text">Archive</span>
+					<span class="text">Records</span>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<i class='bx bxs-package'></i>
+					<span class="text">Stocks</span>
+				</a>
+			</li>
+			<li>
+				<a href="">
+					<i class='bx bxs-user-plus'></i>
+					<span class="text">Users</span>
 				</a>
 			</li>
 		</ul>
