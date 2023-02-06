@@ -239,8 +239,6 @@ session_start();
 											</select>
 										</div>
 									</div>
-
-
 									<div class="col">
 										<div class="form-group">
 											<label for="contact">Contact</label>
@@ -260,114 +258,95 @@ session_start();
 							<div class="row">
 								<div class="col">
 									<div class="form-group">
-									<label class="form-group" style="font-weight: bold;">Donation Types & Quantity</label>
-									<button style="float: right;" type="button" class="btn btn-success btnAdd" id="btnAdd" name="btnAdd"><i style="color: white;font-size:30px;" class="fa-sharp fa-solid fa-plus"></i> 
-										</button>
+									<label class="form-group" style="font-weight: bold;">Donations</label>										</button>
 									</div>
 								</div>
 							</div>
 							<div class="row">
-							<div class="col">
-										<div class="form-group">
-										<?php 
-								$sql1="SELECT * from donation_items10 where Reference= ?";
-								$stmt = $conn->prepare($sql1); 
-								$stmt->bind_param("s", $donorreference);
-								$stmt->execute();
-								$result = $stmt->get_result();
-								$data = $result->fetch_all(MYSQLI_ASSOC);
-								foreach ($data as $donor){
-									$variantCode= $donor['variantCode'];
-									$categCode= $donor['category'];
-									$name_items= $donor['name_items'];
-								}
-								
-							
-							
-								?>
-										<label for="variant">Select Variant</label>
-											<select class="custom-select variant border-success" name="variant" id="variant">
-											<option value="-Select-">-Select-</option>
-											<?php 
-												$sql = "SELECT * FROM variant";
-												$result = mysqli_query($conn,$sql);
-												foreach($result	 as $row):
-												?>
-											<option value="<?php echo htmlentities($row['variantCode']);?>"
-											<?php if($variantCode == $row['variantCode']) {echo 'selected="selected"';}?>>
-											<?php echo htmlentities($row['variant']);?></option>
-											<?php endforeach;  ?>
-											</select>
-										</div>
-									</div>
-									<div class="col">
-										<div class="form-group">
-											<label for="">Quantity</label>
-											<?php 
-											$totalVariant= "SELECT quantity from categ_varianttotal where donor_reference=?";
-											$stmt = $conn->prepare($totalVariant);
-											$stmt->bind_param('s',$donorreference);
-											$stmt->execute();
-											$result= $stmt->get_result();
-											$user = $result->fetch_assoc();
-											echo "<input class='form-control border-success quantity' name='quantity' id='quantity' value='".$user['quantity']."'>";
-											?>
-
-										</div>
-									</div>
-							</div>	
-							
-							<table class="table table-bordered">
-								<tr>
-									<th>Category</th>
-									<th>item Name</th>
-									<th>Button</th>
-								</tr>
-								<tbody class="dynamicAdd">
-									<tr>
-									<?php 
-								$total="SELECT * from donation_items10 where Reference= ?";
-								$stmt = $conn->prepare($total); 
-								$stmt->bind_param("s", $donorreference);
-								$stmt->execute();
-								$result = $stmt->get_result();
-								$data = $result->fetch_all(MYSQLI_ASSOC);
-								foreach ($data as $donor):
-									$variantCode= $donor['variantCode'];
-									$categCode= $donor['category'];
-									$name_items= $donor['name_items'];
-									$count=0;
-							
-								?>
-										<td><select  class="custom-select border-success category" name="category" id="category">
-												<option value="-Select-">-Select-</option>
-												<?php
-													$sql2= "SELECT * from category";
-													$result2= mysqli_query($conn,$sql2);
-													foreach ($result2 as $row2): 		
-																
-												?>
-									
-												<option value="<?php echo htmlentities($row2['categCode']); ?>"<?php if($categCode == $row2['categ_id']) {echo 'selected="selected"';}?>>
-												<?php echo htmlentities($row2['category']);?></option>
-												
-												
-													<?php endforeach; ?>
-										
-													</select></td>
-										<td><input type="text" class="form-control border-success name_items" id="name_items" name="name_items" value="<?php echo htmlentities($name_items); ?>"></td>
-									
-										<td><button type="button" class="btn btn-danger btnRemove" id="btnRemove">Remove</button></td>
-										
-									</tr>
-									<?php $count++; endforeach; ?>
-								</tbody>
-							
-							</table>
-							
-							
-									</form>	
-									
+								<div class="col">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Can/Noodles</th>
+												<th>Hygine Essentials</th>
+												<th>Infant Items</th>
+												<th>Drinking Water</th>
+												<th>Meats/Grains</th>
+												<th>Medicine</th>
+												<th>Others</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><?php 
+												$sql = "SELECT * FROM categcannoodles WHERE referenceID=?";
+												$stmt = $conn->prepare($sql); 
+												$stmt->bind_param("i", $donorreference);
+												$stmt->execute();
+												$result = $stmt->get_result();
+												while ($row = $result->fetch_assoc()) {
+													echo $row['productName'].': '.$row['quantity'].'pcs'.'<br>';	
+												}?></td>
+												<td><?php 
+												$sql = "SELECT * FROM categhygineessential WHERE referenceID=?";
+												$stmt = $conn->prepare($sql); 
+												$stmt->bind_param("i", $donorreference);
+												$stmt->execute();
+												$result = $stmt->get_result();
+												while ($row = $result->fetch_assoc()) {
+													echo $row['productName'].': '.$row['quantity'].'pcs'.'<br>';	
+												}?></td>
+												<td><?php 
+												$sql = "SELECT * FROM categinfant WHERE referenceID=?";
+												$stmt = $conn->prepare($sql); 
+												$stmt->bind_param("i", $donorreference);
+												$stmt->execute();
+												$result = $stmt->get_result();
+												while ($row = $result->fetch_assoc()) {
+													echo $row['productName'].': '.$row['quantity'].'pcs'.'<br>';	
+												}?></td>
+												<td><?php 
+												$sql = "SELECT * FROM categdrinkingwater WHERE referenceID=?";
+												$stmt = $conn->prepare($sql); 
+												$stmt->bind_param("i", $donorreference);
+												$stmt->execute();
+												$result = $stmt->get_result();
+												while ($row = $result->fetch_assoc()) {
+													echo $row['productName'].': '.$row['quantity'].'pcs'.'<br>';	
+												}?></td>
+												<td><?php 
+												$sql = "SELECT * FROM categmeatgrains WHERE referenceID=?";
+												$stmt = $conn->prepare($sql); 
+												$stmt->bind_param("i", $donorreference);
+												$stmt->execute();
+												$result = $stmt->get_result();
+												while ($row = $result->fetch_assoc()) {
+													echo $row['productName'].': '.$row['quantity'].'/'.$row['unit'].'<br>';	
+												}?></td>
+												<td><?php 
+												$sql = "SELECT * FROM categmedicine WHERE referenceID=?";
+												$stmt = $conn->prepare($sql); 
+												$stmt->bind_param("i", $donorreference);
+												$stmt->execute();
+												$result = $stmt->get_result();
+												while ($row = $result->fetch_assoc()) {
+													echo $row['productName'].': '.$row['quantity'].'/'.$row['unit'].'<br>';	
+												}?></td>
+												<td><?php 
+												$sql = "SELECT * FROM categothers WHERE referenceID=?";
+												$stmt = $conn->prepare($sql); 
+												$stmt->bind_param("i", $donorreference);
+												$stmt->execute();
+												$result = $stmt->get_result();
+												while ($row = $result->fetch_assoc()) {
+													echo $row['productName'].': '.$row['quantity'].'pcs'.'<br>';	
+												}?></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</form>					
 			</div>
 		</main>	
 	</section>
@@ -378,35 +357,12 @@ session_start();
 	<script src="scripts/sweetalert2.all.min.js"></script>	
 	<script>
 		$(document).ready(function(){
-	var appendedTable = '<tr>'+
-	'<td><select class="custom-select category border-success" name="category" id="category"><option value="-Select-">-Select-</option><?php echo fill_category_select_box($conn); ?></select></td>'+
-	'<td><input class="form-control border-success name_items" id="name_items" name="name_items" autocomplete="off"></td>'+
-	'<td><button type="button" class="btn btn-danger btnRemove" id="btnRemove">Remove</button></td></tr>';
-	$(document).on('click','.btnRemove', function(){
-      $(this).closest('tr').remove();
-    });
 	$('#update-form').append('<button  type="button" class="btn addDonate" id="testBtn">Save</button>');
 	$('#update-form').append('<button type="button" class="btn  cancelBtn" id="cancelBtn">Cancel</button>');
-	
-	$(document).on('click', '.btnAdd',function(){
-		$('.dynamicAdd').append(appendedTable);
-	});
 	$('#testBtn').click(function(e){
 		var valid = this.form.checkValidity();
         if(valid) { 
             e.preventDefault();
-    
-        var category_arr=[];
-        var itemName_arr=[];
-
-        var category = $('.category');
-        var name_items = $('.name_items');
-        // var test_qty = 0;
-        for (var i = 0;i<category.length;i++){  
-            category_arr.push($(category[i]).val());
-            itemName_arr.push($(name_items[i]).val());
-            // test_qty += parseInt($(quantity[i]).val());    
-        }
 		var donor_id=$('#donor_id').val();
         var reference_id= $('#reference_id').val();
         var fname = $('#fname').val();
@@ -417,12 +373,11 @@ session_start();
         var email = $('#email').val();
         var donation_date = $('#donation_date').val();
         var contact= $('#contact').val();
-		var variant= $('#variant').val();
-		var quantity= $('#quantity').val();
         var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         var varnumbers = /^\d+$/;
         var inValid = /\s/;
-
+		var data = {updateBtn: '',donor_id:donor_id,reference_id:reference_id,fname,province:province,region:region,municipality:municipality,barangay:barangay,contact:contact,
+			email:email,donation_date:donation_date};
           if(fname==""){
               $('#fname').removeClass('border-success');
               $('#fname').addClass('border-danger');
@@ -484,60 +439,26 @@ session_start();
               $('#donation_date').addClass('border-danger');
               return false;
           }
-		  else if (quantity==""){
-                  Swal.fire('Fields', "Quantity is empty",'warning');
-                  return false;
-              }
-			  
-		 else if (inValid.test($('#quantity').val())==true){ 
-                  Swal.fire('Quantity', "Whitespace is prohibited.",'warning');
-                  return false;
-              }
-		else if(varnumbers.test($('#quantity').val())==false) {
-              Swal.fire('Number', "Numbers only.",'warning');
-              $('#contact').removeClass('border-success');
-              $('#contact').addClass('border-danger');
-              return false;
-            } 
-			else if(variant=="-Select-"){
-              Swal.fire('Select', "Please select a variant",'warning');
-              return false;
-          }
+		
           else{
-              for(var j=0;j<category.length;j++){
-            
-               if ($(category[j]).val()=="-Select-"){
-                  Swal.fire('Fields', "Please select a category",'warning');
-                  return false;
-              }
-           else if ($(name_items[j]).val()==""){
-                  Swal.fire('Fields', "Item name is empty",'warning');
-                  return false;
-              }
-             
-              }
-            var data = {updateBtn: '',donor_id:donor_id,reference_id:reference_id,fname,province:province,region:region,municipality:municipality,barangay:barangay,contact:contact,
-			email:email,donation_date:donation_date,variant:variant,quantity:quantity,category_arr:category_arr,itemName_arr:itemName_arr};
-            
 			$.ajax({
 						url:'include/edit.inc.php',
 						method:'POST',
 						data: data,
 						success:function(data){
-							
-				 			if(data == 'Data-updated') {
-				 			Swal.fire({
+				 		Swal.fire({
 				 		icon: 'success',
 				 		title: 'Success',
 				 		text:data,
 				 		}).then(function() {
 				 			window.location = "donations.php";
 				 		});
-				 }	
 		 	}
 
 		 });
-          }
+		  }
+          
+        
                       
         }
 	});  

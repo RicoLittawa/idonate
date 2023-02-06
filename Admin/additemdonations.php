@@ -244,7 +244,7 @@ session_start();
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box1" value="cannoodles">
 							<label class="form-check-label" for="">Can Goods & Noodles</label>
 							</div>
-						<table class="table cnTB col" id="cnTB">
+						<table class="table cnTB col table-bordered" id="cnTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Quantity</th>
@@ -264,7 +264,7 @@ session_start();
 							<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box2" value="hygine">
 							<label class="form-check-label" for="">Hygiene Essentials</label>
 							</div>
-						<table class="table hyTB col" id="hyTB">
+						<table class="table hyTB col table-bordered" id="hyTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Quantity</th>
@@ -284,7 +284,7 @@ session_start();
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box3" value="infant">
 							<label class="form-check-label" for="">Infant Items(*Formula not included)</label>
 							</div>
-						<table class="table iiTB col" id="iiTB">
+						<table class="table iiTB col table-bordered" id="iiTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Quantity</th>
@@ -304,7 +304,7 @@ session_start();
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box4" value="drink">
 							<label class="form-check-label" for="">Drinking Water</label>
 							</div>
-						<table class="table dwTB col" id="dwTB">
+						<table class="table dwTB col table-bordered" id="dwTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Quantity</th>
@@ -324,7 +324,7 @@ session_start();
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box5" value="meat">
 							<label class="form-check-label" for="">Meats/Grains</label>
 							</div>
-						<table class="table mgTB col" id="mgTB">
+						<table class="table mgTB col table-bordered" id="mgTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Type</th>
@@ -357,7 +357,7 @@ session_start();
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box6" value="meds">
 							<label class="form-check-label" for="">Medicine</label>
 							</div>
-						<table class="table meTB col" id="meTB">
+						<table class="table meTB col table-bordered" id="meTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Type</th>
@@ -393,7 +393,7 @@ session_start();
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box7" value="other">
 							<label class="form-check-label" for="">Others (Type n/a if there is no type or unit)</label>
 							</div>
-						<table class="table otTB col" id="otTB">
+						<table class="table otTB col table-bordered" id="otTB">
 						<thead><tr>
 							<th>Product Name</th>
 							<th>Type</th>

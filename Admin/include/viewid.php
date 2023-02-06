@@ -38,25 +38,7 @@ if (isset($_GET['viewNote'])){
      
  
  }
- //view money
-if (isset($_GET['moneyNote'])){
-    $request_id= $_GET['moneyNote'];
-    $sql= "SELECT money_note from monetary_donations where money_id=?";
-    $stmt = $conn->prepare($sql); 
-    $stmt->bind_param("i", $request_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
- 
-     if ( $donor = $result->fetch_assoc()){
-      
-             echo $donor['money_note'];
-        
-     }else{
-         echo 'Data not found';
-     }
-     
- 
- }
+
  //view reference
  if (isset($_GET['money_id'])){
     $request_id= $_GET['money_id'];
@@ -91,28 +73,6 @@ if (isset($_GET['moneyNote'])){
      if ( $donor = $result->fetch_assoc()){
       
              echo $donor['rD_certificate'];
-        
-     }else{
-         echo 'Data not found';
-     }
-     
- 
- }
-
-
-
- //view money certi
-if (isset($_GET['viewMoney'])){
-    $request_id= $_GET['viewMoney'];
-    $sql= "SELECT rDM_certificate from donor_recordm where id=?";
-    $stmt = $conn->prepare($sql); 
-    $stmt->bind_param("i", $request_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
- 
-     if ( $money = $result->fetch_assoc()){
-      
-             echo $money['rDM_certificate'];
         
      }else{
          echo 'Data not found';

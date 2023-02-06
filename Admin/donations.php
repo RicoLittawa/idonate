@@ -148,18 +148,11 @@ session_start();
     <thead>
       <tr>
         <th><input type="checkbox" name="" id="selectAll" class="col"></th>
-	
-		<th>ID</th>
         <th>Fullname</th>
-		<th>Region</th>
-		<th>Province</th>
-		<th>Municipality</th>
-		<th>Barangay</th>
 		<th>Email</th>
 		<th>Contact</th>
       	<th>Donation Date</th>
 		<th>Send</th>
-		
       </tr>
     </thead>
     <tbody>
@@ -176,88 +169,29 @@ session_start();
    		<td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['donor_email']);?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"></input>
 	    <button class="btn col"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button></button>
 		</td>
-		<td><?php echo  htmlentities($row['Reference']);?></td>
 		<td><?php echo  htmlentities($row['donor_name']);?></td>
-		<?php 
-		$regCode= $row['donor_region'];
-		 $region="SELECT * From refregion";
-		 $result=mysqli_query($conn,$region);
-		
-		 foreach($result as $row1){
-			if ($regCode== $row1['regCode']){
-				echo "<td>".htmlentities($row1['regDesc'])."</td>
-				";
-			}
-		 }
-		
-		?>
-		<?php 
-		$provCode= $row['donor_province'];
-		 $province="SELECT * From refprovince";
-		 $result=mysqli_query($conn,$province);
-		
-		 foreach($result as $row1){
-			if ($provCode== $row1['provCode']){
-				echo "<td>".htmlentities($row1['provDesc'])."</td>
-				";
-			}
-		 }
-		
-		?>
-		<?php 
-		$citymunCode= $row['donor_municipality'];
-		 $municipality="SELECT * From refcitymun";
-		 $result=mysqli_query($conn,$municipality);
-		
-		 foreach($result as $row1){
-			if ($citymunCode== $row1['citymunCode']){
-				echo "<td>".htmlentities($row1['citymunDesc'])."</td>
-				";
-			}
-		 }
-		
-		?>
-		<?php 
-		$brgyCode= $row['donor_barangay'];
-		 $barangay="SELECT * From refbrgy";
-		 $result=mysqli_query($conn,$barangay);
-		
-		 foreach($result as $row1){
-			if ($brgyCode== $row1['brgyCode']){
-				echo "<td>".htmlentities($row1['brgyDesc'])."</td>
-				";
-			}
-		 }
-		
-		?>
 		<td><?php echo  htmlentities($row['donor_email']) ;?></td>
 		<td><?php echo  htmlentities($row['donor_contact']);?></td>
 		<td><?php echo  htmlentities($row['donationDate']);?></td>
 		<td><button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"
 		data-email="<?php echo htmlentities($row['donor_email']); ?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-action="single">Send</button>
-    </td>
-	
+		</td>
 		</tr>
 		   
 		<?php endforeach; 	?>
 			
     </tbody>
 	<tr>
-		<td colspan="10"></td>
+		<td colspan="5"></td>
 		<td>
      <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
 	</tr>
 	
-  </table>
- 
-  			
+  </table>	
 			</div>
 		</main>
 	
 	</section>
-	
-	
-
 	<script src="scripts/sidemenu.js"></script>
 	<script src="scripts/jQuery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

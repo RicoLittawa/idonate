@@ -129,7 +129,7 @@ session_start();
 						$result= mysqli_query($conn,$sql);
 						foreach($result as $row):				
 						?>
-						<input type="hidden" value="<?php echo $row['imgID']; ?>" id="tempId">
+						<input type="hidden" value="<?php echo $row['id']; ?>" id="tempId">
 						<input type="hidden" value="<?php echo $row['id']; ?>" id="id">
 						<div class="row">
 							<div class="col">
