@@ -123,39 +123,37 @@ $result= mysqli_query($conn,$sql);
 						</li>
 					</ul>
 				</div>
+				<span><button class="btn adddata" type="button" style=" width:200px;height:50px;">Add Users<i class="fa-solid fa-plus"></i></button></span>
+
 			</div>
-			
+			<div class="add-user" id="add-user">
+				
+	
+				</div>
 			<div class="table-data">
 				<div class="add">
 					<div class="head">
 						<h3>Account Details</h3>
-						<div class="dropdown">
-		
-			
-			<div class="add_users">
-				<button class="btn btn-success">Add User</button>
-			</div>
-		</div>
-	</div>
-	<table class="table table-striped table-bordered" style="width:100%" id="table_data">
-    <thead>
-      <tr>
-		<th>Name</th>
-		<th>Email</th>
-		<th>User Type</th>   
-		<th>Status</th> 
-      </tr>
-	</thead>
-		<tbody>
-		<tr>
-			<td>Rico Littawa</td>
-			<td>ricolittawa@gmail.com</td>
-			<td>Admin</td>
-			<td><span class="badge badge-primary">Primary</span></td>
-		</tr>
-				
-		</tbody>
-	</table>
+						</div>
+						<table class="table table-striped table-bordered" style="width:100%" id="table_data">
+						<thead>
+						<tr>
+							<th>Name</th>
+							<th>Email</th>
+							<th>User Type</th>   
+							<th>Status</th> 
+						</tr>
+						</thead>
+							<tbody>
+							<tr>
+								<td>Rico Littawa</td>
+								<td>ricolittawa@gmail.com</td>
+								<td>Admin</td>
+								<td><span class="badge badge-primary">Active</span></td>
+							</tr>
+									
+							</tbody>
+						</table>
 			</div>
 		</main>
 	
@@ -186,6 +184,37 @@ $result= mysqli_query($conn,$sql);
 
 			});
 		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			var count=0;
+			var max= 1;
+			function addUser(count){
+				var html='';
+				html+='<div class="user-add"><div class="user-head"><h3>Create Account</h3></div><form>';
+				html+='<div class="row"><div class="col"><label>Full Name</label>'
+				html+='<input type="text" class="form-control" /></div>';
+				html+='<div class="col"><label>Username</label>'
+				html+='<input type="text" class="form-control" /></div>';
+				
+				
+				html+='</form></div>';
+				return html;
+			}
+			$('.adddata').on('click',function(){
+				count++;
+				console.log(count);
+				if(count>max){
+					
+					return;
+				}else{
+					$('.adddata').remove();
+					$('#add-user').append(addUser(0))
+				}
+				
+
+			})
+		})
 	</script>
 
 

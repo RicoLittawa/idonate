@@ -144,6 +144,7 @@ $result= mysqli_query($conn,$sql);
 					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
     <thead>
       <tr>
+		<th>Action</th>
 		<th>Donor Name</th>
 		<th>Email</th>
 		<th>Contact</th>
@@ -168,13 +169,14 @@ $result= mysqli_query($conn,$sql);
 				
 				?>
 		<tr>
+			<td><button type="button" class="btn deleteBtn" id="<?php echo $count; ?>" value="<?php echo htmlentities($reference_id); ?>"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
 			<td><?php echo htmlentities($rd_name) ?></td>
 			<td><?php echo htmlentities($rd_email) ?></td>
 			<td><?php echo htmlentities($rd_contact) ?></td>
 			<td><?php echo htmlentities($rd_date) ?></td>
 			<td><button class="btn btnCert" value="<?php echo htmlentities($rd_id) ?>"><?php echo htmlentities($rd_certificate) ?></button>
 			</td>
-			<td><span class="badge badge-success">Recieved</span><button type="button" class="btn deleteBtn" id="<?php echo $count; ?>" value="<?php echo htmlentities($reference_id); ?>"><i style="color: red;" class="fa-sharp fa-solid fa-trash"></i></button></td>
+			<td><span class="badge badge-success">Recieved</span></td>
 		
 		</tr>
 	<?php endforeach; ?>

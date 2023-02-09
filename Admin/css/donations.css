@@ -433,6 +433,34 @@ body {
 	flex-grow: 1;
 	flex-basis: 500px;
 }
+/*Add user */
+#content main .add-user > div {
+	border-radius: 20px;
+	background: var(--light);
+	padding: 24px;
+	overflow-x: auto;
+}
+#content main .add-user .user-head {
+	display: flex;
+	align-items: center;
+	grid-gap: 16px;
+	margin-bottom: 24px;
+}
+#content main .add-user .user-head h3 {
+	margin-right: auto;
+	font-size: 40px;
+	font-weight: 600;
+}
+#content main .add-user .user-head .bx {
+	cursor: pointer;
+}
+
+#content main .add-user .user-add {
+	flex-grow: 1;
+	flex-basis: 500px;
+}
+
+
 .form-group label{
 	font-family: 'IBM Plex Sans', sans-serif;
 	font-weight: 800;
