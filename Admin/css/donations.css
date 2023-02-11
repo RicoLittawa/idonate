@@ -38,7 +38,7 @@ body.dark {
 }
 
 body {
-	background: var(--grey);
+	background: var(--light);
 	overflow-x: hidden;
 }
 
@@ -241,7 +241,7 @@ body {
 	padding: 0 16px;
 	height: 100%;
 	border: none;
-	background: var(--grey);
+	background: var(--light);
 	border-radius: 36px 0 0 36px;
 	outline: none;
 	width: 100%;
@@ -342,6 +342,9 @@ body {
 
 
 /* MAIN */
+main{
+	background: var(--grey);
+}
 #content main {
 	width: 100%;
 	padding: 36px 24px;
@@ -383,7 +386,6 @@ body {
 	height: 36px;
 	padding: 0 16px;
 	border-radius: 36px;
-	background: #83f28f;
 	color: var(--light);
 	display: flex;
 	justify-content: center;
