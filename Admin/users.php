@@ -123,39 +123,53 @@ $result= mysqli_query($conn,$sql);
 						</li>
 					</ul>
 				</div>
-				<span><button class="btn adddata" type="button" style=" width:200px;height:50px;">Add Users<i class="fa-solid fa-plus"></i></button></span>
+				<span><button class="btn adddata" id="toggleFormBtn" type="button" style=" width:200px;height:50px;"><i class="fas fa-add"></i>Show Form</button></span>
 
 			</div>
 			<div class="add-user" id="add-user">
-				
-	
 				</div>
 			<div class="table-data">
 				<div class="add">
 					<div class="head">
 						<h3>Account Details</h3>
 						</div>
-						<table class="table table-striped table-bordered" style="width:100%" id="table_data">
-						<thead>
-						<tr>
-							<th>Name</th>
-							<th>Email</th>
-							<th>User Type</th>   
-							<th>Status</th> 
-						</tr>
-						</thead>
-							<tbody>
-							<tr>
-								<td>Rico Littawa</td>
-								<td>ricolittawa@gmail.com</td>
-								<td>Admin</td>
-								<td><span class="badge badge-primary">Active</span></td>
-							</tr>
-									
-							</tbody>
-						</table>
+						
+						<div id="registerForm" style="display: none;">
+      <form>
+		<div class="form-group">
+		<input class="form-control" type="text" placeholder="Name"><br><br>
+		</div>
+        <input class="form-control" type="email" placeholder="Email"><br><br>
+        <input class="form-control" type="password" placeholder="Password"><br><br>
+        <input class="btn btn-success" type="submit" value="Submit">
+		
+        
+      </form>
+    </div>
+    <br><br>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Password</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John Doe</td>
+          <td>johndoe@example.com</td>
+          <td>12345</td>
+        </tr>
+        <tr>
+          <td>Jane Doe</td>
+          <td>janedoe@example.com</td>
+          <td>67890</td>
+        </tr>
+      </tbody>
+    </table>
 			</div>
-		</main>
+		
 	
 	</section>
 	
@@ -185,40 +199,20 @@ $result= mysqli_query($conn,$sql);
 			});
 		});
 	</script>
-	<script>
-		$(document).ready(function(){
-			var count=0;
-			var max= 1;
-			function addUser(count){
-				var html='';
-				html+='<div class="user-add"><div class="user-head"><h3>Create Account</h3></div><form>';
-				html+='<div class="row"><div class="col"><label>Full Name</label>'
-				html+='<input type="text" class="form-control" /></div>';
-				html+='<div class="col"><label>Username</label>'
-				html+='<input type="text" class="form-control" /></div>';
-				
-				
-				html+='</form></div>';
-				return html;
-			}
-			$('.adddata').on('click',function(){
-				count++;
-				console.log(count);
-				if(count>max){
-					
-					return;
-				}else{
-					$('.adddata').remove();
-					$('#add-user').append(addUser(0))
-				}
-				
-
-			})
-		})
-	</script>
 
 
-	
+<script>
+        $(document).ready(function(){
+        $("#toggleFormBtn").click(function(){
+          $("#registerForm").toggle();
+          if ($(this).html() == '<i class="fas fa-minus"></i> Hide Form') {
+            $(this).html('<i class="fas fa-plus"></i> Show Form');
+          } else {
+            $(this).html('<i class="fas fa-minus"></i> Hide Form');
+          }
+        });
+      });
+    </script>
 
 </body>
 </html>

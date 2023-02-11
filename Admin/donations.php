@@ -129,7 +129,7 @@ session_start();
 				   
 			</div>
 
-<div class="table-data">
+			<div class="table-data">
 				<div class="add">
 					<div class="head">
 						<h3>Donor Information</h3>
