@@ -42,10 +42,6 @@ body {
 	overflow-x: hidden;
 }
 
-
-
-
-
 /* SIDEBAR */
 #sidebar {
 	position: fixed;
@@ -340,8 +336,6 @@ body {
 /* Floating labels*/
 
 
-
-
 /* MAIN */
 main{
 	background: var(--grey);
@@ -388,6 +382,7 @@ main{
 	padding: 0 16px;
 	border-radius: 36px;
 	color: var(--light);
+	background-color: #83f28f;
 	display: flex;
 	justify-content: center;
 	align-items: center;
