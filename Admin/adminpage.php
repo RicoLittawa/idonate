@@ -1,6 +1,13 @@
 <?php
 session_start();
 
+	?>
+<?php 
+require_once 'include/connection.php';
+$sql = "SELECT * from donor_record";
+$result= mysqli_query($conn,$sql);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,157 +15,279 @@ session_start();
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-	<!-- Boxicons -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-	<!-- My CSS -->
-	<link rel="stylesheet" href="css/landing.css">
-	
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+	<link rel="stylesheet" href="css/mdb.min.css">
+	<link rel="stylesheet" href="css/style.css">
+
 	<title>Dashboard</title>
 </head>
 <body>
+	<!-- SIDEBAR -->	
+	<section class="bg-success" id="sidebar">
+  <a href="#" class="brand d-flex align-items-center justify-content-between">
+    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle mx-auto" style="width: 90px; height: 90px;margin-top:6rem;border:solid 5px #fff;">
 
+  </a>
 
-	<!-- SIDEBAR -->
-	<section id="sidebar">
-		<a href="#" class="brand">
-			
-			<span ><img class="img" src="img/logo.png" alt=""></span>
+  <nav class="side-menu">
+	  <h6 class="ps-5 mb-3 text-light custom-title">Main Menu</h6>
+    <ul class="nav">
+      <li class="nav-item">
+        <a href="adminpage.php" class="nav-link active">
+          <i class='bx bxs-dashboard active'></i>
+          <span class="text">Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="donations.php" class="nav-link">
+          <i class='bx bxs-box'></i>
+          <span class="text">Donations</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="request.php" class="nav-link">
+          <i class='bx bxs-envelope'></i>
+          <span class="text">Requests</span>
+        </a>
+      </li>
+		<li class="nav-item">
+			<a href="#" class="nav-link">
+			<i class='bx bxs-file-archive'></i>
+			<span class="text">Records</span>
 		</a>
-		<ul class="side-menu top">
-			<li  class="active">
-				<a href="adminpage.php">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Dashboard</span>
-				</a>
-			</li>
-			<li>
-				<a href="donations.php">
-					<i class='bx bxs-box' ></i>
-					<span class="text">Donations</span>
-				</a>
-			</li>
-			<li>
-				<a href="request.php">
-					<i class='bx bxs-envelope' ></i>
-					<span class="text">Requests</span>
-				</a>
-			</li>
-			<li>
-				<a href="archive.php">
-				<i class='bx bxs-file-archive'></i>
-					<span class="text">Records</span>
-				</a>
-			</li>
-			<li>
-				<a href="categorytables.php">
-					<i class='bx bxs-package'></i>
-					<span class="text">Stocks</span>
-				</a>
-			</li>
-			<li>
-				<a href="">
-					<i class='bx bxs-user-plus'></i>
-					<span class="text">Users</span>
-				</a>
-			</li>
-		</ul>
-		<ul class="side-menu">
-			<li>
-				<a class="settings"  href="settings.php">
-					<i class='bx bxs-cog' ></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
-			<li>
-				<a href="include/logout.php" class="logout">
-					<i class='bx bxs-log-out-circle' ></i>
-					<span class="text">Logout</span>
-				</a>
-			</li>
-		</ul>
+		</li>
+      <li class="nav-item">
+        <a href="categorytables.php" class="nav-link">
+          <i class='bx bxs-package'></i>
+          <span class="text">Stocks</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="" class="nav-link">
+          <i class='bx bxs-user-plus'></i>
+          <span class="text">Users</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+ 
+</section>
+<!-- SIDEBAR -->
+
+
+<section>
+	<div class="mb-4 custom-breadcrumb">
+	<h1 class="fs-1 breadcrumb-title">Dashboard</h1>
+	<nav class="bc-nav d-flex">
+		<h6 class="mb-0">
+		<a href="" class="text-reset bc-path">Home</a>
+		<span>/</span>
+		<a href="" class="text-reset bc-path active">Dashboard</a>
+		</h6>  
+	</nav>
+	<!-- Breadcrumb -->
+	</div>
+
+	<!--Main content -->
+	<div class="custom-container d-flex align-items-center justify-content-between">
+
+	<div class="row">
+  <div class="col-md-3">
+  <div class="card">
+	<div class="card-header  bg-gradient bg-success"></div>
+      <div class="card-body">
+        <div class="row">
+			<div class="col">
+				<h4 class="ms-3 pt-3 text-dark"><i class="fas fa-users"></i></h4>
+			</div>
+			<div class="col">
+				<h1 class="pt-2 me-5 text-dark">50</h1>
+			</div>
+			<h5 class="ms-5 ps-4 text-dark">Donors</h5>
+		</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+  <div class="card">
+	<div class="card-header  bg-gradient bg-success"></div>
+      <div class="card-body">
+        <div class="row">
+			<div class="col">
+				<h4 class="ms-3 pt-3 text-dark"><i class="fas fa-users"></i></h4>
+			</div>
+			<div class="col">
+				<h1 class="pt-2 me-5 text-dark">50</h1>
+			</div>
+			<h5 class="ms-5 ps-4 text-dark">Donors</h5>
+		</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+  <div class="card">
+	<div class="card-header  bg-gradient bg-success"></div>
+      <div class="card-body">
+        <div class="row">
+			<div class="col">
+				<h4 class="ms-3 pt-3 text-dark"><i class="fas fa-users"></i></h4>
+			</div>
+			<div class="col">
+				<h1 class="pt-2 me-5 text-dark">50</h1>
+			</div>
+			<h5 class="ms-5 ps-4 text-dark">Donors</h5>
+		</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+  <div class="card">
+	<div class="card-header  bg-gradient bg-success"></div>
+      <div class="card-body">
+        <div class="row">
+			<div class="col">
+				<h4 class="ms-3 pt-3 text-dark"><i class="fas fa-users"></i></h4>
+			</div>
+			<div class="col">
+				<h1 class="pt-2 me-5 text-dark">50</h1>
+			</div>
+			<h5 class="ms-5 ps-4 text-dark">Donors</h5>
+		</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 pt-4">
+  <div class="card my-fixed-height">
+      <div class="card-body">
+      <canvas id="myChart" style="width:50rem;height:500px;"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 pt-4">
+  <div class="card my-fixed-height">
+      <div class="card-body">
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+	<tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+	</div>
+	
 	</section>
-	<!-- SIDEBAR -->
-
-
-
-	<!-- CONTENT -->
-	<section id="content">
-		<!-- NAVBAR -->
-		<nav>
-			<i style="font-size:40px;" class='bx bx-menu' ></i>
-			<form action="#">
-			</form>
-			<a href="#" class="notification">
-				<i class='bx bxs-bell' ></i>
-				<span class="num">8</span>
-			</a>Good Day
-			<a href="#" class="profile"><span> <?php echo $_SESSION['name']; ?></span></a>
-			
-		</nav>
-		<!-- NAVBAR -->
-
-		<!-- MAIN -->
-		<main>
-			<div class="head-title">
-				<div class="left">
-					<h1>Dashboard</h1>	
-				</div>
-			</div>
-
-			<ul class="box-info">
-				<li>
-				<i class='bx bxs-group' ></i>
-				<span class="text">
-				<?php
-				require 'include/connection.php'; 
-			 $sql="SELECT count('1') from total_donor";
-			 $result=mysqli_query($conn,$sql);
-			 $row=mysqli_fetch_array($result);
-			 echo "<h3 style=font-size:45px>$row[0]</h3>";
-			 ?>
-		
-						<h4 style="color: grey;">Donor</h4>
-					</span>
-				</li>
-				<li>
-					<i class='bx bxs-dollar-circle' ></i>
-
-					<span class="text">
-					<?php
-		
-			 $sql="SELECT sum(amount) from total_funds";
-			 $result=mysqli_query($conn,$sql);
-			 $row=mysqli_fetch_array($result);
-			 echo "<h3 style=font-size:45px>₱ $row[0]</h3>";
-			 mysqli_close($conn); ?>
-		
-					<h4 style="color: grey;">Funds</h4>
-					</span>
-				</li>
-			</ul>
-
-				</div>
-			</div>
-			
-			<div class="table-data">
-
-				<div class="add">
-				<iframe title="idonate" width="970" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMDNjMGUyZWYtMWU2ZS00ODc0LWIxMTQtOWM0ZmRhYjU0MTRmIiwidCI6IjYxMTExODkxLTNkYzgtNDVmZi1hZjcwLWZjMGFmM2NjYjBmOCIsImMiOjEwfQ%3D%3D&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>	
-				</div>
-					
-					
-			</div>
-		</main>
-	
-	</section>
-	
 	
 
-	<script src="scripts/sidemenu.js"></script>
-	<script src="scripts/jQuery.js"></script>
-	
-    
-	
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>	
+	<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+  	<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+	<script type="text/javascript" src="scripts/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
+
+
+	<script>
+	  $(document).ready(function () {
+			$('#table_data').DataTable({
+			"pagingType":"full_numbers",
+			"lengthMenu":[
+			[10,25,50,-1],
+			[10,25,50,"All"]],
+			responsive:true,
+			language:{
+				search:"_INPUT_",
+				searchPlaceholder: "Search Records",
+			}
+
+			});
+		});
+	</script>
+	<script>
+       $(document).ready(function() {
+		$("#toggleFormBtn").click(function() {
+			$("#registerForm").collapse('toggle');
+			if ($(this).html().includes('<i class="fas fa-minus"></i> Hide Form')) {
+				$(this).html('<i class="fas fa-plus"></i> Show Form');
+			} else {
+				$(this).html('<i class="fas fa-minus"></i> Hide Form');
+			}
+			});
+		});
+	</script>
+
+<script>
+	$(document).ready(function(){
+var ctx = $('#myChart').get(0).getContext('2d');
+var myChart = new Chart(ctx, {
+type: 'line',
+data: {
+labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+datasets: [{
+data: [86,114,106,106,107,111,133],
+label: "Total",
+borderColor: "rgb(62,149,205)",
+backgroundColor: "rgb(62,149,205,0.1)",
+}, {
+data: [70,90,44,60,83,90,100],
+label: "Accepted",
+borderColor: "rgb(60,186,159)",
+backgroundColor: "rgb(60,186,159,0.1)",
+}, {
+data: [10,21,60,44,17,21,17],
+label: "Pending",
+borderColor: "rgb(255,165,0)",
+backgroundColor:"rgb(255,165,0,0.1)",
+}, {
+data: [6,3,2,2,7,0,16],
+label: "Rejected",
+borderColor: "rgb(196,88,80)",
+backgroundColor:"rgb(196,88,80,0.1)",
+}
+]
+},
+});
+});
+</script>
+
+
 </body>
 </html>

@@ -74,10 +74,7 @@ $result= mysqli_query($conn,$sql);
       </li>
     </ul>
   </nav>
-  <nav class="side-menu">
-    <ul class="nav">
-    </ul>
-  </nav>
+  
 </section>
 
 
@@ -104,7 +101,7 @@ $result= mysqli_query($conn,$sql);
 
 
 
-  <div class="custom-container">
+  <div class="custom-container d-block align-items-center justify-content-between">
   <div class="card custom-card" >
   <div class="card-body">
  <div class="mt-2">

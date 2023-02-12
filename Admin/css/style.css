@@ -18,11 +18,21 @@
 .custom-container{
   width: auto;
     padding-left: 70px;
+    margin-right: 2.5rem;
+    margin-bottom: 1rem;
 }
-.custom-card{
-    max-width: 96%;
+.my-fixed-height {
+  height: 355px;
+  overflow: auto;
 }
-
+h1{
+  font-family: "Roboto", sans-serif;
+  font-weight:700 ;
+}
+h5{
+  font-family: "Lato", sans-serif;
+  font-weight:400 ;
+}
   
   /*Sidebar */
   #sidebar {
@@ -125,8 +135,6 @@
 .custom-title{
     font-family: "Lato", sans-serif;
 }.breadcrumb-title{
-    font-family: "Roboto", sans-serif;
-    font-weight: 700;
     color: #2D3436;
 }.bc-path{
     font-family: "Lato", sans-serif;
@@ -135,3 +143,5 @@
 .bc-nav a.active {
   color: #3aa3e0 !important;
 }
+
+/*Dashboard cards*/
