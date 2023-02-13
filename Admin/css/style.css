@@ -5,6 +5,7 @@
     padding: 0;
   }
   body{
+    max-height: 100vh;
     margin-left: 220px;
     background: #ebeae8;
     height: auto;
@@ -29,11 +30,20 @@ h1{
   font-family: "Roboto", sans-serif;
   font-weight:700 ;
 }
+.h1-color{
+  color: #2D3436;
+}
 h5{
   font-family: "Lato", sans-serif;
   font-weight:400 ;
 }
-  
+h6{
+  font-family: "Roboto", sans-serif;
+}
+.card-names{
+  color: #a9a9a9;
+  font-size: 14px;
+}
   /*Sidebar */
   #sidebar {
     width: 250px;

@@ -79,7 +79,7 @@ $result= mysqli_query($conn,$sql);
 <!-- SIDEBAR -->
 
 
-<section>
+<section class="container">
 	<div class="mb-4 custom-breadcrumb">
 	<h1 class="fs-1 breadcrumb-title">Dashboard</h1>
 	<nav class="bc-nav d-flex">
@@ -93,115 +93,90 @@ $result= mysqli_query($conn,$sql);
 	</div>
 
 	<!--Main content -->
-	<div class="custom-container d-flex align-items-center justify-content-between">
+	<div class="custom-container container d-flex align-items-center justify-content-between">
 
-	<div class="row">
-  <div class="col-md-3">
+	<div class="row g-3">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-4">
   <div class="card">
 	<div class="card-header  bg-gradient bg-success"></div>
       <div class="card-body">
         <div class="row">
-			<div class="col">
-				<h4 class="ms-3 pt-3 text-dark"><i class="fas fa-users"></i></h4>
-			</div>
-			<div class="col">
-				<h1 class="pt-2 me-5 text-dark">50</h1>
-			</div>
-			<h5 class="ms-5 ps-4 text-dark">Donors</h5>
-		</div>
+        <span><h6 class=" h1-color card-names">DONORS</h6>  </span>
+        <div class="col">
+				  <h1 class="m-md-1 h1-color">50</h1>
+			  </div>
+			  <div class="col">
+          <h4 class="m-md-6 mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-user  fa-2x"></i></h4>
+			    </div>
+		    </div>
       </div>
     </div>
   </div>
-  <div class="col-md-3">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-4">
   <div class="card">
 	<div class="card-header  bg-gradient bg-success"></div>
       <div class="card-body">
         <div class="row">
-			<div class="col">
-				<h4 class="ms-3 pt-3 text-dark"><i class="fas fa-users"></i></h4>
-			</div>
-			<div class="col">
-				<h1 class="pt-2 me-5 text-dark">50</h1>
-			</div>
-			<h5 class="ms-5 ps-4 text-dark">Donors</h5>
-		</div>
+        <span><h6 class=" h1-color card-names">REQUESTS</h6>  </span>
+        <div class="col">
+				  <h1 class="m-md-1 h1-color">50</h1>
+			  </div>
+			  <div class="col">
+          <h4 class="m-md-6 mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-envelope  fa-2x"></i></h4>
+			    </div>
+		    </div>
       </div>
     </div>
   </div>
-  <div class="col-md-3">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-4">
   <div class="card">
 	<div class="card-header  bg-gradient bg-success"></div>
       <div class="card-body">
         <div class="row">
-			<div class="col">
-				<h4 class="ms-3 pt-3 text-dark"><i class="fas fa-users"></i></h4>
-			</div>
-			<div class="col">
-				<h1 class="pt-2 me-5 text-dark">50</h1>
-			</div>
-			<h5 class="ms-5 ps-4 text-dark">Donors</h5>
-		</div>
+        <span><h6 class=" h1-color card-names">GIVEN</h6>  </span>
+        
+        <div class="col">
+       
+				  <h1 class="m-md-1 h1-color">12</h1>
+			  </div>
+			  <div class="col">
+				  <h4 class="m-md-6 mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-gift fa-2x"></i></h4>
+			    </div>
+		    </div>
       </div>
     </div>
   </div>
-  <div class="col-md-3">
-  <div class="card">
-	<div class="card-header  bg-gradient bg-success"></div>
-      <div class="card-body">
-        <div class="row">
-			<div class="col">
-				<h4 class="ms-3 pt-3 text-dark"><i class="fas fa-users"></i></h4>
-			</div>
-			<div class="col">
-				<h1 class="pt-2 me-5 text-dark">50</h1>
-			</div>
-			<h5 class="ms-5 ps-4 text-dark">Donors</h5>
-		</div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6 pt-4">
+  <div class="col-s-12 col-md-12 col-lg-6">
   <div class="card my-fixed-height">
       <div class="card-body">
-      <canvas id="myChart" style="width:50rem;height:500px;"></canvas>
+      <canvas class="" id="myChart"></canvas>
       </div>
     </div>
   </div>
-  <div class="col-md-6 pt-4">
+  <div class="col-s-12 col-md-12 col-lg-6">
   <div class="card my-fixed-height">
       <div class="card-body">
-      <table class="table">
+      <table class="table table-striped table-bordered" style="width:100%" id="table_data">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Category</th>
+      <th scope="col">Total</th>
+      <th scope="col">View</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Can Goods/ Noodles</td>
+      <td>10000</td>
+      <td><a href="">Link</a></td>
     </tr>
     <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Hygine Essentials</td>
+      <td>500</td>
+      <td><a href="">Link</a></td>
     </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-	<tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+ 
+ 
   </tbody>
 </table>
       </div>
@@ -281,6 +256,7 @@ data: [6,3,2,2,7,0,16],
 label: "Rejected",
 borderColor: "rgb(196,88,80)",
 backgroundColor:"rgb(196,88,80,0.1)",
+
 }
 ]
 },
