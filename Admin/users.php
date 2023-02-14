@@ -101,7 +101,7 @@ $result= mysqli_query($conn,$sql);
 
 
 
-  <div class="custom-container d-block align-items-center justify-content-between">
+  <div class="custom-container d-block align-items-center justify-content-between pb-3">
   <div class="card" style="margin-left:12px;" >
   <div class="card-body overflow-auto">
  <div class="mt-2">

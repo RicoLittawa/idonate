@@ -2,13 +2,6 @@
 session_start();
 
 	?>
-<?php 
-require_once 'include/connection.php';
-$sql = "SELECT * from donor_record";
-$result= mysqli_query($conn,$sql);
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,7 +60,7 @@ $result= mysqli_query($conn,$sql);
         </a>
       </li>
       <li class="nav-item">
-        <a href="" class="nav-link">
+        <a href="users.php" class="nav-link">
           <i class='bx bxs-user-plus'></i>
           <span class="text">Users</span>
         </a>
