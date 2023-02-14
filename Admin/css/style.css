@@ -18,9 +18,10 @@
 }
 .custom-container{
   width: auto;
-    padding-left: 70px;
+    margin-left: 3.7rem;
     margin-right: 2.5rem;
     margin-bottom: 1rem;
+
 }
 .my-fixed-height {
   height: 355px;

@@ -102,8 +102,8 @@ $result= mysqli_query($conn,$sql);
 
 
   <div class="custom-container d-block align-items-center justify-content-between">
-  <div class="card custom-card" >
-  <div class="card-body">
+  <div class="card" style="margin-left:12px;" >
+  <div class="card-body overflow-auto">
  <div class="mt-2">
 
  <span><button class="btn btn-success" type="button" style=" width:200px;height:50px;float:right;"
@@ -167,7 +167,7 @@ $result= mysqli_query($conn,$sql);
 
 	<br>
   <br><br>
-	<table  class="table table-striped table-bordered" style="width:100%" id="table_data">
+	<table  class="table table-striped table-bordered" id="table_data">
       <thead>
         <tr>
           <th>Name</th>

@@ -106,7 +106,7 @@ $result= mysqli_query($conn,$sql);
 				  <h1 class="m-md-1 h1-color">50</h1>
 			  </div>
 			  <div class="col">
-          <h4 class="m-md-6 mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-user  fa-2x"></i></h4>
+          <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-user  fa-2x"></i></h4>
 			    </div>
 		    </div>
       </div>
@@ -122,7 +122,7 @@ $result= mysqli_query($conn,$sql);
 				  <h1 class="m-md-1 h1-color">50</h1>
 			  </div>
 			  <div class="col">
-          <h4 class="m-md-6 mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-envelope  fa-2x"></i></h4>
+          <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-envelope  fa-2x"></i></h4>
 			    </div>
 		    </div>
       </div>
@@ -140,7 +140,7 @@ $result= mysqli_query($conn,$sql);
 				  <h1 class="m-md-1 h1-color">12</h1>
 			  </div>
 			  <div class="col">
-				  <h4 class="m-md-6 mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-gift fa-2x"></i></h4>
+				  <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-gift fa-2x"></i></h4>
 			    </div>
 		    </div>
       </div>
