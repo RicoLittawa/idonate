@@ -133,7 +133,15 @@ h6{
   #sidebar .side-menu ul.nav li.nav-item:last-child {
     margin-bottom: 0;
   }
-  
+  label{
+    font-family: "Roboto", sans-serif;
+    font-size:12px;
+  }
+
+  select option{
+    font-family: "Roboto", sans-serif;
+    font-size:14px;
+  }
  /*Sidebar */
 
 

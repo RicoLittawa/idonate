@@ -135,68 +135,121 @@ session_start();
 
 
   <!--Place table here --->
-  <form id="add-form">
-  <?php 
-    $referenceId = "";
-    $sql = "SELECT * FROM donation_items_picking";
-    $result = mysqli_query($conn,$sql);
-    foreach($result as $row){
-      $referenceId = $row['reference_id'];
-    }
-  ?>
-  <input type="hidden" id="reference_id" value="<?php echo htmlentities($referenceId); ?>" readonly>
 
-  <div class="form-group">
-    <label for="fname">Full Name</label>
-    <input class="form-control" type="text" name="fname" id="fname" />
-  </div>
-  
-  <div class="form-group">
-    <label for="region">Select Region</label>
-    <select class="form-control" name="region" id="region">
-      <option value="-Select-">-Select Region-</option>
-      <?php echo fill_region_select_box($conn); ?>
-    </select>
-  </div>
 
-  <div class="form-group">
-    <label for="province">Province</label>
-    <select class="form-control" name="province" id="province"></select>
-  </div>
-  
-  <div class="form-group">
-    <label for="municipality">Municipality</label>
-    <select class="form-control" name="municipality" id="municipality"></select>
-  </div>
-  
-  <div class="form-group">
-    <label for="barangay">Barangay</label>
-    <select class="form-control" name="barangay" id="barangay"></select>
-  </div>
-
-  <div class="form-group">
-    <label for="donor_contact"> Contact</label>
-    <input class="form-control" type="text" id="contact" name="contact" />
-  </div>
-
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input class="form-control" type="text" name="email" id="email" />
-  </div>
-
-  <div class="form-group">
-    <label for="donation_date">Donation Date</label>
-    <input class="form-control" type="date" name="donation_date" id="donation_date" />
-  </div>
-			
-            <div class="row">
-				<div class="col">
-					<div class="form-group">
-					<label class="form-group titleColumn" style="font-weight: bold;">Donation Types & Quantity</label>
-						<!-- <button style="float: right;" type="button" name="addVar" class="btn" id="addVar"><i style="color: green;font-size:40px;" class="fa-sharp fa-solid fa-plus"></i> 
-								</button> -->
+	<div class="form-container mt-5 ms-5">
+		<div class="personal">
+			<h6 style="width: 50px;
+			height: 50px;
+			border-radius: 25px;
+			border: 2px solid #BEBEBE;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			float: left;
+			margin-right: 10px;">
+			<span style="font-size: 20px;">1</span>
+ 		 </h6>
+  		<div class="mt-3 ps-3" style="display: inline-block; color:#4d5157;">
+    		<h6 style="font-size:20px;"><span>Personal Details</span></h6>
+  		</div>
+	</div>
+	<form id="add-form" class="p-3 ms-4 me-3">
+		<?php 
+			$referenceId = "";
+			$sql = "SELECT * FROM donation_items_picking";
+			$result = mysqli_query($conn,$sql);
+			foreach($result as $row){
+			$referenceId = $row['reference_id'];
+			}
+		?>
+  	<input type="hidden"  id="reference_id" value="<?php echo htmlentities($referenceId); ?>" readonly>
+	<div class="row">
+			<div class="col">
+				<div class="form-group  mt-3">
+					<div class="form-outline">
+						<input class="form-control border-success" type="text" name="fname" id="fname">
+						<label class="form-label" for="fname">Full Name</label>
 					</div>
-					<div class="form-group cn">
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group mt-3">
+					<div class="form-outline">
+						<input class="form-control" type="text" name="email" id="email">
+						<label class="form-label" for="email">Email</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="form-group  mt-3">
+					<label for="region">Select Region</label>
+						<select class="form-control" name="region" id="region">
+						<option value="-Select-">-Select-</option>
+						<?php echo fill_region_select_box($conn); ?>
+					</select>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group  mt-3">
+					<label for="province">Province</label>
+						<select class="form-control" name="province" id="province">
+					</select>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group  mt-3">
+					<label for="municipality">Municipality</label>
+						<select class="form-control" name="municipality" id="municipality">
+					</select>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group  mt-3">
+					<label for="barangay">Barangay</label>
+						<select class="form-control" name="barangay" id="barangay">
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="form-group mt-4">
+					<div class="form-outline">
+						<input class="form-control" type="text" id="contact" name="contact">
+						<label class="form-label" for="contact">Contact</label>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="donation_date">Donation Date</label>
+					<input class="form-control" type="date" name="donation">
+				</div>
+			</div>
+		</div>
+		<div class="personal pt-5" style="position:relative; right:34px;">
+			<h6 style="width: 50px;
+			height: 50px;
+			border-radius: 25px;
+			border: 2px solid #BEBEBE;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			float: left;
+			margin-right: 10px;">
+			<span style="font-size: 20px;">2</span>
+ 		 </h6>
+  		<div class="mt-3 ps-3" style="display: inline-block; color:#4d5157;">
+    		<h6 style="font-size:20px;"><span>Donation Type and Category</span></h6>
+  		</div>
+	</div>
+</div>
+<div class="row pe-4 ps-5 ms-4">
+	<div class="col">
+	<div class="form-group cn mt-3">
 						<div class="form-check form-check-inline">
 							<input class="form-check-input selectCateg" name="selector[]"type="checkbox" id="box1" value="cannoodles">
 							<label class="form-check-label" for="">Can Goods & Noodles</label>
@@ -293,14 +346,14 @@ session_start();
 						<tbody class="mgBody" id="mgBody"><tr>
 						<td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>
 						<td><select class="form-control typeMG" name="typeMG" id="typeMG">
-							<option value="">Choose</option>
+							<option value="">--</option>
 							<option value="Frozen">Frozen</option>
 							<option value="Fresh">Fresh</option>
 							<option value="None">None</option>
 						</select></td>
 						<td><input type="number" class="form-control qMG" id="qMG"></td>
 						<td><select class="form-control unitMG" name="unitMG" id="unitMG">
-							<option value="">Choose</option>
+							<option value="">--</option>
 							<option value="Kilograms">Kilograms</option>
 							<option value="Grams">Grams</option>
 						</select></td>
@@ -326,7 +379,7 @@ session_start();
 						<tbody class="meBody" id="meBody"><tr>
 						<td><input type="text" class="form-control name_items pnME" id="pnME"></td>
 						<td><select class="form-control typeME" name="typeME" id="typeME">
-							<option value="">Choose</option>
+							<option value="">--</option>
 							<option value="Tablet">Tablet</option>
 							<option value="Capsule">Capsule</option>
 							<option value="Liquid">Liquid</option>
@@ -334,7 +387,7 @@ session_start();
 						</select></td>
 						<td><input type="number" class="form-control qME" id="qME"></td>
 						<td><select class="form-control unitME" name="unitME" id="unitME">
-							<option value="">Choose</option>
+							<option value="">--</option>
 							<option value="Milligrams">Milligrams</option>
 							<option value="Grams">Grams</option>
 							<option value="Micrograms">Micrograms</option>
@@ -370,18 +423,17 @@ session_start();
 					</table>
 					</div>
 				</div>
-				</div>
 			</div>
-          </form>
-			</div>
-  </div>
-  </div>
-  
-</div>
- 
-
-		
-	</section>
+			<button type="submit" style="float:right; height:50px;width:100px;" class="btn btn-success waves-effect waves-light" id="saveD">Save</button>
+		</form>
+	</div>
+<!--End of form-->
+		</div>
+	</div>
+	<!--End of card-->
+	</div>
+	<!--End of container-->
+</section>
 	
 
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
@@ -450,14 +502,14 @@ session_start();
 				var appendMG='';
 				appendMG += '<tr><td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>'+
 				'<td><select class="form-control typeMG" name="typeMG" id="typeMG">'+
-							'<option value="">Choose</option>'+
+							'<option value="">--</option>'+
 							'<option value="Frozen">Frozen</option>'+
 							'<option value="Fresh">Fresh</option>'+
 							'<option value="None">None</option>'+
 						'</select></td>'+
 						'<td><input type="number" class="form-control qMG" id="qMG"></td>'+
 						'<td><select class="form-control unitMG" name="unitMG" id="unitMG">'+
-							'<option value="">Choose</option>'+
+							'<option value="">--</option>'+
 							'<option value="Kilograms">Kilograms</option>'+
 							'<option value="Grams">Grams</option>'+
 						'</select></td>';
@@ -474,7 +526,7 @@ session_start();
 				var appendME='';
 				appendME += '<tr><td><input type="text" class="form-control name_items pnME" id="pnME"></td>'+
 				'<td><select class="form-control typeME" name="typeME" id="typeME">'+
-							'<option value="">Choose</option>'+
+							'<option value="">--</option>'+
 							'<option value="Tablet">Tablet</option>'+
 							'<option value="Capsule">Capsule</option>'+
 							'<option value="Liquid">Liquid</option>'+
@@ -482,7 +534,7 @@ session_start();
 						'</select></td>'+
 						'<td><input type="number" class="form-control qME" id="qME"></td>'+
 						'<td><select class="form-control unitME" name="unitME" id="unitME">'+
-							'<option value="">Choose</option>'+
+							'<option value="">--</option>'+
 							'<option value="Milligrams">Milligrams</option>'+
 							'<option value="Grams">Grams</option>'+
 							'<option value="Micrograms">Micrograms</option>'+
@@ -568,8 +620,6 @@ session_start();
 			$(this).closest('tr').remove();
 				});	
 				
-			var saveBtn= '<button type="submit" style="float:right; height:50px;width:100px;" class="btn btn-success waves-effect waves-light" id="saveD">Save</button>';
-			$('#add-form').append(saveBtn);
 			$(document).on('click','#saveD',function(e){
 				e.preventDefault();
 
