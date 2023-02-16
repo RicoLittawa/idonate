@@ -1,14 +1,11 @@
 <?php
-session_start();
-?>
+session_start(); ?>
  <?php
-	  require_once "include/connection.php";
-	    
-    $sql = "SELECT * FROM donation_items ORDER BY donor_id DESC";
-    $result = mysqli_query($conn,$sql);
-	
-  
-	?>
+ require_once "include/connection.php";
+
+ $sql = "SELECT * FROM donation_items ORDER BY donor_id DESC";
+ $result = mysqli_query($conn, $sql);
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,26 +130,38 @@ session_start();
 			</thead>
 			<tbody>
 			 <?php
-				$count=0;
-				   foreach($result as $row)
-				   :?>
-					<?php  $count = $count + 1  ?>
+    $count = 0;
+    foreach ($result as $row): ?>
+					<?php $count = $count + 1; ?>
 					<tr>
-				   <td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities($row['donor_email']);?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"></input>
-				<button class="btn-outline-secondary"><a href="updatedonate.php?editdonate=<?php echo $row['donor_id']; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></button>
+				   <td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities(
+         $row["donor_email"]
+       ); ?>" data-name="<?php echo htmlentities(
+  $row["donor_name"]
+); ?>" data-id="<?php echo htmlentities($row["donor_id"]); ?>"></input>
+				<a href="updatedonatev2.php?editdonate=<?php echo $row[
+      "donor_id"
+    ]; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a>
 				</td>
-				<td><?php echo  htmlentities($row['Reference']);?></td>
-				<td><?php echo  htmlentities($row['donor_name']);?></td>
-				<td><?php echo  htmlentities($row['donor_email']) ;?></td>
-				<td><?php echo  htmlentities($row['donor_contact']);?></td>
-				<td><?php echo  htmlentities($row['donationDate']);?></td>
-				<td><button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row['donor_id']); ?>"
-				data-email="<?php echo htmlentities($row['donor_email']); ?>" data-name="<?php echo htmlentities($row['donor_name']); ?>" data-action="single">Send</button>
+				<td><?php echo htmlentities($row["Reference"]); ?></td>
+				<td><?php echo htmlentities($row["donor_name"]); ?></td>
+				<td><?php echo htmlentities($row["donor_email"]); ?></td>
+				<td><?php echo htmlentities($row["donor_contact"]); ?></td>
+				<td><?php echo htmlentities($row["donationDate"]); ?></td>
+				<td><button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities(
+  $row["donor_id"]
+); ?>"
+				data-email="<?php echo htmlentities(
+      $row["donor_email"]
+    ); ?>" data-name="<?php echo htmlentities(
+  $row["donor_name"]
+); ?>" data-action="single">Send</button>
 			</td>
 			
 				</tr>
 				   
-				<?php endforeach; 	?>
+				<?php endforeach;
+    ?>
 					
 			</tbody>
 			<tr>
@@ -278,10 +287,5 @@ $(document).ready(function(){
 
 });
 </script>
-
-
-
-
-
 </body>
 </html>
