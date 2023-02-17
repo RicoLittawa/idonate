@@ -81,29 +81,23 @@ function fill_region_select_box($conn)
 				<li class="nav-item">
 					<a href="donations.php" class="nav-link active">
 						<i class='bx bxs-box active'></i>
-						<span class="text">Donations</span>
+						<span class="text">Donors</span>
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="request.php" class="nav-link">
+					<a href="#" class="nav-link">
 						<i class='bx bxs-envelope'></i>
 						<span class="text">Requests</span>
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="#" class="nav-link">
-						<i class='bx bxs-file-archive'></i>
-						<span class="text">Records</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="categorytables.php" class="nav-link">
 						<i class='bx bxs-package'></i>
 						<span class="text">Stocks</span>
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="" class="nav-link ">
+					<a href="users.php" class="nav-link ">
 						<i class='bx bxs-user-plus '></i>
 						<span class="text">Users</span>
 					</a>
@@ -126,7 +120,7 @@ function fill_region_select_box($conn)
 				<h6 class="mb-0">
 					<a href="" class="text-reset bc-path">Home</a>
 					<span>/</span>
-					<a href="" class="text-reset bc-path active">Add Donations</a>
+					<a href="donations.php" class="text-reset bc-path active">Donors Information</a>
 				</h6>
 			</nav>
 			<!-- Breadcrumb -->
@@ -953,14 +947,11 @@ function fill_region_select_box($conn)
 					Swal.fire('Warning', 'Field is empty', 'warning');
 					return false;
 				} else {
-					console.log('saved');
-					console.log(data);
 					$.ajax({
 						url: 'include/add.inc.php',
 						method: 'POST',
 						data: data,
 						success: function(data) {
-							alert('save');
 							Swal.fire({
 								title: 'Success',
 								text: "Successfully Added",

@@ -3,7 +3,7 @@ session_start(); ?>
  <?php
  require_once "include/connection.php";
 
- $sql = "SELECT * FROM donation_items ORDER BY donor_id ASC";
+ $sql = "SELECT * FROM donation_items ORDER BY donor_id DESC";
  $result = mysqli_query($conn, $sql);
  ?>
 <!DOCTYPE html>
@@ -42,23 +42,17 @@ session_start(); ?>
       <li class="nav-item">
         <a href="donations.php" class="nav-link active">
           <i class='bx bxs-box active'></i>
-          <span class="text">Donations</span>
+          <span class="text">Donors</span>
         </a>
       </li>
       <li class="nav-item">
-        <a href="request.php" class="nav-link">
+        <a href="#" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
       </li>
-		<li class="nav-item">
-			<a href="#" class="nav-link">
-			<i class='bx bxs-file-archive'></i>
-			<span class="text">Records</span>
-		</a>
-		</li>
       <li class="nav-item">
-        <a href="categorytables.php" class="nav-link">
+        <a href="#" class="nav-link">
           <i class='bx bxs-package'></i>
           <span class="text">Stocks</span>
         </a>
@@ -82,12 +76,12 @@ session_start(); ?>
 
 	
 <div class="mb-4 custom-breadcrumb">
-  <h1 class="fs-1 breadcrumb-title">Donors</h1>
+  <h1 class="fs-1 breadcrumb-title">Donors Information</h1>
   <nav class="bc-nav d-flex">
     <h6 class="mb-0">
       <a href="" class="text-reset bc-path">Home</a>
       <span>/</span>
-      <a href="" class="text-reset bc-path active">Donors</a>
+      <a href="adminpage.php" class="text-reset bc-path active">Dashboard</a>
     </h6>  
   </nav>
   <!-- Breadcrumb -->
@@ -98,7 +92,7 @@ session_start(); ?>
 
 
 
-  <div class="custom-container d-block align-items-center justify-content-between">
+  <div class="custom-container d-block align-items-center justify-content-between pb-3">
   <div class="card" style="margin-left:12px;" >
   <div class="card-body overflow-auto">
  <div class="mt-2">
@@ -140,11 +134,11 @@ session_start(); ?>
            <span><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities(
             $row["donor_email"]); ?>" data-name="<?php echo htmlentities($row["donor_name"]);?>"
             data-id="<?php echo htmlentities($row["donor_id"]); ?>"></input></span> 
-            <span><a href="updatedonatev2.php?editdonate=<?php echo $row["donor_id"]; ?>">
+            <span><a href="updatedonate.php?editdonate=<?php echo $row["donor_id"]; ?>">
             <i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></span>
         <?php } else { ?>
          <span><a href=""><i style="color:red;" class="fa-solid fa-trash"></i></a></span>
-         <span><a href="updatedonatev2.php?editdonate=<?php echo $row[
+         <span><a href="updatedonate.php?editdonate=<?php echo $row[
       "donor_id"]; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></span>
         <?php } ?>
 
@@ -161,7 +155,7 @@ session_start(); ?>
         <button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row["donor_id"]); ?>" data-email="<?php echo htmlentities($row["donor_email"]); ?>" 
         data-name="<?php echo htmlentities($row["donor_name"]); ?>"  data-action="single">Send</button>
       <?php } else { ?>
-        <span class="text-success status_res" id="status_res"><i class="fa-sharp fa-solid fa-envelope-circle-check"></i> Sent</span>
+        <span class="text-success status_res" id="status_res"><i class="fa-sharp fa-solid fa-envelope-circle-check"></i></span>
       <?php } ?>
       </td>
       <td>
@@ -239,6 +233,7 @@ $(document).ready(function(){
         name: $this.data("name"),
         uID: $this.data('id'),
       });
+      $('#bulk_email').attr('disabled',true);
     }
     else
     {
@@ -263,7 +258,7 @@ $(document).ready(function(){
       data:{email_data:email_data},
       beforeSend:function(){
         $this.html('Sending...');
-        $this.addClass('btn-danger');
+        $this.addClass('btn btn-danger');
       },
       success:function(data){
         if(data == 'Inserted') {

@@ -45,23 +45,17 @@ $result= mysqli_query($conn,$sql);
       <li class="nav-item">
         <a href="donations.php" class="nav-link">
           <i class='bx bxs-box'></i>
-          <span class="text">Donations</span>
+          <span class="text">Donors</span>
         </a>
       </li>
       <li class="nav-item">
-        <a href="request.php" class="nav-link">
+        <a href="#" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
       </li>
-		<li class="nav-item">
-			<a href="#" class="nav-link">
-			<i class='bx bxs-file-archive'></i>
-			<span class="text">Records</span>
-		</a>
-		</li>
       <li class="nav-item">
-        <a href="categorytables.php" class="nav-link">
+        <a href="#" class="nav-link">
           <i class='bx bxs-package'></i>
           <span class="text">Stocks</span>
         </a>

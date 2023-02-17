@@ -42,13 +42,13 @@ session_start();
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="request.php" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="categorytables.php" class="nav-link">
           <i class='bx bxs-package'></i>
           <span class="text">Stocks</span>
         </a>
@@ -80,7 +80,7 @@ session_start();
 	</div>
 
 	<!--Main content -->
-	<div class="custom-container container d-flex align-items-center justify-content-between ">
+	<div class="custom-container container d-flex align-items-center justify-content-between">
 
 	<div class="row g-3">
   <div class="col-12 col-sm-12 col-md-12 col-lg-4">
