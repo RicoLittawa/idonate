@@ -27,7 +27,7 @@ $result= mysqli_query($conn,$sql);
 </head>
 <body>
 	<!-- SIDEBAR -->	
-	<section class="bg-success" id="sidebar">
+	<section id="sidebar">
   <a href="#" class="brand d-flex align-items-center justify-content-between">
     <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle mx-auto" style="width: 90px; height: 90px;margin-top:6rem;border:solid 5px #fff;">
 
@@ -64,6 +64,12 @@ $result= mysqli_query($conn,$sql);
         <a href="" class="nav-link active">
           <i class='bx bxs-user-plus active'></i>
           <span class="text">Users</span>
+        </a>
+      </li>
+      <li class="nav-item log-item">
+        <a href="./include/logout.php" class="nav-link log-link">
+        <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="text">Logout</span>
         </a>
       </li>
     </ul>

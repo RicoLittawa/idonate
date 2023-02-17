@@ -102,6 +102,12 @@ function fill_region_select_box($conn)
 						<span class="text">Users</span>
 					</a>
 				</li>
+				<li class="nav-item log-item">
+        			<a href="./include/logout.php" class="nav-link log-link">
+        				<i class="fa-solid fa-right-from-bracket"></i>
+          				<span class="text">Logout</span>
+       				 </a>
+     			 </li>
 			</ul>
 		</nav>
 

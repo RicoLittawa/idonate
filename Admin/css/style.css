@@ -48,6 +48,7 @@ h6{
   /*Sidebar */
   #sidebar {
     width: 250px;
+    background: #20d070;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -133,6 +134,7 @@ h6{
   #sidebar .side-menu ul.nav li.nav-item:last-child {
     margin-bottom: 0;
   }
+
   label{
     font-family: "Roboto", sans-serif;
     font-size:12px;
