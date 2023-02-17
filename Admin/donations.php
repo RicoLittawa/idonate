@@ -3,7 +3,7 @@ session_start(); ?>
  <?php
  require_once "include/connection.php";
 
- $sql = "SELECT * FROM donation_items ORDER BY donor_id DESC";
+ $sql = "SELECT * FROM donation_items ORDER BY donor_id ASC";
  $result = mysqli_query($conn, $sql);
  ?>
 <!DOCTYPE html>
@@ -114,7 +114,7 @@ session_start(); ?>
 	<br>
   <br><br>
   <!--Place table here --->
-	<table class="table table-striped table-bordered" style="width:100%" id="table_data">
+	<table class="table table-striped table-bordered" style="width:100%;" id="table_data">
 			
 			<thead>
 			  <tr>
@@ -126,6 +126,7 @@ session_start(); ?>
 				<th>Contact</th>
 				<th>Donation Date</th>
 				<th>Send</th>
+        <th>Certificate</th>
 			  </tr>
 			</thead>
 			<tbody>
@@ -134,38 +135,50 @@ session_start(); ?>
     foreach ($result as $row): ?>
 					<?php $count = $count + 1; ?>
 					<tr>
-				   <td><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities(
-         $row["donor_email"]
-       ); ?>" data-name="<?php echo htmlentities(
-  $row["donor_name"]
-); ?>" data-id="<?php echo htmlentities($row["donor_id"]); ?>"></input>
-				<a href="updatedonatev2.php?editdonate=<?php echo $row[
-      "donor_id"
-    ]; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a>
+				   <td>
+           <?php if ($row['email_status'] == 'not sent') { ?>
+           <span><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities(
+            $row["donor_email"]); ?>" data-name="<?php echo htmlentities($row["donor_name"]);?>"
+            data-id="<?php echo htmlentities($row["donor_id"]); ?>"></input></span> 
+            <span><a href="updatedonatev2.php?editdonate=<?php echo $row["donor_id"]; ?>">
+            <i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></span>
+        <?php } else { ?>
+         <span><a href=""><i style="color:red;" class="fa-solid fa-trash"></i></a></span>
+         <span><a href="updatedonatev2.php?editdonate=<?php echo $row[
+      "donor_id"]; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></span>
+        <?php } ?>
+
+
+            
 				</td>
 				<td><?php echo htmlentities($row["Reference"]); ?></td>
 				<td><?php echo htmlentities($row["donor_name"]); ?></td>
 				<td><?php echo htmlentities($row["donor_email"]); ?></td>
 				<td><?php echo htmlentities($row["donor_contact"]); ?></td>
 				<td><?php echo htmlentities($row["donationDate"]); ?></td>
-				<td><button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities(
-  $row["donor_id"]
-); ?>"
-				data-email="<?php echo htmlentities(
-      $row["donor_email"]
-    ); ?>" data-name="<?php echo htmlentities(
-  $row["donor_name"]
-); ?>" data-action="single">Send</button>
-			</td>
-			
+        <td>
+      <?php if ($row['email_status'] == 'not sent') { ?>
+        <button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row["donor_id"]); ?>" data-email="<?php echo htmlentities($row["donor_email"]); ?>" 
+        data-name="<?php echo htmlentities($row["donor_name"]); ?>"  data-action="single">Send</button>
+      <?php } else { ?>
+        <span class="text-success status_res" id="status_res"><i class="fa-sharp fa-solid fa-envelope-circle-check"></i> Sent</span>
+      <?php } ?>
+      </td>
+      <td>
+        <?php if ($row['certificate']== 'cert empty') {?>
+          <span><span class="badge badge-danger">Empty</span></span>
+        <?php } else { ?>
+          <button class="btn btn-success btnCert" value="<?php echo htmlentities($row['donor_id']) ?>" style="overflow:hidden;">
+       Print</button>
+          <?php } ?>
+      </td>
 				</tr>
 				   
-				<?php endforeach;
-    ?>
+				<?php endforeach;?>
 					
 			</tbody>
 			<tr>
-				<td colspan="6"></td>
+				<td colspan="7"></td>
 				<td>
 			 <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
 			</tr>
@@ -190,6 +203,7 @@ session_start(); ?>
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
   <script src="scripts/sweetalert2.all.min.js"></script>	
+  <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
   <!--Here is the scripts for functions -->
 
 
@@ -210,82 +224,93 @@ session_start(); ?>
 			});
 		});
 	</script>
-	<script>
+<script>
 $(document).ready(function(){
- $('.email_button').click(function(){
-  $(this).attr('disabled', true);
-  
-  var id = $(this).attr("id");
-  var action = $(this).data("action");
-  var email_data = [];
-  
-  if(action == 'single')
-  {
-   email_data.push({
-    email: $(this).data("email"),
-    name: $(this).data("name"),
-	uID: $(this).data('id')
-   });
-  }
-  else
-  {
-   $('.single_select').each(function(){
-    if($(this). prop("checked") == true)
-    {
-     email_data.push({
-      email: $(this).data("email"),
-      name: $(this).data('name'),
-	  uID: $(this).data('id')
-     });
-
-    return;
-    }
-   
-   });
-  }
-  console.log(email_data);
-   $.ajax({
-    url:"include/sendcerti.php",
-    method:"POST",
-    data:{email_data:email_data},
-    beforeSend:function(){
-     $('#'+id).html('Sending...');
-     $('#'+id).addClass('btn-danger');
-    },
-    success:function(data){
-          if(data = 'Inserted')
-          {
-             $('#'+id).html('<i class="fa-sharp fa-solid fa-envelope-circle-check"></i>');
-             $('#'+id).removeClass('btn-danger');
-             $('#'+id).removeClass('btn-info');
-             $('#'+id).addClass('btn-success');
-
- 	    Swal.fire({
- 	    	icon: 'success',
- 	    	title: 'Sent',
- 	    	text:'Email has been sent',
- 	    	}).then(function() {
- 	    	window.location = "archive.php";
- 	    	});
-          }
-          else
-          {
-           $('#'+id).text(data);
-          }
-          $('.email_button='+id).attr('disabled', false);
+  $('.email_button').click(function(){
+    var $this = $(this);
+    var id = $this.attr("id");
+    var action = $this.data("action");
+    var email_data = [];
     
+    if(action == 'single')
+    {
+      email_data.push({
+        email: $this.data("email"),
+        name: $this.data("name"),
+        uID: $this.data('id'),
+      });
     }
-   
-   });
- });
+    else
+    {
+      var $checkedBoxes = $('.single_select:checked');
+      if ($checkedBoxes.length === 0) {
+        $this.attr('disabled', true);
+        return;
+      }
+      
+      $checkedBoxes.each(function(){
+        email_data.push({
+          email: $(this).data("email"),
+          name: $(this).data('name'),
+          uID: $(this).data('id'),
+        });
+      });
+    }
+  
+    $.ajax({
+      url:"include/sendcerti.php",
+      method:"POST",
+      data:{email_data:email_data},
+      beforeSend:function(){
+        $this.html('Sending...');
+        $this.addClass('btn-danger');
+      },
+      success:function(data){
+        if(data == 'Inserted') {
+          $this.html('sent');
+          Swal.fire({
+            icon: 'success',
+            title: 'Sent',
+            text:'Email has been sent',
+          }).then(function() {
+            location.reload();
+          });
+        } else {
+          $this.text(data);
+        }
+      }
+    });
+  });
 });
+
 </script>
+
   <!--Select all checkbox --->
 <script>
  $("#selectAll").click(function(){
         $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
 
 });
+</script>
+
+
+<!--View cert -->
+<script> 
+	$(document).ready(function(){
+		$('.btnCert').click(function(){
+
+			var valueBtn = $(this);
+			var id =valueBtn.val();
+			  $.ajax({
+			  	url:'include/viewid.php?viewCert='+id,
+			  	type: 'GET',
+			  	success: function(data){
+				 printJS('./include/download-certificate/'+data, 'image')		   		
+			  	}
+			  });
+
+		});
+	});
 </script>
 </body>
 </html>

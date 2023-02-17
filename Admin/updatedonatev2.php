@@ -138,14 +138,14 @@ function fill_category_select_box($conn)
 					<div class="form-container mt-5 ms-5">
 						<div class="personal">
 							<h6 style="width: 50px;
-			height: 50px;
-			border-radius: 25px;
-			border: 2px solid #BEBEBE;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			float: left;
-			margin-right: 10px;">
+							height: 50px;
+							border-radius: 25px;
+							border: 2px solid #BEBEBE;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							float: left;
+							margin-right: 10px;">
 								<span style="font-size: 20px;">1</span>
 							</h6>
 							<div class="mt-3 ps-3" style="display: inline-block; color:#4d5157;">
@@ -154,19 +154,13 @@ function fill_category_select_box($conn)
 						</div>
 						<!-- Start of Form-->
 						<form class="p-3 ms-4 me-3" id="update-form">
-							<input type="hidden" name="donor_id" id="donor_id" value="<?php echo htmlentities(
-         $donorid
-       ); ?>" readonly>
-							<input type="hidden" value="<?php echo htmlentities(
-         $donorreference
-       ); ?>" name="reference_id" id="reference_id" readonly>
+							<input type="hidden" name="donor_id" id="donor_id" value="<?php echo htmlentities($donorid); ?>" readonly>
+							<input type="hidden" value="<?php echo htmlentities($donorreference); ?>" name="reference_id" id="reference_id" readonly>
 							<div class="row">
 								<div class="col">
 									<div class="form-group  mt-3">
 										<div class="form-outline">
-											<input class="form-control" type="text" name="fname" id="fname" value="<?php echo htmlentities(
-             $donorname
-           ); ?>">
+											<input class="form-control" type="text" name="fname" id="fname" value="<?php echo htmlentities($donorname); ?>">
 											<label class="form-label" for="fname">Fullname</label>
 										</div>
 									</div>
@@ -174,7 +168,7 @@ function fill_category_select_box($conn)
 								<div class="col">
 									<div class="form-group mt-3">
 										<div class="form-outline">
-											<input class="form-control" type="text" name="email" id="email" value="<?php echo $donoremail; ?>">
+											<input class="form-control" type="text" name="email" id="email" value="<?php echo htmlentities($donoremail) ; ?>">
 											<label class="form-label" for="email">Email</label>
 										</div>
 									</div>
@@ -187,17 +181,16 @@ function fill_category_select_box($conn)
 										<select class="form-control region" name="region" id="region">
 											<option value="-Select-">-Select-</option>
 											<?php
-           $sql = "SELECT * FROM refregion";
-           $result = mysqli_query($conn, $sql);
-           foreach ($result as $row): ?>
-												<option value="<?php echo htmlentities($row["regCode"]); ?>" <?php if (
-  $donorregion == $row["regCode"]
-) {
-  echo 'selected="selected"';
-} ?>>
-													<?php echo htmlentities($row["regDesc"]); ?></option>
-											<?php endforeach;
-           ?>
+											$sql = "SELECT * FROM refregion";
+											$result = mysqli_query($conn, $sql);
+											foreach ($result as $row): ?>
+											<option value="<?php echo htmlentities($row["regCode"]); ?>" <?php if (
+											$donorregion == $row["regCode"]) 
+											{
+											echo 'selected="selected"';
+											} ?>>
+											<?php echo htmlentities($row["regDesc"]); ?></option>
+											<?php endforeach;?>
 										</select>
 									</div>
 								</div>
@@ -207,22 +200,20 @@ function fill_category_select_box($conn)
 										<select class="form-control province" name="province" id="province">
 											<option value="-Select-">-Select-</option>
 											<?php
-           $province =
-             "SELECT provCode, provDesc FROM refprovince where regCode=?";
-           $stmt = $conn->prepare($province);
-           $stmt->bind_param("s", $donorregion);
-           $stmt->execute();
-           $resultProv = $stmt->get_result();
-           $data = $resultProv->fetch_all(MYSQLI_ASSOC);
-           foreach ($data as $row): ?>
-												<option value="<?php echo htmlentities($row["provCode"]); ?>" <?php if (
-  $donorprovince == $row["provCode"]
-) {
-  echo 'selected="selected"';
-} ?>>
-													<?php echo htmlentities($row["provDesc"]); ?></option>
-											<?php endforeach;
-           ?>
+											$province ="SELECT provCode, provDesc FROM refprovince where regCode=?";
+											$stmt = $conn->prepare($province);
+											$stmt->bind_param("s", $donorregion);
+											$stmt->execute();
+											$resultProv = $stmt->get_result();
+											$data = $resultProv->fetch_all(MYSQLI_ASSOC);
+											foreach ($data as $row): ?>
+											<option value="<?php echo htmlentities($row["provCode"]); ?>" 
+											<?php if ($donorprovince == $row["provCode"])
+											{
+											echo 'selected="selected"';
+											} ?>>
+											<?php echo htmlentities($row["provDesc"]); ?></option>
+											<?php endforeach; ?>
 										</select>
 									</div>
 								</div>
@@ -232,22 +223,21 @@ function fill_category_select_box($conn)
 										<select class="form-control municipality" name="municipality" id="municipality">
 											<option value="-Select-">-Select-</option>
 											<?php
-           $city =
-             "SELECT citymunCode, citymunDesc FROM refcitymun where provCode=?";
-           $stmt = $conn->prepare($city);
-           $stmt->bind_param("s", $donorprovince);
-           $stmt->execute();
-           $resultProv = $stmt->get_result();
-           $data = $resultProv->fetch_all(MYSQLI_ASSOC);
-           foreach ($data as $row): ?>
-												<option value="<?php echo htmlentities($row["citymunCode"]); ?>" <?php if (
-  $donormunicipality == $row["citymunCode"]
-) {
-  echo 'selected="selected"';
-} ?>>
-													<?php echo htmlentities($row["citymunDesc"]); ?></option>
-											<?php endforeach;
-           ?>
+											$city =
+												"SELECT citymunCode, citymunDesc FROM refcitymun where provCode=?";
+											$stmt = $conn->prepare($city);
+											$stmt->bind_param("s", $donorprovince);
+											$stmt->execute();
+											$resultProv = $stmt->get_result();
+											$data = $resultProv->fetch_all(MYSQLI_ASSOC);
+											foreach ($data as $row): ?>
+											<option value="<?php echo htmlentities($row["citymunCode"]); ?>" 
+											<?php if ($donormunicipality == $row["citymunCode"]) 
+											{
+											echo 'selected="selected"';
+											} ?>>
+											<?php echo htmlentities($row["citymunDesc"]); ?></option>
+											<?php endforeach;?>
 										</select>
 									</div>
 								</div>
@@ -257,21 +247,18 @@ function fill_category_select_box($conn)
 										<select class="form-control barangay" name="barangay" id="barangay">
 											<option value="-Select-">-Select-</option>
 											<?php
-           $brgy = "SELECT brgyCode, brgyDesc FROM refbrgy where citymunCode=?";
-           $stmt = $conn->prepare($brgy);
-           $stmt->bind_param("s", $donormunicipality);
-           $stmt->execute();
-           $resultProv = $stmt->get_result();
-           $data = $resultProv->fetch_all(MYSQLI_ASSOC);
-           foreach ($data as $row): ?>
-												<option value="<?php echo htmlentities($row["brgyCode"]); ?>" <?php if (
-  $donorbarangay == $row["brgyCode"]
-) {
-  echo 'selected="selected"';
-} ?>>
-													<?php echo htmlentities($row["brgyDesc"]); ?></option>
-											<?php endforeach;
-           ?>
+											$brgy = "SELECT brgyCode, brgyDesc FROM refbrgy where citymunCode=?";
+											$stmt = $conn->prepare($brgy);
+											$stmt->bind_param("s", $donormunicipality);
+											$stmt->execute();
+											$resultProv = $stmt->get_result();
+											$data = $resultProv->fetch_all(MYSQLI_ASSOC);
+											foreach ($data as $row): ?>
+											<option value="<?php echo htmlentities($row["brgyCode"]); ?>" 
+											<?php if ($donorbarangay == $row["brgyCode"]) 
+											{echo 'selected="selected"';} ?>>
+											<?php echo htmlentities($row["brgyDesc"]); ?></option>
+											<?php endforeach;?>
 										</select>
 									</div>
 								</div>
@@ -280,9 +267,7 @@ function fill_category_select_box($conn)
 								<div class="col">
 									<div class="form-group mt-4">
 										<div class="form-outline">
-											<input class="form-control" type="text" name="contact" id="contact" value="<?php echo htmlentities(
-             $donorcontact
-           ); ?>">
+											<input class="form-control" type="text" name="contact" id="contact" value="<?php echo htmlentities($donorcontact); ?>">
 											<label class="form-label" for="contact">Contact</label>
 										</div>
 									</div>
@@ -312,7 +297,7 @@ function fill_category_select_box($conn)
 									<h6 style="font-size:20px;"><span>Donation Type and Category</span></h6>
 								</div>
 							</div>
-					</div>
+						</div>
 					<div class="row pe-4 ps-5 ms-4">
 						<div class="col">
 							<table class="table table-bordered">
@@ -332,32 +317,68 @@ function fill_category_select_box($conn)
 									SELECT 'Hygine Essentials' AS table_name, productName, quantity FROM categhygineessential WHERE referenceID = ?
 									UNION ALL
 									SELECT 'Infant Items' AS table_name, productName, quantity FROM categinfant WHERE referenceID = ?";
-         $stmt = $conn->prepare($sql);
-         $stmt->bind_param(
-           "iiii",
-           $donorreference,
-           $donorreference,
-           $donorreference,
-           $donorreference
-         );
-         $stmt->execute();
-         $result = $stmt->get_result();
-         while ($row = $result->fetch_assoc()): ?>
-										<tr>
-											<td><?php echo $row["table_name"]; ?></td>
-											<td><?php echo $row["productName"]; ?></td>
-											<td><?php echo $row["quantity"]; ?></td>
-										</tr>
-									<?php endwhile;
-         ?>
+									$stmt = $conn->prepare($sql);
+									$stmt->bind_param(
+									"iiii",
+									$donorreference,
+									$donorreference,
+									$donorreference,
+									$donorreference
+									);
+									$stmt->execute();
+									$result = $stmt->get_result();
+									while ($row = $result->fetch_assoc()): ?>
+									<tr>
+										<td><?php echo $row["table_name"]; ?></td>
+										<td><?php echo $row["productName"]; ?></td>
+										<td><?php echo $row["quantity"]; ?></td>
+									</tr>
+									<?php endwhile; ?>
 								</tbody>
 							</table>
 						</div>
 					</div>
+					<hr class="hr hr-blurry" />
 					<!--2nd table -->
-					<div class="row">
+					<div class="row pe-4 ps-5 ms-4 mt-4">
 						<div class="col">
-							
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Category</th>
+										<th>Product Name</th>
+										<th>Type</th>
+										<th>Quantity</th>
+										<th>Unit</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+        						 $sql = "SELECT 'Can/Noodles' AS table_name, productName, type, quantity, unit FROM categmeatgrains WHERE referenceID = ?
+									UNION ALL
+									SELECT 'Drinking Water' AS table_name, productName, type, quantity, unit FROM categmedicine WHERE referenceID = ?
+									UNION ALL
+									SELECT 'Hygine Essentials' AS table_name, productName, type, quantity, unit FROM categothers WHERE referenceID = ?";
+									$stmt = $conn->prepare($sql);
+									$stmt->bind_param(
+									"iii",
+									$donorreference,
+									$donorreference,
+									$donorreference
+									);
+									$stmt->execute();
+									$result = $stmt->get_result();
+									while ($row = $result->fetch_assoc()): ?>
+									<tr>
+										<td><?php echo $row["table_name"]; ?></td>
+										<td><?php echo $row["productName"]; ?></td>
+										<td><?php echo $row["type"]; ?></td>
+										<td><?php echo $row["quantity"]; ?></td>
+										<td><?php echo $row["unit"]; ?></td>
+									</tr>
+									<?php endwhile; ?>
+								</tbody>
+							</table>
 						</div>
 					</div>
 					<div style="float:right;">

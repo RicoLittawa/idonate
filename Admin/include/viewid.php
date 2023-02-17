@@ -62,17 +62,17 @@ if (isset($_GET['viewNote'])){
 
  //view certificate
  if (isset($_GET['viewCert'])){
-    $request_id= $_GET['viewCert'];
+    $id= $_GET['viewCert'];
     $message='';
-    $sql= "SELECT rD_certificate from donor_record where id=?";
+    $sql= "SELECT certificate from donation_items where donor_id=?";
     $stmt = $conn->prepare($sql); 
-    $stmt->bind_param("i", $request_id);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
  
      if ( $donor = $result->fetch_assoc()){
       
-             echo $donor['rD_certificate'];
+             echo $donor['certificate'];
         
      }else{
          echo 'Data not found';
@@ -206,30 +206,7 @@ if (isset($_GET['viewTemp'])){
     }
 
  }
- //delete money donor
- if (isset($_GET['deleteBtnM'])){
-    $id = $_GET['deleteBtnM'];
-    $selectImg= "SELECT rDM_certificate from donor_recordm where id=?";
-    $stmt=$conn->prepare($selectImg);
-    $stmt->bind_param('s',$id);
-    $stmt->execute();
-    $result= $stmt->get_result();
-    $donor = $result->fetch_assoc();
-    $cert= $donor['rDM_certificate'];
-    $validPath= '../include/money_donor/'.$cert;
-    unlink($validPath);
-    $donorM = "DELETE from donor_recordm where id=?";
-    $stmt= $conn->prepare($donorM);
-    $stmt->bind_param('i',$id);
-    $result= $stmt-> execute();
-    if ($result== true){
-       
-        echo "Data is deleted";
-    }else{
-        echo "Data is not deleted";
-    }
-
- }
+ 
  //delete request
  if (isset($_GET['deleteReq'])){
     $id = $_GET['deleteReq'];

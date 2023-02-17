@@ -229,7 +229,7 @@ function fill_region_select_box($conn)
 								<div class="col">
 									<div class="form-group">
 										<label for="donation_date">Donation Date</label>
-										<input class="form-control" type="date" name="donation">
+										<input class="form-control" id="donation_date" type="date" name="donation">
 									</div>
 								</div>
 							</div>
