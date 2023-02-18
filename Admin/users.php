@@ -50,7 +50,7 @@ session_start();
         </a>
       </li>
       <li class="nav-item">
-        <a href="users.php" class="nav-link active">
+        <a href="#" class="nav-link active">
           <i class='bx bxs-user-plus active' ></i>
           <span class="text">Users</span>
         </a>
@@ -72,11 +72,11 @@ session_start();
   <div class="mb-4 custom-breadcrumb">
   <h1 class="fs-1 breadcrumb-title">Account Details</h1>
   <nav class="bc-nav d-flex">
-    <h6 class="mb-0">
-      <a href="" class="text-reset bc-path">Home</a>
-      <span>/</span>
-      <a href="" class="text-reset bc-path active">Dashboard</a>
-    </h6>  
+  <h6 class="mb-0">
+  <a href="" class="text-reset bc-path">Home</a>
+  <span>/</span>
+  <a href="" class="text-reset bc-path active">Dashboard</a>
+  </h6>  
   </nav>
   <!-- Breadcrumb -->
 </div>
@@ -86,8 +86,8 @@ session_start();
 
 
 
-  <div class="custom-container d-block align-items-center justify-content-between pb-3">
-  <div class="card" style="margin-left:12px;" >
+  <div class="custom-container pb-3">
+  <div class="card">
   <div class="card-body overflow-auto">
  <div class="mt-2">
 
@@ -205,22 +205,6 @@ session_start();
 
 
 
-	<script>
-	  $(document).ready(function () {
-			$('#table_data').DataTable({
-			"pagingType":"full_numbers",
-			"lengthMenu":[
-			[10,25,50,-1],
-			[10,25,50,"All"]],
-			responsive:true,
-			language:{
-				search:"_INPUT_",
-				searchPlaceholder: "Search Records",
-			}
-
-			});
-		});
-	</script>
 	<script>
        $(document).ready(function() {
 		$("#toggleFormBtn").click(function() {

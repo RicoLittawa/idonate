@@ -123,8 +123,8 @@ function fill_category_select_box($conn)
 			<!-- Breadcrumb -->
 		</div>
 
-		<div class="custom-container d-block align-items-center justify-content-between pb-3">
-			<div class="card" style="margin-left:12px;">
+		<div class="custom-container pb-3">
+			<div class="card">
 				<div class="card-body overflow-auto">
 
 
@@ -296,7 +296,7 @@ function fill_category_select_box($conn)
 						</div>
 					<div class="row pe-4 ps-5 ms-4">
 						<div class="col">
-							<table class="table table-bordered">
+							<table class="table table-striped table-bordered" id="table_data">
 								<thead>
 									<tr>
 										<th>Category</th>

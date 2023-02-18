@@ -14,13 +14,13 @@ overflow: hidden;
 }
 .custom-breadcrumb{
 
-    margin-left: 4.50rem;
+    margin-left: 3.50rem;
     margin-right: 3.24rem;
     margin-top: 30px;
     background: #ebeae8;
 }
 .custom-container{
-  width: auto;
+    width: auto;
     margin-left: 3.7rem;
     margin-right: 2.5rem;
     margin-bottom: 1rem;
@@ -366,7 +366,7 @@ h6{
 display: none;
   }
   .main-content{
-    margin-left: 5rem;
+    margin-left: 6rem;
 
   }
 }

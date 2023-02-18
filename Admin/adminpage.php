@@ -29,14 +29,14 @@ session_start();
 	<title>Dashboard</title>
 </head>
 <body>
-  <div class="main-container">
+<div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
     <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
   <nav class="side-menu">
     <ul class="nav">
       <li class="nav-item">
-        <a href="adminpage.php" class="nav-link active">
+        <a href="#" class="nav-link active">
           <i class='bx bxs-dashboard active'></i>
           <span class="text">Dashboard</span>
         </a>
@@ -61,7 +61,7 @@ session_start();
       </li>
       <li class="nav-item">
         <a href="users.php" class="nav-link">
-          <i class='bx bxs-user-plus'></i>
+          <i class='bx bxs-user-plus' ></i>
           <span class="text">Users</span>
         </a>
       </li>
@@ -76,8 +76,7 @@ session_start();
  
     </div>
 
-
-
+<!--Main content -->
   <div class="main-content">
   <div class="content">
   <div class="mb-4 custom-breadcrumb">
@@ -89,71 +88,70 @@ session_start();
 		<a href="" class="text-reset bc-path active">Dashboard</a>
 		</h6>  
 	</nav>
-	<!-- Breadcrumb -->
 	</div>
 
-	<!--Main content -->
-	<div class="custom-container container d-flex align-items-center justify-content-between">
 
-	<div class="row g-3">
-  <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-  <div class="card">
-	<div class="card-header  bg-gradient bg-success"></div>
-      <div class="card-body">
-        <div class="row">
-        <span><h6 class=" h1-color card-names">DONORS</h6>  </span>
-        <div class="col">
-				  <h1 class="m-md-1 h1-color">50</h1>
-			  </div>
-			  <div class="col">
-          <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-user  fa-2x"></i></h4>
-			    </div>
-		    </div>
+  <!--reports -->
+  <div class="custom-container pb-3">
+    <div class="row g-3">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="card">
+	      <div class="card-header  bg-gradient bg-success"></div>
+          <div class="card-body">
+            <div class="row">
+              <span><h6 class=" h1-color card-names">DONORS</h6>  </span>
+              <div class="col">
+				        <h1 class="m-md-1 h1-color">50</h1>
+			          </div>
+			        <div class="col">
+                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-user  fa-2x"></i></h4>
+			        </div>
+		        </div>
+        </div>
+      </div>
+    </div> 
+    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="card">
+	      <div class="card-header  bg-gradient bg-success"></div>
+          <div class="card-body">
+            <div class="row">
+              <span><h6 class=" h1-color card-names">GIVEN</h6>  </span>
+              <div class="col">
+				        <h1 class="m-md-1 h1-color">50</h1>
+			          </div>
+			        <div class="col">
+                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-gift fa-2x"></i></h4>
+			        </div>
+		        </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="card">
+	      <div class="card-header  bg-gradient bg-success"></div>
+          <div class="card-body">
+            <div class="row">
+              <span><h6 class=" h1-color card-names">REQUESTS</h6>  </span>
+              <div class="col">
+				        <h1 class="m-md-1 h1-color">50</h1>
+			          </div>
+			        <div class="col">
+                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-envelope  fa-2x"></i></h4>
+			        </div>
+		        </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-  <div class="card">
-	<div class="card-header  bg-gradient bg-success"></div>
-      <div class="card-body">
-        <div class="row">
-        <span><h6 class=" h1-color card-names">REQUESTS</h6>  </span>
-        <div class="col">
-				  <h1 class="m-md-1 h1-color">50</h1>
-			  </div>
-			  <div class="col">
-          <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-envelope  fa-2x"></i></h4>
-			    </div>
-		    </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-  <div class="card">
-	<div class="card-header  bg-gradient bg-success"></div>
-      <div class="card-body">
-        <div class="row">
-        <span><h6 class=" h1-color card-names">GIVEN</h6>  </span>
-        
-        <div class="col">
-       
-				  <h1 class="m-md-1 h1-color">12</h1>
-			  </div>
-			  <div class="col">
-				  <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-gift fa-2x"></i></h4>
-			    </div>
-		    </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-s-12 col-md-12 col-lg-6">
-  <div class="card my-fixed-height">
-      <div class="card-body">
-      <canvas class="" id="myChart"></canvas>
-      </div>
-    </div>
-  </div>
-  <div class="col-s-12 col-md-12 col-lg-6">
+  <div class="row g-3 mt-2">
+    <div class="col-s-12 col-md-12 col-lg-6">
+      <div class="card my-fixed-height">
+       <div class="card-body">
+         <canvas class="" id="myChart"></canvas>
+        </div>
+       </div>  
+     </div>
+     <div class="col-s-12 col-md-12 col-lg-6">
   <div class="card my-fixed-height">
       <div class="card-body">
       <table class="table table-striped table-bordered" style="width:100%" id="table_data">
@@ -182,16 +180,13 @@ session_start();
       </div>
     </div>
   </div>
-</div>
 
-
-	</div>
-
-  </div>
   
-
-	
+<!--End of main content -->
+      </div>
+    </div>
   </div>
+</div>
 
   
 	
@@ -208,22 +203,7 @@ session_start();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
 
 
-	<script>
-	  $(document).ready(function () {
-			$('#table_data').DataTable({
-			"pagingType":"full_numbers",
-			"lengthMenu":[
-			[10,25,50,-1],
-			[10,25,50,"All"]],
-			responsive:true,
-			language:{
-				search:"_INPUT_",
-				searchPlaceholder: "Search Records",
-			}
 
-			});
-		});
-	</script>
 	<script>
        $(document).ready(function() {
 		$("#toggleFormBtn").click(function() {

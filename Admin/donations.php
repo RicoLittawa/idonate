@@ -36,7 +36,7 @@ session_start(); ?>
         </a>
       </li>
       <li class="nav-item">
-        <a href="donations.php" class="nav-link active">
+        <a href="#" class="nav-link active">
           <i class='bx bxs-box active'></i>
           <span class="text">Donors</span>
         </a>
@@ -86,18 +86,13 @@ session_start(); ?>
 </div>
 
 
-
-
-
-
-  <div class="custom-container d-block align-items-center justify-content-between pb-3">
-  <div class="card" style="margin-left:12px;" >
+  <div class="custom-container pb-3">
+  <div class="card">
   <div class="card-body overflow-auto">
  <div class="mt-2">
 
- <button class="btn btn-success float-end" style="width:200px; height:50px;">
-  <a style="color:white;" href="additemdonations.php"><i class="fa-solid fa-plus"></i> Add Donations</a>
-</button>
+ <button class="btn btn-success addPage float-end" style="width:200px; height:50px;">
+  <i class="fa-solid fa-plus"></i> Add Donations</button>
  </div>
 	
 			<br>
@@ -182,6 +177,9 @@ session_start(); ?>
   
 </div>
 
+
+
+
   </div>
   
 
@@ -206,25 +204,6 @@ session_start(); ?>
   <script src="scripts/main.js"></script>
 
   <!--Here is the scripts for functions -->
-
-
-
-	<script>
-	  $(document).ready(function () {
-			$('#table_data').DataTable({
-			"pagingType":"full_numbers",
-			"lengthMenu":[
-			[10,25,50,-1],
-			[10,25,50,"All"]],
-			responsive:true,
-			language:{
-				search:"_INPUT_",
-				searchPlaceholder: "Search Records",
-			}
-
-			});
-		});
-	</script>
 <script>
 $(document).ready(function(){
   $('.email_button').click(function(){
@@ -313,6 +292,13 @@ $(document).ready(function(){
 
 		});
 	});
+</script>
+<script>
+  $(document).ready(function(){
+    $('.addPage').click(function(){
+      window.location.href = "additemdonations.php?fillupform";
+    });
+  })
 </script>
 </body>
 </html>
