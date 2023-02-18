@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2022 at 09:47 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Generation Time: Feb 17, 2023 at 12:59 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `idonate`
+-- Database: `u321569821_idonate`
 --
 
 -- --------------------------------------------------------
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `announcement_template` (
   `id` int(11) NOT NULL,
   `announcement` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `announcement_template`
@@ -42,6 +42,88 @@ INSERT INTO `announcement_template` (`id`, `announcement`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `categcannoodles`
+--
+
+CREATE TABLE `categcannoodles` (
+  `id` int(11) NOT NULL,
+  `referenceID` bigint(20) NOT NULL,
+  `productName` longtext DEFAULT NULL,
+  `quantity` longtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categdrinkingwater`
+--
+
+CREATE TABLE `categdrinkingwater` (
+  `id` int(11) NOT NULL,
+  `referenceID` bigint(11) NOT NULL,
+  `productName` longtext NOT NULL,
+  `quantity` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categhygineessential`
+--
+
+CREATE TABLE `categhygineessential` (
+  `id` int(11) NOT NULL,
+  `referenceID` bigint(11) NOT NULL,
+  `productName` longtext NOT NULL,
+  `quantity` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categinfant`
+--
+
+CREATE TABLE `categinfant` (
+  `id` int(11) NOT NULL,
+  `referenceID` bigint(11) NOT NULL,
+  `productName` longtext NOT NULL,
+  `quantity` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categmeatgrains`
+--
+
+CREATE TABLE `categmeatgrains` (
+  `id` int(11) NOT NULL,
+  `referenceID` bigint(20) NOT NULL,
+  `productName` longtext NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `quantity` longtext NOT NULL,
+  `unit` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categmedicine`
+--
+
+CREATE TABLE `categmedicine` (
+  `id` int(11) NOT NULL,
+  `referenceID` bigint(20) NOT NULL,
+  `productName` longtext NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `quantity` longtext NOT NULL,
+  `unit` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `category`
 --
 
@@ -49,7 +131,7 @@ CREATE TABLE `category` (
   `categ_id` int(11) NOT NULL,
   `category` longtext NOT NULL,
   `categCode` varchar(191) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `category`
@@ -69,6 +151,21 @@ INSERT INTO `category` (`categ_id`, `category`, `categCode`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `categothers`
+--
+
+CREATE TABLE `categothers` (
+  `id` int(11) NOT NULL,
+  `referenceID` bigint(20) NOT NULL,
+  `productName` longtext NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `quantity` longtext NOT NULL,
+  `unit` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categ_products`
 --
 
@@ -76,7 +173,7 @@ CREATE TABLE `categ_products` (
   `id` int(11) NOT NULL,
   `product_name` varchar(191) NOT NULL,
   `categCode` varchar(191) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categ_products`
@@ -287,26 +384,6 @@ INSERT INTO `categ_products` (`id`, `product_name`, `categCode`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categ_varianttotal`
---
-
-CREATE TABLE `categ_varianttotal` (
-  `id` int(11) NOT NULL,
-  `donor_reference` bigint(20) NOT NULL,
-  `variant` varchar(191) NOT NULL,
-  `quantity` varchar(191) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `categ_varianttotal`
---
-
-INSERT INTO `categ_varianttotal` (`id`, `donor_reference`, `variant`, `quantity`) VALUES
-(14, 2, '003', '10');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `donation_items`
 --
 
@@ -320,15 +397,10 @@ CREATE TABLE `donation_items` (
   `donor_barangay` longtext NOT NULL,
   `donor_email` longtext NOT NULL,
   `donor_contact` varchar(11) NOT NULL,
-  `donationDate` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `donation_items`
---
-
-INSERT INTO `donation_items` (`donor_id`, `Reference`, `donor_name`, `donor_region`, `donor_province`, `donor_municipality`, `donor_barangay`, `donor_email`, `donor_contact`, `donationDate`) VALUES
-(1, 2, 'wendel cueto', '04', '0410', '041005', '112504010', 'sample@gmail.com', '09298289932', '2022-12-02');
+  `donationDate` date NOT NULL,
+  `email_status` varchar(10) NOT NULL DEFAULT 'not sent',
+  `certificate` varchar(100) NOT NULL DEFAULT 'cert empty'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -339,18 +411,11 @@ INSERT INTO `donation_items` (`donor_id`, `Reference`, `donor_name`, `donor_regi
 CREATE TABLE `donation_items10` (
   `id` int(11) NOT NULL,
   `Reference` bigint(20) NOT NULL,
-  `category` longtext NOT NULL,
-  `name_items` longtext NOT NULL,
-  `variantCode` varchar(191) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `donation_items10`
---
-
-INSERT INTO `donation_items10` (`id`, `Reference`, `category`, `name_items`, `variantCode`) VALUES
-(22, 2, '01', 'sardines', '003'),
-(23, 2, '02', 'creamsilk', '003');
+  `productName` longtext NOT NULL,
+  `type` varchar(191) DEFAULT NULL,
+  `unit` varchar(191) DEFAULT NULL,
+  `quantity` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -360,97 +425,14 @@ INSERT INTO `donation_items10` (`id`, `Reference`, `category`, `name_items`, `va
 
 CREATE TABLE `donation_items_picking` (
   `reference_id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `donation_items_picking`
 --
 
 INSERT INTO `donation_items_picking` (`reference_id`) VALUES
-(3);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `donor_record`
---
-
-CREATE TABLE `donor_record` (
-  `id` int(11) NOT NULL,
-  `rD_reference` bigint(20) NOT NULL,
-  `rD_name` longtext NOT NULL,
-  `rD_province` longtext NOT NULL,
-  `rD_street` longtext NOT NULL,
-  `rD_region` longtext NOT NULL,
-  `rD_email` longtext NOT NULL,
-  `rD_contact` varchar(11) NOT NULL,
-  `rD_date` date NOT NULL,
-  `rD_certificate` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `donor_record`
---
-
-INSERT INTO `donor_record` (`id`, `rD_reference`, `rD_name`, `rD_province`, `rD_street`, `rD_region`, `rD_email`, `rD_contact`, `rD_date`, `rD_certificate`) VALUES
-(1, 1, 'Maryann Royster', '74 S Westgate St', '74 S Westgate St', '3', 'mroyster@royster.com', '09392560000', '2022-10-27', 'Maryann Royster1669555425.png'),
-(2, 3, 'Allene Iturbide', '1 Central Ave', '1 Central Ave', '5', 'allene_iturbide@cox.net', '09298289932', '2022-11-27', 'Allene Iturbide1669555654.png'),
-(3, 2, 'Alisha Slusarski', '3273 State St', '3273 State St', '1', 'alisha@slusarski.com', '09392560014', '2022-10-27', 'Alisha Slusarski1669555674.png'),
-(4, 4, 'rico littawa', 'bicol', 'Brgy Balagtas Sitio 7 Tramo Pulo', '7', 'jeffersondetorres@gmail.com', '09298289932', '2022-12-01', 'rico littawa1669557852.png'),
-(5, 6, 'deser', 'bicol', 'bicol', '6', 'rico.littawa@g.batstate-u.edu.ph', '09392560000', '2022-12-01', 'deser1669558014.png'),
-(6, 5, 'wendel', 'pasig', 'laguna', '4', 'xyz@email.com', '09392560001', '2022-12-28', 'wendel1669558019.png'),
-(7, 7, 'rico', 'Batangas', 'Brgy Balagtas Sitio 7 Tramo Pulo', '2', 'sample@gmail.com', '09298289932', '2022-11-27', 'rico1669560085.png'),
-(8, 8, 'this is new', 'Laguna', 'laguna bay', '4', 'rico.littawa@g.batstate-u.edu.ph', '09298289932', '2022-11-28', 'this is new1669648249.png'),
-(9, 9, 'deser', 'bicol', 'Sta Maria Bauan', '13', 'rico.littawa@g.batstate-u.edu.ph', '09298289932', '2022-11-28', 'deser1669648903.png'),
-(10, 11, 'Rodrigo Delaroca', 'Batangas', 'Kalisahan ', '4', 'rodginsky@yahoo.com', '09175059819', '2022-11-28', 'Rodrigo Delaroca1669682119.png');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `donor_recordm`
---
-
-CREATE TABLE `donor_recordm` (
-  `id` int(11) NOT NULL,
-  `rDM_name` longtext NOT NULL,
-  `rDM_province` longtext NOT NULL,
-  `rDM_street` longtext NOT NULL,
-  `rDM_region` longtext NOT NULL,
-  `rDM_contact` varchar(11) NOT NULL,
-  `rDM_email` longtext NOT NULL,
-  `donated` bigint(20) NOT NULL,
-  `rDM_date` date NOT NULL,
-  `rDM_certificate` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `donor_recordm`
---
-
-INSERT INTO `donor_recordm` (`id`, `rDM_name`, `rDM_province`, `rDM_street`, `rDM_region`, `rDM_contact`, `rDM_email`, `donated`, `rDM_date`, `rDM_certificate`) VALUES
-(1, 'try this rich name', 'Cebu', 'Cebu', '8', '09298289932', '09298289932', 1000, '2022-11-28', 'try this rich name1669632254.png'),
-(2, 'Conor Mc Gregor', 'Mindoro', 'Mindoro Sample Street', '6', '09298289932', '09298289932', 100, '2022-11-29', 'Conor Mc Gregor1669632368.png');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `monetary_donations`
---
-
-CREATE TABLE `monetary_donations` (
-  `money_id` int(11) NOT NULL,
-  `money_name` longtext NOT NULL,
-  `money_province` longtext NOT NULL,
-  `money_street` longtext NOT NULL,
-  `money_region` longtext NOT NULL,
-  `money_contact` varchar(11) NOT NULL,
-  `money_email` longtext NOT NULL,
-  `money_date` date NOT NULL,
-  `money_reference` varchar(100) NOT NULL,
-  `money_img` longtext NOT NULL,
-  `money_amount` bigint(20) NOT NULL,
-  `money_note` varchar(1000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(1);
 
 -- --------------------------------------------------------
 
@@ -461,7 +443,7 @@ CREATE TABLE `monetary_donations` (
 CREATE TABLE `month` (
   `id` int(11) NOT NULL,
   `name_month` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `month`
@@ -494,7 +476,7 @@ CREATE TABLE `refbrgy` (
   `regCode` varchar(255) DEFAULT NULL,
   `provCode` varchar(255) DEFAULT NULL,
   `citymunCode` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `refbrgy`
@@ -42592,7 +42574,7 @@ CREATE TABLE `refcitymun` (
   `regDesc` varchar(255) DEFAULT NULL,
   `provCode` varchar(255) DEFAULT NULL,
   `citymunCode` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `refcitymun`
@@ -44260,7 +44242,7 @@ CREATE TABLE `refprovince` (
   `provDesc` text DEFAULT NULL,
   `regCode` varchar(255) DEFAULT NULL,
   `provCode` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `refprovince`
@@ -44367,7 +44349,7 @@ CREATE TABLE `refregion` (
   `psgcCode` varchar(255) DEFAULT NULL,
   `regDesc` text DEFAULT NULL,
   `regCode` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `refregion`
@@ -44395,27 +44377,6 @@ INSERT INTO `refregion` (`id`, `psgcCode`, `regDesc`, `regCode`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `req_varianttotal`
---
-
-CREATE TABLE `req_varianttotal` (
-  `id` int(11) NOT NULL,
-  `req_reference` bigint(20) NOT NULL,
-  `req_variant` int(11) NOT NULL,
-  `req_quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `req_varianttotal`
---
-
-INSERT INTO `req_varianttotal` (`id`, `req_reference`, `req_variant`, `req_quantity`) VALUES
-(1, 1, 0, 0),
-(2, 2, 3, 2);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `set_request`
 --
 
@@ -44433,7 +44394,7 @@ CREATE TABLE `set_request` (
   `valid_id` longtext NOT NULL,
   `req_note` varchar(1000) NOT NULL,
   `req_status` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `set_request`
@@ -44456,7 +44417,7 @@ CREATE TABLE `set_request10` (
   `req_category` longtext NOT NULL,
   `req_nameItem` longtext NOT NULL,
   `req_variantCode` varchar(191) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `set_request10`
@@ -44474,7 +44435,7 @@ INSERT INTO `set_request10` (`id`, `req_reference`, `req_category`, `req_nameIte
 
 CREATE TABLE `set_request_pickings` (
   `reference_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `set_request_pickings`
@@ -44492,7 +44453,7 @@ INSERT INTO `set_request_pickings` (`reference_id`) VALUES
 CREATE TABLE `template_certi` (
   `id` int(11) NOT NULL,
   `template` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `template_certi`
@@ -44500,86 +44461,6 @@ CREATE TABLE `template_certi` (
 
 INSERT INTO `template_certi` (`id`, `template`) VALUES
 (1, 'certificate.png');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `total_donor`
---
-
-CREATE TABLE `total_donor` (
-  `id` int(11) NOT NULL,
-  `Tdonor_name` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `total_donor`
---
-
-INSERT INTO `total_donor` (`id`, `Tdonor_name`) VALUES
-(5, 'Maryann Royster'),
-(6, 'Allene Iturbide'),
-(7, 'Alisha Slusarski'),
-(8, 'rico littawa'),
-(9, 'deser'),
-(10, 'wendel'),
-(11, 'rico'),
-(12, 'try this rich name'),
-(13, 'Conor Mc Gregor'),
-(14, 'this is new'),
-(15, 'deser'),
-(16, 'Rodrigo Delaroca'),
-(17, 'rico littawa1');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `total_funds`
---
-
-CREATE TABLE `total_funds` (
-  `id` int(11) NOT NULL,
-  `amount` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `total_funds`
---
-
-INSERT INTO `total_funds` (`id`, `amount`) VALUES
-(1, 1300);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `unit_measure`
---
-
-CREATE TABLE `unit_measure` (
-  `id` int(11) NOT NULL,
-  `categCode` varchar(191) NOT NULL,
-  `unit` varchar(191) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `unit_measure`
---
-
-INSERT INTO `unit_measure` (`id`, `categCode`, `unit`) VALUES
-(1, '01', 'none'),
-(2, '07', 'Kg'),
-(3, '07', 'Grams'),
-(4, '08', 'Fresh'),
-(5, '08', 'Dry'),
-(7, '02', 'Sachet'),
-(8, '03', 'None'),
-(9, '04', 'None'),
-(10, '05', 'None'),
-(11, '06', 'None'),
-(12, '09', 'None'),
-(13, '08', 'Kg'),
-(14, '08', 'Grams'),
-(15, '02', 'None');
 
 -- --------------------------------------------------------
 
@@ -44592,7 +44473,7 @@ CREATE TABLE `useradmin` (
   `name` tinytext NOT NULL,
   `email` tinytext NOT NULL,
   `pwdUsers` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `useradmin`
@@ -44613,36 +44494,13 @@ INSERT INTO `useradmin` (`uID`, `name`, `email`, `pwdUsers`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `variant`
---
-
-CREATE TABLE `variant` (
-  `variant_id` int(11) NOT NULL,
-  `variant` longtext NOT NULL,
-  `variantCode` varchar(191) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `variant`
---
-
-INSERT INTO `variant` (`variant_id`, `variant`, `variantCode`) VALUES
-(1, 'Per Pack', '001'),
-(3, 'Per Box', '002'),
-(4, 'Per Piece', '003'),
-(5, 'Per Sack', '004'),
-(6, 'Per Tray', '005');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `year`
 --
 
 CREATE TABLE `year` (
   `id` int(11) NOT NULL,
   `year_name` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `year`
@@ -44679,6 +44537,42 @@ ALTER TABLE `announcement_template`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `categcannoodles`
+--
+ALTER TABLE `categcannoodles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categdrinkingwater`
+--
+ALTER TABLE `categdrinkingwater`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categhygineessential`
+--
+ALTER TABLE `categhygineessential`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categinfant`
+--
+ALTER TABLE `categinfant`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categmeatgrains`
+--
+ALTER TABLE `categmeatgrains`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `categmedicine`
+--
+ALTER TABLE `categmedicine`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
@@ -44686,15 +44580,15 @@ ALTER TABLE `category`
   ADD KEY `category` (`category`(768));
 
 --
--- Indexes for table `categ_products`
+-- Indexes for table `categothers`
 --
-ALTER TABLE `categ_products`
+ALTER TABLE `categothers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `categ_varianttotal`
+-- Indexes for table `categ_products`
 --
-ALTER TABLE `categ_varianttotal`
+ALTER TABLE `categ_products`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -44715,24 +44609,6 @@ ALTER TABLE `donation_items10`
 --
 ALTER TABLE `donation_items_picking`
   ADD PRIMARY KEY (`reference_id`);
-
---
--- Indexes for table `donor_record`
---
-ALTER TABLE `donor_record`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `donor_recordm`
---
-ALTER TABLE `donor_recordm`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `monetary_donations`
---
-ALTER TABLE `monetary_donations`
-  ADD PRIMARY KEY (`money_id`);
 
 --
 -- Indexes for table `month`
@@ -44765,12 +44641,6 @@ ALTER TABLE `refregion`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `req_varianttotal`
---
-ALTER TABLE `req_varianttotal`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `set_request`
 --
 ALTER TABLE `set_request`
@@ -44795,35 +44665,10 @@ ALTER TABLE `template_certi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `total_donor`
---
-ALTER TABLE `total_donor`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `total_funds`
---
-ALTER TABLE `total_funds`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `unit_measure`
---
-ALTER TABLE `unit_measure`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `useradmin`
 --
 ALTER TABLE `useradmin`
   ADD PRIMARY KEY (`uID`);
-
---
--- Indexes for table `variant`
---
-ALTER TABLE `variant`
-  ADD PRIMARY KEY (`variant_id`),
-  ADD KEY `variant` (`variant`(768));
 
 --
 -- Indexes for table `year`
@@ -44842,10 +44687,52 @@ ALTER TABLE `announcement_template`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `categcannoodles`
+--
+ALTER TABLE `categcannoodles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categdrinkingwater`
+--
+ALTER TABLE `categdrinkingwater`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categhygineessential`
+--
+ALTER TABLE `categhygineessential`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categinfant`
+--
+ALTER TABLE `categinfant`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categmeatgrains`
+--
+ALTER TABLE `categmeatgrains`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categmedicine`
+--
+ALTER TABLE `categmedicine`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `categ_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `categothers`
+--
+ALTER TABLE `categothers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categ_products`
@@ -44854,46 +44741,22 @@ ALTER TABLE `categ_products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
 
 --
--- AUTO_INCREMENT for table `categ_varianttotal`
---
-ALTER TABLE `categ_varianttotal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
 -- AUTO_INCREMENT for table `donation_items`
 --
 ALTER TABLE `donation_items`
-  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `donation_items10`
 --
 ALTER TABLE `donation_items10`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `donation_items_picking`
 --
 ALTER TABLE `donation_items_picking`
-  MODIFY `reference_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT for table `donor_record`
---
-ALTER TABLE `donor_record`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `donor_recordm`
---
-ALTER TABLE `donor_recordm`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `monetary_donations`
---
-ALTER TABLE `monetary_donations`
-  MODIFY `money_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `reference_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `month`
@@ -44926,12 +44789,6 @@ ALTER TABLE `refregion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `req_varianttotal`
---
-ALTER TABLE `req_varianttotal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `set_request`
 --
 ALTER TABLE `set_request`
@@ -44956,34 +44813,10 @@ ALTER TABLE `template_certi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `total_donor`
---
-ALTER TABLE `total_donor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT for table `total_funds`
---
-ALTER TABLE `total_funds`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `unit_measure`
---
-ALTER TABLE `unit_measure`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
 -- AUTO_INCREMENT for table `useradmin`
 --
 ALTER TABLE `useradmin`
   MODIFY `uID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `variant`
---
-ALTER TABLE `variant`
-  MODIFY `variant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `year`

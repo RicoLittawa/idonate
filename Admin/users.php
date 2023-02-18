@@ -2,13 +2,6 @@
 session_start();
 
 	?>
-<?php 
-require_once 'include/connection.php';
-$sql = "SELECT * from donor_record";
-$result= mysqli_query($conn,$sql);
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,15 +19,11 @@ $result= mysqli_query($conn,$sql);
 	<title>User Details</title>
 </head>
 <body>
-	<!-- SIDEBAR -->	
-	<section id="sidebar">
-  <a href="#" class="brand d-flex align-items-center justify-content-between">
-    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle mx-auto" style="width: 90px; height: 90px;margin-top:6rem;border:solid 5px #fff;">
-
-  </a>
-
+<div class="main-container">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+    <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
   <nav class="side-menu">
-	  <h6 class="ps-5 mb-3 text-light custom-title">Main Menu</h6>
     <ul class="nav">
       <li class="nav-item">
         <a href="adminpage.php" class="nav-link">
@@ -61,30 +50,26 @@ $result= mysqli_query($conn,$sql);
         </a>
       </li>
       <li class="nav-item">
-        <a href="" class="nav-link active">
-          <i class='bx bxs-user-plus active'></i>
+        <a href="users.php" class="nav-link active">
+          <i class='bx bxs-user-plus active' ></i>
           <span class="text">Users</span>
         </a>
       </li>
       <li class="nav-item log-item">
         <a href="./include/logout.php" class="nav-link log-link">
-        <i class="fa-solid fa-right-from-bracket"></i>
+        	<i class="fa-solid fa-right-from-bracket"></i>
           <span class="text">Logout</span>
-        </a>
-      </li>
+       		</a>
+     	</li>
     </ul>
   </nav>
-  
-</section>
+ 
+    </div>
 
-
-	<!-- SIDEBAR -->
-
-
-	<section>
-
-	
-<div class="mb-4 custom-breadcrumb">
+<!--Main content -->
+  <div class="main-content">
+  <div class="content">
+  <div class="mb-4 custom-breadcrumb">
   <h1 class="fs-1 breadcrumb-title">Account Details</h1>
   <nav class="bc-nav d-flex">
     <h6 class="mb-0">
@@ -197,11 +182,16 @@ $result= mysqli_query($conn,$sql);
   </div>
   
 </div>
- 
 
-		
-	</section>
+  </div>
+  
+
 	
+  </div>
+</div>
+
+
+
 
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -210,6 +200,8 @@ $result= mysqli_query($conn,$sql);
   	<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
+  <script src="scripts/main.js"></script>
+
 
 
 

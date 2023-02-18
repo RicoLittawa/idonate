@@ -57,65 +57,61 @@ function fill_category_select_box($conn)
 </head>
 
 <body>
-	<!-- SIDEBAR -->
-	<section id="sidebar">
-		<a href="#" class="brand d-flex align-items-center justify-content-between">
-			<img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle mx-auto" style="width: 90px; height: 90px;margin-top:6rem;border:solid 5px #fff;">
+<div class="main-container">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+    <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
+  <nav class="side-menu">
+    <ul class="nav">
+      <li class="nav-item">
+        <a href="adminpage.php" class="nav-link">
+          <i class='bx bxs-dashboard'></i>
+          <span class="text">Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="donations.php" class="nav-link active">
+          <i class='bx bxs-box active'></i>
+          <span class="text">Donors</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class='bx bxs-envelope'></i>
+          <span class="text">Requests</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class='bx bxs-package'></i>
+          <span class="text">Stocks</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="users.php" class="nav-link">
+          <i class='bx bxs-user-plus' ></i>
+          <span class="text">Users</span>
+        </a>
+      </li>
+      <li class="nav-item log-item">
+        <a href="./include/logout.php" class="nav-link log-link">
+        	<i class="fa-solid fa-right-from-bracket"></i>
+          <span class="text">Logout</span>
+       		</a>
+     	</li>
+    </ul>
+  </nav>
+ 
+    </div>
 
-		</a>
-
-		<nav class="side-menu">
-			<h6 class="ps-5 mb-3 text-light custom-title">Main Menu</h6>
-			<ul class="nav">
-				<li class="nav-item">
-					<a href="adminpage.php" class="nav-link">
-						<i class='bx bxs-dashboard'></i>
-						<span class="text">Dashboard</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="donations.php" class="nav-link active">
-						<i class='bx bxs-box active'></i>
-						<span class="text">Donors</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class='bx bxs-envelope'></i>
-						<span class="text">Requests</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="#" class="nav-link">
-						<i class='bx bxs-package'></i>
-						<span class="text">Stocks</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="users.php" class="nav-link ">
-						<i class='bx bxs-user-plus '></i>
-						<span class="text">Users</span>
-					</a>
-				</li>
-				<li class="nav-item log-item">
-        			<a href="./include/logout.php" class="nav-link log-link">
-        				<i class="fa-solid fa-right-from-bracket"></i>
-          				<span class="text">Logout</span>
-       				 </a>
-     			 </li>
-			</ul>
-		</nav>
-
-	</section>
-
-
-	<!-- SIDEBAR -->
+<!--Main content -->
+  <div class="main-content">
+  <div class="content">
 
 
-	<section>
-
-
-		<div class="mb-4 custom-breadcrumb">
+  </div>
+  
+  <div class="mb-4 custom-breadcrumb">
 			<h1 class="fs-1 breadcrumb-title">Update Donations</h1>
 			<nav class="bc-nav d-flex">
 				<h6 class="mb-0">
@@ -395,7 +391,11 @@ function fill_category_select_box($conn)
 		<!--End of card-->
 		</div>
 		<!--End of container-->
-	</section>
+	
+  </div>
+</div>
+
+
 
 
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
@@ -408,7 +408,7 @@ function fill_category_select_box($conn)
 	<script src="scripts/sweetalert2.all.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-
+	<script src="scripts/main.js"></script>
 	<!--Here is the scripts for functions -->
 	<script>
 		$(document).ready(function() {

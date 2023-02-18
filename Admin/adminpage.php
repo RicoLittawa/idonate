@@ -19,15 +19,11 @@ session_start();
 	<title>Dashboard</title>
 </head>
 <body>
-	<!-- SIDEBAR -->	
-	<section id="sidebar">
-  <a href="#" class="brand d-flex align-items-center justify-content-between">
-    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle mx-auto" style="width: 90px; height: 90px;margin-top:6rem;border:solid 5px #fff;">
-
-  </a>
-
+  <div class="main-container">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+    <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
   <nav class="side-menu">
-	  <h6 class="ps-5 mb-3 text-light custom-title">Main Menu</h6>
     <ul class="nav">
       <li class="nav-item">
         <a href="adminpage.php" class="nav-link active">
@@ -68,12 +64,13 @@ session_start();
     </ul>
   </nav>
  
-</section>
-<!-- SIDEBAR -->
+    </div>
 
 
-<section class="container">
-	<div class="mb-4 custom-breadcrumb">
+
+  <div class="main-content">
+  <div class="content">
+  <div class="mb-4 custom-breadcrumb">
 	<h1 class="fs-1 breadcrumb-title">Dashboard</h1>
 	<nav class="bc-nav d-flex">
 		<h6 class="mb-0">
@@ -86,7 +83,7 @@ session_start();
 	</div>
 
 	<!--Main content -->
-	<div class="custom-container container d-flex align-items-center justify-content-between ">
+	<div class="custom-container container d-flex align-items-center justify-content-between">
 
 	<div class="row g-3">
   <div class="col-12 col-sm-12 col-md-12 col-lg-4">
@@ -179,18 +176,26 @@ session_start();
 
 
 	</div>
+
+  </div>
+  
+
 	
-	</section>
+  </div>
+
+  
+	
 	
 
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>	
 	<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-  	<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
+  <script src="scripts/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
 
 
 	<script>

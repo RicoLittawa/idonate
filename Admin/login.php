@@ -23,7 +23,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic" >
-					<img src="images/logo.png" alt="IMG">
+					<img src="img/logo.png" alt="IMG">
 				</div>
 
 				<form class="login100-form validate-form" method="POST" action="/Admin/include/login.inc.php" >
