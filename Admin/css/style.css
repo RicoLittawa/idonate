@@ -127,6 +127,7 @@ h6{
 
   .sidebar .side-menu ul.nav li.nav-item a.nav-link span.text {
     margin-right: 30px;
+    transition: 1s ease;
   }
   
   .sidebar .side-menu ul.nav li.nav-item:last-child {
@@ -281,7 +282,7 @@ h6{
 
 /*Dashboard cards*/
 
-@media (max-width: 767px) {
+@media (max-width: 600px) {
   .sidebar {
     width: 15%;
     height: auto;
@@ -328,7 +329,7 @@ h6{
     align-items: center;
     height: 100%;
     width: 100%;
-    padding: 0 auto;
+    padding: 0 10px;
     color: #fff;
     font-size: 14px;
     font-family: 'Roboto', sans-serif;;
@@ -363,7 +364,7 @@ h6{
     margin-bottom: 0;
   }
   .sidebar .menuBtn{
-display: none;
+    display: none;
   }
   .main-content{
     margin-left: 6rem;

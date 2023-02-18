@@ -294,54 +294,12 @@ function fill_category_select_box($conn)
 								</div>
 							</div>
 						</div>
-					<div class="row pe-4 ps-5 ms-4">
+					<!--2nd table -->
+					<div class="row pe-4 ps-5 ms-4 mt-4">
 						<div class="col">
 							<table class="table table-striped table-bordered" id="table_data">
 								<thead>
 									<tr>
-										<th>Category</th>
-										<th>Product Name</th>
-										<th>Quantity</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
-        						 $sql = "SELECT 'Can/Noodles' AS table_name, productName, quantity FROM categcannoodles WHERE referenceID = ?
-									UNION ALL
-									SELECT 'Drinking Water' AS table_name, productName, quantity FROM categdrinkingwater WHERE referenceID = ?
-									UNION ALL
-									SELECT 'Hygine Essentials' AS table_name, productName, quantity FROM categhygineessential WHERE referenceID = ?
-									UNION ALL
-									SELECT 'Infant Items' AS table_name, productName, quantity FROM categinfant WHERE referenceID = ?";
-									$stmt = $conn->prepare($sql);
-									$stmt->bind_param(
-									"iiii",
-									$donorreference,
-									$donorreference,
-									$donorreference,
-									$donorreference
-									);
-									$stmt->execute();
-									$result = $stmt->get_result();
-									while ($row = $result->fetch_assoc()): ?>
-									<tr>
-										<td><?php echo $row["table_name"]; ?></td>
-										<td><?php echo $row["productName"]; ?></td>
-										<td><?php echo $row["quantity"]; ?></td>
-									</tr>
-									<?php endwhile; ?>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<hr class="hr hr-blurry" />
-					<!--2nd table -->
-					<div class="row pe-4 ps-5 ms-4 mt-4">
-						<div class="col">
-							<table class="table table-bordered">
-								<thead>
-									<tr>
-										<th>Category</th>
 										<th>Product Name</th>
 										<th>Type</th>
 										<th>Quantity</th>
@@ -350,34 +308,34 @@ function fill_category_select_box($conn)
 								</thead>
 								<tbody>
 									<?php
-        						 $sql = "SELECT 'Can/Noodles' AS table_name, productName, type, quantity, unit FROM categmeatgrains WHERE referenceID = ?
-									UNION ALL
-									SELECT 'Drinking Water' AS table_name, productName, type, quantity, unit FROM categmedicine WHERE referenceID = ?
-									UNION ALL
-									SELECT 'Hygine Essentials' AS table_name, productName, type, quantity, unit FROM categothers WHERE referenceID = ?";
-									$stmt = $conn->prepare($sql);
-									$stmt->bind_param(
-									"iii",
-									$donorreference,
-									$donorreference,
-									$donorreference
-									);
+        						$sql= "SELECT * FROM donation_items10 where Reference=?";
+								$stmt=$conn->prepare($sql);
+								$stmt->bind_param('i', $donorreference);
+								$stmt->execute();
+								$result = $stmt->get_result();
 									$stmt->execute();
 									$result = $stmt->get_result();
 									while ($row = $result->fetch_assoc()): ?>
 									<tr>
-										<td><?php echo $row["table_name"]; ?></td>
 										<td><?php echo $row["productName"]; ?></td>
+										<?php if ($row['type'] == null) { ?>
+										<td><span class="badge rounded-pill badge-warning">Empty</span></td>
+										<?php } else { ?>
 										<td><?php echo $row["type"]; ?></td>
-										<td><?php echo $row["quantity"]; ?></td>
+										<?php } ?>
+										<?php if ($row['unit'] == null) { ?>
+										<td><span class="badge rounded-pill badge-warning">Empty</span></td>
+										<?php } else { ?>
 										<td><?php echo $row["unit"]; ?></td>
+										<?php } ?>
+										<td><?php echo $row["quantity"]; ?></td>
 									</tr>
 									<?php endwhile; ?>
 								</tbody>
 							</table>
 						</div>
 					</div>
-					<div style="float:right;">
+					<div class="mt-3" style="float:right;">
 						<button type="button" class="btn btn-danger  cancelBtn" id="cancelBtn">Cancel</button>
 						<button type="button" class="btn btn-success addDonate" id="testBtn">Save</button>
 					</div>
@@ -565,6 +523,13 @@ function fill_category_select_box($conn)
 				}
 			});
 
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$('#cancelBtn').click(function(){
+				window.location.href= ('donations.php');
+			})
 		});
 	</script>
 
