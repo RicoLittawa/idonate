@@ -15,7 +15,17 @@ session_start();
 	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" href="css/style.css">
-
+  <style>
+    .card-names{
+  color: #a9a9a9;
+  font-size: 14px;
+}.h1-color{
+  color: #2D3436;
+}.my-fixed-height {
+  height: 355px;
+  overflow: auto;
+}
+  </style>
 	<title>Dashboard</title>
 </head>
 <body>
