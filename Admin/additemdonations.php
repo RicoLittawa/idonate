@@ -93,7 +93,7 @@ function fill_region_select_box($conn)
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="stocks.php" class="nav-link">
           <i class='bx bxs-package'></i>
           <span class="text">Stocks</span>
         </a>
@@ -895,8 +895,7 @@ function fill_region_select_box($conn)
 					})
 				}
 				if (fname == "") {
-					$('#fname').removeClass('border-success');
-					$('#fname').addClass('border-danger');
+					Swal.fire('Field', "Please input your fullname", 'warning');
 					return false;
 				} else if (region == "-Select-") {
 					Swal.fire('Select', "Please select a region", 'warning');
@@ -911,35 +910,25 @@ function fill_region_select_box($conn)
 					Swal.fire('Select', "Please select a barangay", 'warning');
 					return false;
 				} else if (contact == "") {
-					$('#contact').removeClass('border-success');
-					$('#contact').addClass('border-danger');
+					Swal.fire('Field', "Please input your contact", 'warning');
+					return false;
 				} else if (inValid.test($('#contact').val()) == true) {
 					Swal.fire('Contact', "Whitespace is prohibited.", 'warning');
-					$('#contact').removeClass('border-success');
-					$('#contact').addClass('border-danger');
 					return false;
 				} else if (varnumbers.test($('#contact').val()) == false) {
 					Swal.fire('Number', "Numbers only.", 'warning');
-					$('#contact').removeClass('border-success');
-					$('#contact').addClass('border-danger');
 					return false;
 				} else if (contact.length != 11) {
 					Swal.fire('Contact', "Enter Valid Contact Number", 'warning');
-					$('#contact').removeClass('border-success');
-					$('#contact').addClass('border-danger');
 					return false;
 				} else if (email == "") {
-					$('#email').removeClass('border-success');
-					$('#email').addClass('border-danger');
+					Swal.fire('Field', "Please input your email", 'warning');
 					return false;
 				} else if (emailVali.test($('#email').val()) == false) {
 					Swal.fire('Email', "Invalid email address", 'warning');
-					$('#email').removeClass('border-success');
-					$('#email').addClass('border-danger');
 					return false;
 				} else if (donation_date == "") {
-					$('#donation_date').removeClass('border-success');
-					$('#donation_date').addClass('border-danger');
+					Swal.fire('Select', "Please select date", 'warning');
 					return false;
 				} else if (!$('.selectCateg').is(':checked')) {
 					Swal.fire('Category', "Please select a category", 'warning')

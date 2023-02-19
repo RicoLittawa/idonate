@@ -48,7 +48,7 @@ session_start(); ?>
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="stocks.php" class="nav-link">
           <i class='bx bxs-package'></i>
           <span class="text">Stocks</span>
         </a>
@@ -148,7 +148,7 @@ session_start(); ?>
         <button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row["donor_id"]); ?>" data-email="<?php echo htmlentities($row["donor_email"]); ?>" 
         data-name="<?php echo htmlentities($row["donor_name"]); ?>"  data-action="single">Send</button>
       <?php } else { ?>
-        <span class="text-success status_res" id="status_res"><i class="fa-sharp fa-solid fa-envelope-circle-check"></i></span>
+        <span class="badge badge-success">Sent</span>
       <?php } ?>
       </td>
       <td>

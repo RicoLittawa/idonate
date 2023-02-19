@@ -44,7 +44,7 @@ session_start();
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="stocks.php" class="nav-link">
           <i class='bx bxs-package'></i>
           <span class="text">Stocks</span>
         </a>
@@ -98,7 +98,7 @@ session_start();
 	
 			<br>
  <div id="registerForm" class="collapse mt-5" data-duration="500">
-	<form class="pe-2 mb-3">
+	<form class="pe-2 mb-3" id="add-user">
 
   <!-- 2 column grid layout with text inputs for the first and last names -->
   <div class="row mb-4">
@@ -127,31 +127,41 @@ session_start();
     <input type="email" id="email" class="form-control" />
     <label class="form-label" for="email">Email address</label>
   </div>
-  <div class="form-outline mb-4">
-    <input type="password" id="password" class="form-control" />
-    <label class="form-label" for="password">Password</label>
+  <div class="row">
+    <div class="col">
+      
+    </div>
   </div>
+  <div class="input-group mb-4">
+  <input type="password" class="form-control" id="password" placeholder="Password">
+  <div class="input-group-append">
+  <button class="btn h-100" type="button" id="togglePass">
+      <i class="fa fa-eye"></i>
+    </button>
+  <button class="btn btn-success h-100" type="button" id="generatePasswordBtn">Generate Password</button>
+  </div>
+</div>
 
   <!-- Address input -->
   <div class="form-outline mb-4">
-    <textarea class="form-control" id="address" rows="3"></textarea>
+    <input class="form-control" id="address" rows="3"></input>
     <label class="form-label" for="address">Address</label>
   </div>
 
   <!-- Radio buttons -->
   <div class="d-flex justify-content-center mb-4">
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="role" id="admin" value="admin">
+      <input class="form-check-input typeCheck" type="radio" name="role" id="admin" value="admin">
       <label class="form-check-label" for="admin">Admin</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="role" id="user" value="user">
+      <input class="form-check-input typeCheck" type="radio" name="role" id="user" value="user">
       <label class="form-check-label" for="user">User</label>
     </div>
   </div>
 
   <!-- Submit button -->
-  <button type="submit" class="btn btn-success btn-block">Register</button>
+  <button type="submit " id="adduserBtn" class="btn btn-success btn-block">Register</button>
 </form>
 
     </div>
@@ -161,26 +171,44 @@ session_start();
 	<table  class="table table-striped table-bordered" id="table_data">
       <thead>
         <tr>
-          <th>Name</th>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Position</th>
           <th>Email</th>
-          <th>Type</th>
+          <th>Address</th>
+          <th>Role</th>
 		  <th>Status</th>
         </tr>
       </thead>
       <tbody>
+        <?php 
+        require_once 'include/connection.php';
+        $sql= 'SELECT * from adduser';
+        $stmt= $conn->prepare($sql);
+        $stmt->execute();
+        $result= $stmt->get_result();
+        while($row= $result->fetch_assoc()):
+        ?>
         <tr>
-          <td>John Doe</td>
-          <td>johndoe@example.com</td>
-          <td>Admin</td>
-		  <td><span class="badge badge-primary">Active</span></td>
-	
+          <td><?php echo $row['firstname']; ?></td>
+          <td><?php echo $row['lastname']; ?></td>
+          <td><?php echo $row['position']; ?></td>
+          <td><?php echo $row['email']; ?></td>
+          <td><?php echo $row['address']; ?></td>
+          <?php if($row['role']==='admin') {?>
+          <td><span class="badge rounded-pill badge-primary">Admin</span></td>
+          <?php }else{?>
+          <td><span class="badge rounded-pill badge-info">User</span></td>
+            <?php }?>
+          <?php if($row['status']==='active') {?>
+          <td><span class="badge rounded-pill badge-success">Active</span></td>
+          <?php }else{?>
+          <td><span class="badge rounded-pill badge-danger">Not active</span></td>
+            <?php }?>
+          
+         
         </tr>
-        <tr>
-          <td>Jane Doe</td>
-          <td>janedoe@example.com</td>
-          <td>User</td>
-		  <td><span class="badge badge-danger">Inactive</span></td>
-        </tr>
+        <?php endwhile; ?>
       </tbody>
     </table>
 			</div>
@@ -209,8 +237,6 @@ session_start();
   <script src="scripts/main.js"></script>
 
 
-
-
 	<script>
        $(document).ready(function() {
 		$("#toggleFormBtn").click(function() {
@@ -224,8 +250,57 @@ session_start();
 		});
 	</script>
 
+  <script>
+    $(document).ready(function(){
+      function generatePassword() {
+    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:\'",.<>/?`~';
+    let password = '';
+    for (let i = 0; i < 8; i++) {
+      password += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return password;
+  }
+  
+  var passwordInput = $('#password');
+  
+  $('#generatePasswordBtn').click(function() {
+     passwordInput.val(generatePassword()) ;
+     $('#password').remove('.passClass');
+
+  });
+  $('#togglePass').click(function() {
+  if (passwordInput.attr('type') === 'password') {
+    passwordInput.attr('type', 'text');
+  } else {
+    passwordInput.attr('type', 'password');
+  }
+});
 
 
+$('#add-user').submit(function(e){
+  e.preventDefault()
+   var fname= $('#fname').val();
+   var lname= $('#lname').val();
+   var position= $('#position').val();
+   var email= $('#email').val();
+   var password= $('#password').val();
+   var address= $('#address').val();
+   var selectedValue = $('input[name="role"]:checked').val();
+   var data = {submitBtn:'',fname:fname, lname:lname, position:position, email:email, password:password, 
+    address:address, selectedValue:selectedValue};
+    $.ajax({
+      type:'POST',
+      url:'include/login.inc.php',
+      data:data,
+      success:function(data){
+        alert(data);
+        window.location.reload();
+      }
+    })
+
+      });
+    })
+  </script>
 
 </body>
 </html>

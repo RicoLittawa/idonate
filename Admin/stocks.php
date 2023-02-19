@@ -16,22 +16,18 @@ session_start();
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" href="css/style.css">
 
-	<title>Dashboard</title>
+	<title>Stocks</title>
 </head>
 <body>
-	<!-- SIDEBAR -->	
-	<section class="bg-success" id="sidebar">
-  <a href="#" class="brand d-flex align-items-center justify-content-between">
-    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle mx-auto" style="width: 90px; height: 90px;margin-top:6rem;border:solid 5px #fff;">
-
-  </a>
-
+<div class="main-container">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+    <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
   <nav class="side-menu">
-	  <h6 class="ps-5 mb-3 text-light custom-title">Main Menu</h6>
     <ul class="nav">
       <li class="nav-item">
-        <a href="adminpage.php" class="nav-link active">
-          <i class='bx bxs-dashboard active'></i>
+        <a href="adminpage.php" class="nav-link">
+          <i class='bx bxs-dashboard'></i>
           <span class="text">Dashboard</span>
         </a>
       </li>
@@ -42,167 +38,133 @@ session_start();
         </a>
       </li>
       <li class="nav-item">
-        <a href="request.php" class="nav-link">
+        <a href="#" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
       </li>
       <li class="nav-item">
-        <a href="categorytables.php" class="nav-link">
-          <i class='bx bxs-package'></i>
+        <a href="#" class="nav-link active">
+          <i class='bx bxs-package active'></i>
           <span class="text">Stocks</span>
         </a>
       </li>
       <li class="nav-item">
         <a href="users.php" class="nav-link">
-          <i class='bx bxs-user-plus'></i>
+          <i class='bx bxs-user-plus' ></i>
           <span class="text">Users</span>
         </a>
       </li>
+      <li class="nav-item log-item">
+        <a href="./include/logout.php" class="nav-link log-link">
+        	<i class="fa-solid fa-right-from-bracket"></i>
+          <span class="text">Logout</span>
+       		</a>
+     	</li>
     </ul>
   </nav>
  
-</section>
-<!-- SIDEBAR -->
+    </div>
 
-
-<section class="container">
-	<div class="mb-4 custom-breadcrumb">
-	<h1 class="fs-1 breadcrumb-title">Dashboard</h1>
+<!--Main content -->
+  <div class="main-content">
+  <div class="content">
+  <div class="mb-4 custom-breadcrumb">
+	<h1 class="fs-1 breadcrumb-title">Stocks</h1>
 	<nav class="bc-nav d-flex">
 		<h6 class="mb-0">
 		<a href="" class="text-reset bc-path">Home</a>
 		<span>/</span>
-		<a href="" class="text-reset bc-path active">Dashboard</a>
+		<a href="" class="text-reset bc-path active">Stocks</a>
 		</h6>  
 	</nav>
-	<!-- Breadcrumb -->
 	</div>
 
-	<!--Main content -->
-	<div class="custom-container container d-flex align-items-center justify-content-between">
 
-	<div class="row g-3">
-  <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-  <div class="card">
-	<div class="card-header  bg-gradient bg-success"></div>
+  <!--reports -->
+  <div class="custom-container pb-3">
+    <div class="card">
       <div class="card-body">
-        <div class="row">
-        <span><h6 class=" h1-color card-names">DONORS</h6>  </span>
-        <div class="col">
-				  <h1 class="m-md-1 h1-color">50</h1>
-			  </div>
-			  <div class="col">
-          <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-user  fa-2x"></i></h4>
-			    </div>
-		    </div>
+        <table class="table" id="table_data">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Product name</th>
+              <th>Type</th>
+              <th>Unit</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          <t-body>
+            <?php 
+            require_once 'include/connection.php';
+            $sql= "SELECT category, productName, type, unit, SUM(quantity) as totalQuantity
+            FROM (
+                SELECT 'Can and Noodles' AS category, productName, type, unit, quantity FROM categcannoodles
+                UNION ALL
+                SELECT 'Drinking Water' AS category, productName, type, unit, quantity FROM categdrinkingwater
+                UNION ALL
+                SELECT 'Hygine Essentials' AS category, productName, type, unit, quantity FROM categhygineessential
+                UNION ALL
+                SELECT 'Infant Items' AS category, productName, type, unit, quantity FROM categinfant
+                UNION ALL
+                SELECT 'Meat and Grains' AS category, productName, type, unit, quantity FROM categmeatgrains
+                UNION ALL
+                SELECT 'Medicine' AS category, productName, type, unit, quantity FROM categmedicine
+                UNION ALL
+                SELECT 'Others' AS category, productName, type, unit, quantity FROM categdrinkingwater
+            ) AS allProducts
+            GROUP BY productName
+            ORDER BY productName ASC";
+            $stmt=$conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result(); 
+            ?>
+            <?php while($row= $result->fetch_assoc()): ?>
+            <tr>
+              <td  style="font-weight: bold;"><?php echo $row['category'] ;?></td>
+              <td><?php echo $row['productName'] ;?></td>
+              <?php if ($row['type']===null){ ?>
+              <td><span class="badge badge-warning">Empty</span></td>
+              <?php }else{?>
+              <td><?php echo htmlentities($row['type']) ?></td>
+              <?php }?>
+              <?php if ($row['unit']===null){ ?>
+              <td><span class="badge badge-warning">Empty</span></td>
+              <?php }else{?>
+              <td><?php echo htmlentities($row['unit']) ?></td>
+              <?php }?>
+              <td><?php echo $row['totalQuantity'] ;?></td>
+            </tr>
+            <?php endwhile; ?>
+          </t-body>
+        </table>
       </div>
     </div>
-  </div>
-  <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-  <div class="card">
-	<div class="card-header  bg-gradient bg-success"></div>
-      <div class="card-body">
-        <div class="row">
-        <span><h6 class=" h1-color card-names">REQUESTS</h6>  </span>
-        <div class="col">
-				  <h1 class="m-md-1 h1-color">50</h1>
-			  </div>
-			  <div class="col">
-          <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-envelope  fa-2x"></i></h4>
-			    </div>
-		    </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-  <div class="card">
-	<div class="card-header  bg-gradient bg-success"></div>
-      <div class="card-body">
-        <div class="row">
-        <span><h6 class=" h1-color card-names">GIVEN</h6>  </span>
-        
-        <div class="col">
-       
-				  <h1 class="m-md-1 h1-color">12</h1>
-			  </div>
-			  <div class="col">
-				  <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-gift fa-2x"></i></h4>
-			    </div>
-		    </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-s-12 col-md-12 col-lg-6">
-  <div class="card my-fixed-height">
-      <div class="card-body">
-      <canvas class="" id="myChart"></canvas>
-      </div>
-    </div>
-  </div>
-  <div class="col-s-12 col-md-12 col-lg-6">
-  <div class="card my-fixed-height">
-      <div class="card-body">
-      <table class="table table-striped table-bordered" style="width:100%" id="table_data">
-  <thead>
-    <tr>
-      <th scope="col">Category</th>
-      <th scope="col">Total</th>
-      <th scope="col">View</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Can Goods/ Noodles</td>
-      <td>10000</td>
-      <td><a href="">Link</a></td>
-    </tr>
-    <tr>
-      <td>Hygine Essentials</td>
-      <td>500</td>
-      <td><a href="">Link</a></td>
-    </tr>
- 
- 
-  </tbody>
-</table>
+
+  
+<!--End of main content -->
       </div>
     </div>
   </div>
 </div>
 
-
-	</div>
+  
 	
-	</section>
 	
 
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>	
 	<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-  	<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
+  <script src="scripts/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
 
 
-	<script>
-	  $(document).ready(function () {
-			$('#table_data').DataTable({
-			"pagingType":"full_numbers",
-			"lengthMenu":[
-			[10,25,50,-1],
-			[10,25,50,"All"]],
-			responsive:true,
-			language:{
-				search:"_INPUT_",
-				searchPlaceholder: "Search Records",
-			}
 
-			});
-		});
-	</script>
 	<script>
        $(document).ready(function() {
 		$("#toggleFormBtn").click(function() {

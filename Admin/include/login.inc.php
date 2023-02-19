@@ -1,53 +1,18 @@
 <?php 
-if(isset($_POST['login-submit'])){
-    require_once 'connection.php';
-    $Email = $_POST['userEmail'];
-    $Password = $_POST['userPassword'];
-    if (empty($Email)||empty($Password)){
-        header("Location: ../loginforms/login.php?error=emptyfields");
-        exit();
-    }   
-    else{
-        $sql = "SELECT *FROM useradmin WHERE email=?";
-        $stmt = mysqli_stmt_init($conn);
-        if(!mysqli_stmt_prepare($stmt,$sql)){
-            header("Location: ../loginforms/login.php?error=sqlerror");
-            exit();
-        }
-        else{
-            mysqli_stmt_bind_param($stmt,"s", $Email);
-            mysqli_stmt_execute($stmt);
-            $result= mysqli_stmt_get_result($stmt);
-        
-        if($row= mysqli_fetch_assoc($result)){
-            $pwdCheck = password_verify($Password, $row['pwdUsers']);
-            if ($pwdCheck == false){
-                header("Location: ../loginforms/login.php?error=wrongpassword");
-                exit();
+require_once 'connection.php';
+if(isset($_POST['submitBtn'])){
+   $fname= $_POST['fname'];
+   $lname= $_POST['lname'];
+   $position= $_POST['position'];
+   $email= $_POST['email'];
+   $password= $_POST['password'];
+   $address= $_POST['address'];
+   $selectedValue= $_POST['selectedValue'];
 
-            }
-            else if ($pwdCheck == true){
-                session_start();
-                $_SESSION['email'] = $row['email'];
-                $_SESSION['name'] = $row['name'];
-                $_SESSION['id'] = $row['uID'];
-                header("Location: ../adminpage.php");
-            exit();
-            }
-            else{
-                header("Location: login/login.php?error=wrongpassword");
-                exit();
-            }
-             }
-             else{
-                header("Location: ../loginforms/login.php?error=nouser");
-                exit();
-             }
-        }
-    }
-}
-
-else{
-    header("Location: ../loginforms/login.php.php");
-    exit();
+   $sql= 'INSERT into adduser (firstname,lastname,position,email,pwdUsers,address,role) VALUES(?,?,?,?,?,?,?)';
+   $stmt= $conn->prepare($sql);
+   $hashPW= password_hash($password, PASSWORD_DEFAULT);
+   $stmt->bind_param('sssssss', $fname,$lname,$position,$email,$hashPW,$address,$selectedValue);
+   $stmt->execute();
+   echo 'success';
 }

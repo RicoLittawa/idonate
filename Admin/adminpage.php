@@ -54,7 +54,7 @@ session_start();
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="stocks.php" class="nav-link">
           <i class='bx bxs-package'></i>
           <span class="text">Stocks</span>
         </a>
