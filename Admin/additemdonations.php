@@ -56,6 +56,11 @@ function fill_region_select_box($conn)
 	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+
+
 
 
 	<title>Add Donations</title>
@@ -467,9 +472,9 @@ function fill_region_select_box($conn)
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
 	<script src="scripts/sweetalert2.all.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="scripts/main.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 	<!--Here is the scripts for functions -->
 
@@ -1039,25 +1044,41 @@ function fill_region_select_box($conn)
 	</script>
 	<Script>
 		$(document).ready(function() {
-			$('#add-form').on('focus', '.name_items', function(e) {
+  $('.name_items').autocomplete({
+    source: function(request, response) {
+      $.ajax({
+        type: 'POST',
+        url: 'include/viewid.php',
+        dataType: 'json',
+        data: {
+          keyword: request.term
+        },
+        success: function(data) {
+          response($.map(data, function(item) {
+            return {
+              label: item.product_name,
+              value: item.product_name
+            };
+          }));
+        }
+      });
+    },
+    minLength: 1,
+    select: function(event, ui) {
+      $(this).val(ui.item.value);
+      return false;
+    },
+    focus: function(event, ui) {
+      $(this).val(ui.item.value);
+      return false;
+    }
+  }).autocomplete("instance")._renderItem = function(ul, item) {
+    return $("<li>")
+      .append("<div>" + item.label + "</div>")
+      .appendTo(ul);
+  };
+});
 
-				$(this).autocomplete({
-					source: 'include/viewid.php',
-					minLength: 1,
-					select: function(event, ui) {
-						$('#name_items').val(ui.item.value);
-					}
-
-				}).data('ui-autocomplete')._renderItem = function(ul, item) {
-					return $('<li class="ui-autocomplete-row"></li>').data('item.autocomplete', item)
-						.append(item.label)
-						.appendTo(ul);
-
-				}
-
-
-			});
-		});
 	</Script>
 
 

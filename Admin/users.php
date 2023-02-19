@@ -114,6 +114,12 @@ session_start();
         <label class="form-label" for="lname">Last name</label>
       </div>
     </div>
+    <div class="col">
+      <div class="form-outline">
+        <input type="text" id="position" class="form-control" placeholder="e.g. Brgy Captain"/>
+        <label class="form-label" for="position">Position</label>
+      </div>
+    </div>
   </div>
 
   <!-- Email and Password inputs -->

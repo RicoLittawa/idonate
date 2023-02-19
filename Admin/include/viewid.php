@@ -135,25 +135,25 @@ if (isset($_GET['viewTemp'])){
  
  }
 
- if(isset($_GET["term"])){
-    $search= "%".$_GET['term']."%";
-    $autoS= 'SELECT * from categ_products WHERE product_name LIKE ?';
-    $stmt= $conn->prepare($autoS);
-    $stmt->bind_param('s',$search);
+ if (isset($_POST['keyword'])) {
+    $keyword = "%" . $_POST['keyword'] . "%";
+    $autoS = 'SELECT * FROM categ_products WHERE product_name LIKE ? ORDER BY product_name LIMIT 0,6';
+    $stmt = $conn->prepare($autoS);
+    $stmt->bind_param('s', $keyword);
     $stmt->execute();
     $result = $stmt->get_result();
-    $data = $result->fetch_all(MYSQLI_ASSOC);
-    $output= array();
-    foreach ($data as $row){
-        $temp_array=array();
-        $temp_array['value']=$row['product_name'];
-        $temp_array['label'] =$row['product_name'];
-
-        $output[]= $temp_array;
+    $response = array();
+    if (!empty($result)) {
+      while ($row = $result->fetch_assoc()) {
+        $response[] = array(
+          'product_name' => $row['product_name']
+        );
+      }
     }
-    echo json_encode($output);
- }
- 
+    echo json_encode($response);
+  }
+  
+
 
  //update announcement
  if (isset($_GET['updateAnnounce'])){

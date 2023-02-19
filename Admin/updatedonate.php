@@ -290,7 +290,7 @@ function fill_category_select_box($conn)
 							<span style="font-size: 20px;">2</span>
 								</h6>
 								<div class="mt-3 ps-3" style="display: inline-block; color:#4d5157;">
-									<h6 style="font-size:20px;"><span>Donation Type and Category</span></h6>
+									<h6 style="font-size:20px;"><span>List of Donations</span></h6>
 								</div>
 							</div>
 						</div>
@@ -301,9 +301,9 @@ function fill_category_select_box($conn)
 								<thead>
 									<tr>
 										<th>Product Name</th>
-										<th>Type</th>
-										<th>Quantity</th>
+										<td>Type</td>
 										<th>Unit</th>
+										<th>Quantity</th>
 									</tr>
 								</thead>
 								<tbody>
