@@ -659,99 +659,63 @@ function fill_region_select_box($conn)
 			$(document).on('click', '#saveD', function(e) {
 				e.preventDefault();
 
-				var pnCN = $('.pnCN');
-				var qCN = $('.qCN');
-				var pnHY = $('.pnHY');
-				var qHY = $('.qHY');
-				var pnII = $('.pnII');
-				var qII = $('.qII');
-				var pnDW = $('.pnDW');
-				var qDW = $('.qDW');
-				//get data with select
-				var pnMG = $('.pnMG');
-				var qMG = $('.qMG');
-				var typeMG = $('.typeMG');
-				var unitMG = $('.unitMG');
-				var pnME = $('.pnME');
-				var qME = $('.qME');
-				var typeME = $('.typeME');
-				var unitME = $('.unitME');
-				var pnOT = $('.pnOT');
-				var qOT = $('.qOT');
-				var typeOT = $('.typeOT');
-				var unitOT = $('.unitOT');
+				
+  // Items with no select
+  var pnCN_arr = [];
+  var qCN_arr = [];
+  var pnHY_arr = [];
+  var qHY_arr = [];
+  var pnII_arr = [];
+  var qII_arr = [];
+  var pnDW_arr = [];
+  var qDW_arr = [];
+
+  // Items with select options
+  var pnMG_arr = [];
+  var qMG_arr = [];
+  var typeMG_arr = [];
+  var unitMG_arr = [];
+  var pnME_arr = [];
+  var qME_arr = [];
+  var typeME_arr = [];
+  var unitME_arr = [];
+  var pnOT_arr = [];
+  var qOT_arr = [];
+  var typeOT_arr = [];
+  var unitOT_arr = [];
+
+  // Check which categories are selected
+  var result = [];
+  var x = 0;
+  $('.selectCateg:checked').each(function() {
+    result[x++] = $(this).val();
+  });
+
+  // Push data into respective arrays
+  $('.pnCN').each(function() { pnCN_arr.push($(this).val()); });
+  $('.qCN').each(function() { qCN_arr.push($(this).val()); });
+  $('.pnHY').each(function() { pnHY_arr.push($(this).val()); });
+  $('.qHY').each(function() { qHY_arr.push($(this).val()); });
+  $('.pnII').each(function() { pnII_arr.push($(this).val()); });
+  $('.qII').each(function() { qII_arr.push($(this).val()); });
+  $('.pnDW').each(function() { pnDW_arr.push($(this).val()); });
+  $('.qDW').each(function() { qDW_arr.push($(this).val()); });
+  $('.pnMG').each(function() { pnMG_arr.push($(this).val()); });
+  $('.qMG').each(function() { qMG_arr.push($(this).val()); });
+  $('.typeMG').each(function() { typeMG_arr.push($(this).val()); });
+  $('.unitMG').each(function() { unitMG_arr.push($(this).val()); });
+  $('.pnME').each(function() { pnME_arr.push($(this).val()); });
+  $('.qME').each(function() { qME_arr.push($(this).val()); });
+  $('.typeME').each(function() { typeME_arr.push($(this).val()); });
+  $('.unitME').each(function() { unitME_arr.push($(this).val()); });
+  $('.pnOT').each(function() { pnOT_arr.push($(this).val()); });
+  $('.qOT').each(function() { qOT_arr.push($(this).val()); });
+  $('.typeOT').each(function() { typeOT_arr.push($(this).val());});
+  $('.unit').each(function() { unit_arr.push($(this).val());});
 
 
-				//no select
-				var pnCN_arr = [];
-				var qCN_arr = [];
-				var pnHY_arr = [];
-				var qHY_arr = [];
-				var pnII_arr = [];
-				var qII_arr = [];
-				var pnDW_arr = [];
-				var qDW_arr = [];
 
-				//with select options
-				var pnMG_arr = [];
-				var qMG_arr = [];
-				var typeMG_arr = [];
-				var unitMG_arr = [];
-				var pnME_arr = [];
-				var qME_arr = [];
-				var typeME_arr = [];
-				var unitME_arr = [];
-				var pnOT_arr = [];
-				var qOT_arr = [];
-				var typeOT_arr = [];
-				var unitOT_arr = [];
-				var x = 0;
-				var result = [];
-				$('.selectCateg:checked').each(function() {
-					result[x++] = $(this).val();
-				});
 
-				for (var i = 0; i < pnCN.length; i++) {
-					pnCN_arr.push($(pnCN[i]).val());
-					qCN_arr.push($(qCN[i]).val());
-
-				}
-				for (var i = 0; i < pnHY.length; i++) {
-					pnHY_arr.push($(pnHY[i]).val());
-					qHY_arr.push($(qHY[i]).val());
-
-				}
-				for (var i = 0; i < pnII.length; i++) {
-					pnII_arr.push($(pnII[i]).val());
-					qII_arr.push($(qII[i]).val());
-
-				}
-				for (var i = 0; i < pnDW.length; i++) {
-					pnDW_arr.push($(pnDW[i]).val());
-					qDW_arr.push($(qDW[i]).val());
-
-				}
-				for (var i = 0; i < pnMG.length; i++) {
-					pnMG_arr.push($(pnMG[i]).val());
-					typeMG_arr.push($(typeMG[i]).val());
-					qMG_arr.push($(qMG[i]).val());
-					unitMG_arr.push($(unitMG[i]).val());
-
-				}
-				for (var i = 0; i < pnME.length; i++) {
-					pnME_arr.push($(pnME[i]).val());
-					typeME_arr.push($(typeME[i]).val());
-					qME_arr.push($(qME[i]).val());
-					unitME_arr.push($(unitME[i]).val());
-
-				}
-				for (var i = 0; i < pnOT.length; i++) {
-					pnOT_arr.push($(pnOT[i]).val());
-					typeOT_arr.push($(typeOT[i]).val());
-					qOT_arr.push($(qOT[i]).val());
-					unitOT_arr.push($(unitOT[i]).val());
-
-				}
 				var ref_id = $('#reference_id').val();
 				var fname = $('#fname').val();
 				var region = $('#region').val();
@@ -1032,8 +996,8 @@ function fill_region_select_box($conn)
 		});
 	</script>
 	<Script>
-		$(document).ready(function() {
-  $('.name_items').autocomplete({
+$(document).on('focus', '.name_items', function() {
+  $(this).autocomplete({
     source: function(request, response) {
       $.ajax({
         type: 'POST',
@@ -1067,6 +1031,7 @@ function fill_region_select_box($conn)
       .appendTo(ul);
   };
 });
+
 
 	</Script>
 

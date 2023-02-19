@@ -15,7 +15,7 @@ session_start();
 	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" href="css/style.css">
-
+  
 	<title>User Details</title>
 </head>
 <body>
@@ -116,7 +116,7 @@ session_start();
     </div>
     <div class="col">
       <div class="form-outline">
-        <input type="text" id="position" class="form-control" placeholder="e.g. Brgy Captain"/>
+        <input type="text" id="position" class="form-control" placeholder="e.g. Brgy Captain/Employee"/>
         <label class="form-label" for="position">Position</label>
       </div>
     </div>
@@ -127,19 +127,17 @@ session_start();
     <input type="email" id="email" class="form-control" />
     <label class="form-label" for="email">Email address</label>
   </div>
-  <div class="row">
-    <div class="col">
-      
-    </div>
-  </div>
-  <div class="input-group mb-4">
-  <input type="password" class="form-control" id="password" placeholder="Password">
+
+  <div class="input-group form-outline mb-4">
+   <input type="password" class="form-control" id="password">
   <div class="input-group-append">
-  <button class="btn h-100" type="button" id="togglePass">
-      <i class="fa fa-eye"></i>
-    </button>
-  <button class="btn btn-success h-100" type="button" id="generatePasswordBtn">Generate Password</button>
+      <button class="btn btn-success h-100" type="button" id="generatePasswordBtn">Generate Password</button>
   </div>
+  <div class="input-group-append">
+    <button class="btn btn-secondary h-100" type="button" id="togglePass">
+      <i class="fa fa-eye"></i>    </button>
+  </div>
+  <label class="form-label" for="password">Password</label>
 </div>
 
   <!-- Address input -->
@@ -228,10 +226,10 @@ session_start();
 
 
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>	
 	<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-  	<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
   <script src="scripts/main.js"></script>
@@ -264,41 +262,107 @@ session_start();
   var passwordInput = $('#password');
   
   $('#generatePasswordBtn').click(function() {
-     passwordInput.val(generatePassword()) ;
-     $('#password').remove('.passClass');
+  passwordInput.val(generatePassword());
+  $('label[for="password"]').hide();
+});
 
-  });
-  $('#togglePass').click(function() {
+$('#password').keyup(function() {
+  $('label[for="password"]').toggle($('#password').val() === '');
+});
+
+$('#togglePass').click(function(){
   if (passwordInput.attr('type') === 'password') {
     passwordInput.attr('type', 'text');
   } else {
     passwordInput.attr('type', 'password');
   }
+})
+
+$('#add-user').submit(function(e) {
+  e.preventDefault();
+
+  // Get form field values
+  var fname = $('#fname').val();
+  var lname = $('#lname').val();
+  var position = $('#position').val();
+  var email = $('#email').val();
+  var password = $('#password').val();
+  var address = $('#address').val();
+  var selectedValue = $('input[name="role"]:checked').val();
+
+  // Check for empty required fields
+  if (!fname) {
+    $('#fname').addClass('is-invalid');
+    return false;
+  } else {
+    $('#fname').removeClass('is-invalid');
+  }
+
+  if (!lname) {
+    $('#lname').addClass('is-invalid');
+    return false;
+  } else {
+    $('#lname').removeClass('is-invalid');
+  }
+
+  if (!position) {
+    $('#position').addClass('is-invalid');
+    return false;
+  } else {
+    $('#position').removeClass('is-invalid');
+  }
+
+  if (!email) {
+    $('#email').addClass('is-invalid');
+    return false;
+  } else {
+    $('#email').removeClass('is-invalid');
+  }
+
+  if (!password) {
+    $('#password').addClass('is-invalid');
+    return false;
+  } else {
+    $('#password').removeClass('is-invalid');
+  }
+
+  if (!address) {
+    $('#address').addClass('is-invalid');
+    return false;
+  } else {
+    $('#address').removeClass('is-invalid');
+  }
+
+  if (!selectedValue) {
+    $('input[name="role"]').addClass('is-invalid');
+    return false;
+  } else {
+    $('input[name="role"]').removeClass('is-invalid');
+  }
+
+  // Submit the form data with AJAX
+  var data = {
+    submitBtn: '',
+    fname: fname,
+    lname: lname,
+    position: position,
+    email: email,
+    password: password,
+    address: address,
+    selectedValue: selectedValue
+  };
+
+  $.ajax({
+    type: 'POST',
+    url: 'include/login.inc.php',
+    data: data,
+    success: function(data) {
+      alert(data);
+      window.location.reload();
+    }
+  });
 });
 
-
-$('#add-user').submit(function(e){
-  e.preventDefault()
-   var fname= $('#fname').val();
-   var lname= $('#lname').val();
-   var position= $('#position').val();
-   var email= $('#email').val();
-   var password= $('#password').val();
-   var address= $('#address').val();
-   var selectedValue = $('input[name="role"]:checked').val();
-   var data = {submitBtn:'',fname:fname, lname:lname, position:position, email:email, password:password, 
-    address:address, selectedValue:selectedValue};
-    $.ajax({
-      type:'POST',
-      url:'include/login.inc.php',
-      data:data,
-      success:function(data){
-        alert(data);
-        window.location.reload();
-      }
-    })
-
-      });
     })
   </script>
 
