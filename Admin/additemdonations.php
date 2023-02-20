@@ -254,7 +254,7 @@ function fill_region_select_box($conn)
 						<div class="col">
 							<div class="form-group cn mt-3">
 								<div class="form-check form-check-inline">
-									<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box1" value="cannoodles">
+									<input class="form-check-input selectCateg" type="checkbox" id="box1" value="cannoodles">
 									<label class="form-check-label" for="">Can Goods & Noodles</label>
 								</div>
 								<table class="table cnTB col table-bordered" id="cnTB">
@@ -276,7 +276,7 @@ function fill_region_select_box($conn)
 							</div>
 							<div class="form-group hy">
 								<div class="form-check form-check-inline">
-									<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box2" value="hygine">
+									<input class="form-check-input selectCateg" type="checkbox" id="box2" value="hygine">
 									<label class="form-check-label" for="">Hygiene Essentials</label>
 								</div>
 								<table class="table hyTB col table-bordered" id="hyTB">
@@ -298,7 +298,7 @@ function fill_region_select_box($conn)
 							</div>
 							<div class="form-group ii">
 								<div class="form-check form-check-inline">
-									<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box3" value="infant">
+									<input class="form-check-input selectCateg" type="checkbox" id="box3" value="infant">
 									<label class="form-check-label" for="">Infant Items(*Formula not included)</label>
 								</div>
 								<table class="table iiTB col table-bordered" id="iiTB">
@@ -320,7 +320,7 @@ function fill_region_select_box($conn)
 							</div>
 							<div class="form-group dw">
 								<div class="form-check form-check-inline">
-									<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box4" value="drink">
+									<input class="form-check-input selectCateg" type="checkbox" id="box4" value="drink">
 									<label class="form-check-label" for="">Drinking Water</label>
 								</div>
 								<table class="table dwTB col table-bordered" id="dwTB">
@@ -342,7 +342,7 @@ function fill_region_select_box($conn)
 							</div>
 							<div class="form-group mg">
 								<div class="form-check form-check-inline">
-									<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box5" value="meat">
+									<input class="form-check-input selectCateg" type="checkbox" id="box5" value="meat">
 									<label class="form-check-label" for="">Meats/Grains</label>
 								</div>
 								<table class="table mgTB col table-bordered" id="mgTB">
@@ -377,7 +377,7 @@ function fill_region_select_box($conn)
 							</div>
 							<div class="form-group me">
 								<div class="form-check form-check-inline">
-									<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box6" value="meds">
+									<input class="form-check-input selectCateg" type="checkbox" id="box6" value="meds">
 									<label class="form-check-label" for="">Medicine</label>
 								</div>
 								<table class="table meTB col table-bordered" id="meTB">
@@ -415,7 +415,7 @@ function fill_region_select_box($conn)
 							</div>
 							<div class="form-group ot">
 								<div class="form-check form-check-inline">
-									<input class="form-check-input selectCateg" name="selector[]" type="checkbox" id="box7" value="other">
+									<input class="form-check-input selectCateg" type="checkbox" id="box7" value="other">
 									<label class="form-check-label" for="">Others (Type n/a if there is no type or unit)</label>
 								</div>
 								<table class="table otTB col table-bordered" id="otTB">
@@ -481,60 +481,46 @@ function fill_region_select_box($conn)
 
 	<script>
 		$(document).ready(function() {
-			var count = 0;
 
-			function add_CN(count) {
-
-				var appendCN = '';
-				appendCN += '<tr><td><input type="text" class="form-control name_items pnCN" id="pnCN"></td><td><input type="number" class="form-control qCN" id="qCN"></td>';
-				var removeCnBtn = '';
+			var count= 0;
+			//function to identify each button and add dynamic row to table
+			function addRowButton(buttonType) {
+				let html = '';
+				let remove = '';
+			if (buttonType === 'buttonCN') {
+				html += '<tr><td><input type="text" class="form-control name_items pnCN" id="pnCN"></td><td><input type="number" class="form-control qCN" id="qCN"></td>';
 				if (count > 0) {
-					removeCnBtn = '<button type="button" name="removeCN" id="removeTbCn" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button" name="removeCN"  class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>';
 				}
-				appendCN += '<td>' + removeCnBtn + '</td></tr>';
-				return appendCN;
+				html += '<td>' + remove + '</td></tr>';
+				return html;
 			}
-
-			function add_HY(count) {
-
-				var appendHY = '';
-				appendHY += '<tr><td><input type="text" class="form-control name_items pnHY" id="pnHY"></td><td><input type="number" class="form-control qHY" id="qHY"></td>';
-				var removeHyBtn = '';
+			else if (buttonType === 'buttonHY') {
+				html += '<tr><td><input type="text" class="form-control name_items pnHY" id="pnHY"></td><td><input type="number" class="form-control qHY" id="qHY"></td>';
 				if (count > 0) {
-					removeHyBtn = '<button type="button" name="removeHY" id="removeTbHy" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+					remove += '<button type="button" name="removeHY"  class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>';
 				}
-				appendHY += '<td>' + removeHyBtn + '</td></tr>';
-				return appendHY;
-			}
-
-			function add_II(count) {
-
-				var appendII = '';
-				appendII += '<tr><td><input type="text" class="form-control name_items pnII" id="pnII"></td><td><input type="number" class="form-control qII" id="qII"></td>';
-				var removeIiBtn = '';
+				html += '<td>' + remove + '</td></tr>';
+				return html;
+			} 
+			else if (buttonType=== 'buttonII'){
+				html+= '<tr><td><input type="text" class="form-control name_items pnII" id="pnII"></td><td><input type="number" class="form-control qII" id="qII"></td>';
 				if (count > 0) {
-					removeIiBtn = '<button type="button" name="removeII" id="removeTbIi" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button" name="removeII" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>'
 				}
-				appendII += '<td>' + removeIiBtn + '</td></tr>';
-				return appendII;
+				html+= '<td>' + remove + '</td></tr>';
+				return html;
 			}
-
-			function add_DW(count) {
-
-				var appendDW = '';
-				appendDW += '<tr><td><input type="text" class="form-control name_items pnDW" id="pnDW"></td><td><input type="number" class="form-control qDW" id="qDW"></td>';
-				var removeDwBtn = '';
+			else if (buttonType=== 'buttonDW'){
+				html += '<tr><td><input type="text" class="form-control name_items pnDW" id="pnDW"></td><td><input type="number" class="form-control qDW" id="qDW"></td>';
 				if (count > 0) {
-					removeDwBtn = '<button type="button" name="removeDW" id="removeTbDw" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button" name="removeDW" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>'
 				}
-				appendDW += '<td>' + removeDwBtn + '</td></tr>';
-				return appendDW;
+				html += '<td>' + remove + '</td></tr>';
+				return html;
 			}
-
-			function add_MG(count) {
-
-				var appendMG = '';
-				appendMG += '<tr><td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>' +
+			else if (buttonType=== 'buttonMG'){
+				html += '<tr><td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>' +
 					'<td><select class="form-control typeMG" name="typeMG" id="typeMG">' +
 					'<option value="">--</option>' +
 					'<option value="Frozen">Frozen</option>' +
@@ -547,19 +533,14 @@ function fill_region_select_box($conn)
 					'<option value="Kilograms">Kilograms</option>' +
 					'<option value="Grams">Grams</option>' +
 					'</select></td>';
-
-				var removeMgBtn = '';
 				if (count > 0) {
-					removeMgBtn = '<button type="button" name="removeMG" id="removeTbMg" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button" name="removeMG" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>'
 				}
-				appendMG += '<td>' + removeMgBtn + '</td></tr>';
-				return appendMG;
+				html += '<td>' + remove + '</td></tr>';
+				return html;
 			}
-
-			function add_ME(count) {
-
-				var appendME = '';
-				appendME += '<tr><td><input type="text" class="form-control name_items pnME" id="pnME"></td>' +
+			else if (buttonType=== 'buttonME'){
+				html += '<tr><td><input type="text" class="form-control name_items pnME" id="pnME"></td>' +
 					'<td><select class="form-control typeME" name="typeME" id="typeME">' +
 					'<option value="">--</option>' +
 					'<option value="Tablet">Tablet</option>' +
@@ -575,160 +556,132 @@ function fill_region_select_box($conn)
 					'<option value="Micrograms">Micrograms</option>' +
 					'<option value="None">None</option>' +
 					'</select></td>';
-
-				var removeMeBtn = '';
 				if (count > 0) {
-					removeMeBtn = '<button type="button" name="removeME" id="removeTbMe" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button" name="removeME" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>'
 				}
-				appendME += '<td>' + removeMeBtn + '</td></tr>';
-				return appendME;
+				html += '<td>' + remove + '</td></tr>';
+				return html;
 			}
-
-			function add_OT(count) {
-
-				var appendOT = '';
-				appendOT += '<tr><td><input type="text" class="form-control pnOT" id="pnOT"></td>' +
+			else if (buttonType=== 'buttonOT'){
+				html += '<tr><td><input type="text" class="form-control pnOT" id="pnOT"></td>' +
 					'<td><input type="text" class="form-control typeOT" id="typeOT"></td>' +
 					'<td><input type="number" class="form-control qOT" id="qOT"></td>' +
 					'<td><input type="text" class="form-control unituOT" id="unituOT"></td>';
-
-				var removeOtBtn = '';
 				if (count > 0) {
-					removeOtBtn = '<button type="button" name="removeOT" id="removeTbOt" class="btn btn-danger"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button" name="removeOT" id="removeTbOt" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>'
 				}
-				appendOT += '<td>' + removeOtBtn + '</td></tr>';
-				return appendOT;
+				html += '<td>' + remove + '</td></tr>';
+				return html;
 			}
-			//add to cn
-			$(document).on('click', '#addCN', function() {
-				count++;
-				$('.cnBody').append(add_CN(count));
-			})
-			$(document).on('click', '#removeTbCn', function() {
+			}
+			//remove row on specific table
+			$(document).on('focus', '.remove',function(){
 				$(this).closest('tr').remove();
-			});
-			//add to hy
-			$(document).on('click', '#addHY', function() {
-				count++;
-				$('.hyBody').append(add_HY(count));
 			})
-			$(document).on('click', '#removeTbHy', function() {
-				$(this).closest('tr').remove();
-			});
-			//add to ii
-			$(document).on('click', '#addII', function() {
-				count++;
-				$('.iiBody').append(add_II(count));
-			})
-			$(document).on('click', '#removeTbIi', function() {
-				$(this).closest('tr').remove();
-			});
-			//add to dw
-			$(document).on('click', '#addDW', function() {
-				count++;
-				$('.dwBody').append(add_DW(count));
-			})
-			$(document).on('click', '#removeTbDw', function() {
-				$(this).closest('tr').remove();
-			});
-			//add to mg
-			$(document).on('click', '#addMG', function() {
-				count++;
-				$('.mgBody').append(add_MG(count));
-			})
-			$(document).on('click', '#removeTbMg', function() {
-				$(this).closest('tr').remove();
-			});
-			//add to me
-			$(document).on('click', '#addME', function() {
-				count++;
-				$('.meBody').append(add_ME(count));
-			})
-			$(document).on('click', '#removeTbMe', function() {
-				$(this).closest('tr').remove();
-			});
-			//add to ot
-			$(document).on('click', '#addOT', function() {
-				count++;
-				$('.otBody').append(add_OT(count));
-			})
-			$(document).on('click', '#removeTbOt', function() {
-				$(this).closest('tr').remove();
-			});
 
-			$(document).on('click', '#saveD', function(e) {
-				e.preventDefault();
-
+			//append table rows
+			$('#addCN').click(function(){
+				count++;
+				$('#cnBody').append(addRowButton('buttonCN'))
 				
-  // Items with no select
-  var pnCN_arr = [];
-  var qCN_arr = [];
-  var pnHY_arr = [];
-  var qHY_arr = [];
-  var pnII_arr = [];
-  var qII_arr = [];
-  var pnDW_arr = [];
-  var qDW_arr = [];
+			})		
+			$('#addHY').click(function(){
+				count++
+				$('#hyBody').append(addRowButton('buttonHY'))
+			})
+			$('#addII').click(function(){
+				count++
+				$('#iiBody').append(addRowButton('buttonII'))
+			})
+			$('#addDW').click(function(){
+				count++
+				$('#dwBody').append(addRowButton('buttonDW'))
+			})
 
-  // Items with select options
-  var pnMG_arr = [];
-  var qMG_arr = [];
-  var typeMG_arr = [];
-  var unitMG_arr = [];
-  var pnME_arr = [];
-  var qME_arr = [];
-  var typeME_arr = [];
-  var unitME_arr = [];
-  var pnOT_arr = [];
-  var qOT_arr = [];
-  var typeOT_arr = [];
-  var unitOT_arr = [];
+			$('#addMG').click(function(){
+				count++
+				$('#mgBody').append(addRowButton('buttonMG'))
+			})
 
-  // Check which categories are selected
-  var result = [];
-  var x = 0;
-  $('.selectCateg:checked').each(function() {
-    result[x++] = $(this).val();
-  });
+			$('#addME').click(function(){
+				count++
+				$('#meBody').append(addRowButton('buttonME'))
+			})
 
-  // Push data into respective arrays
-  $('.pnCN').each(function() { pnCN_arr.push($(this).val()); });
-  $('.qCN').each(function() { qCN_arr.push($(this).val()); });
-  $('.pnHY').each(function() { pnHY_arr.push($(this).val()); });
-  $('.qHY').each(function() { qHY_arr.push($(this).val()); });
-  $('.pnII').each(function() { pnII_arr.push($(this).val()); });
-  $('.qII').each(function() { qII_arr.push($(this).val()); });
-  $('.pnDW').each(function() { pnDW_arr.push($(this).val()); });
-  $('.qDW').each(function() { qDW_arr.push($(this).val()); });
-  $('.pnMG').each(function() { pnMG_arr.push($(this).val()); });
-  $('.qMG').each(function() { qMG_arr.push($(this).val()); });
-  $('.typeMG').each(function() { typeMG_arr.push($(this).val()); });
-  $('.unitMG').each(function() { unitMG_arr.push($(this).val()); });
-  $('.pnME').each(function() { pnME_arr.push($(this).val()); });
-  $('.qME').each(function() { qME_arr.push($(this).val()); });
-  $('.typeME').each(function() { typeME_arr.push($(this).val()); });
-  $('.unitME').each(function() { unitME_arr.push($(this).val()); });
-  $('.pnOT').each(function() { pnOT_arr.push($(this).val()); });
-  $('.qOT').each(function() { qOT_arr.push($(this).val()); });
-  $('.typeOT').each(function() { typeOT_arr.push($(this).val());});
-  $('.unit').each(function() { unit_arr.push($(this).val());});
+			$('#addOT').click(function(){
+				count++
+				$('#otBody').append(addRowButton('buttonOT'))
+			})
 
+			//save the data on  the forms
+			$(document).on('click', '#saveD', function(e) {
+				e.preventDefault();			
+			// Items with no select
+			var pnCN_arr = [];
+			var qCN_arr = [];
+			var pnHY_arr = [];
+			var qHY_arr = [];
+			var pnII_arr = [];
+			var qII_arr = [];
+			var pnDW_arr = [];
+			var qDW_arr = [];
 
+			// Items with select options
+			var pnMG_arr = [];
+			var qMG_arr = [];
+			var typeMG_arr = [];
+			var unitMG_arr = [];
+			var pnME_arr = [];
+			var qME_arr = [];
+			var typeME_arr = [];
+			var unitME_arr = [];
+			var pnOT_arr = [];
+			var qOT_arr = [];
+			var typeOT_arr = [];
+			var unitOT_arr = [];
 
+			// Check which categories are selected
+			var result = [];
+			var x = 0;
+			$('.selectCateg:checked').each(function() {
+				result[x++] = $(this).val();
+			});
 
-				var ref_id = $('#reference_id').val();
-				var fname = $('#fname').val();
-				var region = $('#region').val();
-				var province = $('#province').val();
-				var municipality = $('#municipality').val();
-				var barangay = $('#barangay').val();
-				var contact = $('#contact').val();
-				var email = $('#email').val();
-				var donation_date = $('#donation_date').val();
-				var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-				var varnumbers = /^\d+$/;
-				var inValid = /\s/;
-				var name_items = $('.name_items').val();
+	// Push data into respective arrays
+		$('.pnCN').each(function() { pnCN_arr.push($(this).val()); });
+		$('.qCN').each(function() { qCN_arr.push($(this).val()); });
+		$('.pnHY').each(function() { pnHY_arr.push($(this).val()); });
+		$('.qHY').each(function() { qHY_arr.push($(this).val()); });
+		$('.pnII').each(function() { pnII_arr.push($(this).val()); });
+		$('.qII').each(function() { qII_arr.push($(this).val()); });
+		$('.pnDW').each(function() { pnDW_arr.push($(this).val()); });
+		$('.qDW').each(function() { qDW_arr.push($(this).val()); });
+		$('.pnMG').each(function() { pnMG_arr.push($(this).val()); });
+		$('.qMG').each(function() { qMG_arr.push($(this).val()); });
+		$('.typeMG').each(function() { typeMG_arr.push($(this).val()); });
+		$('.unitMG').each(function() { unitMG_arr.push($(this).val()); });
+		$('.pnME').each(function() { pnME_arr.push($(this).val()); });
+		$('.qME').each(function() { qME_arr.push($(this).val()); });
+		$('.typeME').each(function() { typeME_arr.push($(this).val()); });
+		$('.unitME').each(function() { unitME_arr.push($(this).val()); });
+		$('.pnOT').each(function() { pnOT_arr.push($(this).val()); });
+		$('.qOT').each(function() { qOT_arr.push($(this).val()); });
+		$('.typeOT').each(function() { typeOT_arr.push($(this).val());});
+		$('.unit').each(function() { unit_arr.push($(this).val());});
+
+		var ref_id = $('#reference_id').val();
+		var fname = $('#fname').val();
+		var region = $('#region').val();
+		var province = $('#province').val();
+		var municipality = $('#municipality').val();
+		var barangay = $('#barangay').val();
+		var contact = $('#contact').val();
+		var email = $('#email').val();
+		var donation_date = $('#donation_date').val();
+		var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		var varnumbers = /^\d+$/;
+		var inValid = /\s/;
+		var name_items = $('.name_items').val();
 
 				var data = {
 					saveBtn: '',
@@ -762,6 +715,12 @@ function fill_region_select_box($conn)
 					typeOT_arr: typeOT_arr,
 					qOT_arr: qOT_arr,
 					unitOT_arr: unitOT_arr
+				}
+
+
+				function checkDataInput(checkValue){
+					
+
 				}
 				if ($('#box1').is(':checked')) {
 					var pn1 = '';

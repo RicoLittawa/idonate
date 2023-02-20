@@ -33,8 +33,6 @@
         $qOT_arr=$_POST['qOT_arr'];
         $unitOT_arr=$_POST['unitOT_arr'];
         $checkRes=$_POST['result'];
-       $null1='';
-       $null2='';
          foreach ($checkRes as $res){
              if ($res=='cannoodles'){
                   $count = 0;
@@ -46,7 +44,7 @@
                         
                         }
                         else {
-                            mysqli_stmt_bind_param($stmt,"sssss",$reference_id,$cn,$null1,$null2,$qCN_arr[$count]);
+                            mysqli_stmt_bind_param($stmt,"sssss",$reference_id,$cn,NULL,NULL,$qCN_arr[$count]);
                          mysqli_stmt_execute($stmt);
                    
                         }
@@ -76,7 +74,7 @@
                         
                         }
                         else {
-                            mysqli_stmt_bind_param($stmt,"sssss",$reference_id,$hy,$null1,$null2,$qHY_arr[$count]);
+                            mysqli_stmt_bind_param($stmt,"sssss",$reference_id,$hy,NULL,NULL,$qHY_arr[$count]);
                          mysqli_stmt_execute($stmt);
                    
                         }
@@ -104,7 +102,7 @@
                 
                 }
                 else {
-                    mysqli_stmt_bind_param($stmt,"sssss",$reference_id,$ii,$null1,$null2,$qII_arr[$count]);
+                    mysqli_stmt_bind_param($stmt,"sssss",$reference_id,$ii,NULL,NULL,$qII_arr[$count]);
                  mysqli_stmt_execute($stmt);
            
                 }
@@ -132,7 +130,7 @@
                         
                         }
                         else {
-                            mysqli_stmt_bind_param($stmt,"sssss",$reference_id,$dw,$null1,$null2,$qDW_arr[$count]);
+                            mysqli_stmt_bind_param($stmt,"sssss",$reference_id,$dw,NULL,NULL,$qDW_arr[$count]);
                          mysqli_stmt_execute($stmt);
                    
                         }
