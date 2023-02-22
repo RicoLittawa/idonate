@@ -1,7 +1,4 @@
-<?php
-session_start();
-
-	?>
+<?php include 'include/protect.php'?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -354,7 +351,7 @@ $('#add-user').submit(function(e) {
 
   $.ajax({
     type: 'POST',
-    url: 'include/login.inc.php',
+    url: 'include/register.inc.php',
     data: data,
     success: function(data) {
       alert(data);

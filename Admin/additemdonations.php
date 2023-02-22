@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+<?php include 'include/protect.php'?>
 <?php
 include '../Admin/include/connection.php';
 function fill_category_select_box($conn)
@@ -482,7 +480,7 @@ function fill_region_select_box($conn)
 	<script>
 		$(document).ready(function() {
 
-			var count= 0;
+			let count= 0;
 			//function to identify each button and add dynamic row to table
 			function addRowButton(buttonType) {
 				let html = '';
@@ -617,32 +615,32 @@ function fill_region_select_box($conn)
 			$(document).on('click', '#saveD', function(e) {
 				e.preventDefault();			
 			// Items with no select
-			var pnCN_arr = [];
-			var qCN_arr = [];
-			var pnHY_arr = [];
-			var qHY_arr = [];
-			var pnII_arr = [];
-			var qII_arr = [];
-			var pnDW_arr = [];
-			var qDW_arr = [];
+			let pnCN_arr = [];
+			let qCN_arr = [];
+			let pnHY_arr = [];
+			let qHY_arr = [];
+			let pnII_arr = [];
+			let qII_arr = [];
+			let pnDW_arr = [];
+			let qDW_arr = [];
 
 			// Items with select options
-			var pnMG_arr = [];
-			var qMG_arr = [];
-			var typeMG_arr = [];
-			var unitMG_arr = [];
-			var pnME_arr = [];
-			var qME_arr = [];
-			var typeME_arr = [];
-			var unitME_arr = [];
-			var pnOT_arr = [];
-			var qOT_arr = [];
-			var typeOT_arr = [];
-			var unitOT_arr = [];
+			let pnMG_arr = [];
+			let qMG_arr = [];
+			let typeMG_arr = [];
+			let unitMG_arr = [];
+			let pnME_arr = [];
+			let qME_arr = [];
+			let typeME_arr = [];
+			let unitME_arr = [];
+			let pnOT_arr = [];
+			let qOT_arr = [];
+			let typeOT_arr = [];
+			let unitOT_arr = [];
 
 			// Check which categories are selected
-			var result = [];
-			var x = 0;
+			let result = [];
+			let x = 0;
 			$('.selectCateg:checked').each(function() {
 				result[x++] = $(this).val();
 			});
@@ -669,21 +667,21 @@ function fill_region_select_box($conn)
 		$('.typeOT').each(function() { typeOT_arr.push($(this).val());});
 		$('.unit').each(function() { unit_arr.push($(this).val());});
 
-		var ref_id = $('#reference_id').val();
-		var fname = $('#fname').val();
-		var region = $('#region').val();
-		var province = $('#province').val();
-		var municipality = $('#municipality').val();
-		var barangay = $('#barangay').val();
-		var contact = $('#contact').val();
-		var email = $('#email').val();
-		var donation_date = $('#donation_date').val();
-		var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-		var varnumbers = /^\d+$/;
-		var inValid = /\s/;
-		var name_items = $('.name_items').val();
-
-				var data = {
+		let ref_id = $('#reference_id').val();
+		let fname = $('#fname').val();
+		let region = $('#region').val();
+		let province = $('#province').val();
+		let municipality = $('#municipality').val();
+		let barangay = $('#barangay').val();
+		let contact = $('#contact').val();
+		let email = $('#email').val();
+		let donation_date = $('#donation_date').val();
+		let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		let varnumbers = /^\d+$/;
+		let inValid = /\s/;
+		let name_items = $('.name_items').val();
+			//data object pass to ajax
+				let data = {
 					saveBtn: '',
 					result: result,
 					ref_id: ref_id,
@@ -716,31 +714,14 @@ function fill_region_select_box($conn)
 					qOT_arr: qOT_arr,
 					unitOT_arr: unitOT_arr
 				}
-				// checkBoxData= {
-				// 	cnProductName:"",
-				// 	cnQuantity:"",
-				// 	hyProductName:[],
-				// 	hyQuantity:[],
-				// 	iiProductName:[],
-				// 	iiQuantity:[],
-				// 	dwProductName:[],
-				// 	dwQuantity:[],
-				// 	mgProductName:[],
-				// 	mgQuantity:[],
-				// 	mgType:[],
-				// 	mgUnit:[],
-				// 	meProductName:[],
-				// 	meQuantity:[],
-				// 	meType:[],
-				// 	meUnit:[],
-				// 	otProductName:[],
-				// 	otQuantity:[],
-				// 	otType:[],
-				// 	otUnit:[],
+				//Variables for checking the empty input fields of checked checkbox
+				let cnProductName,cnQuantity,hyProductName,hyQuantity,iiProductName,iiQuantity,dwProductName,dwQuantity,
+				mgProductName,mgQuantity,mgType,mgUnit,meProductName,meQuantity,meType,meUnit,otProductName,otQuantity,otType,otUnit;
 
-				// }
+				/**If the box is check it will get the data of each input field then pass it
+				to the variable then check it if value of that input field is empty
+				 * */
 				if ($('#box1').is(':checked')) {
-					var cnProductName,cnQuantity;
 					$('.pnCN').each(function() {
 					 	 cnProductName= $(this).val();
 					})
@@ -749,7 +730,6 @@ function fill_region_select_box($conn)
 					})
 				}
 				if ($('#box2').is(':checked')) {
-					var hyProductName,hyQuantity;
 					$('.pnHY').each(function() {
 						hyProductName= $(this).val();
 					})
@@ -758,7 +738,6 @@ function fill_region_select_box($conn)
 					})
 				}
 				if ($('#box3').is(':checked')) {
-					var iiProductName,iiQuantity;
 					$('.pnII').each(function() {
 						iiProductName=$(this).val();
 					})
@@ -766,8 +745,7 @@ function fill_region_select_box($conn)
 						iiQuantity=$(this).val();
 					})
 				}
-				if ($('#box4').is(':checked')) {
-					var dwProductName,dwQuantity;
+				if ($('#box4').is(':checked')) { 
 					$('.pnDW').each(function() {
 						dwProductName=$(this).val();
 					})
@@ -776,7 +754,6 @@ function fill_region_select_box($conn)
 					})
 				}
 				if ($('#box5').is(':checked')) {
-					var mgProductName,mgQuantity,mgType,mgUnit;
 					$('.pnMG').each(function() {
 						mgProductName=$(this).val();
 					})
@@ -791,7 +768,6 @@ function fill_region_select_box($conn)
 					})
 				}
 				if ($('#box6').is(':checked')) {
-					var meProductName,meQuantity,meType,meUnit;
 					$('.pnME').each(function() {
 						meProductName=$(this).val();
 					})
@@ -806,7 +782,6 @@ function fill_region_select_box($conn)
 					})
 				}
 				if ($('#box7').is(':checked')) {
-					var otProductName,otQuantity,otType,otUnit;
 					$('.pnOT').each(function() {
 						otProductName=$(this).val();
 					})
@@ -820,6 +795,8 @@ function fill_region_select_box($conn)
 						otUnit=$(this).val();
 					})
 				}
+
+				//Validate the whole form
 				if (fname == "") {
 					Swal.fire('Field', "Please input your fullname", 'warning');
 					return false;

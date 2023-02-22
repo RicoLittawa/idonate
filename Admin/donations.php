@@ -1,5 +1,4 @@
-<?php
-session_start(); ?>
+<?php include 'include/protect.php' ?>
  <?php
  require_once "include/connection.php";
 

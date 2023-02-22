@@ -1,5 +1,4 @@
-<?php
-session_start(); ?>
+<?php include 'include/protect.php'?>
 <?php
 require_once "include/connection.php";
 if (isset($_GET["editdonate"])) {
@@ -371,23 +370,23 @@ function fill_category_select_box($conn)
 	<script>
 		$(document).ready(function() {
 			$('#testBtn').click(function(e) {
-				var valid = this.form.checkValidity();
+				let valid = this.form.checkValidity();
 				if (valid) {
 					e.preventDefault();
-					var donor_id = $('#donor_id').val();
-					var reference_id = $('#reference_id').val();
-					var fname = $('#fname').val();
-					var province = $('#province').val();
-					var region = $('#region').val();
-					var municipality = $('#municipality').val();
-					var barangay = $('#barangay').val();
-					var email = $('#email').val();
-					var donation_date = $('#donation_date').val();
-					var contact = $('#contact').val();
-					var emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-					var varnumbers = /^\d+$/;
-					var inValid = /\s/;
-					var data = {
+					let donor_id = $('#donor_id').val();
+					let reference_id = $('#reference_id').val();
+					let fname = $('#fname').val();
+					let province = $('#province').val();
+					let region = $('#region').val();
+					let municipality = $('#municipality').val();
+					let barangay = $('#barangay').val();
+					let email = $('#email').val();
+					let donation_date = $('#donation_date').val();
+					let contact = $('#contact').val();
+					let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+					let varnumbers = /^\d+$/;
+					let inValid = /\s/;
+					let data = {
 						updateBtn: '',
 						donor_id: donor_id,
 						reference_id: reference_id,
@@ -424,7 +423,7 @@ function fill_category_select_box($conn)
 						$('#contact').removeClass('border-success');
 						$('#contact').addClass('border-danger');
 						return false;
-					} else if (varnumbers.test($('#contact').val()) == false) {
+					} else if (letnumbers.test($('#contact').val()) == false) {
 						Swal.fire('Number', "Numbers only.", 'warning');
 						$('#contact').removeClass('border-success');
 						$('#contact').addClass('border-danger');
@@ -475,7 +474,7 @@ function fill_category_select_box($conn)
 	<script>
 		$(document).ready(function() {
 			$('#region').on('change', function() {
-				var regCode = $(this).val();
+				let regCode = $(this).val();
 				if (regCode) {
 					$.ajax({
 						url: 'include/region.php',
@@ -491,7 +490,7 @@ function fill_category_select_box($conn)
 				}
 			});
 			$('#province').on('change', function() {
-				var provCode = $(this).val();
+				let provCode = $(this).val();
 				if (provCode) {
 					$.ajax({
 						url: 'include/region.php',
@@ -507,7 +506,7 @@ function fill_category_select_box($conn)
 				}
 			});
 			$('#municipality').on('change', function() {
-				var citymunCode = $(this).val();
+				let citymunCode = $(this).val();
 				if (citymunCode) {
 					$.ajax({
 						url: 'include/region.php',

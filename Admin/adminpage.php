@@ -1,7 +1,4 @@
-<?php
-session_start();
-
-	?>
+<?php include 'include/protect.php'?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
