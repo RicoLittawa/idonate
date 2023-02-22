@@ -716,105 +716,108 @@ function fill_region_select_box($conn)
 					qOT_arr: qOT_arr,
 					unitOT_arr: unitOT_arr
 				}
+				// checkBoxData= {
+				// 	cnProductName:"",
+				// 	cnQuantity:"",
+				// 	hyProductName:[],
+				// 	hyQuantity:[],
+				// 	iiProductName:[],
+				// 	iiQuantity:[],
+				// 	dwProductName:[],
+				// 	dwQuantity:[],
+				// 	mgProductName:[],
+				// 	mgQuantity:[],
+				// 	mgType:[],
+				// 	mgUnit:[],
+				// 	meProductName:[],
+				// 	meQuantity:[],
+				// 	meType:[],
+				// 	meUnit:[],
+				// 	otProductName:[],
+				// 	otQuantity:[],
+				// 	otType:[],
+				// 	otUnit:[],
 
-
-				function checkDataInput(checkValue){
-					
-
-				}
+				// }
 				if ($('#box1').is(':checked')) {
-					var pn1 = '';
-					var q1 = '';
-
+					var cnProductName,cnQuantity;
 					$('.pnCN').each(function() {
-						pn1 = (this.value);
+					 	 cnProductName= $(this).val();
 					})
 					$('.qCN').each(function() {
-						q1 = (this.value);
+						cnProductName=$(this).val();
 					})
 				}
 				if ($('#box2').is(':checked')) {
-					var pn2 = '';
-					var q2 = '';
+					var hyProductName,hyQuantity;
 					$('.pnHY').each(function() {
-						pn2 = (this.value);
+						hyProductName= $(this).val();
 					})
 					$('.qHY').each(function() {
-						q2 = (this.value);
+						hyQuantity= $(this).val();
 					})
 				}
 				if ($('#box3').is(':checked')) {
-					var pn3 = '';
-					var q3 = '';
+					var iiProductName,iiQuantity;
 					$('.pnII').each(function() {
-						pn3 = (this.value);
+						iiProductName=$(this).val();
 					})
 					$('.qII').each(function() {
-						q3 = (this.value);
+						iiQuantity=$(this).val();
 					})
 				}
 				if ($('#box4').is(':checked')) {
-					var pn4 = '';
-					var q4 = '';
+					var dwProductName,dwQuantity;
 					$('.pnDW').each(function() {
-						pn4 = (this.value);
+						dwProductName=$(this).val();
 					})
 					$('.qDW').each(function() {
-						q4 = (this.value);
+						dwQuantity=$(this).val();
 					})
 				}
 				if ($('#box5').is(':checked')) {
-					var pn5 = '';
-					var q5 = '';
-					var t1 = '';
-					var u1 = '';
+					var mgProductName,mgQuantity,mgType,mgUnit;
 					$('.pnMG').each(function() {
-						pn5 = (this.value);
+						mgProductName=$(this).val();
 					})
 					$('.typeMG').each(function() {
-						t1 = (this.value);
+						mgType=$(this).val();
 					})
 					$('.qMG').each(function() {
-						q5 = (this.value);
+						mgQuantity=$(this).val();
 					})
 					$('.unitMG').each(function() {
-						u1 = (this.value);
+						mgUnit=$(this).val();
 					})
 				}
 				if ($('#box6').is(':checked')) {
-					var pn6 = '';
-					var q6 = '';
-					var t2 = '';
-					var u2 = '';
+					var meProductName,meQuantity,meType,meUnit;
 					$('.pnME').each(function() {
-						pn6 = (this.value);
+						meProductName=$(this).val();
 					})
 					$('.typeME').each(function() {
-						t2 = (this.value);
+						meType=$(this).val();
 					})
 					$('.qME').each(function() {
-						q6 = (this.value);
+						meQuantity=$(this).val();
 					})
 					$('.unitME').each(function() {
-						u2 = (this.value);
+						meUnit=$(this).val();
 					})
 				}
 				if ($('#box7').is(':checked')) {
-					var pn7 = '';
-					var q7 = '';
-					var t3 = '';
-					var u3 = '';
+					var otProductName,otQuantity,otType,otUnit;
 					$('.pnOT').each(function() {
-						pn7 = (this.value);
+						otProductName=$(this).val();
 					})
 					$('.typeOT').each(function() {
-						t3 = (this.value);
+						otType=$(this).val();
 					})
 					$('.qOT').each(function() {
-						q7 = (this.value);
+						otQuantity=$(this).val();
 					})
 					$('.unitOT').each(function() {
-						u3 = (this.value);
+						otUnit=$(this).val();
 					})
 				}
 				if (fname == "") {
@@ -855,26 +858,29 @@ function fill_region_select_box($conn)
 					return false;
 				} else if (!$('.selectCateg').is(':checked')) {
 					Swal.fire('Category', "Please select a category", 'warning')
-				} else if (pn1 == '' || q1 == '') {
-					Swal.fire('Warning', 'Field is empty', 'warning');
+				} else if (cnProductName== ''||cnQuantity== '') {
+					Swal.fire('Warning', 'Can & Noodles are empty', 'warning');
 					return false;
-				} else if (pn2 == '' || q2 == '') {
-					Swal.fire('Warning', 'Field is empty', 'warning');
+				} else if (hyProductName== ''||hyQuantity== '') {
+					Swal.fire('Warning', 'Hygine Essentials are empty', 'warning');
 					return false;
-				} else if (pn3 == '' || q3 == '') {
-					Swal.fire('Warning', 'Field is empty', 'warning');;
+				} else if (iiProductName== ''||iiQuantity== '') {
+					Swal.fire('Warning', 'Infant Items are empty', 'warning');;
 					return false;
-				} else if (pn4 == '' || q4 == '') {
-					Swal.fire('Warning', 'Field is empty', 'warning');
+				} else if (dwProductName== ''||dwQuantity== '') {
+					Swal.fire('Warning', 'Drinking Waters are empty', 'warning');
 					return false;
-				} else if (pn5 == '' || t1 == '' || q5 == '' || u1 == '') {
-					Swal.fire('Warning', 'Field is empty', 'warning');
+				} else if (mgProductName== ''||mgType== ''
+				||mgQuantity== ''||mgUnit== '') {
+					Swal.fire('Warning', 'Meat & Grains are empty', 'warning');
 					return false;
-				} else if (pn6 == '' || t2 == '' || q6 == '' || u2 == '') {
-					Swal.fire('Warning', 'Field is empty', 'warning');
+				} else if (meProductName== ''||meType== ''
+				||meQuantity== ''||meUnit== '') {
+					Swal.fire('Warning', 'Medicines are empty', 'warning');
 					return false;
-				} else if (pn7 == '' || t3 == '' || q7 == '' || u3 == '') {
-					Swal.fire('Warning', 'Field is empty', 'warning');
+				} else if (otProductName== ''||otType== ''
+				||otQuantity== ''||otUnit== '') {
+					Swal.fire('Warning', 'Others are empty', 'warning');
 					return false;
 				} else {
 					$.ajax({
