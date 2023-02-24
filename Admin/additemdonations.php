@@ -785,7 +785,7 @@ function fill_region_select_box($conn)
 						inputFields.ME.q.push($(this).val());
 				 	})
 				 	$('.unitME').each(function() {
-						meUnit$(this).val()=$(this).val();
+						meUnit=$(this).val();
 						inputFields.ME.unit.push($(this).val());
 				 	})
 				 }
@@ -950,43 +950,41 @@ function fill_region_select_box($conn)
 		});
 	</script>
 	<Script>
-$(document).on('focus', '.name_items', function() {
-  $(this).autocomplete({
-    source: function(request, response) {
-      $.ajax({
-        type: 'POST',
-        url: 'include/viewid.php',
-        dataType: 'json',
-        data: {
-          keyword: request.term
-        },
-        success: function(data) {
-          response($.map(data, function(item) {
-            return {
-              label: item.product_name,
-              value: item.product_name
-            };
-          }));
-        }
-      });
-    },
-    minLength: 1,
-    select: function(event, ui) {
-      $(this).val(ui.item.value);
-      return false;
-    },
-    focus: function(event, ui) {
-      $(this).val(ui.item.value);
-      return false;
-    }
-  }).autocomplete("instance")._renderItem = function(ul, item) {
-    return $("<li>")
-      .append("<div>" + item.label + "</div>")
-      .appendTo(ul);
-  };
-});
-
-
+	$(document).on('focus', '.name_items', function() {
+	$(this).autocomplete({
+		source: function(request, response) {
+		$.ajax({
+			type: 'POST',
+			url: 'include/viewid.php',
+			dataType: 'json',
+			data: {
+			keyword: request.term
+			},
+			success: function(data) {
+			response($.map(data, function(item) {
+				return {
+				label: item.product_name,
+				value: item.product_name
+				};
+			}));
+			}
+		});
+		},
+		minLength: 1,
+		select: function(event, ui) {
+		$(this).val(ui.item.value);
+		return false;
+		},
+		focus: function(event, ui) {
+		$(this).val(ui.item.value);
+		return false;
+		}
+	}).autocomplete("instance")._renderItem = function(ul, item) {
+		return $("<li>")
+		.append("<div>" + item.label + "</div>")
+		.appendTo(ul);
+	};
+	});
 	</Script>
 
 
