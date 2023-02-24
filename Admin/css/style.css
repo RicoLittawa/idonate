@@ -13,17 +13,22 @@
 overflow: hidden;
 }
 .custom-breadcrumb{
-
-    margin-left: 3.50rem;
-    margin-right: 3.24rem;
-    margin-top: 30px;
-    background: #ebeae8;
+  max-width: 96.5%;
+   border:1px solid black; 
+    display: flex;
+    flex-direction: row;;
+   padding-top: 2%;
+   margin-left: 2%;
+   margin-right: 5%;
+   gap: 72%;
 }
+
 .custom-container{
-    width: auto;
-    margin-left: 3.7rem;
-    margin-right: 2.5rem;
-    margin-bottom: 1rem;
+    border:1px solid red; 
+    max-width: 96.5%;
+    margin-left: 2%;
+    margin-right: 5%
+
 
 }
 
@@ -42,7 +47,7 @@ h6{
 
   /*Sidebar */
   .sidebar {
-    width: 15%;
+    max-width: 30%;
     height: 100%;
     background: #20d070;
     position: fixed;
@@ -51,27 +56,9 @@ h6{
     left: 0;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     z-index: 1040;
-    transition: all 0.3s ease;
+    transition: all 1s ease;
   }
-  
-  .sidebar .brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 53px;
-    color: #fff;
-    font-size: 24px;
-    font-weight: 500;
-  }
-  
-  .sidebar .brand span {
-    display: flex;
-    align-items: center;
-  }
-  
-  .sidebar .brand img {
-    margin-right: 10px;
-  }
+
   
   .sidebar .side-menu {
     margin-top: 150px;
@@ -90,6 +77,7 @@ h6{
     align-items: center;
     height: 48px;
     margin-bottom: 10px;
+   
   }
   
   .sidebar .side-menu ul.nav li.nav-item a.nav-link {
@@ -97,15 +85,16 @@ h6{
     align-items: center;
     height: 100%;
     width: 100%;
-    padding: 0 auto;
+    padding: 0 5%;
     color: #fff;
     font-size: 14px;
     font-family: 'Roboto', sans-serif;;
     font-weight:400;
-    transition: all 0.3s ease;
+    
   }
   .nav-link:hover i, .nav-link:hover .text {
     color: #06603b !important;
+    transition: all 1s ease;
   }
   .sidebar .side-menu ul.nav li.nav-item a.nav-link i.active {
     color: #06603b;
@@ -114,7 +103,8 @@ h6{
   .sidebar .side-menu ul.nav li.nav-item a.nav-link.active {
     border-radius: 5px;
       background: #fff;
-      color: #06603b;
+      color: #06603b; 
+     
       
   }
   
@@ -151,7 +141,7 @@ h6{
 
 
   .small-sidebar{
-    width: 5%;
+    max-width: 5%;
     height: auto;
     background: #20d070;
     position: fixed;
@@ -160,22 +150,10 @@ h6{
     left: 0;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     z-index: 1040;
-    transition: all 0.3s ease;
+    
+
   }
-  .small-sidebar .brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 53px;
-    color: #fff;
-    font-size: 24px;
-    font-weight: 500;
-  }
-  
-  .small-sidebar .brand img {
-    margin-right: 15px;
-  }
-  
+
   .small-sidebar .side-menu {
     margin-top: 150px;
   }
@@ -205,6 +183,8 @@ h6{
     font-size: 14px;
     font-family: 'Roboto', sans-serif;;
     font-weight:400;
+    transition: all 0.3s ease;
+
   }
 
   .small-sidebar .side-menu ul.nav li.nav-item a.nav-link i.active {
@@ -225,6 +205,7 @@ h6{
   }
 
   .small-sidebar .side-menu ul.nav li.nav-item a.nav-link span.text {
+    
   display: none;
   }
   
@@ -282,9 +263,9 @@ h6{
 
 /*Dashboard cards*/
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .sidebar {
-    width: 15%;
+    max-width: 15%;
     height: auto;
     background: #20d070;
     position: fixed;
@@ -293,18 +274,8 @@ h6{
     left: 0;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     z-index: 1040;
-    transition: all 0.3s ease;
+    transition: all 1s ease;
   }
-  .sidebar .brand {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 53px;
-    color: #fff;
-    font-size: 24px;
-    font-weight: 500;
-  }
-  
   .sidebar .side-menu {
     margin-top: 150px;
   }

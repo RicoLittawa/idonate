@@ -115,21 +115,24 @@ function fill_region_select_box($conn)
 
 <!--Main content -->
   <div class="main-content">
-  <div class="content">
-  
-  </div>
+  <!--Header -->
   <div class="mb-4 custom-breadcrumb">
-			<h1 class="fs-1 breadcrumb-title">Add Donations</h1>
-			<nav class="bc-nav d-flex">
-				<h6 class="mb-0">
-					<a href="" class="text-reset bc-path">Home</a>
-					<span>/</span>
-					<a href="donations.php" class="text-reset bc-path active">Donors Information</a>
-				</h6>
-			</nav>
-			<!-- Breadcrumb -->
-		</div>
-
+  <div class="crumb">
+  <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
+	<nav class="bc-nav d-flex">
+		<h6 class="mb-0">
+		<a href="" class="text-reset bc-path">Home</a>
+		<span>/</span>
+		<a href="" class="text-reset bc-path active">Dashboard</a>
+		</h6>  
+	</nav>
+  </div>
+	<div>
+  <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 100px;"
+  alt="Avatar" />
+  </div>
+	</div>
+ <!--Header -->
 		<div class="custom-container pb-3">
 			<div class="card">
 				<div class="card-body overflow-auto">
@@ -141,14 +144,14 @@ function fill_region_select_box($conn)
 					<div class="form-container mt-5 ms-5">
 						<div class="personal">
 							<h6 style="width: 50px;
-			height: 50px;
-			border-radius: 25px;
-			border: 2px solid #BEBEBE;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			float: left;
-			margin-right: 10px;">
+							height: 50px;
+							border-radius: 25px;
+							border: 2px solid #BEBEBE;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							float: left;
+							margin-right: 10px;">
 								<span style="font-size: 20px;">1</span>
 							</h6>
 							<div class="mt-3 ps-3" style="display: inline-block; color:#4d5157;">
@@ -233,14 +236,14 @@ function fill_region_select_box($conn)
 							</div>
 							<div class="personal pt-5" style="position:relative; right:34px;">
 								<h6 style="width: 50px;
-			height: 50px;
-			border-radius: 25px;
-			border: 2px solid #BEBEBE;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			float: left;
-			margin-right: 10px;">
+								height: 50px;
+								border-radius: 25px;
+								border: 2px solid #BEBEBE;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								float: left;
+								margin-right: 10px;">
 									<span style="font-size: 20px;">2</span>
 								</h6>
 								<div class="mt-3 ps-3" style="display: inline-block; color:#4d5157;">
@@ -446,20 +449,18 @@ function fill_region_select_box($conn)
 			</div>
 		</div>
 		<!--End of card-->
+
+
+		
 		</div>
   </div>
 </div>
 
 
-	<!-- SIDEBAR -->
 
 
-	<section>
 
 
-	
-		<!--End of container-->
-	</section>
 
 
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>

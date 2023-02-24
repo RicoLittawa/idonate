@@ -75,9 +75,9 @@
 
 <!--Main content -->
   <div class="main-content">
-  <div class="content">
   <div class="mb-4 custom-breadcrumb">
-	<h1 class="fs-1 breadcrumb-title">Dashboard</h1>
+  <div class="crumb">
+  <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
 	<nav class="bc-nav d-flex">
 		<h6 class="mb-0">
 		<a href="" class="text-reset bc-path">Home</a>
@@ -85,6 +85,11 @@
 		<a href="" class="text-reset bc-path active">Dashboard</a>
 		</h6>  
 	</nav>
+  </div>
+	<div>
+  <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 100px;"
+  alt="Avatar" />
+  </div>
 	</div>
 
 
@@ -180,7 +185,6 @@
 
   
 <!--End of main content -->
-      </div>
     </div>
   </div>
 </div>

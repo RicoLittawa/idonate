@@ -12,8 +12,18 @@
 	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" href="css/style.css">
-
-	<title>Stocks</title>
+  <style>
+    .card-names{
+  color: #a9a9a9;
+  font-size: 14px;
+}.h1-color{
+  color: #2D3436;
+}.my-fixed-height {
+  height: 355px;
+  overflow: auto;
+}
+  </style>
+	<title>Dashboard</title>
 </head>
 <body>
 <div class="main-container">
@@ -23,8 +33,8 @@
   <nav class="side-menu">
     <ul class="nav">
       <li class="nav-item">
-        <a href="adminpage.php" class="nav-link">
-          <i class='bx bxs-dashboard'></i>
+        <a href="#" class="nav-link active">
+          <i class='bx bxs-dashboard active'></i>
           <span class="text">Dashboard</span>
         </a>
       </li>
@@ -41,8 +51,8 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link active">
-          <i class='bx bxs-package active'></i>
+        <a href="stocks.php" class="nav-link">
+          <i class='bx bxs-package'></i>
           <span class="text">Stocks</span>
         </a>
       </li>
@@ -65,8 +75,8 @@
 
 <!--Main content -->
   <div class="main-content">
-  <!--Header -->
-  <div class="mb-4 custom-breadcrumb">
+   <!--Header -->
+   <div class="mb-4 custom-breadcrumb">
   <div class="crumb">
   <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
 	<nav class="bc-nav d-flex">
@@ -86,65 +96,7 @@
 
 
   <!--reports -->
-  <div class="custom-container pb-3">
-    <div class="card">
-      <div class="card-body">
-        <table class="table" id="table_data">
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>Product name</th>
-              <th>Type</th>
-              <th>Unit</th>
-              <th>Quantity</th>
-            </tr>
-          </thead>
-          <t-body>
-            <?php 
-            require_once 'include/connection.php';
-            $sql= "SELECT category, productName, type, unit, SUM(quantity) as totalQuantity
-            FROM (
-                SELECT 'Can and Noodles' AS category, productName, type, unit, quantity FROM categcannoodles
-                UNION ALL
-                SELECT 'Drinking Water' AS category, productName, type, unit, quantity FROM categdrinkingwater
-                UNION ALL
-                SELECT 'Hygine Essentials' AS category, productName, type, unit, quantity FROM categhygineessential
-                UNION ALL
-                SELECT 'Infant Items' AS category, productName, type, unit, quantity FROM categinfant
-                UNION ALL
-                SELECT 'Meat and Grains' AS category, productName, type, unit, quantity FROM categmeatgrains
-                UNION ALL
-                SELECT 'Medicine' AS category, productName, type, unit, quantity FROM categmedicine
-                UNION ALL
-                SELECT 'Others' AS category, productName, type, unit, quantity FROM categdrinkingwater
-            ) AS allProducts
-            GROUP BY productName
-            ORDER BY productName ASC";
-            $stmt=$conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->get_result(); 
-            ?>
-            <?php while($row= $result->fetch_assoc()): ?>
-            <tr>
-              <td  style="font-weight: bold;"><?php echo $row['category'] ;?></td>
-              <td><?php echo $row['productName'] ;?></td>
-              <?php if ($row['type']===null){ ?>
-              <td><span class="badge badge-warning">Empty</span></td>
-              <?php }else{?>
-              <td><?php echo htmlentities($row['type']) ?></td>
-              <?php }?>
-              <?php if ($row['unit']===null){ ?>
-              <td><span class="badge badge-warning">Empty</span></td>
-              <?php }else{?>
-              <td><?php echo htmlentities($row['unit']) ?></td>
-              <?php }?>
-              <td><?php echo $row['totalQuantity'] ;?></td>
-            </tr>
-            <?php endwhile; ?>
-          </t-body>
-        </table>
-      </div>
-    </div>
+ <h1>user</h1>
 
   
 <!--End of main content -->

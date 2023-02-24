@@ -65,23 +65,24 @@
 
 <!--Main content -->
   <div class="main-content">
-  <div class="content">
+  <!--Header -->
   <div class="mb-4 custom-breadcrumb">
-  <h1 class="fs-1 breadcrumb-title">Account Details</h1>
-  <nav class="bc-nav d-flex">
-  <h6 class="mb-0">
-  <a href="" class="text-reset bc-path">Home</a>
-  <span>/</span>
-  <a href="" class="text-reset bc-path active">Dashboard</a>
-  </h6>  
-  </nav>
-  <!-- Breadcrumb -->
-</div>
-
-
-
-
-
+  <div class="crumb">
+  <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
+	<nav class="bc-nav d-flex">
+		<h6 class="mb-0">
+		<a href="" class="text-reset bc-path">Home</a>
+		<span>/</span>
+		<a href="" class="text-reset bc-path active">Dashboard</a>
+		</h6>  
+	</nav>
+  </div>
+	<div>
+  <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 100px;"
+  alt="Avatar" />
+  </div>
+	</div>
+ <!--Header -->
 
   <div class="custom-container pb-3">
   <div class="card">
@@ -210,12 +211,9 @@
   </div>
   </div>
   
-</div>
 
-  </div>
-  
 
-	
+    </div>
   </div>
 </div>
 
