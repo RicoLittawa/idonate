@@ -25,11 +25,11 @@
                         $stmt= $conn->prepare($list);
                         try{
                             if(!$stmt){
-                                throw new Exception('Error: There was a problem executing the query.');
+                                throw new Exception('There was a problem executing the query.');
                             }else{
                                 $stmt->bind_param('sss',$reference_id,$cn,$qCN_arr[$count]);
                                 if(!$result=$stmt->execute()){
-                                    throw new Exception('Error: There was a problem executing the query.');
+                                    throw new Exception('There was a problem executing the query.');
                                 }
                             }
                         }
@@ -42,11 +42,11 @@
                         $stmt= $conn->prepare($can);
                         try{
                             if(!$stmt){
-                                throw new Exception('Error: There was a problem executing the query.');
+                                throw new Exception('There was a problem executing the query.');
                             }else{
                                 $stmt->bind_param('sss', $reference_id,$cn, $qCN_arr[$count]);
                                 if(!$result=$stmt->execute()){
-                                    throw new Exception('Error: There was a problem executing the query.');
+                                    throw new Exception('There was a problem executing the query.');
                                 }else{
                                     $resultCount = $resultCount + 1;
                                     $count=$count+1;
@@ -70,11 +70,11 @@
                     $stmt= $conn->prepare($list);
                     try{
                         if(!$stmt){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }else{
                             $stmt->bind_param('sss',$reference_id,$hy,$qHY_arr[$count]);
                             if(!$result=$stmt->execute()){
-                                throw new Exception('Error: There was a problem executing the query.');
+                                throw new Exception('There was a problem executing the query.');
                             }
                         }
                     }
@@ -87,11 +87,11 @@
                     $stmt= $conn->prepare($hygine);
                     try{
                         if(!$stmt){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }else{
                             $stmt->bind_param('sss', $reference_id,$hy, $qHY_arr[$count]);
                             if(!$result=$stmt->execute()){
-                                throw new Exception('Error: There was a problem executing the query.');
+                                throw new Exception('There was a problem executing the query.');
                             }else{
                                 $resultCount = $resultCount + 1;
                                 $count=$count+1;
@@ -115,11 +115,11 @@
                 $stmt= $conn->prepare($list);
                 try{
                     if(!$stmt){
-                        throw new Exception('Error: There was a problem executing the query.');
+                        throw new Exception('There was a problem executing the query.');
                     }else{
                         $stmt->bind_param('sss',$reference_id,$ii,$qII_arr[$count]);
                         if(!$result=$stmt->execute()){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }
                     }
                 }
@@ -132,11 +132,11 @@
                 $stmt= $conn->prepare($infant);
                 try{
                     if(!$stmt){
-                        throw new Exception('Error: There was a problem executing the query.');
+                        throw new Exception('There was a problem executing the query.');
                     }else{
                         $stmt->bind_param('sss', $reference_id,$ii, $qII_arr[$count]);
                         if(!$result=$stmt->execute()){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }else{
                             $resultCount = $resultCount + 1;
                             $count=$count+1;
@@ -160,11 +160,11 @@
                 $stmt= $conn->prepare($list);
                 try{
                     if(!$stmt){
-                        throw new Exception('Error: There was a problem executing the query.');
+                        throw new Exception('There was a problem executing the query.');
                     }else{
                         $stmt->bind_param('sss',$reference_id,$dw,$qDW_arr[$count]);
                         if(!$result=$stmt->execute()){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }
                     }
                 }
@@ -177,11 +177,11 @@
                 $stmt= $conn->prepare($drinkingwater);
                 try{
                     if(!$stmt){
-                        throw new Exception('Error: There was a problem executing the query.');
+                        throw new Exception('There was a problem executing the query.');
                     }else{
                         $stmt->bind_param('sss', $reference_id,$dw, $qDW_arr[$count]);
                         if(!$result=$stmt->execute()){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }else{
                             $resultCount = $resultCount + 1;
                             $count=$count+1;
@@ -207,11 +207,11 @@
                 $stmt= $conn->prepare($list);
                 try{
                     if(!$stmt){
-                        throw new Exception('Error: There was a problem executing the query.');
+                        throw new Exception('There was a problem executing the query.');
                     }else{
                         $stmt->bind_param('sssss',$reference_id,$mg,$typeMG_arr[$count],$qMG_arr[$count],$unitMG_arr[$count]);
                         if(!$result=$stmt->execute()){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }
                     }
                 }
@@ -224,11 +224,11 @@
                 $stmt= $conn->prepare($meatgrains);
                 try{
                     if(!$stmt){
-                        throw new Exception('Error: There was a problem executing the query.');
+                        throw new Exception('There was a problem executing the query.');
                     }else{
                         $stmt->bind_param('sssss', $reference_id,$mg,$typeMG_arr[$count],$qMG_arr[$count],$unitMG_arr[$count]);
                         if(!$result=$stmt->execute()){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }else{
                             $resultCount = $resultCount + 1;
                             $count=$count+1;
@@ -254,11 +254,11 @@
                 $stmt= $conn->prepare($list);
                 try{
                     if(!$stmt){
-                        throw new Exception('Error: There was a problem executing the query.');
+                        throw new Exception('There was a problem executing the query.');
                     }else{
                         $stmt->bind_param('sssss',$reference_id,$me,$typeME_arr[$count],$qME_arr[$count],$unitME_arr[$count]);
                         if(!$result=$stmt->execute()){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }
                     }
                 }
@@ -271,11 +271,11 @@
                 $stmt= $conn->prepare($medicine);
                 try{
                     if(!$stmt){
-                        throw new Exception('Error: There was a problem executing the query.');
+                        throw new Exception('There was a problem executing the query.');
                     }else{
                         $stmt->bind_param('sssss', $reference_id,$me,$typeME_arr[$count],$qME_arr[$count],$unitME_arr[$count]);
                         if(!$result=$stmt->execute()){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }else{
                             $resultCount = $resultCount + 1;
                             $count=$count+1;
@@ -301,11 +301,11 @@
                 $stmt= $conn->prepare($list);
                 try{
                     if(!$stmt){
-                        throw new Exception('Error: There was a problem executing the query.');
+                        throw new Exception('There was a problem executing the query.');
                     }else{
                         $stmt->bind_param('sssss',$reference_id,$ot,$typeOT_arr[$count],$qOT_arr[$count],$unitOT_arr[$count]);
                         if(!$result=$stmt->execute()){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }
                     }
                 }
@@ -318,11 +318,11 @@
                 $stmt= $conn->prepare($others);
                 try{
                     if(!$stmt){
-                        throw new Exception('Error: There was a problem executing the query.');
+                        throw new Exception('There was a problem executing the query.');
                     }else{
                         $stmt->bind_param('sssss', $reference_id,$ot,$typeOT_arr[$count],$qOT_arr[$count],$unitOT_arr[$count]);
                         if(!$result=$stmt->execute()){
-                            throw new Exception('Error: There was a problem executing the query.');
+                            throw new Exception('There was a problem executing the query.');
                         }else{
                             $resultCount = $resultCount + 1;
                             $count=$count+1;

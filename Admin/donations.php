@@ -74,20 +74,19 @@
   <!--Header -->
   <div class="mb-4 custom-breadcrumb">
   <div class="crumb">
-  <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
-	<nav class="bc-nav d-flex">
-		<h6 class="mb-0">
-		<a href="" class="text-reset bc-path">Home</a>
-		<span>/</span>
-		<a href="" class="text-reset bc-path active">Dashboard</a>
-		</h6>  
-	</nav>
+    <h1 class="fs-1 breadcrumb-title">Donor Details</h1>
+    <nav class="bc-nav d-flex">
+      <h6 class="mb-0">
+        <a href="" class="text-reset bc-path">Home</a>
+        <span>/</span>
+        <a href="" class="text-reset bc-path active">Donor Details</a>
+      </h6>  
+    </nav>
   </div>
-	<div>
-  <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 100px;"
-  alt="Avatar" />
+  <div style="margin-left: auto;">
+    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 100px;" alt="Avatar" />
   </div>
-	</div>
+</div>
  <!--Header -->
 
   <div class="custom-container pb-3">
@@ -206,10 +205,10 @@
 <script>
 $(document).ready(function(){
   $('.email_button').click(function(){
-    var $this = $(this);
-    var id = $this.attr("id");
-    var action = $this.data("action");
-    var email_data = [];
+    let $this = $(this);
+    let id = $this.attr("id");
+    let action = $this.data("action");
+    let email_data = [];
     
     if(action == 'single')
     {
@@ -222,7 +221,7 @@ $(document).ready(function(){
     }
     else
     {
-      var $checkedBoxes = $('.single_select:checked');
+      let $checkedBoxes = $('.single_select:checked');
       if ($checkedBoxes.length === 0) {
         $this.attr('disabled', true);
         return;
@@ -279,8 +278,8 @@ $(document).ready(function(){
 	$(document).ready(function(){
 		$('.btnCert').click(function(){
 
-			var valueBtn = $(this);
-			var id =valueBtn.val();
+			let valueBtn = $(this);
+			let id =valueBtn.val();
 			  $.ajax({
 			  	url:'include/viewid.php?viewCert='+id,
 			  	type: 'GET',

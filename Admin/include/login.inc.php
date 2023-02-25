@@ -19,13 +19,14 @@ if (isset($_POST['login-submit'])){
                 $hash=$row['pwdUsers'];
                 if (password_verify($userPassword,$hash)){
                     session_start();
-                    $_SESSION["firstname"] = $user["firstname"];
-                    $_SESSION["lastname"] = $user["lastname"];
-                    $_SESSION["uID"] = $user["id"];
-                    $_SESSION["role"] = $user["role"];
+                    $_SESSION["firstname"] = $row["firstname"];
+                    $_SESSION["lastname"] = $row["lastname"];
+                    $_SESSION["uID"] = $row["uID"];
+                    $_SESSION["role"] = $row["role"];
                     $_SESSION["logged_in"] = true; 
                     
                     header("location: ../adminpage.php?loggegin");
+                    exit();
                     //success
                 }else{
                     echo "Invalid email or password.";

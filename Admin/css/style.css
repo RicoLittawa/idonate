@@ -16,11 +16,11 @@ overflow: hidden;
   max-width: 96.5%;
    border:1px solid black; 
     display: flex;
-    flex-direction: row;;
    padding-top: 2%;
    margin-left: 2%;
    margin-right: 5%;
-   gap: 72%;
+  ;
+
 }
 
 .custom-container{
@@ -274,7 +274,6 @@ h6{
     left: 0;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     z-index: 1040;
-    transition: all 1s ease;
   }
   .sidebar .side-menu {
     margin-top: 150px;

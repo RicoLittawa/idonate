@@ -1,4 +1,5 @@
-<?php include 'include/protect.php'?>
+<?php include 'include/protect.php'
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,22 +76,24 @@
 
 <!--Main content -->
   <div class="main-content">
+
+  <!--Header -->
   <div class="mb-4 custom-breadcrumb">
   <div class="crumb">
-  <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
-	<nav class="bc-nav d-flex">
-		<h6 class="mb-0">
-		<a href="" class="text-reset bc-path">Home</a>
-		<span>/</span>
-		<a href="" class="text-reset bc-path active">Dashboard</a>
-		</h6>  
-	</nav>
+    <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
+    <nav class="bc-nav d-flex">
+      <h6 class="mb-0">
+        <a href="" class="text-reset bc-path">Home</a>
+        <span>/</span>
+        <a href="" class="text-reset bc-path active">Dashboard</a>
+      </h6>  
+    </nav>
   </div>
-	<div>
-  <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 100px;"
-  alt="Avatar" />
+  <div style="margin-left: auto;">
+    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 100px;" alt="Avatar" />
   </div>
-	</div>
+</div>
+ <!--Header -->
 
 
   <!--reports -->

@@ -1,4 +1,32 @@
-<?php include 'include/protect.php'?>
+<?php include 'include/protect.php';
+require_once 'include/connection.php';
+
+$sql= "SELECT * FROM adduser WHERE uID=? ";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param('i',$_SESSION['uID']);
+try{
+  $stmt->execute();
+  $result= $stmt->get_result();
+  if($result->num_rows == 0) {
+    echo "Invalid email or password.";
+  }
+  else{
+    while($row= $result->fetch_assoc()){
+     $firstname=  $row['firstname'];
+     $lastname=  $row['lastname'];
+     $position=  $row['position'];
+     $email=  $row['email'];
+     $address=  $row['address'];
+
+    }
+  }
+
+}
+
+catch(Exception $e){
+  echo "Error". $e->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,12 +96,12 @@
   <!--Header -->
   <div class="mb-4 custom-breadcrumb">
   <div class="crumb">
-    <h1 class="fs-1 breadcrumb-title">User Details</h1>
+    <h1 class="fs-1 breadcrumb-title">Update Account</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
         <a href="" class="text-reset bc-path">Home</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">User Details</a>
+        <a href="" class="text-reset bc-path active">Update Account</a>
       </h6>  
     </nav>
   </div>
@@ -81,39 +109,31 @@
     <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 100px;" alt="Avatar" />
   </div>
 </div>
+
  <!--Header -->
 
   <div class="custom-container pb-3">
   <div class="card">
   <div class="card-body overflow-auto">
- <div class="mt-2">
-
- <span><button class="btn btn-success" type="button" style=" width:200px;height:50px;float:right;"
-				id="toggleFormBtn">
-				<i class="fas fa-add"></i>Show Form</button></span>
- </div>
-	
-			<br>
- <div id="registerForm" class="collapse mt-5" data-duration="500">
 	<form class="pe-2 mb-3" id="add-user">
 
   <!-- 2 column grid layout with text inputs for the first and last names -->
   <div class="row mb-4">
     <div class="col">
       <div class="form-outline">
-        <input type="text" id="fname" class="form-control"/>
+        <input type="text" id="fname" class="form-control" value="<?php echo  htmlentities($firstname );?>"/>
         <label class="form-label" for="fname">First name</label>
       </div>
     </div>
     <div class="col">
       <div class="form-outline">
-        <input type="text" id="lname" class="form-control"/>
+        <input type="text" id="lname" class="form-control" value="<?php echo htmlentities($lastname);?>"/>
         <label class="form-label" for="lname">Last name</label>
       </div>
     </div>
     <div class="col">
       <div class="form-outline">
-        <input type="text" id="position" class="form-control" placeholder="e.g. Brgy Captain/Employee"/>
+        <input type="text" id="position" class="form-control" placeholder="e.g. Brgy Captain/Employee" value="<?php echo htmlentities($position)?>"/>
         <label class="form-label" for="position">Position</label>
       </div>
     </div>
@@ -121,91 +141,25 @@
 
   <!-- Email and Password inputs -->
   <div class="form-outline mb-4">
-    <input type="email" id="email" class="form-control" />
+    <input type="email" id="email" class="form-control" value="<?php echo htmlentities($email)?>"/>
     <label class="form-label" for="email">Email address</label>
   </div>
-
-  <div class="input-group form-outline mb-4">
-   <input type="password" class="form-control" id="password">
-  <div class="input-group-append">
-      <button class="btn btn-success h-100" type="button" id="generatePasswordBtn">Generate Password</button>
-  </div>
-  <div class="input-group-append">
-    <button class="btn btn-secondary h-100" type="button" id="togglePass">
-      <i class="fa fa-eye"></i>    </button>
-  </div>
-  <label class="form-label" for="password">Password</label>
-</div>
-
   <!-- Address input -->
   <div class="form-outline mb-4">
-    <input class="form-control" id="address" rows="3"></input>
+    <input class="form-control" id="address" value="<?php echo htmlentities($address)?>"/>
     <label class="form-label" for="address">Address</label>
   </div>
 
-  <!-- Radio buttons -->
-  <div class="d-flex justify-content-center mb-4">
-    <div class="form-check form-check-inline">
-      <input class="form-check-input typeCheck" type="radio" name="role" id="admin" value="admin">
-      <label class="form-check-label" for="admin">Admin</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input typeCheck" type="radio" name="role" id="user" value="user">
-      <label class="form-check-label" for="user">User</label>
-    </div>
-  </div>
+ 
 
   <!-- Submit button -->
-  <button type="submit " id="adduserBtn" class="btn btn-success btn-block">Register</button>
+  <button type="submit " id="adduserBtn" class="btn btn-success btn-block">Update</button>
 </form>
+	
 
-    </div>
 
-	<br>
-  <br><br>
-	<table  class="table table-striped table-bordered" id="table_data">
-      <thead>
-        <tr>
-          <th>Firstname</th>
-          <th>Lastname</th>
-          <th>Position</th>
-          <th>Email</th>
-          <th>Address</th>
-          <th>Role</th>
-		  <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php 
-        require_once 'include/connection.php';
-        $sql= 'SELECT * from adduser';
-        $stmt= $conn->prepare($sql);
-        $stmt->execute();
-        $result= $stmt->get_result();
-        while($row= $result->fetch_assoc()):
-        ?>
-        <tr>
-          <td><?php echo $row['firstname']; ?></td>
-          <td><?php echo $row['lastname']; ?></td>
-          <td><?php echo $row['position']; ?></td>
-          <td><?php echo $row['email']; ?></td>
-          <td><?php echo $row['address']; ?></td>
-          <?php if($row['role']==='admin') {?>
-          <td><span class="badge rounded-pill badge-primary">Admin</span></td>
-          <?php }else{?>
-          <td><span class="badge rounded-pill badge-info">User</span></td>
-            <?php }?>
-          <?php if($row['status']==='active') {?>
-          <td><span class="badge rounded-pill badge-success">Active</span></td>
-          <?php }else{?>
-          <td><span class="badge rounded-pill badge-danger">Not active</span></td>
-            <?php }?>
-          
-         
-        </tr>
-        <?php endwhile; ?>
-      </tbody>
-    </table>
+	
+   
 			</div>
   </div>
   </div>
