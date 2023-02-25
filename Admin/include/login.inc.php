@@ -24,6 +24,7 @@ if (isset($_POST['login-submit'])){
                     $_SESSION["uID"] = $row["uID"];
                     $_SESSION["role"] = $row["role"];
                     $_SESSION["logged_in"] = true; 
+                    $_SESSION["profilePath"] = $row['profile'];
                     
                     header("location: ../adminpage.php?loggegin");
                     exit();

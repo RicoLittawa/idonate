@@ -90,12 +90,12 @@ catch(Exception $e){
   <!--Header -->
   <div class="mb-4 custom-breadcrumb">
   <div class="crumb">
-    <h1 class="fs-1 breadcrumb-title">Update Account</h1>
+    <h1 class="fs-1 breadcrumb-title">Change Password</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
         <a href="" class="text-reset bc-path">Home</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">Update Account</a>
+        <a href="" class="text-reset bc-path active">Update Password</a>
       </h6>  
     </nav>
   </div>
@@ -130,49 +130,27 @@ catch(Exception $e){
   <div class="custom-container pb-3">
   <div class="card">
   <div class="card-body overflow-auto">
-	<form class="pe-2 mb-3" id="update-user"  enctype="multipart/form-data">
-  <input type="text" id="uID" name="uID" value="<?php echo $_SESSION['uID'] ?>" hidden />
-  <!-- 2 column grid layout with text inputs for the first and last names -->
-  <div class="row mb-4">
-    <div class="col">
-      <div class="form-outline">
-        <input type="text" id="fname" name="fname" class="form-control" value="<?php echo  htmlentities($firstname );?>"/>
-        <label class="form-label" for="fname">First name</label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-outline">
-        <input type="text" id="lname" name="lname" class="form-control" value="<?php echo htmlentities($lastname);?>"/>
-        <label class="form-label" for="lname">Last name</label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-outline">
-        <input type="text" id="position" name="position" class="form-control" placeholder="e.g. Brgy Captain/Employee" value="<?php echo htmlentities($position)?>"/>
-        <label class="form-label" for="position">Position</label>
-      </div>
-    </div>
-  </div>
+	<form class="pe-2 mb-3" id="add-user">
 
   <!-- Email and Password inputs -->
   <div class="form-outline mb-4">
-    <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlentities($email)?>"/>
-    <label class="form-label" for="email">Email address</label>
+    <input type="password" id="currentPass" class="form-control" value=""/>
+    <label class="form-label" for="currentPass">Current Password</label>
   </div>
   <!-- Address input -->
   <div class="form-outline mb-4">
-    <input class="form-control" id="address" name="address" value="<?php echo htmlentities($address)?>"/>
-    <label class="form-label" for="address">Address</label>
+    <input class="form-control" type="password" id="newPass" value=""/>
+    <label class="form-label" for="newPass">New Password</label>
   </div>
-  <div class="form-group mb-4">
-    <label class="form-label" for="customFile">Upload Image</label>
-    <input type="file" name="profileImg" class="form-control" id="customFile" />
+  <div style="float:right;">
+    <input type="checkbox" id="showPass" value=""/>
+    <label class="form-label" for="newPass">Show Password</label>
   </div>
 
  
 
   <!-- Submit button -->
-  <button type="submit"  class="btn btn-success btn-block">Update</button>
+  <button type="submit " id="adduserBtn" class="btn btn-success btn-block">Change Password</button>
 </form>
 	
 
@@ -202,34 +180,136 @@ catch(Exception $e){
   <script src="scripts/main.js"></script>
 
 
-<script>
-    $(document).ready(()=>{
-      $(document).submit('#updateUserBtn',(e)=>{
-          e.preventDefault();
+	<script>
+       $(document).ready(function() {
+		$("#toggleFormBtn").click(function() {
+			$("#registerForm").collapse('toggle');
+			if ($(this).html().includes('<i class="fas fa-minus"></i> Hide Form')) {
+				$(this).html('<i class="fas fa-plus"></i> Show Form');
+			} else {
+				$(this).html('<i class="fas fa-minus"></i> Hide Form');
+			}
+			});
+		});
+	</script>
 
-    
-        let form = $('#update-user')[0];
-        let fd = new FormData(form);//JavaScript object that allows you to 
-        //easily construct and send form data (including files) via AJAX.
-        fd.append('updateBtn',true);
-
-        //  for (let [key, value] of fd.entries()) {customFile
-        //  console.log(`${key}: ${value}`);}
-
-        $.ajax({
-          url:"include/update-user.php",
-          method:"POST",
-          processData: false,
-          contentType: false,
-          dataType:'text',
-          data:fd,
-          success:(data)=>{
-            console.log(data);
-          }
-        })
-      })
-    });
-  </script>
+  <script>
+    $(document).ready(function(){
+      function generatePassword() {
+    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:\'",.<>/?`~';
+    let password = '';
+    for (let i = 0; i < 8; i++) {
+      password += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return password;
+  }
   
+  let passwordInput = $('#password');
+  
+  $('#generatePasswordBtn').click(function() {
+  passwordInput.val(generatePassword());
+  $('label[for="password"]').hide();
+});
+
+$('#password').keyup(function() {
+  $('label[for="password"]').toggle($('#password').val() === '');
+});
+
+$('#togglePass').click(function(){
+  if (passwordInput.attr('type') === 'password') {
+    passwordInput.attr('type', 'text');
+  } else {
+    passwordInput.attr('type', 'password');
+  }
+})
+
+$('#add-user').submit(function(e) {
+  e.preventDefault();
+
+  // Get form field values
+  let fname = $('#fname').val();
+  let lname = $('#lname').val();
+  let position = $('#position').val();
+  let email = $('#email').val();
+  let password = $('#password').val();
+  let address = $('#address').val();
+  let selectedValue = $('input[name="role"]:checked').val();
+
+  // Check for empty required fields
+  if (!fname) {
+    $('#fname').addClass('is-invalid');
+    return false;
+  } else {
+    $('#fname').removeClass('is-invalid');
+  }
+
+  if (!lname) {
+    $('#lname').addClass('is-invalid');
+    return false;
+  } else {
+    $('#lname').removeClass('is-invalid');
+  }
+
+  if (!position) {
+    $('#position').addClass('is-invalid');
+    return false;
+  } else {
+    $('#position').removeClass('is-invalid');
+  }
+
+  if (!email) {
+    $('#email').addClass('is-invalid');
+    return false;
+  } else {
+    $('#email').removeClass('is-invalid');
+  }
+
+  if (!password) {
+    $('#password').addClass('is-invalid');
+    return false;
+  } else {
+    $('#password').removeClass('is-invalid');
+  }
+
+  if (!address) {
+    $('#address').addClass('is-invalid');
+    return false;
+  } else {
+    $('#address').removeClass('is-invalid');
+  }
+
+  if (!selectedValue) {
+    $('input[name="role"]').addClass('is-invalid');
+    return false;
+  } else {
+    $('input[name="role"]').removeClass('is-invalid');
+  }
+
+  // Submit the form data with AJAX
+  let data = {
+    submitBtn: '',
+    fname: fname,
+    lname: lname,
+    position: position,
+    email: email,
+    password: password,
+    address: address,
+    selectedValue: selectedValue
+  };
+
+  $.ajax({
+    type: 'POST',
+    url: 'include/register.inc.php',
+    data: data,
+    success: function(data) {
+      alert(data);
+      window.location.reload();
+    }
+  });
+});
+
+    })
+  </script>
+
 </body>
 </html>

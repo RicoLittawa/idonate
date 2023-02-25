@@ -52,12 +52,6 @@
           <span class="text">Users</span>
         </a>
       </li>
-      <li class="nav-item log-item">
-        <a href="./include/logout.php" class="nav-link log-link">
-        	<i class="fa-solid fa-right-from-bracket"></i>
-          <span class="text">Logout</span>
-       		</a>
-     	</li>
     </ul>
   </nav>
  
@@ -78,7 +72,28 @@
     </nav>
   </div>
   <div style="margin-left: auto;">
-    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 100px;" alt="Avatar" />
+    <div class="dropdown">
+  <a
+    class="dropdown-toggle"
+    id="dropdownMenuButton"
+    data-mdb-toggle="dropdown"
+    aria-expanded="false"
+    style="border: none;"
+  >
+  <?php if ($_SESSION['profilePath']==null){ ?>
+    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+  <?php }else{?>
+    <img src="include/profile/<?php echo $_SESSION['profilePath']; ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+  <?php }?>
+
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li><h6 class="dropdown-item">Hello <?php echo $_SESSION['firstname'];?>!</h6></li>
+    <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
+    <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
+    <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
+  </ul>
+</div>
   </div>
 </div>
  <!--Header -->
@@ -172,7 +187,8 @@
           <th>Email</th>
           <th>Address</th>
           <th>Role</th>
-		  <th>Status</th>
+		      <th>Status</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -200,6 +216,8 @@
           <?php }else{?>
           <td><span class="badge rounded-pill badge-danger">Not active</span></td>
             <?php }?>
+          <td><div class="row"><a class="col" href=""><i style="color:red;" class="fa-solid fa-trash"></i></a>
+          <a class="col" href=""><i style="color:green;" class="fa-solid fa-pen"></i></a></div></td>
           
          
         </tr>
