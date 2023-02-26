@@ -8,56 +8,60 @@ if (isset($_POST['updateBtn'])){
     $email = $_POST["email"];
     $address = $_POST["address"];
     $Image = $_FILES['profileImg']['name'];
-    $filePath='profile/';
-    $filename=  $filePath.basename($_FILES['profileImg']['name']);
-    $filetype=strtolower(pathinfo($filename,PATHINFO_EXTENSION));
-    $fileSize = $_FILES['profileImg']['size'];
-    $fileError = $_FILES['profileImg']['error'];
-    if(move_uploaded_file($_FILES['profileImg']['tmp_name'],$filePath.$Image)){
-        if($fileError === 0){
-            if($fileSize < 1000000) {
-                $sql= "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?";
-                $stmt= $conn->prepare($sql);
-                try{
-                    if(!$stmt){
-                        throw new Exception('There was a problem executing the query.');
-                    }
-                    else{
-                        $stmt->bind_param("ssssssi",$fname,$lname,$position,$email,$address,$Image,$uID);
-                        if(!$stmt->execute()){
-                            throw new Exception('There was a problem executing the query.');
-                        }else{
-                            echo "Account updated";
-                        }
-                    }
-                }
-                catch(Exception $e){
-                    echo "Error:".$e->getMessage();
-                }
 
-
+    if ($Image== null){
+        $sql= "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=? where uID=?";
+        $stmt= $conn->prepare($sql);
+        try{
+            if(!$stmt){
+                throw new Exception('There was a problem executing the query.');
+            }
+            else{
+                $stmt->bind_param("sssssi",$fname,$lname,$position,$email,$address,$uID);
+                if(!$stmt->execute()){
+                    throw new Exception('There was a problem executing the query.');
+                }else{
+                    echo "Account updated";
+                }
             }
         }
+        catch(Exception $e){
+            echo "Error:".$e->getMessage();
+        }
     }else{
-        $sql= "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?";
-                $stmt= $conn->prepare($sql);
-                try{
-                    if(!$stmt){
-                        throw new Exception('There was a problem executing the query.');
-                    }
-                    else{
-                        $stmt->bind_param("ssssssi",$fname,$lname,$position,$email,$address,$Image,$uID);
-                        if(!$stmt->execute()){
+        $filePath='profile/';
+        $filename=  $filePath.basename($_FILES['profileImg']['name']);
+        $filetype=strtolower(pathinfo($filename,PATHINFO_EXTENSION));
+        $fileSize = $_FILES['profileImg']['size'];
+        $fileError = $_FILES['profileImg']['error'];
+        if(move_uploaded_file($_FILES['profileImg']['tmp_name'],$filePath.$Image)){
+            if($fileError === 0){
+                if($fileSize < 1000000) {
+                    $sql= "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?";
+                    $stmt= $conn->prepare($sql);
+                    try{
+                        if(!$stmt){
                             throw new Exception('There was a problem executing the query.');
-                        }else{
-                            echo "Account updated";
+                        }
+                        else{
+                            $stmt->bind_param("ssssssi",$fname,$lname,$position,$email,$address,$Image,$uID);
+                            if(!$stmt->execute()){
+                                throw new Exception('There was a problem executing the query.');
+                            }else{
+                                echo "Account with pic updated";
+                            }
                         }
                     }
+                    catch(Exception $e){
+                        echo "Error:".$e->getMessage();
+                    }
+    
+    
                 }
-                catch(Exception $e){
-                    echo "Error:".$e->getMessage();
-                }
-    }  
+            }
+        }
+    }
+
 }
 
 if (isset($_POST['updatePassword'])){

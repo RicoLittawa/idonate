@@ -43,6 +43,53 @@ catch(Exception $e){
 	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" href="css/style.css">
+  <style>.picture-container{
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+}
+.picture{
+    width: 106px;
+    height: 106px;
+    background-color: #999999;
+    border: 4px solid #CCCCCC;
+    color: #FFFFFF;
+    border-radius: 50%;
+    margin: 0px auto;
+    overflow: hidden;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+}
+.picture:hover{
+    border-color: #20d070;
+}
+.content.ct-wizard-green .picture:hover{
+    border-color: #05ae0e;
+}
+.content.ct-wizard-blue .picture:hover{
+    border-color: #3472f7;
+}
+.content.ct-wizard-orange .picture:hover{
+    border-color: #ff9500;
+}
+.content.ct-wizard-red .picture:hover{
+    border-color: #ff3b30;
+}
+.picture input[type="file"] {
+    cursor: pointer;
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0 !important;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.picture-src{
+    width: 100%;
+    
+}</style>
   
 	<title>User Details</title>
 </head>
@@ -133,7 +180,21 @@ catch(Exception $e){
   <div class="custom-container pb-3">
   <div class="card">
   <div class="card-body overflow-auto">
+
+
 	<form class="pe-2 mb-3" id="update-user"  enctype="multipart/form-data">
+    <!--Change profile -->
+    <div class="mb-5" style="border:1px;">
+        <div class="picture-container">
+            <div class="picture">
+                <img src="include/profile/<?php echo htmlentities($profile); ?>" class="picture-src" id="wizardPicturePreview" title="">
+                <input type="file" name="profileImg" id="wizard-picture">
+            </div>
+            <h6 class="mt-2">Upload image <i class="fa-solid fa-upload"></i></h6>
+
+        </div>
+    </div>
+
   <input type="text" id="uID" name="uID" value="<?php echo $_SESSION['uID'] ?>" hidden />
   <!-- 2 column grid layout with text inputs for the first and last names -->
   <div class="row mb-4">
@@ -166,10 +227,6 @@ catch(Exception $e){
   <div class="form-outline mb-4">
     <input class="form-control" id="address" name="address" value="<?php echo htmlentities($address)?>"/>
     <label class="form-label" for="address">Address</label>
-  </div>
-  <div class="form-group mb-4">
-    <label class="form-label" for="customFile">Upload Image</label>
-    <input type="file" name="profileImg" class="form-control" id="customFile" />
   </div>
 
  
@@ -227,7 +284,7 @@ catch(Exception $e){
           data:fd,
           success:(data)=>{
             console.log(data);
-            window.location.href= ('users.php');
+           window.location.href= ('users.php');
           }
         })
       })
