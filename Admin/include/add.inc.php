@@ -358,6 +358,7 @@
              exit();
          }
          //Add 1 for new reference id
+         $reference_id=$reference_id+1;
          $ref= "UPDATE donation_items_picking  set reference_id=? ";
          $stmt= $conn->prepare($ref);
          try{

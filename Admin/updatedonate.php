@@ -1,40 +1,63 @@
-<?php include 'include/protect.php'?>
-<?php
-require_once "include/connection.php";
-if (isset($_GET["editdonate"])) {
-  $update_id = $_GET["editdonate"];
-  $sql = "SELECT * FROM donation_items WHERE donor_id=?";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("i", $update_id);
+<?php include 'include/protect.php' ;
+require_once 'include/connection.php';
+
+$sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param('i',$_SESSION['uID']);
+try{
   $stmt->execute();
-  $result = $stmt->get_result();
-  $row = $result->fetch_assoc();
-  $donorid = $row["donor_id"];
-  $donorreference = $row["Reference"];
-  $donorname = $row["donor_name"];
-  $donorprovince = $row["donor_province"];
-  $donorregion = $row["donor_region"];
-  $donormunicipality = $row["donor_municipality"];
-  $donorbarangay = $row["donor_barangay"];
-  $donoremail = $row["donor_email"];
-  $donordate = $row["donationDate"];
-  $donorcontact = $row["donor_contact"];
-}
-function fill_category_select_box($conn)
-{
-  $output = "";
-  $sql = "SELECT * From category order by categ_id ASC";
-  $result = mysqli_query($conn, $sql);
-  foreach ($result as $row) {
-    $output .=
-      '<option value="' .
-      $row["categ_id"] .
-      '">' .
-      $row["category"] .
-      "</option>";
+  $result= $stmt->get_result();
+  if($result->num_rows == 0) {
+    echo "Invalid email or password.";
   }
-  return $output;
+  else{
+    while($row= $result->fetch_assoc()){
+     $firstname=  $row['firstname'];
+     $profile=  $row['profile'];
+
+    }
+  }
+
 }
+
+catch(Exception $e){
+  echo "Error". $e->getMessage();
+
+}
+if (isset($_GET["editdonate"])) {
+	$update_id = $_GET["editdonate"];
+	$donor = "SELECT * FROM donation_items WHERE donor_id=?";
+	$stmt = $conn->prepare($donor);
+	$stmt->bind_param("i", $update_id);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_assoc();
+	$donorid = $row["donor_id"];
+	$donorreference = $row["Reference"];
+	$donorname = $row["donor_name"];
+	$donorprovince = $row["donor_province"];
+	$donorregion = $row["donor_region"];
+	$donormunicipality = $row["donor_municipality"];
+	$donorbarangay = $row["donor_barangay"];
+	$donoremail = $row["donor_email"];
+	$donordate = $row["donationDate"];
+	$donorcontact = $row["donor_contact"];
+  }
+  function fill_category_select_box($conn)
+  {
+	$output = "";
+	$sql = "SELECT * From category order by categ_id ASC";
+	$result = mysqli_query($conn, $sql);
+	foreach ($result as $row) {
+	  $output .=
+		'<option value="' .
+		$row["categ_id"] .
+		'">' .
+		$row["category"] .
+		"</option>";
+	}
+	return $output;
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -120,15 +143,15 @@ function fill_category_select_box($conn)
     aria-expanded="false"
     style="border: none;"
   >
-  <?php if ($_SESSION['profilePath']==null){ ?>
+  <?php if ($profile==null){ ?>
     <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo $_SESSION['profilePath']; ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
   <?php }?>
 
   </a>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <li><h6 class="dropdown-item">Hello <?php echo $_SESSION['firstname'];?>!</h6></li>
+    <li><h6 class="dropdown-item">Hello <?php echo htmlentities($firstname);?>!</h6></li>
     <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
     <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
@@ -438,7 +461,7 @@ function fill_category_select_box($conn)
 						$('#contact').removeClass('border-success');
 						$('#contact').addClass('border-danger');
 						return false;
-					} else if (letnumbers.test($('#contact').val()) == false) {
+					} else if (varnumbers.test($('#contact').val()) == false) {
 						Swal.fire('Number', "Numbers only.", 'warning');
 						$('#contact').removeClass('border-success');
 						$('#contact').addClass('border-danger');

@@ -1,4 +1,29 @@
-<?php include 'include/protect.php'
+<?php include 'include/protect.php';
+require_once 'include/connection.php';
+
+$sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param('i',$_SESSION['uID']);
+try{
+  $stmt->execute();
+  $result= $stmt->get_result();
+  if($result->num_rows == 0) {
+    echo "Invalid email or password.";
+  }
+  else{
+    while($row= $result->fetch_assoc()){
+     $firstname=  $row['firstname'];
+     $profile=  $row['profile'];
+
+    }
+  }
+
+}
+
+catch(Exception $e){
+  echo "Error". $e->getMessage();
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,15 +117,15 @@
     aria-expanded="false"
     style="border: none;"
   >
-  <?php if ($_SESSION['profilePath']==null){ ?>
+  <?php if ($profile==null){ ?>
     <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo $_SESSION['profilePath']; ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
   <?php }?>
 
   </a>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <li><h6 class="dropdown-item">Hello <?php echo $_SESSION['firstname'];?>!</h6></li>
+    <li><h6 class="dropdown-item">Hello <?php echo htmlentities($firstname);?>!</h6></li>
     <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
     <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>

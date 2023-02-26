@@ -1,7 +1,6 @@
 <?php include 'include/protect.php';
 require_once 'include/connection.php';
-
-$sql= "SELECT * FROM adduser WHERE uID=? ";
+$sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
 $stmt= $conn->prepare($sql);
 $stmt->bind_param('i',$_SESSION['uID']);
 try{
@@ -13,10 +12,7 @@ try{
   else{
     while($row= $result->fetch_assoc()){
      $firstname=  $row['firstname'];
-     $lastname=  $row['lastname'];
-     $position=  $row['position'];
-     $email=  $row['email'];
-     $address=  $row['address'];
+     $profile=  $row['profile'];
 
     }
   }
@@ -25,6 +21,7 @@ try{
 
 catch(Exception $e){
   echo "Error". $e->getMessage();
+
 }
 ?>
 <!DOCTYPE html>
@@ -108,15 +105,15 @@ catch(Exception $e){
     aria-expanded="false"
     style="border: none;"
   >
-  <?php if ($_SESSION['profilePath']==null){ ?>
+  <?php if ($profile==null){ ?>
     <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo $_SESSION['profilePath']; ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
   <?php }?>
 
   </a>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <li><h6 class="dropdown-item">Hello <?php echo $_SESSION['firstname'];?>!</h6></li>
+    <li><h6 class="dropdown-item">Hello <?php echo htmlentities($firstname);?>!</h6></li>
     <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
     <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
@@ -130,27 +127,27 @@ catch(Exception $e){
   <div class="custom-container pb-3">
   <div class="card">
   <div class="card-body overflow-auto">
-	<form class="pe-2 mb-3" id="add-user">
-
+	<form class="pe-2 mb-3" id="password-update">
+  <input type="text" name="uID" value="<?php echo $_SESSION['uID'] ?>"/>
   <!-- Email and Password inputs -->
   <div class="form-outline mb-4">
-    <input type="password" id="currentPass" class="form-control" value=""/>
+    <input type="password" name="currentPass" autocomplete="currentPass" class="form-control"/>
     <label class="form-label" for="currentPass">Current Password</label>
   </div>
   <!-- Address input -->
   <div class="form-outline mb-4">
-    <input class="form-control" type="password" id="newPass" value=""/>
+    <input class="form-control" type="password" autocomplete="newPass" name="newPass"/>
     <label class="form-label" for="newPass">New Password</label>
   </div>
   <div style="float:right;">
-    <input type="checkbox" id="showPass" value=""/>
+    <input type="checkbox" id="showPass"/>
     <label class="form-label" for="newPass">Show Password</label>
   </div>
 
  
 
   <!-- Submit button -->
-  <button type="submit " id="adduserBtn" class="btn btn-success btn-block">Change Password</button>
+  <button type="submit " id="updatePassword" class="btn btn-success btn-block">Change Password</button>
 </form>
 	
 
@@ -181,133 +178,25 @@ catch(Exception $e){
 
 
 	<script>
-       $(document).ready(function() {
-		$("#toggleFormBtn").click(function() {
-			$("#registerForm").collapse('toggle');
-			if ($(this).html().includes('<i class="fas fa-minus"></i> Hide Form')) {
-				$(this).html('<i class="fas fa-plus"></i> Show Form');
-			} else {
-				$(this).html('<i class="fas fa-minus"></i> Hide Form');
-			}
-			});
-		});
-	</script>
-
-  <script>
-    $(document).ready(function(){
-      function generatePassword() {
-    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:\'",.<>/?`~';
-    let password = '';
-    for (let i = 0; i < 8; i++) {
-      password += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return password;
-  }
-  
-  let passwordInput = $('#password');
-  
-  $('#generatePasswordBtn').click(function() {
-  passwordInput.val(generatePassword());
-  $('label[for="password"]').hide();
-});
-
-$('#password').keyup(function() {
-  $('label[for="password"]').toggle($('#password').val() === '');
-});
-
-$('#togglePass').click(function(){
-  if (passwordInput.attr('type') === 'password') {
-    passwordInput.attr('type', 'text');
-  } else {
-    passwordInput.attr('type', 'password');
-  }
-})
-
-$('#add-user').submit(function(e) {
-  e.preventDefault();
-
-  // Get form field values
-  let fname = $('#fname').val();
-  let lname = $('#lname').val();
-  let position = $('#position').val();
-  let email = $('#email').val();
-  let password = $('#password').val();
-  let address = $('#address').val();
-  let selectedValue = $('input[name="role"]:checked').val();
-
-  // Check for empty required fields
-  if (!fname) {
-    $('#fname').addClass('is-invalid');
-    return false;
-  } else {
-    $('#fname').removeClass('is-invalid');
-  }
-
-  if (!lname) {
-    $('#lname').addClass('is-invalid');
-    return false;
-  } else {
-    $('#lname').removeClass('is-invalid');
-  }
-
-  if (!position) {
-    $('#position').addClass('is-invalid');
-    return false;
-  } else {
-    $('#position').removeClass('is-invalid');
-  }
-
-  if (!email) {
-    $('#email').addClass('is-invalid');
-    return false;
-  } else {
-    $('#email').removeClass('is-invalid');
-  }
-
-  if (!password) {
-    $('#password').addClass('is-invalid');
-    return false;
-  } else {
-    $('#password').removeClass('is-invalid');
-  }
-
-  if (!address) {
-    $('#address').addClass('is-invalid');
-    return false;
-  } else {
-    $('#address').removeClass('is-invalid');
-  }
-
-  if (!selectedValue) {
-    $('input[name="role"]').addClass('is-invalid');
-    return false;
-  } else {
-    $('input[name="role"]').removeClass('is-invalid');
-  }
-
-  // Submit the form data with AJAX
-  let data = {
-    submitBtn: '',
-    fname: fname,
-    lname: lname,
-    position: position,
-    email: email,
-    password: password,
-    address: address,
-    selectedValue: selectedValue
-  };
-
-  $.ajax({
-    type: 'POST',
-    url: 'include/register.inc.php',
-    data: data,
-    success: function(data) {
-      alert(data);
-      window.location.reload();
-    }
-  });
-});
-
+    $(document).ready(()=>{
+      $(document).submit('updatePassword',(e)=>{
+        e.preventDefault();
+        let fd = new FormData($('#password-update')[0]);
+        fd.append('updatePassword',true);
+          // for (let [key, value] of fd.entries()) {
+          // console.log(`${key}: ${value}`);}
+          $.ajax({
+            url:"include/update-user.php",
+            method:"POST",
+            processData: false,
+            contentType: false,
+            dataType:'text',
+            data:fd,
+            success:(data)=>{
+              console.log(data)
+            }
+          });
+      });
     })
   </script>
 

@@ -17,6 +17,9 @@ try{
      $position=  $row['position'];
      $email=  $row['email'];
      $address=  $row['address'];
+     $profile=  $row['profile'];
+     $role=  $row['role'];
+     
 
     }
   }
@@ -108,15 +111,15 @@ catch(Exception $e){
     aria-expanded="false"
     style="border: none;"
   >
-  <?php if ($_SESSION['profilePath']==null){ ?>
+  <?php if ($profile==null){ ?>
     <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo $_SESSION['profilePath']; ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
   <?php }?>
 
   </a>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <li><h6 class="dropdown-item">Hello <?php echo $_SESSION['firstname'];?>!</h6></li>
+    <li><h6 class="dropdown-item">Hello <?php echo htmlentities($firstname);?>!</h6></li>
     <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
     <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
@@ -208,12 +211,11 @@ catch(Exception $e){
           e.preventDefault();
 
     
-        let form = $('#update-user')[0];
-        let fd = new FormData(form);//JavaScript object that allows you to 
+        let fd = new FormData($('#update-user')[0]);//JavaScript object that allows you to 
         //easily construct and send form data (including files) via AJAX.
         fd.append('updateBtn',true);
 
-        //  for (let [key, value] of fd.entries()) {customFile
+        //  for (let [key, value] of fd.entries()) {
         //  console.log(`${key}: ${value}`);}
 
         $.ajax({
@@ -225,6 +227,7 @@ catch(Exception $e){
           data:fd,
           success:(data)=>{
             console.log(data);
+            window.location.href= ('users.php');
           }
         })
       })
