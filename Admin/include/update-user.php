@@ -29,12 +29,31 @@ if (isset($_POST['updateBtn'])){
             echo "Error:".$e->getMessage();
         }
     }else{
+        $selectOldImg= "SELECT profile from adduser where uID=?";
+        $stmt=$conn->prepare($selectOldImg);
+        $stmt->bind_param('i',$uID);
+        $stmt->execute();
+        $oldRes= $stmt->get_result();
+        $old= $oldRes->fetch_assoc();
+            $oldImg= $old['profile'];
+            $path= "../include/profile/". $oldImg;    
+            if ($oldImg!=null){
+               if(file_exists($path)){
+                unlink($path);
+               }
+    
+            }else {
+                echo"null";
+            }
+        
+
+//upload new img
         $filePath='profile/';
-        $filename=  $filePath.basename($_FILES['profileImg']['name']);
+        $filename = $uID . '_' . basename($_FILES['profileImg']['name']);
         $filetype=strtolower(pathinfo($filename,PATHINFO_EXTENSION));
         $fileSize = $_FILES['profileImg']['size'];
         $fileError = $_FILES['profileImg']['error'];
-        if(move_uploaded_file($_FILES['profileImg']['tmp_name'],$filePath.$Image)){
+        if(move_uploaded_file($_FILES['profileImg']['tmp_name'],$filePath.$filename)){
             if($fileError === 0){
                 if($fileSize < 1000000) {
                     $sql= "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?";
@@ -44,8 +63,8 @@ if (isset($_POST['updateBtn'])){
                             throw new Exception('There was a problem executing the query.');
                         }
                         else{
-                            $stmt->bind_param("ssssssi",$fname,$lname,$position,$email,$address,$Image,$uID);
-                            if(!$stmt->execute()){
+                            $stmt->bind_param("ssssssi",$fname,$lname,$position,$email,$address,$filename,$uID);
+                            if(!$stmt->execute( )){
                                 throw new Exception('There was a problem executing the query.');
                             }else{
                                 echo "Account with pic updated";
@@ -55,11 +74,16 @@ if (isset($_POST['updateBtn'])){
                     catch(Exception $e){
                         echo "Error:".$e->getMessage();
                     }
-    
-    
+        
+        
                 }
             }
         }
+        //upload new img
+        
+        
+      
+      
     }
 
 }

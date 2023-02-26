@@ -108,7 +108,7 @@ catch(Exception $e){
   <?php if ($profile==null){ ?>
     <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
   <?php }?>
 
   </a>
@@ -242,7 +242,7 @@ catch(Exception $e){
           <td><span class="badge rounded-pill badge-danger">Not active</span></td>
             <?php }?>
           <td><div class="row"><a class="col" href=""><i style="color:red;" class="fa-solid fa-trash"></i></a>
-          <a class="col" href=""><i style="color:green;" class="fa-solid fa-pen"></i></a></div></td>
+          <a class="col" href=""><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></div></td>
           
          
         </tr>

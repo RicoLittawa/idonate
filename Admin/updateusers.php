@@ -88,6 +88,9 @@ catch(Exception $e){
 
 .picture-src{
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+  
     
 }</style>
   
@@ -161,7 +164,7 @@ catch(Exception $e){
   <?php if ($profile==null){ ?>
     <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
   <?php }?>
 
   </a>
@@ -187,7 +190,11 @@ catch(Exception $e){
     <div class="mb-5" style="border:1px;">
         <div class="picture-container">
             <div class="picture">
-                <img src="include/profile/<?php echo htmlentities($profile); ?>" class="picture-src" id="wizardPicturePreview" title="">
+                <?php if($profile==null){ ?>
+                <img src="img/default-admin.png" class="picture-src" id="wizardPicturePreview" title="">
+                <?php } else{?>
+                  <img src="include/profile/<?php echo htmlentities($profile) ?>" class="picture-src" id="wizardPicturePreview" title="">
+                <?php }?>
                 <input type="file" name="profileImg" id="wizard-picture">
             </div>
             <h6 class="mt-2">Upload image <i class="fa-solid fa-upload"></i></h6>
@@ -284,12 +291,29 @@ catch(Exception $e){
           data:fd,
           success:(data)=>{
             console.log(data);
-           window.location.href= ('users.php');
+          //  window.location.href= ('users.php');
           }
         })
       })
     });
   </script>
-  
+  <script>
+    $(document).ready(function(){
+// Prepare the preview for profile picture
+    $("#wizard-picture").change(function(){
+        readURL(this);
+    });
+});
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+  </script>
 </body>
 </html>
