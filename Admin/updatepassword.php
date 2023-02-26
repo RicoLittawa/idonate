@@ -128,7 +128,7 @@ catch(Exception $e){
   <div class="card">
   <div class="card-body overflow-auto">
 	<form class="pe-2 mb-3" id="password-update">
-  <input type="text" name="uID" value="<?php echo $_SESSION['uID'] ?>"/>
+  <input type="text"hidden name="uID" value="<?php echo $_SESSION['uID'] ?>"/>
   <!-- Email and Password inputs -->
   <div class="form-outline mb-4">
     <input type="password" name="currentPass" autocomplete="currentPass" class="form-control"/>
@@ -147,7 +147,10 @@ catch(Exception $e){
  
 
   <!-- Submit button -->
-  <button type="submit " id="updatePassword" class="btn btn-success btn-block">Change Password</button>
+  <button type="submit" id="updatePassword" class="btn btn-success btn-block">
+    <span class="submit-text">Change Password</span>
+    <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
+  </button>
 </form>
 	
 
@@ -175,6 +178,7 @@ catch(Exception $e){
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
   <script src="scripts/main.js"></script>
+  <script src="scripts/sweetalert2.all.min.js"></script>
 
 
 	<script>
@@ -192,8 +196,30 @@ catch(Exception $e){
             contentType: false,
             dataType:'text',
             data:fd,
+            beforeSend:()=>{
+              $('button[type="submit"]').prop("disabled",true);
+              $('.submit-text').addClass('d-none');
+              $('.spinner-border').removeClass('d-none');
+            },
             success:(data)=>{
-              console.log(data)
+              setTimeout(()=>{
+                $('button[type="submit]"').prop("disabled",false);
+                $('.submit-text').removeClass('d-none');
+                $('.spinner-border').addClass('d-none');
+                Swal.fire({
+				 			  	title: 'Success',
+				 			  	text: "Your password is updated",
+				 			  	icon: 'success',
+				 			  	confirmButtonColor: '#3085d6',
+				 			  	confirmButtonText: 'OK',
+				 			  	allowOutsideClick: false
+				 			  }).then((result) => {
+				 			  	if (result.isConfirmed) {
+				 			  		window.location.href = "users.php?Updated";
+				 			  	}
+				 			  })
+              }
+              ,1500)
             }
           });
       });

@@ -2,11 +2,11 @@
 require_once 'connection.php';
 if (isset($_POST['updateBtn'])){
     $uID = $_POST["uID"];
-    $fname = $_POST["fname"];
-    $lname = $_POST["lname"];
-    $position = $_POST["position"];
-    $email = $_POST["email"];
-    $address = $_POST["address"];
+    $fname = trim($_POST["fname"]);
+    $lname = trim($_POST["lname"]);
+    $position = trim($_POST["position"]);
+    $email = trim($_POST["email"]);
+    $address = trim($_POST["address"]);
     $Image = $_FILES['profileImg']['name'];
 
     if ($Image== null){

@@ -195,9 +195,9 @@ catch(Exception $e){
                 <?php } else{?>
                   <img src="include/profile/<?php echo htmlentities($profile) ?>" class="picture-src" id="wizardPicturePreview" title="">
                 <?php }?>
-                <input type="file" name="profileImg" id="wizard-picture">
+                <input type="file" name="profileImg" id="wizard-picture" value="<?php echo htmlentities($profile)  ?>">
             </div>
-            <h6 class="mt-2">Upload image <i class="fa-solid fa-upload"></i></h6>
+            <label>Upload image <i class="fa-sharp fa-solid fa-file-arrow-up"></i></label>
 
         </div>
     </div>
@@ -239,7 +239,10 @@ catch(Exception $e){
  
 
   <!-- Submit button -->
-  <button type="submit"  class="btn btn-success btn-block">Update</button>
+  <button type="submit"  class="btn btn-success btn-block">
+  <span class="submit-text">Update</span>
+  <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
+  </button>
 </form>
 	
 
@@ -267,6 +270,7 @@ catch(Exception $e){
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
   <script src="scripts/main.js"></script>
+  <script src="scripts/sweetalert2.all.min.js"></script>
 
 
 <script>
@@ -282,6 +286,60 @@ catch(Exception $e){
         //  for (let [key, value] of fd.entries()) {
         //  console.log(`${key}: ${value}`);}
 
+        //validation
+        let fname = fd.get('fname');
+        let lname = fd.get('lname');
+        let position = fd.get('position');
+        let email = fd.get('email');
+        let address = fd.get('address');
+        
+        let fileInput = $('input[type="file"]');
+        let file = fileInput[0].files[0];
+        if (file) {
+          let extension = file.name.split('.').pop().toLowerCase();
+          if (['gif', 'png', 'jpg', 'jpeg'].indexOf(extension) === -1) {
+            // Invalid file extension
+            // Display an error message or highlight the input field
+            Swal.fire('Image', "Invalid file extension.",'warning');
+            fileInput.val('');
+            return false;
+          }
+        } 
+        if (!fname){
+          $('#fname').addClass('is-invalid');
+          return false;
+        }
+        else{
+          $('#fname').removeClass('is-invalid');
+        }
+        if (!lname){
+          $('#lname').addClass('is-invalid');
+          return false;
+        }
+        else{
+          $('#lname').removeClass('is-invalid');
+        }
+        if (!position){
+          $('#position').addClass('is-invalid');
+          return false;
+        }
+        else{
+          $('#position').removeClass('is-invalid');
+        }
+        if (!email){
+          $('#email').addClass('is-invalid');
+          return false;
+        }
+        else{
+          $('#email').removeClass('is-invalid');
+        }
+        if (!address){
+          $('#address').addClass('is-invalid');
+          return false;
+        }
+        else{
+          $('#address').removeClass('is-invalid');
+        }
         $.ajax({
           url:"include/update-user.php",
           method:"POST",
@@ -289,9 +347,34 @@ catch(Exception $e){
           contentType: false,
           dataType:'text',
           data:fd,
+          beforeSend:()=>{
+            $('button[type="submit"]').prop('disabled', true);
+            $('.submit-text').addClass('d-none');
+            $('.spinner-border').removeClass('d-none');
+
+          },
           success:(data)=>{
-            console.log(data);
-          //  window.location.href= ('users.php');
+            setTimeout(() => {
+            // Enable the submit button and hide the loading animation
+            $('button[type="submit"]').prop('disabled', false);
+            $('.submit-text').removeClass('d-none');
+            $('.spinner-border').addClass('d-none');
+            Swal.fire({
+				 			  	title: 'Success',
+				 			  	text: "Your profile is updated",
+				 			  	icon: 'success',
+				 			  	confirmButtonColor: '#3085d6',
+				 			  	confirmButtonText: 'OK',
+				 			  	allowOutsideClick: false
+				 			  }).then((result) => {
+				 			  	if (result.isConfirmed) {
+				 			  		window.location.href = "users.php?Updated";
+				 			  	}
+				 			  })
+          }, 1500);
+
+         
+          
           }
         })
       })
