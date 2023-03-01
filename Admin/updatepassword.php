@@ -131,12 +131,12 @@ catch(Exception $e){
   <input type="text"hidden name="uID" value="<?php echo $_SESSION['uID'] ?>"/>
   <!-- Email and Password inputs -->
   <div class="form-outline mb-4">
-    <input type="password" name="currentPass" autocomplete="currentPass" class="form-control"/>
+    <input type="password" name="currentPass" autocomplete="currentPass" id="currentPass" class="form-control"/>
     <label class="form-label" for="currentPass">Current Password</label>
   </div>
   <!-- Address input -->
   <div class="form-outline mb-4">
-    <input class="form-control" type="password" autocomplete="newPass" name="newPass"/>
+    <input class="form-control" type="password" autocomplete="newPass" name="newPass" id="newPass"/>
     <label class="form-label" for="newPass">New Password</label>
   </div>
   <div style="float:right;">
@@ -189,6 +189,21 @@ catch(Exception $e){
         fd.append('updatePassword',true);
           // for (let [key, value] of fd.entries()) {
           // console.log(`${key}: ${value}`);}
+
+          let currpass = fd.get("currentPass");
+          let newpass = fd.get("newPass");
+         if (!currpass){
+          $("#currentPass").addClass("is-invalid");
+         }
+         else{
+          $("#currentPass").removeClass("is-invalid");
+         }
+         if (!newpass){
+          $("#newPass").addClass("is-invalid");
+         }
+         else{
+          $("#newPass").removeClass("is-invalid");
+         }
           $.ajax({
             url:"include/update-user.php",
             method:"POST",
