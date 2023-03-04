@@ -1,10 +1,11 @@
 <?php
 session_start();
-//checking if the session exists
-//if the session is not set it redirects the user to the login form/page
 
-if(! isset($_SESSION["logged_in"])){
-    header("Location: login.php?LoginFirst");
-    echo "loginfirst";
+if (isset($_SESSION['user'])) {
+    $userID = $_SESSION['user']['uID'];
+    $loggin= $_SESSION['user']['logged_in'];
+} else {
+    // User is not logged in, redirect to login page
+    header("Location: login.php?Loginfirst");
+    exit();
 }
-

@@ -2,7 +2,7 @@
 require_once 'include/connection.php';
 $sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
 $stmt= $conn->prepare($sql);
-$stmt->bind_param('i',$_SESSION['uID']);
+$stmt->bind_param('i',$userID );
 try{
   $stmt->execute();
   $result= $stmt->get_result();
@@ -196,7 +196,10 @@ catch(Exception $e){
   </div>
 
   <!-- Submit button -->
-  <button type="submit " id="adduserBtn" class="btn btn-success btn-block">Register</button>
+  <button type="submit " id="adduserBtn" class="btn btn-success btn-block">
+  <span class="submit-text">Add</span>
+  <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
+  </button>
 </form>
 
     </div>
@@ -236,10 +239,10 @@ catch(Exception $e){
           <?php }else{?>
           <td><span class="badge rounded-pill badge-info">User</span></td>
             <?php }?>
-          <?php if($row['status']==='active') {?>
-          <td><span class="badge rounded-pill badge-success">Active</span></td>
+          <?php if($row['status']==='offline') {?>
+          <td><span class="badge rounded-pill badge-danger">Offline</span></td>
           <?php }else{?>
-          <td><span class="badge rounded-pill badge-danger">Not active</span></td>
+          <td><span class="badge rounded-pill badge-success">Active</span></td>
             <?php }?>
           <td><div class="row"><a class="col" href=""><i style="color:red;" class="fa-solid fa-trash"></i></a>
           <a class="col" href=""><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></div></td>
@@ -270,6 +273,7 @@ catch(Exception $e){
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
   <script src="scripts/main.js"></script>
+  <script src="scripts/sweetalert2.all.min.js"></script>
 
 
 	<script>
@@ -393,9 +397,61 @@ $('#add-user').submit(function(e) {
     type: 'POST',
     url: 'include/register.inc.php',
     data: data,
+    beforeSend:()=>{
+            $('button[type="submit"]').prop('disabled', true);
+            $('.submit-text').addClass('d-none');
+            $('.spinner-border').removeClass('d-none');
+
+          },
     success: function(data) {
-      alert(data);
-      window.location.reload();
+      if (data==='success'){
+        setTimeout(() => {
+            // Enable the submit button and hide the loading animation
+            $('button[type="submit"]').prop('disabled', false);
+            $('.submit-text').removeClass('d-none');
+            $('.spinner-border').addClass('d-none');
+            Swal.fire({
+				 			  	title: 'Success',
+				 			  	text: "Account is successfully created",
+				 			  	icon: 'success',
+				 			  	confirmButtonColor: '#3085d6',
+				 			  	confirmButtonText: 'OK',
+				 			  	allowOutsideClick: false
+				 			  }).then((result) => {
+				 			  	if (result.isConfirmed) {
+				 			  		window.location.reload();
+				 			  	}
+				 			  })
+          }, 500);
+            }else{
+              Swal.fire({
+                title: 'Error',
+                text: data,
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false
+              }).then((result) => {
+				 			  	if (result.isConfirmed) {
+				 			  		window.location.reload();
+				 			  	}
+				 			  });
+            }
+    },
+    error: function(xhr, status, error) {
+        // Handle errors
+        Swal.fire({
+            title: 'Error',
+            text: xhr.responseText,
+            icon: 'error',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+            allowOutsideClick: false
+        }) .then((result) => {
+				 			  	if (result.isConfirmed) {
+				 			  		window.location.reload();
+				 			  	}
+				 			  });
     }
   });
 });

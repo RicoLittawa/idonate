@@ -3,7 +3,7 @@ require_once 'include/connection.php';
 
 $sql= "SELECT * FROM adduser WHERE uID=? ";
 $stmt= $conn->prepare($sql);
-$stmt->bind_param('i',$_SESSION['uID']);
+$stmt->bind_param('i',$userID);
 try{
   $stmt->execute();
   $result= $stmt->get_result();
@@ -202,7 +202,7 @@ catch(Exception $e){
         </div>
     </div>
 
-  <input type="text" id="uID" name="uID" value="<?php echo $_SESSION['uID'] ?>" hidden />
+  <input type="text" id="uID" name="uID" value="<?php echo $userID?>" hidden />
   <!-- 2 column grid layout with text inputs for the first and last names -->
   <div class="row mb-4">
     <div class="col">
@@ -354,7 +354,8 @@ catch(Exception $e){
 
           },
           success:(data)=>{
-            setTimeout(() => {
+            if (data==='success'){
+              setTimeout(() => {
             // Enable the submit button and hide the loading animation
             $('button[type="submit"]').prop('disabled', false);
             $('.submit-text').removeClass('d-none');
@@ -372,10 +373,38 @@ catch(Exception $e){
 				 			  	}
 				 			  })
           }, 1500);
-
-         
-          
-          }
+            }
+            else{
+              Swal.fire({
+                title: 'Error',
+                text: data,
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false
+              }).then((result) => {
+				 			  	if (result.isConfirmed) {
+				 			  		window.location.reload();
+				 			  	}
+				 			  });
+            }
+            
+          },
+          error: function(xhr, status, error) {
+            // Handle errors
+            Swal.fire({
+                title: 'Error',
+                text: xhr.responseText,
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false
+            }) .then((result) => {
+                      if (result.isConfirmed) {
+                        window.location.reload();
+                      }
+                    });
+        }
         })
       })
     });

@@ -1,9 +1,8 @@
 <?php include 'include/protect.php';
 require_once 'include/connection.php';
-
 $sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
 $stmt= $conn->prepare($sql);
-$stmt->bind_param('i',$_SESSION['uID']);
+$stmt->bind_param('i',$userID );
 try{
   $stmt->execute();
   $result= $stmt->get_result();

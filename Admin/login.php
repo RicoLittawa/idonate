@@ -1,4 +1,15 @@
-<?php session_start() ?>
+<?php 
+session_start();
+
+// Check if user is already logged in
+if(isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='admin') {
+    header("Location: adminpage.php"); // Redirect to index.php or any other page you want
+    exit();
+}else if (isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='user'){
+	header("Location: userlandingpage.php"); // Redirect to index.php or any other page you want
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

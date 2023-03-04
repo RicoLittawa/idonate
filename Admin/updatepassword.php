@@ -2,7 +2,7 @@
 require_once 'include/connection.php';
 $sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
 $stmt= $conn->prepare($sql);
-$stmt->bind_param('i',$_SESSION['uID']);
+$stmt->bind_param('i',$userID );
 try{
   $stmt->execute();
   $result= $stmt->get_result();
@@ -128,7 +128,7 @@ catch(Exception $e){
   <div class="card">
   <div class="card-body overflow-auto">
 	<form class="pe-2 mb-3" id="password-update">
-  <input type="text"hidden name="uID" value="<?php echo $_SESSION['uID'] ?>"/>
+  <input type="text"hidden name="uID" value="<?php echo $userID ?>"/>
   <!-- Email and Password inputs -->
   <div class="form-outline mb-4">
     <input type="password" name="currentPass" autocomplete="currentPass" id="currentPass" class="form-control"/>
@@ -217,7 +217,8 @@ catch(Exception $e){
               $('.spinner-border').removeClass('d-none');
             },
             success:(data)=>{
-              setTimeout(()=>{
+              if (data==='success'){
+                setTimeout(()=>{
                 $('button[type="submit]"').prop("disabled",false);
                 $('.submit-text').removeClass('d-none');
                 $('.spinner-border').addClass('d-none');
@@ -235,6 +236,36 @@ catch(Exception $e){
 				 			  })
               }
               ,1500)
+              }
+              else{
+                Swal.fire({
+                title: 'Error',
+                text: data,
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false
+              }).then((result) => {
+				 			  	if (result.isConfirmed) {
+				 			  		window.location.reload();
+				 			  	}
+				 			  });
+              }
+            },
+            error: function(xhr, status, error) {
+            // Handle errors
+            Swal.fire({
+                title: 'Error',
+                text: xhr.responseText,
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false
+            }) .then((result) => {
+                      if (result.isConfirmed) {
+                        window.location.reload();
+                      }
+                    });
             }
           });
       });

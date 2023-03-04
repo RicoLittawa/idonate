@@ -9,6 +9,16 @@ if (isset($_POST['updateBtn'])){
     $address = trim($_POST["address"]);
     $Image = $_FILES['profileImg']['name'];
 
+
+    $sql = "SELECT COUNT(*) FROM adduser WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+    
+
     if ($Image== null){
         $sql= "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=? where uID=?";
         $stmt= $conn->prepare($sql);
@@ -21,12 +31,18 @@ if (isset($_POST['updateBtn'])){
                 if(!$stmt->execute()){
                     throw new Exception('There was a problem executing the query.');
                 }else{
-                    echo "Account updated";
+                    echo "success";
                 }
             }
         }
         catch(Exception $e){
-            echo "Error:".$e->getMessage();
+            if ($e->getCode() == 1062) {
+                // Handle duplicate email error
+                echo "Error: Email already exists";
+            } else {
+                // Handle other errors
+                echo "Error: " . $e->getMessage();
+            }
         }
     }else{
         $selectOldImg= "SELECT profile from adduser where uID=?";
@@ -42,10 +58,7 @@ if (isset($_POST['updateBtn'])){
                 unlink($path);
                }
     
-            }else {
-                echo"null";
             }
-        
 
 //upload new img
         $filePath='profile/';
@@ -67,12 +80,18 @@ if (isset($_POST['updateBtn'])){
                             if(!$stmt->execute( )){
                                 throw new Exception('There was a problem executing the query.');
                             }else{
-                                echo "Account with pic updated";
+                                echo "success";
                             }
                         }
                     }
                     catch(Exception $e){
-                        echo "Error:".$e->getMessage();
+                        if ($e->getCode() == 1062) {
+                            // Handle duplicate email error
+                            echo "Error: Email already exists";
+                        } else {
+                            // Handle other errors
+                            echo "Error: " . $e->getMessage();
+                        }
                     }
         
         
@@ -106,9 +125,10 @@ if (isset($_POST['updatePassword'])){
             $hashPW= password_hash($newPass, PASSWORD_DEFAULT);
             $stmt->bind_param('si',$hashPW,$passUID);
             $stmt->execute();
+            echo "success";
             
         }else{
-            echo "not matched";
+            echo "Password does not match to any account";
         }
     }
 

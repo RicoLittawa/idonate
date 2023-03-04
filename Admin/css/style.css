@@ -14,6 +14,7 @@ overflow: hidden;
 }
 .custom-breadcrumb{
   max-width: 96.5%;
+  height: 100%;
    border:1px solid black; 
     display: flex;
    padding-top: 2%;
