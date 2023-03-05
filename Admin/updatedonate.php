@@ -43,21 +43,6 @@ if (isset($_GET["editdonate"])) {
 	$donordate = $row["donationDate"];
 	$donorcontact = $row["donor_contact"];
   }
-  function fill_category_select_box($conn)
-  {
-	$output = "";
-	$sql = "SELECT * From category order by categ_id ASC";
-	$result = mysqli_query($conn, $sql);
-	foreach ($result as $row) {
-	  $output .=
-		'<option value="' .
-		$row["categ_id"] .
-		'">' .
-		$row["category"] .
-		"</option>";
-	}
-	return $output;
-  }
 ?>
 <!DOCTYPE html>
 <html lang="en">

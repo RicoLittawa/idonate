@@ -24,37 +24,13 @@ catch(Exception $e){
   echo "Error". $e->getMessage();
 
 }
-function fill_category_select_box($conn)
-{
-	$output = '';
-	$sql = "SELECT * From category order by categ_id ASC";
-	$result = mysqli_query($conn, $sql);
-	foreach ($result as $row) {
-		$categCode = htmlentities($row['categCode']);
-		$categname = htmlentities($row["category"]);
-		$output .= '<option value="' . $categCode . '">' . $categname . '</option>';
-	}
-	return $output;
-}
-function fill_variant_box($conn)
-{
-	$output = '';
-	$sql = "SELECT * From variant order by variantCode ASC";
-	$result = mysqli_query($conn, $sql);
-	foreach ($result as $row) {
-		$variantCode = htmlentities($row['variantCode']);
-		$variantName = htmlentities($row["variant"]);
-		$output .= '<option value="' . $variantCode . '">' . $variantName . '</option>';
-	}
-	return $output;
-}
-
-
 function fill_region_select_box($conn)
 {
 	$output = '';
 	$sql = "SELECT * FROM refregion";
-	$result = mysqli_query($conn, $sql);
+	$stmt=$conn->prepare($sql);
+    $stmt->execute();
+	$result = $stmt->get_result(); 
 	foreach ($result as $row) {
 		$regid = htmlentities($row['regCode']);
 		$regname = htmlentities($row['regDesc']);
@@ -610,7 +586,7 @@ function fill_region_select_box($conn)
 			}
 			}
 			//remove row on specific table
-			$(document).on('focus', '.remove',function(){
+			$(document).on('click', '.remove',function(){
 				$(this).closest('tr').remove();
 			})
 

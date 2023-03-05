@@ -38,13 +38,13 @@
                             echo "Error: " . $e->getMessage();
                             exit();
                         }
-                        $can = "INSERT INTO categcannoodles (referenceID, productName,quantity) VALUES (?,?,?)";
+                        $can = "INSERT INTO categcannoodles (productName,quantity) VALUES (?,?)";
                         $stmt= $conn->prepare($can);
                         try{
                             if(!$stmt){
                                 throw new Exception('There was a problem executing the query.');
                             }else{
-                                $stmt->bind_param('sss', $reference_id,$cn, $qCN_arr[$count]);
+                                $stmt->bind_param('ss',$cn, $qCN_arr[$count]);
                                 if(!$result=$stmt->execute()){
                                     throw new Exception('There was a problem executing the query.');
                                 }else{
@@ -83,13 +83,13 @@
                         echo "Error: " . $e->getMessage();
                         exit();
                     }
-                    $hygine = "INSERT INTO categhygineessential (referenceID, productName,quantity) VALUES (?,?,?)";
+                    $hygine = "INSERT INTO categhygineessential (productName,quantity) VALUES (?,?)";
                     $stmt= $conn->prepare($hygine);
                     try{
                         if(!$stmt){
                             throw new Exception('There was a problem executing the query.');
                         }else{
-                            $stmt->bind_param('sss', $reference_id,$hy, $qHY_arr[$count]);
+                            $stmt->bind_param('ss',$hy, $qHY_arr[$count]);
                             if(!$result=$stmt->execute()){
                                 throw new Exception('There was a problem executing the query.');
                             }else{
@@ -128,13 +128,13 @@
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
-                $infant = "INSERT INTO categinfant (referenceID, productName,quantity) VALUES (?,?,?)";
+                $infant = "INSERT INTO categinfant (productName,quantity) VALUES (?,?)";
                 $stmt= $conn->prepare($infant);
                 try{
                     if(!$stmt){
                         throw new Exception('There was a problem executing the query.');
                     }else{
-                        $stmt->bind_param('sss', $reference_id,$ii, $qII_arr[$count]);
+                        $stmt->bind_param('ss',$ii, $qII_arr[$count]);
                         if(!$result=$stmt->execute()){
                             throw new Exception('There was a problem executing the query.');
                         }else{
@@ -173,13 +173,13 @@
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
-                $drinkingwater = "INSERT INTO categdrinkingwater (referenceID, productName,quantity) VALUES (?,?,?)";
+                $drinkingwater = "INSERT INTO categdrinkingwater (productName,quantity) VALUES (?,?)";
                 $stmt= $conn->prepare($drinkingwater);
                 try{
                     if(!$stmt){
                         throw new Exception('There was a problem executing the query.');
                     }else{
-                        $stmt->bind_param('sss', $reference_id,$dw, $qDW_arr[$count]);
+                        $stmt->bind_param('ss',$dw, $qDW_arr[$count]);
                         if(!$result=$stmt->execute()){
                             throw new Exception('There was a problem executing the query.');
                         }else{
@@ -220,13 +220,13 @@
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
-                $meatgrains = "INSERT INTO categmeatgrains (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
+                $meatgrains = "INSERT INTO categmeatgrains (productName,type,quantity,unit) VALUES (?,?,?,?)";
                 $stmt= $conn->prepare($meatgrains);
                 try{
                     if(!$stmt){
                         throw new Exception('There was a problem executing the query.');
                     }else{
-                        $stmt->bind_param('sssss', $reference_id,$mg,$typeMG_arr[$count],$qMG_arr[$count],$unitMG_arr[$count]);
+                        $stmt->bind_param('ssss',$mg,$typeMG_arr[$count],$qMG_arr[$count],$unitMG_arr[$count]);
                         if(!$result=$stmt->execute()){
                             throw new Exception('There was a problem executing the query.');
                         }else{
@@ -267,13 +267,13 @@
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
-                $medicine = "INSERT INTO categmedicine (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
+                $medicine = "INSERT INTO categmedicine (productName,type,quantity,unit) VALUES (?,?,?,?)";
                 $stmt= $conn->prepare($medicine);
                 try{
                     if(!$stmt){
                         throw new Exception('There was a problem executing the query.');
                     }else{
-                        $stmt->bind_param('sssss', $reference_id,$me,$typeME_arr[$count],$qME_arr[$count],$unitME_arr[$count]);
+                        $stmt->bind_param('ssss',$me,$typeME_arr[$count],$qME_arr[$count],$unitME_arr[$count]);
                         if(!$result=$stmt->execute()){
                             throw new Exception('There was a problem executing the query.');
                         }else{
@@ -314,13 +314,13 @@
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
-                $others = "INSERT INTO categothers (referenceID, productName,type,quantity,unit) VALUES (?,?,?,?,?)";
+                $others = "INSERT INTO categothers (productName,type,quantity,unit) VALUES (?,?,?,?)";
                 $stmt= $conn->prepare($others);
                 try{
                     if(!$stmt){
                         throw new Exception('There was a problem executing the query.');
                     }else{
-                        $stmt->bind_param('sssss', $reference_id,$ot,$typeOT_arr[$count],$qOT_arr[$count],$unitOT_arr[$count]);
+                        $stmt->bind_param('ssss',$ot,$typeOT_arr[$count],$qOT_arr[$count],$unitOT_arr[$count]);
                         if(!$result=$stmt->execute()){
                             throw new Exception('There was a problem executing the query.');
                         }else{

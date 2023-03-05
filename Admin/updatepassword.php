@@ -147,7 +147,7 @@ catch(Exception $e){
  
 
   <!-- Submit button -->
-  <button type="submit" id="updatePassword" class="btn btn-success btn-block">
+  <button type="submit" class="btn btn-success btn-block">
     <span class="submit-text">Change Password</span>
     <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
   </button>
@@ -183,7 +183,7 @@ catch(Exception $e){
 
 	<script>
     $(document).ready(()=>{
-      $(document).submit('updatePassword',(e)=>{
+      $('#password-update').submit((e)=>{
         e.preventDefault();
         let fd = new FormData($('#password-update')[0]);
         fd.append('updatePassword',true);
@@ -252,7 +252,7 @@ catch(Exception $e){
 				 			  });
               }
             },
-            error: function(xhr, status, error) {
+            error: (xhr, status, error)=> {
             // Handle errors
             Swal.fire({
                 title: 'Error',

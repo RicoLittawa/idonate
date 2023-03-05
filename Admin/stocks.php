@@ -141,7 +141,6 @@ catch(Exception $e){
           </thead>
           <t-body>
             <?php 
-            require_once 'include/connection.php';
             $sql= "SELECT category, productName, type, unit, SUM(quantity) as totalQuantity
             FROM (
                 SELECT 'Can and Noodles' AS category, productName, type, unit, quantity FROM categcannoodles
@@ -156,7 +155,7 @@ catch(Exception $e){
                 UNION ALL
                 SELECT 'Medicine' AS category, productName, type, unit, quantity FROM categmedicine
                 UNION ALL
-                SELECT 'Others' AS category, productName, type, unit, quantity FROM categdrinkingwater
+                SELECT 'Others' AS category, productName, type, unit, quantity FROM categothers
             ) AS allProducts
             GROUP BY productName
             ORDER BY productName ASC";
@@ -206,8 +205,6 @@ catch(Exception $e){
   <script src="scripts/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
 
-
-
 	<script>
        $(document).ready(function() {
 		$("#toggleFormBtn").click(function() {
@@ -220,6 +217,10 @@ catch(Exception $e){
 			});
 		});
 	</script>
+
+  <script>
+    
+  </script>
 
 
 </body>

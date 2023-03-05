@@ -196,7 +196,7 @@ catch(Exception $e){
   </div>
 
   <!-- Submit button -->
-  <button type="submit " id="adduserBtn" class="btn btn-success btn-block">
+  <button type="submit " class="btn btn-success btn-block">
   <span class="submit-text">Add</span>
   <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
   </button>
@@ -221,7 +221,6 @@ catch(Exception $e){
       </thead>
       <tbody>
         <?php 
-        require_once 'include/connection.php';
         $sql= 'SELECT * from adduser';
         $stmt= $conn->prepare($sql);
         $stmt->execute();
@@ -290,8 +289,8 @@ catch(Exception $e){
 	</script>
 
   <script>
-    $(document).ready(function(){
-      function generatePassword() {
+    $(document).ready(()=>{
+      const generatePassword=()=> {
     const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:\'",.<>/?`~';
     let password = '';
     for (let i = 0; i < 8; i++) {
@@ -302,12 +301,12 @@ catch(Exception $e){
   
   let passwordInput = $('#password');
   
-  $('#generatePasswordBtn').click(function() {
+  $('#generatePasswordBtn').click(()=> {
   passwordInput.val(generatePassword());
   $('label[for="password"]').hide();
 });
 
-$('#password').keyup(function() {
+$('#password').keyup(()=> {
   $('label[for="password"]').toggle($('#password').val() === '');
 });
 
@@ -319,7 +318,7 @@ $('#togglePass').click(function(){
   }
 })
 
-$('#add-user').submit(function(e) {
+$('#add-user').submit((e)=> {
   e.preventDefault();
 
   // Get form field values
@@ -403,7 +402,7 @@ $('#add-user').submit(function(e) {
             $('.spinner-border').removeClass('d-none');
 
           },
-    success: function(data) {
+    success: (data) =>{
       if (data==='success'){
         setTimeout(() => {
             // Enable the submit button and hide the loading animation
@@ -438,7 +437,7 @@ $('#add-user').submit(function(e) {
 				 			  });
             }
     },
-    error: function(xhr, status, error) {
+    error: (xhr, status, error)=> {
         // Handle errors
         Swal.fire({
             title: 'Error',

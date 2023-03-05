@@ -145,7 +145,15 @@ catch(Exception $e){
             <div class="row">
               <span><h6 class=" h1-color card-names">DONORS</h6>  </span>
               <div class="col">
-				        <h1 class="m-md-1 h1-color">50</h1>
+              <?php 
+                $donors = "SELECT COUNT(*) FROM donation_items";
+                $stmt = $conn->prepare($donors);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+                $count = $row['COUNT(*)'];
+              ?>
+				        <h1 class="m-md-1 h1-color"><?php echo $count ?></h1>
 			          </div>
 			        <div class="col">
                 <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-user  fa-2x"></i></h4>
@@ -159,7 +167,7 @@ catch(Exception $e){
 	      <div class="card-header  bg-gradient bg-success"></div>
           <div class="card-body">
             <div class="row">
-              <span><h6 class=" h1-color card-names">GIVEN</h6>  </span>
+              <span><h6 class=" h1-color card-names">Donated</h6></span>
               <div class="col">
 				        <h1 class="m-md-1 h1-color">50</h1>
 			          </div>

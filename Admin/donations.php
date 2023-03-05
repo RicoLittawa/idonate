@@ -146,7 +146,6 @@ catch(Exception $e){
 			  <tr>
 				<th><input type="checkbox" name="" id="selectAll" class="col"></th>
 			
-				<th>ID</th>
 				<th>Fullname</th>
 				<th>Email</th>
 				<th>Contact</th>
@@ -179,7 +178,6 @@ catch(Exception $e){
 
             
 				</td>
-				<td><?php echo htmlentities($row["Reference"]); ?></td>
 				<td><?php echo htmlentities($row["donor_name"]); ?></td>
 				<td><?php echo htmlentities($row["donor_email"]); ?></td>
 				<td><?php echo htmlentities($row["donor_contact"]); ?></td>
@@ -206,7 +204,7 @@ catch(Exception $e){
 					
 			</tbody>
 			<tr>
-				<td colspan="7"></td>
+				<td colspan="6"></td>
 				<td>
 			 <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
 			</tr>

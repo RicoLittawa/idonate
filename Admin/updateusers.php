@@ -275,7 +275,7 @@ catch(Exception $e){
 
 <script>
     $(document).ready(()=>{
-      $(document).submit('#updateUserBtn',(e)=>{
+      $('#update-user').submit((e)=>{
           e.preventDefault();
 
     
@@ -386,11 +386,11 @@ catch(Exception $e){
 				 			  	if (result.isConfirmed) {
 				 			  		window.location.reload();
 				 			  	}
-				 			  });
+				 			  }); 
             }
             
           },
-          error: function(xhr, status, error) {
+          error: (xhr, status, error)=>{
             // Handle errors
             Swal.fire({
                 title: 'Error',
@@ -410,9 +410,9 @@ catch(Exception $e){
     });
   </script>
   <script>
-    $(document).ready(function(){
+    $(document).ready(()=>{
 // Prepare the preview for profile picture
-    $("#wizard-picture").change(function(){
+    $("#wizard-picture").change(()=>{
         readURL(this);
     });
 });
@@ -420,7 +420,7 @@ function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
-        reader.onload = function (e) {
+        reader.onload = (e)=> {
             $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
         }
         reader.readAsDataURL(input.files[0]);

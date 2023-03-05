@@ -26,43 +26,43 @@ if(isset($_POST['submitBtn'])){
          $hashPW = password_hash($password, PASSWORD_DEFAULT);
          $stmt->bind_param('sssssss', $fname, $lname, $position, $email, $hashPW, $address, $selectedValue);
          $result= $stmt->execute();
-        //  if($result){
-        //     // Send email
-        //     $mail = new PHPMailer(true);
+         if($result){
+            // Send email
+            $mail = new PHPMailer(true);
 
-        //     // Server settings
-        //     $mail->SMTPDebug = 0;                      // Enable verbose debug output
-        //     $mail->isSMTP();                                            // Send using SMTP
-        //     $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
-        //     $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-        //     $mail->Username   = 'testcdrrmo@gmail.com';                     // SMTP username
-        //     $mail->Password   = 'mlytxekfgplnhsap';                               // SMTP password
-        //     $mail->SMTPSecure = 'ssl';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-        //     $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+            // Server settings
+            $mail->SMTPDebug = 0;                      // Enable verbose debug output
+            $mail->isSMTP();                                            // Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+            $mail->Username   = 'testcdrrmo@gmail.com';                     // SMTP username
+            $mail->Password   = 'mlytxekfgplnhsap';                               // SMTP password
+            $mail->SMTPSecure = 'ssl';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
-        //     // Recipients
-        //     $mail->setFrom('testcdrrmo@gmail.com');
-        //     $mail->addAddress($email);     // Add a recipient
+            // Recipients
+            $mail->setFrom('testcdrrmo@gmail.com');
+            $mail->addAddress($email);     // Add a recipient
 
-        //     // Content
-        //     $mail->isHTML(true);                                  // Set email format to HTML
-        //     $mail->Subject = 'Your account has been created';
-        //     $mail->Body = 'Your account has been created successfully. You can use the email and password to login to the system.
+            // Content
+            $mail->isHTML(true);                                  // Set email format to HTML
+            $mail->Subject = 'Your account has been created';
+            $mail->Body = 'Your account has been created successfully. You can use the email and password to login to the system.
 
-        //     Fullname: '.$fname.' '.$lname.'
-        //     Email: '.$email.'
-        //     Password: '.$_POST['password'].'
+            Fullname: '.$fname.' '.$lname.'
+            Email: '.$email.'
+            Password: '.$_POST['password'].'
             
-        //     After that, you can update your password.';
+            After that, you can update your password.';
 
-        //     $mail->send();
-        //     echo "success";
+            $mail->send();
+            echo "success";
             
-        //     // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
          
 
-        //     $stmt->close();
-        //  }
+            $stmt->close();
+         }
        }
      } catch (mysqli_sql_exception $e) {
       if ($e->getCode() == 1062) {
