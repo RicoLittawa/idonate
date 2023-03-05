@@ -7,7 +7,7 @@ try{
   $stmt->execute();
   $result= $stmt->get_result();
   if($result->num_rows == 0) {
-    echo "Invalid email or password.";
+    throw new Exception("User does not exist");
   }
   else{
     while($row= $result->fetch_assoc()){
@@ -20,25 +20,29 @@ try{
 }
 
 catch(Exception $e){
-  echo "Error". $e->getMessage();
+  echo $e->getMessage();
 
 }
-
 function add_category($conn){
   $output = '';
   $sql= "SELECT * from category";
             
-            $stmt=$conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->get_result(); 
-            foreach ($result as $row) {
-              $category = htmlentities($row['category']);
-              $output .= '<option " value="' . $category . '">' . $category . '</option>';
-            }
-            return $output;
+  $stmt=$conn->prepare($sql);
+  $stmt->execute();
+  $result = $stmt->get_result(); 
+  foreach ($result as $row) {
+    $category = htmlentities($row['category']);
+    $output .= '<option " value="' . $category . '">' . $category . '</option>';
+  }
+  return $output;
 
 }
-
+$reqId= "SELECT * from ref_request";
+$stmt=$conn->prepare($reqId);
+$stmt->execute();
+$reqResult= $stmt->get_result();
+$refRow = $reqResult->fetch_assoc();
+$requestRef = $refRow['request_id'];
 ?>
 
 <!DOCTYPE html>
@@ -143,7 +147,8 @@ function add_category($conn){
 	<form class="pe-2 mb-3" id="add-request">
 
   <!-- 2 column grid layout with text inputs for the first and last names -->
-  <input type="text" id="userId" value="<?php echo $userID ?>">
+  <input type="text" id="requestRef" value="<?php echo htmlentities($requestRef) ?>">
+  <input type="text" id="userId" value="<?php echo htmlentities($userID) ?>">
   <div class="form-group mb-4">
     <label for="request_date">Request Date</label>
     <input class="form-control" id="request_date" type="date">
@@ -289,6 +294,7 @@ $(document).ready(() => {
     category: [],
     quantity: [],
     userId: $('#userId').val(),
+    reqRef: $('#requestRef').val(),
     request_date: $('#request_date').val(),
     evacQty: $('#evacQty').val()
   };
@@ -348,9 +354,59 @@ $(document).ready(() => {
 
     },
     success:(data)=>{
-      alert(data)
+      if (data==='success'){
+        setTimeout(()=>{
+        $('button[type="submit]"').prop("disabled",false);
+        $('.submit-text').removeClass('d-none');
+        $('.spinner-border').addClass('d-none');
+        Swal.fire({
+          title: 'Success',
+          text: "Your request is created",
+          icon: 'success',
+          confirmButtonColor: '#20d070',
+          confirmButtonText: 'OK',
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.isConfirmed) {
+            inputFields = {}; // reset inputFields object
+            // clear input fields
+            $('.category').val('');
+            $('.quantity').val('');
+            $('#request_date').val('');
+            $('#evacQty').val('');
+          }
+        })
+      }
+      ,1500)
+      }
+      else{
+        Swal.fire({
+        title: 'Error',
+        text: data,
+        icon: 'error',
+        confirmButtonColor: '#20d070',
+        confirmButtonText: 'OK',
+        allowOutsideClick: false
+      }).then((result) => {
+          if (result.isConfirmed) {
+            // window.location.reload();
+          }
+        });
+      }
     },
-    error:()=>{
+    error:(xhr, status, error)=>{
+      Swal.fire({
+      title: 'Error',
+      text: xhr.responseText,
+      icon: 'error',
+      confirmButtonColor: '#20d070',
+      confirmButtonText: 'OK',
+      allowOutsideClick: false
+      }) .then((result) => {
+        if (result.isConfirmed) {
+          // window.location.reload();
+        }
+      });
 
     }
 
