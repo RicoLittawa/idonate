@@ -197,8 +197,8 @@ catch(Exception $e){
 
   <!-- Submit button -->
   <button type="submit " class="btn btn-success btn-block">
-  <span class="submit-text">Add</span>
-  <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
+  <span class="submit-text">Create</span>
+  <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
   </button>
 </form>
 
@@ -330,52 +330,68 @@ $('#add-user').submit((e)=> {
   let address = $('#address').val();
   let selectedValue = $('input[name="role"]:checked').val();
 
+
+  /**Validations */
+  let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  let isInvalid = false;
+
   // Check for empty required fields
   if (!fname) {
     $('#fname').addClass('is-invalid');
-    return false;
+    isInvalid=true;
   } else {
     $('#fname').removeClass('is-invalid');
   }
 
   if (!lname) {
     $('#lname').addClass('is-invalid');
-    return false;
+    isInvalid=true;
   } else {
     $('#lname').removeClass('is-invalid');
   }
 
   if (!position) {
     $('#position').addClass('is-invalid');
-    return false;
+    isInvalid=true;
   } else {
     $('#position').removeClass('is-invalid');
   }
 
   if (!email) {
     $('#email').addClass('is-invalid');
-    return false;
-  } else {
+    isInvalid=true;
+  }
+  else if(emailVali.test(email) == false){
+    Swal.fire({
+    title: 'Warning',
+    text: 'Invalid email address',
+    icon: 'warning',
+    confirmButtonColor: '#20d070' // Change the color value here
+    });
+    $('#email').addClass('is-invalid');
+    isInvalid = true;
+    }
+  else {
     $('#email').removeClass('is-invalid');
   }
 
   if (!password) {
     $('#password').addClass('is-invalid');
-    return false;
+    isInvalid=true;
   } else {
     $('#password').removeClass('is-invalid');
   }
 
   if (!address) {
     $('#address').addClass('is-invalid');
-    return false;
+    isInvalid=true;
   } else {
     $('#address').removeClass('is-invalid');
   }
 
   if (!selectedValue) {
     $('input[name="role"]').addClass('is-invalid');
-    return false;
+    isInvalid=true;
   } else {
     $('input[name="role"]').removeClass('is-invalid');
   }
@@ -391,14 +407,16 @@ $('#add-user').submit((e)=> {
     address: address,
     selectedValue: selectedValue
   };
-
+  if (isInvalid){
+    return false;
+  }
   $.ajax({
     type: 'POST',
     url: 'include/register.inc.php',
     data: data,
     beforeSend:()=>{
             $('button[type="submit"]').prop('disabled', true);
-            $('.submit-text').addClass('d-none');
+            $('.submit-text').text('Creating...');
             $('.spinner-border').removeClass('d-none');
 
           },
@@ -407,13 +425,13 @@ $('#add-user').submit((e)=> {
         setTimeout(() => {
             // Enable the submit button and hide the loading animation
             $('button[type="submit"]').prop('disabled', false);
-            $('.submit-text').removeClass('d-none');
+            $('.submit-text').text('Create');            
             $('.spinner-border').addClass('d-none');
             Swal.fire({
 				 			  	title: 'Success',
 				 			  	text: "Account is successfully created",
 				 			  	icon: 'success',
-				 			  	confirmButtonColor: '#3085d6',
+				 			  	confirmButtonColor: '#20d070',
 				 			  	confirmButtonText: 'OK',
 				 			  	allowOutsideClick: false
 				 			  }).then((result) => {
@@ -422,19 +440,31 @@ $('#add-user').submit((e)=> {
 				 			  	}
 				 			  })
           }, 500);
-            }else{
+            }
+            else if (data=='Error: Email already exists'){
               Swal.fire({
                 title: 'Error',
                 text: data,
                 icon: 'error',
-                confirmButtonColor: '#3085d6',
+                confirmButtonColor: '#20d070',
                 confirmButtonText: 'OK',
                 allowOutsideClick: false
-              }).then((result) => {
-				 			  	if (result.isConfirmed) {
-				 			  		window.location.reload();
-				 			  	}
-				 			  });
+              })
+              $('button[type="submit"]').prop('disabled', false);
+              $('.submit-text').text('Create');            
+              $('.spinner-border').addClass('d-none');
+              $('#email').val('');
+              $('#email').addClass('is-invalid');
+            }
+            else{
+              Swal.fire({
+                title: 'Error',
+                text: data,
+                icon: 'error',
+                confirmButtonColor: '#20d070',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false
+              })
             }
     },
     error: (xhr, status, error)=> {
@@ -443,14 +473,10 @@ $('#add-user').submit((e)=> {
             title: 'Error',
             text: xhr.responseText,
             icon: 'error',
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: '#20d070',
             confirmButtonText: 'OK',
             allowOutsideClick: false
-        }) .then((result) => {
-				 			  	if (result.isConfirmed) {
-				 			  		window.location.reload();
-				 			  	}
-				 			  });
+        })
     }
   });
 });

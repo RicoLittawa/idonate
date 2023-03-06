@@ -357,9 +357,16 @@ if (isset($_GET["editdonate"])) {
 							</table>
 						</div>
 					</div>
-					<div class="mt-3" style="float:right;">
-						<button type="button" class="btn btn-danger  cancelBtn" id="cancelBtn">Cancel</button>
-						<button type="button" class="btn btn-success addDonate" id="testBtn">Save</button>
+					<div class="d-flex justify-content-end mt-3">
+						<div class="me-3">
+							<button type="button" class="btn btn-danger cancelBtn" id="cancelBtn">Cancel</button>
+						</div>
+						<div>
+							<button type="button" class="btn btn-success addDonate" id="testBtn">
+								<span class="submit-text">Update</span>
+  								<span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
+							</button>
+						</div>
 					</div>
 
 					</form>
@@ -475,14 +482,58 @@ if (isset($_GET["editdonate"])) {
 							url: 'include/edit.inc.php',
 							method: 'POST',
 							data: data,
+							beforeSend:()=>{
+								$('button[type="submit"]').prop('disabled', true);
+								$('.submit-text').text('Updating...');
+								$('.spinner-border').removeClass('d-none');
+
+							},
 							success: function(data) {
+								if (data==='success'){
+							setTimeout(() => {
+							// Enable the submit button and hide the loading animation
+							$('button[type="submit"]').prop('disabled', false);
+							$('.submit-text').text('Update');
+							$('.spinner-border').addClass('d-none');
+							Swal.fire({
+								title: 'Success',
+								text: "Data has been updated",
+								icon: 'success',
+								confirmButtonColor: '#20d070',
+								confirmButtonText: 'OK',
+								allowOutsideClick: false
+								}).then((result) => {
+								if (result.isConfirmed) {
+									window.location.href = "donations.php?dataUpdated";
+								}
+								})
+							}, 1000);
+								}
+								else{
+								$('.submit-text').text('Update');
+								$('.spinner-border').addClass('d-none');
 								Swal.fire({
-									icon: 'success',
-									title: 'Success',
+									title: 'Error',
 									text: data,
-								}).then(function() {
-									window.location = "donations.php";
-								});
+									icon: 'error',
+									confirmButtonColor: '#20d070',
+									confirmButtonText: 'OK',
+									allowOutsideClick: false
+								})
+									}
+							},
+							error: (xhr, status, error)=>{
+								$('.submit-text').text('Update');
+								$('.spinner-border').addClass('d-none');
+								// Handle errors
+								Swal.fire({
+									title: 'Error',
+									text: xhr.responseText,
+									icon: 'error',
+									confirmButtonColor: '#20d070',
+									confirmButtonText: 'OK',
+									allowOutsideClick: false
+								})
 							}
 
 						});

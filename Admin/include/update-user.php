@@ -10,15 +10,6 @@ if (isset($_POST['updateBtn'])){
     $Image = $_FILES['profileImg']['name'];
 
 
-    $sql = "SELECT COUNT(*) FROM adduser WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $stmt->bind_result($count);
-    $stmt->fetch();
-    $stmt->close();
-    
-
     if ($Image== null){
         $sql= "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=? where uID=?";
         $stmt= $conn->prepare($sql);
@@ -98,13 +89,9 @@ if (isset($_POST['updateBtn'])){
                 }
             }
         }
-        //upload new img
-        
-        
-      
-      
+        //upload new img         
     }
-
+    $conn->close();
 }
 
 if (isset($_POST['updatePassword'])){
@@ -131,5 +118,5 @@ if (isset($_POST['updatePassword'])){
             echo "Password does not match to any account";
         }
     }
-
+    $conn->close();
 }

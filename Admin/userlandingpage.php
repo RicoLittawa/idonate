@@ -147,8 +147,8 @@ $requestRef = $refRow['request_id'];
 	<form class="pe-2 mb-3" id="add-request">
 
   <!-- 2 column grid layout with text inputs for the first and last names -->
-  <input type="text" id="requestRef" value="<?php echo htmlentities($requestRef) ?>">
-  <input type="text" id="userId" value="<?php echo htmlentities($userID) ?>">
+  <input hidden type="text" id="requestRef" value="<?php echo htmlentities($requestRef) ?>">
+  <input hidden type="text" id="userId" value="<?php echo htmlentities($userID) ?>">
   <div class="form-group mb-4">
     <label for="request_date">Request Date</label>
     <input class="form-control" id="request_date" type="date">
@@ -163,7 +163,8 @@ $requestRef = $refRow['request_id'];
       <thead>
         <tr>
           <th>Available Category</th>
-          <th>QTY</th>
+          <th>Est QTY</th>
+          <th>Notes (Optional)</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -179,6 +180,7 @@ $requestRef = $refRow['request_id'];
          <td>
             <input type="text" class="form-control quantity" id="quantity">
         </td>   
+        <td><textarea class="form-control notes" id="notes" cols="30" rows="5" placeholder="e.g. We only need shampoo, soap, and mouthwash"></textarea></td>
          <td><button class="btn btn-success" type="button" id="addCategory"><i class="fa-solid fa-plus"></i></button></td>     
         </tr>
     
@@ -205,6 +207,7 @@ $requestRef = $refRow['request_id'];
       <thead>
         <tr>
           <th>Reciept No.</th>
+          <th>No. Evacuees/Families</th>
           <th>Request Date</th>
           <th>Recieve Date</th>
           <th>Status</th>
@@ -213,15 +216,39 @@ $requestRef = $refRow['request_id'];
         </tr>
       </thead>
       <tbody>
-     
+      <?php 
+        $createdRequest= "SELECT request_id,evacuees_qty,requestdate,recievedate,status from request where userID=?";
+        $stmt= $conn->prepare($createdRequest);
+        $stmt->bind_param('i',$userID);
+        $stmt->execute();
+        $createdRequestRes= $stmt->get_result();
+        while ($reqRes= $createdRequestRes->fetch_assoc()){
+          $request_date = $reqRes['requestdate'];
+          $request_dateTrimmed = str_replace('-', '', $request_date);
+          $reference= $reqRes['request_id'];
+          $evacuees_qty= $reqRes['evacuees_qty'];
+          $recieve_date= $reqRes['recievedate'];
+          $status= $reqRes['status'];
+        
+      ?>
         <tr>
-         <td></td>
-         <td></td>
-         <td></td>
-         <td></td>
+         <td><?php echo htmlentities($request_dateTrimmed)."-00".$reference ?></td>
+         <td><?php echo htmlentities($evacuees_qty) ?></td>
+         <td><?php echo htmlentities($request_date) ?></td>
+         <?php if($recieve_date===null){ ?>
+         <td><span class="badge badge-info">Empty</span></td>
+         <?php } else { ?>
+          <td><?php echo htmlentities($recieve_date) ?></td>
+          <?php }?>
+
+          <?php if($status==='pending'){ ?>
+          <td><span class="badge badge-warning">Pending</span></td>
+          <?php } else { ?>
+          <td><?php echo htmlentities($status) ?></td>
+          <?php }?>
          <td></td>
         </tr>
-    
+        <?php } ?>
       </tbody>
     </table>
 			</div>
@@ -272,6 +299,7 @@ $(document).ready(() => {
       '<?php echo add_category($conn); ?>' +
       '</select></td>';
     html += '<td><input type="text" class="form-control quantity" name="quantity" id="quantity' + count + '"></td>';
+    html+='<td><textarea class="form-control notes" id="notes" cols="30" rows="5" placeholder="e.g. We only need shampoo, soap, and mouthwash"></textarea></td>';
     if (count > 0) {
       remove = '<button type="button" name="removeCN"  class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>';
     }
@@ -288,23 +316,27 @@ $(document).ready(() => {
   })
   $('#add-request').submit((e) => {
   e.preventDefault();
-  let category, qtyCheck;
+  let userId= $('#userId').val();
+  let reqRef= $('#requestRef').val();
+  let request_date= $('#request_date').val();
+  let evacQty= $('#evacQty').val()
+
   let inputFields = {
     createBtn: '',
     category: [],
     quantity: [],
-    userId: $('#userId').val(),
-    reqRef: $('#requestRef').val(),
-    request_date: $('#request_date').val(),
-    evacQty: $('#evacQty').val()
+    notes:[],
+    userId: userId,
+    reqRef: reqRef,
+    request_date: request_date,
+    evacQty: evacQty
   };
   
   let isInvalid = false; // variable to keep track if any input is invalid
 
   $('.category').each((index, element) => {
-    category = $(element).val();
-    inputFields.category.push(category);
-    if (!category) {
+    inputFields.category.push($(element).val());
+    if ($(element).val()=="") {
       $(element).addClass('is-invalid');
       isInvalid = true;
     } else {
@@ -313,24 +345,26 @@ $(document).ready(() => {
   });
 
   $('.quantity').each((index, element) => {
-    qtyCheck = $(element).val();
-    inputFields.quantity.push(qtyCheck);
-    if (!qtyCheck) {
+    inputFields.quantity.push($(element).val());
+    if ($(element).val()=="") {
       $(element).addClass('is-invalid');
       isInvalid = true;
     } else {
       $(element).removeClass('is-invalid');
     }
   });
+  $('.notes').each((index, element) => {
+    inputFields.notes.push($(element).val());
+  });
 
-  if (!inputFields.request_date) {
+  if (!request_date) {
     $('#request_date').addClass('is-invalid');
     isInvalid = true;
   } else {
     $('#request_date').removeClass('is-invalid');
   }
 
-  if (!inputFields.evacQty) {
+  if (!evacQty) {
     $('#evacQty').addClass('is-invalid');
     isInvalid = true;
   } else {
@@ -343,6 +377,8 @@ $(document).ready(() => {
 
   // form is valid, continue with form submission
   // ...
+
+
   $.ajax({
     url:"include/request.inc.php",
     method:"POST",
@@ -368,12 +404,8 @@ $(document).ready(() => {
           allowOutsideClick: false
         }).then((result) => {
           if (result.isConfirmed) {
-            inputFields = {}; // reset inputFields object
-            // clear input fields
-            $('.category').val('');
-            $('.quantity').val('');
-            $('#request_date').val('');
-            $('#evacQty').val('');
+            // inputFields = {}; // reset inputFields object
+           window.location.reload();
           }
         })
       }
@@ -387,11 +419,7 @@ $(document).ready(() => {
         confirmButtonColor: '#20d070',
         confirmButtonText: 'OK',
         allowOutsideClick: false
-      }).then((result) => {
-          if (result.isConfirmed) {
-            // window.location.reload();
-          }
-        });
+      })
       }
     },
     error:(xhr, status, error)=>{
@@ -402,11 +430,7 @@ $(document).ready(() => {
       confirmButtonColor: '#20d070',
       confirmButtonText: 'OK',
       allowOutsideClick: false
-      }) .then((result) => {
-        if (result.isConfirmed) {
-          // window.location.reload();
-        }
-      });
+      })
 
     }
 

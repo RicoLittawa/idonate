@@ -293,6 +293,9 @@ catch(Exception $e){
         let email = fd.get('email');
         let address = fd.get('address');
         
+        /**Validation */
+        let isInvalid= false
+
         let fileInput = $('input[type="file"]');
         let file = fileInput[0].files[0];
         if (file) {
@@ -302,44 +305,49 @@ catch(Exception $e){
             // Display an error message or highlight the input field
             Swal.fire('Image', "Invalid file extension.",'warning');
             fileInput.val('');
-            return false;
+            isInvalid=true;
           }
         } 
         if (!fname){
           $('#fname').addClass('is-invalid');
-          return false;
+          isInvalid=true;
         }
         else{
           $('#fname').removeClass('is-invalid');
         }
         if (!lname){
           $('#lname').addClass('is-invalid');
-          return false;
+          isInvalid=true;
         }
         else{
           $('#lname').removeClass('is-invalid');
         }
         if (!position){
           $('#position').addClass('is-invalid');
-          return false;
+          isInvalid=true;
         }
         else{
           $('#position').removeClass('is-invalid');
         }
         if (!email){
           $('#email').addClass('is-invalid');
-          return false;
+          isInvalid=true;
         }
         else{
           $('#email').removeClass('is-invalid');
         }
         if (!address){
           $('#address').addClass('is-invalid');
-          return false;
+          isInvalid=true;
         }
         else{
           $('#address').removeClass('is-invalid');
         }
+
+        if(isInvalid){
+          return false;
+        }
+        
         $.ajax({
           url:"include/update-user.php",
           method:"POST",
@@ -349,7 +357,7 @@ catch(Exception $e){
           data:fd,
           beforeSend:()=>{
             $('button[type="submit"]').prop('disabled', true);
-            $('.submit-text').addClass('d-none');
+            $('.submit-text').text('Updating...');
             $('.spinner-border').removeClass('d-none');
 
           },
@@ -358,7 +366,7 @@ catch(Exception $e){
               setTimeout(() => {
             // Enable the submit button and hide the loading animation
             $('button[type="submit"]').prop('disabled', false);
-            $('.submit-text').removeClass('d-none');
+            $('.submit-text').text('Update');
             $('.spinner-border').addClass('d-none');
             Swal.fire({
 				 			  	title: 'Success',
@@ -374,20 +382,31 @@ catch(Exception $e){
 				 			  })
           }, 1500);
             }
-            else{
-              Swal.fire({
+          else if (data == 'Error: Email already exists'){
+            Swal.fire({
                 title: 'Error',
                 text: data,
                 icon: 'error',
-                confirmButtonColor: '#3085d6',
+                confirmButtonColor: '#20d070',
                 confirmButtonText: 'OK',
                 allowOutsideClick: false
-              }).then((result) => {
-				 			  	if (result.isConfirmed) {
-				 			  		window.location.reload();
-				 			  	}
-				 			  }); 
-            }
+              })
+              $('button[type="submit"]').prop('disabled', false);
+              $('.submit-text').text('Create');            
+              $('.spinner-border').addClass('d-none');
+              $('#email').val('');
+              $('#email').addClass('is-invalid');
+          }
+          else{
+            Swal.fire({
+              title: 'Error',
+              text: data,
+              icon: 'error',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK',
+              allowOutsideClick: false
+            })
+          }
             
           },
           error: (xhr, status, error)=>{
@@ -399,11 +418,7 @@ catch(Exception $e){
                 confirmButtonColor: '#3085d6',
                 confirmButtonText: 'OK',
                 allowOutsideClick: false
-            }) .then((result) => {
-                      if (result.isConfirmed) {
-                        window.location.reload();
-                      }
-                    });
+            })
         }
         })
       })

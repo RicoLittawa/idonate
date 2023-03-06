@@ -150,7 +150,7 @@ catch(Exception $e){
 				<th>Email</th>
 				<th>Contact</th>
 				<th>Donation Date</th>
-				<th>Send</th>
+				<th>Status</th>
         <th>Certificate</th>
 			  </tr>
 			</thead>

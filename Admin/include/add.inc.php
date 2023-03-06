@@ -4,14 +4,14 @@
         if (isset($_POST["saveBtn"]))
     {
         $reference_id= $_POST['ref_id'];
-        $Fname= $_POST['fname'];
+        $Fname= trim($_POST['fname']);
         $Province= $_POST['province'];
         $Municipality= $_POST['municipality'];
         $Barangay= $_POST['barangay'];
         $Region = $_POST['region'];
-        $Email= $_POST['email'];
+        $Email= trim($_POST['email']);
         $Date= date('Y-m-d', strtotime($_POST['donation_date']));
-        $Contact= $_POST['contact'];
+        $Contact= trim($_POST['contact']);
         $checkRes=$_POST['result'];
          foreach ($checkRes as $res){
             
@@ -34,7 +34,6 @@
                             }
                         }
                         catch(Exception $e){
-                            http_response_code(500);
                             echo "Error: " . $e->getMessage();
                             exit();
                         }
@@ -48,13 +47,12 @@
                                 if(!$result=$stmt->execute()){
                                     throw new Exception('There was a problem executing the query.');
                                 }else{
-                                    $resultCount = $resultCount + 1;
-                                    $count=$count+1;
+                                    $resultCount++;
+                                    $count++;
                                 }
                             }
                         }
                         catch(Exception $e){
-                            http_response_code(500);
                             echo "Error: " . $e->getMessage();
                             exit();
                         }
@@ -79,7 +77,6 @@
                         }
                     }
                     catch(Exception $e){
-                        http_response_code(500);
                         echo "Error: " . $e->getMessage();
                         exit();
                     }
@@ -93,13 +90,12 @@
                             if(!$result=$stmt->execute()){
                                 throw new Exception('There was a problem executing the query.');
                             }else{
-                                $resultCount = $resultCount + 1;
-                                $count=$count+1;
+                                $resultCount++;
+                                $count++;
                             }
                         }
                     }
-                    catch(Exception $e){
-                        http_response_code(500);
+                    catch(Exception $e){ 
                         echo "Error: " . $e->getMessage();
                         exit();
                     }
@@ -124,7 +120,6 @@
                     }
                 }
                 catch(Exception $e){
-                    http_response_code(500);
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
@@ -138,13 +133,12 @@
                         if(!$result=$stmt->execute()){
                             throw new Exception('There was a problem executing the query.');
                         }else{
-                            $resultCount = $resultCount + 1;
-                            $count=$count+1;
+                            $resultCount++;
+                            $count++;
                         }
                     }
                 }
                 catch(Exception $e){
-                    http_response_code(500);
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
@@ -169,7 +163,6 @@
                     }
                 }
                 catch(Exception $e){
-                    http_response_code(500);
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
@@ -183,13 +176,12 @@
                         if(!$result=$stmt->execute()){
                             throw new Exception('There was a problem executing the query.');
                         }else{
-                            $resultCount = $resultCount + 1;
-                            $count=$count+1;
+                            $resultCount++;
+                            $count++;
                         }
                     }
                 }
-                catch(Exception $e){
-                    http_response_code(500);
+                catch(Exception $e){       
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
@@ -215,8 +207,7 @@
                         }
                     }
                 }
-                catch(Exception $e){
-                    http_response_code(500);
+                catch(Exception $e){          
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
@@ -230,13 +221,12 @@
                         if(!$result=$stmt->execute()){
                             throw new Exception('There was a problem executing the query.');
                         }else{
-                            $resultCount = $resultCount + 1;
-                            $count=$count+1;
+                            $resultCount++;
+                            $count++;
                         }
                     }
                 }
-                catch(Exception $e){
-                    http_response_code(500);
+                catch(Exception $e){           
                     echo "Error: " . $e->getMessage();
                     exit();
                 }     
@@ -263,7 +253,6 @@
                     }
                 }
                 catch(Exception $e){
-                    http_response_code(500);
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
@@ -277,13 +266,12 @@
                         if(!$result=$stmt->execute()){
                             throw new Exception('There was a problem executing the query.');
                         }else{
-                            $resultCount = $resultCount + 1;
-                            $count=$count+1;
+                            $resultCount++;
+                            $count++;
                         }
                     }
                 }
                 catch(Exception $e){
-                    http_response_code(500);
                     echo "Error: " . $e->getMessage();
                     exit();
                 }     
@@ -310,7 +298,7 @@
                     }
                 }
                 catch(Exception $e){
-                    http_response_code(500);
+                    
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
@@ -324,13 +312,12 @@
                         if(!$result=$stmt->execute()){
                             throw new Exception('There was a problem executing the query.');
                         }else{
-                            $resultCount = $resultCount + 1;
-                            $count=$count+1;
+                            $resultCount++;
+                            $count++;
                         }
                     }
                 }
                 catch(Exception $e){
-                    http_response_code(500);
                     echo "Error: " . $e->getMessage();
                     exit();
                 }
@@ -344,41 +331,41 @@
          $stmt= $conn->prepare($donor);
          try{
              if(!$stmt){
-                 throw new Exception('Error: There was a problem executing the query.');
+                 throw new Exception('There was a problem executing the query.');
              }else{
                  $stmt->bind_param('sssssssss',$reference_id,$Fname,$Region,$Province,$Municipality,$Barangay,$Email,$Contact,$Date);
                  if(!$stmt->execute()){
-                     throw new Exception('Error: There was a problem executing the query.');
+                     throw new Exception('There was a problem executing the query.');
                  }
              }
          }
          catch(Exception $e){
-             http_response_code(500);
              echo "Error: " . $e->getMessage();
              exit();
          }
          //Add 1 for new reference id
-         $reference_id=$reference_id+1;
+         $reference_id++;
          $ref= "UPDATE donation_items_picking  set reference_id=? ";
          $stmt= $conn->prepare($ref);
          try{
              if(!$stmt){
-                 throw new Exception('Error: There was a problem executing the query.');
+                 throw new Exception('There was a problem executing the query.');
              }else{
                  $stmt->bind_param('i', $reference_id);
                  if(!$stmt->execute()){
-                     throw new Exception('Error: There was a problem executing the query.');
+                     throw new Exception('There was a problem executing the query.');
+                 }
+                 else{
+                    echo "success";
                  }
              }
          }
          catch(Exception $e){
-             http_response_code(500);
              echo "Error: " . $e->getMessage();
              exit();
          }
           
-           mysqli_stmt_close($stmt);
-           mysqli_close($conn);
+         $conn->close();
    
      }
    

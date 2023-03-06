@@ -148,8 +148,8 @@ catch(Exception $e){
 
   <!-- Submit button -->
   <button type="submit" class="btn btn-success btn-block">
-    <span class="submit-text">Change Password</span>
-    <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
+    <span class="submit-text">Change</span>
+    <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
   </button>
 </form>
 	
@@ -192,17 +192,24 @@ catch(Exception $e){
 
           let currpass = fd.get("currentPass");
           let newpass = fd.get("newPass");
+          let isInvalid= false;
          if (!currpass){
           $("#currentPass").addClass("is-invalid");
+          isInvalid=true;
          }
          else{
           $("#currentPass").removeClass("is-invalid");
          }
          if (!newpass){
           $("#newPass").addClass("is-invalid");
+          isInvalid=true;
          }
          else{
           $("#newPass").removeClass("is-invalid");
+         }
+
+         if (isInvalid){
+          return false
          }
           $.ajax({
             url:"include/update-user.php",
@@ -213,20 +220,20 @@ catch(Exception $e){
             data:fd,
             beforeSend:()=>{
               $('button[type="submit"]').prop("disabled",true);
-              $('.submit-text').addClass('d-none');
+              $('.submit-text').text('Changing...');
               $('.spinner-border').removeClass('d-none');
             },
             success:(data)=>{
               if (data==='success'){
                 setTimeout(()=>{
-                $('button[type="submit]"').prop("disabled",false);
-                $('.submit-text').removeClass('d-none');
+                $('button[type="submit"]').prop("disabled",false);
+                $('.submit-text').text('Change');
                 $('.spinner-border').addClass('d-none');
                 Swal.fire({
 				 			  	title: 'Success',
 				 			  	text: "Your password is updated",
 				 			  	icon: 'success',
-				 			  	confirmButtonColor: '#3085d6',
+				 			  	confirmButtonColor: '#20d070',
 				 			  	confirmButtonText: 'OK',
 				 			  	allowOutsideClick: false
 				 			  }).then((result) => {
@@ -242,14 +249,16 @@ catch(Exception $e){
                 title: 'Error',
                 text: data,
                 icon: 'error',
-                confirmButtonColor: '#3085d6',
+                confirmButtonColor: '#20d070',
                 confirmButtonText: 'OK',
                 allowOutsideClick: false
-              }).then((result) => {
-				 			  	if (result.isConfirmed) {
-				 			  		window.location.reload();
-				 			  	}
-				 			  });
+              })
+              $('button[type="submit"]').prop("disabled",false);
+              $('.submit-text').text('Change');
+              $('.spinner-border').addClass('d-none');
+              $('#currentPass').val('');
+              $('#newPass').val('');
+              $('#currentPass').addClass('is-invalid');
               }
             },
             error: (xhr, status, error)=> {
@@ -258,14 +267,10 @@ catch(Exception $e){
                 title: 'Error',
                 text: xhr.responseText,
                 icon: 'error',
-                confirmButtonColor: '#3085d6',
+                confirmButtonColor: '#20d070',
                 confirmButtonText: 'OK',
                 allowOutsideClick: false
-            }) .then((result) => {
-                      if (result.isConfirmed) {
-                        window.location.reload();
-                      }
-                    });
+            })
             }
           });
       });

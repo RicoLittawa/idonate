@@ -8,6 +8,7 @@ $request_date= date('Y-m-d', strtotime($_POST['request_date']));
 $evacQty= trim($_POST['evacQty']);
 $category= $_POST['category'];
 $quantity = $_POST['quantity'];
+$notes = $_POST['notes'];
 
 $user = "SELECT firstname, lastname, email, position FROM adduser WHERE uID = ?";
 $stmt = $conn->prepare($user);
@@ -36,14 +37,14 @@ try {
 $count= 0;
 $resultcount=0;
 $status= "pending";
-$reqDetails= ("INSERT into request (request_id,firstname,lastname,position,email,evacuees_qty,requestdate,status) VALUES(?,?,?,?,?,?,?,?)");
+$reqDetails= ("INSERT into request (userID,request_id,firstname,lastname,position,email,evacuees_qty,requestdate,status) VALUES(?,?,?,?,?,?,?,?,?)");
 $stmt=$conn->prepare($reqDetails);
 try{
     if (!$stmt){
         throw new Exception("There was a problem executing the query.");        
     }
     else{
-        $stmt->bind_param('isssssss', $reqRef,$firstname,$lastname,$position,$email,$evacQty,$request_date,$status);
+        $stmt->bind_param('iisssssss', $userId,$reqRef,$firstname,$lastname,$position,$email,$evacQty,$request_date,$status);
         $stmt->execute();
         echo "success";
     }
@@ -53,14 +54,14 @@ catch(Exception $e){
 }
 
  foreach ($category as $categ){
-    $categDetails= "INSERT INTO request_category (request_id,categoryName,quantity) VALUES (?,?,?)";
+    $categDetails= "INSERT INTO request_category (request_id,categoryName,quantity,notes) VALUES (?,?,?,?)";
     $stmt=$conn->prepare($categDetails);
     try{
         if(!$stmt){
             throw new Exception("There was a problem executing the query.");
         }
         else{
-            $stmt->bind_param('iss',$reqRef,$categ,$quantity[$count]);
+            $stmt->bind_param('isss',$reqRef,$categ,$quantity[$count],$notes[$count]);
             if (!$stmt->execute()){
                 throw new Exception("There was a problem executing the query.");
             }else{

@@ -203,7 +203,7 @@ function fill_region_select_box($conn)
 									<div class="form-group  mt-3">
 										<label for="region">Select Region</label>
 										<select class="form-control" name="region" id="region">
-											<option value="-Select-">--</option>
+											<option value="">--</option>
 											<?php echo fill_region_select_box($conn); ?>
 										</select>
 									</div>
@@ -454,7 +454,17 @@ function fill_region_select_box($conn)
 							</div>
 						</div>
 					</div>
-					<button type="submit" style="float:right; height:50px;width:100px;" class="btn btn-success waves-effect waves-light" id="saveD">Save</button>
+					<div class="d-flex justify-content-end mt-3">
+						<div class="me-3">
+							<button type="button" class="btn btn-danger cancelBtn" id="cancelBtn">Cancel</button>
+						</div>
+						<div>
+							<button type="submit"  class="btn btn-success waves-effect waves-light" id="saveD">
+								<span class="submit-text">Save</span>
+  								<span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
 					</form>
 				</div>
 				<!--End of form-->
@@ -491,7 +501,7 @@ function fill_region_select_box($conn)
 
 
 	<script>
-		$(document).ready(function() {
+		$(document).ready(()=> {
 
 			let count= 0;
 			//function to identify each button and add dynamic row to table
@@ -671,21 +681,26 @@ function fill_region_select_box($conn)
 				"unit":[]
 			}
 			}
-		 let ref_id = $('#reference_id').val();
-		 let fname = $('#fname').val();
-		 let region = $('#region').val();
-		 let province = $('#province').val();
-		 let municipality = $('#municipality').val();
-		 let barangay = $('#barangay').val();
-		 let contact = $('#contact').val();
-		 let email = $('#email').val();
-		 let donation_date = $('#donation_date').val();
+		/**Donor Details */
+		let ref_id = $('#reference_id').val();
+		let fname= $('#fname').val();
+		let region= $('#region').val();
+		let province= $('#province').val();
+		let municipality= $('#municipality').val();
+		let barangay=$('#barangay').val();
+		let contact= $('#contact').val();
+		let email= $('#email').val();
+		let donation_date=$('#donation_date').val();
+		/**Donor Details */
+
+		/** Validations */
 		 let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 		 let varnumbers = /^\d+$/;
-		 let inValid = /\s/;
-		 let name_items = $('.name_items').val();
+		 let isInvalid = false; // variable to keep track if any input is invalid
+		 /** Validations */
+		
 		 	//data object pass to ajax
-		 		let data = {
+		 		let inputData = {
 		 			saveBtn: '',
 		 			result: result,
 		 			ref_id: ref_id,
@@ -693,224 +708,419 @@ function fill_region_select_box($conn)
 		 			region: region,
 		 			province: province,
 		 			municipality: municipality,
-		 			barangay: barangay,
+		 			barangay:barangay,
 		 			contact: contact,
 		 			email: email,
-		 			donation_date: donation_date,
+		 			donation_date:donation_date,
 		 			pnCN_arr: inputFields.CN.pn,
-		 			 qCN_arr: inputFields.CN.q,
-		 			 pnHY_arr: inputFields.HY.pn,
-		 			 qHY_arr: inputFields.HY.q,
-		 			 pnII_arr: inputFields.II.pn,
-		 			 qII_arr: inputFields.II.q,
-		 			 pnDW_arr: inputFields.DW.pn,
-		 			 qDW_arr: inputFields.DW.q,
-		 			 pnMG_arr: inputFields.MG.pn,
-		 			 typeMG_arr: inputFields.MG.type,
-		 			 qMG_arr: inputFields.MG.q,
-		 			 unitMG_arr: inputFields.MG.unit,
-		 			 pnME_arr: inputFields.ME.pn,
-		 			 typeME_arr: inputFields.ME.type,
-		 			 qME_arr: inputFields.ME.q,
-		 			 unitME_arr: inputFields.ME.unit,
-		 			 pnOT_arr: inputFields.OT.pn,
-		 			 typeOT_arr: inputFields.OT.type,
-		 			 qOT_arr: inputFields.OT.q,
-		 			 unitOT_arr: inputFields.OT.unit
+		 			qCN_arr: inputFields.CN.q,
+		 			pnHY_arr: inputFields.HY.pn,
+		 			qHY_arr: inputFields.HY.q,
+		 			pnII_arr: inputFields.II.pn,
+		 			qII_arr: inputFields.II.q,
+		 			pnDW_arr: inputFields.DW.pn,
+		 			qDW_arr: inputFields.DW.q,
+		 			pnMG_arr: inputFields.MG.pn,
+		 			typeMG_arr: inputFields.MG.type,
+		 			qMG_arr: inputFields.MG.q,
+		 			unitMG_arr: inputFields.MG.unit,
+		 			pnME_arr: inputFields.ME.pn,
+		 			typeME_arr: inputFields.ME.type,
+		 			qME_arr: inputFields.ME.q,
+		 			unitME_arr: inputFields.ME.unit,
+		 			pnOT_arr: inputFields.OT.pn,
+		 			typeOT_arr: inputFields.OT.type,
+		 			qOT_arr: inputFields.OT.q,
+		 			unitOT_arr: inputFields.OT.unit
 		 		}
-		 		//Variables for checking the empty input fields of checked checkbox
-		 		let cnProductName,cnQuantity,hyProductName,hyQuantity,iiProductName,iiQuantity,dwProductName,dwQuantity,
-		 		mgProductName,mgQuantity,mgType,mgUnit,meProductName,meQuantity,meType,meUnit,otProductName,otQuantity,otType,otUnit;
-
+		 		
 				/**If the box is check it will get the data of each input field then pass it
 				to the variable then check it if value of that input field is empty
 				  * */
 				 if ($('#box1').is(':checked')) {
-				 	$('.pnCN').each(function() {
-						cnProductName= $(this).val();
-						inputFields.CN.pn.push($(this).val()); 	 	
+				 	$('.pnCN').each((index, element)=> {
+						inputFields.CN.pn.push($(element).val()); 
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 	
 				 	})
-				 	 $('.qCN').each(function() {
-						cnQuantity= $(this).val();
-						inputFields.CN.q.push($(this).val());
+				 	 $('.qCN').each((index, element) =>{
+						inputFields.CN.q.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	
 				 	 })
 				 }
 				 if ($('#box2').is(':checked')) {
-				 	$('.pnHY').each(function() {
-						hyProductName= $(this).val();
-						inputFields.HY.pn.push($(this).val());
+				 	$('.pnHY').each((index,element)=> {
+						inputFields.HY.pn.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.qHY').each(function() {
-						hyQuantity= $(this).val();
-						inputFields.HY.q.push($(this).val());
+				 	$('.qHY').each((index,element)=> {
+						inputFields.HY.q.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
 				 }
 				 if ($('#box3').is(':checked')) {
-				 	$('.pnII').each(function() {
-						iiProductName= $(this).val();
-						inputFields.II.pn.push($(this).val());
+				 	$('.pnII').each((index,element)=> {
+						inputFields.II.pn.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.qII').each(function() {
-						iiQuantity= $(this).val();
-						inputFields.II.q.push($(this).val());
+				 	$('.qII').each((index,element)=> {
+						inputFields.II.q.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
 				 }
 				 if ($('#box4').is(':checked')) { 
-				 	$('.pnDW').each(function() {
-						dwProductName= $(this).val();
-						inputFields.DW.pn.push($(this).val());
+				 	$('.pnDW').each((index,element)=> {
+						inputFields.DW.pn.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.qDW').each(function() {
-						dwQuantity= $(this).val();
-						inputFields.DW.q.push($(this).val());
+				 	$('.qDW').each((index,element)=> {
+						inputFields.DW.q.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
 				 }
 				 if ($('#box5').is(':checked')) {
-				 	$('.pnMG').each(function() {
-						mgProductName= $(this).val();
-						inputFields.MG.pn.push($(this).val());
+				 	$('.pnMG').each((index,element)=> {
+						inputFields.MG.pn.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.typeMG').each(function() {
-						mgType= $(this).val();
-						inputFields.MG.type.push($(this).val());
+				 	$('.typeMG').each((index,element)=> {
+						inputFields.MG.type.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.qMG').each(function() {
-						mgQuantity=$(this).val();
-						inputFields.MG.q.push($(this).val());
+				 	$('.qMG').each((index,element)=> {
+						inputFields.MG.q.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.unitMG').each(function() {
-						mgUnit=$(this).val();
-						inputFields.MG.unit.push($(this).val());
+				 	$('.unitMG').each((index,element)=> {
+						inputFields.MG.unit.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
 				 }
 				 if ($('#box6').is(':checked')) {
-				 	$('.pnME').each(function() {
-						meProductName=$(this).val();
-						inputFields.ME.pn.push($(this).val());
+				 	$('.pnME').each((index,element)=> {
+						inputFields.ME.pn.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.typeME').each(function() {
-						meType=$(this).val();
-						inputFields.ME.type.push($(this).val());
+				 	$('.typeME').each((index,element)=> {
+						inputFields.ME.type.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.qME').each(function() {
-						meQuantity=$(this).val();
-						inputFields.ME.q.push($(this).val());
+				 	$('.qME').each((index,element)=> {
+						inputFields.ME.q.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.unitME').each(function() {
-						meUnit=$(this).val();
-						inputFields.ME.unit.push($(this).val());
+				 	$('.unitME').each((index,element)=> {
+						inputFields.ME.unit.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
 				 }
 				 if ($('#box7').is(':checked')) {
-				 	$('.pnOT').each(function() {
-						otProductName=$(this).val();
-						inputFields.OT.pn.push($(this).val());
+				 	$('.pnOT').each((index,element)=> {
+						inputFields.OT.pn.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.typeOT').each(function() {
-						otType=$(this).val();
-						inputFields.OT.type.push($(this).val());
+				 	$('.typeOT').each((index,element)=> {
+						inputFields.OT.type.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.qOT').each(function() {
-						otQuantity=$(this).val();
-						inputFields.OT.q.push($(this).val());
+				 	$('.qOT').each((index,element)=> {
+						inputFields.OT.q.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
-				 	$('.unitOT').each(function() {
-						otUnit=$(this).val();
-						inputFields.OT.unit.push($(this).val());
+				 	$('.unitOT').each((index,element)=> {
+						inputFields.OT.unit.push($(element).val());
+						if ($(element).val()==''){
+							$(element).addClass('is-invalid');
+      						isInvalid = true;
+						}
+						else{
+							$(element).removeClass('is-invalid');
+						}	 
 				 	})
 				 }
 
 				// Validate the whole form
-				 if (fname == "") {
-				 	Swal.fire('Field', "Please input your fullname", 'warning');
-				 	return false;
-				 } else if (region == "-Select-") {
-				 	Swal.fire('Select', "Please select a region", 'warning');
-				 	return false;
-				 } else if (province == "-Select-") {
-				 	Swal.fire('Select', "Please select a province", 'warning');
-				 	return false;
-				 } else if (municipality == "-Select-") {
-				 	Swal.fire('Select', "Please select a municipality", 'warning');
-				 	return false;
-				 } else if (barangay == "-Select-") {
-				 	Swal.fire('Select', "Please select a barangay", 'warning');
-				 	return false;
-				 } else if (contact == "") {
-				 	Swal.fire('Field', "Please input your contact", 'warning');
-				 	return false;
-				 } else if (inValid.test($('#contact').val()) == true) {
-				 	Swal.fire('Contact', "Whitespace is prohibited.", 'warning');
-				 	return false;
-				 } else if (varnumbers.test($('#contact').val()) == false) {
-				 	Swal.fire('Number', "Numbers only.", 'warning');
-				 	return false;
-				 } else if (contact.length != 11) {
-				 	Swal.fire('Contact', "Enter Valid Contact Number", 'warning');
-				 	return false;
-				 } else if (email == "") {
-				 	Swal.fire('Field', "Please input your email", 'warning');
-				 	return false;
-				 } else if (emailVali.test($('#email').val()) == false) {
-				 	Swal.fire('Email', "Invalid email address", 'warning');
-				 	return false;
-				 } else if (donation_date == "") {
-				 	Swal.fire('Select', "Please select date", 'warning');
-				 	return false;
-				 } else if (!$('.selectCateg').is(':checked')) {
-				 	Swal.fire('Category', "Please select a category", 'warning')
-				 }else if (cnProductName =='' || cnQuantity== '') {
-				 	Swal.fire('Warning', 'Can & Noodles are empty', 'warning');
-				 	return false;
-				 } else if (hyProductName ==''|| hyQuantity== '') {
-				 	Swal.fire('Warning', 'Hygine Essentials are empty', 'warning');
-				 	return false;
-				 } else if (iiProductName== ''||iiQuantity== '') {
-				 	Swal.fire('Warning', 'Infant Items are empty', 'warning');;
-				 	return false;
-				 } else if (dwProductName== ''||dwQuantity== '') {
-				 	Swal.fire('Warning', 'Drinking Waters are empty', 'warning');
-				 	return false;
-				 } else if (mgProductName== ''||mgType== ''||mgQuantity== ''||mgUnit== '') {
-				 	Swal.fire('Warning', 'Meat & Grains are empty', 'warning');
-				 	return false;
-				 } else if (meProductName== ''||meType== ''||meQuantity== ''||meUnit== '') {
-				 	Swal.fire('Warning', 'Medicines are empty', 'warning');
-				 	return false;
-				 } else if (otProductName== ''||otType== ''||otQuantity== ''||otUnit== '') {
-				 	Swal.fire('Warning', 'Others are empty', 'warning');
-				 	return false;
-				 } else {
-				 	$.ajax({
-				 		url: 'include/add.inc.php',
-				 		method: 'POST',
-				 		data: data,
-				 		success:(data)=> {
-				 			  Swal.fire({
-				 			  	title: 'Success',
-				 			  	text: "Successfully Added",
-				 			  	icon: 'success',
-				 			  	confirmButtonColor: '#3085d6',
-				 			  	confirmButtonText: 'OK',
-				 			  	allowOutsideClick: false
-				 			  }).then((result) => {
-				 			  	if (result.isConfirmed) {
-				 			  		window.location.href = "donations.php?inserted";
-				 			  	}
-				 			  })
-				 		},
-						 error: (jqXHR, textStatus, errorThrown) =>{
-							Swal.fire('Error', jqXHR.responseText, 'warning');
-						}
-
-				 	})
+				 if (!fname) {
+					$('#fname').addClass('is-invalid');
+					isInvalid = true;
 				 }
+				 else{
+					$('#fname').removeClass('is-invalid');
+				 }
+				 if (!email){
+					$('#email').addClass('is-invalid');
+					isInvalid = true;
+				 }
+				else if(emailVali.test(email) == false){
+					Swal.fire({
+					title: 'Warning',
+					text: 'Invalid email address',
+					icon: 'warning',
+					confirmButtonColor: '#20d070' // Change the color value here
+					});
+					$('#email').addClass('is-invalid');
+					isInvalid = true;
+				 }
+				 else{
+					$('#email').removeClass('is-invalid');
+				 }
+				 if (!region){
+					$('#region').addClass('is-invalid');
+					isInvalid = true;
+				 }
+				 else{
+					$('#region').removeClass('is-invalid');
+				 }
+				 if (!province){
+					$('#province').addClass('is-invalid');
+					isInvalid = true;
+				 }
+				 else{
+					$('#province').removeClass('is-invalid');
+				 }
+				 if (!municipality){
+					$('#municipality').addClass('is-invalid');
+					isInvalid = true;
+				 }
+				 else{
+					$('#municipality').removeClass('is-invalid');
+				 }
+				 if (!barangay){
+					$('#barangay').addClass('is-invalid');
+					isInvalid = true;
+				 }
+				 else{
+					$('#barangay').removeClass('is-invalid');
+				 }
+				 if(!contact){
+					$('#contact').addClass('is-invalid');
+				 }
+				 else if(varnumbers.test(contact) == false){
+					Swal.fire({
+					title: 'Warning',
+					text: 'Contact can only contain numbers',
+					icon: 'warning',
+					confirmButtonColor: '#20d070' // Change the color value here
+					});
+					$('#contact').addClass('is-invalid');
+					isInvalid = true;
+				 }
+				 else if(contact.length > 11){
+					Swal.fire({
+					title: 'Warning',
+					text: 'Contact number exceeds to 11 digits',
+					icon: 'warning',
+					confirmButtonColor: '#20d070' // Change the color value here
+					});
+					$('#contact').addClass('is-invalid');
+					isInvalid = true;
+				 }
+				 else{
+					$('#contact').removeClass('is-invalid');
+				 }
+				 if (!donation_date){
+					$('#donation_date').addClass('is-invalid');
+				 }
+				 else{
+					$('#donation_date').removeClass('is-invalid');
+				 }
+				 if (!$('.selectCateg').is(':checked')) {
+					Swal.fire({
+					title: 'Warning',
+					text: 'Please select a category',
+					icon: 'warning',
+					confirmButtonColor: '#20d070' // Change the color value here
+					});
+					$('#contact').addClass('is-invalid');
+					isInvalid = true;
+				  } 
+				if (isInvalid) {
+    				return false; // prevent form from submitting if any input is invalid
+				}
+				$.ajax({
+					url: 'include/add.inc.php',
+					method: 'POST',
+					data: inputData,
+					beforeSend:()=>{
+						$('button[type="submit"]').prop('disabled', true);
+						$('.submit-text').text('Saving...');
+						$('.spinner-border').removeClass('d-none');
+
+					},
+					success:(data)=> {
+						if (data==='success'){
+							setTimeout(() => {
+							// Enable the submit button and hide the loading animation
+							$('button[type="submit"]').prop('disabled', false);
+							$('.submit-text').text('Save');
+							$('.spinner-border').addClass('d-none');
+							Swal.fire({
+								title: 'Success',
+								text: "Data has been added",
+								icon: 'success',
+								confirmButtonColor: '#20d070',
+								confirmButtonText: 'OK',
+								allowOutsideClick: false
+								}).then((result) => {
+								if (result.isConfirmed) {
+									window.location.href = "donations.php?NewdataAdded";
+								}
+								})
+							}, 500);
+								}
+						else{
+							$('.submit-text').text('Save');
+							Swal.fire({
+								title: 'Error',
+								text: data,
+								icon: 'error',
+								confirmButtonColor: '#20d070',
+								confirmButtonText: 'OK',
+								allowOutsideClick: false
+							})
+						}
+										
+					},
+					error: (xhr, status, error)=>{
+						// Handle errors
+						$('.submit-text').text('Save');
+						Swal.fire({
+							title: 'Error',
+							text: xhr.responseText,
+							icon: 'error',
+							confirmButtonColor: '#20d070',
+							confirmButtonText: 'OK',
+							allowOutsideClick: false
+						})
+					}
+
+				})
+				 
 			})
 		});
 	</script>
 	<script>
-		$(document).ready(function() {
-			$('#region').on('change', function() {
+		$(document).ready(()=> {
+			$('#region').on('change', function(){
 				var regCode = $(this).val();
 				if (regCode) {
 					$.ajax({
@@ -926,7 +1136,7 @@ function fill_region_select_box($conn)
 					swal.fire('Warning', 'Select region', 'warning');
 				}
 			});
-			$('#province').on('change', function() {
+			$('#province').on('change', function(){
 				var provCode = $(this).val();
 				if (provCode) {
 					$.ajax({
@@ -942,7 +1152,7 @@ function fill_region_select_box($conn)
 					swal.fire('Warning', 'Select province', 'warning');
 				}
 			});
-			$('#municipality').on('change', function() {
+			$('#municipality').on('change', function(){
 				var citymunCode = $(this).val();
 				if (citymunCode) {
 					$.ajax({
@@ -962,7 +1172,15 @@ function fill_region_select_box($conn)
 		});
 	</script>
 	<Script>
-	$(document).on('focus', '.name_items', function() {
+	let $nameItems = $('.name_items');
+
+	function renderItem(ul, item) {
+	return $("<li>")
+		.append("<div>" + item.label + "</div>")
+		.appendTo(ul);
+	}
+
+	$(document).on('focus', '.name_items', function(){
 	$(this).autocomplete({
 		source: function(request, response) {
 		$.ajax({
@@ -991,12 +1209,9 @@ function fill_region_select_box($conn)
 		$(this).val(ui.item.value);
 		return false;
 		}
-	}).autocomplete("instance")._renderItem = function(ul, item) {
-		return $("<li>")
-		.append("<div>" + item.label + "</div>")
-		.appendTo(ul);
-	};
+	}).autocomplete("instance")._renderItem = renderItem;
 	});
+
 	</Script>
 
 

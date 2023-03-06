@@ -77,7 +77,7 @@ if(isset($_POST['submitBtn'])){
       echo "Error: " . $e->getMessage();
   }
   
-    
+  $conn->close();
   
 }
-$conn->close();
+
