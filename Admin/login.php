@@ -1,14 +1,14 @@
 <?php 
-session_start();
+ session_start();
 
-// Check if user is already logged in
-if(isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='admin') {
-    header("Location: adminpage.php"); // Redirect to index.php or any other page you want
-    exit();
-}else if (isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='user'){
-	header("Location: userlandingpage.php"); // Redirect to index.php or any other page you want
-    exit();
-}
+ 
+ if(isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='admin') {
+     header("Location: adminpage.php");  
+     exit();
+ }else if (isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='user'){
+ 	header("Location: userlandingpage.php");  
+     exit();
+ }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,39 +33,29 @@ if(isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='admin'
 					<img src="img/batangascitylogo.png" alt="IMG">
 				</div>
 
-				<form class="login100-form" id="login-form" method="POST" action="include/login.inc.php" >
+				<form class="login100-form" id="login-form">
 					<span class="login100-form-title">
 						Login
 					</span>
-					<div class="pb-2 d-flex justify-content-center" >
-						<?php if (isset($_SESSION['error'])):?>
-						<p style="color:red"><?php
-							echo $_SESSION['error'];
-							unset($_SESSION['error']); ?></p>
-						<?php endif?>
-					</div>
 						<div class="wrap-input100">
-				
-						<input class="input100 is-invalid" type="text" id="userEmail" name="userEmail" placeholder="Email" autocomplete="">
+						<input class="input100 is-invalid" type="text" id="userEmail" name="userEmail" placeholder="Email">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 						<i class="fa fa-envelope" aria-hidden="true"></i>
 					
 					</div>
-
-
-
-
-
 					<div class="wrap-input100">
-						<input class="input100" type="password" name="userPassword" placeholder="Password" autocomplete="">
+						<input class="input100" type="password" name="userPassword" id="userPassword" placeholder="Password">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
 					<div class="container-login100-form-btn">
-					<button type="submit" name="login-submit" class="login100-form-btn">Login</button>
+					<button type="submit" name="login-submit" class="login100-form-btn">
+						<span class="submit-text">Login</span>
+						<span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
+					</button>
 					<!-- <span id="loading"></span> -->
 			
 					</div>
@@ -77,13 +67,139 @@ if(isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='admin'
 		</div>
 	</div>
 	
-	
-
-	
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>	
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
+	<script src="scripts/sweetalert2.all.min.js"></script>
 
+	<script>
+		$(document).ready(()=>{
+			$('#login-form').on('submit',(e)=>{
+				e.preventDefault();	
+				let userEmail= $('#userEmail').val();
+				let userPassword = $('#userPassword').val();
+
+				let isInvalid= false;
+				let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+				let data= {
+					submitBtn:'',
+					userEmail:userEmail,
+					userPassword:userPassword,
+				}
+				if (!userEmail){
+					$('#userEmail').css('border','1px solid #c80000');
+					isInvalid=true;
+				}
+				else if(emailVali.test(userEmail) == false){
+					Swal.fire({
+					title: 'Warning',
+					text: 'Invalid email address',
+					icon: 'warning',
+					confirmButtonColor: '#20d070' // Change the color value here
+					});
+					$('#userEmail').css('border','1px solid #c80000');
+					isInvalid=true;
+				}
+				else{
+					$('#userEmail').css('border','none');
+				}
+				if(!userPassword){
+					$('#userPassword').css('border','1px solid #c80000');
+					isInvalid=true;
+				}
+				else{
+					$('#userPassword').css('border','none');
+				}
+
+				if(isInvalid){
+					return false;
+				}
+
+				$.ajax({
+					url:"include/login.inc.php",
+					method:"POST",
+					data:data,
+					beforeSend:()=>{
+						$('button[type="submit"]').prop('disabled', true);
+						$('.submit-text').text('Logging in...');
+						$('.spinner-border').removeClass('d-none');
+
+					},
+					success:(data)=>{
+						 if (data==='admin'){
+							setTimeout(() => {
+								// Enable the submit button and hide the loading animation
+								$('button[type="submit"]').prop('disabled', false);
+								$('.submit-text').text('Login');            
+								$('.spinner-border').addClass('d-none');
+								Swal.fire({
+				 			  	title: 'Hello Admin',
+				 			  	text: "You are logged in",
+				 			  	icon: 'success',
+				 			  	confirmButtonColor: '#20d070',
+				 			  	confirmButtonText: 'OK',
+				 			  	allowOutsideClick: false
+				 			  })
+							   setTimeout(()=>{
+								window.location.href="adminpage.php";
+							},1000)
+         					 }, 1500);
+							
+						 }
+						 if (data==='user'){
+							setTimeout(() => {
+								// Enable the submit button and hide the loading animation
+								$('button[type="submit"]').prop('disabled', false);
+								$('.submit-text').text('Login');            
+								$('.spinner-border').addClass('d-none');
+								Swal.fire({
+				 			  	title: 'Hello User',
+				 			  	text: "You are logged in",
+				 			  	icon: 'success',
+				 			  	confirmButtonColor: '#20d070',
+				 			  	confirmButtonText: 'OK',
+				 			  	allowOutsideClick: false
+				 			  })
+							   setTimeout(()=>{
+								window.location.href="userlandingpage.php";
+							},1000)
+         					 }, 1500);
+						 }
+						 if (data== "Invalid email or password."){
+							Swal.fire({
+								title: 'Error',
+								text: data,
+								icon: 'error',
+								confirmButtonColor: '#20d070',
+								confirmButtonText: 'OK',
+								allowOutsideClick: false
+							})
+							$('button[type="submit"]').prop('disabled', false);
+							$('.submit-text').text('Login');            
+							$('.spinner-border').addClass('d-none');
+							$('#userEmail').val('');
+							$('#userPassword').val('');
+							$('#userEmail').css('border','1px solid #c80000');
+							$('#userPassword').css('border','1px solid #c80000');
+						 }
+							
+					},
+					error: (xhr, status, error)=> {
+					// Handle errors
+					Swal.fire({
+						title: 'Error',
+						text: xhr.responseText,
+						icon: 'error',
+						confirmButtonColor: '#20d070',
+						confirmButtonText: 'OK',
+						allowOutsideClick: false
+						})
+   					 }			
+				})
+			})
+		})
+	</script>
 </body>
 </html>

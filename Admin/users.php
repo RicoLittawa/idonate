@@ -439,7 +439,7 @@ $('#add-user').submit((e)=> {
 				 			  		window.location.reload();
 				 			  	}
 				 			  })
-          }, 500);
+          }, 1000);
             }
             else if (data=='Error: Email already exists'){
               Swal.fire({

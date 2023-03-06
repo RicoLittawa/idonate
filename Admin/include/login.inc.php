@@ -2,23 +2,10 @@
 session_start();
 require_once 'connection.php';
 
-if (isset($_POST['login-submit'])){
+if (isset($_POST['submitBtn'])){
 
     $userEmail = $_POST['userEmail'];
     $userPassword = $_POST['userPassword'];
-
-    if (empty($userEmail) || empty($userPassword)) {
-        $_SESSION['error'] = 'Email or Password are empty.';
-        header("location: ../login.php");
-        exit();
-    }
-
-    if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['error'] = 'Invalid email address.';
-        header("location: ../login.php");
-        exit();
-    }
-
     $sql = "SELECT * FROM adduser WHERE email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $userEmail);
@@ -28,9 +15,7 @@ if (isset($_POST['login-submit'])){
         $result = $stmt->get_result();
 
         if($result->num_rows == 0) {
-            $_SESSION['error'] = 'Invalid email or password.';
-            header("location: ../login.php");
-            exit();
+            throw new Exception("Invalid email or password.");
         } else {
             while($row = $result->fetch_assoc()){
                 $hash = $row['pwdUsers'];
@@ -48,24 +33,20 @@ if (isset($_POST['login-submit'])){
                     $stmt2->bind_param('si', $status, $userID);
                     $stmt2->execute();
                    if($_SESSION["user"]['role']=='admin'){
-                    header("Location: ../adminpage.php");
-                    exit();
+                        echo "admin";
                    }
-                    else{
-                        header("Location: ../userlandingpage.php");
-                    exit();
+                    if ($_SESSION["user"]['role']=='user'){
+                       echo "user";
                     }
                     
                 } else {
-                    $_SESSION['error'] = 'Invalid email or password.';
-                    header("location: ../login.php");
-                    exit();
+                   throw new Exception("Invalid email or password.");
                 }
             }
         }
 
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        echo $e->getMessage();
     }
 }
 ?>
