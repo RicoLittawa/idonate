@@ -23,16 +23,17 @@ if (isset($_POST['updateBtn'])){
                     throw new Exception('There was a problem executing the query.');
                 }else{
                     echo "success";
+                    $stmt->close();
                 }
             }
         }
         catch(Exception $e){
             if ($e->getCode() == 1062) {
                 // Handle duplicate email error
-                echo "Error: Email already exists";
+                echo "Email already exists";
             } else {
                 // Handle other errors
-                echo "Error: " . $e->getMessage();
+                echo $e->getMessage();
             }
         }
     }else{
@@ -72,6 +73,7 @@ if (isset($_POST['updateBtn'])){
                                 throw new Exception('There was a problem executing the query.');
                             }else{
                                 echo "success";
+                                $stmt->close();
                             }
                         }
                     }
@@ -81,7 +83,7 @@ if (isset($_POST['updateBtn'])){
                             echo "Error: Email already exists";
                         } else {
                             // Handle other errors
-                            echo "Error: " . $e->getMessage();
+                            echo $e->getMessage();
                         }
                     }
         
@@ -113,6 +115,7 @@ if (isset($_POST['updatePassword'])){
             $stmt->bind_param('si',$hashPW,$passUID);
             $stmt->execute();
             echo "success";
+            $stmt->close();
             
         }else{
             echo "Password does not match to any account";

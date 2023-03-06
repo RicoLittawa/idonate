@@ -16,7 +16,8 @@ if (isset($_POST['regCode'])){
         echo "
         <option value='".$row['provCode']."'>".$row['provDesc']."</option>";
     }
-
+    $stmt->close();
+    $conn->close();
 }
  
 
@@ -34,7 +35,8 @@ if (isset($_POST['provCode'])){
         echo "
         <option value='".$row['citymunCode']."'>".$row['citymunDesc']."</option>";
 }
-
+$stmt->close();
+$conn->close();
 }
 
 //Select Barangay
@@ -51,7 +53,8 @@ if (isset($_POST['citymunCode'])){
         echo "
         <option value='".$row['brgyCode']."'>".$row['brgyDesc']."</option>";
 }
-
+$stmt->close();
+$conn->close();
 }
 
 //Select categ for unit
@@ -69,5 +72,6 @@ if (isset($_POST['categCode'])){
         echo "
         <option value='".$row['id']."'>".$row['unit']."</option>";
     }
-
+    $stmt->close();
+    $conn->close();
 }

@@ -29,16 +29,16 @@ if (isset($_POST['submitBtn'])){
                     ];
                     $status = 'active';
                     $updateStatus = "UPDATE adduser SET status = ? WHERE uID = ?";
-                    $stmt2 = $conn->prepare($updateStatus);
-                    $stmt2->bind_param('si', $status, $userID);
-                    $stmt2->execute();
+                    $stmt = $conn->prepare($updateStatus);
+                    $stmt->bind_param('si', $status, $userID);
+                    $stmt->execute();
                    if($_SESSION["user"]['role']=='admin'){
                         echo "admin";
                    }
                     if ($_SESSION["user"]['role']=='user'){
                        echo "user";
                     }
-                    
+                    $stmt->close();
                 } else {
                    throw new Exception("Invalid email or password.");
                 }
@@ -47,6 +47,9 @@ if (isset($_POST['submitBtn'])){
 
     } catch (Exception $e) {
         echo $e->getMessage();
+    }
+    finally{
+        $conn->close();
     }
 }
 ?>

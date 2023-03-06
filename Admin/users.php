@@ -276,7 +276,7 @@ catch(Exception $e){
 
 
 	<script>
-       $(document).ready(function() {
+       $(document).ready(()=> {
 		$("#toggleFormBtn").click(function() {
 			$("#registerForm").collapse('toggle');
 			if ($(this).html().includes('<i class="fas fa-minus"></i> Hide Form')) {
@@ -418,7 +418,6 @@ $('#add-user').submit((e)=> {
             $('button[type="submit"]').prop('disabled', true);
             $('.submit-text').text('Creating...');
             $('.spinner-border').removeClass('d-none');
-
           },
     success: (data) =>{
       if (data==='success'){
@@ -434,12 +433,17 @@ $('#add-user').submit((e)=> {
 				 			  	confirmButtonColor: '#20d070',
 				 			  	confirmButtonText: 'OK',
 				 			  	allowOutsideClick: false
-				 			  }).then((result) => {
-				 			  	if (result.isConfirmed) {
-				 			  		window.location.reload();
-				 			  	}
 				 			  })
-          }, 1000);
+          setTimeout(()=>{
+            $('#fname').val("");
+            $('#lname').val("");
+            $('#position').val("");
+            $('#email').val("");
+            $('#password').val("");
+            $('#address').val("");
+            $('input[name="role"]').prop('checked', false);
+          },1000)
+          }, 500);
             }
             else if (data=='Error: Email already exists'){
               Swal.fire({

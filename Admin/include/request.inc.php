@@ -85,9 +85,13 @@ catch(Exception $e){
     else{
         $stmt->bind_param('i',$reqRef);
         $stmt->execute();
+
     }
  }
  catch(Exception $e){
     echo $e->getMessage();
  }
+
+ $stmt->close();
+ $conn->close();
 }

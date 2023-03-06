@@ -67,17 +67,19 @@ if(isset($_POST['submitBtn'])){
      } catch (mysqli_sql_exception $e) {
       if ($e->getCode() == 1062) {
           // Handle duplicate email error
-          echo "Error: Email already exists";
+          echo "Email already exists";
       } else {
           // Handle other MySQL errors
           echo "MySQL Error: " . $e->getMessage();
       }
   } catch (Exception $e) {
       // Handle other non-MySQL errors
-      echo "Error: " . $e->getMessage();
+      echo $e->getMessage();
+  }
+  finally{
+    $conn->close();
   }
   
-  $conn->close();
   
 }
 

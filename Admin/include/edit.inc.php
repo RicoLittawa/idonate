@@ -31,7 +31,7 @@
       catch(Exception $e){
         echo $e->getMessage();
       }
-    
+      $stmt->close();
       $conn->close();
        
     }

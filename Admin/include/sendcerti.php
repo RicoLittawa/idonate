@@ -15,25 +15,25 @@
   foreach($_POST['email_data']as $row)
   {
 
-    $donor_id= $row['uID'];
-    $status= 'email_sent';
+   $donor_id= $row['uID'];
+   $status= 'email_sent';
    $template= "SELECT * from template_certi";
    $result = mysqli_query($conn,$template);
    foreach($result as $rowTemp){
    $tempCert= $rowTemp['template'];
    } 
    $image = imagecreatefrompng('Certificate Template/'.$tempCert);
-$white = imagecolorallocate($image, 255, 255, 255);
-$black = imagecolorallocate($image, 0, 0, 0);
-$font = "fonts/Roboto-Black.ttf";
-$size = 110;
-$box = imagettfbbox($size, 0, $font, $row['name']);
-$text_width = abs($box[2]) - abs($box[0]);
-$text_height = abs($box[5]) - abs($box[3]);
-$image_width = imagesx($image);
-$image_height = imagesy($image);
-$x = ($image_width - $text_width) / 2;
-$y = ($image_height + $text_height) / 2;
+   $white = imagecolorallocate($image, 255, 255, 255);
+   $black = imagecolorallocate($image, 0, 0, 0);
+   $font = "fonts/Roboto-Black.ttf";
+   $size = 110;
+   $box = imagettfbbox($size, 0, $font, $row['name']);
+   $text_width = abs($box[2]) - abs($box[0]);
+   $text_height = abs($box[5]) - abs($box[3]);
+   $image_width = imagesx($image);
+   $image_height = imagesy($image);
+   $x = ($image_width - $text_width) / 2;
+   $y = ($image_height + $text_height) / 2;
 
 // add text
 imagettftext($image, $size, 0, $x, $y, $black, $font, $row['name']);
@@ -71,21 +71,33 @@ imagedestroy($image);
       $mail->addStringAttachment($pdf->Output("S",'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
       $mail->Send();      //Send an Email. Return true on success or false on error
 
-      $sql ="UPDATE donation_items set email_status=?, certificate=? where donor_id=?";
-      $stmt=mysqli_stmt_init($conn);
-      if(!mysqli_stmt_prepare($stmt,$sql)){
-         
-      }else{
-         mysqli_stmt_bind_param($stmt, 'ssi', $status,$genImage,$donor_id);
-          mysqli_stmt_execute($stmt);
-     }
- 
+      
     
    
  
   
- } echo "Inserted";
- 
+ } 
+      $sql ="UPDATE donation_items set email_status=?, certificate=? where donor_id=?";
+      $stmt= $conn->prepare($sql);
+      try {
+         if (!$stmt){
+            throw new Exception("There are error when executing query.");
+         }
+         else{
+            $stmt->bind_param('ssi', $status,$genImage,$donor_id);
+            $stmt->execute();
+            echo "Inserted";
+            $stmt->close();
+         }
+      }
+      catch(Exception $e){
+         echo $e->getMessage();
+      }
+      finally{
+         $conn->close();
+      }
+
+
 }
 
 

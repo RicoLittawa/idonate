@@ -364,7 +364,7 @@
              echo "Error: " . $e->getMessage();
              exit();
          }
-          
+          $stmt->close();
          $conn->close();
    
      }

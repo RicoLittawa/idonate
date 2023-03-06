@@ -375,12 +375,14 @@ catch(Exception $e){
 				 			  	confirmButtonColor: '#3085d6',
 				 			  	confirmButtonText: 'OK',
 				 			  	allowOutsideClick: false
-				 			  }).then((result) => {
-				 			  	if (result.isConfirmed) {
-				 			  		window.location.href = "users.php?Updated";
-				 			  	}
 				 			  })
+
+              setTimeout(()=>{
+                window.location.href = "users.php?Updated";
+              },1000)
+
           }, 1500);
+
             }
           else if (data == 'Error: Email already exists'){
             Swal.fire({
@@ -427,7 +429,7 @@ catch(Exception $e){
   <script>
     $(document).ready(()=>{
 // Prepare the preview for profile picture
-    $("#wizard-picture").change(()=>{
+    $("#wizard-picture").change(function(){
         readURL(this);
     });
 });
@@ -435,7 +437,7 @@ function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
-        reader.onload = (e)=> {
+        reader.onload = function(e) {
             $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
         }
         reader.readAsDataURL(input.files[0]);
