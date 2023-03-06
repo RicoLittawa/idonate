@@ -1080,11 +1080,11 @@ function fill_region_select_box($conn)
 								confirmButtonColor: '#20d070',
 								confirmButtonText: 'OK',
 								allowOutsideClick: false
-								}).then((result) => {
-								if (result.isConfirmed) {
-									window.location.href = "donations.php?NewdataAdded";
-								}
 								})
+
+							setTimeout(()=>{
+								window.location.href = "donations.php?NewdataAdded";
+							},1000)
 							}, 500);
 								}
 						else{

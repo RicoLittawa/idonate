@@ -502,11 +502,10 @@ if (isset($_GET["editdonate"])) {
 								confirmButtonColor: '#20d070',
 								confirmButtonText: 'OK',
 								allowOutsideClick: false
-								}).then((result) => {
-								if (result.isConfirmed) {
-									window.location.href = "donations.php?dataUpdated";
-								}
-								})
+								});
+								setTimeout(()=>{
+								window.location.href = "donations.php?NewdataAdded";
+							},1500);
 							}, 1000);
 								}
 								else{

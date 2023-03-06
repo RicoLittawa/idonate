@@ -83,7 +83,7 @@ $requestRef = $refRow['request_id'];
       <li class="nav-item">
         <a href="#" class="nav-link">
           <i class='bx bxs-package'></i>
-          <span class="text">Stocks</span>
+          <span class="text">History</span>
         </a>
       </li>
     </ul>
@@ -168,7 +168,7 @@ $requestRef = $refRow['request_id'];
           <th>Action</th>
         </tr>
       </thead>
-      <tbody id="categoryBody">
+      <tbody id="requestBody">
         <tr>
       
          <td> <!-- SELECT OPTION -->
@@ -294,7 +294,7 @@ $(document).ready(() => {
   const addCategory = () => {
     let html = '';
     let remove = '';
-    html += '<tr><td> <select class="form-control category" name="category" id="category' + count + '">' +
+    html += '<tr id="appendedRows"><td> <select class="form-control category" name="category" id="category' + count + '">' +
       '<option value="">--</option>' +
       '<?php echo add_category($conn); ?>' +
       '</select></td>';
@@ -309,7 +309,7 @@ $(document).ready(() => {
   }
   $('#addCategory').click(() => {
     count++
-    $('#categoryBody').append(addCategory());
+    $('#requestBody').append(addCategory());
   })
   $(document).on('click', '.remove', function () {
     $(this).closest('tr').remove();
@@ -402,12 +402,10 @@ $(document).ready(() => {
           confirmButtonColor: '#20d070',
           confirmButtonText: 'OK',
           allowOutsideClick: false
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // inputFields = {}; // reset inputFields object
-           window.location.reload();
-          }
-        })
+        });
+        setTimeout(()=>{
+          window.location.reload();
+          },1000)
       }
       ,1500)
       }
