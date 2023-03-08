@@ -1,53 +1,55 @@
-<?php 
-if(isset($_POST['login-submit'])){
-    require_once 'connection.php';
-    $Email = $_POST['userEmail'];
-    $Password = $_POST['userPassword'];
-    if (empty($Email)||empty($Password)){
-        header("Location: ../loginforms/login.php?error=emptyfields");
-        exit();
-    }   
-    else{
-        $sql = "SELECT *FROM useradmin WHERE email=?";
-        $stmt = mysqli_stmt_init($conn);
-        if(!mysqli_stmt_prepare($stmt,$sql)){
-            header("Location: ../loginforms/login.php?error=sqlerror");
-            exit();
-        }
-        else{
-            mysqli_stmt_bind_param($stmt,"s", $Email);
-            mysqli_stmt_execute($stmt);
-            $result= mysqli_stmt_get_result($stmt);
-        
-        if($row= mysqli_fetch_assoc($result)){
-            $pwdCheck = password_verify($Password, $row['pwdUsers']);
-            if ($pwdCheck == false){
-                header("Location: ../loginforms/login.php?error=wrongpassword");
-                exit();
+<?php
+session_start();
+require_once 'connection.php';
 
+if (isset($_POST['submitBtn'])){
+
+    $userEmail = $_POST['userEmail'];
+    $userPassword = $_POST['userPassword'];
+    $sql = "SELECT * FROM adduser WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $userEmail);
+
+    try {
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if($result->num_rows == 0) {
+            throw new Exception("Invalid email or password.");
+        } else {
+            while($row = $result->fetch_assoc()){
+                $hash = $row['pwdUsers'];
+                if (password_verify($userPassword, $hash)) {
+                    $userID = $row["uID"];
+
+                    $_SESSION["user"] = [
+                        "uID" => $row["uID"],
+                        "logged_in" => true,
+                        "role" => $row['role']
+                    ];
+                    $status = 'active';
+                    $updateStatus = "UPDATE adduser SET status = ? WHERE uID = ?";
+                    $stmt = $conn->prepare($updateStatus);
+                    $stmt->bind_param('si', $status, $userID);
+                    $stmt->execute();
+                   if($_SESSION["user"]['role']=='admin'){
+                        echo "admin";
+                   }
+                    if ($_SESSION["user"]['role']=='user'){
+                       echo "user";
+                    }
+                    $stmt->close();
+                } else {
+                   throw new Exception("Invalid email or password.");
+                }
             }
-            else if ($pwdCheck == true){
-                session_start();
-                $_SESSION['email'] = $row['email'];
-                $_SESSION['name'] = $row['name'];
-                $_SESSION['id'] = $row['uID'];
-                header("Location: ../adminpage.php");
-            exit();
-            }
-            else{
-                header("Location: login/login.php?error=wrongpassword");
-                exit();
-            }
-             }
-             else{
-                header("Location: ../loginforms/login.php?error=nouser");
-                exit();
-             }
         }
+
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+    finally{
+        $conn->close();
     }
 }
-
-else{
-    header("Location: ../loginforms/login.php.php");
-    exit();
-}
+?>

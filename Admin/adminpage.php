@@ -1,6 +1,29 @@
-<?php
-session_start();
+<?php include 'include/protect.php';
+require_once 'include/connection.php';
+$sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param('i',$userID );
+$stmt->execute();
+$result= $stmt->get_result();
+while($row= $result->fetch_assoc()){
+  $firstname=  $row['firstname'];
+  $profile=  $row['profile'];
+    } 
 
+function fill_select_category($conn){
+  $output='';
+  $selectCateg= "SELECT * from category";
+  $stmt=$conn->prepare($selectCateg);
+  $stmt->execute();
+  $result=$stmt->get_result();
+  foreach ($result as $row) {
+		$categoryName = htmlentities($row['category']);
+		$categCode = htmlentities($row['categCode']);
+		$output .= '<option value="' . $categCode . '">' . $categoryName . '</option>';
+	}
+	return $output;
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,157 +31,449 @@ session_start();
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-	<!-- Boxicons -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-	<!-- My CSS -->
-	<link rel="stylesheet" href="css/landing.css">
-	
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+	<link rel="stylesheet" href="css/mdb.min.css">
+	<link rel="stylesheet" href="css/style.css">
+  <style>
+    .card-names{
+  color: #a9a9a9;
+  font-size: 14px;
+}.h1-color{
+  color: #2D3436;
+}.my-fixed-height {
+  height: 355px;
+  overflow: auto;
+}
+  </style>
 	<title>Dashboard</title>
 </head>
 <body>
+<div class="main-container">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+    <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
+  <nav class="side-menu">
+    <ul class="nav">
+      <li class="nav-item">
+        <a href="#" class="nav-link active">
+          <i class='bx bxs-dashboard active'></i>
+          <span class="text">Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="donations.php" class="nav-link">
+          <i class='bx bxs-box'></i>
+          <span class="text">Donors</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class='bx bxs-envelope'></i>
+          <span class="text">Requests</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="stocks.php" class="nav-link">
+          <i class='bx bxs-package'></i>
+          <span class="text">Stocks</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="users.php" class="nav-link">
+          <i class='bx bxs-user-plus' ></i>
+          <span class="text">Users</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+ 
+    </div>
+
+<!--Main content -->
+  <div class="main-content">
+
+  <!--Header -->
+  <div class="mb-4 custom-breadcrumb">
+  <div class="crumb">
+    <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
+    <nav class="bc-nav d-flex">
+      <h6 class="mb-0">
+        <a href="" class="text-reset bc-path">Home</a>
+        <span>/</span>
+        <a href="" class="text-reset bc-path active">Dashboard</a>
+      </h6>  
+    </nav>
+  </div>
+  <div style="margin-left: auto;">
+    <div class="dropdown">
+  <a
+    class="dropdown-toggle"
+    id="dropdownMenuButton"
+    data-mdb-toggle="dropdown"
+    aria-expanded="false"
+    style="border: none;"
+  >
+  <?php if ($profile==null){ ?>
+    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+  <?php }else{?>
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
+  <?php }?>
+
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li><h6 class="dropdown-item">Hello <?php echo htmlentities($firstname);?>!</h6></li>
+    <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
+    <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
+    <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
+  </ul>
+</div>
+  </div>
+</div>
+ <!--Header -->
 
 
-	<!-- SIDEBAR -->
-	<section id="sidebar">
-		<a href="#" class="brand">
-			
-			<span ><img class="img" src="img/logo.png" alt=""></span>
-		</a>
-		<ul class="side-menu top">
-			<li  class="active">
-				<a href="adminpage.php">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Dashboard</span>
-				</a>
-			</li>
-			<li>
-				<a href="donations.php">
-					<i class='bx bxs-box' ></i>
-					<span class="text">Donations</span>
-				</a>
-			</li>
-			<li>
-				<a href="request.php">
-					<i class='bx bxs-envelope' ></i>
-					<span class="text">Requests</span>
-				</a>
-			</li>
-			<li>
-				<a href="archive.php">
-				<i class='bx bxs-file-archive'></i>
-					<span class="text">Records</span>
-				</a>
-			</li>
-			<li>
-				<a href="categorytables.php">
-					<i class='bx bxs-package'></i>
-					<span class="text">Stocks</span>
-				</a>
-			</li>
-			<li>
-				<a href="">
-					<i class='bx bxs-user-plus'></i>
-					<span class="text">Users</span>
-				</a>
-			</li>
-		</ul>
-		<ul class="side-menu">
-			<li>
-				<a class="settings"  href="settings.php">
-					<i class='bx bxs-cog' ></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
-			<li>
-				<a href="include/logout.php" class="logout">
-					<i class='bx bxs-log-out-circle' ></i>
-					<span class="text">Logout</span>
-				</a>
-			</li>
-		</ul>
-	</section>
-	<!-- SIDEBAR -->
+  <!--reports -->
+  <div class="custom-container pb-3">
+    <div class="row g-3">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="card">
+	      <div class="card-header  bg-gradient bg-success"></div>
+          <div class="card-body">
+            <div class="row">
+              <span><h6 class=" h1-color card-names">DONORS</h6>  </span>
+              <div class="col">
+              <?php 
+                $donors = "SELECT COUNT(*) FROM donation_items";
+                $stmt = $conn->prepare($donors);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+                $count = $row['COUNT(*)'];
+              ?>
+				        <h1 class="m-md-1 h1-color"><?php echo $count ?></h1>
+			          </div>
+			        <div class="col">
+                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-user  fa-2x"></i></h4>
+			        </div>
+		        </div>
+        </div>
+      </div>
+    </div> 
+    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="card">
+	      <div class="card-header  bg-gradient bg-success"></div>
+          <div class="card-body">
+            <div class="row">
+              <span><h6 class=" h1-color card-names">Distributed</h6></span>
+              <div class="col">
+				        <h1 class="m-md-1 h1-color">50</h1>
+			          </div>
+			        <div class="col">
+                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-gift fa-2x"></i></h4>
+			        </div>
+		        </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="card">
+	      <div class="card-header  bg-gradient bg-success"></div>
+          <div class="card-body">
+            <div class="row">
+              <span><h6 class=" h1-color card-names">REQUESTS</h6>  </span>
+              <div class="col">
+              <?php 
+                $request = "SELECT COUNT(*) FROM request";
+                $stmt = $conn->prepare($request);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+                $count = $row['COUNT(*)'];
+              ?>
+				        <h1 class="m-md-1 h1-color"><?php echo $count ?></h1>
+			          </div>
+			        <div class="col">
+                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-envelope  fa-2x"></i></h4>
+			        </div>
+		        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row g-3 mt-2">
+    <div class="col-s-12 col-md-12 col-lg-12">
+      <div class="card">
+       <div class="card-body">
+        <div class="d-flex justify-content-lg-end">
+        <div style="width: 30%;" >
+          <label for="selectCategory" class="form-label">Category</label>
+          <select name="selectCategory" id="selectCategory" class="form-control">
+            <option value="">Select</option>
+            <?php echo fill_select_category($conn) ?>
+          </select>
+       </div>
+        </div>
+         <canvas id="barChart"></canvas>
+        </div>
+       </div>  
+     </div>
+     <div class="col-s-12 col-md-12 col-lg-12">
+  <div class="card">
+      <div class="card-body">
+      <h1 class="mb-3">Category</h1>
+      <table class="table table-striped table-bordered" style="width:100%" id="table_data">
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php $category= "SELECT category,sum(quantity) as totalQuantity  FROM (
+            SELECT 'Can and Noodles' AS category,quantity FROM categcannoodles
+            UNION ALL
+            SELECT 'Drinking Water' AS category,quantity FROM categdrinkingwater
+            UNION ALL
+            SELECT 'Hygine Essentials' AS category,quantity FROM categhygineessential
+            UNION ALL
+            SELECT 'Infant Items' AS category,quantity FROM categinfant
+            UNION ALL
+            SELECT 'Meat and Grains' AS category,quantity FROM categmeatgrains
+            UNION ALL
+            SELECT 'Medicine' AS category,quantity FROM categmedicine
+            UNION ALL
+            SELECT 'Others' AS category,quantity FROM categothers
+            ) as allProducts 
+            GROUP BY category
+            ORDER BY totalQuantity DESC";
+            $stmt=$conn->prepare($category);
+            $stmt->execute();
+            $result = $stmt->get_result();  
+            while ($row= $result->fetch_assoc()):
+            ?>
+      <td style="font-weight: bold;"><?php echo htmlentities($row['category'])?></td>
+      <td><?php echo htmlentities($row['totalQuantity']) ?></td>
+    </tr>
+    <?php endwhile; ?>
+ 
+  </tbody>
+</table>
+      </div>
+    </div>
+  </div>
+  <div class="col-s-12 col-md-12 col-lg-12">
+      <div class="card">
+       <div class="card-body">
+         <canvas id="lineChart"></canvas>
+        </div>
+       </div>  
+     </div>
+     <div class="col-s-12 col-md-12 col-lg-12">
+  <div class="card">
+      <div class="card-body">
+      <h1 class="mb-3">Requests Completed</h1>
+      <table class="table table-striped table-bordered" style="width:100%" id="table_data">
+  <thead>
+    <tr>
+      <th>Request Reciept No.</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+      <td style="font-weight: bold;"></td>
+      <td></td>
+    </tr>
+
+ 
+  </tbody>
+</table>
+      </div>
+    </div>
+  </div>
+
+  
+<!--End of main content -->
+    </div>
+  </div>
+</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>	
+	<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+	<script type="text/javascript" src="scripts/mdb.min.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
 
 
 
-	<!-- CONTENT -->
-	<section id="content">
-		<!-- NAVBAR -->
-		<nav>
-			<i style="font-size:40px;" class='bx bx-menu' ></i>
-			<form action="#">
-			</form>
-			<a href="#" class="notification">
-				<i class='bx bxs-bell' ></i>
-				<span class="num">8</span>
-			</a>Good Day
-			<a href="#" class="profile"><span> <?php echo $_SESSION['name']; ?></span></a>
-			
-		</nav>
-		<!-- NAVBAR -->
 
-		<!-- MAIN -->
-		<main>
-			<div class="head-title">
-				<div class="left">
-					<h1>Dashboard</h1>	
-				</div>
-			</div>
 
-			<ul class="box-info">
-				<li>
-				<i class='bx bxs-group' ></i>
-				<span class="text">
-				<?php
-				require 'include/connection.php'; 
-			 $sql="SELECT count('1') from total_donor";
-			 $result=mysqli_query($conn,$sql);
-			 $row=mysqli_fetch_array($result);
-			 echo "<h3 style=font-size:45px>$row[0]</h3>";
-			 ?>
-		
-						<h4 style="color: grey;">Donor</h4>
-					</span>
-				</li>
-				<li>
-					<i class='bx bxs-dollar-circle' ></i>
+<script>
+	$(document).ready(()=>{
 
-					<span class="text">
-					<?php
-		
-			 $sql="SELECT sum(amount) from total_funds";
-			 $result=mysqli_query($conn,$sql);
-			 $row=mysqli_fetch_array($result);
-			 echo "<h3 style=font-size:45px>₱ $row[0]</h3>";
-			 mysqli_close($conn); ?>
-		
-					<h4 style="color: grey;">Funds</h4>
-					</span>
-				</li>
-			</ul>
+  
+  let label = '';
+  let data=[];
+  let labels=[];
+  let backgroundColor=[];
 
-				</div>
-			</div>
-			
-			<div class="table-data">
+  $.ajax({
+    url:'include/graphs.bar.data.php',
+    method:"GET",
+    dataType:'json',
+    success: (response)=> {
+       label= response.label;
+       data= response.data;
+       labels= response.labels;
+       let lowestValue = Math.min(...data);
+       let highestValue = Math.max(...data);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i] === lowestValue) {
+          backgroundColor.push('rgb(240, 255, 66)');
+        } else if (data[i] === highestValue) {
+          backgroundColor.push('rgb(55, 146, 55)');
+        } else {
+          backgroundColor.push('rgb(84, 180, 53)');
+        }
+      }
+       myChart.data.datasets[0].label = label;
+       myChart.data.datasets[0].data = data;
+       myChart.data.labels = labels;
+       myChart.update();
+    },
+    error: (xhr, status, error)=> {
+        console.log('Error: ' + error.message);
+    }
+  })
 
-				<div class="add">
-				<iframe title="idonate" width="970" height="600" src="https://app.powerbi.com/view?r=eyJrIjoiMDNjMGUyZWYtMWU2ZS00ODc0LWIxMTQtOWM0ZmRhYjU0MTRmIiwidCI6IjYxMTExODkxLTNkYzgtNDVmZi1hZjcwLWZjMGFmM2NjYjBmOCIsImMiOjEwfQ%3D%3D&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>	
-				</div>
-					
-					
-			</div>
-		</main>
-	
-	</section>
-	
-	
+ 
+// create the chart
+let ctx = $('#barChart').get(0).getContext('2d');
+let myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels:labels,
+    datasets: [{
+      label: label,
+      data: data,
+      backgroundColor: backgroundColor,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
 
-	<script src="scripts/sidemenu.js"></script>
-	<script src="scripts/jQuery.js"></script>
-	
+    }
+  }
+});
+
+// update the chart data and label based on the selected category
+  $('#selectCategory').on('change', function() {
+    const selectedValue = $('#selectCategory').val();
+      $.ajax({
+        url:'include/graphs.bar.dynamic.data.php',
+        method:'GET',
+        dataType:'json',
+        data:{category:selectedValue},
+        success:(response)=>{
+          console.log(response)
+          label= response.label;
+          myChart.data.datasets[0].label = label;
+           myChart.data.datasets[0].data = data;
+           myChart.data.labels = labels;
+           myChart.update();
+        }
+      });
+      if(selectedValue==""){
+        $.ajax({
+    url:'include/graphs.bar.data.php',
+    method:"GET",
+    dataType:'json',
+    success: (response)=> {
+       label= response.label;
+       data= response.data;
+       labels= response.labels;
+       let lowestValue = Math.min(...data);
+       let highestValue = Math.max(...data);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i] === lowestValue) {
+          backgroundColor.push('rgb(240, 255, 66)');
+        } else if (data[i] === highestValue) {
+          backgroundColor.push('rgb(55, 146, 55)');
+        } else {
+          backgroundColor.push('rgb(84, 180, 53)');
+        }
+      }
+       myChart.data.datasets[0].label = label;
+       myChart.data.datasets[0].data = data;
+       myChart.data.labels = labels;
+       myChart.update();
+    },
+    error: (xhr, status, error)=> {
+        console.log('Error: ' + error.message);
+    }
+  })
+      }
     
-	
+  });
+
+});
+
+</script>
+<script>
+	$(document).ready(()=>{
+    const data = {
+  datasets: [{
+    label: 'My First Dataset',
+    data: [65, 59, 80, 81, 56, 55, 40],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+    borderWidth: 1
+  }]
+};
+      var ctx = $('#lineChart').get(0).getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'line',
+          data: data,
+          options: {
+            scales: {
+         y: {
+        beginAtZero: true
+            }
+          }
+        }
+        
+      });
+      });
+</script>
+
+
+
 </body>
 </html>

@@ -62,17 +62,17 @@ if (isset($_GET['viewNote'])){
 
  //view certificate
  if (isset($_GET['viewCert'])){
-    $request_id= $_GET['viewCert'];
+    $id= $_GET['viewCert'];
     $message='';
-    $sql= "SELECT rD_certificate from donor_record where id=?";
+    $sql= "SELECT certificate from donation_items where donor_id=?";
     $stmt = $conn->prepare($sql); 
-    $stmt->bind_param("i", $request_id);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
  
      if ( $donor = $result->fetch_assoc()){
       
-             echo $donor['rD_certificate'];
+             echo $donor['certificate'];
         
      }else{
          echo 'Data not found';
@@ -135,25 +135,25 @@ if (isset($_GET['viewTemp'])){
  
  }
 
- if(isset($_GET["term"])){
-    $search= "%".$_GET['term']."%";
-    $autoS= 'SELECT * from categ_products WHERE product_name LIKE ?';
-    $stmt= $conn->prepare($autoS);
-    $stmt->bind_param('s',$search);
+ if (isset($_POST['keyword'])) {
+    $keyword = "%" . $_POST['keyword'] . "%";
+    $autoS = 'SELECT * FROM categ_products WHERE product_name LIKE ? ORDER BY product_name LIMIT 0,6';
+    $stmt = $conn->prepare($autoS);
+    $stmt->bind_param('s', $keyword);
     $stmt->execute();
     $result = $stmt->get_result();
-    $data = $result->fetch_all(MYSQLI_ASSOC);
-    $output= array();
-    foreach ($data as $row){
-        $temp_array=array();
-        $temp_array['value']=$row['product_name'];
-        $temp_array['label'] =$row['product_name'];
-
-        $output[]= $temp_array;
+    $response = array();
+    if (!empty($result)) {
+      while ($row = $result->fetch_assoc()) {
+        $response[] = array(
+          'product_name' => $row['product_name']
+        );
+      }
     }
-    echo json_encode($output);
- }
- 
+    echo json_encode($response);
+  }
+  
+
 
  //update announcement
  if (isset($_GET['updateAnnounce'])){
@@ -206,30 +206,7 @@ if (isset($_GET['viewTemp'])){
     }
 
  }
- //delete money donor
- if (isset($_GET['deleteBtnM'])){
-    $id = $_GET['deleteBtnM'];
-    $selectImg= "SELECT rDM_certificate from donor_recordm where id=?";
-    $stmt=$conn->prepare($selectImg);
-    $stmt->bind_param('s',$id);
-    $stmt->execute();
-    $result= $stmt->get_result();
-    $donor = $result->fetch_assoc();
-    $cert= $donor['rDM_certificate'];
-    $validPath= '../include/money_donor/'.$cert;
-    unlink($validPath);
-    $donorM = "DELETE from donor_recordm where id=?";
-    $stmt= $conn->prepare($donorM);
-    $stmt->bind_param('i',$id);
-    $result= $stmt-> execute();
-    if ($result== true){
-       
-        echo "Data is deleted";
-    }else{
-        echo "Data is not deleted";
-    }
-
- }
+ 
  //delete request
  if (isset($_GET['deleteReq'])){
     $id = $_GET['deleteReq'];

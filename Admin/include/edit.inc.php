@@ -17,21 +17,21 @@
       
     
       $sql ="UPDATE donation_items set Reference=?,donor_name=?,donor_region=?,donor_province=?,donor_municipality=?,donor_barangay=?,donor_email=?,donor_contact=?,donationDate=? where donor_id=?";
-      $stmt=mysqli_stmt_init($conn);
-      if(!mysqli_stmt_prepare($stmt,$sql)){
-         
-      }else{
-         mysqli_stmt_bind_param($stmt, 'issssssssi', $reference_id,$Fname,$Region,$Province,$Municipality,$Barangay,$Email,$Contact,$Date,$donorid);
-          mysqli_stmt_execute($stmt);
-     }
- 
-     
-    
-
-    
-
-      mysqli_stmt_close($stmt);
-      mysqli_close($conn);
-   
+      $stmt=$conn->prepare($sql);
+      try {
+        if(!$stmt){
+          throw new Exception("There are error when executing the query.");
+        }
+        else{
+          $stmt->bind_param('issssssssi', $reference_id,$Fname,$Region,$Province,$Municipality,$Barangay,$Email,$Contact,$Date,$donorid);
+          $stmt->execute();
+          echo "success";
+        }
+      }
+      catch(Exception $e){
+        echo $e->getMessage();
+      }
+      $stmt->close();
+      $conn->close();
        
     }
