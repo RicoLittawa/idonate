@@ -20,6 +20,8 @@ if (isset($_GET['category'])){
             'labels'=>$labels
         );
         echo json_encode($dataArray);
+        $stmt->close();
+        $conn->close();
     }
     else if ($category==="02"){
         $data= array();
@@ -39,6 +41,8 @@ if (isset($_GET['category'])){
             'labels'=>$labels
         );
         echo json_encode($dataArray);
+        $stmt->close();
+        $conn->close();
     }
     else if ($category==="03"){
         $data= array();
@@ -58,6 +62,8 @@ if (isset($_GET['category'])){
             'labels'=>$labels
         );
         echo json_encode($dataArray);
+        $stmt->close();
+        $conn->close();
     }
     else if ($category==="04"){
         $data= array();
@@ -77,6 +83,8 @@ if (isset($_GET['category'])){
             'labels'=>$labels
         );
         echo json_encode($dataArray);
+        $stmt->close();
+        $conn->close();
     }
     else if ($category==="05"){
         $data= array();
@@ -96,6 +104,8 @@ if (isset($_GET['category'])){
             'labels'=>$labels
         );
         echo json_encode($dataArray);
+        $stmt->close();
+        $conn->close();
     }
     else if ($category==="06"){
         $data= array();
@@ -115,6 +125,8 @@ if (isset($_GET['category'])){
             'labels'=>$labels
         );
         echo json_encode($dataArray);
+        $stmt->close();
+        $conn->close();
     }
     else if ($category==="07"){
         $data= array();
@@ -134,6 +146,8 @@ if (isset($_GET['category'])){
             'labels'=>$labels
         );
         echo json_encode($dataArray);
+        $stmt->close();
+        $conn->close();
     }
    
    

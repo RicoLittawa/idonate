@@ -21,6 +21,7 @@ function fill_select_category($conn){
 		$categCode = htmlentities($row['categCode']);
 		$output .= '<option value="' . $categCode . '">' . $categoryName . '</option>';
 	}
+  
 	return $output;
 
 }
@@ -38,6 +39,7 @@ function fill_select_category($conn){
 	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
     .card-names{
   color: #a9a9a9;
@@ -153,6 +155,7 @@ function fill_select_category($conn){
                 $result = $stmt->get_result();
                 $row = $result->fetch_assoc();
                 $count = $row['COUNT(*)'];
+                
               ?>
 				        <h1 class="m-md-1 h1-color"><?php echo $count ?></h1>
 			          </div>
@@ -216,7 +219,7 @@ function fill_select_category($conn){
             <?php echo fill_select_category($conn) ?>
           </select>
        </div>
-        </div>
+        </div c>
          <canvas id="barChart"></canvas>
         </div>
        </div>  
@@ -258,7 +261,8 @@ function fill_select_category($conn){
       <td style="font-weight: bold;"><?php echo htmlentities($row['category'])?></td>
       <td><?php echo htmlentities($row['totalQuantity']) ?></td>
     </tr>
-    <?php endwhile; ?>
+    <?php endwhile;  $stmt->close();
+        $conn->close();?>
  
   </tbody>
 </table>
