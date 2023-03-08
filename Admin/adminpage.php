@@ -386,12 +386,25 @@ let myChart = new Chart(ctx, {
         dataType:'json',
         data:{category:selectedValue},
         success:(response)=>{
-          console.log(response)
           label= response.label;
+          data= response.data;
+          labels= response.labels;
+          let lowestValue = Math.min(...data);
+          let highestValue = Math.max(...data);
+          for (let i = 0; i < data.length; i++) {
+            if (data[i] === lowestValue) {
+              backgroundColor.push('rgb(240, 255, 66)');
+            } else if (data[i] === highestValue) {
+              backgroundColor.push('rgb(55, 146, 55)');
+            } else {
+              backgroundColor.push('rgb(84, 180, 53)');
+            }
+          }
+          
           myChart.data.datasets[0].label = label;
-           myChart.data.datasets[0].data = data;
-           myChart.data.labels = labels;
-           myChart.update();
+          myChart.data.datasets[0].data = data;
+          myChart.data.labels = labels;
+          myChart.update();
         }
       });
       if(selectedValue==""){

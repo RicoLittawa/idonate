@@ -236,11 +236,10 @@ catch(Exception $e){
 				 			  	confirmButtonColor: '#20d070',
 				 			  	confirmButtonText: 'OK',
 				 			  	allowOutsideClick: false
-				 			  }).then((result) => {
-				 			  	if (result.isConfirmed) {
-				 			  		window.location.href = "users.php?Updated";
-				 			  	}
 				 			  })
+                setTimeout(()=>{
+                  window.location.href = "users.php?Updated";
+                },1000)
               }
               ,1500)
               }

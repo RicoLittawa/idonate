@@ -384,7 +384,7 @@ catch(Exception $e){
           }, 1500);
 
             }
-          else if (data == 'Error: Email already exists'){
+          else if (data == 'Email already exists'){
             Swal.fire({
                 title: 'Error',
                 text: data,
@@ -399,17 +399,7 @@ catch(Exception $e){
               $('#email').val('');
               $('#email').addClass('is-invalid');
           }
-          else{
-            Swal.fire({
-              title: 'Error',
-              text: data,
-              icon: 'error',
-              confirmButtonColor: '#3085d6',
-              confirmButtonText: 'OK',
-              allowOutsideClick: false
-            })
-          }
-            
+    
           },
           error: (xhr, status, error)=>{
             // Handle errors

@@ -445,22 +445,12 @@ $('#add-user').submit((e)=> {
           },1000)
           }, 500);
             }
-            else if (data=='Error: Email already exists'){
-              Swal.fire({
-                title: 'Error',
-                text: data,
-                icon: 'error',
-                confirmButtonColor: '#20d070',
-                confirmButtonText: 'OK',
-                allowOutsideClick: false
-              })
+            else if (data=='Email already exists'){
               $('button[type="submit"]').prop('disabled', false);
               $('.submit-text').text('Create');            
               $('.spinner-border').addClass('d-none');
               $('#email').val('');
               $('#email').addClass('is-invalid');
-            }
-            else{
               Swal.fire({
                 title: 'Error',
                 text: data,
@@ -470,6 +460,7 @@ $('#add-user').submit((e)=> {
                 allowOutsideClick: false
               })
             }
+           
     },
     error: (xhr, status, error)=> {
         // Handle errors
