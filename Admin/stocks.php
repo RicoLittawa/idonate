@@ -137,6 +137,7 @@ catch(Exception $e){
               <th>Type</th>
               <th>Unit</th>
               <th>Quantity</th>
+              <th>Add Expiry</th>
             </tr>
           </thead>
           <t-body>
@@ -178,6 +179,7 @@ catch(Exception $e){
               <td><?php echo htmlentities($row['unit']) ?></td>
               <?php }?>
               <td><?php echo $row['totalQuantity'] ;?></td>
+              <td><button class="btn btn-success">Add</button></td>
             </tr>
             <?php endwhile; ?>
           </t-body>

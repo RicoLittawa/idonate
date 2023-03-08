@@ -10,6 +10,20 @@ while($row= $result->fetch_assoc()){
   $profile=  $row['profile'];
     } 
 
+function fill_select_category($conn){
+  $output='';
+  $selectCateg= "SELECT * from category";
+  $stmt=$conn->prepare($selectCateg);
+  $stmt->execute();
+  $result=$stmt->get_result();
+  foreach ($result as $row) {
+		$categoryName = htmlentities($row['category']);
+		$categCode = htmlentities($row['categCode']);
+		$output .= '<option value="' . $categCode . '">' . $categoryName . '</option>';
+	}
+	return $output;
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -191,36 +205,89 @@ while($row= $result->fetch_assoc()){
     </div>
   </div>
   <div class="row g-3 mt-2">
-    <div class="col-s-12 col-md-12 col-lg-6">
-      <div class="card my-fixed-height">
+    <div class="col-s-12 col-md-12 col-lg-12">
+      <div class="card">
        <div class="card-body">
-         <canvas class="" id="myChart"></canvas>
+        <div class="d-flex justify-content-lg-end">
+        <div style="width: 30%;" >
+          <label for="selectCategory" class="form-label">Category</label>
+          <select name="selectCategory" id="selectCategory" class="form-control">
+            <option value="">Select</option>
+            <?php echo fill_select_category($conn) ?>
+          </select>
+       </div>
+        </div>
+         <canvas id="barChart"></canvas>
         </div>
        </div>  
      </div>
-     <div class="col-s-12 col-md-12 col-lg-6">
-  <div class="card my-fixed-height">
+     <div class="col-s-12 col-md-12 col-lg-12">
+  <div class="card">
       <div class="card-body">
+      <h1 class="mb-3">Category</h1>
       <table class="table table-striped table-bordered" style="width:100%" id="table_data">
   <thead>
     <tr>
-      <th scope="col">Category</th>
-      <th scope="col">Total</th>
-      <th scope="col">View</th>
+      <th>Category</th>
+      <th>Total</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Can Goods/ Noodles</td>
-      <td>10000</td>
-      <td><a href="">Link</a></td>
+    <?php $category= "SELECT category,sum(quantity) as totalQuantity  FROM (
+            SELECT 'Can and Noodles' AS category,quantity FROM categcannoodles
+            UNION ALL
+            SELECT 'Drinking Water' AS category,quantity FROM categdrinkingwater
+            UNION ALL
+            SELECT 'Hygine Essentials' AS category,quantity FROM categhygineessential
+            UNION ALL
+            SELECT 'Infant Items' AS category,quantity FROM categinfant
+            UNION ALL
+            SELECT 'Meat and Grains' AS category,quantity FROM categmeatgrains
+            UNION ALL
+            SELECT 'Medicine' AS category,quantity FROM categmedicine
+            UNION ALL
+            SELECT 'Others' AS category,quantity FROM categothers
+            ) as allProducts 
+            GROUP BY category
+            ORDER BY totalQuantity DESC";
+            $stmt=$conn->prepare($category);
+            $stmt->execute();
+            $result = $stmt->get_result();  
+            while ($row= $result->fetch_assoc()):
+            ?>
+      <td style="font-weight: bold;"><?php echo htmlentities($row['category'])?></td>
+      <td><?php echo htmlentities($row['totalQuantity']) ?></td>
     </tr>
-    <tr>
-      <td>Hygine Essentials</td>
-      <td>500</td>
-      <td><a href="">Link</a></td>
-    </tr>
+    <?php endwhile; ?>
  
+  </tbody>
+</table>
+      </div>
+    </div>
+  </div>
+  <div class="col-s-12 col-md-12 col-lg-12">
+      <div class="card">
+       <div class="card-body">
+         <canvas id="lineChart"></canvas>
+        </div>
+       </div>  
+     </div>
+     <div class="col-s-12 col-md-12 col-lg-12">
+  <div class="card">
+      <div class="card-body">
+      <h1 class="mb-3">Requests Completed</h1>
+      <table class="table table-striped table-bordered" style="width:100%" id="table_data">
+  <thead>
+    <tr>
+      <th>Request Reciept No.</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+      <td style="font-weight: bold;"></td>
+      <td></td>
+    </tr>
+
  
   </tbody>
 </table>
@@ -234,10 +301,6 @@ while($row= $result->fetch_assoc()){
   </div>
 </div>
 
-  
-	
-	
-
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>	
@@ -250,53 +313,166 @@ while($row= $result->fetch_assoc()){
 
 
 
-	<script>
-       $(document).ready(function() {
-		$("#toggleFormBtn").click(function() {
-			$("#registerForm").collapse('toggle');
-			if ($(this).html().includes('<i class="fas fa-minus"></i> Hide Form')) {
-				$(this).html('<i class="fas fa-plus"></i> Show Form');
-			} else {
-				$(this).html('<i class="fas fa-minus"></i> Hide Form');
-			}
-			});
-		});
-	</script>
+
 
 <script>
-	$(document).ready(function(){
-var ctx = $('#myChart').get(0).getContext('2d');
-var myChart = new Chart(ctx, {
-type: 'line',
-data: {
-labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-datasets: [{
-data: [86,114,106,106,107,111,133],
-label: "Total",
-borderColor: "rgb(62,149,205)",
-backgroundColor: "rgb(62,149,205,0.1)",
-}, {
-data: [70,90,44,60,83,90,100],
-label: "Accepted",
-borderColor: "rgb(60,186,159)",
-backgroundColor: "rgb(60,186,159,0.1)",
-}, {
-data: [10,21,60,44,17,21,17],
-label: "Pending",
-borderColor: "rgb(255,165,0)",
-backgroundColor:"rgb(255,165,0,0.1)",
-}, {
-data: [6,3,2,2,7,0,16],
-label: "Rejected",
-borderColor: "rgb(196,88,80)",
-backgroundColor:"rgb(196,88,80,0.1)",
+	$(document).ready(()=>{
 
-}
-]
-},
+  
+  let label = '';
+  let data=[];
+  let labels=[];
+  let backgroundColor=[];
+
+  $.ajax({
+    url:'include/graphs.bar.data.php',
+    method:"GET",
+    dataType:'json',
+    success: (response)=> {
+       label= response.label;
+       data= response.data;
+       labels= response.labels;
+       let lowestValue = Math.min(...data);
+       let highestValue = Math.max(...data);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i] === lowestValue) {
+          backgroundColor.push('rgb(240, 255, 66)');
+        } else if (data[i] === highestValue) {
+          backgroundColor.push('rgb(55, 146, 55)');
+        } else {
+          backgroundColor.push('rgb(84, 180, 53)');
+        }
+      }
+       myChart.data.datasets[0].label = label;
+       myChart.data.datasets[0].data = data;
+       myChart.data.labels = labels;
+       myChart.update();
+    },
+    error: (xhr, status, error)=> {
+        console.log('Error: ' + error.message);
+    }
+  })
+
+ 
+// create the chart
+let ctx = $('#barChart').get(0).getContext('2d');
+let myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels:labels,
+    datasets: [{
+      label: label,
+      data: data,
+      backgroundColor: backgroundColor,
+      borderWidth: 1,
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+
+    }
+  }
 });
+
+// update the chart data and label based on the selected category
+  $('#selectCategory').on('change', function() {
+    const selectedValue = $('#selectCategory').val();
+      $.ajax({
+        url:'include/graphs.bar.dynamic.data.php',
+        method:'GET',
+        dataType:'json',
+        data:{category:selectedValue},
+        success:(response)=>{
+          console.log(response)
+          label= response.label;
+          myChart.data.datasets[0].label = label;
+           myChart.data.datasets[0].data = data;
+           myChart.data.labels = labels;
+           myChart.update();
+        }
+      });
+      if(selectedValue==""){
+        $.ajax({
+    url:'include/graphs.bar.data.php',
+    method:"GET",
+    dataType:'json',
+    success: (response)=> {
+       label= response.label;
+       data= response.data;
+       labels= response.labels;
+       let lowestValue = Math.min(...data);
+       let highestValue = Math.max(...data);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i] === lowestValue) {
+          backgroundColor.push('rgb(240, 255, 66)');
+        } else if (data[i] === highestValue) {
+          backgroundColor.push('rgb(55, 146, 55)');
+        } else {
+          backgroundColor.push('rgb(84, 180, 53)');
+        }
+      }
+       myChart.data.datasets[0].label = label;
+       myChart.data.datasets[0].data = data;
+       myChart.data.labels = labels;
+       myChart.update();
+    },
+    error: (xhr, status, error)=> {
+        console.log('Error: ' + error.message);
+    }
+  })
+      }
+    
+  });
+
 });
+
 </script>
+<script>
+	$(document).ready(()=>{
+    const data = {
+  datasets: [{
+    label: 'My First Dataset',
+    data: [65, 59, 80, 81, 56, 55, 40],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+    borderWidth: 1
+  }]
+};
+      var ctx = $('#lineChart').get(0).getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'line',
+          data: data,
+          options: {
+            scales: {
+         y: {
+        beginAtZero: true
+            }
+          }
+        }
+        
+      });
+      });
+</script>
+
 
 
 </body>
