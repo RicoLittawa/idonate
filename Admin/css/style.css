@@ -16,7 +16,7 @@ overflow: hidden;
 .custom-breadcrumb{
   max-width: 96.5%;
   height: 100%;
-   border:1px solid black; 
+   /* border:1px solid black;  */
     display: flex;
    padding-top: 2%;
    margin-left: 2%;
@@ -26,7 +26,7 @@ overflow: hidden;
 }
 
 .custom-container{
-    border:1px solid red; 
+    /* border:1px solid red;  */
     max-width: 96.5%;
     margin-left: 2%;
     margin-right: 5%;

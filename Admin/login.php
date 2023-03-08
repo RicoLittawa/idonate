@@ -53,14 +53,14 @@
 						Login
 					</span>
 						<div class="wrap-input100">
-						<input class="input100 is-invalid" type="text" id="userEmail" name="userEmail" placeholder="Email">
+						<input class="input100 is-invalid" type="text" id="userEmail" name="userEmail" placeholder="Email" autocomplete>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 						<i class="fa fa-envelope" aria-hidden="true"></i>
 					
 					</div>
 					<div class="wrap-input100">
-						<input class="input100" type="password" name="userPassword" id="userPassword" placeholder="Password">
+						<input class="input100" type="password" name="userPassword" id="userPassword" placeholder="Password" autocomplete>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -138,7 +138,6 @@
 						$('button[type="submit"]').prop('disabled', true);
 						$('#loader').addClass('loader');
 						$('.container-login100').addClass('blur-filter-class')
-
 					},
 					success:(data)=>{
 						if (data==='admin'){
@@ -178,7 +177,8 @@
          				 	 }, 1500);
 						  }
 						  if (data== "Invalid email or password."){
-						 	Swal.fire({
+							setTimeout(()=>{
+								Swal.fire({
 						 		title: 'Error',
 						 		text: data,
 						 		icon: 'error',
@@ -193,6 +193,8 @@
 						 	$('#userPassword').val('');
 						 	$('#userEmail').css('border','1px solid #c80000');
 						 	$('#userPassword').css('border','1px solid #c80000');
+							},1500)
+						 	
 						  }
 							
 					},
