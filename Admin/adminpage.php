@@ -41,15 +41,14 @@ function fill_select_category($conn){
 	<link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
-    .card-names{
+  .card-names{
   color: #a9a9a9;
   font-size: 14px;
-}.h1-color{
-  color: #2D3436;
-}.my-fixed-height {
-  height: 355px;
-  overflow: auto;
-}
+  }
+  .my-fixed-height {
+    height: 285px;
+    overflow: auto;
+  }
   </style>
 	<title>Dashboard</title>
 </head>
@@ -73,7 +72,7 @@ function fill_select_category($conn){
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="request.php" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
@@ -104,25 +103,24 @@ function fill_select_category($conn){
     <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
-        <a href="" class="text-reset bc-path">Home</a>
+        <a href="#" class="text-muted bc-path">Home</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">Dashboard</a>
+        <a href="#" class="text-reset bc-path active">Dashboard</a>
       </h6>  
     </nav>
   </div>
-  <div style="margin-left: auto;">
+  <div class="ms-auto">
     <div class="dropdown">
   <a
-    class="dropdown-toggle"
+    class="dropdown-toggle border border-0"
     id="dropdownMenuButton"
     data-mdb-toggle="dropdown"
     aria-expanded="false"
-    style="border: none;"
   >
   <?php if ($profile==null){ ?>
-    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="img/default-admin.png" class="rounded-circle w-100"alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
   <?php }?>
 
   </a>
@@ -146,7 +144,7 @@ function fill_select_category($conn){
 	      <div class="card-header  bg-gradient bg-success"></div>
           <div class="card-body">
             <div class="row">
-              <span><h6 class=" h1-color card-names">DONORS</h6>  </span>
+              <span><h6 class="text-muted card-names">DONORS</h6>  </span>
               <div class="col">
               <?php 
                 $donors = "SELECT COUNT(*) FROM donation_items";
@@ -157,10 +155,10 @@ function fill_select_category($conn){
                 $count = $row['COUNT(*)'];
                 
               ?>
-				        <h1 class="m-md-1 h1-color"><?php echo $count ?></h1>
+				        <h1 class="m-md-1 text-dark"><?php echo $count ?></h1>
 			          </div>
 			        <div class="col">
-                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-user  fa-2x"></i></h4>
+                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 text-dark"><i class="fas fa-user  fa-2x"></i></h4>
 			        </div>
 		        </div>
         </div>
@@ -171,12 +169,12 @@ function fill_select_category($conn){
 	      <div class="card-header  bg-gradient bg-success"></div>
           <div class="card-body">
             <div class="row">
-              <span><h6 class=" h1-color card-names">Distributed</h6></span>
+              <span><h6 class="text-muted card-names">Distributed</h6></span>
               <div class="col">
-				        <h1 class="m-md-1 h1-color">50</h1>
+				        <h1 class="m-md-1 text-dark">50</h1>
 			          </div>
 			        <div class="col">
-                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-gift fa-2x"></i></h4>
+                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 text-dark"><i class="fas fa-gift fa-2x"></i></h4>
 			        </div>
 		        </div>
         </div>
@@ -187,7 +185,7 @@ function fill_select_category($conn){
 	      <div class="card-header  bg-gradient bg-success"></div>
           <div class="card-body">
             <div class="row">
-              <span><h6 class=" h1-color card-names">REQUESTS</h6>  </span>
+              <span><h6 class="text-muted card-names">REQUESTS</h6>  </span>
               <div class="col">
               <?php 
                 $request = "SELECT COUNT(*) FROM request";
@@ -197,10 +195,10 @@ function fill_select_category($conn){
                 $row = $result->fetch_assoc();
                 $count = $row['COUNT(*)'];
               ?>
-				        <h1 class="m-md-1 h1-color"><?php echo $count ?></h1>
+				        <h1 class="m-md-1 text-dark"><?php echo $count ?></h1>
 			          </div>
 			        <div class="col">
-                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 h1-color"><i class="fas fa-envelope  fa-2x"></i></h4>
+                <h4 class="mb-md-2 mt-lg-1 ms-lg-5 text-dark"><i class="fas fa-envelope  fa-2x"></i></h4>
 			        </div>
 		        </div>
         </div>
@@ -211,24 +209,29 @@ function fill_select_category($conn){
     <div class="col-s-12 col-md-12 col-lg-12">
       <div class="card">
        <div class="card-body">
+       <div class="d-flex justify-content-start"><h4>Number of items based on Category</h4></div>
         <div class="d-flex justify-content-lg-end">
-        <div style="width: 30%;" >
-          <label for="selectCategory" class="form-label">Category</label>
+        <div class="w-30" >
           <select name="selectCategory" id="selectCategory" class="form-control">
             <option value="">Select</option>
             <?php echo fill_select_category($conn) ?>
           </select>
-       </div>
-        </div c>
-         <canvas id="barChart"></canvas>
-        </div>
-       </div>  
-     </div>
-     <div class="col-s-12 col-md-12 col-lg-12">
+          </div>
+          <div class="ps-3"><button class="btn btn-success">Print</button></div>
+            </div>
+              <canvas id="barChart"></canvas>
+          </div>
+        </div>  
+      </div>
+    <div class="col-s-12 col-md-12 col-lg-12">
   <div class="card">
       <div class="card-body">
-      <h1 class="mb-3">Category</h1>
-      <table class="table table-striped table-bordered" style="width:100%" id="table_data">
+      <div class="d-flex justify-content-start"><h4 class="mb-3">Total number of donated items</h4></div>
+      <div class="d-flex justify-content-lg-end">
+       <div class="ps-3 pb-4"><button class="btn btn-success">Print</button></div>
+        </div>
+     
+      <table class="table table-striped table-bordered w-100"id="table_data">
   <thead>
     <tr>
       <th>Category</th>
@@ -258,7 +261,7 @@ function fill_select_category($conn){
             $result = $stmt->get_result();  
             while ($row= $result->fetch_assoc()):
             ?>
-      <td style="font-weight: bold;"><?php echo htmlentities($row['category'])?></td>
+      <td class="fw-bold"><?php echo htmlentities($row['category'])?></td>
       <td><?php echo htmlentities($row['totalQuantity']) ?></td>
     </tr>
     <?php endwhile;  $stmt->close();
@@ -269,7 +272,35 @@ function fill_select_category($conn){
       </div>
     </div>
   </div>
-  <div class="col-s-12 col-md-12 col-lg-12">
+  <div class="col-s-12 col-md-12 col-lg-6">
+      <div class="card">
+       <div class="card-body">
+         <canvas id="lineChart1"></canvas>
+        </div>
+       </div>  
+     </div>
+  <div class="col-s-12 col-md-12 col-lg-6">
+    <div class="card">
+      <div class="card-body my-fixed-height" >
+        <h4 class="mb-3">Total Distributed Items</h4>
+        <table class="table table-striped table-bordered w-100" id="table_data">
+        <thead>
+          <tr>
+            <th>Request Reciept No.</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+            <td class="fw-bold"></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="col-s-12 col-md-12 col-lg-12">
       <div class="card">
        <div class="card-body">
          <canvas id="lineChart"></canvas>
@@ -277,24 +308,22 @@ function fill_select_category($conn){
        </div>  
      </div>
      <div class="col-s-12 col-md-12 col-lg-12">
-  <div class="card">
-      <div class="card-body">
-      <h1 class="mb-3">Requests Completed</h1>
-      <table class="table table-striped table-bordered" style="width:100%" id="table_data">
-  <thead>
-    <tr>
-      <th>Request Reciept No.</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-      <td style="font-weight: bold;"></td>
-      <td></td>
-    </tr>
-
- 
-  </tbody>
-</table>
+       <div class="card">
+          <div class="card-body">
+            <h1 class="mb-3">Requests Completed</h1>
+            <table class="table table-striped table-bordered w-100" id="table_data">
+            <thead>
+              <tr>
+                <th>Request Reciept No.</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td class="fw-bold"></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -314,10 +343,6 @@ function fill_select_category($conn){
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
   <script src="scripts/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
-
-
-
-
 
 <script>
 	$(document).ready(()=>{
@@ -356,7 +381,6 @@ function fill_select_category($conn){
         console.log('Error: ' + error.message);
     }
   })
-
  
 // create the chart
 let ctx = $('#barChart').get(0).getContext('2d');
@@ -490,6 +514,48 @@ let myChart = new Chart(ctx, {
       });
 </script>
 
+<script>
+	$(document).ready(()=>{
+    const data = {
+  datasets: [{
+    label: 'My First Dataset',
+    data: [65, 59, 80, 81, 56, 55, 40],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+    borderWidth: 1
+  }]
+};
+      var ctx = $('#lineChart1').get(0).getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'line',
+          data: data,
+          options: {
+            scales: {
+         y: {
+        beginAtZero: true
+            }
+          }
+        }
+        
+      });
+      });
+</script>
 
 
 </body>

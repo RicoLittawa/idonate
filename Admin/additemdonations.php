@@ -54,12 +54,6 @@ function fill_region_select_box($conn)
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-
-
-
-
-
 	<title>Add Donations</title>
 </head>
 
@@ -84,7 +78,7 @@ function fill_region_select_box($conn)
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="request.php" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
@@ -111,28 +105,27 @@ function fill_region_select_box($conn)
   <!--Header -->
   <div class="mb-4 custom-breadcrumb">
   <div class="crumb">
-    <h1 class="fs-1 breadcrumb-title">Add Donations</h1>
+    <h1 class="fs-1 breadcrumb-title">Add Donation</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
-        <a href="" class="text-reset bc-path">Home</a>
+        <a href="donations.php" class="text-muted bc-path">Donors</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">Add Donations</a>
+        <a href="#" class="text-reset bc-path active">Add Donation</a>
       </h6>  
     </nav>
   </div>
-  <div style="margin-left: auto;">
+  <div class="ms-auto">
     <div class="dropdown">
   <a
-    class="dropdown-toggle"
+    class="dropdown-toggle border border-0"
     id="dropdownMenuButton"
     data-mdb-toggle="dropdown"
     aria-expanded="false"
-    style="border: none;"
   >
   <?php if ($profile==null){ ?>
-    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="img/default-admin.png" class="rounded-circle w-100"alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
   <?php }?>
 
   </a>
@@ -149,28 +142,14 @@ function fill_region_select_box($conn)
 		<div class="custom-container pb-3">
 			<div class="card">
 				<div class="card-body overflow-auto">
-
-
 					<!--Place table here --->
-
-
 					<div class="form-container mt-5 ms-5">
-						<div class="personal">
-							<h6 style="width: 50px;
-							height: 50px;
-							border-radius: 25px;
-							border: 2px solid #BEBEBE;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							float: left;
-							margin-right: 10px;">
-								<span style="font-size: 20px;">1</span>
-							</h6>
-							<div class="mt-3 ps-3" style="display: inline-block; color:#4d5157;">
-								<h6 style="font-size:20px;"><span>Personal Details</span></h6>
+					<div class="d-inline-flex">
+							<h6 class="number-title">1</h6>
+								<div class="mt-3 ps-3">
+									<h4 class="text-muted">Personal Details</h4>
+								</div>
 							</div>
-						</div>
 						<form id="add-form" class="p-3 ms-4 me-3">
 							<?php
 							$sql = "SELECT * FROM donation_items_picking";
@@ -246,23 +225,14 @@ function fill_region_select_box($conn)
 									</div>
 								</div>
 							</div>
-							<div class="personal pt-5" style="position:relative; right:34px;">
-								<h6 style="width: 50px;
-								height: 50px;
-								border-radius: 25px;
-								border: 2px solid #BEBEBE;
-								display: flex;
-								justify-content: center;
-								align-items: center;
-								float: left;
-								margin-right: 10px;">
-									<span style="font-size: 20px;">2</span>
-								</h6>
-								<div class="mt-3 ps-3" style="display: inline-block; color:#4d5157;">
-									<h6 style="font-size:20px;"><span>Donation Type and Category</span></h6>
+							<div class="d-inline-flex pt-4"  style="position:relative; right:34px;">
+							<h6 class="number-title">2</h6>
+								<div class="mt-3 ps-3">
+									<h4 class="text-muted">Donation Type and Category</h4>
 								</div>
 							</div>
 					</div>
+					
 					<div class="row pe-4 ps-5 ms-4">
 						<div class="col">
 							<div class="form-group cn mt-3">
@@ -282,7 +252,7 @@ function fill_region_select_box($conn)
 										<tr>
 											<td><input type="text" class="form-control name_items pnCN" id="pnCN"></td>
 											<td><input type="number" class="form-control qCN" id="qCN"></td>
-											<td><button type="button" class="btn btn-success addCN" id="addCN"><i class="fa-solid fa-plus"></i></button></td>
+											<td><button type="button" class="btn btn-success addCN btn-rounded" id="addCN"><i class="fa-solid fa-plus"></i></button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -304,7 +274,7 @@ function fill_region_select_box($conn)
 										<tr>
 											<td><input type="text" class="form-control name_items pnHY" id="pnHY"></td>
 											<td><input type="number" class="form-control qHY" id="qHY"></td>
-											<td><button type="button" class="btn btn-success addHY" id="addHY"><i class="fa-solid fa-plus"></i></button></td>
+											<td><button type="button" class="btn btn-success addHY btn-rounded" id="addHY"><i class="fa-solid fa-plus"></i></button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -326,7 +296,7 @@ function fill_region_select_box($conn)
 										<tr>
 											<td><input type="text" class="form-control name_items pnII" id="pnII"></td>
 											<td><input type="number" class="form-control qII" id="qII"></td>
-											<td><button type="button" class="btn btn-success addII" id="addII"><i class="fa-solid fa-plus"></i></button></td>
+											<td><button type="button" class="btn btn-success addII btn-rounded" id="addII"><i class="fa-solid fa-plus"></i></button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -348,7 +318,7 @@ function fill_region_select_box($conn)
 										<tr>
 											<td><input type="text" class="form-control name_items pnDW" id="pnDW"></td>
 											<td><input type="number" class="form-control qDW" id="qDW"></td>
-											<td><button type="button" class="btn btn-success addDW" id="addDW"><i class="fa-solid fa-plus"></i></button></td>
+											<td><button type="button" class="btn btn-success addDW btn-rounded" id="addDW"><i class="fa-solid fa-plus"></i></button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -383,7 +353,7 @@ function fill_region_select_box($conn)
 													<option value="Kilograms">Kilograms</option>
 													<option value="Grams">Grams</option>
 												</select></td>
-											<td><button type="button" class="btn btn-success addMG" id="addMG"><i class="fa-solid fa-plus"></i></button></td>
+											<td><button type="button" class="btn btn-success addMG btn-rounded" id="addMG"><i class="fa-solid fa-plus"></i></button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -421,7 +391,7 @@ function fill_region_select_box($conn)
 													<option value="Micrograms">Micrograms</option>
 													<option value="None">None</option>
 												</select></td>
-											<td><button type="button" class="btn btn-success addME" id="addME"><i class="fa-solid fa-plus"></i></button></td>
+											<td><button type="button" class="btn btn-success addME btn-rounded" id="addME"><i class="fa-solid fa-plus"></i></button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -447,7 +417,7 @@ function fill_region_select_box($conn)
 											<td><input type="text" class="form-control typeOT" id="typeOT"></td>
 											<td><input type="number" class="form-control qOT" id="qOT"></td>
 											<td><input type="text" class="form-control unitOT" id="unitOT"></td>
-											<td><button type="button" class="btn btn-success addOT" id="addOT"><i class="fa-solid fa-plus"></i></button></td>
+											<td><button type="button" class="btn btn-success addOT btn-rounded" id="addOT"><i class="fa-solid fa-plus"></i></button></td>
 										</tr>
 									</tbody>
 								</table>
@@ -456,10 +426,10 @@ function fill_region_select_box($conn)
 					</div>
 					<div class="d-flex justify-content-end mt-3">
 						<div class="me-3">
-							<button type="button" class="btn btn-danger cancelBtn" id="cancelBtn">Cancel</button>
+							<button type="button" class="btn btn-danger cancelBtn btn-rounded" id="cancelBtn">Cancel</button>
 						</div>
 						<div>
-							<button type="submit"  class="btn btn-success waves-effect waves-light" id="saveD">
+							<button type="submit"  class="btn btn-success waves-effect waves-light btn-rounded" id="saveD">
 								<span class="submit-text">Save</span>
   								<span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
 							</button>
@@ -511,7 +481,7 @@ function fill_region_select_box($conn)
 			if (buttonType === 'buttonCN') {
 				html += '<tr><td><input type="text" class="form-control name_items pnCN" id="pnCN"></td><td><input type="number" class="form-control qCN" id="qCN"></td>';
 				if (count > 0) {
-					remove = '<button type="button" name="removeCN"  class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>';
+					remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
 				}
 				html += '<td>' + remove + '</td></tr>';
 				return html;
@@ -519,7 +489,7 @@ function fill_region_select_box($conn)
 			else if (buttonType === 'buttonHY') {
 				html += '<tr><td><input type="text" class="form-control name_items pnHY" id="pnHY"></td><td><input type="number" class="form-control qHY" id="qHY"></td>';
 				if (count > 0) {
-					remove += '<button type="button" name="removeHY"  class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>';
+					remove += '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
 				}
 				html += '<td>' + remove + '</td></tr>';
 				return html;
@@ -527,7 +497,7 @@ function fill_region_select_box($conn)
 			else if (buttonType=== 'buttonII'){
 				html+= '<tr><td><input type="text" class="form-control name_items pnII" id="pnII"></td><td><input type="number" class="form-control qII" id="qII"></td>';
 				if (count > 0) {
-					remove = '<button type="button" name="removeII" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>'
 				}
 				html+= '<td>' + remove + '</td></tr>';
 				return html;
@@ -535,7 +505,7 @@ function fill_region_select_box($conn)
 			else if (buttonType=== 'buttonDW'){
 				html += '<tr><td><input type="text" class="form-control name_items pnDW" id="pnDW"></td><td><input type="number" class="form-control qDW" id="qDW"></td>';
 				if (count > 0) {
-					remove = '<button type="button" name="removeDW" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button"  class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>'
 				}
 				html += '<td>' + remove + '</td></tr>';
 				return html;
@@ -555,7 +525,7 @@ function fill_region_select_box($conn)
 					'<option value="Grams">Grams</option>' +
 					'</select></td>';
 				if (count > 0) {
-					remove = '<button type="button" name="removeMG" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button"  class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>'
 				}
 				html += '<td>' + remove + '</td></tr>';
 				return html;
@@ -578,7 +548,7 @@ function fill_region_select_box($conn)
 					'<option value="None">None</option>' +
 					'</select></td>';
 				if (count > 0) {
-					remove = '<button type="button" name="removeME" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>'
 				}
 				html += '<td>' + remove + '</td></tr>';
 				return html;
@@ -589,7 +559,7 @@ function fill_region_select_box($conn)
 					'<td><input type="number" class="form-control qOT" id="qOT"></td>' +
 					'<td><input type="text" class="form-control unituOT" id="unituOT"></td>';
 				if (count > 0) {
-					remove = '<button type="button" name="removeOT" id="removeTbOt" class="btn btn-danger remove"><i class="fa-solid fa-minus"></i></button>'
+					remove = '<button type="button"  class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>'
 				}
 				html += '<td>' + remove + '</td></tr>';
 				return html;

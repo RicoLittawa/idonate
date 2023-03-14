@@ -32,7 +32,8 @@ function add_category($conn){
   $result = $stmt->get_result(); 
   foreach ($result as $row) {
     $category = htmlentities($row['category']);
-    $output .= '<option " value="' . $category . '">' . $category . '</option>';
+    $categCode = htmlentities($row['categCode']);
+    $output .= '<option " value="' . $categCode . '">' . $category . '</option>';
   }
   return $output;
 
@@ -232,7 +233,7 @@ $requestRef = $refRow['request_id'];
         
       ?>
         <tr>
-         <td><?php echo htmlentities($request_dateTrimmed)."-00".$reference ?></td>
+         <td><?php echo htmlentities($request_dateTrimmed)."-00".htmlentities($reference) ?></td>
          <td><?php echo htmlentities($evacuees_qty) ?></td>
          <td><?php echo htmlentities($request_date) ?></td>
          <?php if($recieve_date===null){ ?>
@@ -242,7 +243,7 @@ $requestRef = $refRow['request_id'];
           <?php }?>
 
           <?php if($status==='pending'){ ?>
-          <td><span class="badge badge-warning">Pending</span></td>
+          <td><span class="badge badge-warning"><?php echo htmlentities($status) ?></span></td>
           <?php } else { ?>
           <td><?php echo htmlentities($status) ?></td>
           <?php }?>

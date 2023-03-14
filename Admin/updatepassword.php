@@ -60,7 +60,7 @@ catch(Exception $e){
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="request.php" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>

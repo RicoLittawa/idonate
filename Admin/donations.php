@@ -62,7 +62,7 @@ catch(Exception $e){
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="request.php" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
@@ -89,28 +89,27 @@ catch(Exception $e){
   <!--Header -->
   <div class="mb-4 custom-breadcrumb">
   <div class="crumb">
-    <h1 class="fs-1 breadcrumb-title">Donor Details</h1>
+    <h1 class="fs-1 breadcrumb-title">Donors</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
-        <a href="" class="text-reset bc-path">Home</a>
+        <a href="#" class="text-muted bc-path">Home</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">Donor Details</a>
+        <a href="#" class="text-reset bc-path active">Donors</a>
       </h6>  
     </nav>
   </div>
-  <div style="margin-left: auto;">
+  <div class="ms-auto">
     <div class="dropdown">
   <a
-    class="dropdown-toggle"
+    class="dropdown-toggle border border-0"
     id="dropdownMenuButton"
     data-mdb-toggle="dropdown"
     aria-expanded="false"
-    style="border: none;"
   >
   <?php if ($profile==null){ ?>
-    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="img/default-admin.png" class="rounded-circle w-100"alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
   <?php }?>
 
   </a>
@@ -130,7 +129,7 @@ catch(Exception $e){
   <div class="card-body overflow-auto">
  <div class="mt-2">
 
- <button class="btn btn-success addPage float-end" style="width:200px; height:50px;">
+ <button class="btn btn-success addPage float-end w-20 h-50 btn-rounded">
   <i class="fa-solid fa-plus"></i> Add Donations</button>
  </div>
 	
@@ -140,7 +139,7 @@ catch(Exception $e){
 	<br>
   <br><br>
   <!--Place table here --->
-	<table class="table table-striped table-bordered" style="width:100%;" id="table_data">
+	<table class="table table-striped table-bordered" id="table_data">
 			
 			<thead>
 			  <tr>
@@ -157,7 +156,9 @@ catch(Exception $e){
 			<tbody>
 			 <?php
          $sql = "SELECT * FROM donation_items ORDER BY donor_id DESC";
-         $result = mysqli_query($conn, $sql);
+         $stmt= $conn->prepare($sql);
+         $stmt->execute();
+         $result= $stmt->get_result();
          $count = 0;
           foreach ($result as $row): ?>
 					<?php $count = $count + 1; ?>
@@ -168,15 +169,12 @@ catch(Exception $e){
             $row["donor_email"]); ?>" data-name="<?php echo htmlentities($row["donor_name"]);?>"
             data-id="<?php echo htmlentities($row["donor_id"]); ?>"></input></span> 
             <span><a href="updatedonate.php?editdonate=<?php echo $row["donor_id"]; ?>">
-            <i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></span>
-        <?php } else { ?>
-         <span><a href=""><i style="color:red;" class="fa-solid fa-trash"></i></a></span>
-         <span><a href="updatedonate.php?editdonate=<?php echo $row[
-      "donor_id"]; ?>"><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></span>
-        <?php } ?>
-
-
-            
+            <i class="fa-solid fa-pen-to-square text-success"></i></a></span>
+            <?php } else { ?>
+            <span><a href=""><i class="fa-solid fa-trash text-danger"></i></a></span>
+            <span><a href="updatedonate.php?editdonate=<?php echo $row[
+            "donor_id"]; ?>"><i class="fa-solid fa-pen-to-square text-success"></i></a></span>
+            <?php } ?>
 				</td>
 				<td><?php echo htmlentities($row["donor_name"]); ?></td>
 				<td><?php echo htmlentities($row["donor_email"]); ?></td>
@@ -184,7 +182,7 @@ catch(Exception $e){
 				<td><?php echo htmlentities($row["donationDate"]); ?></td>
         <td>
       <?php if ($row['email_status'] == 'not sent') { ?>
-        <button type="button" class="btn btn-info email_button col" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row["donor_id"]); ?>" data-email="<?php echo htmlentities($row["donor_email"]); ?>" 
+        <button type="button" class="btn btn-info email_button col btn-rounded" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row["donor_id"]); ?>" data-email="<?php echo htmlentities($row["donor_email"]); ?>" 
         data-name="<?php echo htmlentities($row["donor_name"]); ?>"  data-action="single">Send</button>
       <?php } else { ?>
         <span class="badge badge-success">Sent</span>
@@ -194,7 +192,7 @@ catch(Exception $e){
         <?php if ($row['certificate']== 'cert empty') {?>
           <span><span class="badge badge-danger">Empty</span></span>
         <?php } else { ?>
-          <button class="btn btn-success btnCert" value="<?php echo htmlentities($row['donor_id']) ?>" style="overflow:hidden;">
+          <button class="btn btn-success btnCert overflow-hidden btn-rounded" value="<?php echo htmlentities($row['donor_id']) ?>">
        Print</button>
           <?php } ?>
       </td>
@@ -206,7 +204,7 @@ catch(Exception $e){
 			<tr>
 				<td colspan="6"></td>
 				<td>
-			 <button type="button" name="bulk_email" class="btn btn-info email_button" id="bulk_email" data-action="bulk" >Bulk</button></td>
+			 <button type="button" name="bulk_email" class="btn btn-info email_button btn-rounded" id="bulk_email" data-action="bulk" >Bulk</button></td>
 			</tr>
 			
 		  </table>	

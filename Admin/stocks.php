@@ -61,7 +61,7 @@ catch(Exception $e){
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="request.php" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
@@ -91,30 +91,29 @@ catch(Exception $e){
     <h1 class="fs-1 breadcrumb-title">Stocks</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
-        <a href="" class="text-reset bc-path">Home</a>
+        <a href="request.php" class="text-muted bc-path">Home</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">Stocks</a>
+        <a href="#" class="text-reset bc-path active">Stocks</a>
       </h6>  
     </nav>
   </div>
-  <div style="margin-left: auto;">
+  <div class="ms-auto">
     <div class="dropdown">
   <a
-    class="dropdown-toggle"
+    class="dropdown-toggle border border-0"
     id="dropdownMenuButton"
     data-mdb-toggle="dropdown"
     aria-expanded="false"
-    style="border: none;"
   >
   <?php if ($profile==null){ ?>
-    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="img/default-admin.png" class="rounded-circle w-100"alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
   <?php }?>
 
   </a>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <li><h6 class="dropdown-item">Hello <?php htmlentities($firstname);?>!</h6></li>
+    <li><h6 class="dropdown-item">Hello <?php echo htmlentities($firstname);?>!</h6></li>
     <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
     <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
@@ -166,7 +165,7 @@ catch(Exception $e){
             ?>
             <?php while($row= $result->fetch_assoc()): ?>
             <tr>
-              <td  style="font-weight: bold;"><?php echo $row['category'] ;?></td>
+              <td class="fw-bold"><?php echo $row['category'] ;?></td>
               <td><?php echo $row['productName'] ;?></td>
               <?php if ($row['type']===null){ ?>
               <td><span class="badge badge-warning">Empty</span></td>
@@ -179,7 +178,7 @@ catch(Exception $e){
               <td><?php echo htmlentities($row['unit']) ?></td>
               <?php }?>
               <td><?php echo $row['totalQuantity'] ;?></td>
-              <td><button class="btn btn-success">Add</button></td>
+              <td><button class="btn btn-success btn-rounded"><i class="fa-solid fa-plus"></i></button></td>
             </tr>
             <?php endwhile; ?>
           </t-body>
@@ -207,22 +206,6 @@ catch(Exception $e){
   <script src="scripts/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
 
-	<script>
-       $(document).ready(function() {
-		$("#toggleFormBtn").click(function() {
-			$("#registerForm").collapse('toggle');
-			if ($(this).html().includes('<i class="fas fa-minus"></i> Hide Form')) {
-				$(this).html('<i class="fas fa-plus"></i> Show Form');
-			} else {
-				$(this).html('<i class="fas fa-minus"></i> Hide Form');
-			}
-			});
-		});
-	</script>
-
-  <script>
-    
-  </script>
 
 
 </body>
