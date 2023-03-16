@@ -170,7 +170,7 @@ catch(Exception $e){
               <?php } else { ?>
                 <td><span class="badge badge-warning"><?php echo htmlentities($status)?></span></td>
               <?php } ?>
-              <td><button type="button" class="btn btn-success btn-rounded">Accept</button></td>
+              <td><button type="button" id="acceptBtn" data-request="<?php echo htmlentities($reference) ?>"  class="btn btn-success btn-rounded">Accept</button></td>
             </tr>
             <?php endwhile; ?>
           </t-body>
@@ -197,6 +197,16 @@ catch(Exception $e){
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
   <script src="scripts/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
+
+  <script>
+   $(document).ready(()=>{
+      $(document).on('click','#acceptBtn',(event)=>{
+        let requestId= $(event.target).attr('data-request');
+       window.location.href="acceptrequest.php?requestId="+requestId;
+
+      });
+    })
+  </script>
 
 
 

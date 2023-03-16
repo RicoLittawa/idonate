@@ -196,7 +196,7 @@ catch(Exception $e){
   </div>
 
   <!-- Submit button -->
-  <button type="submit" class="btn btn-success btn-block">
+  <button type="submit" class="btn btn-success btn-block btn-rounded">
   <span class="submit-text">Create</span>
   <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
   </button>

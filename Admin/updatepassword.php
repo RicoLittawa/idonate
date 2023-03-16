@@ -87,28 +87,27 @@ catch(Exception $e){
   <!--Header -->
   <div class="mb-4 custom-breadcrumb">
   <div class="crumb">
-    <h1 class="fs-1 breadcrumb-title">Change Password</h1>
+    <h1 class="fs-1 breadcrumb-title">Update Password</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
-        <a href="" class="text-reset bc-path">Home</a>
+        <a href="#" class="text-muted bc-path">Home</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">Update Password</a>
+        <a href="#" class="text-reset bc-path active">Update Password</a>
       </h6>  
     </nav>
   </div>
-  <div style="margin-left: auto;">
+  <div class="ms-auto">
     <div class="dropdown">
   <a
-    class="dropdown-toggle"
+    class="dropdown-toggle border border-0"
     id="dropdownMenuButton"
     data-mdb-toggle="dropdown"
     aria-expanded="false"
-    style="border: none;"
   >
   <?php if ($profile==null){ ?>
-    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="img/default-admin.png" class="rounded-circle w-100"alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
   <?php }?>
 
   </a>
@@ -139,15 +138,15 @@ catch(Exception $e){
     <input class="form-control" type="password" autocomplete="newPass" name="newPass" id="newPass"/>
     <label class="form-label" for="newPass">New Password</label>
   </div>
-  <div style="float:right;">
+  <div class="d-flex justify-content-end">
     <input type="checkbox" id="showPass"/>
-    <label class="form-label" for="newPass">Show Password</label>
+    <label class="ps-1" for="newPass">Show Password</label>
   </div>
 
  
 
   <!-- Submit button -->
-  <button type="submit" class="btn btn-success btn-block">
+  <button type="submit" class="btn btn-success btn-block btn-rounded my-3">
     <span class="submit-text">Change</span>
     <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
   </button>

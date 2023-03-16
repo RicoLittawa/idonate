@@ -572,36 +572,26 @@ if (isset($_GET["editdonate"])) {
 		$(document).ready(function(){
 			$('#cancelBtn').click(function(){
 				Swal.fire({
-					title: 'Warning',
-					text: "Any data you entered will not be saved.",
+					title: 'Are you sure?',
+					text: "The data you update will not be saved.",
 					icon: 'warning',
 					showCancelButton: true,
-					confirmButtonText: 'Are you sure you want to cancel?',
-					confirmButtonColor: '#dc4c64',
-					cancelButtonText: 'No',
-					reverseButtons: true,
-					allowOutsideClick: false
+					confirmButtonColor: '#20d070',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes',
+					reverseButtons: true
 					}).then((result) => {
 					if (result.isConfirmed) {
-						swal.fire(
-						'Canceled',
-						'Your data is not saved.',
-						'warning'
+						Swal.fire(
+						'Canceled!',
+						'Your data has not been updated.',
+						'error'
 						)
 						setTimeout(()=>{
-							window.location.href = "donations.php";
+							window.location.href="donations.php";
 						},1500)
-					} else if (
-						/* Read more about handling dismissals below */
-						result.dismiss === Swal.DismissReason.cancel
-					) {
-						swal.fire(
-						'Update',
-						'You can continue updating the data.',
-						'info'
-						)
 					}
-					});
+					})
 			})
 		});
 	</script>

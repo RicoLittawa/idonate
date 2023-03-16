@@ -23,8 +23,8 @@ catch(Exception $e){
   echo "Error". $e->getMessage();
 }
 
-if(isset($_GET['acceptRequest'])){
-	$reference= $_GET['acceptRequest'];
+if(isset($_GET['requestId'])){
+	$reference= $_GET['requestId'];
 	$getRequest = "SELECT firstname,lastname,position,email,evacuees_qty,requestdate,status from request where request_id=?";
 	$stmt=$conn->prepare($getRequest);
 	$stmt->bind_param('i',$reference);
@@ -59,7 +59,7 @@ if(isset($_GET['acceptRequest'])){
 	<link rel="stylesheet" href="css/style.css">
 
 
-	<title>Update Donations</title>
+	<title>Accept Request</title>
 </head>
 
 <body>
@@ -148,7 +148,7 @@ if(isset($_GET['acceptRequest'])){
 				<div class="card-body overflow-auto">
 					<!--Place table here --->
 					<div class="d-flex justify-content-end">
-						<button class="btn btn-success">Print</button>
+						<button class="btn btn-success btn-rounded w-10">Print</button>
 					</div>
 					<div class="form-container mt-5 ms-5">
 					
@@ -168,6 +168,7 @@ if(isset($_GET['acceptRequest'])){
 									<span class="d-flex justify-content-end py-2"><h6>Request Date:</h6><h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($requestdate) ?></h6></span>
 								</div>
 							</div>
+							<hr class="hr" />
 							<div class="row">
 								<div class="col py-3">
 									<span><h6>Fullname:</h6><h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($fname)." ".htmlentities($lname) ?></h6></span>
@@ -203,6 +204,8 @@ if(isset($_GET['acceptRequest'])){
 						</div>
 					
 					<!--2nd table -->
+					<form id="processForm">
+						<input hidden type="text" id="request_id" value="<?php echo htmlentities($reference) ?>">
 					<div class="row pe-4 ps-5 ms-4 mt-4">
 						<div class="col">
 							<?php 
@@ -221,17 +224,10 @@ if(isset($_GET['acceptRequest'])){
 							<?php 
 							switch ($category):
 								case "01":
-									// Fetch data for Can/Noodles category
-									$query = "SELECT productName, SUM(quantity) as totalQuantity FROM categcannoodles GROUP BY productName";
-									$stmt = $conn->prepare($query);
-									$stmt->execute();
-									$result = $stmt->get_result();
-									
 									// Display notes if available
 									if ($notes != null):?>
-										<div class="form-outline mb-3">
-											<textarea class="form-control" id="textAreaExample" rows="2" readonly><?php echo htmlentities($notes) ?></textarea>
-											<label class="form-label" for="textAreaExample">For Can/Noodles</label>
+										<div class="note note-success mb-3">
+										<strong>Can/Noodles:</strong>&nbsp<?php echo htmlentities($notes) ?>
 										</div>
 										<?php endif; ?>
 										<table class="table table-striped table-bordered">
@@ -246,38 +242,29 @@ if(isset($_GET['acceptRequest'])){
 											<tr>
 												<td>
 													<label for="cnProduct" class="form-label">Available Product</label>
-													<select name="cnProduct" class="form-control cnProduct">
-														<option value="">Select Product</option>
-														<?php foreach ($result as $row): ?>
-														<option value=""><?php echo htmlentities($row['productName'])." (".htmlentities($row['totalQuantity']).") pcs" ?></option>
-														<?php endforeach; ?>
+														<select name="cnProduct" class="form-control cnProduct">
 													</select>
 												</td>
 												<td>
 													<label for="cnQuantity" class="form-label">Quantity</label>
 													<input type="text" class="form-control cnQuantity">
 												</td>
-												<td><button type="button" id="addCn" class="btn btn-success"><i class="fa-solid fa-plus"></i></button></td>
+												<td><button type="button" id="addCn" class="btn btn-success btn-rounded"><i class="fa-solid fa-plus"></i></button></td>
 											</tr>
 										</tbody>
 									</table>
 								<?php break;
 								case "02":	
-									$hygineEssential= "SELECT productName,sum(quantity) as totalQuantity from categhygineessential GROUP BY productName";
-									$stmt= $conn->prepare($hygineEssential);
-									$stmt->execute();
-									$hyResult= $stmt->get_result();
-								?>
-									<?php if ($notes != null): ?>
-										<div class="form-outline mb-3">
-											<textarea class="form-control" id="textAreaExample" rows="2" readonly><?php echo htmlentities($notes) ?></textarea>
-											<label class="form-label" for="textAreaExample">For Drinking Water</label>
+									if ($notes != null):
+								?>	
+									<div class="note note-success mb-3">
+										<strong>Hygine Essentials:</strong>&nbsp<?php echo htmlentities($notes) ?>
 										</div>
 									<?php endif; ?>
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>Drinking Water</th>
+												<th>Hygine Essentials</th>
 												<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
 												<th>Action</th>
 											</tr>
@@ -286,33 +273,23 @@ if(isset($_GET['acceptRequest'])){
 											<tr>	
 												<td>
 													<label for="hyProduct" class="form-label">Available Product</label>
-													<select name="hyProduct"  class="form-control hyProduct">
-													<option value="">Select Product</option>
-													<?php foreach ($hyResult as $hy): ?>
-													<option value=""><?php echo htmlentities($hy['productName'])." (".htmlentities($hy['totalQuantity']).") pcs" ?></option>
-													<?php endforeach; ?>
+														<select name="hyProduct"  class="form-control hyProduct">
 													</select>
 												</td>
 												<td>
-													<label for="dhyProduct" class="form-label">Quantity</label>
-													<input type="text" class="form-control dhyQuantity"></td>
-												<td><button type="button" id="adddhY" class="btn btn-success"><i class="fa-solid fa-plus"></i></button></td>
+													<label for="hyProduct" class="form-label">Quantity</label>
+													<input type="text" class="form-control hyQuantity"></td>
+												<td><button type="button" id="addHy" class="btn btn-success btn-rounded"><i class="fa-solid fa-plus"></i></button></td>
 											</tr>
 										</tbody>
 									</table>
 								<?php break;
 								case "03":	
-									$infantItems= "SELECT productName,sum(quantity) as totalQuantity from categinfant   GROUP BY productName";
-									$stmt= $conn->prepare($infantItems);
-									$stmt->execute();
-									$iiResult= $stmt->get_result();
-
 									if ($notes != null): 
 									?>	
-									<div class="form-outline mb-3">
-										<textarea class="form-control" id="textAreaExample" rows="2" readonly><?php echo htmlentities($notes) ?></textarea>
-										<label class="form-label" for="textAreaExample">For Infant Items</label>
-									</div>
+									<div class="note note-success mb-3">
+										<strong>Infant Items:</strong>&nbsp<?php echo htmlentities($notes) ?>
+										</div>
 									<?php endif; ?>
 									<table class="table table-striped table-bordered">
 										<thead>
@@ -321,37 +298,27 @@ if(isset($_GET['acceptRequest'])){
 												<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="iiBody">
 											<tr>
 												<td>
 													<label for="iiProduct" class="form-label">Available Product</label>
-													<select name="iiProduct"  class="form-control iiProduct">
-													<option value="">Select Product</option>
-													<?php foreach ($iiResult as $ii): ?>
-													<option value=""><?php echo htmlentities($ii['productName'])." (".htmlentities($ii['totalQuantity']).") pcs" ?></option>
-													<?php endforeach; ?>
+														<select name="iiProduct"  class="form-control iiProduct">
 													</select>
 												</td>
 												<td>
 													<label for="iiQuantity" class="form-label">Quantity</label>
 													<input type="text" class="form-control iiQuantity"></td>	
-												<td><button type="button" id="addIi" class="btn btn-success"><i class="fa-solid fa-plus"></i></button></td>
+												<td><button type="button" id="addIi" class="btn btn-success btn-rounded"><i class="fa-solid fa-plus"></i></button></td>
 											</tr>
 										</tbody>
 									</table>
 								<?php break;
 								case "04":	
-									$drinkingWater= "SELECT productName,sum(quantity) as totalQuantity from categdrinkingwater   GROUP BY productName";
-									$stmt= $conn->prepare($drinkingWater);
-									$stmt->execute();
-									$dwResult= $stmt->get_result();
-
 									if ($notes != null):
 								?>
-									<div class="form-outline mb-3">
-										<textarea class="form-control" id="textAreaExample" rows="2" readonly><?php echo htmlentities($notes) ?></textarea>
-										<label class="form-label" for="textAreaExample">For Drinking Water</label>
-									</div>
+									<div class="note note-success mb-3">
+										<strong>Drinking Water:</strong>&nbsp<?php echo htmlentities($notes) ?>
+										</div>
 									<?php endif; ?>
 									<table class="table table-striped table-bordered">
 										<thead>
@@ -365,109 +332,83 @@ if(isset($_GET['acceptRequest'])){
 											<tr>	
 												<td>
 													<label for="dwProduct" class="form-label">Available Product</label>
-													<select name="dwProduct"  class="form-control dwProduct">
-													<option value="">Select Product</option>
-													<?php foreach ($dwResult as $dw): ?>
-													<option value=""><?php echo htmlentities($dw['productName'])." (".htmlentities($dw['totalQuantity']).") pcs" ?></option>
-													<?php endforeach; ?>
+														<select name="dwProduct"  class="form-control dwProduct">
 													</select>
 												</td>
 												<td>
 													<label for="dwProduct" class="form-label">Quantity</label>
 													<input type="text" class="form-control dwQuantity"></td>
-												<td><button type="button" id="addDw" class="btn btn-success"><i class="fa-solid fa-plus"></i></button></td>
+												<td><button type="button" id="addDw" class="btn btn-success btn-rounded"><i class="fa-solid fa-plus"></i></button></td>
 											</tr>
 										</tbody>
 									</table>
 								<?php break;
 								case "05":	
-									$meatGrains= "SELECT productName,sum(quantity) as totalQuantity from categmeatgrains  GROUP BY productName";
-									$stmt= $conn->prepare($meatGrains);
-									$stmt->execute();
-									$mgResult= $stmt->get_result();
-
 									if ($notes != null):
-							?>	
-									<div class="form-outline mb-3">
-										<textarea class="form-control" id="textAreaExample" rows="2" readonly><?php echo htmlentities($notes) ?></textarea>
-										<label class="form-label" for="textAreaExample">For Meat/Grains</label>
-									</div>
+									?>	
+									<div class="note note-success mb-3">
+										<strong>Meat/Grains:</strong>&nbsp<?php echo htmlentities($notes) ?>
+										</div>
 									<?php endif; ?>
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
 												<th>Meat/Grains</th>
 												<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
+												<th>Action</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="mgBody">
 											<tr>	
 												<td>
 													<label for="mgProduct" class="form-label">Available Product</label>
-													<select name="mgProduct"  class="form-control mgProduct">
-													<option value="">Select Product</option>
-													<?php foreach ($mgResult as $mg): ?>
-													<option value=""><?php echo htmlentities($mg['productName'])." (".htmlentities($mg['totalQuantity']).") pcs" ?></option>
-													<?php endforeach; ?>
+														<select name="mgProduct"  class="form-control mgProduct">
 													</select>
 												</td>
 												<td>
 													<label for="mgQuantity" class="form-label">Quantity</label>
 													<input type="text" class="form-control mgQuantity"></td>						
-												<td><button type="button" id="addMg" class="btn btn-success"><i class="fa-solid fa-plus"></i></button></td>
+												<td><button type="button" id="addMg" class="btn btn-success btn-rounded"><i class="fa-solid fa-plus"></i></button></td>
 											</tr>
 										</tbody>
 									</table>
 								<?php break;
 								case "06":	
-									$medicine= "SELECT productName,sum(quantity) as totalQuantity from categmedicine   GROUP BY productName";
-									$stmt= $conn->prepare($medicine);
-									$stmt->execute();
-									$meResult= $stmt->get_result();
 									if ($notes != null):
 								?>
-									<div class="form-outline mb-3">
-										<textarea class="form-control" id="textAreaExample" rows="2" readonly><?php echo htmlentities($notes) ?></textarea>
-										<label class="form-label" for="textAreaExample">For Medicine</label>
-									</div>
+									<div class="note note-success mb-3">
+										<strong>Medicine:</strong>&nbsp<?php echo htmlentities($notes) ?>
+										</div>
 									<?php endif; ?>
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
 												<th>Medicine</th>
 												<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
+												<th>Action</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="meBody">
 											<tr>	
 												<td>
 													<label for="meProduct" class="form-label">Available Product</label>
-													<select name="meProduct"  class="form-control meProduct">
-													<option value="">Select Product</option>
-													<?php foreach ($meResult as $me): ?>
-													<option value=""><?php echo htmlentities($me['productName'])." (".htmlentities($me['totalQuantity']).") pcs" ?></option>
-													<?php endforeach; ?>
+														<select name="meProduct"  class="form-control meProduct">
 													</select>
 												</td>
 												<td>
 													<label for="meQuantity" class="form-label">Quantity</label>
 													<input type="text" class="form-control meQuantity"></td>
-												<td><button type="button" id="addMe" class="btn btn-success"><i class="fa-solid fa-plus"></i></button></td>											
+												<td><button type="button" id="addMe" class="btn btn-success btn-rounded"><i class="fa-solid fa-plus"></i></button></td>											
 											</tr>
 										</tbody>
 									</table>
 								<?php break;
 								case "07":	
-									$others= "SELECT productName,sum(quantity) as totalQuantity from categothers   GROUP BY productName";
-									$stmt= $conn->prepare($others);
-									$stmt->execute();
-									$otResult= $stmt->get_result();
 									if ($notes != null):
 								?>
-									<div class="form-outline mb-3">
-										<textarea class="form-control" id="textAreaExample" rows="2" readonly><?php echo htmlentities($notes) ?></textarea>
-										<label class="form-label" for="textAreaExample">For Others</label>
-									</div>
+									<div class="note note-success mb-3">
+										<strong>Others:</strong>&nbsp<?php echo htmlentities($notes) ?>
+										</div>
 									<?php endif; ?>
 									<table class="table table-striped table-bordered">
 										<thead>
@@ -476,21 +417,17 @@ if(isset($_GET['acceptRequest'])){
 												<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="otBody">
 											<tr>	
 												<td>
 													<label for="otProduct" class="form-label">Available Product</label>
-													<select name="otProduct"  class="form-control otProduct">
-													<option value="">Select Product</option>
-													<?php foreach ($otResult as $ot): ?>
-													<option value=""><?php echo htmlentities($ot['productName'])." (".htmlentities($ot['totalQuantity']).") pcs" ?></option>
-													<?php endforeach; ?>
+														<select name="otProduct"  class="form-control otProduct">
 													</select>
 												</td>
 												<td>
 													<label for="otQuantity" class="form-label">Quantity</label>
 													<input type="text" class="form-control otQuantity"></td>
-												<td><button type="button" id="addOt" class="btn btn-success"><i class="fa-solid fa-plus"></i></button></td>	
+												<td><button type="button" id="addOt" class="btn btn-success btn-rounded"><i class="fa-solid fa-plus"></i></button></td>	
 											</tr>
 										</tbody>
 									</table>
@@ -500,10 +437,10 @@ if(isset($_GET['acceptRequest'])){
 					</div>
 					<div class="d-flex justify-content-end mt-3">
 						<div class="me-3">
-							<button type="button" class="btn btn-danger cancelBtn" id="cancelBtn">Cancel</button>
+							<button type="button" class="btn btn-danger cancelBtn btn-rounded" id="cancelBtn">Cancel</button>
 						</div>
 						<div>
-							<button type="button" class="btn btn-success addDonate" id="addToProcess">
+							<button type="submit" class="btn btn-success btn-rounded" id="addToProcess">
 								<span class="submit-text">Process</span>
   								<span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
 							</button>
@@ -522,10 +459,6 @@ if(isset($_GET['acceptRequest'])){
 	
   </div>
 </div>
-
-
-
-
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -538,34 +471,604 @@ if(isset($_GET['acceptRequest'])){
 	<!--Here is the scripts for functions -->
 
 	<script>
-		$(document).ready(()=>{
-			let count=0;
-			const appendNewProduct=(buttontype)=>{
-				let html= "";
-				let remove ="";
+		$(document).ready(() => {
+    		let count = 0;
+
+			//Get Can/Noodles
+			const populateCanNoodles = (select) => {
+				$.ajax({
+					url: 'include/getproduct.php',
+					method: 'GET',
+					dataType: 'json',
+					success: (response) => {
+						let productCn = response.productCn;
+						let quantityCn = response.quantityCn;
+						select.empty();
+						select.append("<option value=''>Select Product</option>");
+						for (let i = 0; i < productCn.length; i++) {
+							let product =productCn[i];
+							let qty= quantityCn[i];
+							let $option = $("<option>", {
+								text: product + " (" +qty + ") pcs",
+								value: product
+							});
+							select.append($option);
+						}
+					}
+				});
+			}
+
+			//Get Drinking water
+			const populateDrinkingWater = (select) => {
+				$.ajax({
+					url: 'include/getproduct.php',
+					method: 'GET',
+					dataType: 'json',
+					success: (response) => {
+						let productDw = response.productDw;
+						let quantityDw = response.quantityDw;
+						select.empty();
+						select.append("<option value=''>Select Product</option>");
+						for (let i = 0; i < productDw.length; i++) {
+							let product = productDw[i];
+							let qty = quantityDw[i];
+							let $option = $("<option>", {
+								text: product + " (" + qty + ") pcs",
+								value: product
+							});
+							select.append($option);
+						}
+					}
+				});
+			}
+
+			//Get Infant  Items
+			const populateInfantItems = (select) => {
+				$.ajax({
+					url: 'include/getproduct.php',
+					method: 'GET',
+					dataType: 'json',
+					success: (response) => {
+						let productIi = response.productIi;
+						let quantityIi = response.quantityIi;
+						select.empty();
+						select.append("<option value=''>Select Product</option>");
+						for (let i = 0; i < productIi.length; i++) {
+							let product = productIi[i];
+							let qty = quantityIi[i];
+							let $option = $("<option>", {
+								text: product + " (" + qty + ") pcs",
+								value: product
+							});
+							select.append($option);
+						}
+					}
+				});
+			}
+			//Get Hygine Essentials
+			const populateHygineEssentials = (select) => {
+				$.ajax({
+					url: 'include/getproduct.php',
+					method: 'GET',
+					dataType: 'json',
+					success: (response) => {
+						let productHy = response.productHy;
+						let quantityHy = response.quantityHy;
+						select.empty();
+						select.append("<option value=''>Select Product</option>");
+						for (let i = 0; i < productHy.length; i++) {
+							let product = productHy[i];
+							let qty = quantityHy[i];
+							let $option = $("<option>", {
+								text: product + " (" + qty + ") pcs",
+								value: product
+							});
+							select.append($option);
+						}
+					}
+				});
+			}
+			//Get Meat/Grains
+			const populateMeatGrains = (select) => {
+				$.ajax({
+					url: 'include/getproduct.php',
+					method: 'GET',
+					dataType: 'json',
+					success: (response) => {
+						let productMg = response.productMg;
+						let quantityMg = response.quantityMg;
+						let unitMg = response.unitMg
+						select.empty();
+						select.append("<option value=''>Select Product</option>");
+						for (let i = 0; i < productMg.length; i++) {
+							let product = productMg[i];
+							let qty = quantityMg[i];
+							let unit= unitMg[i]
+							let $option = $("<option>", {
+								text: product + " (" + qty + ") "+ unit,
+								value: product
+							});
+							select.append($option);
+						}
+					}
+				});
+			}
+			//Get Medicine
+			const populateMedicine = (select) => {
+				$.ajax({
+					url: 'include/getproduct.php',
+					method: 'GET',
+					dataType: 'json',
+					success: (response) => {
+						let productMe = response.productMe;
+						let quantityMe = response.quantityMe;
+						let unitMe = response.unitMe
+						select.empty();
+						select.append("<option value=''>Select Product</option>");
+						for (let i = 0; i < productMe.length; i++) {
+							let product = productMe[i];
+							let qty = quantityMe[i];
+							let unit= unitMe[i]
+							let $option = $("<option>", {
+								text: product + " (" + qty + ") "+ unit,
+								value: product
+							});
+							select.append($option);
+						}
+					}
+				});
+			}
+			//Get Others
+			const populateOthers = (select) => {
+				$.ajax({
+					url: 'include/getproduct.php',
+					method: 'GET',
+					dataType: 'json',
+					success: (response) => {
+						let productOt = response.productOt;
+						let quantityOt = response.quantityOt;
+						let unitOt = response.unitOt
+						select.empty();
+						select.append("<option value=''>Select Product</option>");
+						for (let i = 0; i < productOt.length; i++) {
+							let product = productOt[i];
+							let qty = quantityOt[i];
+							let unit= unitOt[i]
+							let $option = $("<option>", {
+								text: product + " (" + qty + ") "+ unit,
+								value: product
+							});
+							select.append($option);
+						}
+					}
+				});
+			}
+		//Function to add new table
+		const appendNewProduct = (tableBody, buttontype) => {
+			let html = "";
+			let remove = "";
+			if (buttontype === '01') {
+				html += '<tr>';
+				html += '<td><select name="cnProduct" class="form-control cnProduct"><option value="">Select Product</option></select></td>';
+				html+= '<td><input type="text" class="form-control cnQuantity"></td>';
+				if (count > 0) {
+					remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
+				}
+				html += '<td>' + remove + '</td>'
+				tableBody.append(html);
+				let select = tableBody.find('tr:last-child .cnProduct');
+				populateCanNoodles(select);
+			}
+			else if (buttontype === '02') {
+				html += '<tr>';
+				html += '<td><select name="hyProduct" class="form-control hyProduct"><option value="">Select Product</option></select></td>';
+				html+= '<td><input type="text" class="form-control hyQuantity"></td>';
+				if (count > 0) {
+					remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
+				}
+				html += '<td>' + remove + '</td>'
+				tableBody.append(html);
+				let select = tableBody.find('tr:last-child .hyProduct');
+				populateHygineEssentials(select);
+			}
+			else if (buttontype === '03') {
+				html += '<tr>';
+				html += '<td><select name="iiProduct" class="form-control iiProduct"><option value="">Select Product</option></select></td>';
+				html+= '<td><input type="text" class="form-control iiQuantity"></td>';
+				if (count > 0) {
+					remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
+				}
+				html += '<td>' + remove + '</td>'
+				tableBody.append(html);
+				let select = tableBody.find('tr:last-child .iiProduct');
+				populateInfantItems(select);
+			}
+			else if (buttontype === '04') {
+				html += '<tr>';
+				html += '<td><select name="dwProduct" class="form-control dwProduct"><option value="">Select Product</option></select></td>';
+				html+= '<td><input type="text" class="form-control dwQuantity"></td>';
+				if (count > 0) {
+					remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
+				}
+				html += '<td>' + remove + '</td>'
+				tableBody.append(html);
+				let select = tableBody.find('tr:last-child .dwProduct');
+				populateInfantItems(select);
+			}
+			else if (buttontype === '05') {
+				html += '<tr>';
+				html += '<td><select name="mgProduct" class="form-control mgProduct"><option value="">Select Product</option></select></td>';
+				html+= '<td><input type="text" class="form-control mgQuantity"></td>';
+				if (count > 0) {
+					remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
+				}
+				html += '<td>' + remove + '</td>'
+				tableBody.append(html);
+				let select = tableBody.find('tr:last-child .mgProduct');
+				populateMeatGrains(select);
+			}
+			else if (buttontype === '06') {
+				html += '<tr>';
+				html += '<td><select name="meProduct" class="form-control meProduct"><option value="">Select Product</option></select></td>';
+				html+= '<td><input type="text" class="form-control meQuantity"></td>';
+				if (count > 0) {
+					remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
+				}
+				html += '<td>' + remove + '</td>'
+				tableBody.append(html);
+				let select = tableBody.find('tr:last-child .meProduct');
+				populateMedicine(select);
+			}
+			else if (buttontype === '07') {
+				html += '<tr>';
+				html += '<td><select name="otProduct" class="form-control otProduct"><option value="">Select Product</option></select></td>';
+				html+= '<td><input type="text" class="form-control otQuantity"></td>';
+				if (count > 0) {
+					remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
+				}
+				html += '<td>' + remove + '</td>'
+				tableBody.append(html);
+				let select = tableBody.find('tr:last-child .otProduct');
+				populateOthers(select);
+			}
+		}
+		//Remove added table row
+		$(document).on('click', '.remove', function() {
+			$(this).closest('tr').remove();
+		})
+		//Append new Table
+		$('#addCn').click( () => {
+			count++;
+			let tableBody = $('#cnBody');
+			appendNewProduct(tableBody, '01');
+		});
+
+		$('#addHy').click(() => {
+			count++;
+			let tableBody = $('#hyBody');
+			appendNewProduct(tableBody, '02');
+		});
+		$('#addIi').click(() => {
+			count++;
+			let tableBody = $('#iiBody');
+			appendNewProduct(tableBody, '03');
+		});
+
+		$('#addDw').click(() => {
+			count++;
+			let tableBody = $('#dwBody');
+			appendNewProduct(tableBody, '04')
+		});
+		$('#addMg').click(() => {
+			count++;
+			let tableBody = $('#mgBody');
+			appendNewProduct(tableBody, '05')
+		});
+		$('#addMe').click(() => {
+			count++;
+			let tableBody = $('#meBody');
+			appendNewProduct(tableBody, '06')
+		});
+		$('#addOt').click(() => {
+			count++;
+			let tableBody = $('#otBody');
+			appendNewProduct(tableBody, '07')
+		});
+
+
+		// Populate product options for existing select elements
+		$('.cnProduct').each(function() {
+			populateCanNoodles($(this));
+		});
+		$('.hyProduct').each(function() {
+			populateHygineEssentials($(this));
+		});
+		$('.iiProduct').each(function() {
+			populateInfantItems($(this));
+		});
+		$('.dwProduct').each(function() {
+			populateDrinkingWater($(this));
+		});
+		$('.mgProduct').each(function() {
+			populateMeatGrains($(this));
+		});
+		$('.meProduct').each(function() {
+			populateMedicine($(this));
+		});
+		$('.otProduct').each(function() {
+			populateOthers($(this));
+		});
+
+		//Get data to each category field
+		
+		$(document).submit('#addToProcess',(e)=>{
+			e.preventDefault();
+			let categoryFields={
+			'CanNoodles':{
+				'pn':[],
+				'q':[]
+				},
+			'Hygine':{
+				'pn':[],
+				'q':[]
+				},
+			'Infant':{
+				'pn':[],
+				'q':[]
+				},
+			'Drinks':{
+				'pn':[],
+				'q':[]
+				},
+			'MeatGrain':{
+				'pn':[],
+				'q':[]
+				},
+			'Medicine':{
+				'pn':[],
+				'q':[]
+				},
+			'Others':{
+				'pn':[],
+				'q':[]
+				}
+			}
+			 let isInvalid = false;
+			//Push value of elements to objects array
+			$('.cnProduct').each((index,element)=>{
+				categoryFields.CanNoodles.pn.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.cnQuantity').each((index,element)=>{
+				categoryFields.CanNoodles.q.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.hyProduct').each((index,element)=>{
+				categoryFields.Hygine.pn.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.hyQuantity').each((index,element)=>{
+				categoryFields.Hygine.q.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.iiProduct').each((index,element)=>{
+				categoryFields.Infant.pn.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.iiQuantity').each((index,element)=>{
+				categoryFields.Infant.q.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.dwProduct').each((index,element)=>{
+				categoryFields.Drinks.pn.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.dwQuantity').each((index,element)=>{
+				categoryFields.Drinks.q.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.mgProduct').each((index,element)=>{
+				categoryFields.MeatGrain.pn.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.mgQuantity').each((index,element)=>{
+				categoryFields.MeatGrain.q.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.meProduct').each((index,element)=>{
+				categoryFields.Medicine.pn.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
 				
+			});
+			$('.meQuantity').each((index,element)=>{
+				categoryFields.Medicine.q.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.otProduct').each((index,element)=>{
+				categoryFields.Others.pn.push($(element).val());
+				 if($(element).val()==""){
+				 	$(element).addClass('is-invalid');
+				 	isInvalid=true;
+				 }else{
+				 	$(element).removeClass('is-invalid');
+				 }
+			});
+			$('.otQuantity').each((index,element)=>{
+				categoryFields.Others.q.push($(element).val());
+				if($(element).val()==""){
+					$(element).addClass('is-invalid');
+					isInvalid=true;
+				}else{
+					$(element).removeClass('is-invalid');
+
+				}
+			});
+			let request_id= $('#request_id').val();
+
+
+			//save to data
+			let data = {
+				submitProcess:"",
+				request_id:request_id,
+				CanNoodlesPn:categoryFields.CanNoodles.pn,
+				CanNoodlesQ:categoryFields.CanNoodles.q,
+				HyginePn:categoryFields.Hygine.pn,
+				HygineQ:categoryFields.Hygine.q,
+				InfantPn:categoryFields.Infant.pn,
+				InfantQ:categoryFields.Infant.q,
+				DrinkingWaterPn:categoryFields.Drinks.pn,
+				DrinkingWaterQ:categoryFields.Drinks.q,
+				MeatGrainsPn:categoryFields.MeatGrain.pn,
+				MeatGrainsQ:categoryFields.MeatGrain.q,
+				MedicinePn:categoryFields.Medicine.pn,
+				MedicineQ:categoryFields.Medicine.q,
+				OthersPn:categoryFields.Others.pn,
+				OthersQ:categoryFields.Others.q,
 				
 			}
-			$(document).on('click', '.remove',function(){
-				$(this).closest('tr').remove();
-			})
-			$('#addCn').click(()=>{
-				count++;
-				$('#cnBody').append(appendNewProduct('01'));
-			});
-			$('#addHy').click(()=>{
-				count++;
-				$('#hyBody').append(appendNewProduct('02'));
-			});
 			
+
+		const checkProductsIfExist = (categoryFields) => {
+	
+				for (const category in categoryFields) {
+				if (categoryFields[category].pn.length > 0) {
+				$.ajax({
+					url: 'include/getproduct.php',
+					method: 'GET',
+					dataType: 'json',
+					success: (response) => {
+					switch (category) {
+						case 'CanNoodles':
+						if (response.productCn.map(pnValue => categoryFields[category].pn.includes(pnValue))) {
+							const commonProducts = response.quantityCn.filter(quantityValue => categoryFields[category].pn.includes(response.productCn[response.quantityCn.indexOf(quantityValue)]));
+							if (+categoryFields[category].q > +commonProducts) {
+								$('.cnQuantity').each(function(){
+									$(this).addClass('is-invalid');
+								});	
+							isInvalid = true;
+							} else {
+								$(this).removeClass('is-invalid');				
+							
+							}
+						} else {
+							console.log(`No products exist in both arrays for category ${category}.`);
+						}
+						break;
+						 case 'Drinks':
+						  if (response.productDw.map(pnValue => categoryFields[category].pn.includes(pnValue))) {
+						  	const commonProducts = response.quantityDw.filter(quantityValue => categoryFields[category].pn.includes(response.productDw[response.quantityDw.indexOf(quantityValue)]));
+						  	if(+categoryFields.Drinks.q > +commonProducts){
+								 $('.dwQuantity').each(function(){
+									$(this).addClass('is-invalid');
+								});	
+						 		isInvalid= true;
+						  	}else{
+								$(this).removeClass('is-invalid');							}
+						 	
+						  } else {
+						  	console.log(`No products exist in both arrays for category ${category}.`);
+						  }
+						 break;
+					}
+					},
+					error: () => {
+					console.log('Failed to get products data.');
+					}
+				});
+				}
+			}
 		
-			$('#addDw').click(()=>{
-				count++;
-				$('#dwBody').append(appendNewProduct('04'))
-			});
+			
+			setTimeout(()=>{
+				if(!isInvalid){
+					$.ajax({
+			  	url: 'include/ProcessRequest.php',
+			  	method: 'POST',
+			  	data: data,
+				
+			  	success: (data) => {
+			 		alert(data);
+			  	},
+			  	error: () => {
+			  		console.log('Failed to save data to the database.');
+			  	}
+			  });
+				}
+			},1000)
+
+			 //Move the code that saves data to the database inside the success callback of the last AJAX request
+			  
+
+			};
+
+			checkProductsIfExist(categoryFields);
+
 		
-		
+
 		})
+		// End of button
+});
+
 		
 	</script>
 
