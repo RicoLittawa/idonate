@@ -55,7 +55,6 @@ if (isset($_GET["editdonate"])) {
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
-	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" href="css/style.css">
 
@@ -83,7 +82,7 @@ if (isset($_GET["editdonate"])) {
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="request.php" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
@@ -110,28 +109,27 @@ if (isset($_GET["editdonate"])) {
   <!--Header -->
   <div class="mb-4 custom-breadcrumb">
   <div class="crumb">
-    <h1 class="fs-1 breadcrumb-title">Update Donor</h1>
+    <h1 class="fs-1 breadcrumb-title">Update Donors</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
-        <a href="" class="text-reset bc-path">Home</a>
+        <a href="donations.php" class="text-muted bc-path">Donors</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">Update Donor</a>
+        <a href="#" class="text-reset bc-path active">Update Donors</a>
       </h6>  
     </nav>
   </div>
-  <div style="margin-left: auto;">
+  <div class="ms-auto">
     <div class="dropdown">
   <a
-    class="dropdown-toggle"
+    class="dropdown-toggle border border-0"
     id="dropdownMenuButton"
     data-mdb-toggle="dropdown"
     aria-expanded="false"
-    style="border: none;"
   >
   <?php if ($profile==null){ ?>
-    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="img/default-admin.png" class="rounded-circle w-100"alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
   <?php }?>
 
   </a>
@@ -154,22 +152,12 @@ if (isset($_GET["editdonate"])) {
 
 
 					<div class="form-container mt-5 ms-5">
-						<div class="personal">
-							<h6 style="width: 50px;
-							height: 50px;
-							border-radius: 25px;
-							border: 2px solid #BEBEBE;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							float: left;
-							margin-right: 10px;">
-								<span style="font-size: 20px;">1</span>
-							</h6>
-							<div class="mt-3 ps-3" style="display: inline-block; color:#4d5157;">
-								<h6 style="font-size:20px;"><span>Personal Details</span></h6>
+					<div class="d-inline-flex">
+							<h6 class="number-title">1</h6>
+								<div class="mt-3 ps-3">
+									<h4 class="text-muted">Personal Details</h4>
+								</div>
 							</div>
-						</div>
 						<!-- Start of Form-->
 						<form class="p-3 ms-4 me-3" id="update-form">
 							<input type="hidden" name="donor_id" id="donor_id" value="<?php echo htmlentities($donorid); ?>" readonly>
@@ -299,26 +287,15 @@ if (isset($_GET["editdonate"])) {
 							</div>
 
 							<!--Number 2 -->
-							<div class="personal pt-5" style="position:relative; right:34px;">
-							<h6 style="width: 50px;
-							height: 50px;
-							border-radius: 25px;
-							border: 2px solid #BEBEBE;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							float: left;
-							margin-right: 10px;">
-							<span style="font-size: 20px;">2</span>
-								</h6>
-								<div class="mt-3 ps-3" style="display: inline-block; color:#4d5157;">
-									<h6 style="font-size:20px;"><span>List of Donations</span></h6>
+							<div class="d-inline-flex pt-4" style="position:relative; right:34px;">
+							<h6 class="number-title">1</h6>
+								<div class="mt-3 ps-3">
+									<h4 class="text-muted">Personal Details</h4>
 								</div>
 							</div>
 						</div>
 					<!--2nd table -->
-					<div class="row pe-4 ps-5 ms-4 mt-4">
-						<div class="col">
+					<div class="pe-4 ps-5 ms-4 mt-4">
 							<table class="table table-striped table-bordered" id="table_data">
 								<thead>
 									<tr>
@@ -355,14 +332,13 @@ if (isset($_GET["editdonate"])) {
 									<?php endwhile; ?>
 								</tbody>
 							</table>
-						</div>
 					</div>
 					<div class="d-flex justify-content-end mt-3">
 						<div class="me-3">
-							<button type="button" class="btn btn-danger cancelBtn" id="cancelBtn">Cancel</button>
+							<button type="button" class="btn btn-danger cancelBtn btn-rounded" id="cancelBtn">Cancel</button>
 						</div>
 						<div>
-							<button type="button" class="btn btn-success addDonate" id="testBtn">
+							<button type="button" class="btn btn-success addDonate btn-rounded" id="updateBtn">
 								<span class="submit-text">Update</span>
   								<span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
 							</button>
@@ -393,13 +369,11 @@ if (isset($_GET["editdonate"])) {
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
 	<script src="scripts/sweetalert2.all.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="scripts/main.js"></script>
 	<!--Here is the scripts for functions -->
 	<script>
 		$(document).ready(function() {
-			$('#testBtn').click(function(e) {
+			$('#updateBtn').click(function(e) {
 				let valid = this.form.checkValidity();
 				if (valid) {
 					e.preventDefault();
@@ -537,9 +511,6 @@ if (isset($_GET["editdonate"])) {
 
 						});
 					}
-
-
-
 				}
 			});
 		});
@@ -600,7 +571,27 @@ if (isset($_GET["editdonate"])) {
 	<script>
 		$(document).ready(function(){
 			$('#cancelBtn').click(function(){
-				window.location.href= ('donations.php');
+				Swal.fire({
+					title: 'Are you sure?',
+					text: "The data you update will not be saved.",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#20d070',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes',
+					reverseButtons: true
+					}).then((result) => {
+					if (result.isConfirmed) {
+						Swal.fire(
+						'Canceled!',
+						'Your data has not been updated.',
+						'error'
+						)
+						setTimeout(()=>{
+							window.location.href="donations.php";
+						},1500)
+					}
+					})
 			})
 		});
 	</script>

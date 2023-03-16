@@ -2,12 +2,12 @@
  session_start();
 
  
- if(isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='admin') {
-     header("Location: adminpage.php");  
-     exit();
- }else if (isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='user'){
- 	header("Location: userlandingpage.php");  
-     exit();
+  if(isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='admin') {
+      header("Location: adminpage.php");  
+      exit();
+  }else if (isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='user'){
+  	header("Location: userlandingpage.php");  
+      exit();
  }
 ?>
 <!DOCTYPE html>
@@ -25,9 +25,24 @@
 <!--===============================================================================================-->
 </head>
 <body>
-	
-	<div class="">
+
+
+<div class="loading-container">
+<div id="loader">
+  <div class="cell d-0"></div>
+  <div class="cell d-1"></div>
+  <div class="cell d-2"></div>
+  <div class="cell d-1"></div>
+  <div class="cell d-2"></div>
+  <div class="cell d-2"></div>
+  <div class="cell d-3"></div>
+  <div class="cell d-3"></div>
+  <div class="cell d-4"></div>
+</div>
+</div>
+
 		<div class="container-login100">
+
 			<div class="wrap-login100">
 				<div class="login100-pic" >
 					<img src="img/batangascitylogo.png" alt="IMG">
@@ -38,14 +53,14 @@
 						Login
 					</span>
 						<div class="wrap-input100">
-						<input class="input100 is-invalid" type="text" id="userEmail" name="userEmail" placeholder="Email">
+						<input class="input100 is-invalid" type="text" id="userEmail" name="userEmail" placeholder="Email" autocomplete>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 						<i class="fa fa-envelope" aria-hidden="true"></i>
 					
 					</div>
 					<div class="wrap-input100">
-						<input class="input100" type="password" name="userPassword" id="userPassword" placeholder="Password">
+						<input class="input100" type="password" name="userPassword" id="userPassword" placeholder="Password" autocomplete>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -54,7 +69,6 @@
 					<div class="container-login100-form-btn">
 					<button type="submit" name="login-submit" class="login100-form-btn">
 						<span class="submit-text">Login</span>
-						<span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
 					</button>
 					<!-- <span id="loading"></span> -->
 			
@@ -65,8 +79,7 @@
 				</form>
 			</div>
 		</div>
-	</div>
-	
+
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>	
@@ -123,67 +136,66 @@
 					data:data,
 					beforeSend:()=>{
 						$('button[type="submit"]').prop('disabled', true);
-						$('.submit-text').text('Logging in...');
-						$('.spinner-border').removeClass('d-none');
-
+						$('#loader').addClass('loader');
+						$('.container-login100').addClass('blur-filter-class')
 					},
 					success:(data)=>{
-						 if (data==='admin'){
-							setTimeout(() => {
+						if (data==='admin'){
+						 	setTimeout(() => {
 								// Enable the submit button and hide the loading animation
-								$('button[type="submit"]').prop('disabled', false);
-								$('.submit-text').text('Login');            
-								$('.spinner-border').addClass('d-none');
-								Swal.fire({
-				 			  	title: 'Hello Admin',
-				 			  	text: "You are logged in",
-				 			  	icon: 'success',
-				 			  	confirmButtonColor: '#20d070',
-				 			  	confirmButtonText: 'OK',
-				 			  	allowOutsideClick: false
-				 			  })
-							   setTimeout(()=>{
-								window.location.href="adminpage.php";
-							},1000)
-         					 }, 1500);
+						 		$('button[type="submit"]').prop('disabled', false);
+						 		$('#loader').removeClass('loader');
+						 		Swal.fire({
+				 		 	  	title: 'Hello Admin',
+				 		 	  	text: "You are logged in",
+				 		 	  	icon: 'success',
+				 		 	  	confirmButtonColor: '#20d070',
+				 		 	  	confirmButtonText: 'OK',
+				 		 	  	allowOutsideClick: false
+				 		 	  })
+						 	   setTimeout(()=>{
+						 		window.location.href="adminpage.php";
+						 	},1000)
+         				 	 }, 1500);
 							
-						 }
-						 if (data==='user'){
-							setTimeout(() => {
-								// Enable the submit button and hide the loading animation
+						  }
+						  if (data==='user'){
+						 	setTimeout(() => {
 								$('button[type="submit"]').prop('disabled', false);
-								$('.submit-text').text('Login');            
-								$('.spinner-border').addClass('d-none');
+						 		$('#loader').removeClass('loader');
+						 		Swal.fire({
+				 		 	  	title: 'Hello User',
+				 		 	  	text: "You are logged in",
+				 		 	  	icon: 'success',
+				 		 	  	confirmButtonColor: '#20d070',
+				 		 	  	confirmButtonText: 'OK',
+				 		 	  	allowOutsideClick: false
+				 		 	  })
+						 	   setTimeout(()=>{
+						 		window.location.href="userlandingpage.php";
+						 	},1000)
+         				 	 }, 1500);
+						  }
+						  if (data== "Invalid email or password."){
+							setTimeout(()=>{
 								Swal.fire({
-				 			  	title: 'Hello User',
-				 			  	text: "You are logged in",
-				 			  	icon: 'success',
-				 			  	confirmButtonColor: '#20d070',
-				 			  	confirmButtonText: 'OK',
-				 			  	allowOutsideClick: false
-				 			  })
-							   setTimeout(()=>{
-								window.location.href="userlandingpage.php";
-							},1000)
-         					 }, 1500);
-						 }
-						 if (data== "Invalid email or password."){
-							Swal.fire({
-								title: 'Error',
-								text: data,
-								icon: 'error',
-								confirmButtonColor: '#20d070',
-								confirmButtonText: 'OK',
-								allowOutsideClick: false
-							})
-							$('button[type="submit"]').prop('disabled', false);
-							$('.submit-text').text('Login');            
-							$('.spinner-border').addClass('d-none');
-							$('#userEmail').val('');
-							$('#userPassword').val('');
-							$('#userEmail').css('border','1px solid #c80000');
-							$('#userPassword').css('border','1px solid #c80000');
-						 }
+						 		title: 'Error',
+						 		text: data,
+						 		icon: 'error',
+						 		confirmButtonColor: '#20d070',
+						 		confirmButtonText: 'OK',
+						 		allowOutsideClick: false
+						 	})
+						 	$('button[type="submit"]').prop('disabled', false);
+						 	$('#loader').removeClass('loader'); 
+							$('.container-login100').removeClass('blur-filter-class')
+						 	$('#userEmail').val('');
+						 	$('#userPassword').val('');
+						 	$('#userEmail').css('border','1px solid #c80000');
+						 	$('#userPassword').css('border','1px solid #c80000');
+							},1500)
+						 	
+						  }
 							
 					},
 					error: (xhr, status, error)=> {

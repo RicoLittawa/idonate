@@ -1,13 +1,29 @@
-<?php
-session_start();
-
-	?>
-<?php 
+<?php include 'include/protect.php' ;
 require_once 'include/connection.php';
-$sql = "SELECT * from set_request";
-$result= mysqli_query($conn,$sql);
-$count=0;
 
+$sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param('i',$userID );
+try{
+  $stmt->execute();
+  $result= $stmt->get_result();
+  if($result->num_rows == 0) {
+    echo "Invalid email or password.";
+  }
+  else{
+    while($row= $result->fetch_assoc()){
+     $firstname=  $row['firstname'];
+     $profile=  $row['profile'];
+
+    }
+  }
+
+}
+
+catch(Exception $e){
+  echo "Error". $e->getMessage();
+
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,437 +31,184 @@ $count=0;
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-	<!-- My CSS -->
-	<link rel="stylesheet" href="css/donations.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+	<link rel="stylesheet" href="css/mdb.min.css">
+	<link rel="stylesheet" href="css/style.css">
 
 	<title>Requests</title>
 </head>
 <body>
-
-
-	<!-- SIDEBAR -->	
-	<section id="sidebar">
-		<a href="#" class="brand">
-			
-			<span ><img class="img" src="img/logo.png" alt=""></span>
-		</a>
-		<ul class="side-menu top">
-			<li>
-				<a href="adminpage.php">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Dashboard</span>
-				</a>
-			</li>
-			<li>
-				<a href="donations.php">
-					<i class='bx bxs-box' ></i>
-					<span class="text">Donations</span>
-				</a>
-			</li>
-			<li class="active">
-				<a href="#">
-					<i class='bx bxs-envelope' ></i>
-					<span class="text">Requests</span>
-				</a>
-			</li>
-			<li>
-				<a href="archive.php">
-				<i class='bx bxs-file-archive'></i>
-					<span class="text">Records</span>
-				</a>
-			</li>
-			<li>
-				<a href="categorytables.php">
-					<i class='bx bxs-package'></i>
-					<span class="text">Stocks</span>
-				</a>
-			</li>
-			<li>
-				<a href="">
-					<i class='bx bxs-user-plus'></i>
-					<span class="text">Users</span>
-				</a>
-			</li>
-		</ul>
-		<ul class="side-menu">
-			<li>
-				<a class="settings" href="settings.php">
-					<i class='bx bxs-cog' ></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
-			<li>
-				<a href="include/logout.php" class="logout">
-					<i class='bx bxs-log-out-circle' ></i>
-					<span class="text">Logout</span>
-				</a>
-			</li>
-		</ul>
-	</section>
-	<!-- SIDEBAR -->
-
-
-
-	<!-- CONTENT -->
-	<section id="content">
-		<!-- NAVBAR -->
-		<nav>
-			<i style="font-size:40px;" class='bx bx-menu' ></i>
-			<form action="#">
-				
-			</form>
-			<a href="#" class="notification">
-				<i class='bx bxs-bell' ></i>
-				<span class="num">8</span>
-			</a>Good Day
-			<a href="#" class="profile"><span> <?php echo $_SESSION['name']; ?></span></a>
-			
-		</nav>
-		<!-- NAVBAR -->
-
-		<!-- MAIN -->
-		<main>
-			<div class="head-title">
-				<div class="left">
-					<h1>Requests</h1>
-					<ul class="breadcrumb">
-						<li>
-							<a href="#" style="font-size: 18px;">Dashboard</a>
-						</li>
-						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="active" href="#" style="font-size: 18px;">Home</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-			
-			<div class="table-data">
-				<div class="add">
-					<div class="head">
-						<h3>Requests</h3>
-						<i class="fa-solid fa-arrows-rotate"></i>
-					</div>
-					<table class="table table-striped table-bordered" style="width:100%" id="table_data">
-    <thead>
-      <tr>
-		<th>Id</th>
-		<th>Date</th>
-        <th>Donor Name</th>
-		<th>Region</th>
-		<th>Province</th>
-		<th>Municipality</th>
-		<th>Barangay</th>
-		<th>Contact Number</th>
-		<th>Email</th>
-		<th>Status</th>
-		<th></th>
-        
-        
-      </tr>
-    </thead>
-    <tbody>
-
-		<?php foreach ($result as $row): ?>
-			<?php 
-				$reference_id= $row['reference_id'];
-				$req_id= $row['request_id'];
-				$reqName= $row['req_name'];
-				$reqDate= $row['req_date'];
-				$reqMunicipality= $row['req_municipality'];
-				$reqBarangay= $row['req_barangay'];
-				$reqProvince= $row['req_province'];
-				$reqRegion= $row['req_region'];
-				$reqContact= $row['req_contact'];
-				$reqEmail= $row['req_email'];
-				$status= $row['req_status'];
-				$count = $count + 1;
-				?>
-		<tr>
-			<td><?php echo htmlentities($reference_id); ?></td>
-			<td><?php echo htmlentities($reqDate); ?></td>
-			<td><?php echo htmlentities($reqName); ?></td>
-			<?php 
-			$reg ="SELECT * from refregion";
-			$result= mysqli_query($conn,$reg);
-			foreach($result as $row){
-				if ($reqRegion== $row['regCode']){
-					echo '<td>'.$row['regDesc'].'</td>';
-				}
-			}
-			?>
-			<?php 
-			$prov ="SELECT * from refprovince";
-			$result= mysqli_query($conn,$prov);
-			foreach($result as $row){
-				if ($reqProvince== $row['provCode']){
-					echo '<td>'.$row['provDesc'].'</td>';
-				}
-			}
-			?>
-			<?php 
-			$citymun ="SELECT * from refcitymun";
-			$result= mysqli_query($conn,$citymun);
-			foreach($result as $row){
-				if ($reqMunicipality== $row['citymunCode']){
-					echo '<td>'.$row['citymunDesc'].'</td>';
-				}
-			}
-			?>
-			<?php 
-			$brgy ="SELECT * from refbrgy";
-			$result= mysqli_query($conn,$brgy);
-			foreach($result as $row){
-				if ($reqBarangay== $row['brgyCode']){
-					echo '<td>'.$row['brgyDesc'].'</td>';
-				}
-			}
-			?>
-			
-			<td><?php echo htmlentities($reqContact); ?></td>
-			<td><?php echo htmlentities($reqEmail); ?></td>
-			<td><?php echo htmlentities($status); ?></td>
-			<td><button type="button" id="btnNote" class="btn col btnNote" data-toggle="modal" data-target="viewMessage" value="<?php echo htmlentities($req_id); ?>"><i style="color: green;" class="fa-solid fa-message"></i></button>
-			<button type="button" class="btn col  validId"  data-toggle="modal" data-target="validImg" value="<?php echo htmlentities($req_id); ?>"><i style="color:green ;" class="fa-regular fa-id-badge"></i></button>
-			<button class="btn verify col" id="<?php echo $count; ?>" data-action="verify" data-email="<?php echo htmlentities($reqEmail); ?>" data-id="<?php echo htmlentities($req_id); ?>" data-name="<?php echo htmlentities($reqName); ?>"><i class="fa-solid fa-check"></i></button>
-			<a  class="btn btn-success col" href="acceptrequest.php?acceptReq=<?php echo htmlentities($req_id); ?>">Accept</a>
-			<button class="col deleteBtn btn btn-danger" id="<?php echo $count; ?>" value="<?php echo htmlentities($reference_id); ?>">Delete</button>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	  </tbody>
-  </table>
- <!--Valid id -->
-<div class="modal fade" id="validImg">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Reference/Transaction Reciept</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		
-      </div>
-	
-	
-
-	<form>
-	<div class="modal-body">
-	<img src="" id="imageContainer" alt="" width="465px" height="100%" style="border-radius:10px;">
-	</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-	</form>
-
-		
-
+<div class="main-container">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+    <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
+  <nav class="side-menu">
+    <ul class="nav">
+      <li class="nav-item">
+        <a href="adminpage.php" class="nav-link">
+          <i class='bx bxs-dashboard'></i>
+          <span class="text">Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="donations.php" class="nav-link">
+          <i class='bx bxs-box'></i>
+          <span class="text">Donors</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link active">
+          <i class='bx bxs-envelope active'></i>
+          <span class="text">Requests</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="stocks.php" class="nav-link ">
+          <i class='bx bxs-package '></i>
+          <span class="text">Stocks</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="users.php" class="nav-link">
+          <i class='bx bxs-user-plus' ></i>
+          <span class="text">Users</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+ 
     </div>
+
+<!--Main content -->
+  <div class="main-content">
+  <!--Header -->
+  <div class="mb-4 custom-breadcrumb">
+  <div class="crumb">
+    <h1 class="fs-1 breadcrumb-title">Process Request</h1>
+    <nav class="bc-nav d-flex">
+      <h6 class="mb-0">
+        <a href="request.php" class="text-muted bc-path">Request</a>
+        <span>/</span>
+        <a href="#" class="text-reset bc-path active">Process Request</a>
+      </h6>  
+    </nav>
+  </div>
+  <div class="ms-auto">
+    <div class="dropdown">
+  <a
+    class="dropdown-toggle border border-0"
+    id="dropdownMenuButton"
+    data-mdb-toggle="dropdown"
+    aria-expanded="false"
+  >
+  <?php if ($profile==null){ ?>
+    <img src="img/default-admin.png" class="rounded-circle w-100"alt="Avatar" />
+  <?php }else{?>
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+  <?php }?>
+
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li><h6 class="dropdown-item">Hello <?php echo htmlentities($firstname);?>!</h6></li>
+    <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
+    <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
+    <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
+  </ul>
+</div>
   </div>
 </div>
+ <!--Header -->
 
-<!--Note --->
-<div class="modal" id="viewMessage">
-  <div class="modal-dialog">
-    <div class="modal-content">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Donor's Note</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-		<div class="form-group">
-			<label for="req_note">Note</label>
-		<textarea class="form-control" name="req_note" id="req_note" cols="50" rows="5"></textarea>
-		</div>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-  			
-			</div>
-		</main>
-	
-	</section>
-	
-	
-
-	<script src="scripts/sidemenu.js"></script>
-	<script src="scripts/jQuery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="scripts/sweetalert2.all.min.js"></script>	
-	<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-  	<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
-	  <script>
-	  $(document).ready(function () {
-    $('#table_data').DataTable({
-      "pagingType":"full_numbers",
-      "lengthMenu":[
-      [10,25,50,-1],
-      [10,25,50,"All"]],
-      responsive:true,
-      language:{
-        search:"_INPUT_",
-        searchPlaceholder: "Search Records",
-      }
-
-    });
-});
-</script>
-
-<!-- Valid Id-->
-<script> 
-	$(document).ready(function(){
-		$('.validId').click(function(){
-			var valueBtn = $(this);
-			var request_id =valueBtn.val();
-			$.ajax({
-				url:'include/viewid.php?viewID='+request_id,
-				type: 'GET',
-				success: function(data){
-						$('#validImg').modal('show');
-			 			$('#imageContainer').attr('src','../donors/ValidId/'+data);
-				}
-			});
-
-		});
-	});
-</script>
-<!--Note -->
-<script> 
-	$(document).ready(function(){
-		$('.btnNote').click(function(){
-
-			var valueBtn = $(this);
-			var request_id =valueBtn.val();
-			
-			  $.ajax({
-			  	url:'include/viewid.php?viewNote='+request_id,
-			  	type: 'GET',
-			  	success: function(data){
-			  			$('#viewMessage').modal('show');
-						  $('#req_note').val(data);
-						
-			  			
-			  	}
-			  });
-
-		});
-	});
-</script>
-<script>
-	$(document).ready(function(){
-		$('.verify').click(function(){
-			var id=  $(this).val();
-			var email_data=[];
-			var action = $(this).data("action");
-			if (action=="verify"){
-				email_data.push({
-					email: $(this).data("email"),
-					uID: $(this).data("id"),
-					name: $(this).data("name"),
-				});
-			}
-			Swal.fire({
-            title: 'Confirmation',
-            text: "Do you want to verify the request?",
-            icon: 'warning',
-            showDenyButton: true,
-            confirmButtonColor: '#48bf53',
-            confirmButtonText: 'Ok',
-            denyButtonText: 'Back',
-          }).then((result) => {
-          if (result.isConfirmed) {
-            $.ajax({
-             url: 'include/verify.php',
-              method: 'POST',
-               data:{email_data:email_data},
-              success: function(data) {
-                if(data == "verified"){
-                  Swal.fire({
-                  title: 'Success',
-                  text: "Status has been changed" ,
-                  icon: 'success',
-                  confirmButtonColor: '#48bf53',
-                  confirmButtonText: 'Continue',
-                  allowOutsideClick: false
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      window.location.href="request.php?inserted";
-                    }
-                  }) 
-                } else {
-                  Swal.fire('Error','Status is not changed','error')
-                }
+  <!--reports -->
+  <div class="custom-container pb-3">
+    <div class="card">
+      <div class="card-body">
+        <table class="table" id="table_data">
+          <thead>
+            <tr>
+              <th>Reciept No.</th>
+              <th>Full name</th>
+              <th>Position</th>
+              <th>No. Evacuees/Families</th>
+              <th>Request Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <t-body>
+            <?php 
+              $getRequest="SELECT request_id,firstname,lastname,position,evacuees_qty,requestdate,status FROM request"; 
+              $stmt=$conn->prepare($getRequest);
+              $stmt->execute();
+              $getResult= $stmt->get_result();
+              while($get= $getResult->fetch_assoc()):
+            ?>
+            <tr>
+              <?php
+              $reference= $get['request_id'];
+              $firstname= $get['firstname'];
+              $lastname= $get['lastname'];
+              $position= $get['position'];
+              $evecuees_qty= $get['evacuees_qty'];
+              $requestdate= $get['requestdate'];
+              $dateTrimmed = str_replace('-', '', $requestdate);
+              $status= $get['status'];
               
-            
-                 
-            }
-       });
+              ?>
+              <td><?php echo htmlentities($dateTrimmed)."-00".htmlentities($reference) ?></td>
+              <td><?php echo htmlentities($firstname)." ".htmlentities($lastname) ?></td>
+              <td><?php echo htmlentities($position) ?></td>
+              <td><?php echo htmlentities($evecuees_qty) ?></td>
+              <td><?php echo htmlentities($requestdate) ?></td>
+              <?php if ($status!='pending'){ ?>
+              <td><span class="badge badge-danger"><?php echo "empty" ?></span></td>
+              <?php } else { ?>
+                <td><span class="badge badge-warning"><?php echo htmlentities($status)?></span></td>
+              <?php } ?>
+              <td><button type="button" id="acceptBtn" data-request="<?php echo htmlentities($reference) ?>"  class="btn btn-success btn-rounded">Accept</button></td>
+            </tr>
+            <?php endwhile; ?>
+          </t-body>
+        </table>
+      </div>
+    </div>
 
-          } else if (result.isDenied) {
-            Swal.fire('Changes are not saved', '', 'info')
-          }
-        });
+  
+<!--End of main content -->
+    </div>
+  </div>
+</div>
 
-			
-		});
+  
+	
+	
 
-	});
-</script>
-<script>
-	$(document).ready(function(){
-		$('.deleteBtn').click(function(){
-			var valueBtn= $(this);
-			var donorID= valueBtn.val();
-			Swal.fire({
-				title: 'Are you sure?',
-				text: "You won't be able to revert this!",
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Yes, delete it!'
-				}).then((result) => {
-				if (result.isConfirmed) {
-					$.ajax({
-						url:'include/viewid.php?deleteReq='+donorID,
-						type:'POST',
-						success:function(data){
-							
-							 Swal.fire(
-							 'Deleted!',
-							 'Your file has been deleted.',
-							 'success'
-							 ).then((result)=>{
-								if(result.isConfirmed){
-									location.reload();
-								}
-							});
-						}
-					});
-					
-				}
-				});
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>	
+	<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+	<script type="text/javascript" src="scripts/mdb.min.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
 
-		});
-	})
-</script>
+  <script>
+   $(document).ready(()=>{
+      $(document).on('click','#acceptBtn',(event)=>{
+        let requestId= $(event.target).attr('data-request');
+       window.location.href="acceptrequest.php?requestId="+requestId;
+
+      });
+    })
+  </script>
+
+
 
 </body>
 </html>

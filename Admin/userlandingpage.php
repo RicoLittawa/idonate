@@ -32,7 +32,8 @@ function add_category($conn){
   $result = $stmt->get_result(); 
   foreach ($result as $row) {
     $category = htmlentities($row['category']);
-    $output .= '<option " value="' . $category . '">' . $category . '</option>';
+    $categCode = htmlentities($row['categCode']);
+    $output .= '<option " value="' . $categCode . '">' . $category . '</option>';
   }
   return $output;
 
@@ -99,25 +100,24 @@ $requestRef = $refRow['request_id'];
     <h1 class="fs-1 breadcrumb-title">Create Request</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
-        <a href="" class="text-reset bc-path">Home</a>
+        <a href="#" class="text-muted bc-path">Home</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">Create Request</a>
+        <a href="#" class="text-reset bc-path active">Create Request</a>
       </h6>  
     </nav>
   </div>
-  <div style="margin-left: auto;">
+  <div class="ms-auto">
     <div class="dropdown">
   <a
-    class="dropdown-toggle"
+    class="dropdown-toggle border border-0"
     id="dropdownMenuButton"
     data-mdb-toggle="dropdown"
     aria-expanded="false"
-    style="border: none;"
   >
   <?php if ($profile==null){ ?>
-    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="img/default-admin.png" class="rounded-circle w-100"alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
   <?php }?>
 
   </a>
@@ -137,9 +137,10 @@ $requestRef = $refRow['request_id'];
   <div class="card-body overflow-auto">
  <div class="mt-2">
 
- <span><button class="btn btn-success" type="button" style=" width:200px;height:50px;float:right;"
-				id="toggleFormBtn">
-				<i class="fas fa-add"></i> Show Form</button></span>
+ <span>
+  <button class="btn btn-success float-end w-20 h-50 btn-rounded" type="button" id="toggleFormBtn">
+		<i class="fas fa-add"></i>Show Form</button>
+  </span>
  </div>
 	
 			<br>
@@ -232,7 +233,7 @@ $requestRef = $refRow['request_id'];
         
       ?>
         <tr>
-         <td><?php echo htmlentities($request_dateTrimmed)."-00".$reference ?></td>
+         <td><?php echo htmlentities($request_dateTrimmed)."-00".htmlentities($reference) ?></td>
          <td><?php echo htmlentities($evacuees_qty) ?></td>
          <td><?php echo htmlentities($request_date) ?></td>
          <?php if($recieve_date===null){ ?>
@@ -242,7 +243,7 @@ $requestRef = $refRow['request_id'];
           <?php }?>
 
           <?php if($status==='pending'){ ?>
-          <td><span class="badge badge-warning">Pending</span></td>
+          <td><span class="badge badge-warning"><?php echo htmlentities($status) ?></span></td>
           <?php } else { ?>
           <td><?php echo htmlentities($status) ?></td>
           <?php }?>

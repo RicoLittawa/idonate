@@ -60,7 +60,7 @@ catch(Exception $e){
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="request.php" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
@@ -87,28 +87,27 @@ catch(Exception $e){
   <!--Header -->
   <div class="mb-4 custom-breadcrumb">
   <div class="crumb">
-    <h1 class="fs-1 breadcrumb-title">User Details</h1>
+    <h1 class="fs-1 breadcrumb-title">Users</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
-        <a href="" class="text-reset bc-path">Home</a>
+        <a href="adminpage.php" class="text-muted bc-path">Home</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">User Details</a>
+        <a href="#" class="text-reset bc-path active">Users</a>
       </h6>  
     </nav>
   </div>
-  <div style="margin-left: auto;">
+  <div class="ms-auto">
     <div class="dropdown">
   <a
-    class="dropdown-toggle"
+    class="dropdown-toggle border border-0"
     id="dropdownMenuButton"
     data-mdb-toggle="dropdown"
     aria-expanded="false"
-    style="border: none;"
   >
   <?php if ($profile==null){ ?>
-    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="img/default-admin.png" class="rounded-circle w-100"alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
   <?php }?>
 
   </a>
@@ -128,9 +127,10 @@ catch(Exception $e){
   <div class="card-body overflow-auto">
  <div class="mt-2">
 
- <span><button class="btn btn-success" type="button" style=" width:200px;height:50px;float:right;"
-				id="toggleFormBtn">
-				<i class="fas fa-add"></i>Show Form</button></span>
+ <span>
+  <button class="btn btn-success float-end w-20 h-50 btn-rounded" type="button" id="toggleFormBtn">
+		<i class="fas fa-add"></i>Show Form</button>
+  </span>
  </div>
 	
 			<br>
@@ -196,7 +196,7 @@ catch(Exception $e){
   </div>
 
   <!-- Submit button -->
-  <button type="submit " class="btn btn-success btn-block">
+  <button type="submit" class="btn btn-success btn-block btn-rounded">
   <span class="submit-text">Create</span>
   <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
   </button>
@@ -243,8 +243,8 @@ catch(Exception $e){
           <?php }else{?>
           <td><span class="badge rounded-pill badge-success">Active</span></td>
             <?php }?>
-          <td><div class="row"><a class="col" href=""><i style="color:red;" class="fa-solid fa-trash"></i></a>
-          <a class="col" href=""><i style="color:green;" class="fa-solid fa-pen-to-square"></i></a></div></td>
+          <td><div class="row"><a class="col" href=""><i class="fa-solid fa-trash text-danger"></i></a>
+          <a class="col" href=""><i class="fa-solid fa-pen-to-square text-success"></i></a></div></td>
           
          
         </tr>
@@ -445,22 +445,12 @@ $('#add-user').submit((e)=> {
           },1000)
           }, 500);
             }
-            else if (data=='Error: Email already exists'){
-              Swal.fire({
-                title: 'Error',
-                text: data,
-                icon: 'error',
-                confirmButtonColor: '#20d070',
-                confirmButtonText: 'OK',
-                allowOutsideClick: false
-              })
+            else if (data=='Email already exists'){
               $('button[type="submit"]').prop('disabled', false);
               $('.submit-text').text('Create');            
               $('.spinner-border').addClass('d-none');
               $('#email').val('');
               $('#email').addClass('is-invalid');
-            }
-            else{
               Swal.fire({
                 title: 'Error',
                 text: data,
@@ -470,6 +460,7 @@ $('#add-user').submit((e)=> {
                 allowOutsideClick: false
               })
             }
+           
     },
     error: (xhr, status, error)=> {
         // Handle errors

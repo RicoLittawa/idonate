@@ -116,7 +116,7 @@ catch(Exception $e){
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="request.php" class="nav-link">
           <i class='bx bxs-envelope'></i>
           <span class="text">Requests</span>
         </a>
@@ -146,25 +146,24 @@ catch(Exception $e){
     <h1 class="fs-1 breadcrumb-title">Update Account</h1>
     <nav class="bc-nav d-flex">
       <h6 class="mb-0">
-        <a href="" class="text-reset bc-path">Home</a>
+        <a href="#" class="text-muted bc-path">Home</a>
         <span>/</span>
-        <a href="" class="text-reset bc-path active">Update Account</a>
+        <a href="#" class="text-reset bc-path active">Update Account</a>
       </h6>  
     </nav>
   </div>
-  <div style="margin-left: auto;">
+  <div class="ms-auto">
     <div class="dropdown">
   <a
-    class="dropdown-toggle"
+    class="dropdown-toggle border border-0"
     id="dropdownMenuButton"
     data-mdb-toggle="dropdown"
     aria-expanded="false"
-    style="border: none;"
   >
   <?php if ($profile==null){ ?>
-    <img src="img/default-admin.png" class="rounded-circle" style="width: 100px; border:1px green;" alt="Avatar" />
+    <img src="img/default-admin.png" class="rounded-circle w-100"alt="Avatar" />
   <?php }else{?>
-    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle" style="width: 100px; height:100px; object-fit: cover; border:1px green;" alt="Avatar" />
+    <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
   <?php }?>
 
   </a>
@@ -187,7 +186,7 @@ catch(Exception $e){
 
 	<form class="pe-2 mb-3" id="update-user"  enctype="multipart/form-data">
     <!--Change profile -->
-    <div class="mb-5" style="border:1px;">
+    <div class="mb-5">
         <div class="picture-container">
             <div class="picture">
                 <?php if($profile==null){ ?>
@@ -239,7 +238,7 @@ catch(Exception $e){
  
 
   <!-- Submit button -->
-  <button type="submit"  class="btn btn-success btn-block">
+  <button type="submit"  class="btn btn-success btn-block btn-rounded">
   <span class="submit-text">Update</span>
   <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
   </button>
@@ -384,7 +383,7 @@ catch(Exception $e){
           }, 1500);
 
             }
-          else if (data == 'Error: Email already exists'){
+          else if (data == 'Email already exists'){
             Swal.fire({
                 title: 'Error',
                 text: data,
@@ -399,17 +398,7 @@ catch(Exception $e){
               $('#email').val('');
               $('#email').addClass('is-invalid');
           }
-          else{
-            Swal.fire({
-              title: 'Error',
-              text: data,
-              icon: 'error',
-              confirmButtonColor: '#3085d6',
-              confirmButtonText: 'OK',
-              allowOutsideClick: false
-            })
-          }
-            
+    
           },
           error: (xhr, status, error)=>{
             // Handle errors

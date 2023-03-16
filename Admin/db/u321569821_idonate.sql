@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2023 at 02:24 PM
+-- Generation Time: Mar 08, 2023 at 03:05 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -36,7 +36,7 @@ CREATE TABLE `adduser` (
   `pwdUsers` longtext NOT NULL,
   `address` longtext NOT NULL,
   `role` varchar(100) NOT NULL,
-  `status` varchar(10) NOT NULL DEFAULT 'active',
+  `status` varchar(10) NOT NULL DEFAULT 'offline',
   `profile` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -45,8 +45,8 @@ CREATE TABLE `adduser` (
 --
 
 INSERT INTO `adduser` (`uID`, `firstname`, `lastname`, `position`, `email`, `pwdUsers`, `address`, `role`, `status`, `profile`) VALUES
-(1, 'Rico', 'Littawa', 'Cdrrmo Employee', 'rico.littawa@g.batstate-u.edu.ph', '$2y$10$v.5w0riUrk1qS86uwMU33uWA/akr7ggY8puJe7TqdAIVwyy8IczwW', 'Balagtas Batangas City', 'admin', 'active', '292787969_589029682626367_6048710602373870890_n.png'),
-(2, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', '$2y$10$y/OEfSOuPVGq.FD0EGhvvuAPmKVqYe2Ohx4ajUdbyJizOg8qWMG8m', 'Balagtas Batangas City', 'user', 'active', NULL);
+(1, 'Rico', 'Littawa', 'Cdrrmo Employee', 'rico.littawa@g.batstate-u.edu.ph', '$2y$10$BtFNinRr0uazCN1ml.pEU.LOaXkslQSrC/UQA/LBeRYc3lYz.CeC.', 'Balagtas Batangas City', 'admin', 'active', '1_riconew.jpg'),
+(2, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', '$2y$10$JIww1Yf.zdDtiJsXZVy5F..EnKwPOWRKjAN1vxDdh.HuTXxAC3yWC', 'Balagtas Batangas City', 'user', 'offline', '2_try.jpg');
 
 -- --------------------------------------------------------
 
@@ -223,11 +223,9 @@ INSERT INTO `category` (`categ_id`, `category`, `categCode`) VALUES
 (2, 'Hygiene Essentials', '02'),
 (3, 'Infant Items(*Formula not included)', '03'),
 (4, 'Drinking water ', '04'),
-(5, 'Medicine', '05'),
-(6, 'PPE', '06'),
-(7, 'Grains', '07'),
-(8, 'Meat and Eggs', '08'),
-(9, 'Others', '09');
+(5, 'Meat and Grains', '05'),
+(7, 'Medicine', '06'),
+(9, 'Others', '07');
 
 -- --------------------------------------------------------
 
@@ -44490,72 +44488,67 @@ INSERT INTO `refregion` (`id`, `psgcCode`, `regDesc`, `regCode`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `set_request`
+-- Table structure for table `ref_request`
 --
 
-CREATE TABLE `set_request` (
-  `request_id` int(11) NOT NULL,
-  `reference_id` bigint(20) NOT NULL,
-  `req_name` longtext NOT NULL,
-  `req_region` varchar(191) NOT NULL,
-  `req_province` longtext NOT NULL,
-  `req_municipality` longtext NOT NULL,
-  `req_barangay` longtext NOT NULL,
-  `req_email` longtext NOT NULL,
-  `req_contact` varchar(11) NOT NULL,
-  `req_date` date NOT NULL,
-  `valid_id` longtext NOT NULL,
-  `req_note` varchar(1000) NOT NULL,
-  `req_status` longtext NOT NULL
+CREATE TABLE `ref_request` (
+  `request_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `set_request`
+-- Dumping data for table `ref_request`
 --
 
-INSERT INTO `set_request` (`request_id`, `reference_id`, `req_name`, `req_region`, `req_province`, `req_municipality`, `req_barangay`, `req_email`, `req_contact`, `req_date`, `valid_id`, `req_note`, `req_status`) VALUES
-(1, 1, 'rico littawa', '02', '0231', '023103', '023103012', 'sample@gmail.com', '09392560000', '1970-01-01', 'Background picture.jpeg', 'note', 'For verification'),
-(2, 1, 'wendel', '12', '1280', '128004', '128004012', 'rico.littawa@g.batstate-u.edu.ph', '09392560001', '1970-01-01', 'product.png', '12', 'For verification'),
-(3, 2, 'deser', '03', '0354', '035406', '035406004', 'sample@gmail.com', '09298289932', '1970-01-01', 'coffee shop.png', '', 'For verification');
+INSERT INTO `ref_request` (`request_id`) VALUES
+(2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `set_request10`
+-- Table structure for table `request`
 --
 
-CREATE TABLE `set_request10` (
+CREATE TABLE `request` (
   `id` int(11) NOT NULL,
-  `req_reference` bigint(20) NOT NULL,
-  `req_category` longtext NOT NULL,
-  `req_nameItem` longtext NOT NULL,
-  `req_variantCode` varchar(191) NOT NULL
+  `request_id` bigint(20) NOT NULL,
+  `firstname` longtext NOT NULL,
+  `lastname` longtext NOT NULL,
+  `position` longtext NOT NULL,
+  `email` longtext NOT NULL,
+  `evacuees_qty` int(11) NOT NULL,
+  `requestdate` date NOT NULL,
+  `status` varchar(25) DEFAULT NULL,
+  `userID` bigint(20) NOT NULL,
+  `recievedate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `set_request10`
+-- Dumping data for table `request`
 --
 
-INSERT INTO `set_request10` (`id`, `req_reference`, `req_category`, `req_nameItem`, `req_variantCode`) VALUES
-(1, 1, '3', 'sardines', 'undefined'),
-(2, 2, '7', 'sardines', '003');
+INSERT INTO `request` (`id`, `request_id`, `firstname`, `lastname`, `position`, `email`, `evacuees_qty`, `requestdate`, `status`, `userID`, `recievedate`) VALUES
+(1, 1, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-03-08', 'pending', 2, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `set_request_pickings`
+-- Table structure for table `request_category`
 --
 
-CREATE TABLE `set_request_pickings` (
-  `reference_id` int(11) NOT NULL
+CREATE TABLE `request_category` (
+  `id` int(11) NOT NULL,
+  `request_id` bigint(20) NOT NULL,
+  `categoryName` mediumtext NOT NULL,
+  `quantity` bigint(20) DEFAULT NULL,
+  `notes` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `set_request_pickings`
+-- Dumping data for table `request_category`
 --
 
-INSERT INTO `set_request_pickings` (`reference_id`) VALUES
-(3);
+INSERT INTO `request_category` (`id`, `request_id`, `categoryName`, `quantity`, `notes`) VALUES
+(0, 1, 'Hygiene Essentials', 6, 'sample');
 
 -- --------------------------------------------------------
 
@@ -44618,7 +44611,8 @@ INSERT INTO `year` (`id`, `year_name`) VALUES
 -- Indexes for table `adduser`
 --
 ALTER TABLE `adduser`
-  ADD PRIMARY KEY (`uID`);
+  ADD PRIMARY KEY (`uID`),
+  ADD UNIQUE KEY `constraint_name` (`email`) USING HASH;
 
 --
 -- Indexes for table `announcement_template`
@@ -44731,22 +44725,16 @@ ALTER TABLE `refregion`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `set_request`
+-- Indexes for table `ref_request`
 --
-ALTER TABLE `set_request`
+ALTER TABLE `ref_request`
   ADD PRIMARY KEY (`request_id`);
 
 --
--- Indexes for table `set_request10`
+-- Indexes for table `request`
 --
-ALTER TABLE `set_request10`
+ALTER TABLE `request`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `set_request_pickings`
---
-ALTER TABLE `set_request_pickings`
-  ADD PRIMARY KEY (`reference_id`);
 
 --
 -- Indexes for table `template_certi`
@@ -44879,22 +44867,16 @@ ALTER TABLE `refregion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `set_request`
+-- AUTO_INCREMENT for table `ref_request`
 --
-ALTER TABLE `set_request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `ref_request`
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `set_request10`
+-- AUTO_INCREMENT for table `request`
 --
-ALTER TABLE `set_request10`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `set_request_pickings`
---
-ALTER TABLE `set_request_pickings`
-  MODIFY `reference_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+ALTER TABLE `request`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `template_certi`

@@ -38,6 +38,8 @@ require_once 'connection.php';
     
     // Return the data as a JSON object
     echo json_encode($dataArray);
+    $stmt->close();
+    $conn->close();
 
 
 
