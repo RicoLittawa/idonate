@@ -236,17 +236,23 @@ $requestRef = $refRow['request_id'];
          <td><?php echo htmlentities($request_dateTrimmed)."-00".htmlentities($reference) ?></td>
          <td><?php echo htmlentities($evacuees_qty) ?></td>
          <td><?php echo htmlentities($request_date) ?></td>
-         <?php if($recieve_date===null){ ?>
-         <td><span class="badge badge-info">Empty</span></td>
-         <?php } else { ?>
-          <td><?php echo htmlentities($recieve_date) ?></td>
+         
+         <td>
+           <?php if($recieve_date===null){ ?>
+           <span class="badge badge-info">Empty</span>
+           <?php } else { ?>
+            <?php echo htmlentities($recieve_date) ?>
           <?php }?>
-
-          <?php if($status==='pending'){ ?>
-          <td><span class="badge badge-warning"><?php echo htmlentities($status) ?></span></td>
-          <?php } else { ?>
-          <td><?php echo htmlentities($status) ?></td>
-          <?php }?>
+         </td>
+          <td>
+            <?php if($status==='pending'){ ?>
+            <span class="badge badge-warning"><?php echo htmlentities($status) ?></span>
+            <?php } else { ?>
+            <span class="badge badge-success"><?php echo htmlentities($status) ?></span>
+            <?php }?>
+          </td>
+  
+          
          <td></td>
         </tr>
         <?php } ?>
@@ -274,6 +280,7 @@ $requestRef = $refRow['request_id'];
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/sweetalert2.all.min.js"></script>
+  <script src="scripts/DataTablesInitialize.js"></script>
 
 
 	<script>

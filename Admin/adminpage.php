@@ -212,7 +212,7 @@ function fill_select_category($conn){
        <div class="d-flex justify-content-start"><h4>Number of items based on Category</h4></div>
         <div class="d-flex justify-content-lg-end">
         <div class="w-30" >
-          <select name="selectCategory" id="selectCategory" class="form-control">
+          <select name="selectCategory" id="selectCategory" class="form-select">
             <option value="">Select</option>
             <?php echo fill_select_category($conn) ?>
           </select>

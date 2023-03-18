@@ -234,6 +234,7 @@ catch(Exception $e){
   <script src="scripts/sweetalert2.all.min.js"></script>	
   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
   <script src="scripts/main.js"></script>
+  <script src="scripts/DataTablesInitialize.js"></script>
 
   <!--Here is the scripts for functions -->
 <script>

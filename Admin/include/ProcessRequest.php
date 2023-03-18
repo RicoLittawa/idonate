@@ -3,6 +3,7 @@ require_once 'connection.php';
 
 if (isset($_POST['submitProcess'])){
     $request_id= $_POST['request_id'];
+    $checkIfSave= false;
 
     //Check if array of can/noodles exists
     if (array_key_exists('CanNoodlesPn', $_POST)) {
@@ -27,6 +28,7 @@ if (isset($_POST['submitProcess'])){
                 else{
                   $count++;
                   $resultCount++;
+                  $checkIfSave= true;
                 }
               }
             }
@@ -60,6 +62,7 @@ if (isset($_POST['submitProcess'])){
                 else{
                   $count++;
                   $resultCount++;
+                  $checkIfSave= true;
                 }
               }
             }
@@ -93,6 +96,7 @@ if (isset($_POST['submitProcess'])){
                 else{
                   $count++;
                   $resultCount++;
+                  $checkIfSave= true;
                 }
               }
             }
@@ -126,6 +130,7 @@ if (isset($_POST['submitProcess'])){
                 else{
                   $count++;
                   $resultCount++;
+                  $checkIfSave= true;
                 }
               }
             }
@@ -160,6 +165,7 @@ if (isset($_POST['submitProcess'])){
                 else{
                   $count++;
                   $resultCount++;
+                  $checkIfSave= true;
                 }
               }
             }
@@ -194,6 +200,7 @@ if (isset($_POST['submitProcess'])){
                 else{
                   $count++;
                   $resultCount++;
+                  $checkIfSave= true;
                 }
               }
             }
@@ -228,6 +235,7 @@ if (isset($_POST['submitProcess'])){
                 else{
                   $count++;
                   $resultCount++;
+                  $checkIfSave= true;
                 }
               }
             }
@@ -237,7 +245,15 @@ if (isset($_POST['submitProcess'])){
         }   
       }
 
-    echo $request_id;
+  if ($checkIfSave){
+    $status= "Request has been proccessed";
+    $updateStatus = "UPDATE request set status=? where request_id=? ";
+    $stmt=$conn->prepare($updateStatus);
+    $stmt->bind_param('si',$status,$request_id);
+    $stmt->execute();
+
+    echo  "success";
+  }
 
    
 }

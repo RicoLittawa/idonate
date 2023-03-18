@@ -147,9 +147,6 @@ if(isset($_GET['requestId'])){
 			<div class="card">
 				<div class="card-body overflow-auto">
 					<!--Place table here --->
-					<div class="d-flex justify-content-end">
-						<button class="btn btn-success btn-rounded w-10">Print</button>
-					</div>
 					<div class="form-container mt-5 ms-5">
 					
 
@@ -481,18 +478,17 @@ if(isset($_GET['requestId'])){
 					method: 'GET',
 					dataType: 'json',
 					success: (response) => {
-						let productCn = response.productCn;
-						let quantityCn = response.quantityCn;
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < productCn.length; i++) {
-							let product =productCn[i];
-							let qty= quantityCn[i];
-							let $option = $("<option>", {
-								text: product + " (" +qty + ") pcs",
-								value: product
-							});
-							select.append($option);
+						for (let i = 0; i < response.productCn.length; i++) {
+							let product = response.productCn[i];
+							let qty = response.quantityCn[i];
+							let optionText = product + " (" + qty + " pcs)";
+							if (qty == 0) {
+								optionText += " - Out of stock";
+							}
+							let option = new Option(optionText, product);
+							select.append(option);
 						}
 					}
 				});
@@ -505,18 +501,17 @@ if(isset($_GET['requestId'])){
 					method: 'GET',
 					dataType: 'json',
 					success: (response) => {
-						let productDw = response.productDw;
-						let quantityDw = response.quantityDw;
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < productDw.length; i++) {
-							let product = productDw[i];
-							let qty = quantityDw[i];
-							let $option = $("<option>", {
-								text: product + " (" + qty + ") pcs",
-								value: product
-							});
-							select.append($option);
+						for (let i = 0; i < response.productDw; i++) {
+							let product = response.productDw[i];
+							let qty = response.quantityDw[i];
+							let optionText = product + " (" + qty + " pcs)";
+							if (qty == 0) {
+								optionText += " - Out of stock";
+							}
+							let option = new Option(optionText, product);
+							select.append(option);
 						}
 					}
 				});
@@ -529,18 +524,17 @@ if(isset($_GET['requestId'])){
 					method: 'GET',
 					dataType: 'json',
 					success: (response) => {
-						let productIi = response.productIi;
-						let quantityIi = response.quantityIi;
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < productIi.length; i++) {
-							let product = productIi[i];
-							let qty = quantityIi[i];
-							let $option = $("<option>", {
-								text: product + " (" + qty + ") pcs",
-								value: product
-							});
-							select.append($option);
+						for (let i = 0; i < response.productIi.length; i++) {
+							let product = response.productIi[i];
+							let qty = response.quantityIi[i];
+							let optionText = product + " (" + qty + " pcs)";
+							if (qty == 0) {
+								optionText += " - Out of stock";
+							}
+							let option = new Option(optionText, product);
+							select.append(option);
 						}
 					}
 				});
@@ -552,18 +546,17 @@ if(isset($_GET['requestId'])){
 					method: 'GET',
 					dataType: 'json',
 					success: (response) => {
-						let productHy = response.productHy;
-						let quantityHy = response.quantityHy;
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < productHy.length; i++) {
-							let product = productHy[i];
-							let qty = quantityHy[i];
-							let $option = $("<option>", {
-								text: product + " (" + qty + ") pcs",
-								value: product
-							});
-							select.append($option);
+						for (let i = 0; i < response.productHy.length; i++) {
+							let product = response.productHy[i];
+							let qty = response.quantityHy[i];
+							let optionText = product + " (" + qty + " pcs)";
+							if (qty == 0) {
+								optionText += " - Out of stock";
+							}
+							let option = new Option(optionText, product);
+							select.append(option);
 						}
 					}
 				});
@@ -575,20 +568,18 @@ if(isset($_GET['requestId'])){
 					method: 'GET',
 					dataType: 'json',
 					success: (response) => {
-						let productMg = response.productMg;
-						let quantityMg = response.quantityMg;
-						let unitMg = response.unitMg
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < productMg.length; i++) {
-							let product = productMg[i];
-							let qty = quantityMg[i];
-							let unit= unitMg[i]
-							let $option = $("<option>", {
-								text: product + " (" + qty + ") "+ unit,
-								value: product
-							});
-							select.append($option);
+						for (let i = 0; i < response.productMg.length; i++) {
+							let product = response.productMg[i];
+							let qty = response.quantityMg[i];
+							let unit = response.unitMg[i];
+							let optionText = product + " (" + qty +" "+ unit+ ") ";
+							if (qty == 0) {
+								optionText += " - Out of stock";
+							}
+							let option = new Option(optionText, product);
+							select.append(option);
 						}
 					}
 				});
@@ -600,20 +591,18 @@ if(isset($_GET['requestId'])){
 					method: 'GET',
 					dataType: 'json',
 					success: (response) => {
-						let productMe = response.productMe;
-						let quantityMe = response.quantityMe;
-						let unitMe = response.unitMe
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < productMe.length; i++) {
-							let product = productMe[i];
-							let qty = quantityMe[i];
-							let unit= unitMe[i]
-							let $option = $("<option>", {
-								text: product + " (" + qty + ") "+ unit,
-								value: product
-							});
-							select.append($option);
+						for (let i = 0; i < response.productMe.length; i++) {
+							let product = response.productMe[i];
+							let qty = response.quantityMe[i];
+							let unit = response.unitMe[i];
+							let optionText = product + " (" + qty +" "+ unit+ ")";
+							if (qty == 0) {
+								optionText += " - Out of stock";
+							}
+							let option = new Option(optionText, product);
+							select.append(option);
 						}
 					}
 				});
@@ -625,20 +614,18 @@ if(isset($_GET['requestId'])){
 					method: 'GET',
 					dataType: 'json',
 					success: (response) => {
-						let productOt = response.productOt;
-						let quantityOt = response.quantityOt;
-						let unitOt = response.unitOt
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < productOt.length; i++) {
-							let product = productOt[i];
-							let qty = quantityOt[i];
-							let unit= unitOt[i]
-							let $option = $("<option>", {
-								text: product + " (" + qty + ") "+ unit,
-								value: product
-							});
-							select.append($option);
+						for (let i = 0; i < response.productOt.length; i++) {
+							let product = response.productOt[i];
+							let qty = response.quantityOt[i];
+							let unit = response.unitOt[i];
+							let optionText = product + " (" + qty +" "+ unit+ ")";
+							if (qty == 0) {
+								optionText += " - Out of stock";
+							}
+							let option = new Option(optionText, product);
+							select.append(option);
 						}
 					}
 				});
@@ -693,7 +680,7 @@ if(isset($_GET['requestId'])){
 				html += '<td>' + remove + '</td>'
 				tableBody.append(html);
 				let select = tableBody.find('tr:last-child .dwProduct');
-				populateInfantItems(select);
+				populateDrinkingWater(select);
 			}
 			else if (buttontype === '05') {
 				html += '<tr>';
@@ -987,9 +974,9 @@ if(isset($_GET['requestId'])){
 				
 			}
 			
-
+		
 		const checkProductsIfExist = (categoryFields) => {
-	
+				
 				for (const category in categoryFields) {
 				if (categoryFields[category].pn.length > 0) {
 				$.ajax({
@@ -999,37 +986,147 @@ if(isset($_GET['requestId'])){
 					success: (response) => {
 					switch (category) {
 						case 'CanNoodles':
-						if (response.productCn.map(pnValue => categoryFields[category].pn.includes(pnValue))) {
-							const commonProducts = response.quantityCn.filter(quantityValue => categoryFields[category].pn.includes(response.productCn[response.quantityCn.indexOf(quantityValue)]));
-							if (+categoryFields[category].q > +commonProducts) {
-								$('.cnQuantity').each(function(){
+							const commonCanNoodles = categoryFields[category].pn.map(pnValue => {
+							const index = response.productCn.indexOf(pnValue);
+							return response.quantityCn[index];
+							});
+							for (let i = 0; i < categoryFields[category].q.length; i++) {
+								$('.cnQuantity').each(function(i) {
+								if (+categoryFields[category].q[i] > +commonCanNoodles[i]) {
+									swal.fire({
+										title:'Warning',
+										html:`<h5>We only have <strong>${commonCanNoodles[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+										icon: 'warning',
+										confirmButtonColor: '#20d070' //
+									});
 									$(this).addClass('is-invalid');
+									isInvalid = true;
+								}
 								});	
-							isInvalid = true;
-							} else {
-								$(this).removeClass('is-invalid');				
-							
 							}
-						} else {
-							console.log(`No products exist in both arrays for category ${category}.`);
-						}
+						break;
+						case 'Hygine':
+							const commonHygine = categoryFields[category].pn.map(pnValue => {
+							const index = response.productHy.indexOf(pnValue);
+							return response.quantityHy[index];
+							});
+							for (let i = 0; i < categoryFields[category].q.length; i++) {
+								$('.hyQuantity').each(function(i) {
+									if (+categoryFields[category].q[i] > +commonHygine[i]) {
+										swal.fire({
+										title:'Warning',
+										html:`<h5>We only have <strong>${commonHygine[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+										icon: 'warning',
+										confirmButtonColor: '#20d070' //
+									});
+										$(this).addClass('is-invalid');
+										isInvalid = true;
+									}
+								});						
+							}
+						break;
+						case 'Infant':
+							const commonInfant = categoryFields[category].pn.map(pnValue => {
+							const index = response.productIi.indexOf(pnValue);
+							return response.quantityIi[index];
+							});
+							for (let i = 0; i < categoryFields[category].q.length; i++) {
+								$('.iiQuantity').each(function(i) {
+									if (+categoryFields[category].q[i] > +commonInfant[i]) {
+										swal.fire({
+										title:'Warning',
+										html:`<h5>We only have <strong>${commonInfant[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+										icon: 'warning',
+										confirmButtonColor: '#20d070' //
+									});
+										$(this).addClass('is-invalid');
+										isInvalid = true;
+									}
+								});						
+							}
 						break;
 						 case 'Drinks':
-						  if (response.productDw.map(pnValue => categoryFields[category].pn.includes(pnValue))) {
-						  	const commonProducts = response.quantityDw.filter(quantityValue => categoryFields[category].pn.includes(response.productDw[response.quantityDw.indexOf(quantityValue)]));
-						  	if(+categoryFields.Drinks.q > +commonProducts){
-								 $('.dwQuantity').each(function(){
+							const commonDrinks = categoryFields[category].pn.map(pnValue => {
+							const index = response.productDw.indexOf(pnValue);
+							return response.quantityDw[index];
+							});
+							for (let i = 0; i < categoryFields[category].q.length; i++) {
+								$('.dwQuantity').each(function(i) {
+								if (+categoryFields[category].q[i] > +commonDrinks[i]) {
+									swal.fire({
+										title:'Warning',
+										html:`<h5>We only have <strong>${commonDrinks[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+										icon: 'warning',
+										confirmButtonColor: '#20d070' //
+									});
 									$(this).addClass('is-invalid');
-								});	
-						 		isInvalid= true;
-						  	}else{
-								$(this).removeClass('is-invalid');							}
-						 	
-						  } else {
-						  	console.log(`No products exist in both arrays for category ${category}.`);
-						  }
+									isInvalid = true;
+								}
+								});							
+							};
 						 break;
-					}
+						 case 'MeatGrain':
+							const commonMeatGrains = categoryFields[category].pn.map(pnValue => {
+							const index = response.productMg.indexOf(pnValue);
+							return response.quantityMg[index];
+							});
+							for (let i = 0; i < categoryFields[category].q.length; i++) {
+								$('.mgQuantity').each(function(i) {
+								if (+categoryFields[category].q[i] > +commonMeatGrains[i]) {
+									swal.fire({
+										title:'Warning',
+										html:`<h5>We only have <strong>${commonMeatGrains[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+										icon: 'warning',
+										confirmButtonColor: '#20d070' //
+									});
+									$(this).addClass('is-invalid');
+									isInvalid = true;
+								}
+								});							
+							};
+						 break;
+						 case 'Medicine':
+							const commonMedicine = categoryFields[category].pn.map(pnValue => {
+							const index = response.productMe.indexOf(pnValue);
+							return response.quantityMe[index];
+							});
+							for (let i = 0; i < categoryFields[category].q.length; i++) {
+								$('.meQuantity').each(function(i) {
+								if (+categoryFields[category].q[i] > +commonMedicine[i]) {
+									swal.fire({
+										title:'Warning',
+										html:`<h5>We only have <strong>${commonMedicine[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+										icon: 'warning',
+										confirmButtonColor: '#20d070' //
+									});
+									$(this).addClass('is-invalid');
+									isInvalid = true;
+								}
+								});							
+							};
+						 break;
+						 case 'Others':
+							const commonOthers = categoryFields[category].pn.map(pnValue => {
+							const index = response.productOt.indexOf(pnValue);
+							return response.quantityOt[index];
+							});
+							for (let i = 0; i < categoryFields[category].q.length; i++) {
+								$('.otQuantity').each(function(i) {
+								if (+categoryFields[category].q[i] > +commonOthers[i]) {
+									swal.fire({
+										title:'Warning',
+										html:`<h5>We only have <strong>${commonOthers[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+										icon: 'warning',
+										confirmButtonColor: '#20d070' //
+									});
+									$(this).addClass('is-invalid');
+									isInvalid = true;
+								}
+								});							
+							};
+						 break;
+						 
+						}
 					},
 					error: () => {
 					console.log('Failed to get products data.');
@@ -1038,33 +1135,29 @@ if(isset($_GET['requestId'])){
 				}
 			}
 		
-			
+	return;
 			setTimeout(()=>{
 				if(!isInvalid){
 					$.ajax({
-			  	url: 'include/ProcessRequest.php',
-			  	method: 'POST',
-			  	data: data,
-				
-			  	success: (data) => {
-			 		alert(data);
-			  	},
-			  	error: () => {
-			  		console.log('Failed to save data to the database.');
-			  	}
-			  });
+						url: 'include/ProcessRequest.php',
+						method: 'POST',
+						data: data,
+						
+						success: (data) => {
+							if(data=="success"){
+
+							}
+						},
+						error: () => {
+							console.log('Failed to save data to the database.');
+						}
+					});
 				}
 			},1000)
-
-			 //Move the code that saves data to the database inside the success callback of the last AJAX request
-			  
 
 			};
 
 			checkProductsIfExist(categoryFields);
-
-		
-
 		})
 		// End of button
 });

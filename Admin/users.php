@@ -273,6 +273,7 @@ catch(Exception $e){
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/sweetalert2.all.min.js"></script>
+  <script src="scripts/DataTablesInitialize.js"></script>
 
 
 	<script>
