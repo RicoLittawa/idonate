@@ -25,6 +25,9 @@ overflow: hidden;
   ;
 
 }
+.blur-filter-class{
+  filter: blur(2px);
+}
 .custom-container{
     /* border:1px solid red;  */
     max-width: 96.5%;

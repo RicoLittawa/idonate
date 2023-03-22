@@ -203,19 +203,34 @@ if(isset($_GET['requestId'])){
 						</div>
 					
 					<!--2nd table -->
-					<?php
-						$onProcess= "SELECT * from on_process where reciept_number=?";
-						$stmt=$conn->prepare($onProcess);
-						$stmt->bind_param('i',$reference);
-						$stmt->execute();
-						$result= $stmt->get_result();
-						while ($row= $result->fetch_assoc()):
+				
+					<div class="px-4 ms-5 mt-4">
+						<table class="table table-striped table-bordered">
+							<thead>
+								<tr>
+									<th>Product name</th>
+									<th>Quantity</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php
+								$onProcess= "SELECT * from on_process where reciept_number=?";
+								$stmt=$conn->prepare($onProcess);
+								$stmt->bind_param('i',$reference);
+								$stmt->execute();
+								$result= $stmt->get_result();
+								while ($row= $result->fetch_assoc()):
 
-					?>
-					<div>
-						<h6><?php echo $row['productName'] ?></h6>
+							?>
+								<tr>
+									<td class="fw-bold"><?php echo htmlentities($row['productName']) ?></td>
+									<td><?php echo htmlentities($row['quantity']) ?></td>
+								</tr>
+								<?php endwhile; ?>
+							</tbody>
+						</table>
 					</div>
-					<?php endwhile; ?>
+					
 				
 					<!--End of Container form -->
 				</div>

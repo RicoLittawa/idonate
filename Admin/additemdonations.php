@@ -345,7 +345,6 @@ function fill_region_select_box($conn)
 													<option value="">--</option>
 													<option value="Frozen">Frozen</option>
 													<option value="Fresh">Fresh</option>
-													<option value="None">None</option>
 												</select></td>
 											<td><input type="number" class="form-control qMG" id="qMG"></td>
 											<td><select class="form-control unitMG" name="unitMG" id="unitMG">
@@ -381,7 +380,6 @@ function fill_region_select_box($conn)
 													<option value="Tablet">Tablet</option>
 													<option value="Capsule">Capsule</option>
 													<option value="Liquid">Liquid</option>
-													<option value="None">None</option>
 												</select></td>
 											<td><input type="number" class="form-control qME" id="qME"></td>
 											<td><select class="form-control unitME" name="unitME" id="unitME">
@@ -389,7 +387,6 @@ function fill_region_select_box($conn)
 													<option value="Milligrams">Milligrams</option>
 													<option value="Grams">Grams</option>
 													<option value="Micrograms">Micrograms</option>
-													<option value="None">None</option>
 												</select></td>
 											<td><button type="button" class="btn btn-success addME btn-rounded" id="addME"><i class="fa-solid fa-plus"></i></button></td>
 										</tr>
@@ -399,7 +396,7 @@ function fill_region_select_box($conn)
 							<div class="form-group ot">
 								<div class="form-check form-check-inline">
 									<input class="form-check-input selectCateg" type="checkbox" id="box7" value="other">
-									<label class="form-check-label" for="">Others (Type n/a if there is no type or unit)</label>
+									<label class="form-check-label" for="">Others (Leave it blank if there is no type or unit)</label>
 								</div>
 								<table class="table otTB col table-bordered" id="otTB">
 									<thead>

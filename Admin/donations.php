@@ -193,7 +193,7 @@ catch(Exception $e){
           <span><span class="badge badge-danger">Empty</span></span>
         <?php } else { ?>
           <button class="btn btn-success btnCert overflow-hidden btn-rounded" value="<?php echo htmlentities($row['donor_id']) ?>">
-       Print</button>
+          <i class="fa-solid fa-print"></i></button>
           <?php } ?>
       </td>
 				</tr>

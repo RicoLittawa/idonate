@@ -203,8 +203,7 @@ if(isset($_GET['requestId'])){
 					<!--2nd table -->
 					<form id="processForm">
 						<input hidden type="text" id="request_id" value="<?php echo htmlentities($reference) ?>">
-					<div class="row pe-4 ps-5 ms-4 mt-4">
-						<div class="col">
+					<div class="px-4 ms-5 mt-4">
 							<?php 
 								$reqCategory = "SELECT categoryName,quantity,notes from request_category where request_id=?";
 								$stmt=$conn->prepare($reqCategory);
@@ -430,7 +429,6 @@ if(isset($_GET['requestId'])){
 									</table>
 								<?php break; endswitch;?>
 							<?php endforeach; $stmt->close(); $conn->close(); ?>
-						</div>
 					</div>
 					<div class="d-flex justify-content-end mt-3">
 						<div class="me-3">
