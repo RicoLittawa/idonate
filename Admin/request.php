@@ -202,13 +202,17 @@ try {
         ajax: 'include/DataForDataTables/requestdata.php',
         columns: [{
             data: 'reference',
+            render:(data,type,row)=>{
+              return row.dateTrimmed +"-00"+ row.reference
+            }
           },
           {
-            data: 'firstname'
+            data: 'Fullname',
+            render:(data,type,row)=>{
+             return  row.firstname+ " "+ row.lastname
+            }
           },
-          {
-            data: 'lastname'
-          },
+          
           {
             data: 'position'
           },
@@ -219,15 +223,25 @@ try {
             data: 'requestdate'
           },
 
+          {
+            data: 'status',
+            render:(data)=>{
+              if(data!=='pending'){
+                return `<span style="cursor:pointer;" class="badge badge-success" onclick="changeStatus()">${data}</span>`
+              }else{
+                return `<span class="badge badge-danger user-select-none not-allowed">${data}</span>`
+
+              }
+            }
+          },
 
           {
             data: 'reference',
-            status:'status',
-            render: function(status,data, type, row) {
-              if (status=== 'Request has been proccess'){
-                return `<button type="button" id="acceptBtn" data-request=${data} class="btn btn-success btn-rounded">Accept</button>`;
+            render: function(data, type, row) {
+              if (row.status === 'pending'){
+                return `<button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button>`;
               }else{
-                return `<button type="button" id="acceptBtn" data-request=${data} class="btn btn-success btn-rounded">View</button>`;
+                return `<button type="button" id="viewRecieptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">View</button>`;
               }
             }
           }
@@ -236,24 +250,7 @@ try {
           [0, 'desc']
         ],
         displayLength: 10,
-        initComplete: function() {
-          this.api().columns(6).every(function() {
-            const column = this;
-            const select = $('<select class="form-select"><option value="">All</option></select>')
-              .appendTo($('#role_filter'))
-              .on('change', function() {
-                const val = $.fn.dataTable.util.escapeRegex(
-                  $(this).val()
-                );
-
-                column.search(val ? '^' + val + '$' : '', true, false).draw();
-              });
-
-            column.data().unique().sort().each(function(d, j) {
-              select.append('<option value="' + d + '">' + d + '</option>')
-            });
-          });
-        },
+       
       });
 
 

@@ -40,8 +40,8 @@ while ($row = $result->fetch_assoc()) {
 }
 
 //Get Drinking Water
-$drinkingwater= "SELECT productName,sum(quantity) as totalQuantity from categdrinkingwater GROUP BY productName";
-$stmt= $conn->prepare($drinkingwater);
+$query= "SELECT productName,sum(quantity) as totalQuantity from categdrinkingwater GROUP BY productName";
+$stmt= $conn->prepare($query);
 $stmt->execute();
 $result = $stmt->get_result();
 $productDw = array();
@@ -104,10 +104,10 @@ $data = array(
     'quantityCn' => $quantityCn,
     'productHy' => $productHy,
     'quantityHy' => $quantityHy,
-    'productDw' => $productDw,
-    'quantityDw' => $quantityDw,
     'productIi' => $productIi,
     'quantityIi' => $quantityIi,
+    'productDw' => $productDw,
+    'quantityDw' => $quantityDw,
     'productMg' => $productMg,
     'quantityMg' => $quantityMg,
     'unitMg' => $unitMg,

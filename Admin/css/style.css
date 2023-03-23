@@ -76,6 +76,15 @@ h6{
   align-items: center;
   margin-right: 10px;
 }
+
+
+.not-allowed {
+  cursor: not-allowed;
+}
+.btn-flat {
+  box-shadow: none !important;
+  border: none !important;
+}
   /*Sidebar */
   .sidebar {
     max-width: 30%;
