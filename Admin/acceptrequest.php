@@ -256,7 +256,7 @@ if (isset($_GET['requestId'])) {
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="CanNoodles"><i class="fa-solid fa-minus"></i></button>
 																<input type="number" class="form-control quantity" value=0 data-input-category="CanNoodles">
-																<button type="button" class="btnAdd btn btn-sm btn-flat"data-btn-category="CanNoodles"><i class="fa-solid fa-plus"></i></button>
+																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="CanNoodles"><i class="fa-solid fa-plus"></i></button>
 															</div>
 
 														</td>
@@ -516,8 +516,6 @@ if (isset($_GET['requestId'])) {
 	<script>
 		$(document).ready(() => {
 			let count = 0;
-			let $this = $(this);
-
 
 			//Get Can/Noodles
 			const populateCanNoodles = (select) => {
@@ -937,7 +935,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'Hygine':
-							categoryFields.CanNoodles.product.push($(element).val());
+							categoryFields.Hygine.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -955,7 +953,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'DrinkingWater':
-							categoryFields.CanNoodles.product.push($(element).val());
+							categoryFields.Drinks.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -964,7 +962,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'MeatGrains':
-							categoryFields.CanNoodles.product.push($(element).val());
+							categoryFields.MeatGrain.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -973,7 +971,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'Medicine':
-							categoryFields.CanNoodles.product.push($(element).val());
+							categoryFields.Medicine.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -996,7 +994,7 @@ if (isset($_GET['requestId'])) {
 
 				//Validation and push data for quantity
 				selectedProductsQuantity.each((index, element) => {
-					let quantity = $(element).data('type');
+					let quantity = $(element).data('input-category');
 					switch (quantity) {
 						case 'CanNoodles':
 							categoryFields.CanNoodles.quantity.push($(element).val());
@@ -1011,7 +1009,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'Hygine':
-							categoryFields.CanNoodles.quantity.push($(element).val());
+							categoryFields.Hygine.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1023,7 +1021,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'InfantItems':
-							categoryFields.CanNoodles.quantity.push($(element).val());
+							categoryFields.Infant.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1035,7 +1033,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'DrinkingWater':
-							categoryFields.CanNoodles.quantity.push($(element).val());
+							categoryFields.Drinks.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1047,7 +1045,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'MeatGrains':
-							categoryFields.CanNoodles.quantity.push($(element).val());
+							categoryFields.MeatGrain.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1059,7 +1057,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'Medicine':
-							categoryFields.CanNoodles.quantity.push($(element).val());
+							categoryFields.Medicine.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1071,7 +1069,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'Others':
-							categoryFields.CanNoodles.quantity.push($(element).val());
+							categoryFields.Others.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1268,18 +1266,54 @@ if (isset($_GET['requestId'])) {
 								url: 'include/ProcessRequest.php',
 								method: 'POST',
 								data: data,
-
+								beforeSend: () => {
+									$('button[type="submit"]').prop('disabled', true);
+									$('.submit-text').addClass('d-none');
+									$('.spinner-border').removeClass('d-none');
+								},
 								success: (data) => {
 									if (data == "success") {
-										alert(data);
+										setTimeout(() => {
+											$('button[type="submit]"').prop("disabled", false);
+											$('.submit-text').removeClass('d-none');
+											$('.spinner-border').addClass('d-none');
+											Swal.fire({
+												title: 'Success',
+												text: "Your request is created",
+												icon: 'success',
+												confirmButtonColor: '#20d070',
+												confirmButtonText: 'OK',
+												allowOutsideClick: false
+											});
+											setTimeout(() => {
+												window.location.href="request.php";
+											}, 1000)
+										}, 1500)
+									} else {
+										Swal.fire({
+											title: 'Error',
+											text: data,
+											icon: 'error',
+											confirmButtonColor: '#20d070',
+											confirmButtonText: 'OK',
+											allowOutsideClick: false
+										});
 									}
 								},
-								error: () => {
-									console.log('Failed to save data to the database.');
+								error: (xhr, status, error) => {
+									Swal.fire({
+										title: 'Error',
+										text: xhr.responseText,
+										icon: 'error',
+										confirmButtonColor: '#20d070',
+										confirmButtonText: 'OK',
+										allowOutsideClick: false
+									})
+
 								}
 							});
 						}
-					}, 1000)
+					}, 500)
 
 				};
 

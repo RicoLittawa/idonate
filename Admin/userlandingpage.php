@@ -425,7 +425,7 @@ $(document).ready(() => {
         confirmButtonColor: '#20d070',
         confirmButtonText: 'OK',
         allowOutsideClick: false
-      })
+      });
       }
     },
     error:(xhr, status, error)=>{
@@ -436,7 +436,7 @@ $(document).ready(() => {
       confirmButtonColor: '#20d070',
       confirmButtonText: 'OK',
       allowOutsideClick: false
-      })
+      });
 
     }
 
