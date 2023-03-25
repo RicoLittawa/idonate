@@ -5,12 +5,12 @@ $cannoodles= "SELECT productName,sum(quantity) as totalQuantity from categcannoo
 $stmt= $conn->prepare($cannoodles);
 $stmt->execute();
 $result = $stmt->get_result();
-$productCn = array();
-$quantityCn = array();
+$CanNoodlesProduct = array();
+$CanNoodlesQuantity = array();
 
 while ($row = $result->fetch_assoc()) {
-    array_push($productCn, $row['productName']);
-    array_push($quantityCn, $row['totalQuantity']);
+    array_push($CanNoodlesProduct, $row['productName']);
+    array_push($CanNoodlesQuantity, $row['totalQuantity']);
 }
 
 //Get Hygine Essential
@@ -18,12 +18,12 @@ $hygine= "SELECT productName,sum(quantity) as totalQuantity from categhygineesse
 $stmt= $conn->prepare($hygine);
 $stmt->execute();
 $result = $stmt->get_result();
-$productHy = array();
-$quantityHy = array();
+$HygineEssentialProduct = array();
+$HygineEssentialQuantity = array();
 
 while ($row = $result->fetch_assoc()) {
-    array_push($productHy, $row['productName']);
-    array_push($quantityHy, $row['totalQuantity']);
+    array_push($HygineEssentialProduct, $row['productName']);
+    array_push($HygineEssentialQuantity, $row['totalQuantity']);
 }
 
 //Get Infant Items
@@ -31,12 +31,12 @@ $infant= "SELECT productName,sum(quantity) as totalQuantity from categinfant GRO
 $stmt= $conn->prepare($infant);
 $stmt->execute();
 $result = $stmt->get_result();
-$productIi = array();
-$quantityIi = array();
+$InfantItemsProduct = array();
+$InfantItemsQuantity = array();
 
 while ($row = $result->fetch_assoc()) {
-    array_push($productIi, $row['productName']);
-    array_push($quantityIi, $row['totalQuantity']);
+    array_push($InfantItemsProduct, $row['productName']);
+    array_push($InfantItemsQuantity, $row['totalQuantity']);
 }
 
 //Get Drinking Water
@@ -44,12 +44,12 @@ $query= "SELECT productName,sum(quantity) as totalQuantity from categdrinkingwat
 $stmt= $conn->prepare($query);
 $stmt->execute();
 $result = $stmt->get_result();
-$productDw = array();
-$quantityDw = array();
+$DrinkingWaterProduct = array();
+$DrinkingWaterQuantity = array();
 
 while ($row = $result->fetch_assoc()) {
-    array_push($productDw, $row['productName']);
-    array_push($quantityDw, $row['totalQuantity']);
+    array_push($DrinkingWaterProduct, $row['productName']);
+    array_push($DrinkingWaterQuantity, $row['totalQuantity']);
 }
 
 //Get Meat/Grains
@@ -57,14 +57,14 @@ $mg= "SELECT productName,sum(quantity) as totalQuantity, unit from categmeatgrai
 $stmt= $conn->prepare($mg);
 $stmt->execute();
 $result = $stmt->get_result();
-$productMg = array();
-$quantityMg = array();
-$unitMg = array();
+$MeatGrainsProduct = array();
+$MeatGrainsQuantity = array();
+$MeatGrainsUnit = array();
 
 while ($row = $result->fetch_assoc()) {
-    array_push($productMg, $row['productName']);
-    array_push($quantityMg, $row['totalQuantity']);
-    array_push($unitMg, $row['unit']);
+    array_push($MeatGrainsProduct, $row['productName']);
+    array_push($MeatGrainsQuantity, $row['totalQuantity']);
+    array_push($MeatGrainsUnit, $row['unit']);
 }
 
 //Get Meat/Grains
@@ -72,14 +72,14 @@ $medicine= "SELECT productName,sum(quantity) as totalQuantity, unit from categme
 $stmt= $conn->prepare($medicine);
 $stmt->execute();
 $result = $stmt->get_result();
-$productMe = array();
-$quantityMe = array();
-$unitMe = array();
+$MedicineProduct = array();
+$MedicineQuantity = array();
+$MedicineUnit = array();
 
 while ($row = $result->fetch_assoc()) {
-    array_push($productMe, $row['productName']);
-    array_push($quantityMe, $row['totalQuantity']);
-    array_push($unitMe, $row['unit']);
+    array_push($MedicineProduct, $row['productName']);
+    array_push($MedicineQuantity, $row['totalQuantity']);
+    array_push($MedicineUnit, $row['unit']);
 }
 
 
@@ -88,35 +88,35 @@ $others= "SELECT productName,sum(quantity) as totalQuantity, unit from categothe
 $stmt= $conn->prepare($others);
 $stmt->execute();
 $result = $stmt->get_result();
-$productOt = array();
-$quantityOt = array();
-$unitOt = array();
+$OthersProduct = array();
+$OthersQuantity = array();
+$OthersUnit = array();
 
 while ($row = $result->fetch_assoc()) {
-    array_push($productOt, $row['productName']);
-    array_push($quantityOt, $row['totalQuantity']);
-    array_push($unitOt, $row['unit']);
+    array_push($OthersProduct, $row['productName']);
+    array_push($OthersQuantity, $row['totalQuantity']);
+    array_push($OthersUnit, $row['unit']);
 }
 
 
 $data = array(
-    'productCn' => $productCn,
-    'quantityCn' => $quantityCn,
-    'productHy' => $productHy,
-    'quantityHy' => $quantityHy,
-    'productIi' => $productIi,
-    'quantityIi' => $quantityIi,
-    'productDw' => $productDw,
-    'quantityDw' => $quantityDw,
-    'productMg' => $productMg,
-    'quantityMg' => $quantityMg,
-    'unitMg' => $unitMg,
-    'productMe' => $productMe,
-    'quantityMe' => $quantityMe,
-    'unitMe' => $unitMe,
-    'productOt' => $productOt,
-    'quantityOt' => $quantityOt,
-    'unitOt' => $unitOt,
+    'CanNoodlesProduct' => $CanNoodlesProduct,
+    'CanNoodlesQuantity' => $CanNoodlesQuantity,
+    'HygineEssentialProduct' => $HygineEssentialProduct,
+    'HygineEssentialQuantity' => $HygineEssentialQuantity,
+    'InfantItemsProduct' => $InfantItemsProduct,
+    'InfantItemsQuantity' => $InfantItemsQuantity,
+    'DrinkingWaterProduct' => $DrinkingWaterProduct,
+    'DrinkingWaterQuantity' => $DrinkingWaterQuantity,
+    'MeatGrainsProduct' => $MeatGrainsProduct,
+    'MeatGrainsQuantity' => $MeatGrainsQuantity,
+    'MeatGrainsUnit' => $MeatGrainsUnit,
+    'MedicineProduct' => $MedicineProduct,
+    'MedicineQuantity' => $MedicineQuantity,
+    'MedicineUnit' => $MedicineUnit,
+    'OthersProduct' => $OthersProduct,
+    'OthersQuantity' => $OthersQuantity,
+    'OthersUnit' => $OthersUnit,
    
 );
 

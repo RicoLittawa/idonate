@@ -244,7 +244,7 @@ if (isset($_GET['requestId'])) {
 														<th>Action</th>
 													</tr>
 												</thead>
-												<tbody data-type="CanNoodles">
+												<tbody data-body-category="CanNoodles">
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
@@ -254,13 +254,13 @@ if (isset($_GET['requestId'])) {
 														<td>
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
-																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="cn"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control quantity" value=0 data-type="cn">
-																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="cn"><i class="fa-solid fa-plus"></i></button>
+																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="CanNoodles"><i class="fa-solid fa-minus"></i></button>
+																<input type="number" class="form-control quantity" value=0 data-input-category="CanNoodles">
+																<button type="button" class="btnAdd btn btn-sm btn-flat"data-btn-category="CanNoodles"><i class="fa-solid fa-plus"></i></button>
 															</div>
 
 														</td>
-														<td><button type="button" data-type="CanNoodles" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
+														<td><button type="button" data-btn-category="CanNoodles" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
 													</tr>
 												</tbody>
 											</table>
@@ -280,7 +280,7 @@ if (isset($_GET['requestId'])) {
 														<th>Action</th>
 													</tr>
 												</thead>
-												<tbody data-type="Hygine">
+												<tbody data-body-category="Hygine">
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
@@ -290,12 +290,12 @@ if (isset($_GET['requestId'])) {
 														<td>
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
-																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="hy"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control quantity" value=0 data-type="hy">
-																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="hy"><i class="fa-solid fa-plus"></i></button>
+																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="Hygine"><i class="fa-solid fa-minus"></i></button>
+																<input type="number" class="form-control quantity" value=0 data-input-category="Hygine">
+																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="Hygine"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
-														<td><button type="button" data-type="Hygine" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
+														<td><button type="button" data-btn-category="Hygine" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
 													</tr>
 												</tbody>
 											</table>
@@ -314,7 +314,7 @@ if (isset($_GET['requestId'])) {
 														<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
 													</tr>
 												</thead>
-												<tbody data-type="InfantItems">
+												<tbody data-body-category="InfantItems">
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
@@ -324,12 +324,12 @@ if (isset($_GET['requestId'])) {
 														<td>
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
-																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="ii"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control quantity" value=0 data-type="ii">
-																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="ii"><i class="fa-solid fa-plus"></i></button>
+																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="InfantItems"><i class="fa-solid fa-minus"></i></button>
+																<input type="number" class="form-control quantity" value=0 data-input-category="InfantItems">
+																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="InfantItems"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
-														<td><button type="button" data-type="InfantItems" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
+														<td><button type="button" data-btn-category="InfantItems" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
 													</tr>
 												</tbody>
 											</table>
@@ -349,7 +349,7 @@ if (isset($_GET['requestId'])) {
 														<th>Action</th>
 													</tr>
 												</thead>
-												<tbody data-type="DrinkingWater">
+												<tbody data-body-category="DrinkingWater">
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
@@ -359,12 +359,12 @@ if (isset($_GET['requestId'])) {
 														<td>
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
-																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="dw"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control quantity" value=0 data-type="dw">
-																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="dw"><i class="fa-solid fa-plus"></i></button>
+																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="DrinkingWater"><i class="fa-solid fa-minus"></i></button>
+																<input type="number" class="form-control quantity" value=0 data-input-category="DrinkingWater">
+																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="DrinkingWater"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
-														<td><button type="button" data-type="DrinkingWater" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
+														<td><button type="button" data-btn-category="DrinkingWater" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
 													</tr>
 												</tbody>
 											</table>
@@ -384,7 +384,7 @@ if (isset($_GET['requestId'])) {
 														<th>Action</th>
 													</tr>
 												</thead>
-												<tbody data-type="MeatGrains">
+												<tbody data-body-category="MeatGrains">
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
@@ -394,12 +394,12 @@ if (isset($_GET['requestId'])) {
 														<td>
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
-																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="mg"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control quantity" value=0 data-type="mg">
-																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="mg"><i class="fa-solid fa-plus"></i></button>
+																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="MeatGrains"><i class="fa-solid fa-minus"></i></button>
+																<input type="number" class="form-control quantity" value=0 data-input-category="MeatGrains">
+																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="MeatGrains"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
-														<td><button type="button" data-type="MeatGrains" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
+														<td><button type="button" data-btn-category="MeatGrains" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
 													</tr>
 												</tbody>
 											</table>
@@ -419,7 +419,7 @@ if (isset($_GET['requestId'])) {
 														<th>Action</th>
 													</tr>
 												</thead>
-												<tbody data-type="Medicine">
+												<tbody data-body-category="Medicine">
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
@@ -429,12 +429,12 @@ if (isset($_GET['requestId'])) {
 														<td>
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
-																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="me"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control quantity" value=0 data-type="me">
-																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="me"><i class="fa-solid fa-plus"></i></button>
+																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="Medicine"><i class="fa-solid fa-minus"></i></button>
+																<input type="number" class="form-control quantity" value=0 data-input-category="Medicine">
+																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="Medicine"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
-														<td><button type="button" data-type="Medicine" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
+														<td><button type="button" data-btn-category="Medicine" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
 													</tr>
 												</tbody>
 											</table>
@@ -453,7 +453,7 @@ if (isset($_GET['requestId'])) {
 														<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
 													</tr>
 												</thead>
-												<tbody data-type="Others">
+												<tbody data-body-category="Others">
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
@@ -463,12 +463,12 @@ if (isset($_GET['requestId'])) {
 														<td>
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
-																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="ot"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control quantity" value=0 data-type="ot">
-																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="ot"><i class="fa-solid fa-plus"></i></button>
+																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="Others"><i class="fa-solid fa-minus"></i></button>
+																<input type="number" class="form-control quantity" value=0 data-input-category="Others">
+																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="Others"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
-														<td><button type="button" data-type="Others" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
+														<td><button type="button" data-btn-category="Others" class="btn btn-success btn-rounded addNewRow"><i class="fa-solid fa-plus"></i></button></td>
 													</tr>
 												</tbody>
 											</table>
@@ -528,9 +528,9 @@ if (isset($_GET['requestId'])) {
 					success: (response) => {
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < response.productCn.length; i++) {
-							let product = response.productCn[i];
-							let qty = response.quantityCn[i];
+						for (let i = 0; i < response.CanNoodlesProduct.length; i++) {
+							let product = response.CanNoodlesProduct[i];
+							let qty = response.CanNoodlesQuantity[i];
 							let optionText = product + " (" + qty + " pcs)";
 							if (qty == 0) {
 								optionText += ` - Out of stock`;
@@ -550,9 +550,9 @@ if (isset($_GET['requestId'])) {
 					success: (response) => {
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < response.productHy.length; i++) {
-							let product = response.productHy[i];
-							let qty = response.quantityHy[i];
+						for (let i = 0; i < response.HygineEssentialProduct.length; i++) {
+							let product = response.HygineEssentialProduct[i];
+							let qty = response.HygineEssentialQuantity[i];
 							let optionText = product + " (" + qty + " pcs)";
 							if (qty == 0) {
 								optionText += " - Out of stock";
@@ -572,9 +572,9 @@ if (isset($_GET['requestId'])) {
 					success: (response) => {
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < response.productIi.length; i++) {
-							let product = response.productIi[i];
-							let qty = response.quantityIi[i];
+						for (let i = 0; i < response.InfantItemsProduct.length; i++) {
+							let product = response.InfantItemsProduct[i];
+							let qty = response.InfantItemsQuantity[i];
 							let optionText = product + " (" + qty + " pcs)";
 							if (qty == 0) {
 								optionText += " - Out of stock";
@@ -594,9 +594,9 @@ if (isset($_GET['requestId'])) {
 					success: (response) => {
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < response.productDw.length; i++) {
-							let product = response.productDw[i];
-							let qty = response.quantityDw[i];
+						for (let i = 0; i < response.DrinkingWaterProduct.length; i++) {
+							let product = response.DrinkingWaterProduct[i];
+							let qty = response.DrinkingWaterQuantity[i];
 							let optionText = product + " (" + qty + " pcs)";
 							if (qty == 0) {
 								optionText += " - Out of stock";
@@ -616,10 +616,10 @@ if (isset($_GET['requestId'])) {
 					success: (response) => {
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < response.productMg.length; i++) {
-							let product = response.productMg[i];
-							let qty = response.quantityMg[i];
-							let unit = response.unitMg[i];
+						for (let i = 0; i < response.MeatGrainsProduct.length; i++) {
+							let product = response.MeatGrainsProduct[i];
+							let qty = response.MeatGrainsQuantity[i];
+							let unit = response.MeatGrainsUnit[i];
 							let optionText = product + " (" + qty + " " + unit + ") ";
 							if (qty == 0) {
 								optionText += " - Out of stock";
@@ -639,10 +639,10 @@ if (isset($_GET['requestId'])) {
 					success: (response) => {
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < response.productMe.length; i++) {
-							let product = response.productMe[i];
-							let qty = response.quantityMe[i];
-							let unit = response.unitMe[i];
+						for (let i = 0; i < response.MedicineProduct.length; i++) {
+							let product = response.MedicineProduct[i];
+							let qty = response.MedicineQuantity[i];
+							let unit = response.MedicineUnit[i];
 							let optionText = product + " (" + qty + " " + unit + ")";
 							if (qty == 0) {
 								optionText += " - Out of stock";
@@ -662,10 +662,10 @@ if (isset($_GET['requestId'])) {
 					success: (response) => {
 						select.empty();
 						select.append("<option value=''>Select Product</option>");
-						for (let i = 0; i < response.productOt.length; i++) {
-							let product = response.productOt[i];
-							let qty = response.quantityOt[i];
-							let unit = response.unitOt[i];
+						for (let i = 0; i < response.OthersProduct.length; i++) {
+							let product = response.OthersProduct[i];
+							let qty = response.OthersQuantity[i];
+							let unit = response.OthersUnit[i];
 							let optionText = product + " (" + qty + " " + unit + ")";
 							if (qty == 0) {
 								optionText += " - Out of stock";
@@ -684,9 +684,9 @@ if (isset($_GET['requestId'])) {
 					html += '<tr>';
 					html += '<td><select class="form-control product" data-product="CanNoodles"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
-								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="cn"><i class="fa-solid fa-minus"></i></button>
-								<input type="number" class="form-control quantity" value="0" data-type="cn">
-								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="cn"><i class="fa-solid fa-plus"></i></button>
+								<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="CanNoodles"><i class="fa-solid fa-minus"></i></button>
+								<input type="number" class="form-control quantity" value="0" data-input-category="CanNoodles">
+								<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="CanNoodles"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
 						remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
@@ -699,9 +699,9 @@ if (isset($_GET['requestId'])) {
 					html += '<tr>';
 					html += '<td><select class="form-control product" data-product="Hygine"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
-								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="hy"><i class="fa-solid fa-minus"></i></button>
-								<input type="number" class="form-control quantity" value="1" data-type="hy">
-								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="hy"><i class="fa-solid fa-plus"></i></button>
+								<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="Hygine"><i class="fa-solid fa-minus"></i></button>
+								<input type="number" class="form-control quantity" value="1" data-input-category="Hygine">
+								<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="Hygine"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
 						remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
@@ -714,9 +714,9 @@ if (isset($_GET['requestId'])) {
 					html += '<tr>';
 					html += '<td><select class="form-control product" data-product="InfantItems"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
-								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="ii"><i class="fa-solid fa-minus"></i></button>
-								<input type="number" class="form-control quantity" value=0 data-type="ii">
-								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="ii"><i class="fa-solid fa-plus"></i></button>
+								<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="InfantItems"><i class="fa-solid fa-minus"></i></button>
+								<input type="number" class="form-control quantity" value=0 data-input-category="InfantItems">
+								<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="InfantItems"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
 						remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
@@ -729,9 +729,9 @@ if (isset($_GET['requestId'])) {
 					html += '<tr>';
 					html += '<td><select class="form-control product" data-product="DrinkingWater"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
-								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="dw"><i class="fa-solid fa-minus"></i></button>
-								<input type="number" class="form-control quantity" value=0 data-type="dw">
-								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="dw"><i class="fa-solid fa-plus"></i></button>
+								<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="DrinkingWater"><i class="fa-solid fa-minus"></i></button>
+								<input type="number" class="form-control quantity" value=0 data-input-category="DrinkingWater">
+								<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="DrinkingWater"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
 						remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
@@ -744,9 +744,9 @@ if (isset($_GET['requestId'])) {
 					html += '<tr>';
 					html += '<td><select" class="form-control product" data-product="MeatGrains"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
-								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="mg"><i class="fa-solid fa-minus"></i></button>
-								<input type="number" class="form-control quantity" value=0 data-type="mg">
-								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="mg"><i class="fa-solid fa-plus"></i></button>
+								<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="MeatGrains"><i class="fa-solid fa-minus"></i></button>
+								<input type="number" class="form-control quantity" value=0 data-input-category="MeatGrains">
+								<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="MeatGrains"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
 						remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
@@ -759,9 +759,9 @@ if (isset($_GET['requestId'])) {
 					html += '<tr>';
 					html += '<td><select class="form-control product" data-product="Medicine"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
-								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="me"><i class="fa-solid fa-minus"></i></button>
-								<input type="number" class="form-control quantity" value=0 data-type="me">
-								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="me"><i class="fa-solid fa-plus"></i></button>
+								<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="Medicine"><i class="fa-solid fa-minus"></i></button>
+								<input type="number" class="form-control quantity" value=0 data-input-category="Medicine">
+								<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="Medicine"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
 						remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
@@ -774,9 +774,9 @@ if (isset($_GET['requestId'])) {
 					html += '<tr>';
 					html += '<td><select class="form-control product" data-product="Others"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
-								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="ot"><i class="fa-solid fa-minus"></i></button>
-								<input type="number" class="form-control quantity" value=0 data-type="ot">
-								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="ot"><i class="fa-solid fa-plus"></i></button>
+								<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="Others"><i class="fa-solid fa-minus"></i></button>
+								<input type="number" class="form-control quantity" value=0 data-input-category="Others">
+								<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="Others"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
 						remove = '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
@@ -798,8 +798,8 @@ if (isset($_GET['requestId'])) {
 			$(document).on('click', '.addNewRow', function(e) {
 				e.stopImmediatePropagation();
 				let $this = $(this);
-				let type = $this.data('type');
-				let tableBody = $('tbody[data-type="' + type + '"]');
+				let type = $this.data('btn-category');
+				let tableBody = $('tbody[data-body-category="' + type + '"]');
 				if ($this.hasClass('addNewRow')) {
 					switch (type) {
 						case 'CanNoodles':
@@ -870,8 +870,8 @@ if (isset($_GET['requestId'])) {
 				event.stopImmediatePropagation(); // stop event propagation to prevent multiple triggers
 				let $this = $(this);
 				let $targetRow = $this.closest('tr');
-				let type = $this.data('type');
-				let $quantity = $targetRow.find('.quantity[data-type="' + type + '"]');
+				let type = $this.data('btn-category');
+				let $quantity = $targetRow.find('.quantity[data-input-category="' + type + '"]');
 				let value = parseInt($quantity.val()) || 0;
 
 				if ($this.hasClass('btnAdd')) {
@@ -883,40 +883,38 @@ if (isset($_GET['requestId'])) {
 				$quantity.val(value);
 			});
 
-
-
 			//Get data to each category field
 
 			$(document).submit('#addToProcess', (e) => {
 				e.preventDefault();
 				let categoryFields = {
 					'CanNoodles': {
-						'pn': [],
-						'q': []
+						'product': [],
+						'quantity': []
 					},
 					'Hygine': {
-						'pn': [],
-						'q': []
+						'product': [],
+						'quantity': []
 					},
 					'Infant': {
-						'pn': [],
-						'q': []
+						'product': [],
+						'quantity': []
 					},
 					'Drinks': {
-						'pn': [],
-						'q': []
+						'product': [],
+						'quantity': []
 					},
 					'MeatGrain': {
-						'pn': [],
-						'q': []
+						'product': [],
+						'quantity': []
 					},
 					'Medicine': {
-						'pn': [],
-						'q': []
+						'product': [],
+						'quantity': []
 					},
 					'Others': {
-						'pn': [],
-						'q': []
+						'product': [],
+						'quantity': []
 					}
 				}
 				let isInvalid = false;
@@ -925,11 +923,12 @@ if (isset($_GET['requestId'])) {
 				let selectedProducts = $('.product');
 				let selectedProductsQuantity = $('.quantity');
 
+				//Push to Product
 				selectedProducts.each((index, element) => {
 					let product = $(element).data('product');
 					switch (product) {
 						case 'CanNoodles':
-							categoryFields.CanNoodles.pn.push($(element).val());
+							categoryFields.CanNoodles.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -938,7 +937,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'Hygine':
-							categoryFields.CanNoodles.pn.push($(element).val());
+							categoryFields.CanNoodles.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -947,7 +946,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'InfantItems':
-							categoryFields.Infant.pn.push($(element).val());
+							categoryFields.Infant.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -956,7 +955,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'DrinkingWater':
-							categoryFields.CanNoodles.pn.push($(element).val());
+							categoryFields.CanNoodles.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -965,7 +964,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'MeatGrains':
-							categoryFields.CanNoodles.pn.push($(element).val());
+							categoryFields.CanNoodles.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -974,7 +973,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'Medicine':
-							categoryFields.CanNoodles.pn.push($(element).val());
+							categoryFields.CanNoodles.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -983,7 +982,7 @@ if (isset($_GET['requestId'])) {
 							}
 							break;
 						case 'Others':
-							categoryFields.Others.pn.push($(element).val());
+							categoryFields.Others.product.push($(element).val());
 							if ($(element).val() == "") {
 								$(element).addClass('is-invalid');
 								isInvalid = true;
@@ -994,12 +993,13 @@ if (isset($_GET['requestId'])) {
 					}
 
 				});
+
 				//Validation and push data for quantity
 				selectedProductsQuantity.each((index, element) => {
 					let quantity = $(element).data('type');
 					switch (quantity) {
-						case 'cn':
-							categoryFields.CanNoodles.q.push($(element).val());
+						case 'CanNoodles':
+							categoryFields.CanNoodles.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1010,8 +1010,8 @@ if (isset($_GET['requestId'])) {
 								isInvalid = true;
 							}
 							break;
-						case 'hy':
-							categoryFields.CanNoodles.q.push($(element).val());
+						case 'Hygine':
+							categoryFields.CanNoodles.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1022,8 +1022,8 @@ if (isset($_GET['requestId'])) {
 								isInvalid = true;
 							}
 							break;
-						case 'ii':
-							categoryFields.CanNoodles.q.push($(element).val());
+						case 'InfantItems':
+							categoryFields.CanNoodles.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1034,8 +1034,8 @@ if (isset($_GET['requestId'])) {
 								isInvalid = true;
 							}
 							break;
-						case 'dw':
-							categoryFields.CanNoodles.q.push($(element).val());
+						case 'DrinkingWater':
+							categoryFields.CanNoodles.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1046,8 +1046,8 @@ if (isset($_GET['requestId'])) {
 								isInvalid = true;
 							}
 							break;
-						case 'mg':
-							categoryFields.CanNoodles.q.push($(element).val());
+						case 'MeatGrains':
+							categoryFields.CanNoodles.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1058,8 +1058,8 @@ if (isset($_GET['requestId'])) {
 								isInvalid = true;
 							}
 							break;
-						case 'me':
-							categoryFields.CanNoodles.q.push($(element).val());
+						case 'Medicine':
+							categoryFields.CanNoodles.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1070,8 +1070,8 @@ if (isset($_GET['requestId'])) {
 								isInvalid = true;
 							}
 							break;
-						case 'ot':
-							categoryFields.CanNoodles.q.push($(element).val());
+						case 'Others':
+							categoryFields.CanNoodles.quantity.push($(element).val());
 							if ($(element).val() <= 0) {
 								swal.fire({
 									title: 'Warning',
@@ -1092,27 +1092,27 @@ if (isset($_GET['requestId'])) {
 				let data = {
 					submitProcess: "",
 					request_id: request_id,
-					CanNoodlesPn: categoryFields.CanNoodles.pn,
-					CanNoodlesQ: categoryFields.CanNoodles.q,
-					HyginePn: categoryFields.Hygine.pn,
-					HygineQ: categoryFields.Hygine.q,
-					InfantPn: categoryFields.Infant.pn,
-					InfantQ: categoryFields.Infant.q,
-					DrinkingWaterPn: categoryFields.Drinks.pn,
-					DrinkingWaterQ: categoryFields.Drinks.q,
-					MeatGrainsPn: categoryFields.MeatGrain.pn,
-					MeatGrainsQ: categoryFields.MeatGrain.q,
-					MedicinePn: categoryFields.Medicine.pn,
-					MedicineQ: categoryFields.Medicine.q,
-					OthersPn: categoryFields.Others.pn,
-					OthersQ: categoryFields.Others.q,
+					CanNoodlesProduct: categoryFields.CanNoodles.product,
+					CanNoodlesQuantity: categoryFields.CanNoodles.quantity,
+					HygineProduct: categoryFields.Hygine.product,
+					HygineQuantity: categoryFields.Hygine.quantity,
+					InfantProduct: categoryFields.Infant.product,
+					InfantQuantity: categoryFields.Infant.quantity,
+					DrinkingWaterProduct: categoryFields.Drinks.product,
+					DrinkingWaterQuantity: categoryFields.Drinks.quantity,
+					MeatGrainsProduct: categoryFields.MeatGrain.product,
+					MeatGrainsQuantity: categoryFields.MeatGrain.quantity,
+					MedicineProduct: categoryFields.Medicine.product,
+					MedicineQuantity: categoryFields.Medicine.quantity,
+					OthersProduct: categoryFields.Others.product,
+					OthersQuantity: categoryFields.Others.quantity,
 
 				}
 
 				//Check product if exist and compare input to quantity of the product
 				const checkProductsIfExist = (categoryFields) => {
 					for (const category in categoryFields) {
-						if (categoryFields[category].pn.length > 0) {
+						if (categoryFields[category].product.length > 0) {
 							$.ajax({
 								url: 'include/getproduct.php',
 								method: 'GET',
@@ -1120,16 +1120,16 @@ if (isset($_GET['requestId'])) {
 								success: (response) => {
 									switch (category) {
 										case 'CanNoodles':
-											const commonCanNoodles = categoryFields[category].pn.map(pnValue => {
-												const index = response.productCn.indexOf(pnValue);
-												return response.quantityCn[index];
+											const commonCanNoodles = categoryFields[category].product.map(productValue => {
+												const index = response.CanNoodlesProduct.indexOf(productValue);
+												return response.CanNoodlesQuantity[index];
 											});
-											for (let i = 0; i < categoryFields[category].q.length; i++) {
-												$('.quantity[data-type="cn"]').each(function(i) {
-													if (+categoryFields[category].q[i] > +commonCanNoodles[i]) {
+											for (let i = 0; i < categoryFields[category].quantity.length; i++) {
+												$('.quantity[data-input-category="CanNoodles"]').each(function(i) {
+													if (+categoryFields[category].quantity[i] > +commonCanNoodles[i]) {
 														swal.fire({
 															title: 'Warning',
-															html: `<h5>We only have <strong>${commonCanNoodles[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+															html: `<h5>We only have <strong>${commonCanNoodles[i]}</strong> available <strong>${categoryFields[category].product[i]}</strong> </h5>`,
 															icon: 'warning',
 															confirmButtonColor: '#20d070' //
 														});
@@ -1139,16 +1139,16 @@ if (isset($_GET['requestId'])) {
 											}
 											break;
 										case 'Hygine':
-											const commonHygine = categoryFields[category].pn.map(pnValue => {
-												const index = response.productHy.indexOf(pnValue);
-												return response.quantityHy[index];
+											const commonHygine = categoryFields[category].product.map(productValue => {
+												const index = response.HygineEssentialProduct.indexOf(productValue);
+												return response.HygineEssentialQuantity[index];
 											});
-											for (let i = 0; i < categoryFields[category].q.length; i++) {
-												$('.quantity[data-type="hy"]').each(function(i) {
-													if (+categoryFields[category].q[i] > +commonHygine[i]) {
+											for (let i = 0; i < categoryFields[category].quantity.length; i++) {
+												$('.quantity[data-input-category="Hygine"]').each(function(i) {
+													if (+categoryFields[category].quantity[i] > +commonHygine[i]) {
 														swal.fire({
 															title: 'Warning',
-															html: `<h5>We only have <strong>${commonHygine[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+															html: `<h5>We only have <strong>${commonHygine[i]}</strong> available <strong>${categoryFields[category].product[i]}</strong> </h5>`,
 															icon: 'warning',
 															confirmButtonColor: '#20d070' //
 														});
@@ -1158,16 +1158,16 @@ if (isset($_GET['requestId'])) {
 											}
 											break;
 										case 'Infant':
-											const commonInfant = categoryFields[category].pn.map(pnValue => {
-												const index = response.productIi.indexOf(pnValue);
-												return response.quantityIi[index];
+											const commonInfant = categoryFields[category].product.map(productValue => {
+												const index = response.InfantItemsProduct.indexOf(productValue);
+												return response.InfantItemsQuantity[index];
 											});
-											for (let i = 0; i < categoryFields[category].q.length; i++) {
-												$('.quantity[data-type="ii"]').each(function(i) {
-													if (+categoryFields[category].q[i] > +commonInfant[i]) {
+											for (let i = 0; i < categoryFields[category].quantity.length; i++) {
+												$('.quantity[data-input-category="InfantItems"]').each(function(i) {
+													if (+categoryFields[category].quantity[i] > +commonInfant[i]) {
 														swal.fire({
 															title: 'Warning',
-															html: `<h5>We only have <strong>${commonInfant[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+															html: `<h5>We only have <strong>${commonInfant[i]}</strong> available <strong>${categoryFields[category].product[i]}</strong> </h5>`,
 															icon: 'warning',
 															confirmButtonColor: '#20d070' //
 														});
@@ -1177,16 +1177,16 @@ if (isset($_GET['requestId'])) {
 											}
 											break;
 										case 'Drinks':
-											const commonDrinks = categoryFields[category].pn.map(pnValue => {
-												const index = response.productDw.indexOf(pnValue);
-												return response.quantityDw[index];
+											const commonDrinks = categoryFields[category].product.map(productValue => {
+												const index = response.DrinkingWaterProduct.indexOf(productValue);
+												return response.DrinkingWaterQuantity[index];
 											});
-											for (let i = 0; i < categoryFields[category].q.length; i++) {
-												$('.quantity[data-type="dw"]').each(function(i) {
-													if (+categoryFields[category].q[i] > +commonDrinks[i]) {
+											for (let i = 0; i < categoryFields[category].quantity.length; i++) {
+												$('.quantity[data-input-category="DrinkingWater"]').each(function(i) {
+													if (+categoryFields[category].quantity[i] > +commonDrinks[i]) {
 														swal.fire({
 															title: 'Warning',
-															html: `<h5>We only have <strong>${commonDrinks[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+															html: `<h5>We only have <strong>${commonDrinks[i]}</strong> available <strong>${categoryFields[category].product[i]}</strong> </h5>`,
 															icon: 'warning',
 															confirmButtonColor: '#20d070' //
 														});
@@ -1196,16 +1196,16 @@ if (isset($_GET['requestId'])) {
 											};
 											break;
 										case 'MeatGrain':
-											const commonMeatGrains = categoryFields[category].pn.map(pnValue => {
-												const index = response.productMg.indexOf(pnValue);
-												return response.quantityMg[index];
+											const commonMeatGrains = categoryFields[category].product.map(productValue => {
+												const index = response.MeatGrainsProduct.indexOf(productValue);
+												return response.MeatGrainsQuantity[index];
 											});
-											for (let i = 0; i < categoryFields[category].q.length; i++) {
-												$('.quantity[data-type="mg"]').each(function(i) {
-													if (+categoryFields[category].q[i] > +commonMeatGrains[i]) {
+											for (let i = 0; i < categoryFields[category].quantity.length; i++) {
+												$('.quantity[data-input-category="MeatGrains"]').each(function(i) {
+													if (+categoryFields[category].quantity[i] > +commonMeatGrains[i]) {
 														swal.fire({
 															title: 'Warning',
-															html: `<h5>We only have <strong>${commonMeatGrains[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+															html: `<h5>We only have <strong>${commonMeatGrains[i]}</strong> available <strong>${categoryFields[category].product[i]}</strong> </h5>`,
 															icon: 'warning',
 															confirmButtonColor: '#20d070' //
 														});
@@ -1215,16 +1215,16 @@ if (isset($_GET['requestId'])) {
 											};
 											break;
 										case 'Medicine':
-											const commonMedicine = categoryFields[category].pn.map(pnValue => {
-												const index = response.productMe.indexOf(pnValue);
-												return response.quantityMe[index];
+											const commonMedicine = categoryFields[category].product.map(productValue => {
+												const index = response.MedicineProduct.indexOf(productValue);
+												return response.MedicineQuantity[index];
 											});
-											for (let i = 0; i < categoryFields[category].q.length; i++) {
-												$('.quantity[data-type="me"]').each(function(i) {
-													if (+categoryFields[category].q[i] > +commonMedicine[i]) {
+											for (let i = 0; i < categoryFields[category].quantity.length; i++) {
+												$('.quantity[data-input-category="Medicine"]').each(function(i) {
+													if (+categoryFields[category].quantity[i] > +commonMedicine[i]) {
 														swal.fire({
 															title: 'Warning',
-															html: `<h5>We only have <strong>${commonMedicine[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+															html: `<h5>We only have <strong>${commonMedicine[i]}</strong> available <strong>${categoryFields[category].product[i]}</strong> </h5>`,
 															icon: 'warning',
 															confirmButtonColor: '#20d070' //
 														});
@@ -1234,16 +1234,16 @@ if (isset($_GET['requestId'])) {
 											};
 											break;
 										case 'Others':
-											const commonOthers = categoryFields[category].pn.map(pnValue => {
-												const index = response.productOt.indexOf(pnValue);
-												return response.quantityOt[index];
+											const commonOthers = categoryFields[category].product.map(productValue => {
+												const index = response.OthersProduct.indexOf(productValue);
+												return response.OthersQuantity[index];
 											});
-											for (let i = 0; i < categoryFields[category].q.length; i++) {
-												$('.quantity[data-type="ot"]').each(function(i) {
-													if (+categoryFields[category].q[i] > +commonOthers[i]) {
+											for (let i = 0; i < categoryFields[category].quantity.length; i++) {
+												$('.quantity[data-input-category="Others"]').each(function(i) {
+													if (+categoryFields[category].quantity[i] > +commonOthers[i]) {
 														swal.fire({
 															title: 'Warning',
-															html: `<h5>We only have <strong>${commonOthers[i]}</strong> available <strong>${categoryFields[category].pn[i]}</strong> </h5>`,
+															html: `<h5>We only have <strong>${commonOthers[i]}</strong> available <strong>${categoryFields[category].product[i]}</strong> </h5>`,
 															icon: 'warning',
 															confirmButtonColor: '#20d070' //
 														});
@@ -1271,7 +1271,7 @@ if (isset($_GET['requestId'])) {
 
 								success: (data) => {
 									if (data == "success") {
-
+										alert(data);
 									}
 								},
 								error: () => {

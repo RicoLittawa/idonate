@@ -352,7 +352,7 @@ function fill_select_category($conn)
     <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script type="text/javascript" src="scripts/mdb.min.js"></script>
-    <script src="scripts/main.js"></script>
+    <script src="scripts/sidebar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
     <script>

@@ -149,8 +149,6 @@ function fill_select_category($conn)
                   <tr>
                     <th>Category</th>
                     <th>Product Name</th>
-                    <th>Type</th>
-                    <th>Unit</th>
                     <th>Quantity</th>
                     <th>New Quantity</th>
                     <th>Total Distributed</th>
@@ -192,18 +190,9 @@ function fill_select_category($conn)
             data: 'category'
           },
           {
-            data: 'product'
-          },
-          {
-            data: 'type',
-            render: (data, type, row) => {
-              return data !== '' ? `<span class="badge rounded-pill badge-success">${data}</span>` : '<span class="badge rounded-pill badge-warning">N/A</span>';
-            }
-          },
-          {
-            data: 'unit',
-            render: (data, type, row) => {
-              return data !== '' ? `<span class="badge rounded-pill badge-success">${data}</span>` : '<span class="badge rounded-pill badge-warning">N/A</span>';
+            data: 'product',
+            render:(data,type,row)=>{
+              return `${data}<span class="badge rounded-pill badge-info">${row.type}</span>`
             }
           },
           {
@@ -211,9 +200,9 @@ function fill_select_category($conn)
             createdCell: function(cell, cellData, rowData, rowIndex, colIndex) {
               let previousQuantity = parseInt(rowData.quantity, 10) + parseInt(rowData.distributed, 10);
               if (rowData.distributed !== 0) {
-                $(cell).html(`<h6>${previousQuantity}<br><span class="badge rounded-pill badge-danger">-${rowData.distributed}</span></h6>`);
+                $(cell).html(`<h6>${previousQuantity}<span class="fw-light">&nbsp${rowData.unit}</span><br><span class="badge rounded-pill badge-danger">-${rowData.distributed}</span></h6>`);
               } else {
-                $(cell).text(rowData.quantity);
+                $(cell).html(`${rowData.quantity}<span class="fw-light">&nbsp${rowData.unit}</span>`);
               }
             }
           },
@@ -223,7 +212,7 @@ function fill_select_category($conn)
               if (row.distributed === 0) {
                 return `<span class="badge rounded-pill badge-warning">N/A</span>`;
               }
-              return data
+              return `${data}<span class="fw-light">&nbsp${row.unit}</span>` ;
 
             }
           },
