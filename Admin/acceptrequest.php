@@ -255,7 +255,7 @@ if (isset($_GET['requestId'])) {
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="cn"><i class="fa-solid fa-minus"></i></button>
-																<input type="text" class="form-control quantity" value=0 data-type="cn">
+																<input type="number" class="form-control quantity" value=0 data-type="cn">
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="cn"><i class="fa-solid fa-plus"></i></button>
 															</div>
 
@@ -291,7 +291,7 @@ if (isset($_GET['requestId'])) {
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="hy"><i class="fa-solid fa-minus"></i></button>
-																<input type="text" class="form-control quantity" value=0 data-type="hy">
+																<input type="number" class="form-control quantity" value=0 data-type="hy">
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="hy"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -325,7 +325,7 @@ if (isset($_GET['requestId'])) {
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="ii"><i class="fa-solid fa-minus"></i></button>
-																<input type="text" class="form-control quantity" value=0 data-type="ii">
+																<input type="number" class="form-control quantity" value=0 data-type="ii">
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="ii"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -360,7 +360,7 @@ if (isset($_GET['requestId'])) {
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="dw"><i class="fa-solid fa-minus"></i></button>
-																<input type="text" class="form-control quantity" value=0 data-type="dw">
+																<input type="number" class="form-control quantity" value=0 data-type="dw">
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="dw"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -395,7 +395,7 @@ if (isset($_GET['requestId'])) {
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="mg"><i class="fa-solid fa-minus"></i></button>
-																<input type="text" class="form-control quantity" value=0 data-type="mg">
+																<input type="number" class="form-control quantity" value=0 data-type="mg">
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="mg"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -430,7 +430,7 @@ if (isset($_GET['requestId'])) {
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="me"><i class="fa-solid fa-minus"></i></button>
-																<input type="text" class="form-control quantity" value=0 data-type="me">
+																<input type="number" class="form-control quantity" value=0 data-type="me">
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="me"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -464,7 +464,7 @@ if (isset($_GET['requestId'])) {
 															<label for="quantity" class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="ot"><i class="fa-solid fa-minus"></i></button>
-																<input type="text" class="form-control quantity" value=0 data-type="ot">
+																<input type="number" class="form-control quantity" value=0 data-type="ot">
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="ot"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -685,7 +685,7 @@ if (isset($_GET['requestId'])) {
 					html += '<td><select class="form-control product" data-product="CanNoodles"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
 								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="cn"><i class="fa-solid fa-minus"></i></button>
-								<input type="text" class="form-control quantity" value="1" data-type="cn">
+								<input type="number" class="form-control quantity" value="0" data-type="cn">
 								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="cn"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
@@ -700,7 +700,7 @@ if (isset($_GET['requestId'])) {
 					html += '<td><select class="form-control product" data-product="Hygine"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
 								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="hy"><i class="fa-solid fa-minus"></i></button>
-								<input type="text" class="form-control quantity" value="1" data-type="hy">
+								<input type="number" class="form-control quantity" value="1" data-type="hy">
 								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="hy"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
@@ -715,7 +715,7 @@ if (isset($_GET['requestId'])) {
 					html += '<td><select class="form-control product" data-product="InfantItems"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
 								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="ii"><i class="fa-solid fa-minus"></i></button>
-								<input type="text" class="form-control quantity" value=0 data-type="ii">
+								<input type="number" class="form-control quantity" value=0 data-type="ii">
 								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="ii"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
@@ -730,7 +730,7 @@ if (isset($_GET['requestId'])) {
 					html += '<td><select class="form-control product" data-product="DrinkingWater"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
 								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="dw"><i class="fa-solid fa-minus"></i></button>
-								<input type="text" class="form-control quantity" value=0 data-type="dw">
+								<input type="number" class="form-control quantity" value=0 data-type="dw">
 								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="dw"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
@@ -745,7 +745,7 @@ if (isset($_GET['requestId'])) {
 					html += '<td><select" class="form-control product" data-product="MeatGrains"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
 								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="mg"><i class="fa-solid fa-minus"></i></button>
-								<input type="text" class="form-control quantity" value=0 data-type="mg">
+								<input type="number" class="form-control quantity" value=0 data-type="mg">
 								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="mg"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
@@ -760,7 +760,7 @@ if (isset($_GET['requestId'])) {
 					html += '<td><select class="form-control product" data-product="Medicine"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
 								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="me"><i class="fa-solid fa-minus"></i></button>
-								<input type="text" class="form-control quantity" value=0 data-type="me">
+								<input type="number" class="form-control quantity" value=0 data-type="me">
 								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="me"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {
@@ -775,7 +775,7 @@ if (isset($_GET['requestId'])) {
 					html += '<td><select class="form-control product" data-product="Others"><option value="">Select Product</option></select></td>';
 					html += `<td><div class="d-flex justify-content-center border">
 								<button type="button" class="btnMinus btn btn-sm btn-flat" data-type="ot"><i class="fa-solid fa-minus"></i></button>
-								<input type="text" class="form-control quantity" value=0 data-type="ot">
+								<input type="number" class="form-control quantity" value=0 data-type="ot">
 								<button type="button" class="btnAdd btn btn-sm btn-flat" data-type="ot"><i class="fa-solid fa-plus"></i></button>
 							</div></td>`;
 					if (count > 0) {

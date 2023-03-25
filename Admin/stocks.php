@@ -137,7 +137,7 @@ function fill_select_category($conn)
         <div class="card">
           <div class="card-body">
 
-          <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end">
               <div class="form-group w-25">
                 <label class="form-label">Select Category:</label>
                 <div id="role_filter"></div>
@@ -152,7 +152,9 @@ function fill_select_category($conn)
                     <th>Type</th>
                     <th>Unit</th>
                     <th>Quantity</th>
-                    <th>Action</th>
+                    <th>New Quantity</th>
+                    <th>Total Distributed</th>
+                    <th>Add Expiry</th>
                     <!-- Add more columns here -->
                   </tr>
                 </thead>
@@ -195,25 +197,46 @@ function fill_select_category($conn)
           {
             data: 'type',
             render: (data, type, row) => {
-              return data !== null ? `<span class="badge rounded-pill badge-success">${data}</span>` : '<span class="badge rounded-pill badge-warning">N/A</span>';
+              return data !== '' ? `<span class="badge rounded-pill badge-success">${data}</span>` : '<span class="badge rounded-pill badge-warning">N/A</span>';
             }
           },
           {
             data: 'unit',
             render: (data, type, row) => {
-              return data !== null ? `<span class="badge rounded-pill badge-success">${data}</span>` : '<span class="badge rounded-pill badge-warning">N/A</span>';
+              return data !== '' ? `<span class="badge rounded-pill badge-success">${data}</span>` : '<span class="badge rounded-pill badge-warning">N/A</span>';
+            }
+          },
+          {
+            data: null,
+            createdCell: function(cell, cellData, rowData, rowIndex, colIndex) {
+              let previousQuantity = parseInt(rowData.quantity, 10) + parseInt(rowData.distributed, 10);
+              if (rowData.distributed !== 0) {
+                $(cell).html(`<h6>${previousQuantity}<br><span class="badge rounded-pill badge-danger">-${rowData.distributed}</span></h6>`);
+              } else {
+                $(cell).text(rowData.quantity);
+              }
             }
           },
           {
             data: 'quantity',
-            render:(data,type,row)=>{
-              return data !==0 ?  data: `<span class="badge rounded-pill badge-danger">Out of Stock</span>`;
+            render: (data, type, row) => {
+              if (row.distributed === 0) {
+                return `<span class="badge rounded-pill badge-warning">N/A</span>`;
+              }
+              return data
+
+            }
+          },
+          {
+            data: 'distributed',
+            render: (data, type, row) => {
+              return data !== 0 ? data : `<span class="badge rounded-pill badge-warning">N/A</span>`;
             }
           },
           {
             data: null,
             render: function(data, type, row) {
-              return `<button class="btn btn-success" id="addExpiry"><i class="fa-solid fa-plus"></i></button>`;
+              return `<button class="btn btn-success btn-rounded" id="addExpiry"><i class="fa-solid fa-plus"></i></button>`;
             }
           }
         ],
@@ -242,7 +265,7 @@ function fill_select_category($conn)
 
       });
 
-      $(document).on('click','#addExpiry',()=>{
+      $(document).on('click', '#addExpiry', () => {
         alert("working");
       })
     })

@@ -895,13 +895,6 @@ function fill_region_select_box($conn)
 				 	})
 				 	$('.typeOT').each((index,element)=> {
 						inputFields.OT.type.push($(element).val());
-						if ($(element).val()==''){
-							$(element).addClass('is-invalid');
-      						isInvalid = true;
-						}
-						else{
-							$(element).removeClass('is-invalid');
-						}	 
 				 	})
 				 	$('.qOT').each((index,element)=> {
 						inputFields.OT.q.push($(element).val());
@@ -915,13 +908,6 @@ function fill_region_select_box($conn)
 				 	})
 				 	$('.unitOT').each((index,element)=> {
 						inputFields.OT.unit.push($(element).val());
-						if ($(element).val()==''){
-							$(element).addClass('is-invalid');
-      						isInvalid = true;
-						}
-						else{
-							$(element).removeClass('is-invalid');
-						}	 
 				 	})
 				 }
 

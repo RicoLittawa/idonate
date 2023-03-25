@@ -47,17 +47,18 @@ try {
           <button type="button" class="btn-close closeModal"></button>
         </div>
         <div class="modal-body">
-          <select name="" id="" class="form-select">
-            <option value="Pick-up">Select Status</option>
-            <option value="Pick-up">Ready for Pick-up</option>
-            <option value="Pick-up">Request has been processed</option>
-            <option value="Pick-up">Request cannot be proccessed</option>
-            <option value="Pick-up">Request completed</option>
+          <input id="reference" type="text">
+
+          <select id="selectStatus" class="form-select">
+            <option value="">Select Status</option>
+            <option value="Ready for Pick-up">Ready for Pick-up</option>
+            <option value="Request cannot be proccessed">Request cannot be proccessed</option>
+            <option value="Request completed">Request completed</option>
           </select>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary closeModal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" id="saveStatus" class="btn btn-success">Save changes</button>
         </div>
       </div>
     </div>
@@ -153,6 +154,7 @@ try {
                   <th>Position</th>
                   <th>No. Evacuees/Families</th>
                   <th>Request Date</th>
+                  <th>Recieve Date</th>
                   <th>Status</th>
                   <th>Action</th>
                   <!-- Add more columns here -->
@@ -183,6 +185,7 @@ try {
   <script src="scripts/main.js"></script>
 
   <script>
+    let table;
     $(document).ready(() => {
       $(document).on('click', '#acceptBtn', (event) => {
         let requestId = $(event.target).attr('data-request');
@@ -197,22 +200,25 @@ try {
         $('.main-content').removeClass('blur-filter-class');
         $('.sidebar').removeClass('blur-filter-class');
       });
-      $('#table_data').DataTable({
+
+
+      //Populate datatables
+      table = $('#table_data').DataTable({
         responsive: true,
         ajax: 'include/DataForDataTables/requestdata.php',
         columns: [{
             data: 'reference',
-            render:(data,type,row)=>{
-              return row.dateTrimmed +"-00"+ row.reference
+            render: (data, type, row) => {
+              return row.dateTrimmed + "-00" + row.reference
             }
           },
           {
             data: 'Fullname',
-            render:(data,type,row)=>{
-             return  row.firstname+ " "+ row.lastname
+            render: (data, type, row) => {
+              return row.firstname + " " + row.lastname
             }
           },
-          
+
           {
             data: 'position'
           },
@@ -222,13 +228,23 @@ try {
           {
             data: 'requestdate'
           },
+          {
+            data: 'recievedate',
+            render: (data, type, row) => {
+              return data === null ? `<span class="badge badge-danger user-select-none not-allowed">N/A</span>` : data;
+            },
+          },
 
           {
             data: 'status',
-            render:(data)=>{
-              if(data!=='pending'){
-                return `<span style="cursor:pointer;" class="badge badge-success" onclick="changeStatus()">${data}</span>`
-              }else{
+            render: (data, type, row) => {
+              if (data === 'Request was processed') {
+                return `<span style="cursor:pointer;" class="badge badge-info" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`
+              } else if (data === 'Ready for Pick-up') {
+                return `<span style="cursor:pointer;" class="badge badge-warning" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`
+              } else if (data === 'Request completed') {
+                return `<span class="badge badge-success user-select-none not-allowed">${data}</span>`
+              } else {
                 return `<span class="badge badge-danger user-select-none not-allowed">${data}</span>`
 
               }
@@ -238,9 +254,9 @@ try {
           {
             data: 'reference',
             render: function(data, type, row) {
-              if (row.status === 'pending'){
+              if (row.status === 'pending') {
                 return `<button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button>`;
-              }else{
+              } else {
                 return `<button type="button" id="viewRecieptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">View</button>`;
               }
             }
@@ -250,16 +266,44 @@ try {
           [0, 'desc']
         ],
         displayLength: 10,
-       
+
       });
 
 
+
+      //Update Status
+      $('#saveStatus').click(() => {
+        let reference = $('#reference').val();
+        let selectStatus = $('#selectStatus').val();
+        $.ajax({
+          url: 'include/UpdateStatus.php',
+          method: 'POST',
+          data: {
+            saveStatus: '',
+            reference: reference,
+            selectStatus: selectStatus
+          },
+          success: (data) => {
+            console.log(data);
+          }
+
+
+        });
+      })
+
+
     })
-    const changeStatus = () => {
+
+    const changeStatus = (element) => {
+      let reference = $(element).data('request');
+      let status = $(element).data('status');
       $('#exampleModal').modal('show');
       $('.main-content').addClass('blur-filter-class');
       $('.sidebar').addClass('blur-filter-class');
-    }
+      $('#reference').val(reference);
+      $('#selectStatus option[value="' + status + '"]').prop('selected', true);
+      $('#selectStatus').find(':selected').text(status);
+    };
   </script>
 
 

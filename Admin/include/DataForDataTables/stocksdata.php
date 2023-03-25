@@ -1,21 +1,21 @@
 <?php
 require_once '../connection.php';
 
-$query = "SELECT category, productName, type, unit, SUM(quantity) as totalQuantity
+$query = "SELECT category, productName, type, unit, quantity,distributed
 FROM (
-    SELECT 'Can and Noodles' AS category, productName, type, unit, quantity FROM categcannoodles
+    SELECT 'Can and Noodles' AS category, productName, type, unit, quantity,distributed FROM categcannoodles
     UNION ALL
-    SELECT 'Drinking Water' AS category, productName, type, unit, quantity FROM categdrinkingwater
+    SELECT 'Drinking Water' AS category, productName, type, unit, quantity,distributed  FROM categdrinkingwater
     UNION ALL
-    SELECT 'Hygine Essentials' AS category, productName, type, unit, quantity FROM categhygineessential
+    SELECT 'Hygine Essentials' AS category, productName, type, unit, quantity,distributed  FROM categhygineessential
     UNION ALL
-    SELECT 'Infant Items' AS category, productName, type, unit, quantity FROM categinfant
+    SELECT 'Infant Items' AS category, productName, type, unit, quantity,distributed  FROM categinfant
     UNION ALL
-    SELECT 'Meat and Grains' AS category, productName, type, unit, quantity FROM categmeatgrains
+    SELECT 'Meat and Grains' AS category, productName, type, unit, quantity,distributed  FROM categmeatgrains
     UNION ALL
-    SELECT 'Medicine' AS category, productName, type, unit, quantity FROM categmedicine
+    SELECT 'Medicine' AS category, productName, type, unit, quantity,distributed  FROM categmedicine
     UNION ALL
-    SELECT 'Others' AS category, productName, type, unit, quantity FROM categothers
+    SELECT 'Others' AS category, productName, type, unit, quantity,distributed  FROM categothers
 ) AS allProducts
 GROUP BY productName
 ORDER BY productName ASC";
@@ -29,9 +29,10 @@ while ($row = $result->fetch_assoc()) {
   $data[] = array(
     'category' => $row['category'],
     'product' => $row['productName'],
-    'quantity' => $row['totalQuantity'],
+    'quantity' => $row['quantity'],
     'type' => $row['type'],
     'unit' => $row['unit'],
+    'distributed' => $row['distributed'],
   );
 }
 

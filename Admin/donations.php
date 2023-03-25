@@ -165,11 +165,13 @@ catch(Exception $e){
 					<tr>
 				   <td>
            <?php if ($row['email_status'] == 'not sent') { ?>
-           <span><input type="checkbox" name="single_select" class="single_select col" data-email="<?php echo htmlentities(
+        
+           <span><input type="checkbox" name="single_select" class="single_select" data-email="<?php echo htmlentities(
             $row["donor_email"]); ?>" data-name="<?php echo htmlentities($row["donor_name"]);?>"
             data-id="<?php echo htmlentities($row["donor_id"]); ?>"></input></span> 
             <span><a href="updatedonate.php?editdonate=<?php echo $row["donor_id"]; ?>">
             <i class="fa-solid fa-pen-to-square text-success"></i></a></span>
+
             <?php } else { ?>
             <span><a href=""><i class="fa-solid fa-trash text-danger"></i></a></span>
             <span><a href="updatedonate.php?editdonate=<?php echo $row[
