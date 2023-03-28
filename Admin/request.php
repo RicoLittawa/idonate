@@ -191,9 +191,9 @@ try {
         let requestId = $(event.target).attr('data-request');
         window.location.href = "acceptrequest.php?requestId=" + requestId;
       });
-      $(document).on('click', '#viewRecieptBtn', (event) => {
+      $(document).on('click', '#viewReceiptBtn', (event) => {
         let viewReciept = $(event.target).attr('data-request');
-        window.location.href = "viewreciept.php?requestId=" + viewReciept;
+        window.location.href = "viewreceipt.php?requestId=" + viewReciept;
       });
       $('.closeModal').click(() => {
         $('#exampleModal').modal('hide');
@@ -257,7 +257,7 @@ try {
               if (row.status === 'pending') {
                 return `<button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button>`;
               } else {
-                return `<button type="button" id="viewRecieptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">View</button>`;
+                return `<button type="button" id="viewReceiptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">View</button>`;
               }
             }
           }

@@ -53,6 +53,7 @@ if (isset($_GET['requestId'])) {
 	<link rel="stylesheet" href="css/style.css">
 
 
+
 	<title>Accept Request</title>
 </head>
 
@@ -139,30 +140,26 @@ if (isset($_GET['requestId'])) {
 					<div class="card-body overflow-auto">
 						<!--Place table here --->
 						<div class="d-flex justify-content-end">
-							<button id="printReciept" class="btn btn-success btn-rounded"  onclick="printJS('form-container', 'html')">Print</button>
+							<button id="printReceipt" class="btn btn-success btn-rounded" type="click">Print</button>
 						</div>
-						<div id="form-container" class="form-container mt-5 ms-5">
+						<form id="form-container" class="form-container mt-5 ms-5">
 
 							<div class="d-inline-flex">
 								<h6 class="number-title">1</h6>
 								<div class="mt-3 ps-3">
-									<h4 class="text-muted">Reciept Details</h4>
+									<h4 class="text-muted">Receipt Details</h4>
 								</div>
 							</div>
-							<div class="d-block p-3 ms-4 me-3">
-								<div class="row">
-									<div class="col">
-										<span class="d-flex py-2">
-											<h6>Reciept No:</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($dateTrimmed) . "-00" . htmlentities($reference) ?></h6>
-										</span>
-									</div>
-									<div class="col">
-										<span class="d-flex justify-content-end py-2">
-											<h6>Request Date:</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($requestdate) ?></h6>
-										</span>
-									</div>
+							<div class="p-3 ms-4 me-3">
+								<div class="d-flex justify-content-between">
+									<span class="d-flex justify-content-start py-2">
+										<h6>Receipt No:</h6>
+										<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($dateTrimmed) . "-00" . htmlentities($reference) ?></h6>
+									</span>
+									<span class="d-flex justify-content-end py-2">
+										<h6>Request Date:</h6>
+										<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($requestdate) ?></h6>
+									</span>
 								</div>
 								<hr class="hr" />
 								<div class="row">
@@ -207,14 +204,14 @@ if (isset($_GET['requestId'])) {
 							<div class="d-inline-flex">
 								<h6 class="number-title">2</h6>
 								<div class="mt-3 ps-3">
-									<h4 class="text-muted">Items</h4>
+									<h4 class="text-muted">Requested Items</h4>
 								</div>
 							</div>
 
 							<!--2nd table -->
 
-							<div class="px-4 ms-5 mt-4">
-								<table class="table table-striped table-bordered">
+							<div class="px-4 ms-5 mt-4 ">
+								<table id="table-container" class="table table-striped table-bordered">
 									<thead>
 										<tr>
 											<th>Product name</th>
@@ -239,7 +236,7 @@ if (isset($_GET['requestId'])) {
 									</tbody>
 								</table>
 							</div>
-						</div>
+						</form>
 
 
 						<!--End of Container form -->
@@ -256,16 +253,26 @@ if (isset($_GET['requestId'])) {
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="scripts/mdb.min.js"></script>
 	<script src="scripts/sweetalert2.all.min.js"></script>
-	<script src="scripts/main.js"></script>
+	<script src="scripts/sidebar.js"></script>
 	<!--Here is the scripts for functions -->
 
 	<script>
-	
+		$(document).ready(() => {
+			$('#printReceipt').click(() => {
+				printJS({
+					printable: 'form-container',
+					type: 'html',
+					css: ['css/mdb.min.css','css/style.css'],
+					scanStyles: true,
+					header:'<h3 class="d-flex justify-content-center">CDRRMO Request Form</h3>',
+					documentTitle:''
+				});
+			});
+
+		})
 	</script>
 
 
