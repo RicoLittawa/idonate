@@ -47,7 +47,7 @@ try {
           <button type="button" class="btn-close closeModal"></button>
         </div>
         <div class="modal-body">
-          <input id="reference" type="text">
+          <input hidden id="reference" type="text">
 
           <select id="selectStatus" class="form-select">
             <option value="">Select Status</option>
@@ -149,12 +149,12 @@ try {
             <table class="table table-striped table-bordered w-100" id="table_data">
               <thead>
                 <tr>
-                  <th>Reciept No.</th>
+                  <th>Receipt No.</th>
                   <th>Full name</th>
                   <th>Position</th>
                   <th>No. Evacuees/Families</th>
                   <th>Request Date</th>
-                  <th>Recieve Date</th>
+                  <th>Received Date</th>
                   <th>Status</th>
                   <th>Action</th>
                   <!-- Add more columns here -->

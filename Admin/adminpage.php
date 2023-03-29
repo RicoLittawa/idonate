@@ -364,35 +364,38 @@ function fill_select_category($conn)
         let labels = [];
         let backgroundColor = [];
 
-        $.ajax({
-          url: 'include/graphs.bar.data.php',
-          method: "GET",
-          dataType: 'json',
-          success: (response) => {
-            label = response.label;
-            data = response.data;
-            labels = response.labels;
-            let lowestValue = Math.min(...data);
-            let highestValue = Math.max(...data);
-            for (let i = 0; i < data.length; i++) {
-              if (data[i] === lowestValue) {
-                backgroundColor.push('rgb(240, 255, 66)');
-              } else if (data[i] === highestValue) {
-                backgroundColor.push('rgb(55, 146, 55)');
-              } else {
-                backgroundColor.push('rgb(84, 180, 53)');
-              }
-            }
-            myChart.data.datasets[0].label = label;
-            myChart.data.datasets[0].data = data;
-            myChart.data.labels = labels;
-            myChart.update();
-          },
-          error: (xhr, status, error) => {
-            console.log('Error: ' + error.message);
-          }
-        })
 
+        const allSelected = () => {
+          $.ajax({
+            url: 'include/GraphsData/graphs.bar.data.php',
+            method: "GET",
+            dataType: 'json',
+            success: (response) => {
+              label = response.label;
+              data = response.data;
+              labels = response.labels;
+              let lowestValue = Math.min(...data);
+              let highestValue = Math.max(...data);
+              for (let i = 0; i < data.length; i++) {
+                if (data[i] === lowestValue) {
+                  backgroundColor.push('rgb(240, 255, 66)');
+                } else if (data[i] === highestValue) {
+                  backgroundColor.push('rgb(55, 146, 55)');
+                } else {
+                  backgroundColor.push('rgb(84, 180, 53)');
+                }
+              }
+              myChart.data.datasets[0].label = label;
+              myChart.data.datasets[0].data = data;
+              myChart.data.labels = labels;
+              myChart.update();
+            },
+            error: (xhr, status, error) => {
+              console.log('Error: ' + error.message);
+            }
+          });
+        }
+        allSelected();
         // create the chart
         let ctx = $('#barChart').get(0).getContext('2d');
         let myChart = new Chart(ctx, {
@@ -420,7 +423,7 @@ function fill_select_category($conn)
         $('#selectCategory').on('change', function() {
           const selectedValue = $('#selectCategory').val();
           $.ajax({
-            url: 'include/graphs.bar.dynamic.data.php',
+            url: 'include/GraphsData/graphs.bar.dynamic.data.php',
             method: 'GET',
             dataType: 'json',
             data: {
@@ -449,34 +452,7 @@ function fill_select_category($conn)
             }
           });
           if (selectedValue == "") {
-            $.ajax({
-              url: 'include/graphs.bar.data.php',
-              method: "GET",
-              dataType: 'json',
-              success: (response) => {
-                label = response.label;
-                data = response.data;
-                labels = response.labels;
-                let lowestValue = Math.min(...data);
-                let highestValue = Math.max(...data);
-                for (let i = 0; i < data.length; i++) {
-                  if (data[i] === lowestValue) {
-                    backgroundColor.push('rgb(240, 255, 66)');
-                  } else if (data[i] === highestValue) {
-                    backgroundColor.push('rgb(55, 146, 55)');
-                  } else {
-                    backgroundColor.push('rgb(84, 180, 53)');
-                  }
-                }
-                myChart.data.datasets[0].label = label;
-                myChart.data.datasets[0].data = data;
-                myChart.data.labels = labels;
-                myChart.update();
-              },
-              error: (xhr, status, error) => {
-                console.log('Error: ' + error.message);
-              }
-            })
+            allSelected();
           }
 
         });

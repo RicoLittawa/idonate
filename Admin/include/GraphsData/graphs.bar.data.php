@@ -1,6 +1,6 @@
 <?php
-require_once 'connection.php';
-    $category = "SELECT category, sum(quantity) as totalQuantity FROM (
+require_once '../connection.php';
+$category = "SELECT category, sum(quantity) as totalQuantity FROM (
         SELECT 'Can and Noodles' AS category, quantity FROM categcannoodles
         UNION ALL
         SELECT 'Drinking Water' AS category, quantity FROM categdrinkingwater
@@ -17,30 +17,26 @@ require_once 'connection.php';
     ) as allProducts 
     GROUP BY category
     ORDER BY totalQuantity DESC";
-    $stmt = $conn->prepare($category);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    $data = array();
-    $labels = array();
-    
-    while ($row = $result->fetch_assoc()) {
-        array_push($labels, $row['category']);
-        array_push($data, $row['totalQuantity']);
-    }
-    
-    // Create an associative array with the data and labels
-    $dataArray = array(
-        'label' => 'All Category',
-        'data' => $data,
-        'labels' => $labels
-    );
-    
-    // Return the data as a JSON object
-    echo json_encode($dataArray);
-    $stmt->close();
-    $conn->close();
+$stmt = $conn->prepare($category);
+$stmt->execute();
+$result = $stmt->get_result();
 
+$data = array();
+$labels = array();
 
+while ($row = $result->fetch_assoc()) {
+    array_push($labels, $row['category']);
+    array_push($data, $row['totalQuantity']);
+}
 
+// Create an associative array with the data and labels
+$dataArray = array(
+    'label' => 'All Category',
+    'data' => $data,
+    'labels' => $labels
+);
 
+// Return the data as a JSON object
+echo json_encode($dataArray);
+$stmt->close();
+$conn->close();
