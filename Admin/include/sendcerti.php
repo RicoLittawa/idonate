@@ -67,7 +67,8 @@ if (isset($_POST['email_data'])) {
          //An HTML or plain text message body
          $mail->Body = "Thank you";
          $mail->addStringAttachment($pdf->Output("S", 'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
-         $mail->Send();      //Send an Email. Return true on success or false on error
+         $mail->Send();    
+         echo "Inserted";
 
 
       }
@@ -79,13 +80,9 @@ if (isset($_POST['email_data'])) {
          } else {
             $stmt->bind_param('ssi', $status, $genImage, $donor_id);
             $stmt->execute();
-            echo "Inserted";
-            $stmt->close();
          }
       } catch (Exception $e) {
          echo $e->getMessage();
-      } finally {
-         $conn->close();
-      }
+      } 
    }
 }

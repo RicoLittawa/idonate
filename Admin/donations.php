@@ -39,8 +39,39 @@ try {
       display: none;
     }
 
-    .up {
-      transform: rotate(180deg);
+    #dateFilter {
+      width: 200px;
+      height: 40px;
+      padding: 5px 10px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    #dateLabel {
+      font-size: 16px;
+      line-height: 30px;
+      color: #6c757d;
+      font-weight: 500;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    #dateIcon {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      transform: translateY(-50%);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    #dateIcon.up {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .form-control:focus {
+      border-color: none;
+      box-shadow: none;
+      outline: none;
     }
   </style>
 
@@ -135,10 +166,13 @@ try {
             <!----Filter -->
             <div class="d-flex justify-content-between py-3">
               <div class="d-flex justify-content-start">
-                <div id="dateFilter" class="border border-success rounded-pill px-4 py-1" style="cursor:pointer;">
-                  <span>Date:&nbsp;</span>
-                  <span></span> <i class="fa fa-caret-down"></i>
+                <div id="dateFilter" class="border border-success rounded-pill px-5 py-1" style="cursor:pointer;">
+                  <span id="dateLabel">Date</span>
+                  <i id="dateIcon" class="fa fa-caret-down me-2"></i>
                 </div>
+
+
+
                 <div class="form-group ps-3 ">
                   <button class="btn btn-success addPage btn-rounded">
                     <i class="fa-solid fa-plus"></i></button>
@@ -149,9 +183,9 @@ try {
               </div>
             </div>
 
-            <div class="d-flex justify-content-end m-auto">
+            <div class="d-flex justify-content-end">
               <div class="pe-2">
-                <button class="btn btn-success rounded-pill email_button" id="bulk_email" data-action="bulk">Send to all</button>
+                <button type="button" name="bulk_email" class="btn btn-success rounded-pill email_button" id="bulk_email" data-action="bulk">Send to all</button>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="selectAll" />
@@ -235,7 +269,7 @@ try {
                 class = "single_select form-check-input"
                 data-email = "${row.donorEmail}"
                 data-name = "${row.donorName}"
-                data-id = "${row.donorId}"/>`;
+                data-id = "${row.donorId}">`;
               } else {
                 return `<a href="updatedonate.php?editdonate=${row.donorId}"><i class="fa-solid fa-pen-to-square text-success"></i></a>`;
               }
@@ -297,21 +331,44 @@ try {
           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        },
+        autoUpdateInput: false
+      }, function(start, end, label) {
+        if (label === 'Today') {
+          $('#dateLabel').html('Today');
+        } else {
+          if (start.format('MM/DD/YYYY') === end.format('MM/DD/YYYY')) {
+            $('#dateLabel').html(start.format('MMMM Do YYYY'));
+          } else {
+            $('#dateLabel').html(start.format('MMMM Do YYYY') + ' - ' + end.format('MMMM Do YYYY'));
+          }
         }
       });
 
-      $('#dateFilter').click(() => {
-        // Toggle the 'up' class on the icon
-        $('#dateFilter i.fa-caret-down').toggleClass('up');
-
-        // Rotate the icon using CSS
-        if ($('#dateFilter i.fa-caret-down').hasClass('up')) {
-          $('#dateFilter i.fa-caret-down').css('transform', 'rotate(180deg)');
-          
+      $('#dateFilter').on('apply.daterangepicker', function(ev, picker) {
+        if (picker.chosenLabel === 'Today') {
+          $('#dateLabel').html('Today');
         } else {
-          $('#dateFilter i.fa-caret-down').css('transform', 'rotate(0deg)');
+          if (picker.startDate.format('MM/DD/YYYY') === picker.endDate.format('MM/DD/YYYY')) {
+            $('#dateLabel').html(picker.startDate.format('MMMM Do YYYY'));
+          } else {
+            $('#dateLabel').html(picker.startDate.format('MMMM Do YYYY') + ' - ' + picker.endDate.format('MMMM Do YYYY'));
+          }
         }
-      })
+      });
+
+      $('#dateFilter').on('cancel.daterangepicker', function(ev, picker) {
+        $('#dateFilter').html('<span id="dateLabel">Date</span><i id="dateIcon" class="fa fa-caret-down me-2"></i>');
+
+      });
+
+
+      $('#dateFilter').on('click', function() {
+        $('#dateIcon').toggleClass('up');
+      });
+
+
+
 
 
 
@@ -341,15 +398,16 @@ try {
             return;
           }
 
-          $checkedBoxes.each(function() {
+          $checkedBoxes.each((index, element) => {
+            const $this = $(element);
             email_data.push({
-              email: $(this).data("email"),
-              name: $(this).data('name'),
-              uID: $(this).data('id'),
+              email: $this.data("email"),
+              name: $this.data('name'),
+              uID: $this.data('id'),
             });
           });
         }
-
+        console.log(email_data)
         $.ajax({
           url: "include/sendcerti.php",
           method: "POST",
@@ -370,9 +428,7 @@ try {
               }).then(function() {
                 location.reload();
               });
-            } else {
-              $this.text(data);
-            }
+            } 
           }
         });
       });
