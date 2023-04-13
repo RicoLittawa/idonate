@@ -27,13 +27,22 @@ try {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
   <link rel="stylesheet" href="css/mdb.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .dataTables_filter {
+      display: none;
+    }
+
+    .up {
+      transform: rotate(180deg);
+    }
+  </style>
 
   <title>Donors</title>
 </head>
@@ -120,91 +129,65 @@ try {
       <div class="custom-container pb-3">
         <div class="card">
           <div class="card-body overflow-auto">
-            <div class="mt-2">
 
-              <button class="btn btn-success addPage float-end w-20 h-50 btn-rounded">
-                <i class="fa-solid fa-plus"></i> Add Donations</button>
+
+
+            <!----Filter -->
+            <div class="d-flex justify-content-between py-3">
+              <div class="d-flex justify-content-start">
+                <div id="dateFilter" class="border border-success rounded-pill px-4 py-1" style="cursor:pointer;">
+                  <span>Date:&nbsp;</span>
+                  <span></span> <i class="fa fa-caret-down"></i>
+                </div>
+                <div class="form-group ps-3 ">
+                  <button class="btn btn-success addPage btn-rounded">
+                    <i class="fa-solid fa-plus"></i></button>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end">
+                <input type="text" class="form-control rounded-pill border-success" id="customSearch" placeholder="Search..." />
+              </div>
             </div>
 
-            <br>
+            <div class="d-flex justify-content-end m-auto">
+              <div class="pe-2">
+                <button class="btn btn-success rounded-pill email_button" id="bulk_email" data-action="bulk">Send to all</button>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="selectAll" />
+                <label class="form-check-label" for="flexCheckDefault">Select All</label>
+              </div>
+            </div>
 
+            <!----Filter -->
 
-            <br>
-            <br><br>
             <!--Place table here --->
-            <table class="table table-striped table-bordered" id="table_data">
-
-              <thead>
-                <tr>
-                  <th><input type="checkbox" name="" id="selectAll" class="col"></th>
-
-                  <th>Fullname</th>
-                  <th>Email</th>
-                  <th>Contact</th>
-                  <th>Donation Date</th>
-                  <th>Status</th>
-                  <th>Certificate</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                $sql = "SELECT * FROM donation_items ORDER BY donor_id DESC";
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                foreach ($result as $row) : ?>
+            <div class="table-container">
+              <table class="table table-striped table-bordered w-100" id="table_data">
+                <thead>
                   <tr>
-                    <td>
-                      <?php if ($row['email_status'] == 'not sent') { ?>
-
-                        <span><input type="checkbox" name="single_select" class="single_select" data-email="<?php echo htmlentities(
-                            $row["donor_email"]); ?>" data-name="<?php echo htmlentities($row["donor_name"]); ?>" data-id="<?php echo htmlentities($row["donor_id"]); ?>"></input></span>
-                        <span><a href="updatedonate.php?editdonate=<?php echo $row["donor_id"]; ?>">
-                            <i class="fa-solid fa-pen-to-square text-success"></i></a></span>
-
-                      <?php } else { ?>
-                        <span><a href=""><i class="fa-solid fa-trash text-danger"></i></a></span>
-                        <span><a href="updatedonate.php?editdonate=<?php echo $row["donor_id"]; ?>"><i class="fa-solid fa-pen-to-square text-success"></i></a></span>
-                      <?php } ?>
-                    </td>
-                    <td><?php echo htmlentities($row["donor_name"]); ?></td>
-                    <td><?php echo htmlentities($row["donor_email"]); ?></td>
-                    <td><?php echo htmlentities($row["donor_contact"]); ?></td>
-                    <td><?php echo htmlentities($row["donationDate"]); ?></td>
-                    <td>
-                      <?php if ($row['email_status'] == 'not sent') { ?>
-                        <button type="button" class="btn btn-info email_button col btn-rounded" name="email_button" id="<?php echo $count; ?>" data-id="<?php echo htmlentities($row["donor_id"]); ?>" data-email="<?php echo htmlentities($row["donor_email"]); ?>" data-name="<?php echo htmlentities($row["donor_name"]); ?>" data-action="single">Send</button>
-                      <?php } else { ?>
-                        <span class="badge badge-success">Sent</span>
-                      <?php } ?>
-                    </td>
-                    <td>
-                      <?php if ($row['certificate'] == 'cert empty') { ?>
-                        <span><span class="badge badge-danger">Empty</span></span>
-                      <?php } else { ?>
-                        <button class="btn btn-success btnCert overflow-hidden btn-rounded" value="<?php echo htmlentities($row['donor_id']) ?>">
-                          <i class="fa-solid fa-print"></i></button>
-                      <?php } ?>
-                    </td>
+                    <th></th>
+                    <th>Donor Name</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Donation Date</th>
+                    <th>Status</th>
+                    <th>Certificate</th>
+                    <th></th>
+                    <!-- Add more columns here -->
                   </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
 
-                <?php endforeach; ?>
 
-              </tbody>
-              <tr>
-                <td colspan="6"></td>
-                <td>
-                  <button type="button" name="bulk_email" class="btn btn-info email_button btn-rounded" id="bulk_email" data-action="bulk">Bulk</button>
-                </td>
-              </tr>
-
-            </table>
           </div>
+
         </div>
       </div>
     </div>
-
-
+  </div>
 
 
   </div>
@@ -215,23 +198,131 @@ try {
 
 
 
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
-  <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   <script type="text/javascript" src="scripts/mdb.min.js"></script>
   <script src="scripts/sweetalert2.all.min.js"></script>
   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-  <script src="scripts/sidebar.js"></script>
-  <script src="scripts/DataTablesInitialize.js"></script>
+
+  <!-- <script src="scripts/sidebar.js"></script> -->
 
   <!--Here is the scripts for functions -->
+
+
+
+
   <script>
     $(document).ready(function() {
-      $('.email_button').click(function() {
-        let $this = $(this);
+
+      /**********Populate donors table */
+      let table = $('#table_data').DataTable({
+        "lengthMenu": [
+          [10, 25, 50, -1],
+          [10, 25, 50, "All"]
+        ],
+        responsive: true,
+        ajax: 'include/DataForDataTables/donorsdata.php',
+        columns: [{
+            data: null,
+            render: function(data, type, row) {
+              if (row.emailStatus === 'not sent') {
+                return `<input type = "checkbox"
+                name = "single_select"
+                class = "single_select form-check-input"
+                data-email = "${row.donorEmail}"
+                data-name = "${row.donorName}"
+                data-id = "${row.donorId}"/>`;
+              } else {
+                return `<a href="updatedonate.php?editdonate=${row.donorId}"><i class="fa-solid fa-pen-to-square text-success"></i></a>`;
+              }
+            }
+          },
+          {
+            data: 'donorName'
+          },
+          {
+            data: 'donorEmail',
+          },
+          {
+            data: 'donorContact'
+          },
+          {
+            data: 'donationDate'
+          },
+          {
+            data: 'emailStatus',
+            render: (data, type, row) => {
+              return data !== 'not sent' ? '<span class="badge badge-success">Sent</span>' :
+                `<button type="button" class="btn btn-secondary email_button col btn-rounded" name="email_button" data-id="${row.donorId}" 
+              data-email="${row.donorEmail}" data-name="${row.donorName}"  data-action="single">Send</button>`;
+            }
+          },
+          {
+            data: 'certificate',
+            render: (data, type, row) => {
+              return data !== 'cert empty' ? `<button class="btn btn-secondary btn-rounded" data-donor-id="${row.donorId}" id="btnCert">
+              <i class="fa-solid fa-print"></i></button>` :
+                '<span class="badge badge-warning user-select-none not-allowed">N/A</span'
+            }
+          },
+          {
+            data: null,
+            render: function(data, type, row) {
+              return `<a href="#"><i class="fa-solid fa-trash text-danger"></i></a>`;
+            }
+          }
+
+        ],
+        order: [
+          [3, 'desc']
+        ],
+        displayLength: 10,
+
+      });
+
+      // Custom search
+      $("#customSearch").on("keyup", (event) => {
+        table.search($(event.target).val()).draw();
+      });
+
+      //date filter
+
+      $('#dateFilter').daterangepicker({
+        ranges: {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        }
+      });
+
+      $('#dateFilter').click(() => {
+        // Toggle the 'up' class on the icon
+        $('#dateFilter i.fa-caret-down').toggleClass('up');
+
+        // Rotate the icon using CSS
+        if ($('#dateFilter i.fa-caret-down').hasClass('up')) {
+          $('#dateFilter i.fa-caret-down').css('transform', 'rotate(180deg)');
+          
+        } else {
+          $('#dateFilter i.fa-caret-down').css('transform', 'rotate(0deg)');
+        }
+      })
+
+
+
+
+
+
+
+
+      /**********Send certificate through email */
+      $('.email_button').click((event) => {
+        let $this = $(event.target);
         let id = $this.attr("id");
         let action = $this.data("action");
         let email_data = [];
@@ -285,36 +376,36 @@ try {
           }
         });
       });
-    });
-  </script>
 
-  <!--View cert -->
-  <script>
-    $(document).ready(function() {
-      $('.btnCert').click(function() {
 
-        let valueBtn = $(this);
-        let id = valueBtn.val();
+      /****View Certificate */
+      $(document).on('click', '#btnCert', (event) => {
+        let donor_id = $(event.target).attr('data-donor-id');
         $.ajax({
-          url: 'include/viewid.php?viewCert=' + id,
+          url: 'include/viewid.php?viewCert=' + donor_id,
           type: 'GET',
           success: function(data) {
             printJS('./include/download-certificate/' + data, 'image')
           }
         });
-
       });
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
+
+      /****Go to addpage */
       $('.addPage').click(function() {
         window.location.href = "additemdonations.php?fillupform";
       });
+      /***Select all checkbox */
       $("#selectAll").click(function() {
         $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
 
       });
+    });
+  </script>
+
+
+  <script>
+    $(document).ready(function() {
+
     })
   </script>
 </body>
