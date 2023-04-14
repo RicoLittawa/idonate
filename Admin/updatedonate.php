@@ -1,29 +1,7 @@
-<?php include 'include/protect.php' ;
+<?php require_once 'include/protect.php' ;
 require_once 'include/connection.php';
+require_once 'include/profile.inc.php';
 
-$sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
-$stmt= $conn->prepare($sql);
-$stmt->bind_param('i',$userID );
-try{
-  $stmt->execute();
-  $result= $stmt->get_result();
-  if($result->num_rows == 0) {
-    echo "Invalid email or password.";
-  }
-  else{
-    while($row= $result->fetch_assoc()){
-     $firstname=  $row['firstname'];
-     $profile=  $row['profile'];
-
-    }
-  }
-
-}
-
-catch(Exception $e){
-  echo "Error". $e->getMessage();
-
-}
 if (isset($_GET["editdonate"])) {
 	$update_id = $_GET["editdonate"];
 	$donor = "SELECT * FROM donation_items WHERE donor_id=?";

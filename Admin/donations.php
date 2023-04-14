@@ -1,23 +1,5 @@
 <?php include 'include/protect.php';
-require_once 'include/connection.php';
-
-$sql = "SELECT firstname,profile FROM adduser WHERE uID=? ";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $userID);
-try {
-  $stmt->execute();
-  $result = $stmt->get_result();
-  if ($result->num_rows == 0) {
-    echo "Invalid email or password.";
-  } else {
-    while ($row = $result->fetch_assoc()) {
-      $firstname =  $row['firstname'];
-      $profile =  $row['profile'];
-    }
-  }
-} catch (Exception $e) {
-  echo "Error" . $e->getMessage();
-}
+include 'include/profile.inc.php'
 ?>
 
 <!DOCTYPE html>
@@ -73,6 +55,7 @@ try {
       box-shadow: none;
       outline: none;
     }
+    
   </style>
 
   <title>Donors</title>
@@ -164,17 +147,14 @@ try {
 
 
             <!----Filter -->
-            <div class="d-flex justify-content-between py-3">
+            <div class="d-flex justify-content-between pb-3">
               <div class="d-flex justify-content-start">
-                <div id="dateFilter" class="border border-success rounded-pill px-5 py-1" style="cursor:pointer;">
+                <div id="dateFilter" class="border border-success rounded-pill px-5" style="cursor:pointer;">
                   <span id="dateLabel">Date</span>
                   <i id="dateIcon" class="fa fa-caret-down me-2"></i>
                 </div>
-
-
-
                 <div class="form-group ps-3 ">
-                  <button class="btn btn-success addPage btn-rounded">
+                  <button class="btn btn-outline-success addPage btn-rounded">
                     <i class="fa-solid fa-plus"></i></button>
                 </div>
               </div>
@@ -182,15 +162,15 @@ try {
                 <input type="text" class="form-control rounded-pill border-success" id="customSearch" placeholder="Search..." />
               </div>
             </div>
-
-            <div class="d-flex justify-content-end">
-              <div class="pe-2">
-                <button class="btn btn-outline-success rounded-pill email_button" id="bulk_email" data-action="bulk">Send to all</button>
-              </div>
-              <div class="form-check">
+            <div class="d-flex justify-content-between pb-3">
+            <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="selectAll" />
                 <label class="form-check-label" for="flexCheckDefault">Select All</label>
               </div>
+              <div class="pe-2">
+                <button class="btn btn-outline-success rounded-pill email_button" id="bulk_email" data-action="bulk">Send to all</button>
+              </div>
+             
             </div>
 
             <!----Filter -->

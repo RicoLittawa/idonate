@@ -1,23 +1,6 @@
-<?php include 'include/protect.php';
-require_once 'include/connection.php';
+<?php require_once '../include/protect.php';
+require_once '../include/profile.inc.php';
 
-$sql = "SELECT firstname,profile FROM adduser WHERE uID=? ";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $userID);
-try {
-  $stmt->execute();
-  $result = $stmt->get_result();
-  if ($result->num_rows == 0) {
-    echo "Invalid email or password.";
-  } else {
-    while ($row = $result->fetch_assoc()) {
-      $firstname =  $row['firstname'];
-      $profile =  $row['profile'];
-    }
-  }
-} catch (Exception $e) {
-  echo "Error" . $e->getMessage();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,8 +13,8 @@ try {
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
-  <link rel="stylesheet" href="css/mdb.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/mdb.min.css">
+  <link rel="stylesheet" href="../css/style.css">
 
   <title>Requests</title>
 </head>
@@ -121,9 +104,9 @@ try {
           <div class="dropdown">
             <a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
               <?php if ($profile == null) { ?>
-                <img src="img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
+                <img src="../img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
               <?php } else { ?>
-                <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
 
             </a>
@@ -179,130 +162,9 @@ try {
   <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-  <script type="text/javascript" src="scripts/mdb.min.js"></script>
-  <script src="scripts/main.js"></script>
-
-  <script>
-    let table;
-    $(document).ready(() => {
-      $(document).on('click', '#acceptBtn', (event) => {
-        let requestId = $(event.target).attr('data-request');
-        window.location.href = "acceptrequest.php?requestId=" + requestId;
-      });
-      $(document).on('click', '#viewReceiptBtn', (event) => {
-        let viewReciept = $(event.target).attr('data-request');
-        window.location.href = "viewreceipt.php?requestId=" + viewReciept;
-      });
-      $('.closeModal').click(() => {
-        $('#exampleModal').modal('hide');
-        $('.main-content').removeClass('blur-filter-class');
-        $('.sidebar').removeClass('blur-filter-class');
-      });
-
-
-      //Populate datatables
-      table = $('#table_data').DataTable({
-        responsive: true,
-        ajax: 'include/DataForDataTables/requestdata.php',
-        columns: [{
-            data: 'reference',
-            render: (data, type, row) => {
-              return row.dateTrimmed + "-00" + row.reference
-            }
-          },
-          {
-            data: 'Fullname',
-            render: (data, type, row) => {
-              return row.firstname + " " + row.lastname
-            }
-          },
-
-          {
-            data: 'position'
-          },
-          {
-            data: 'evacuees_qty'
-          },
-          {
-            data: 'requestdate'
-          },
-          {
-            data: 'recievedate',
-            render: (data, type, row) => {
-              return data === null ? `<span class="badge badge-danger user-select-none not-allowed">N/A</span>` : data;
-            },
-          },
-
-          {
-            data: 'status',
-            render: (data, type, row) => {
-              if (data === 'Request was processed') {
-                return `<span style="cursor:pointer;" class="badge badge-info" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`
-              } else if (data === 'Ready for Pick-up') {
-                return `<span style="cursor:pointer;" class="badge badge-warning" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`
-              } else if (data === 'Request completed') {
-                return `<span class="badge badge-success user-select-none not-allowed">${data}</span>`
-              } else {
-                return `<span class="badge badge-danger user-select-none not-allowed">${data}</span>`
-
-              }
-            }
-          },
-
-          {
-            data: 'reference',
-            render: function(data, type, row) {
-              if (row.status === 'pending') {
-                return `<button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button>`;
-              } else {
-                return `<button type="button" id="viewReceiptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">View</button>`;
-              }
-            }
-          }
-        ],
-        order: [
-          [0, 'desc']
-        ],
-        displayLength: 10,
-
-      });
-
-
-
-      //Update Status
-      $('#saveStatus').click(() => {
-        let reference = $('#reference').val();
-        let selectStatus = $('#selectStatus').val();
-        $.ajax({
-          url: 'include/UpdateStatus.php',
-          method: 'POST',
-          data: {
-            saveStatus: '',
-            reference: reference,
-            selectStatus: selectStatus
-          },
-          success: (data) => {
-            console.log(data);
-          }
-
-
-        });
-      })
-
-
-    })
-
-    const changeStatus = (element) => {
-      let reference = $(element).data('request');
-      let status = $(element).data('status');
-      $('#exampleModal').modal('show');
-      $('.main-content').addClass('blur-filter-class');
-      $('.sidebar').addClass('blur-filter-class');
-      $('#reference').val(reference);
-      $('#selectStatus option[value="' + status + '"]').prop('selected', true);
-      $('#selectStatus').find(':selected').text(status);
-    };
-  </script>
+  <script type="text/javascript" src="../scripts/mdb.min.js"></script>
+  <script src="../scripts/main.js"></script>
+  <script src="scripts/RequestTable.js"></script>
 
 
 </body>

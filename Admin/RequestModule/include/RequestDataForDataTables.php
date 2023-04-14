@@ -1,5 +1,5 @@
 <?php
-require_once '../connection.php';
+require_once '../../include/connection.php';
 $getRequest = "SELECT request_id,firstname,lastname,position,evacuees_qty,requestdate,recievedate,status FROM request";
 $stmt = $conn->prepare($getRequest);
 $stmt->execute();

@@ -1,5 +1,5 @@
 <?php 
-require_once 'connection.php';
+require_once '../../include/connection.php';
 //accept request
 if (isset($_POST['createBtn'])){
 $userId= $_POST['userId'];

@@ -1,30 +1,8 @@
-<?php include 'include/protect.php';
-require_once 'include/connection.php';
-$sql = "SELECT firstname,profile FROM adduser WHERE uID=? ";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $userID);
-$stmt->execute();
-$result = $stmt->get_result();
-while ($row = $result->fetch_assoc()) {
-  $firstname =  $row['firstname'];
-  $profile =  $row['profile'];
-}
+<?php require_once 'include/protect.php';
+require_once 'include/profile.inc.php';
+require_once 'include/FunctionSelectBox.php';
 
-function fill_select_category($conn)
-{
-  $output = '';
-  $selectCateg = "SELECT * from category";
-  $stmt = $conn->prepare($selectCateg);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  foreach ($result as $row) {
-    $categoryName = htmlentities($row['category']);
-    $categCode = htmlentities($row['categCode']);
-    $output .= '<option value="' . $categCode . '">' . $categoryName . '</option>';
-  }
 
-  return $output;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +53,7 @@ function fill_select_category($conn)
             </a>
           </li>
           <li class="nav-item">
-            <a href="request.php" class="nav-link">
+            <a href="RequestModule/request.php" class="nav-link">
               <i class='bx bxs-envelope'></i>
               <span class="text">Requests</span>
             </a>
@@ -222,7 +200,7 @@ function fill_select_category($conn)
                   <div class="w-30">
                     <select name="selectCategory" id="selectCategory" class="form-select">
                       <option value="">Select</option>
-                      <?php echo fill_select_category($conn) ?>
+                      <?php echo add_category($conn) ?>
                     </select>
                   </div>
                   <div class="ps-3"><button class="btn btn-success">Print</button></div>

@@ -1,43 +1,8 @@
-<?php include 'include/protect.php' ;
-require_once 'include/connection.php';
+<?php require_once 'include/protect.php' ;
+require_once 'include/profile.inc.php';
+require_once 'include/FunctionSelectBox.php';
 
-$sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
-$stmt= $conn->prepare($sql);
-$stmt->bind_param('i',$userID );
-try{
-  $stmt->execute();
-  $result= $stmt->get_result();
-  if($result->num_rows == 0) {
-    echo "Invalid email or password.";
-  }
-  else{
-    while($row= $result->fetch_assoc()){
-     $firstname=  $row['firstname'];
-     $profile=  $row['profile'];
 
-    }
-  }
-
-}
-
-catch(Exception $e){
-  echo "Error". $e->getMessage();
-
-}
-function fill_region_select_box($conn)
-{
-	$output = '';
-	$sql = "SELECT * FROM refregion";
-	$stmt=$conn->prepare($sql);
-    $stmt->execute();
-	$result = $stmt->get_result(); 
-	foreach ($result as $row) {
-		$regid = htmlentities($row['regCode']);
-		$regname = htmlentities($row['regDesc']);
-		$output .= '<option value="' . $regid . '">' . $regname . '</option>';
-	}
-	return $output;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">

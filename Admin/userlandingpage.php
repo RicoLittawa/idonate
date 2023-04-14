@@ -1,43 +1,8 @@
-<?php include 'include/protect.php';
-require_once 'include/connection.php';
-$sql= "SELECT firstname,profile FROM adduser WHERE uID=? ";
-$stmt= $conn->prepare($sql);
-$stmt->bind_param('i',$userID );
-try{
-  $stmt->execute();
-  $result= $stmt->get_result();
-  if($result->num_rows == 0) {
-    throw new Exception("User does not exist");
-  }
-  else{
-    while($row= $result->fetch_assoc()){
-     $firstname=  $row['firstname'];
-     $profile=  $row['profile'];
+<?php require_once 'include/protect.php';
+require_once 'include/profile.inc.php';
+require_once 'include/FunctionSelectBox.php';
 
-    }
-  }
 
-}
-
-catch(Exception $e){
-  echo $e->getMessage();
-
-}
-function add_category($conn){
-  $output = '';
-  $sql= "SELECT * from category";
-            
-  $stmt=$conn->prepare($sql);
-  $stmt->execute();
-  $result = $stmt->get_result(); 
-  foreach ($result as $row) {
-    $category = htmlentities($row['category']);
-    $categCode = htmlentities($row['categCode']);
-    $output .= '<option " value="' . $categCode . '">' . $category . '</option>';
-  }
-  return $output;
-
-}
 $reqId= "SELECT * from ref_request";
 $stmt=$conn->prepare($reqId);
 $stmt->execute();

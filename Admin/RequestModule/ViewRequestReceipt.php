@@ -1,41 +1,6 @@
-<?php include 'include/protect.php';
-require_once 'include/connection.php';
-
-$sql = "SELECT firstname,profile FROM adduser WHERE uID=? ";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $userID);
-try {
-	$stmt->execute();
-	$result = $stmt->get_result();
-	if ($result->num_rows == 0) {
-		echo "Invalid email or password.";
-	} else {
-		while ($row = $result->fetch_assoc()) {
-			$firstname =  $row['firstname'];
-			$profile =  $row['profile'];
-		}
-	}
-} catch (Exception $e) {
-	echo "Error" . $e->getMessage();
-}
-
-if (isset($_GET['requestId'])) {
-	$reference = $_GET['requestId'];
-	$getRequest = "SELECT firstname,lastname,position,email,evacuees_qty,requestdate,status from request where request_id=?";
-	$stmt = $conn->prepare($getRequest);
-	$stmt->bind_param('i', $reference);
-	$stmt->execute();
-	$getResult = $stmt->get_result();
-	$get = $getResult->fetch_assoc();
-	$fname = $get['firstname'];
-	$lname = $get['lastname'];
-	$position = $get['position'];
-	$requestemail = $get['email'];
-	$evacuees_qty = $get['evacuees_qty'];
-	$requestdate = $get['requestdate'];
-	$dateTrimmed = str_replace('-', '', $requestdate);
-	$status = $get['status'];
-}
+<?php require_once '../include/protect.php';
+require_once '../include/profile.inc.php';
+require_once '../include/RequestGetData.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,8 +14,8 @@ if (isset($_GET['requestId'])) {
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
 	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
-	<link rel="stylesheet" href="css/mdb.min.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="../css/mdb.min.css">
+	<link rel="stylesheet" href="../css/style.css">
 
 
 
@@ -117,9 +82,9 @@ if (isset($_GET['requestId'])) {
 					<div class="dropdown">
 						<a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
 							<?php if ($profile == null) { ?>
-								<img src="img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
+								<img src="../img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
 							<?php } else { ?>
-								<img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
 
 						</a>
@@ -254,9 +219,9 @@ if (isset($_GET['requestId'])) {
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-	<script type="text/javascript" src="scripts/mdb.min.js"></script>
-	<script src="scripts/sweetalert2.all.min.js"></script>
-	<script src="scripts/sidebar.js"></script>
+	<script type="text/javascript" src="../scripts/mdb.min.js"></script>
+	<script src="../scripts/sweetalert2.all.min.js"></script>
+	<script src="../scripts/sidebar.js"></script>
 	<!--Here is the scripts for functions -->
 
 	<script>
