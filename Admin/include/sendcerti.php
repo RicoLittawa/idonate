@@ -68,7 +68,6 @@ if (isset($_POST['email_data'])) {
          $mail->Body = "Thank you";
          $mail->addStringAttachment($pdf->Output("S", 'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
          $mail->Send();    
-         echo "Inserted";
 
 
       }
@@ -85,4 +84,6 @@ if (isset($_POST['email_data'])) {
          echo $e->getMessage();
       } 
    }
+   echo "Inserted";
+
 }

@@ -225,7 +225,7 @@ function fill_select_category($conn)
           {
             data: null,
             render: function(data, type, row) {
-              return `<button class="btn btn-success btn-rounded" id="addExpiry"><i class="fa-solid fa-plus"></i></button>`;
+              return `<button type="button" class="btn btn-success btn-rounded" id="addExpiry"><i class="fa-solid fa-plus"></i></button>`;
             }
           }
         ],
