@@ -9,6 +9,7 @@
     $stmt->execute();
     $stmt->close();
 
+    
     unset($_SESSION['users']);
     session_destroy();
     $conn->close();

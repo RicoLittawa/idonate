@@ -7,6 +7,6 @@ if (isset($_SESSION['user'])) {
 } 
  else {
       //User is not logged in, redirect to login page
-     header("Location: login.php?Loginfirst");
+     header("Location: ../login.php?Loginfirst");
      exit();
  }

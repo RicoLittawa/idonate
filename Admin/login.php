@@ -154,7 +154,7 @@
 				 		 	  	allowOutsideClick: false
 				 		 	  })
 						 	   setTimeout(()=>{
-						 		window.location.href="adminpage.php";
+						 		window.location.href="./Dashboard/Dashboard.php";
 						 	},1000)
          				 	 }, 1500);
 							
