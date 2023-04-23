@@ -28,7 +28,8 @@ function add_category($conn)
 	foreach ($result as $row) {
 		$category = htmlentities($row['category']);
 		$categCode = htmlentities($row['categCode']);
-		$output .= '<li><a class="dropdown-item select-category"  href="#" data-value="' . $categCode . '">' . $category . '</a></li>';
+		$output .= '
+		<li><a class="dropdown-item select-category"  href="#" data-value="' . $categCode . '">' . $category . '</a></li>';
 	}
 	return $output;
 }

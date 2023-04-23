@@ -1,6 +1,6 @@
 <?php
 require_once '../../include/connection.php';
-$getRequest = "SELECT request_id,firstname,lastname,position,evacuees_qty,requestdate,recievedate,status FROM request";
+$getRequest = "SELECT request_id,firstname,lastname,position,evacuees_qty,requestdate,receivedate,status FROM request";
 $stmt = $conn->prepare($getRequest);
 $stmt->execute();
 $getResult = $stmt->get_result();
@@ -12,7 +12,7 @@ while ($get = $getResult->fetch_assoc()) {
     $evacuees_qty = $get['evacuees_qty'];
     $requestdate = $get['requestdate'];
     $dateTrimmed = str_replace('-', '', $requestdate);
-    $recievedate= $get['recievedate'];
+    $receivedate= $get['receivedate'];
     $status = $get['status'];
 
     $data[] = array(
@@ -24,7 +24,7 @@ while ($get = $getResult->fetch_assoc()) {
         'requestdate' => $requestdate,
         'dateTrimmed' => $dateTrimmed,
         'status' => $status,
-        'recievedate'=>$recievedate
+        'receivedate'=>$receivedate
       );
 }
 header('Content-Type: application/json');

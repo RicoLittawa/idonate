@@ -39,7 +39,7 @@ $(document).ready(() => {
           data: 'requestdate'
         },
         {
-          data: 'recievedate',
+          data: 'receivedate',
           render: (data, type, row) => {
             return data === null ? `<span class="badge badge-danger user-select-none not-allowed">N/A</span>` : data;
           },

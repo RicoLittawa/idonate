@@ -10,6 +10,17 @@
     background: #ebeae8;
     height: auto;
 } 
+.date-filter-dropdown {
+  position: relative;
+  height: 200px;
+  overflow: auto;
+}
+.dt-datetime-clear{
+  cursor: pointer;
+}
+.dt-datetime-today{
+  cursor: pointer;
+}
 
 .main-container{
 overflow: hidden;

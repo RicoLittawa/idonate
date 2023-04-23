@@ -1,29 +1,6 @@
 <?php 
 require_once 'connection.php';
 
-
-
- //view certificate
- if (isset($_GET['viewCert'])){
-    $id= $_GET['viewCert'];
-    $message='';
-    $sql= "SELECT certificate from donation_items where donor_id=?";
-    $stmt = $conn->prepare($sql); 
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
- 
-     if ( $donor = $result->fetch_assoc()){
-      
-             echo $donor['certificate'];
-        
-     }else{
-         echo 'Data not found';
-     }
-     
- 
- }
-
  //upload certi template
  if (isset($_POST['upload'])){
     $imgID = $_POST['tempId'];

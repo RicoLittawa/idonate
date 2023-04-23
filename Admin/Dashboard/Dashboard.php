@@ -1,6 +1,7 @@
 <?php require_once "../include/protect.php";
 require_once "../include/profile.inc.php";
 require_once "../include/FunctionSelectBox.php";
+require "../include/sidebar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,33 +13,21 @@ require_once "../include/FunctionSelectBox.php";
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-  <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/af-2.5.3/b-2.3.6/b-html5-2.3.6/b-print-2.3.6/date-1.4.0/r-2.4.1/rg-1.3.1/sc-2.1.1/sp-2.1.2/datatables.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
   <link rel="stylesheet" href="../css/mdb.min.css">
   <link rel="stylesheet" href="../css/style.css">
+  <!--Necessary Plugins-->
   <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
-  <style>
-    .card-names {
-      color: #a9a9a9;
-      font-size: 14px;
-    }
-
-    .my-fixed-height {
-      height: 285px;
-      overflow: auto;
-    }
-  </style>
+  <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+  <!--Necessary Plugins-->
   <title>Dashboard</title>
 </head>
 
 <body>
   <div class="main-container">
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar"></div>
-
+    <div class="sidebar" id="sidebar"><?php echo sidebar() ?></div>
     <!--Main content -->
     <div class="main-content">
-
       <!--Header -->
       <div class="mb-4 custom-breadcrumb">
         <div class="crumb">
@@ -57,21 +46,17 @@ require_once "../include/FunctionSelectBox.php";
               <?php if ($profile == null) { ?>
                 <img src="../img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
               <?php } else { ?>
-                <img src="../include/profile/<?php echo htmlentities(
-                  $profile
-                ); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
-
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <li>
-                <h6 class="dropdown-item">Hello <?php echo htmlentities(
-                  $firstname
-                ); ?>!</h6>
+                <h6 class="dropdown-item">Hello
+                  <?php echo htmlentities($firstname); ?>!</h6>
               </li>
               <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
               <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
-              <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
+              <li><a class="dropdown-item" href="../include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
             </ul>
           </div>
         </div>
@@ -149,10 +134,11 @@ require_once "../include/FunctionSelectBox.php";
                       Select
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="selectCategory">
+                      <li><a class="dropdown-item select-category" href="#" data-value="">Select</a></li>
                       <?php echo add_category($conn); ?>
                     </ul>
                   </div>
-                  <div class="ps-3"><button class="btn btn-success btn-rounded" id="printBarChart">Print</button></div>
+                  <div class="ps-3"><button class="btn btn-success btn-rounded" id="printBarChart"><i class="fa-solid fa-print"></i></button></div>
                 </div>
                 <canvas id="barChart"></canvas>
               </div>
@@ -165,30 +151,10 @@ require_once "../include/FunctionSelectBox.php";
                   <h4 class="mb-3">Total number of donated items</h4>
                 </div>
                 <div class="d-flex justify-content-between py-3">
-                  <div class="category-table">
-                    <div class="d-flex justify-content-start">
-                      <div class="dropdown  mx-2">
-                        <button class="btn btn-secondary dropdown-toggle btn-rounded" type="button" id="pageTable" data-mdb-toggle="dropdown" aria-expanded="false">
-                          Select
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="pageTable">
-                          <li><a class="dropdown-item select-row" href="#" data-length="10">10 rows</a></li>
-                          <li><a class="dropdown-item select-row" href="#" data-length="25">25 rows</a></li>
-                          <li><a class="dropdown-item select-row" href="#" data-length="50">50 rows</a></li>
-                          <li><a class="dropdown-item select-row" href="#" data-length="-1">All</a></li>
-                        </ul>
-                      </div>
-
-                      <button class="btn btn-secondary btn-rounded mx-1" id="copyTable">Copy</button>
-                      <button class="btn btn-secondary btn-rounded mx-1" id="excelTable">Excel</button>
-                      <button class="btn btn-secondary btn-rounded mx-1" id="csvTable">Csv</button>
-                      <button class="btn btn-secondary btn-rounded mx-1" id="pdfTable">PDF</button>
-                    </div>
-
-                  </div>
-                  <div class="ps-3 pb-4"><button class="btn btn-success btn-rounded " id="printTable">Print</button></div>
+                  <div class="category-table"></div>
+                  <div class="ps-3 pb-4"><button class="btn btn-success btn-rounded " id="printCategory"><i class="fa-solid fa-print"></i></button></div>
                 </div>
-                <table class="table table-striped table-bordered w-100 h-100" id="table_data">
+                <table class="table table-striped table-bordered w-100" id="category_data">
                   <thead>
                     <tr>
                       <th>Category</th>
@@ -211,18 +177,19 @@ require_once "../include/FunctionSelectBox.php";
             <div class="card">
               <div class="card-body">
                 <h1 class="mb-3">Requests Completed</h1>
-                <table class="table table-striped table-bordered w-100" id="table_data">
+                <div class="d-flex justify-content-between py-3">
+                  <div class="request-table"></div>
+                  <div class="ps-3 pb-4"><button class="btn btn-success btn-rounded " id="printRequestCompleted"><i class="fa-solid fa-print"></i></button></div>
+                </div>
+                <table class="table table-striped table-bordered w-100" id="request_data">
                   <thead>
                     <tr>
-                      <th>Request Reciept No.</th>
+                      <th>Receipt Number</th>
+                      <th>Date Completed</th>
                       <th>Status</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <td class="fw-bold"></td>
-                    <td></td>
-                    </tr>
-                  </tbody>
+                  <tbody></tbody>
                 </table>
               </div>
             </div>
@@ -235,15 +202,17 @@ require_once "../include/FunctionSelectBox.php";
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="../scripts/mdb.min.js"></script>
+    <!--Necessary Plugins -->
+    <script src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.js"></script>
     <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <!--Necessary Plugins -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-    <script src="../Sidebar/scripts//SidebarTemplate.js"></script>
     <script src="scripts/TotalNumberCategoryBarChart.js"></script>
     <script src="scripts/DashboardStocksTable.js"></script>
+    <script src="../scripts/TableFilterButtons.js"></script>
 
 
     <script>

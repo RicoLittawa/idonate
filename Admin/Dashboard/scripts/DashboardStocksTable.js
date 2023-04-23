@@ -1,7 +1,8 @@
+//Populate category table on dashboard
 $(document).ready(() => {
-  let table = $("#table_data").DataTable({
+   const category_table = $("#category_data").DataTable({
     responsive: true,
-    headerCallback: function (thead, data, start, end, display) {
+    headerCallback: function (thead) {
       $(thead).find("th").css("font-weight", "bolder");
     },
     ajax: "include/CategoryTable.php",
@@ -18,51 +19,35 @@ $(document).ready(() => {
     buttons: [
       {
         extend: "copyHtml5",
-        className: "btn btn-success rounded-0",
-        text: '<i class="fas fa-copy"></i> Copy',
-        exportOptions: {
-          columns: ":visible",
-        },
+        filename: "List of category", // set the file name
       },
       {
         extend: "excelHtml5",
-        className: "btn btn-success rounded-0",
-        text: '<i class="fas fa-file-excel"></i> Excel',
-        exportOptions: {
-          columns: ":visible",
-        },
+        filename: "List of category", // set the file name
       },
       {
         extend: "csvHtml5",
-        className: "btn btn-success rounded-0",
-        text: '<i class="fas fa-file-excel"></i> Csv',
-        exportOptions: {
-          columns: ":visible",
-        },
+        filename: "List of category", // set the file name
       },
       {
         extend: "pageLength",
-        className: "btn btn-success rounded-0",
-        text: '<i class="fas fa-file-pageLength"></i> pageLength',
-        exportOptions: {
-          columns: ":visible",
-        },
+        filename: "List of category", // set the file name
       },
       {
         extend: "pdfHtml5",
-        className: "btn btn-success rounded-0",
-        text: '<i class="fas fa-file-pdf"></i> PDF',
-        exportOptions: {
-          columns: ":visible",
-        },
-        customize: function (doc) {
+        filename: "List of category", // set the file name
+        customize: (doc) => {
           doc.content[0].text = "Total Number of Product Per Category";
           doc.pageMargins = [40, 40, 40, 60];
           doc.defaultStyle.fontSize = 12;
-          doc.styles.tableHeader.fontSize = 14;
+          doc.styles.tableHeader = {
+            fontSize:14,
+            bold: true,
+            alignment:"left"
+          }; 
           doc.styles.title = {
             color: "#4c8aa0",
-            fontSize: 22,
+            fontSize: 16,
             alignment: "center",
           };
           doc.content[1].table.widths = ["50%", "50%"]; // adjust column widths
@@ -78,45 +63,100 @@ $(document).ready(() => {
     searching: false,
     dom: "frtip",
   });
+  //Populate request table on dashboard
 
-  $(".category-table").append(table.buttons().container());
+  const request_table = $("#request_data").DataTable({
+    responsive: true,
+    headerCallback: function (thead) {
+      $(thead).find("th").css("font-weight", "bolder");
+    },
+    ajax: "include/Completed.php",
+    columns: [
+      {
+        data: "request_id",
+        render: (data, type, row) => {
+          return row.requestdate + "-00" + row.request_id;
+        },
+      },
+      { data: "receivedate" },
+      {
+        data: "status",
+        render: (data, type, row) => {
+          return `<span class="badge badge-success user-select-none not-allowed">${row.status}</span>`;
+        },
+      },
+    ],
+    order: [[1, "Desc"]],
+    buttons: [
+      {
+        extend: "copyHtml5",
+        filename: "Request Completed", // set the file name
+      },
+      {
+        extend: "excelHtml5",
+        filename: "Request Completed", // set the file name
+      },
+      {
+        extend: "csvHtml5",
+        filename: "Request Completed", // set the file name
+      },
+      {
+        extend: "pageLength",
+      },
+      {
+        extend: "pdfHtml5",
+        filename: "Request Completed", // set the file name
+        customize: (doc) => {
+          doc.content[0].text = "Request Completed";
+          doc.pageMargins = [40, 40, 40, 60];
+          doc.defaultStyle.fontSize = 12;
+          doc.styles.tableHeader = {
+            fontSize:14,
+            bold: true,
+            alignment:"left"
 
-  $("#copyTable").on("click", function () {
-    table.button(".buttons-copy").trigger();
-  });
-  $(".select-row").on("click", function (e) {
-    e.preventDefault();
-    table.page.len($(this).data("length")).draw();
+          }; 
+          doc.styles.title = {
+            color: "#4c8aa0",
+            fontSize: 16,
+            alignment: "center",
+          };
+          doc.pageSize = "A4"; // set page size
+          doc.pageOrientation = "portrait";
+        },
+      },
+    ],
+    lengthMenu: [
+      [10, 25, 50, -1],
+      ["10 rows", "25 rows", "50 rows", "Show all"],
+    ],
+    searching: false,
+    dom: "frtip",
   });
 
-  $("#csvTable").on("click", function () {
-    table.button(".buttons-csv").trigger();
-  });
+  
+ //Initialize filter buttons
+ const initializeTableButtons = (selector, tableName) => {
+  $(selector).append(tableName.buttons().container());
 
-  $("#excelTable").on("click", function () {
-    table.button(".buttons-excel").trigger();
+  $(selector).on("click", "#copyTable", function () {
+    tableName.button(".buttons-copy").trigger();
   });
+  $(selector).on("click", ".select-row", (event) => {
+    event.preventDefault();
+    tableName.page.len($(event.target).data("length")).draw();
+  });
+  $(selector).on("click", "#csvTable", function () {
+    tableName.button(".buttons-csv").trigger();
+  });
+  $(selector).on("click", "#excelTable", function () {
+    tableName.button(".buttons-excel").trigger();
+  });
+  $(selector).on("click", "#pdfTable", function () {
+    tableName.button(".buttons-pdf").trigger();
+  });
+};
 
-  $("#pdfTable").on("click", function () {
-    table.button(".buttons-pdf").trigger();
-  });
-  //Print category table
-  $("#printTable").click(() => {
-    printJS({
-      printable: "table_data",
-      type: "html",
-      css: ["../css/mdb.min.css", "../css/style.css"],
-      scanStyles: true,
-      documentTitle: "",
-    });
-  });
-  $("#printBarChart").click(() => {
-    printJS({
-      printable: "barChart",
-      type: "html",
-      css: ["../css/mdb.min.css", "../css/style.css"],
-      scanStyles: true,
-      documentTitle: "",
-    });
-  });
+initializeTableButtons(".category-table", category_table);
+initializeTableButtons(".request-table", request_table);
 });

@@ -1,5 +1,7 @@
 <?php require_once '../include/protect.php';
 require_once '../include/profile.inc.php';
+require "../include/sidebar.php";
+
 
 ?>
 <!DOCTYPE html>
@@ -49,8 +51,8 @@ require_once '../include/profile.inc.php';
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
+      <?php echo sidebar($conn); ?>
     </div>
-
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
@@ -121,9 +123,7 @@ require_once '../include/profile.inc.php';
   <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
   <script type="text/javascript" src="../scripts/mdb.min.js"></script>
-  <script src="../scripts/main.js"></script>
   <script src="scripts/RequestTable.js"></script>
-  <script src="../Sidebar/scripts//SidebarTemplate.js"></script>
 
 
 </body>
