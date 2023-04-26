@@ -1,6 +1,6 @@
 <?php
    
-    include 'connection.php';
+    require '../../include/connection.php';
     if (isset($_POST["updateBtn"]))
     {
       $donorid = $_POST['donor_id'];
@@ -13,9 +13,6 @@
       $Email= $_POST['email'];
       $Date= date('Y-m-d', strtotime($_POST['donation_date']));
       $Contact= $_POST['contact'];
-      
-      
-    
       $sql ="UPDATE donation_items set Reference=?,donor_name=?,donor_region=?,donor_province=?,donor_municipality=?,donor_barangay=?,donor_email=?,donor_contact=?,donationDate=? where donor_id=?";
       $stmt=$conn->prepare($sql);
       try {

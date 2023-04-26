@@ -114,13 +114,24 @@ $(document).submit((e) => {
   let donation_date = $("#donation_date").val();
   /****************Donor Details********************************************************************/
 
-  /****************Category objects********************************************************************/
-
   let result = [];
   let x = 0;
   $(".selectCateg:checked").each(function () {
     result[x++] = $(this).val();
   });
+
+  /****************Alert function********************************************************************/
+  const alertMessage = (Message) => {
+    Swal.fire({
+      title: "Warning",
+      text: Message,
+      icon: "warning",
+      confirmButtonColor: "#20d070",
+    });
+  };
+  /****************Alert function********************************************************************/
+
+  let isInvalid = false; //tracks all input field
 
   /****************Check if there are checked checkbox and push data to the specific object base on value of checkbox********************************************************************/
   const inputFields = {
@@ -182,7 +193,7 @@ $(document).submit((e) => {
         { selector: ".pnME", prop: "pn" },
         { selector: ".typeME", prop: "type" },
         { selector: ".qME", prop: "q" },
-        { selector: ".unitME", prop: "unit" }
+        { selector: ".unitME", prop: "unit" },
       ],
     },
     {
@@ -190,31 +201,19 @@ $(document).submit((e) => {
       category: "Others",
       fields: [
         { selector: ".pnOT", prop: "pn" },
-        { selector: ".typeOT", prop: "type" },  
+        { selector: ".typeOT", prop: "type" },
         { selector: ".qOT", prop: "q" },
-        { selector: ".unitOT", prop: "unit" }
+        { selector: ".unitOT", prop: "unit" },
       ],
     },
   ];
-
-  const alertMessage= (Message)=>{
-    Swal.fire({
-      title: 'Warning',
-      text: Message,
-      icon: 'warning',
-      confirmButtonColor: '#20d070'  
-    });
-  }
-
-  let isInvalid = false;
-
   for (const box of boxes) {
     if ($(box.id).is(":checked")) {
       for (const field of box.fields) {
         $(field.selector).each((index, element) => {
           inputFields[box.category][field.prop].push($(element).val());
           if ($(element).val() == "") {
-            alertMessage(`Please input a value for ${box.category}.`)
+            alertMessage(`Please input a value for ${box.category}.`);
             $(element).addClass("is-invalid");
             isInvalid = true;
           } else {
@@ -227,7 +226,7 @@ $(document).submit((e) => {
         $(field.selector).each((index, element) => {
           if ($(element).val() != "") {
             isInvalid = true;
-            alertMessage(`Please select a category.`)
+            alertMessage(`Please insert value to ${box.category}`);
           }
         });
       }
@@ -235,9 +234,151 @@ $(document).submit((e) => {
   }
   /****************Check if there are checked checkbox and push data to the specific object base on value of checkbox********************/
 
+  /****************Custom Validators********************/
+  const emailVali =
+    /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  const varnumbers = /^\d+$/;
+
+  /****************Custom Validators********************/
+
   /****************Donor Information Validation********************************************************************/
-  
+  const checksDonorInfoIfEmpty = (fieldName, idField) => {
+    if (fieldName === "") {
+      isInvalid = true;
+      $(idField).addClass("is-invalid");
+    } else {
+      if (idField === "#email") {
+        if (!emailVali.test(fieldName)) {
+          isInvalid = true;
+          alertMessage("Please enter a valid e-mail address.");
+          $(idField).addClass("is-invalid");
+          return;
+        }
+      }
+      if (idField === "#contact") {
+        if (!varnumbers.test(fieldName)) {
+          isInvalid = true;
+          alertMessage("Please enter a valid contact number.");
+          $(idField).addClass("is-invalid");
+          return;
+        } else if (fieldName.length > 11) {
+          isInvalid = true;
+          alertMessage("Please enter a valid contact number.");
+          $(idField).addClass("is-invalid");
+          return;
+        }
+      }
 
+      $(idField).removeClass("is-invalid");
+    }
+  };
 
-  
+  checksDonorInfoIfEmpty(fname, "#fname");
+  checksDonorInfoIfEmpty(email, "#email");
+  checksDonorInfoIfEmpty(region, "#region");
+  checksDonorInfoIfEmpty(province, "#province");
+  checksDonorInfoIfEmpty(municipality, "#municipality");
+  checksDonorInfoIfEmpty(barangay, "#barangay");
+  checksDonorInfoIfEmpty(contact, "#contact");
+  checksDonorInfoIfEmpty(donation_date, "#donation_date");
+  /****************Donor Information Validation********************************************************************/
+
+  /****************Checks if there no checked checkbox********************************************************************/
+  if (result.length === 0) {
+    isInvalid = true;
+    alertMessage("Please select a category.");
+  }
+  /****************Checks if there no checked checkbox********************************************************************/
+
+  if (isInvalid) {
+    return false; //prevent form from submitting if any input is invalid
+  }
+  let inputData = {
+    saveBtn: "",
+    result: result,
+    ref_id: ref_id,
+    fname: fname,
+    region: region,
+    province: province,
+    municipality: municipality,
+    barangay: barangay,
+    contact: contact,
+    email: email,
+    donation_date: donation_date,
+    pnCN_arr: inputFields.CanNoodles.pn,
+    qCN_arr: inputFields.CanNoodles.q,
+    pnHY_arr: inputFields.HygineEssentials.pn,
+    qHY_arr: inputFields.HygineEssentials.q,
+    pnII_arr: inputFields.InfantItems.pn,
+    qII_arr: inputFields.InfantItems.q,
+    pnDW_arr: inputFields.DrinkingWater.pn,
+    qDW_arr: inputFields.DrinkingWater.q,
+    pnMG_arr: inputFields.MeatGrains.pn,
+    typeMG_arr: inputFields.MeatGrains.type,
+    qMG_arr: inputFields.MeatGrains.q,
+    unitMG_arr: inputFields.MeatGrains.unit,
+    pnME_arr: inputFields.Medicine.pn,
+    typeME_arr: inputFields.Medicine.type,
+    qME_arr: inputFields.Medicine.q,
+    unitME_arr: inputFields.Medicine.unit,
+    pnOT_arr: inputFields.Others.pn,
+    typeOT_arr: inputFields.Others.type,
+    qOT_arr: inputFields.Others.q,
+    unitOT_arr: inputFields.Others.unit,
+  };
+
+  $.ajax({
+    url: "include/add.inc.php",
+    method: "POST",
+    data: inputData,
+    beforeSend: () => {
+      $('button[type="submit"]').prop("disabled", true);
+      $(".submit-text").text("Saving...");
+      $(".spinner-border").removeClass("d-none");
+    },
+    success: (data) => {
+      if (data === "success") {
+        setTimeout(() => {
+          // Enable the submit button and hide the loading animation
+          $('button[type="submit"]').prop("disabled", false);
+          $(".submit-text").text("Save");
+          $(".spinner-border").addClass("d-none");
+          Swal.fire({
+            title: "Success",
+            text: "Data has been added",
+            icon: "success",
+            confirmButtonColor: "#20d070",
+            confirmButtonText: "OK",
+            allowOutsideClick: false,
+          });
+
+          setTimeout(() => {
+            window.location.href = "Donors.php";
+          }, 1000);
+        }, 500);
+      } else {
+        $(".submit-text").text("Save");
+        Swal.fire({
+          title: "Error",
+          text: data,
+          icon: "error",
+          confirmButtonColor: "#20d070",
+          confirmButtonText: "OK",
+          allowOutsideClick: false,
+        });
+      }
+    },
+    error: (xhr, status, error) => {
+      // Handle errors
+      $(".submit-text").text("Save");
+      Swal.fire({
+        title: "Error",
+        text: xhr.responseText,
+        icon: "error",
+        confirmButtonColor: "#20d070",
+        confirmButtonText: "OK",
+        allowOutsideClick: false,
+      });
+    },
+  });
 });

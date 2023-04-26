@@ -1,10 +1,9 @@
-$(document).ready(() => {
   /******************************Buttons Filter**************************************/
   const tableBtn = () => {
     let html = "";
     html += `
         <div class="d-flex justify-content-start">
-        <div class="dropdown me-2  ">
+        <div class="dropdown me-2 ${!window.location.pathname.includes('Donors.php')? 'd-none': ''} ">
         <button class="btn btn-secondary dropdown-toggle btn-rounded px-4" type="button" id="dateFilter" data-mdb-toggle="dropdown" aria-expanded="false">
           Select Date
         </button>
@@ -140,4 +139,3 @@ $(document).ready(() => {
   });
   /******************************Date Filter**************************************/
 
-});

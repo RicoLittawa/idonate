@@ -1,5 +1,5 @@
 <?php
-require_once 'connection.php';
+require_once '../../include/connection.php';
 
 if (isset($_POST["saveBtn"])) {
     $reference_id = $_POST['ref_id'];
@@ -14,7 +14,7 @@ if (isset($_POST["saveBtn"])) {
     $checkRes = $_POST['result'];
     foreach ($checkRes as $res) {
         /*************************IF CAN/NOODLES IS CHECKED******************************************************************************/
-        if ($res == 'cannoodles') {
+        if ($res == 'can-noodles') {
             $pnCN_arr = $_POST['pnCN_arr'];
             $qCN_arr = $_POST['qCN_arr'];
             foreach ($pnCN_arr as $index => $cn) {
@@ -76,7 +76,7 @@ if (isset($_POST["saveBtn"])) {
         /*************************IF CAN/NOODLES IS CHECKED******************************************************************************/
 
         /*************************IF HYGINE ESSENTIALS IS CHECKED******************************************************************************/
-        if ($res == 'hygine') {
+        if ($res == 'hygine-essentials') {
             $pnHY_arr = $_POST['pnHY_arr'];
             $qHY_arr = $_POST['qHY_arr'];
             foreach ($pnHY_arr as $index => $hy) {
@@ -138,7 +138,7 @@ if (isset($_POST["saveBtn"])) {
         /*************************IF HYGINE ESSENTIALS IS CHECKED******************************************************************************/
 
         /*************************IF INFANT ITEMS IS CHECKED******************************************************************************/
-        if ($res == 'infant') {
+        if ($res == 'infant-items') {
             $pnII_arr = $_POST['pnII_arr'];
             $qII_arr = $_POST['qII_arr'];
             foreach ($pnII_arr as $index => $ii) {
@@ -200,7 +200,7 @@ if (isset($_POST["saveBtn"])) {
         /*************************IF INFANT ITEMS IS CHECKED******************************************************************************/
 
         /*************************IF DRINKING WATER IS CHECKED******************************************************************************/
-        if ($res == 'drink') {
+        if ($res == 'drink-water') {
             $pnDW_arr = $_POST['pnDW_arr'];
             $qDW_arr = $_POST['qDW_arr'];
             foreach ($pnDW_arr as $index => $dw) {
@@ -262,7 +262,7 @@ if (isset($_POST["saveBtn"])) {
         /*************************IF DRINKING WATER IS CHECKED******************************************************************************/
 
         /*************************IF MEAT/GRAINS IS CHECKED******************************************************************************/
-        if ($res == 'meat') {
+        if ($res == 'meat-grains') {
             $pnMG_arr = $_POST['pnMG_arr'];
             $typeMG_arr = $_POST['typeMG_arr'];
             $qMG_arr = $_POST['qMG_arr'];
@@ -326,7 +326,7 @@ if (isset($_POST["saveBtn"])) {
         /*************************IF MEAT/GRAINS IS CHECKED******************************************************************************/
 
         /*************************IF MEDICINE IS CHECKED******************************************************************************/
-        if ($res == 'meds') {
+        if ($res == 'medicine') {
             $pnME_arr = $_POST['pnME_arr'];
             $typeME_arr = $_POST['typeME_arr'];
             $qME_arr = $_POST['qME_arr'];
@@ -390,7 +390,7 @@ if (isset($_POST["saveBtn"])) {
         /*************************IF MEDICINE IS CHECKED******************************************************************************/
 
         /*************************IF OTHERS IS CHECKED******************************************************************************/
-        if ($res == 'other') {
+        if ($res == 'others') {
             $pnOT_arr = $_POST['pnOT_arr'];
             $typeOT_arr = $_POST['typeOT_arr'];
             $qOT_arr = $_POST['qOT_arr'];

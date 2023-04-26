@@ -87,14 +87,14 @@ require "../include/sidebar.php";
               <table class="table table-striped table-bordered w-100" id="donors_data">
                 <thead>
                   <tr>
-                    <th></th>
+                    <th>Update</th>
+                    <th>Check/Delete</th>
                     <th>Donor Name</th>
                     <th>Email</th>
                     <th>Contact</th>
                     <th>Donation Date</th>
                     <th>Status</th>
                     <th>Certificate</th>
-                    <th></th>
                     <!-- Add more columns here -->
                   </tr>
                 </thead>

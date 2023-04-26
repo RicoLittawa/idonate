@@ -18,6 +18,7 @@ require_once '../include/FunctionSelectBox.php';
   <!--Necessary Plugins-->
   <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!--Necessary Plugins-->
   <title>Donors</title>
 </head>
@@ -98,7 +99,7 @@ require_once '../include/FunctionSelectBox.php';
               <div class="row pb-3">
                 <div class="col">
                   <div class="form-group">
-                  <label class="form-label" for="fname">Region</label>
+                    <label class="form-label" for="fname">Region</label>
                     <select class="form-control dropdown" name="region" id="region">
                       <option value="">--</option>
                       <?php echo fill_region_select_box($conn); ?>
@@ -109,6 +110,7 @@ require_once '../include/FunctionSelectBox.php';
                   <div class="form-group">
                     <label for="province" class="form-label">Province</label>
                     <select class="form-control dropdown" name="province" id="province">
+                      <option value="">--</option>
                     </select>
                   </div>
                 </div>
@@ -116,6 +118,7 @@ require_once '../include/FunctionSelectBox.php';
                   <div class="form-group">
                     <label for="municipality" class="form-label">Municipality</label>
                     <select class="form-control dropdown" name="municipality" id="municipality">
+                      <option value="">--</option>
                     </select>
                   </div>
                 </div>
@@ -123,6 +126,7 @@ require_once '../include/FunctionSelectBox.php';
                   <div class="form-group">
                     <label for="barangay" class="form-label">Barangay</label>
                     <select class="form-control dropdown" name="barangay" id="barangay">
+                      <option value="">--</option>
                     </select>
                   </div>
                 </div>
@@ -218,7 +222,6 @@ require_once '../include/FunctionSelectBox.php';
                 </div>
               </div>
             </form>
-
             <!--Place table here --->
           </div>
         </div>
@@ -232,15 +235,13 @@ require_once '../include/FunctionSelectBox.php';
   <script src="../scripts/mdb.min.js"></script>
   <script src="../scripts/sweetalert2.all.min.js"></script>
   <!--Necessary Plugins -->
-  <script src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.js"></script>
-  <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <!--Necessary Plugins -->
   <script src="scripts/AddDonorTable.js"></script>
   <script src="scripts/LocationSelect.js"></script>
   <script src="scripts/AddDonorProcess.js"></script>
+  <script src="scripts/AutoCompleteProducts.js"></script>
+  <script src="../scripts/CancelButton.js"></script>
 </body>
 
 </html>

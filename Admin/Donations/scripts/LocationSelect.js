@@ -18,3 +18,4 @@
   selectElement('Region',"#region", "regCode", "#province");
   selectElement('Province',"#province", "provCode", "#municipality");
   selectElement('Municipality',"#municipality", "citymunCode", "#barangay");
+  

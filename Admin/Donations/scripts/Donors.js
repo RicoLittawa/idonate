@@ -17,6 +17,12 @@
     },
     columns: [
       {
+        data:null,
+        render: function(data,type,row){
+          return `<a href="UpdateDonors.php?editdonate=${row.donorId}"><i class="fa-solid fa-pen-to-square text-success"></i></a>`;
+        }
+      },
+      {
         data: null,
         render: function (data, type, row) {
           if (row.emailStatus === "not sent") {
@@ -27,7 +33,7 @@
                 data-name = "${row.donorName}"
                 data-id = "${row.donorId}">`;
           } else {
-            return `<a href="updatedonate.php?editdonate=${row.donorId}"><i class="fa-solid fa-pen-to-square text-success"></i></a>`;
+            return `<a href="delete.php?editdonate=${row.donorId}"><i class="fa-solid fa-trash text-danger"></i></a>`;
           }
         },
       },
@@ -61,12 +67,7 @@
             : '<span class="badge badge-warning user-select-none not-allowed">N/A</span';
         },
       },
-      {
-        data: null,
-        render: function (data, type, row) {
-          return `<a href="#"><i class="fa-solid fa-trash text-danger"></i></a>`;
-        },
-      },
+      
     ],
     buttons: [
       {
@@ -107,7 +108,7 @@
         },
       },
     ],
-    order: [[3, "desc"]],
+    order: [[5, "desc"]],
     lengthMenu: [
       [10, 25, 50, -1],
       ["10 rows", "25 rows", "50 rows", "Show all"],
