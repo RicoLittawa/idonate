@@ -4,7 +4,7 @@ $(document).ready(() => {
     let html = "";
     html += `
         <div class="d-flex justify-content-start">
-        <div class="dropdown me-2 ${!window.location.pathname.includes('Donors.php')? 'd-none': ''} ">
+        <div class="dropdown me-2  ">
         <button class="btn btn-secondary dropdown-toggle btn-rounded px-4" type="button" id="dateFilter" data-mdb-toggle="dropdown" aria-expanded="false">
           Select Date
         </button>
@@ -15,11 +15,17 @@ $(document).ready(() => {
           <li><a class="dropdown-item select-row thirty-days-ago" href="#" data-daterange="thirty-days-ago">Last 30 days</a></li>
           <li><a class="dropdown-item select-row alltime" href="#" data-daterange="alltime">All Time</a></li>
           <li>
-            <a class="dropdown-item select-row custom-date" href="#" data-daterange="custom-date">
-              Custom Date <i class="fa-solid fa-calendar-days"></i>
+            <a class="dropdown-item select-row custom-date text-muted" href="#" data-daterange="custom-date">
+              Custom Range <i class="fa-solid fa-calendar-days"></i>
               <div class="d-block ">
-                <input type="text" class="form-control rounded-pill mx-2 my-2" id="min" name="min">
-                <input type="text" class="form-control rounded-pill mx-2 my-2" id="max" name="max">
+                <div class="form-group">
+                  <label class="form-label" for="min">From:</label>
+                  <input type="text" class="form-control" id="min" name="min">
+                </div>
+                <div class"form-group">
+                  <label class="form-label" for="max">To:</label>
+                  <input type="text" class="form-control" id="max" name="max">
+                </div>
               </div>
             </a>
           </li>

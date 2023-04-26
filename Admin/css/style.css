@@ -183,10 +183,7 @@ h6{
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     transform: translateX(-50%);
     cursor: pointer;
-    
-
   }
-
 
   .small-sidebar{
     max-width: 5%;
@@ -306,7 +303,9 @@ h6{
 .bc-nav a.active {
   color: #3aa3e0 !important;
 }
-
+.number-two{
+  position:relative; right:34px;
+}
 
 
 /*Dashboard cards*/

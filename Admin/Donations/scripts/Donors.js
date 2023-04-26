@@ -1,4 +1,3 @@
-$(document).ready(() => {
   /***********************Table Initialization*******************************/
   let donorTable = $("#donors_data").DataTable({
     lengthMenu: [
@@ -237,12 +236,10 @@ $(document).ready(() => {
 
   /***********************Route to AddPage and Select All*******************************/
     $('#addPage').click(() => {
-      window.location.href = "additemdonations.php?fillupform";
+      window.location.href = "AddDonor.php?fillupform";
     });
     $('#selectAll').click((event) => {
       $("input[type=checkbox]").prop('checked', $(event.target).prop('checked'));
 
     });
   
-
-});
