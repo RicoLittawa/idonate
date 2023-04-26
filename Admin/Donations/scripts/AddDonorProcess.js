@@ -327,6 +327,7 @@ $(document).submit((e) => {
     unitOT_arr: inputFields.Others.unit,
   };
 
+  /***********************Save data to database*******************************/
   $.ajax({
     url: "include/add.inc.php",
     method: "POST",
@@ -381,4 +382,6 @@ $(document).submit((e) => {
       });
     },
   });
+  /***********************Save data to database*******************************/
+
 });

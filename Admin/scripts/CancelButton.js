@@ -28,3 +28,9 @@
   }
   cancelButton("#cancelBtn");
  
+const goBack =(buttonId)=>{
+    $(document).on("click",buttonId,()=>{
+        window.history.go(-1)
+    })
+}
+goBack("#goBack");

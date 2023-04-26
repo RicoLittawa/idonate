@@ -85,7 +85,7 @@ if (isset($_POST['saveStatus'])) {
                 echo $e->getMessage();
             }
             break;
-        case "Request cannot be proccessed":
+        case "Request cannot be completed":
             $updateStatus = "UPDATE request set status= ? where request_id=?";
             $updateStatusStatement = $conn->prepare($updateStatus);
             $updateStatusStatement->bind_param('si', $selectedStatus, $reference);
@@ -94,7 +94,7 @@ if (isset($_POST['saveStatus'])) {
             break;
         case "Request completed":
             $currentDate = date('Y-m-d');
-            $updateStatus = "UPDATE request set status= ?, recieveDate=? where request_id=?";
+            $updateStatus = "UPDATE request set status= ?, receiveDate=? where request_id=?";
             $updateStatusStatement = $conn->prepare($updateStatus);
             $updateStatusStatement->bind_param('ssi', $selectedStatus,$currentDate, $reference);
             $updateStatusStatement->execute();

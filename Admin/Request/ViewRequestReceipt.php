@@ -1,6 +1,7 @@
 <?php require_once '../include/protect.php';
 require_once '../include/profile.inc.php';
 require_once 'include/RequestGetData.php';
+require "../include/sidebar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,48 +16,12 @@ require_once 'include/RequestGetData.php';
 	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<link rel="stylesheet" href="../css/mdb.min.css">
 	<link rel="stylesheet" href="../css/style.css">
-	<title>Accept Request</title>
+	<title>View Request Receipt</title>
 </head>
 <body>
 	<div class="main-container">
 		<!-- SIDEBAR -->
-		<div class="sidebar" id="sidebar">
-			<button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
-			<nav class="side-menu">
-				<ul class="nav">
-					<li class="nav-item">
-						<a href="adminpage.php" class="nav-link">
-							<i class='bx bxs-dashboard'></i>
-							<span class="text">Dashboard</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="donations.php" class="nav-link">
-							<i class='bx bxs-box'></i>
-							<span class="text">Donors</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="request.php" class="nav-link active">
-							<i class='bx bxs-envelope active'></i>
-							<span class="text">Requests</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="stocks.php" class="nav-link">
-							<i class='bx bxs-package'></i>
-							<span class="text">Stocks</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="users.php" class="nav-link">
-							<i class='bx bxs-user-plus'></i>
-							<span class="text">Users</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
+		<div class="sidebar" id="sidebar"><?php echo sidebar() ?></div>
 		<!--Main content -->
 		<div class="main-content">
 			<!--Header -->
@@ -79,7 +44,6 @@ require_once 'include/RequestGetData.php';
 							<?php } else { ?>
 								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
-
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<li>
@@ -98,7 +62,7 @@ require_once 'include/RequestGetData.php';
 					<div class="card-body overflow-auto">
 						<!--Place table here --->
 						<div class="d-flex justify-content-end">
-							<button id="printReceipt" class="btn btn-success btn-rounded" type="click">Print</button>
+							<button id="printReceipt" class="btn btn-success btn-rounded" type="click"><i class="fa-solid fa-print"></i></button>
 						</div>
 						<form id="form-container" class="form-container mt-5 ms-5">
 
@@ -148,16 +112,20 @@ require_once 'include/RequestGetData.php';
 										</span>
 									</div>
 								</div>
-
 								<span class="d-flex py-2">
 									<h6>Status:</h6>&nbsp&nbsp&nbsp
-									<?php if ($status != "pending") { ?>
-										<span class="badge badge-success"><?php echo htmlentities($status) ?></span>
-									<?php } else { ?>
+									<?php if ($status === "Ready for Pick-up") { ?>
 										<span class="badge badge-warning"><?php echo htmlentities($status) ?></span>
-									<?php  } ?>
+									<?php } else if($status=== "Request was processed") { ?>
+										<span class="badge badge-success"><?php echo htmlentities($status) ?></span>
+									<?php  } else if ($status==="Request completed") { ?>
+										<span class="badge badge-success"><?php echo htmlentities($status) ?></span>
+									<?php  } else if($status ==="Request cannot be completed"){ ?>
+										<span class="badge badge-danger"><?php echo htmlentities($status) ?></span>
+									<?php  } else { ?>
+										<span class="badge badge-info"><?php echo htmlentities($status) ?></span>
+									<?php } ?>
 								</span>
-
 							</div>
 							<div class="d-inline-flex">
 								<h6 class="number-title">2</h6>
@@ -194,18 +162,17 @@ require_once 'include/RequestGetData.php';
 									</tbody>
 								</table>
 							</div>
+							<div class="d-flex justify-content-end me-3">
+								<button type="button" class="btn btn-danger cancelBtn btn-rounded" id="goBack"><i class="fa-solid fa-arrow-left"></i> Go back</button>
+							</div>
 						</form>
-
-
 						<!--End of Container form -->
 					</div>
-
 				</div>
 			</div>
 			<!--End of card-->
 		</div>
 		<!--End of container-->
-
 	</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
@@ -214,27 +181,8 @@ require_once 'include/RequestGetData.php';
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="../scripts/mdb.min.js"></script>
 	<script src="../scripts/sweetalert2.all.min.js"></script>
-	<script src="../scripts/sidebar.js"></script>
-	<!--Here is the scripts for functions -->
-
-	<script>
-		$(document).ready(() => {
-			$('#printReceipt').click(() => {
-				printJS({
-					printable: 'form-container',
-					type: 'html',
-					css: ['../css/mdb.min.css','../css/style.css'],
-					scanStyles: true,
-					header:'<h3 class="d-flex justify-content-center">CDRRMO Request Form</h3>',
-					documentTitle:''
-				});
-			});
-
-		})
-	</script>
-
-
-
+	<script src="../scripts/TableFilterButtons.js"></script>
+	<script src="../scripts/CancelButton.js"></script>
 </body>
 
 </html>

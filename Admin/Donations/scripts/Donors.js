@@ -1,4 +1,56 @@
-  /***********************Table Initialization*******************************/
+/***********************Table Initialization*******************************/
+ /******************************Date Filter**************************************/
+ let minDate = new DateTime($("#min"), {
+  format: "MMMM Do YYYY",
+  buttons: {
+    today: true,
+    clear: true
+}
+});
+let maxDate = new DateTime($("#max"), {
+  format: "MMMM Do YYYY",
+  buttons: {
+    today: true,
+    clear: true
+}
+});
+const today = new Date();
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+const sevenDaysAgo = new Date();
+sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+const thirtyDaysAgo = new Date();
+thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+  let min = minDate.val();
+  let max = maxDate.val();
+  let date = new Date(data[5]);
+
+  if (
+    (min === null && max === null) ||
+    (min === null && date.getTime() <= max.getTime()) ||
+    (min.getTime() <= date.getTime() && max === null) ||
+    (min.getTime() <= date.getTime() && date.getTime() <= max.getTime())
+  ) {
+    // filter records based on today, yesterday, and 7 days ago
+    const selectRange = $(".select-date.active").data("daterange");
+    if (selectRange === "today") {
+      return date.toDateString() === today.toDateString();
+    } else if (selectRange === "yesterday") {
+      return date.toDateString() === yesterday.toDateString();
+    } else if (selectRange === "thirty-days-ago") {
+      return date >= thirtyDaysAgo && date <= yesterday;
+    } else if (selectRange === "seven-days-ago") {
+      return date >= sevenDaysAgo && date <= yesterday;
+    } else if (selectRange === "alltime") {
+      return true;
+    }
+    return true;
+  }
+  return false;
+});
+/******************************Date Filter**************************************/
   let donorTable = $("#donors_data").DataTable({
     lengthMenu: [
       [10, 25, 50, -1],
@@ -151,7 +203,7 @@
       tableName.draw();
     });
     //Date filter options
-    $(document).on("click", '.select-row', (event) =>{
+    $(document).on("click", '.select-date', (event) =>{
       event.preventDefault();
       const filterRange = $(event.target).data("daterange");
       const filters = ["today", "yesterday", "seven-days-ago", "thirty-days-ago", "alltime", "custom-date"];
@@ -215,7 +267,7 @@
             text: "Email has been sent",
             timer: 1500,
           });
-          table.ajax.reload();
+          donorTable.ajax.reload();
         } else {
           $this.text(data);
         }
