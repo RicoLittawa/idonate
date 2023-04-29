@@ -49,7 +49,10 @@ require "../include/sidebar.php";
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary closeModal">Close</button>
-          <button type="button" id="saveStatus" class="btn btn-success">Save changes</button>
+          <button type="button" id="saveStatus" class="btn btn-success">
+            <span class="submit-text">Save changes</span>
+            <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
     </div>

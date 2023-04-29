@@ -112,7 +112,7 @@ let requestTable = $("#request_data_main").DataTable({
       },
     },
   ],
-  order: [[0, "desc"]],
+  order: [[4, "desc"]],
   buttons: [
     {
       extend: "copyHtml5",
@@ -226,23 +226,33 @@ $(document).on("click", "#saveStatus", () => {
       reference: reference,
       selectStatus: selectStatus,
     },
+    beforeSend: () => {
+      $("#saveStatus").prop("disabled", true);
+      $(".submit-text").text("Updating...");
+      $(".spinner-border").removeClass("d-none");
+    },
     success: (data) => {
       if (data === "success") {
-        Swal.fire({
-          title: "Success",
-          text: "Status has been updated",
-          icon: "success",
-          confirmButtonColor: "#20d070",
-          confirmButtonText: "OK",
-          allowOutsideClick: false,
-          timer: 2000,
-        });
+        $('#saveStatus').prop("disabled", false);
+        $(".submit-text").text("Update");
+        $(".spinner-border").addClass("d-none");
         requestTable.ajax.reload();
         setTimeout(() => {
+          Swal.fire({
+            title: "Success",
+            text: "Status has been updated",
+            icon: "success",
+            confirmButtonColor: "#20d070",
+            confirmButtonText: "OK",
+            allowOutsideClick: false,
+            timer: 1500,
+          });
+        }, 1500);
+        setTimeout(()=>{
           $("#exampleModal").modal("hide");
           $(".main-content").removeClass("blur-filter-class");
           $(".sidebar").removeClass("blur-filter-class");
-        }, 2000);
+        },2000)
       }
     },
   });
