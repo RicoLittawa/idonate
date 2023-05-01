@@ -59,7 +59,9 @@ overflow: hidden;
   line-height: 10rem;
   margin: 2rem 0;
 }
-
+.dataTables_filter {
+  display: none;
+}
 .avatar-size{
   width: 100px; height:100px; object-fit: cover; border:1px green;
 }

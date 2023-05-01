@@ -1,6 +1,7 @@
-<?php require_once '../include/protect.php';
-require_once '../include/profile.inc.php';
-
+<?php require_once "../include/protect.php";
+require_once "../include/profile.inc.php";
+require_once "../include/FunctionSelectBox.php";
+require "../include/sidebar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,10 +13,12 @@ require_once '../include/profile.inc.php';
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
-  <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
   <link rel="stylesheet" href="../css/mdb.min.css">
   <link rel="stylesheet" href="../css/style.css">
+  <!--Necessary Plugins-->
+  <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+  <!--Necessary Plugins-->
 
   <title>Stocks</title>
 </head>
@@ -23,8 +26,7 @@ require_once '../include/profile.inc.php';
 <body>
   <div class="main-container">
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar"></div>
-
+    <div class="sidebar" id="sidebar"><?php echo sidebar() ?></div>
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
@@ -47,7 +49,6 @@ require_once '../include/profile.inc.php';
               <?php } else { ?>
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
-
             </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <li>
@@ -61,21 +62,23 @@ require_once '../include/profile.inc.php';
         </div>
       </div>
       <!--Header -->
-
-
       <!--reports -->
       <div class="custom-container pb-3">
         <div class="card">
           <div class="card-body">
-
-            <div class="d-flex justify-content-end">
-              <div class="form-group w-25">
-                <label class="form-label">Select Category:</label>
+              <!----Filter -->
+              <div class="d-flex justify-content-between">
+              <div id="search-field"></div>
+              <div class="form-group">
                 <div id="role_filter"></div>
               </div>
             </div>
-            <div class="py-3">
-              <table class="table table-striped table-bordered w-100" id="table_data">
+            <div class="d-flex justify-content-between py-3">
+              <div class="stocks-download-btn"></div>
+              <button class="btn btn-success btn-rounded me-2 text-wrap" id="printStocks"><i class="fa-solid fa-print"></i></button>
+            </div>
+            <!----Filter -->
+              <table class="table table-striped table-bordered w-100" id="stocks_data">
                 <thead>
                   <tr>
                     <th>Category</th>
@@ -89,8 +92,6 @@ require_once '../include/profile.inc.php';
                 </thead>
                 <tbody></tbody>
               </table>
-            </div>
-
           </div>
         </div>
         <!--End of main content -->
@@ -98,99 +99,21 @@ require_once '../include/profile.inc.php';
     </div>
   </div>
 
-
-
-
-
   <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
-  <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
   <script type="text/javascript" src="../scripts/mdb.min.js"></script>
+  <!--Necessary Plugins -->
+  <script src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.js"></script>
+  <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+  <!--Necessary Plugins -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-  <script src="../Sidebar/scripts//SidebarTemplate.js"></script>
+  <script src="../scripts/TableFilterButtons.js"></script>
+  <script src="scripts/StocksTable.js"></script>
 
-
-  <script>
-    $(document).ready(() => {
-      $('#table_data').DataTable({
-        responsive: true,
-        ajax: '../include/DataForDataTables/stocksdata.php',
-        columns: [{
-            data: 'category'
-          },
-          {
-            data: 'product',
-            render:(data,type,row)=>{
-              return `${data}<span class="badge rounded-pill badge-info">${row.type}</span>`
-            }
-          },
-          {
-            data: null,
-            createdCell: function(cell, cellData, rowData, rowIndex, colIndex) {
-              let previousQuantity = parseInt(rowData.quantity, 10) + parseInt(rowData.distributed, 10);
-              if (rowData.distributed !== 0) {
-                $(cell).html(`<h6>${previousQuantity}<span class="fw-light">&nbsp${rowData.unit}</span><br><span class="badge rounded-pill badge-danger">-${rowData.distributed}</span></h6>`);
-              } else {
-                $(cell).html(`${rowData.quantity}<span class="fw-light">&nbsp${rowData.unit}</span>`);
-              }
-            }
-          },
-          {
-            data: 'quantity',
-            render: (data, type, row) => {
-              if (row.distributed === 0) {
-                return `<span class="badge rounded-pill badge-warning">N/A</span>`;
-              }
-              return `${data}<span class="fw-light">&nbsp${row.unit}</span>` ;
-
-            }
-          },
-          {
-            data: 'distributed',
-            render: (data, type, row) => {
-              return data !== 0 ? data : `<span class="badge rounded-pill badge-warning">N/A</span>`;
-            }
-          },
-          {
-            data: null,
-            render: function(data, type, row) {
-              return `<button type="button" class="btn btn-success btn-rounded" id="addExpiry"><i class="fa-solid fa-plus"></i></button>`;
-            }
-          }
-        ],
-        order: [
-          [0, 'asc']
-        ],
-        displayLength: 10,
-        initComplete: function() {
-          this.api().columns(0).every(function() {
-            const column = this;
-            const select = $('<select class="form-select"><option value="">All</option></select>')
-              .appendTo($('#role_filter'))
-              .on('change', function() {
-                const val = $.fn.dataTable.util.escapeRegex(
-                  $(this).val()
-                );
-
-                column.search(val ? '^' + val + '$' : '', true, false).draw();
-              });
-
-            column.data().unique().sort().each(function(d, j) {
-              select.append('<option value="' + d + '">' + d + '</option>')
-            });
-          });
-        },
-
-      });
-
-      $(document).on('click', '#addExpiry', () => {
-        alert("working");
-      })
-    })
-  </script>
 </body>
 
 </html>

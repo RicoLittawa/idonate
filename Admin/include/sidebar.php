@@ -30,8 +30,8 @@ function sidebar() {
             </a>
           </li>
           <li class="nav-item">
-            <a href="users.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'users.php') !== false ? 'active' : '').'">
-              <i class="bx bxs-user-plus"></i>
+            <a href="../CreateAccount/users.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'users.php') !== false ? 'active' : '').'">
+              <i class="bx bxs-user-plus '.(strpos($_SERVER['REQUEST_URI'], 'users.php') !== false ? 'active' : '').'"></i>
               <span class="text">Users</span>
             </a>
           </li>

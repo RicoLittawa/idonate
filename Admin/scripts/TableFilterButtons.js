@@ -1,7 +1,6 @@
   /******************************Buttons Filter**************************************/
   const tableBtn = () => {
-    let html = "";
-    html += `
+    let html = `
         <div class="d-flex justify-content-start">
         <div class="dropdown me-2 ${!window.location.pathname.includes('Donors.php') && !window.location.pathname.includes('Request.php') ? 'd-none': ''} ">
         <button class="btn btn-secondary dropdown-toggle btn-rounded px-4" type="button" id="dateFilter" data-mdb-toggle="dropdown" aria-expanded="false">
@@ -53,13 +52,16 @@
   $(".request-table").append(tableBtn());
   $(".donor-download-btn").append(tableBtn());
   $(".request-download-btn").append(tableBtn());
+  $(".stocks-download-btn").append(tableBtn());
+  $(".user-download-btn").append(tableBtn());
+
+
 
   /******************************Buttons Filter**************************************/
 
   /******************************Select Filter**************************************/
   const searchField = () => {
-    let html = "";
-    html += `<input type="text" class="form-control rounded-pill text-wrap" id="customSearch" placeholder="Search..." />`;
+    let html = `<input type="text" class="form-control rounded-pill text-wrap" id="customSearch" placeholder="Search..." />`;
     return html;
   };
   $("#search-field").append(searchField());
@@ -87,6 +89,10 @@
   printTable("#printDonors", "donors_data");
   printTable("#printRequest", "request_data_main");
   printTable("#printReceipt", "form-container");
+  printTable("#printStocks", "stocks_data");
+  printTable("#printUsers", "user_data");
+
+
 
 
   /******************************Print Function**************************************/

@@ -1,5 +1,6 @@
-<?php require_once 'include/protect.php';
-require_once 'include/profile.inc.php';
+<?php include "../include/protect.php";
+include "../include/profile.inc.php";
+require "../include/sidebar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,13 +9,14 @@ require_once 'include/profile.inc.php';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="../css/mdb.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <!--Necessary Plugins-->
+  <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
-  <link rel="stylesheet" href="css/mdb.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <!--Necessary Plugins-->
 
   <title>User Details</title>
 </head>
@@ -22,44 +24,7 @@ require_once 'include/profile.inc.php';
 <body>
   <div class="main-container">
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar">
-      <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
-      <nav class="side-menu">
-        <ul class="nav">
-          <li class="nav-item">
-            <a href="adminpage.php" class="nav-link">
-              <i class='bx bxs-dashboard'></i>
-              <span class="text">Dashboard</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="donations.php" class="nav-link">
-              <i class='bx bxs-box'></i>
-              <span class="text">Donors</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="request.php" class="nav-link">
-              <i class='bx bxs-envelope'></i>
-              <span class="text">Requests</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="stocks.php" class="nav-link">
-              <i class='bx bxs-package'></i>
-              <span class="text">Stocks</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link active">
-              <i class='bx bxs-user-plus active'></i>
-              <span class="text">Users</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-    </div>
+    <div class="sidebar" id="sidebar"><?php echo sidebar() ?> </div>
 
     <!--Main content -->
     <div class="main-content">
@@ -79,9 +44,9 @@ require_once 'include/profile.inc.php';
           <div class="dropdown">
             <a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
               <?php if ($profile == null) { ?>
-                <img src="img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
+                <img src="../img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
               <?php } else { ?>
-                <img src="include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
 
             </a>
@@ -101,18 +66,8 @@ require_once 'include/profile.inc.php';
       <div class="custom-container pb-3">
         <div class="card">
           <div class="card-body overflow-auto">
-            <div class="mt-2">
-
-              <span>
-                <button class="btn btn-success float-end w-20 h-50 btn-rounded" type="button" id="toggleFormBtn">
-                  <i class="fas fa-add"></i>Show Form</button>
-              </span>
-            </div>
-
-            <br>
             <div id="registerForm" class="collapse mt-5" data-duration="500">
               <form class="pe-2 mb-3" id="add-user">
-
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class="row mb-4">
                   <div class="col">
@@ -134,7 +89,6 @@ require_once 'include/profile.inc.php';
                     </div>
                   </div>
                 </div>
-
                 <!-- Email and Password inputs -->
                 <div class="form-outline mb-4">
                   <input type="email" id="email" class="form-control" />
@@ -178,34 +132,41 @@ require_once 'include/profile.inc.php';
                 </button>
               </form>
             </div>
-            <br><br>
-            <!--- For table -->
-            <div class="d-flex justify-content-end">
-              <div class="form-group w-25">
-                <label class="form-label">Select Role:</label>
+            <!----Filter -->
+            <div class="d-flex justify-content-between">
+              <div id="search-field"></div>
+              <div class="form-group">
                 <div id="role_filter"></div>
               </div>
             </div>
+            <div class="d-flex justify-content-between py-3">
+              <div class="user-download-btn"></div>
+              <div>
+                <button class="btn btn-success btn-rounded" type="button" id="toggleFormBtn">
+                  <i class="fas fa-add"></i> Show Form</button>
+                  <button class="btn btn-success btn-rounded me-2 text-wrap" id="printUsers"><i class="fa-solid fa-print"></i></button>
 
-            <div class="py-3">
-              <table class="table table-striped table-bordered w-100" id="table_data">
-                <thead>
-                  <tr>
-                    <th>UID</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Position</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                    <!-- Add more columns here -->
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
+              </div>
             </div>
+            <!----Filter -->
+
+            <table class="table table-striped table-bordered w-100" id="user_data">
+              <thead>
+                <tr>
+                  <th>UID</th>
+                  <th>Firstname</th>
+                  <th>Lastname</th>
+                  <th>Position</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                  <!-- Add more columns here -->
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
             <!--- For table -->
           </div>
         </div>
@@ -213,26 +174,22 @@ require_once 'include/profile.inc.php';
     </div>
   </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.2/js/dataTables.bootstrap5.min.js"></script>
+  <script src="../scripts/mdb.min.js"></script>
+  <script src="../scripts/sweetalert2.all.min.js"></script>
+  <!--Necessary Plugins -->
+  <script src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.js"></script>
   <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-  <script type="text/javascript" src="scripts/mdb.min.js"></script>
-  <script src="scripts/main.js"></script>
-  <script src="scripts/sweetalert2.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+  <!--Necessary Plugins -->
+  <script src="../scripts/TableFilterButtons.js"></script>
+  <script src="../scripts/ToggleForm.js"></script>
+  <script src="scripts/UsersTable.js"></script>
   <script>
     $(document).ready(() => {
-      /***** Toggle form to add new user ****/
-      $("#toggleFormBtn").click(function() {
-        $("#registerForm").collapse('toggle');
-        if ($(this).html().includes('<i class="fas fa-minus"></i> Hide Form')) {
-          $(this).html('<i class="fas fa-plus"></i> Show Form');
-        } else {
-          $(this).html('<i class="fas fa-minus"></i> Hide Form');
-        }
-      });
 
       /***** Generate Password ****/
       const generatePassword = () => {
@@ -422,73 +379,7 @@ require_once 'include/profile.inc.php';
       });
       /***** Populate data tables for users ****/
 
-      $('#table_data').DataTable({
-        responsive: true,
-        ajax: 'include/DataForDataTables/usersdata.php',
-        columns: [{
-            data: 'uID',
-            visible: false,
-          },
-          {
-            data: 'firstname'
-          },
-          {
-            data: 'lastname'
-          },
-          {
-            data: 'position'
-          },
-          {
-            data: 'email'
-          },
-          {
-            data: 'address'
-          },
-          {
-            data: 'role',
-            render: (data, type, row) => {
-              return data !== 'admin' ? `<span class="badge rounded-pill badge-info">${data}</span>` : `<span class="badge rounded-pill badge-success">${data}</span>`;
 
-            }
-          },
-          {
-            data: 'status',
-            render: function(data, type, row) {
-              return data !== 'offline' ? `<span class="badge rounded-pill badge-success">Active</span>` : `<span class="badge rounded-pill badge-info">Offline</span>`;
-
-            }
-          },
-          {
-            data: null,
-            render: function(data, type, row) {
-              return `<div class="d-flex justify-content-evenly"><a href=""><i class="fa-solid fa-trash text-danger"></i></a>
-          <a href=""><i class="fa-solid fa-pen-to-square text-success"></i></a></div>`;
-            }
-          }
-        ],
-        order: [
-          [0, 'desc']
-        ],
-        displayLength: 10,
-        initComplete: function() {
-          this.api().columns(6).every(function() {
-            const column = this;
-            const select = $('<select class="form-select"><option value="">All</option></select>')
-              .appendTo($('#role_filter'))
-              .on('change', function() {
-                const val = $.fn.dataTable.util.escapeRegex(
-                  $(this).val()
-                );
-
-                column.search(val ? '^' + val + '$' : '', true, false).draw();
-              });
-
-            column.data().unique().sort().each(function(d, j) {
-              select.append('<option value="' + d + '">' + d + '</option>')
-            });
-          });
-        },
-      });
 
 
     })
