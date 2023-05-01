@@ -32,12 +32,14 @@ require_once '../include/FunctionSelectBox.php';
       <!--Header -->
       <div class="mb-4 custom-breadcrumb">
         <div class="crumb">
-          <h1 class="fs-1 breadcrumb-title">Donors</h1>
+          <h1 class="fs-1 breadcrumb-title">Add Donors</h1>
           <nav class="bc-nav d-flex">
             <h6 class="mb-0">
               <a href="#" class="text-muted bc-path">Home</a>
               <span>/</span>
-              <a href="#" class="text-reset bc-path active">Donors</a>
+              <a href="Donors.php" class="text-reset bc-path">Donors</a>
+              <span>/</span>
+              <a href="#" class="text-reset bc-path active">Add Donors</a>
             </h6>
           </nav>
         </div>
@@ -50,14 +52,7 @@ require_once '../include/FunctionSelectBox.php';
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li>
-                <h6 class="dropdown-item">Hello <?php echo htmlentities($firstname); ?>!</h6>
-              </li>
-              <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
-              <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
-              <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
-            </ul>
+            <?php echo accountUpdate() ?>
           </div>
         </div>
       </div>

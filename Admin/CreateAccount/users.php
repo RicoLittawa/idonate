@@ -17,15 +17,12 @@ require "../include/sidebar.php";
   <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
   <!--Necessary Plugins-->
-
   <title>User Details</title>
 </head>
-
 <body>
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar"><?php echo sidebar() ?> </div>
-
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
@@ -48,21 +45,12 @@ require "../include/sidebar.php";
               <?php } else { ?>
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
-
             </a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li>
-                <h6 class="dropdown-item">Hello <?php echo htmlentities($firstname); ?>!</h6>
-              </li>
-              <li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
-              <li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
-              <li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
-            </ul>
+          <?php echo accountUpdate() ?>
           </div>
         </div>
       </div>
       <!--Header -->
-
       <div class="custom-container pb-3">
         <div class="card">
           <div class="card-body overflow-auto">
@@ -94,7 +82,6 @@ require "../include/sidebar.php";
                   <input type="email" id="email" class="form-control" />
                   <label class="form-label" for="email">Email address</label>
                 </div>
-
                 <div class="input-group form-outline mb-4">
                   <input type="password" class="form-control" id="password">
                   <div class="input-group-append">
@@ -106,13 +93,11 @@ require "../include/sidebar.php";
                   </div>
                   <label class="form-label" for="password">Password</label>
                 </div>
-
                 <!-- Address input -->
                 <div class="form-outline mb-4">
                   <input class="form-control" id="address" rows="3"></input>
                   <label class="form-label" for="address">Address</label>
                 </div>
-
                 <!-- Radio buttons -->
                 <div class="d-flex justify-content-center mb-4">
                   <div class="form-check form-check-inline">
@@ -124,7 +109,6 @@ require "../include/sidebar.php";
                     <label class="form-check-label" for="user">User</label>
                   </div>
                 </div>
-
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-success btn-block btn-rounded">
                   <span class="submit-text">Create</span>
@@ -145,11 +129,9 @@ require "../include/sidebar.php";
                 <button class="btn btn-success btn-rounded" type="button" id="toggleFormBtn">
                   <i class="fas fa-add"></i> Show Form</button>
                   <button class="btn btn-success btn-rounded me-2 text-wrap" id="printUsers"><i class="fa-solid fa-print"></i></button>
-
               </div>
             </div>
             <!----Filter -->
-
             <table class="table table-striped table-bordered w-100" id="user_data">
               <thead>
                 <tr>
@@ -187,205 +169,6 @@ require "../include/sidebar.php";
   <!--Necessary Plugins -->
   <script src="../scripts/TableFilterButtons.js"></script>
   <script src="../scripts/ToggleForm.js"></script>
-  <script src="scripts/UsersTable.js"></script>
-  <script>
-    $(document).ready(() => {
-
-      /***** Generate Password ****/
-      const generatePassword = () => {
-        const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:\'",.<>/?`~';
-        let password = '';
-        for (let i = 0; i < 8; i++) {
-          password += characters.charAt(Math.floor(Math.random() * characters.length));
-        }
-        return password;
-      }
-
-      let passwordInput = $('#password');
-
-      $('#generatePasswordBtn').click(() => {
-        passwordInput.val(generatePassword());
-        $('label[for="password"]').hide();
-      });
-
-      $('#password').keyup(() => {
-        $('label[for="password"]').toggle($('#password').val() === '');
-      });
-
-      /***** Show Password ****/
-      $('#togglePass').click(function() {
-        if (passwordInput.attr('type') === 'password') {
-          passwordInput.attr('type', 'text');
-        } else {
-          passwordInput.attr('type', 'password');
-        }
-      })
-
-      /***** Add new user ****/
-      $('#add-user').submit((e) => {
-        e.preventDefault();
-
-        // Get form field values
-        let fname = $('#fname').val();
-        let lname = $('#lname').val();
-        let position = $('#position').val();
-        let email = $('#email').val();
-        let password = $('#password').val();
-        let address = $('#address').val();
-        let selectedValue = $('input[name="role"]:checked').val();
-
-
-        /**Validations */
-        let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        let isInvalid = false;
-
-        // Check for empty required fields
-        if (!fname) {
-          $('#fname').addClass('is-invalid');
-          isInvalid = true;
-        } else {
-          $('#fname').removeClass('is-invalid');
-        }
-
-        if (!lname) {
-          $('#lname').addClass('is-invalid');
-          isInvalid = true;
-        } else {
-          $('#lname').removeClass('is-invalid');
-        }
-
-        if (!position) {
-          $('#position').addClass('is-invalid');
-          isInvalid = true;
-        } else {
-          $('#position').removeClass('is-invalid');
-        }
-
-        if (!email) {
-          $('#email').addClass('is-invalid');
-          isInvalid = true;
-        } else if (emailVali.test(email) == false) {
-          Swal.fire({
-            title: 'Warning',
-            text: 'Invalid email address',
-            icon: 'warning',
-            confirmButtonColor: '#20d070' // Change the color value here
-          });
-          $('#email').addClass('is-invalid');
-          isInvalid = true;
-        } else {
-          $('#email').removeClass('is-invalid');
-        }
-
-        if (!password) {
-          $('#password').addClass('is-invalid');
-          isInvalid = true;
-        } else {
-          $('#password').removeClass('is-invalid');
-        }
-
-        if (!address) {
-          $('#address').addClass('is-invalid');
-          isInvalid = true;
-        } else {
-          $('#address').removeClass('is-invalid');
-        }
-
-        if (!selectedValue) {
-          $('input[name="role"]').addClass('is-invalid');
-          isInvalid = true;
-        } else {
-          $('input[name="role"]').removeClass('is-invalid');
-        }
-
-        // Submit the form data with AJAX
-        let data = {
-          submitBtn: '',
-          fname: fname,
-          lname: lname,
-          position: position,
-          email: email,
-          password: password,
-          address: address,
-          selectedValue: selectedValue
-        };
-        if (isInvalid) {
-          return false;
-        }
-        $.ajax({
-          type: 'POST',
-          url: 'include/register.inc.php',
-          data: data,
-          beforeSend: () => {
-            $('button[type="submit"]').prop('disabled', true);
-            $('.submit-text').text('Creating...');
-            $('.spinner-border').removeClass('d-none');
-          },
-          success: (data) => {
-            if (data === 'success') {
-              setTimeout(() => {
-                // Enable the submit button and hide the loading animation
-                $('button[type="submit"]').prop('disabled', false);
-                $('.submit-text').text('Create');
-                $('.spinner-border').addClass('d-none');
-                $('#table_data').DataTable().ajax.reload();
-                Swal.fire({
-                  title: 'Success',
-                  text: "Account is successfully created",
-                  icon: 'success',
-                  confirmButtonColor: '#20d070',
-                  confirmButtonText: 'OK',
-                  allowOutsideClick: false
-                })
-                setTimeout(() => {
-                  $('#fname').val("");
-                  $('#lname').val("");
-                  $('#position').val("");
-                  $('#email').val("");
-                  $('#password').val("");
-                  $('#address').val("");
-                  $('input[name="role"]').prop('checked', false);
-                }, 1000)
-              }, 500);
-            } else if (data == 'Email already exists') {
-              $('button[type="submit"]').prop('disabled', false);
-              $('.submit-text').text('Create');
-              $('.spinner-border').addClass('d-none');
-              $('#email').val('');
-              $('#email').addClass('is-invalid');
-              Swal.fire({
-                title: 'Error',
-                text: data,
-                icon: 'error',
-                confirmButtonColor: '#20d070',
-                confirmButtonText: 'OK',
-                allowOutsideClick: false
-              })
-            }
-
-          },
-          error: (xhr, status, error) => {
-            // Handle errors
-            Swal.fire({
-              title: 'Error',
-              text: xhr.responseText,
-              icon: 'error',
-              confirmButtonColor: '#20d070',
-              confirmButtonText: 'OK',
-              allowOutsideClick: false
-            })
-          }
-        });
-      });
-      /***** Populate data tables for users ****/
-
-
-
-
-    })
-  </script>
-
-
+  <script src="scripts/AddUsers.js"></script>
 </body>
-
 </html>

@@ -12,26 +12,10 @@ let stocksTable = $("#stocks_data").DataTable({
       },
     },
     {
-      data: null,
-      createdCell: function (cell, cellData, rowData, rowIndex, colIndex) {
-        let previousQuantity =
-          parseInt(rowData.quantity, 10) + parseInt(rowData.distributed, 10);
-        if (rowData.distributed !== 0) {
-          $(cell).html(
-            `<h6>${previousQuantity}<span class="fw-light">&nbsp${rowData.unit}</span><br><span class="badge rounded-pill badge-danger">-${rowData.distributed}</span></h6>`
-          );
-        } else {
-          $(cell).html(
-            `${rowData.quantity}<span class="fw-light">&nbsp${rowData.unit}</span>`
-          );
-        }
-      },
-    },
-    {
       data: "quantity",
       render: (data, type, row) => {
-        if (row.distributed === 0) {
-          return `<span class="badge rounded-pill badge-warning">N/A</span>`;
+        if (row.quantity <= 0) {
+          return `<span class="badge rounded-pill badge-danger">Out of Stock</span>`;
         }
         return `${data}<span class="fw-light">&nbsp${row.unit}</span>`;
       },
@@ -147,15 +131,13 @@ const initializeTableButtons = (selector, tableName) => {
 initializeTableButtons(".stocks-download-btn", stocksTable);
 
 const filterInitialization = (tableName) => {
-    // Custom search
-    $(document).on("keyup", "#customSearch", (event) => {
-      tableName.search($(event.target).val()).draw();
-    });
-  };
-  filterInitialization(stocksTable);
+  // Custom search
+  $(document).on("keyup", "#customSearch", (event) => {
+    tableName.search($(event.target).val()).draw();
+  });
+};
+filterInitialization(stocksTable);
 /******************************Filter button initializations**************************************/
-
-
 
 /******************************Expiry function**************************************/
 $(document).on("click", "#addExpiry", () => {

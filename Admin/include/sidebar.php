@@ -1,7 +1,6 @@
 <?php
 function sidebar() {
-    $html = '';
-    $html .= '
+    $html = '
       <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
       <nav class="side-menu">
         <ul class="nav">
@@ -12,8 +11,8 @@ function sidebar() {
             </a>
           </li>
           <li class="nav-item">
-            <a href="../Donations/Donors.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'Donors.php') !== false ? 'active' : '').'">
-              <i class="bx bxs-box '.(strpos($_SERVER['REQUEST_URI'], 'Donors.php') !== false ? 'active' : '').'"></i>
+            <a href="../Donations/Donors.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'Donors.php') !== false || strpos($_SERVER['REQUEST_URI'], 'AddDonor.php') !== false ? 'active' : '').'">
+              <i class="bx bxs-box '.(strpos($_SERVER['REQUEST_URI'], 'Donors.php') !== false || strpos($_SERVER['REQUEST_URI'], 'AddDonor.php') !== false ? 'active' : '').'"></i>
               <span class="text">Donors</span>
             </a>
           </li>
@@ -30,13 +29,24 @@ function sidebar() {
             </a>
           </li>
           <li class="nav-item">
-            <a href="../CreateAccount/users.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'users.php') !== false ? 'active' : '').'">
-              <i class="bx bxs-user-plus '.(strpos($_SERVER['REQUEST_URI'], 'users.php') !== false ? 'active' : '').'"></i>
+            <a href="../CreateAccount/Users.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'Users.php') !== false ? 'active' : '').'">
+              <i class="bx bxs-user-plus '.(strpos($_SERVER['REQUEST_URI'], 'Users.php') !== false ? 'active' : '').'"></i>
               <span class="text">Users</span>
             </a>
           </li>
         </ul>
       </nav>';
-  
     return $html;
   }
+function accountUpdate (){
+ $html= '
+ <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li><h6 class="dropdown-item">Hello <?php echo htmlentities($firstname);?>!</h6></li>
+    <li><a class="dropdown-item" href="../UpdateUsersAccount/UpdateAccount.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
+    <li><a class="dropdown-item" href="../UpdateUsersAccount/UpdatePassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
+    <li><a class="dropdown-item" href="../include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
+  </ul>
+
+ ';
+ return $html;
+}

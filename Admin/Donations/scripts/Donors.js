@@ -71,21 +71,22 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
       {
         data:null,
         render: function(data,type,row){
-          return `<a href="UpdateDonors.php?editdonate=${row.donorId}"><i class="fa-solid fa-pen-to-square text-success"></i></a>`;
+          return `<div class="d-flex justify-content-center"><a href="UpdateDonors.php?editdonate=${row.donorId}"><i class="fa-solid fa-pen-to-square text-success"></i></a></div>`;
         }
       },
       {
         data: null,
         render: function (data, type, row) {
           if (row.emailStatus === "not sent") {
-            return `<input type = "checkbox"
+            return `<div class="d-flex justify-content-center"><input type = "checkbox"
                 name = "single_select"
                 class = "single_select form-check-input"
                 data-email = "${row.donorEmail}"
                 data-name = "${row.donorName}"
-                data-id = "${row.donorId}">`;
+                data-id = "${row.donorId}"></div>`;
           } else {
-            return `<a href="delete.php?editdonate=${row.donorId}"><i class="fa-solid fa-trash text-danger"></i></a>`;
+            return `<div class="d-flex justify-content-center"><a href="delete.php?editdonate=${row.donorId}">
+            <i class="fa-solid fa-trash text-danger"></i></a></div>`;
           }
         },
       },

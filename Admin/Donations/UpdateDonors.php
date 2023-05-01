@@ -48,7 +48,9 @@ if (isset($_GET["editdonate"])) {
 					<h1 class="fs-1 breadcrumb-title">Update Donors</h1>
 					<nav class="bc-nav d-flex">
 						<h6 class="mb-0">
-							<a href="donations.php" class="text-muted bc-path">Donors</a>
+							<a href="donations.php" class="text-muted bc-path">Home</a>
+							<span>/</span>
+							<a href="Donors.php" class="text-reset bc-path">Donors</a>
 							<span>/</span>
 							<a href="#" class="text-reset bc-path active">Update Donors</a>
 						</h6>
