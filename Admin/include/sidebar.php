@@ -50,3 +50,26 @@ function accountUpdate (){
  ';
  return $html;
 }
+
+function userSidebar(){
+  $html= '
+  <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
+      <nav class="side-menu">
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="UserCreateRequest.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'UserCreateRequest.php') !== false ? 'active' : '').'">
+              <i class="bx bxs-cart-add active"></i>
+              <span class="text">Create</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="bx bxs-package"></i>
+              <span class="text">History</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+  ';
+  return $html;
+}

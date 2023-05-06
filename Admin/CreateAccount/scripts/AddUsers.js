@@ -1,7 +1,7 @@
 /***********************Populate added users table*******************/
 let userTable = $("#user_data").DataTable({
   responsive: true,
-  ajax: "../include/DataForDataTables/usersdata.php",
+  ajax: "include/usersdata.php",
   columns: [
     {
       data: "uID",
@@ -261,7 +261,7 @@ $("#add-user").submit((e) => {
           $('button[type="submit"]').prop("disabled", false);
           $(".submit-text").text("Create");
           $(".spinner-border").addClass("d-none");
-          $("#table_data").DataTable().ajax.reload();
+          userTable.ajax.reload()
           Swal.fire({
             title: "Success",
             text: "Account is successfully created",
@@ -270,7 +270,6 @@ $("#add-user").submit((e) => {
             confirmButtonText: "OK",
             allowOutsideClick: false,
           });
-          userTable.ajax.reload()
           setTimeout(() => {
             $("#fname").val("");
             $("#lname").val("");

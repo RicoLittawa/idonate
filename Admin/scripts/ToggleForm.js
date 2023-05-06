@@ -10,3 +10,4 @@
     });
 }
 toggleForm("#toggleFormBtn","#registerForm")
+toggleForm("#toggleFormRequestBtn","#createRequest")

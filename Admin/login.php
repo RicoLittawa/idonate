@@ -172,7 +172,7 @@
 				 		 	  	allowOutsideClick: false
 				 		 	  })
 						 	   setTimeout(()=>{
-						 		window.location.href="userlandingpage.php";
+						 		window.location.href="../Admin/UsersModule/UserCreateRequest.php";
 						 	},1000)
          				 	 }, 1500);
 						  }

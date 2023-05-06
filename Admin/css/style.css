@@ -94,6 +94,9 @@ h6{
 .not-allowed {
   cursor: not-allowed;
 }
+.allowed {
+  cursor: pointer;
+}
 .btn-flat {
   box-shadow: none !important;
   border: none !important;

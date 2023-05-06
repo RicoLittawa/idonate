@@ -1,6 +1,5 @@
 <?php
 require_once 'connection.php';
-
 //Fill region selectbox
 function fill_region_select_box($conn)
 {
@@ -33,6 +32,23 @@ function add_category($conn)
 	}
 	return $output;
 }
+
+function add_category_create($conn)
+{
+	$output = '';
+	$sql = "SELECT * from category";
+
+	$stmt = $conn->prepare($sql);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	foreach ($result as $row) {
+		$category = htmlentities($row['category']);
+		$categCode = htmlentities($row['categCode']);
+		$output .= '<option " value="' . $categCode . '">' . $category . '</option>';
+	}
+	return $output;
+}
+
 //Count donors
 function count_donors($conn)
 {
@@ -47,7 +63,6 @@ function count_donors($conn)
 
 	return $output;
 }
-
 //Count Request
 function count_request($conn)
 {
@@ -59,10 +74,8 @@ function count_request($conn)
 	$row = $result->fetch_assoc();
 	$count = $row["COUNT(*)"];
 	$output .= '<h1 class="m-md-1 text-dark">' . $count . '</h1>';
-
 	return $output;
 }
-
 //Count distributed
 function count_distributed($conn)
 {
@@ -90,7 +103,5 @@ function count_distributed($conn)
 		$count = $row["totalQuantity"];
 		$output .= '<h1 class="m-md-1 text-dark">' . $count . '</h1>';
 	}
-
-
 	return $output;
 }

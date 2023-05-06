@@ -1,8 +1,14 @@
-  /******************************Buttons Filter**************************************/
-  const tableBtn = () => {
-    let html = `
+/******************************Buttons Filter**************************************/
+const tableBtn = () => {
+  let html = `
         <div class="d-flex justify-content-start">
-        <div class="dropdown me-2 ${!window.location.pathname.includes('Donors.php') && !window.location.pathname.includes('Request.php') ? 'd-none': ''} ">
+        <div class="dropdown me-2 ${
+          !window.location.pathname.includes("Donors.php") &&
+          !window.location.pathname.includes("UserCreateRequest.php") &&
+          !window.location.pathname.includes("Request.php")
+            ? "d-none"
+            : ""
+        } ">
         <button class="btn btn-secondary dropdown-toggle btn-rounded px-4" type="button" id="dateFilter" data-mdb-toggle="dropdown" aria-expanded="false">
           Select Date
         </button>
@@ -46,57 +52,47 @@
             <button class="btn btn-secondary btn-rounded mx-1" id="pdfTable">PDF</button>
         </div>
         `;
-    return html;
-  };
-  $(".category-table").append(tableBtn());
-  $(".request-table").append(tableBtn());
-  $(".donor-download-btn").append(tableBtn());
-  $(".request-download-btn").append(tableBtn());
-  $(".stocks-download-btn").append(tableBtn());
-  $(".user-download-btn").append(tableBtn());
+  return html;
+};
+$(".category-table").append(tableBtn());
+$(".request-table").append(tableBtn());
+$(".donor-download-btn").append(tableBtn());
+$(".request-download-btn").append(tableBtn());
+$(".stocks-download-btn").append(tableBtn());
+$(".user-download-btn").append(tableBtn());
+$(".create-request-download-btn").append(tableBtn());
 
+/******************************Buttons Filter**************************************/
 
+/******************************Select Filter**************************************/
+const searchField = () => {
+  let html = `<input type="text" class="form-control rounded-pill text-wrap" id="customSearch" placeholder="Search..." />`;
+  return html;
+};
+$("#search-field").append(searchField());
+/******************************Select Filter**************************************/
 
-  /******************************Buttons Filter**************************************/
-
-  /******************************Select Filter**************************************/
-  const searchField = () => {
-    let html = `<input type="text" class="form-control rounded-pill text-wrap" id="customSearch" placeholder="Search..." />`;
-    return html;
-  };
-  $("#search-field").append(searchField());
-  /******************************Select Filter**************************************/
-
-  /******************************Print Function**************************************/
-  const printTable = (buttonId, content) => {
-    $(buttonId).click(() => {
-      printJS({
-        printable: content,
-        orientation: "landscape",
-        type: "html",
-        css: [
-          "../css/mdb.min.css",
-          "../css/style.css",
-        ],
-        scanStyles: true,
-        documentTitle: "",
-      });
+/******************************Print Function**************************************/
+const printTable = (buttonId, content) => {
+  $(buttonId).click(() => {
+    printJS({
+      printable: content,
+      orientation: "landscape",
+      type: "html",
+      css: ["../css/mdb.min.css", "../css/style.css"],
+      scanStyles: true,
+      documentTitle: "",
     });
-  };
-  printTable("#printBarChart", "barChart");
-  printTable("#printRequestCompleted", "request_data");
-  printTable("#printCategory", "category_data");
-  printTable("#printDonors", "donors_data");
-  printTable("#printRequest", "request_data_main");
-  printTable("#printReceipt", "form-container");
-  printTable("#printStocks", "stocks_data");
-  printTable("#printUsers", "user_data");
+  });
+};
+printTable("#printBarChart", "barChart");
+printTable("#printRequestCompleted", "request_data");
+printTable("#printCategory", "category_data");
+printTable("#printDonors", "donors_data");
+printTable("#printRequest", "request_data_main");
+printTable("#printReceipt", "form-container");
+printTable("#printStocks", "stocks_data");
+printTable("#printUsers", "user_data");
+printTable("#printCreatedRequest", "create_request_data");
 
-
-
-
-  /******************************Print Function**************************************/
-
-
- 
-
+/******************************Print Function**************************************/
