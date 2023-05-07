@@ -1,6 +1,15 @@
 let stocksTable = $("#stocks_data").DataTable({
   responsive: true,
-  ajax: "../include/DataForDataTables/stocksdata.php",
+  ajax: {
+    url: "include/stocksdata.php",
+    error: function (xhr, error, thrown) {
+      if (xhr.status === 404) {
+        $("#stocks_data").html("<p>No data available</p>");
+      } else {
+        alert("There was an error retrieving data. Please try again.");
+      }
+    },
+  },
   columns: [
     {
       data: "category",

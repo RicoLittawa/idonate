@@ -1,7 +1,8 @@
 <?php
-require_once '../connection.php';
-
-$query = "SELECT category, productName, type, unit, quantity,distributed
+require_once '../../include/connection.php';
+$data= array();
+try{
+  $query = "SELECT category, productName, type, unit, quantity,distributed
 FROM (
     SELECT 'Can and Noodles' AS category, productName, type, unit, quantity,distributed FROM categcannoodles
     UNION ALL
@@ -22,20 +23,28 @@ ORDER BY productName ASC";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 $result = $stmt->get_result();
-
-$data = array(); // Create an empty array for the rows
-while ($row = $result->fetch_assoc()) {
-  // Add each row to the array
-  $data[] = array(
-    'category' => $row['category'],
-    'product' => $row['productName'],
-    'quantity' => $row['quantity'],
-    'type' => $row['type'],
-    'unit' => $row['unit'],
-    'distributed' => $row['distributed'],
-  );
+if ($result->num_rows < 0) {
+  throw new Exception("There was a problem getting the status.");
+}else{
+  while ($row = $result->fetch_assoc()) {
+    // Add each row to the array
+    $data[] = array(
+      'category' => $row['category'],
+      'product' => $row['productName'],
+      'quantity' => $row['quantity'],
+      'type' => $row['type'],
+      'unit' => $row['unit'],
+      'distributed' => $row['distributed'],
+    );
+  }
+  
+  // Output the data in JSON format
+  header('Content-Type: application/json');
+  echo json_encode(array('data' => $data));
+  }
 }
 
-// Output the data in JSON format
-header('Content-Type: application/json');
-echo json_encode(array('data' => $data));
+catch(Exception $e){
+  echo $e->getMessage();
+}
+
