@@ -2,7 +2,12 @@
 require_once "../../include/connection.php";
 if(isset($_POST['deleteBtn'])){
     $id = $_POST['id'];
-
+    $stmt=$conn->prepare("SELECT certificate from donation_items where Reference=?");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $result= $stmt->get_result();
+    $row= $result->fetch_assoc();
+    $cert= $row['certificate'];
     $conn->autocommit(FALSE); // start transaction
 
     try {
@@ -17,6 +22,9 @@ if(isset($_POST['deleteBtn'])){
         $stmt2 = $conn->prepare("DELETE FROM donation_items10 WHERE Reference = ?");
         $stmt2->bind_param("s", $id);
         $stmt2->execute();
+
+        $validPath= '../../include/download-certificate/'.$cert;
+        unlink($validPath);
 
         $conn->commit(); // commit transaction
         echo "Deleted Successfully";

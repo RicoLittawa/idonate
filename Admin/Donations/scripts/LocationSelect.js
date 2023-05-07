@@ -7,7 +7,7 @@
           type: "POST",
           data: `${codeName}=${code}`,
           success: function (data) {
-            $(nextSelector).html(data);
+            $(nextSelector).append(data);
           },
         });
       } else {

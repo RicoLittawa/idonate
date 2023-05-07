@@ -111,7 +111,7 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
                 data-name = "${row.donorName}"
                 data-id = "${row.donorId}"></div>`;
           } else {
-            return `<a class="d-flex justify-content-center allowed" onclick="deleteRow(${row.reference},'include/DeleteDonor.php','#donors_data')">
+            return `<a class="d-flex justify-content-center allowed" onclick="deleteDonor(${row.reference},'include/DeleteDonor.php','#donors_data')">
             <i class="fa-solid fa-trash text-danger"></i></a>`;
           }
         },

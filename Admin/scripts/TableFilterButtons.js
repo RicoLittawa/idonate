@@ -128,4 +128,34 @@ const deleteRow = (id,url,tableName) => {
     }
   });
 };
+const deleteDonor = (id,url,tableName) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#20d070",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: url,
+        method: "POST",
+        data: { deleteBtn: "", id: id},
+        success: () => {
+          Swal.fire({
+            title: "Success",
+            text: "Request deleted successfully",
+            icon: "success",
+            confirmButtonColor: "#20d070",
+            confirmButtonText: "OK",
+            allowOutsideClick: false,
+          });
+          $(tableName).DataTable().ajax.reload();
+        },
+      });
+    }
+  });
+};
 /******************************Delete Function**************************************/
