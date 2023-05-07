@@ -50,7 +50,18 @@ function accountUpdate (){
  ';
  return $html;
 }
-
+function userAccountUpdate (){
+  $html= '
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+     <li><h6 class="dropdown-item">Hello <?php echo htmlentities($firstname);?>!</h6></li>
+     <li><a class="dropdown-item" href="UserUpdateProfile.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
+     <li><a class="dropdown-item" href="UserUpdatePassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
+     <li><a class="dropdown-item" href="../include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
+   </ul>
+ 
+  ';
+  return $html;
+ }
 function userSidebar(){
   $html= '
   <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
@@ -58,7 +69,7 @@ function userSidebar(){
         <ul class="nav">
           <li class="nav-item">
             <a href="UserCreateRequest.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'UserCreateRequest.php') !== false ? 'active' : '').'">
-              <i class="bx bxs-cart-add active"></i>
+              <i class="bx bxs-cart-add '.(strpos($_SERVER['REQUEST_URI'], 'UserCreateRequest.php') !== false ? 'active' : '').'"></i>
               <span class="text">Create</span>
             </a>
           </li>
@@ -66,6 +77,12 @@ function userSidebar(){
             <a href="#" class="nav-link">
               <i class="bx bxs-package"></i>
               <span class="text">History</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="UserUpdateProfile.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'UserUpdateProfile.php') !== false || strpos($_SERVER['REQUEST_URI'], 'UserUpdatePassword.php') !== false ? 'active' : '').'">
+              <i class="bx bxs-user '.(strpos($_SERVER['REQUEST_URI'], 'UserUpdateProfile.php') || strpos($_SERVER['REQUEST_URI'], 'UserUpdatePassword.php') !== false ? 'active' : '').'"></i>
+              <span class="text">Account</span>
             </a>
           </li>
         </ul>

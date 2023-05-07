@@ -60,7 +60,7 @@ $("#update-user").submit((e) => {
     return false;
   }
   $.ajax({
-    url: "include/update-user.php",
+    url: "../include/update-user.php",
     method: "POST",
     processData: false,
     contentType: false,

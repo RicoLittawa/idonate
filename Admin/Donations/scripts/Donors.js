@@ -256,6 +256,7 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
           $this.attr("disabled", false);
           $this.removeClass("btn btn-outline-danger");
           $this.addClass("btn btn-outline-success");
+          $("#bulk_email").attr("disabled", false);
           $this.html("Sent");
           Swal.fire({
             icon: "success",

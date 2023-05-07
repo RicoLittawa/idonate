@@ -59,7 +59,7 @@ $requestRef = $refRow['request_id'];
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo accountUpdate() ?>
+            <?php echo userAccountUpdate() ?>
           </div>
         </div>
       </div>
