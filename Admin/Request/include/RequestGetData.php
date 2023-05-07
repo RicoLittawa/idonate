@@ -5,7 +5,7 @@ if (isset($_GET['requestId'])) {
 	$reference = $_GET['requestId'];
 
 	try {
-		$getRequest = "SELECT firstname,lastname,position,email,evacuees_qty,requestdate,status from request where request_id=?";
+		$getRequest = "SELECT firstname,lastname,position,email,evacuees_qty,requestdate,status from receive_request where request_id=?";
 		$stmt = $conn->prepare($getRequest);
 		$stmt->bind_param('i', $reference);
 		$stmt->execute();

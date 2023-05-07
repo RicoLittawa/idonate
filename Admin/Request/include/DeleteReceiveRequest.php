@@ -7,7 +7,7 @@ if(isset($_POST['deleteBtn'])){
     $conn->autocommit(FALSE); // start transaction
 
     try {
-        $stmt1 = $conn->prepare("DELETE FROM request WHERE request_id = ?");
+        $stmt1 = $conn->prepare("DELETE FROM receive_request WHERE request_id = ?");
         $stmt1->bind_param("s", $id);
         $stmt1->execute();
 
@@ -19,7 +19,7 @@ if(isset($_POST['deleteBtn'])){
         $stmt2->bind_param("s", $id);
         $stmt2->execute();
 
-        $stmt3 = $conn->prepare("DELETE FROM request_category WHERE request_id = ?");
+        $stmt3 = $conn->prepare("DELETE FROM on_process WHERE reciept_number = ?");
         $stmt3->bind_param("s", $id);
         $stmt3->execute();
 

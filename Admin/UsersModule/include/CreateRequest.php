@@ -37,21 +37,28 @@ try {
 $count= 0;
 $resultcount=0;
 $status= "pending";
-$reqDetails= ("INSERT into request (userID,request_id,firstname,lastname,position,email,evacuees_qty,requestdate,status) VALUES(?,?,?,?,?,?,?,?,?)");
-$stmt=$conn->prepare($reqDetails);
-try{
-    if (!$stmt){
-        throw new Exception("There was a problem executing the query.");        
-    }
-    else{
-        $stmt->bind_param('iisssssss', $userID,$reqRef,$firstname,$lastname,$position,$email,$evacQty,$request_date,$status);
+$reqDetails = "INSERT INTO request (userID, request_id, firstname, lastname, position, email, evacuees_qty, requestdate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$reqReceive = "INSERT INTO receive_request (userID, request_id, firstname, lastname, position, email, evacuees_qty, requestdate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+$stmt = $conn->prepare($reqDetails);
+
+try {
+    if (!$stmt) {
+        throw new Exception("There was a problem executing the query.");
+    } else {
+        $stmt->bind_param('iisssssss', $userID, $reqRef, $firstname, $lastname, $position, $email, $evacQty, $request_date, $status);
         $stmt->execute();
         echo "success";
+        
+        // Insert data into receive_request table
+        $stmt = $conn->prepare($reqReceive);
+        $stmt->bind_param('iisssssss', $userID, $reqRef, $firstname, $lastname, $position, $email, $evacQty, $request_date, $status);
+        $stmt->execute();
     }
-}
-catch(Exception $e){
+} catch (Exception $e) {
     echo $e->getMessage();
 }
+
 
  foreach ($category as $categ){
     $categDetails= "INSERT INTO request_category (request_id,categoryName,quantity,notes) VALUES (?,?,?,?)";

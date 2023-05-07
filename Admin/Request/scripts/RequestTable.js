@@ -87,14 +87,6 @@ let requestTable = $("#request_data_main").DataTable({
       data: "requestdate",
     },
     {
-      data: "receivedate",
-      render: (data, type, row) => {
-        return data === null
-          ? `<span class="badge badge-danger user-select-none not-allowed">N/A</span>`
-          : data;
-      },
-    },
-    {
       data: "status",
       render: (data, type, row) => {
         if (data === "Request was processed") {
@@ -248,11 +240,11 @@ $(document).on("click", "#saveStatus", () => {
     },
     success: (data) => {
       if (data === "success") {
+        setTimeout(() => {
         $('#saveStatus').prop("disabled", false);
         $(".submit-text").text("Update");
         $(".spinner-border").addClass("d-none");
         requestTable.ajax.reload();
-        setTimeout(() => {
           Swal.fire({
             title: "Success",
             text: "Status has been updated",

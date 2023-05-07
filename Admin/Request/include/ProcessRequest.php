@@ -190,6 +190,10 @@ if (isset($_POST['submitProcess'])) {
 
   if ($checkIfSave) {
     $status = "Request was processed";
+    $updateStatus = "UPDATE receive_request set status=? where request_id=? ";
+    $stmt = $conn->prepare($updateStatus);
+    $stmt->bind_param('si', $status, $request_id);
+    $stmt->execute();
     $updateStatus = "UPDATE request set status=? where request_id=? ";
     $stmt = $conn->prepare($updateStatus);
     $stmt->bind_param('si', $status, $request_id);

@@ -100,7 +100,7 @@ require "../include/sidebar.php";
             </div>
             <!----Filter -->
             <div class="table-container">
-              <table class="table table-striped table-bordered w-100" id="request_data_main">
+              <table class="table table-striped table-bordered w-100" id="request_data_main" >
                 <thead>
                   <tr>
                     <th>Receipt No.</th>
@@ -108,7 +108,6 @@ require "../include/sidebar.php";
                     <th>Position</th>
                     <th>No. Evacuees</th>
                     <th>Request Date</th>
-                    <th>Received Date</th>
                     <th>Status</th>
                     <th>View/Accept</th>
                     <th>Delete</th>

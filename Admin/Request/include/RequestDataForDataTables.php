@@ -2,7 +2,7 @@
 require_once '../../include/connection.php';
 $data= array();
 try{
-  $getRequest = "SELECT request_id,firstname,lastname,position,evacuees_qty,requestdate,receivedate,status FROM request";
+  $getRequest = "SELECT request_id,firstname,lastname,position,evacuees_qty,requestdate,receivedate,status FROM receive_request";
   $stmt = $conn->prepare($getRequest);
   $stmt->execute();
   $getResult = $stmt->get_result();
