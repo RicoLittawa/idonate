@@ -1,13 +1,12 @@
 <?php
 require_once "../../include/connection.php";
-
 if(isset($_POST['deleteBtn'])){
     $id = $_POST['id'];
 
     $conn->autocommit(FALSE); // start transaction
 
     try {
-        $stmt1 = $conn->prepare("DELETE FROM request WHERE request_id = ?");
+        $stmt1 = $conn->prepare("DELETE FROM donation_items WHERE Reference = ?");
         $stmt1->bind_param("s", $id);
         $stmt1->execute();
 
@@ -15,7 +14,7 @@ if(isset($_POST['deleteBtn'])){
             throw new Exception("Request ID does not match any data.");
         }
 
-        $stmt2 = $conn->prepare("DELETE FROM request_category WHERE request_id = ?");
+        $stmt2 = $conn->prepare("DELETE FROM donation_items10 WHERE Reference = ?");
         $stmt2->bind_param("s", $id);
         $stmt2->execute();
 
@@ -26,4 +25,3 @@ if(isset($_POST['deleteBtn'])){
         echo $e->getMessage();
     }
 }
-?>

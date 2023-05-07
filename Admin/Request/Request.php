@@ -99,22 +99,25 @@ require "../include/sidebar.php";
               <div class="request-download-btn"></div>
             </div>
             <!----Filter -->
-            <table class="compact table table-striped table-bordered w-100" id="request_data_main">
-              <thead>
-                <tr>
-                  <th>Receipt No.</th>
-                  <th>Full name</th>
-                  <th>Position</th>
-                  <th>No. Evacuees/Families</th>
-                  <th>Request Date</th>
-                  <th>Received Date</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                  <!-- Add more columns here -->
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+            <div class="table-container">
+              <table class="table table-striped table-bordered w-100" id="request_data_main">
+                <thead>
+                  <tr>
+                    <th>Receipt No.</th>
+                    <th>Full name</th>
+                    <th>Position</th>
+                    <th>No. Evacuees</th>
+                    <th>Request Date</th>
+                    <th>Received Date</th>
+                    <th>Status</th>
+                    <th>View/Accept</th>
+                    <th>Delete</th>
+                    <!-- Add more columns here -->
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
         </div>
         <!--End of main content -->
@@ -136,5 +139,4 @@ require "../include/sidebar.php";
   <script src="scripts/RequestTable.js"></script>
   <script src="../scripts/TableFilterButtons.js"></script>
 </body>
-
 </html>

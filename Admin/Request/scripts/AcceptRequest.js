@@ -582,7 +582,7 @@ let data = {
         });
       }
     }
-    setTimeout(() => {
+    setTimeout(()=>{
       if (!isInvalid) {
         $.ajax({
           url: "include/ProcessRequest.php",
@@ -590,14 +590,14 @@ let data = {
           data: data,
           beforeSend: () => {
             $('button[type="submit"]').prop("disabled", true);
-            $(".submit-text").addClass("d-none");
+            $(".submit-text").text("Processing...");
             $(".spinner-border").removeClass("d-none");
           },
           success: (data) => {
             if (data == "success") {
               setTimeout(() => {
-                $('button[type="submit]"').prop("disabled", false);
-                $(".submit-text").removeClass("d-none");
+                $('button[type="submit"]').prop("disabled", false);
+                $(".submit-text").text("Process");
                 $(".spinner-border").addClass("d-none");
                 Swal.fire({
                   title: "Success",
@@ -608,7 +608,7 @@ let data = {
                   allowOutsideClick: false,
                 });
                 setTimeout(() => {
-                  window.location.href = "../Request.php";
+                  window.location.href = "Request.php";
                 }, 1000);
               }, 1500);
             } else {
@@ -636,7 +636,7 @@ let data = {
       }else{
         swal.fire("Warning", "Please recheck the data you inputted","warning")
       }
-    }, 500);
+    },500)
   };
   checkProductsIfExist(categoryFields);
   /***********************************Check product if exist and compare input to quantity of the product***********************************************/

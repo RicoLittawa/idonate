@@ -49,14 +49,7 @@ require_once '../include/sidebar.php';
 								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
 						</a>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<li>
-								<h6 class="dropdown-item">Hello <?php echo htmlentities($firstname); ?>!</h6>
-							</li>
-							<li><a class="dropdown-item" href="updateusers.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
-							<li><a class="dropdown-item" href="updatepassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
-							<li><a class="dropdown-item" href="include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
-						</ul>
+						<?php echo accountUpdate() ?>
 					</div>
 				</div>
 			</div>
@@ -426,7 +419,7 @@ require_once '../include/sidebar.php';
 									<button type="button" class="btn btn-danger cancelBtn btn-rounded" id="cancelBtn">Cancel</button>
 								</div>
 								<div>
-									<button type="submit" class="btn btn-success btn-rounded">
+									<button type="submit" class="btn btn-success btn-block btn-rounded">
 										<span class="submit-text">Process</span>
 										<span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
 									</button>

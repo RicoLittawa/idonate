@@ -54,7 +54,16 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 /******************************Populate Table**************************************/
 let requestTable = $("#request_data_main").DataTable({
   responsive: true,
-  ajax: "include/RequestDataForDataTables.php",
+  ajax: {
+    url: "include/RequestDataForDataTables.php",
+    error: function (xhr, error, thrown) {
+      if (xhr.status === 404) {
+        $("#request_data_main").html("<p>No data available</p>");
+      } else {
+        alert("There was an error retrieving data. Please try again.");
+      }
+    },
+  },
   columns: [
     {
       data: "reference",
@@ -105,10 +114,16 @@ let requestTable = $("#request_data_main").DataTable({
       data: "reference",
       render: function (data, type, row) {
         if (row.status === "pending") {
-          return `<button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button>`;
+          return `<div><button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button></div>`;
         } else {
-          return `<button type="button" id="viewReceiptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">View</button>`;
+          return `<div><button type="button" id="viewReceiptBtn" data-request=${row.reference} class="btn btn-secondary btn-rounded">View</button></div>`;
         }
+      },
+    },
+    {
+      data: null,
+      render: function (data, type, row) {
+        return `<a class="d-flex justify-content-center allowed" onclick="deleteRow(${row.reference},'include/DeleteReceiveRequest.php','#request_data_main')"><i class="fa-solid fa-trash text-danger"></i></a>`;
       },
     },
   ],

@@ -52,7 +52,6 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 /******************************Date Filter**************************************/
 
 /********************************Create Request  Table*****************************/
-let userId = $("#userId").val();
 let createRequest = $("#create_request_data").DataTable({
   responsive: true,
   ajax: {
@@ -105,7 +104,7 @@ let createRequest = $("#create_request_data").DataTable({
     {
       data: null,
       render: (data, type, row) => {
-        return `<a class="d-flex justify-content-center allowed" onclick="deleteRow(${row.request_id})"><i class="fa-solid fa-trash text-danger"></i><a/>`;
+        return `<a class="d-flex justify-content-center allowed" onclick="deleteRow(${row.request_id},'include/DeleteRequest.php','#create_request_data')"><i class="fa-solid fa-trash text-danger"></i><a/>`;
       },
     },
   ],
@@ -222,30 +221,7 @@ const alertMessage = (text, icon, title) => {
     allowOutsideClick: false,
   });
 };
-const deleteRow = (request_id) => {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#20d070',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      $.ajax({
-        url: "include/DeleteRequest.php",
-        method: "POST",
-        data: { deleteBtn: "", request_id: request_id },
-        success: (data) => {
-          alertMessage("Request deleted successfully","success","Success");
-          createRequest.ajax.reload();
-        },
-      });
-    }
-  })
 
-};
 
 $(document).on("submit", "#add-request", (e) => {
   e.preventDefault();
@@ -322,9 +298,12 @@ $(document).on("submit", "#add-request", (e) => {
           $('button[type="submit"]').prop("disabled", false);
           $(".submit-text").text("Create");
           $(".spinner-border").addClass("d-none");
-          createRequest.ajax.reload();
           alertMessage("Your request is created", "success", "Success");
+       
         }, 1500);
+        setTimeout(()=>{
+          window.location.reload();
+        },1500)
       } else {
         alertMessage(data, "warning", "Error");
       }

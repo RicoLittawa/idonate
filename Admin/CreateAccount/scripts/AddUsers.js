@@ -41,7 +41,7 @@ let userTable = $("#user_data").DataTable({
     {
       data: null,
       render: function (data, type, row) {
-        return `<div class="d-flex justify-content-center"><a href=""><i class="fa-solid fa-trash text-danger"></i></a></div>`;
+        return `<a class="d-flex justify-content-center allowed" onclick="deleteRow(${row.uID},'include/DeleteUser.php','#user_data')"><i class="fa-solid fa-trash text-danger"></i></a>`;
       },
     },
   ],

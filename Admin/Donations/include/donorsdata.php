@@ -1,7 +1,7 @@
 <?php
 require_once '../../include/connection.php';
 $data = array();
-$getDonors =  "SELECT donor_id,donor_name,donor_email,donor_contact,donationDate,email_status,certificate FROM donation_items ORDER BY donor_id DESC";
+$getDonors =  "SELECT donor_id,donor_name,donor_email,donor_contact,donationDate,email_status,certificate,Reference FROM donation_items";
 $getDonorStatement = $conn->prepare($getDonors);
 try{
     if(!$getDonorStatement){
@@ -21,6 +21,7 @@ try{
             $donationDate = $get['donationDate'];
             $emailStatus = $get['email_status'];
             $certificate = $get['certificate'];
+            $reference= $get['Reference'];
             $data[] = array(
                 'donorId' => $donorId,
                 'donorName' => $donorName,
@@ -28,7 +29,8 @@ try{
                 'donorContact' => $donorContact,
                 'donationDate' => $donationDate,
                 'emailStatus' => $emailStatus,
-                'certificate' => $certificate
+                'certificate' => $certificate,
+                'reference'=> $reference
             );
         }
         header('Content-Type: application/json');

@@ -4,7 +4,16 @@
    headerCallback: function (thead) {
      $(thead).find("th").css("font-weight", "bolder");
    },
-   ajax: "include/CategoryTable.php",
+   ajax: {
+    url: "include/CategoryTable.php",
+    error: function (xhr, error, thrown) {
+      if (xhr.status === 404) {
+        $("#request_data").html("<p>No data available</p>");
+      } else {
+        alert("There was an error retrieving data. Please try again.");
+      }
+    },
+  },
    columns: [
      {
        data: "category",
@@ -69,7 +78,16 @@
    headerCallback: function (thead) {
      $(thead).find("th").css("font-weight", "bolder");
    },
-   ajax: "include/Completed.php",
+   ajax: {
+    url: "include/Completed.php",
+    error: function (xhr, error, thrown) {
+      if (xhr.status === 404) {
+        $("#request_data").html("<p>No data available</p>");
+      } else {
+        alert("There was an error retrieving data. Please try again.");
+      }
+    },
+  },
    columns: [
      {
        data: "request_id",

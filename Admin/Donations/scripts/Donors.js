@@ -52,10 +52,6 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 });
 /******************************Date Filter**************************************/
   let donorTable = $("#donors_data").DataTable({
-    lengthMenu: [
-      [10, 25, 50, -1],
-      [10, 25, 50, "All"],
-    ],
     responsive: true,
     ajax: {
       url: "include/donorsdata.php",
@@ -68,28 +64,6 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
       },
     },
     columns: [
-      {
-        data:null,
-        render: function(data,type,row){
-          return `<div class="d-flex justify-content-center"><a href="UpdateDonors.php?editdonate=${row.donorId}"><i class="fa-solid fa-pen-to-square text-success"></i></a></div>`;
-        }
-      },
-      {
-        data: null,
-        render: function (data, type, row) {
-          if (row.emailStatus === "not sent") {
-            return `<div class="d-flex justify-content-center"><input type = "checkbox"
-                name = "single_select"
-                class = "single_select form-check-input"
-                data-email = "${row.donorEmail}"
-                data-name = "${row.donorName}"
-                data-id = "${row.donorId}"></div>`;
-          } else {
-            return `<div class="d-flex justify-content-center"><a href="delete.php?editdonate=${row.donorId}">
-            <i class="fa-solid fa-trash text-danger"></i></a></div>`;
-          }
-        },
-      },
       {
         data: "donorName",
       },
@@ -120,7 +94,28 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
             : '<span class="badge badge-warning user-select-none not-allowed">N/A</span';
         },
       },
-      
+      {
+        data:null,
+        render: function(data,type,row){
+          return `<a class="d-flex justify-content-center" href="UpdateDonors.php?editdonate=${row.donorId}"><i class="fa-solid fa-pen-to-square text-success"></i></a>`;
+        }
+      },
+      {
+        data: null,
+        render: function (data, type, row) {
+          if (row.emailStatus === "not sent") {
+            return `<div class="d-flex justify-content-center"><input type = "checkbox"
+                name = "single_select"
+                class = "single_select form-check-input"
+                data-email = "${row.donorEmail}"
+                data-name = "${row.donorName}"
+                data-id = "${row.donorId}"></div>`;
+          } else {
+            return `<a class="d-flex justify-content-center allowed" onclick="deleteRow(${row.reference},'include/DeleteDonor.php','#donors_data')">
+            <i class="fa-solid fa-trash text-danger"></i></a>`;
+          }
+        },
+      },
     ],
     buttons: [
       {
@@ -161,7 +156,7 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
         },
       },
     ],
-    order: [[5, "desc"]],
+    order: [[3, "desc"]],
     lengthMenu: [
       [10, 25, 50, -1],
       ["10 rows", "25 rows", "50 rows", "Show all"],
@@ -246,7 +241,7 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
     }
 
     $.ajax({
-      url: "include/sendcerti.php",
+      url: "../include/sendcerti.php",
       method: "POST",
       data: {
         email_data: email_data,

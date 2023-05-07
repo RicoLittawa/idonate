@@ -1,8 +1,8 @@
 <?php 
 require_once '../../include/connection.php';
+require_once '../../include/protect.php';
 //accept request
 if (isset($_POST['createBtn'])){
-$userId= $_POST['userId'];
 $reqRef= $_POST['reqRef'];
 $request_date= date('Y-m-d', strtotime($_POST['request_date']));
 $evacQty= trim($_POST['evacQty']);
@@ -16,7 +16,7 @@ try {
     if (!$stmt) {
         throw new Exception("There was a problem executing the query.");
     } else {
-        $stmt->bind_param('i', $userId);
+        $stmt->bind_param('i', $userID);
         $stmt->execute();
         $userResult = $stmt->get_result();
         if ($userResult->num_rows == 0) {
@@ -44,7 +44,7 @@ try{
         throw new Exception("There was a problem executing the query.");        
     }
     else{
-        $stmt->bind_param('iisssssss', $userId,$reqRef,$firstname,$lastname,$position,$email,$evacQty,$request_date,$status);
+        $stmt->bind_param('iisssssss', $userID,$reqRef,$firstname,$lastname,$position,$email,$evacQty,$request_date,$status);
         $stmt->execute();
         echo "success";
     }

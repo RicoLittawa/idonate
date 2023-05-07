@@ -161,13 +161,6 @@ require "../include/sidebar.php";
           <div class="col-s-12 col-md-12 col-lg-12">
             <div class="card">
               <div class="card-body">
-                <canvas id="lineChart"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-s-12 col-md-12 col-lg-12">
-            <div class="card">
-              <div class="card-body">
                 <h1 class="mb-3">Requests Completed</h1>
                 <div class="d-flex justify-content-between py-3">
                   <div class="request-table"></div>

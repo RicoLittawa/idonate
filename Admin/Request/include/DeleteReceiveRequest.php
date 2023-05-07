@@ -19,6 +19,10 @@ if(isset($_POST['deleteBtn'])){
         $stmt2->bind_param("s", $id);
         $stmt2->execute();
 
+        $stmt3 = $conn->prepare("DELETE FROM request_category WHERE request_id = ?");
+        $stmt3->bind_param("s", $id);
+        $stmt3->execute();
+
         $conn->commit(); // commit transaction
         echo "Deleted Successfully";
     } catch (Exception $e) {
