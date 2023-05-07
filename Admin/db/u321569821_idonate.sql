@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2023 at 11:05 AM
+-- Generation Time: May 07, 2023 at 08:20 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -45,11 +45,8 @@ CREATE TABLE `adduser` (
 --
 
 INSERT INTO `adduser` (`uID`, `firstname`, `lastname`, `position`, `email`, `pwdUsers`, `address`, `role`, `status`, `profile`) VALUES
-(1, 'Rica', 'Littawa', 'Cdrrmo Employee', 'rico.littawa@g.batstate-u.edu.ph', '$2y$10$BtFNinRr0uazCN1ml.pEU.LOaXkslQSrC/UQA/LBeRYc3lYz.CeC.', 'Balagtas Batangas City', 'admin', 'active', '1_292787969_589029682626367_6048710602373870890_n.jpeg'),
-(2, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', '$2y$10$JIww1Yf.zdDtiJsXZVy5F..EnKwPOWRKjAN1vxDdh.HuTXxAC3yWC', 'Balagtas Batangas City', 'user', 'offline', '2_try.jpg'),
-(3, 'Jobilleen', 'Lopez', 'Bgry Captain-Balagtas', 'jobilleen.lopez@g.batstate-u.edu.ph', '$2y$10$K78qOdfjEB9AD.E23/ZvMuzEnaqU0uIUx1rmJzNGcNf1VzhEQDuhy', 'Balagtas Batangas City', 'user', 'offline', NULL),
-(4, 'Rey', 'Agustin', 'Bgry Captain-Balagtas', 'mroyster@royster.com', '$2y$10$WjE7PIPTMbBriG341NGWPOodjUgFvUAoWWAuiQjLbQg.vQZd6zH5q', 'Balagtas Batangas City', 'user', 'offline', NULL),
-(5, 'try', 'name', 'Cdrrmo Employee', 'try@gmail.com', '$2y$10$Aac0ZQBuJpYOAxmTwSVYs.ZHVHrHB5ERymNfuujIrKnSHo0SE.hC6', 'Balagtas Batangas City', 'admin', 'offline', NULL);
+(1, 'Rica', 'Littawa', 'Cdrrmo Employee', 'rico.littawa@g.batstate-u.edu.ph', '$2y$10$BtFNinRr0uazCN1ml.pEU.LOaXkslQSrC/UQA/LBeRYc3lYz.CeC.', 'Balagtas Batangas City', 'admin', 'active', '1_150 x 150.jpg'),
+(2, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', '$2y$10$JIww1Yf.zdDtiJsXZVy5F..EnKwPOWRKjAN1vxDdh.HuTXxAC3yWC', 'Balagtas Batangas City', 'user', 'offline', '2_try.jpg');
 
 -- --------------------------------------------------------
 
@@ -84,17 +81,6 @@ CREATE TABLE `categcannoodles` (
   `unit` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `categcannoodles`
---
-
-INSERT INTO `categcannoodles` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'sardines', '', '281', 25, ''),
-(2, 'corned beef', '', '97', 3, ''),
-(3, '555 tuna', '', '-20', 40, ''),
-(4, 'century tuna', '', '160', 0, ''),
-(5, 'ss', '', '9', 0, '');
-
 -- --------------------------------------------------------
 
 --
@@ -109,13 +95,6 @@ CREATE TABLE `categdrinkingwater` (
   `distributed` int(11) NOT NULL,
   `unit` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `categdrinkingwater`
---
-
-INSERT INTO `categdrinkingwater` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, ' le minerale 1.5l', '', '100', 0, '');
 
 -- --------------------------------------------------------
 
@@ -132,13 +111,6 @@ CREATE TABLE `categhygineessential` (
   `unit` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `categhygineessential`
---
-
-INSERT INTO `categhygineessential` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'creamsilk', '', '65', 35, '');
-
 -- --------------------------------------------------------
 
 --
@@ -153,13 +125,6 @@ CREATE TABLE `categinfant` (
   `distributed` int(11) NOT NULL,
   `unit` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `categinfant`
---
-
-INSERT INTO `categinfant` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'baby oil', '', '100', 0, '');
 
 -- --------------------------------------------------------
 
@@ -176,13 +141,6 @@ CREATE TABLE `categmeatgrains` (
   `unit` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `categmeatgrains`
---
-
-INSERT INTO `categmeatgrains` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'pork', 'Fresh', '5', 0, 'Kilograms');
-
 -- --------------------------------------------------------
 
 --
@@ -197,13 +155,6 @@ CREATE TABLE `categmedicine` (
   `distributed` int(11) NOT NULL,
   `unit` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `categmedicine`
---
-
-INSERT INTO `categmedicine` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'bioflu', 'Tablet', '97', 6, 'Milligrams');
 
 -- --------------------------------------------------------
 
@@ -244,16 +195,6 @@ CREATE TABLE `categothers` (
   `distributed` int(11) NOT NULL,
   `unit` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `categothers`
---
-
-INSERT INTO `categothers` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'hotdog', '', '100', 0, ''),
-(2, 'cheesedog', '', '15', 0, 'kilograms'),
-(3, 'kikiam', '', '5', 0, 'kilograms'),
-(4, 'fishball', '', '1', 0, 'kilograms');
 
 -- --------------------------------------------------------
 
@@ -494,22 +435,6 @@ CREATE TABLE `donation_items` (
   `certificate` varchar(100) NOT NULL DEFAULT 'cert empty'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `donation_items`
---
-
-INSERT INTO `donation_items` (`donor_id`, `Reference`, `donor_name`, `donor_region`, `donor_province`, `donor_municipality`, `donor_barangay`, `donor_email`, `donor_contact`, `donationDate`, `email_status`, `certificate`) VALUES
-(1, 32, 'Rey Agustin', '09', '0972', '097217', '097217011', 'mroyster@royster.com', '09392560014', '2023-04-14', 'email_sent', 'Rey Agustin_6438f0ed737ac.png'),
-(2, 33, 'Richelle Littawa', '01', '0129', '012904', '012904005', 'mroyster@royster.com', '09392560014', '2023-04-14', 'email_sent', 'Richelle Littawa_6438b3e899362.png'),
-(3, 34, 'Jobilleen Lopez', '01', '0128', '012801', '012801001', 'mroyster@royster.com', '09392560014', '2023-04-14', 'email_sent', 'Jobilleen Lopez_6438b550db9a7.png'),
-(4, 35, 'Rico', '02', '0231', '023102', '023102002', 'mroyster@royster.com', '09392560014', '2023-04-14', 'email_sent', 'Rico_6438afcade7da.png'),
-(5, 36, 'Sample Name', '02', '0215', '021505', '021505003', 'mroyster@royster.com', '09392560014', '2023-04-14', 'email_sent', 'Sample Name_6438e9b04800d.png'),
-(6, 37, 'superman', '17', '1740', '174001', '174001005', 'mroyster@royster.com', '09392560014', '2023-04-14', 'email_sent', 'superman_6438e86408d3d.png'),
-(7, 38, 'try', '16', '1603', '160303', '160303019', 'try@gmail.com', '09392560014', '2023-04-26', 'not sent', 'cert empty'),
-(8, 39, 'dd', '16', '1603', '160302', '160302002', 'dd@gmail.com', '09392560014', '2023-04-26', 'not sent', 'cert empty'),
-(9, 40, 'Richelle Littawa', '14', '1427', '142703', '142703005', 'mroyster@royster.com', '09392560014', '2023-04-26', 'not sent', 'cert empty'),
-(10, 41, 'rico', '14', '\n													1427', '142704', '142704027', 'sda@gmail.com', '09392560014', '2023-04-26', 'not sent', 'cert empty');
-
 -- --------------------------------------------------------
 
 --
@@ -524,56 +449,6 @@ CREATE TABLE `donation_items10` (
   `unit` varchar(191) DEFAULT NULL,
   `quantity` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `donation_items10`
---
-
-INSERT INTO `donation_items10` (`id`, `Reference`, `productName`, `type`, `unit`, `quantity`) VALUES
-(1, 1, 'Sardines', NULL, NULL, '100'),
-(2, 1, 'Creamsilk', NULL, NULL, '100'),
-(3, 1, 'Baby oil', NULL, NULL, '100'),
-(4, 1, ' Le Minerale 1.5L', NULL, NULL, '100'),
-(5, 1, 'pork', 'Fresh', 'Kilograms', '5'),
-(6, 1, 'Bioflu', 'Tablet', 'Milligrams', '100'),
-(7, 1, 'hotdog', '', '', '100'),
-(8, 2, 'cheesedog', '', 'kilograms', '5'),
-(9, 3, 'cheesedog', '', 'kilograms', '5'),
-(10, 4, 'cheesedog', '', 'kilograms', '5'),
-(11, 5, 'kikiam', '', 'kilograms', '5'),
-(12, 6, 'fishball', '', 'kilograms', '1'),
-(13, 7, 'Sardines', NULL, NULL, '5'),
-(14, 8, 'Sardines', NULL, NULL, '10'),
-(15, 9, 'Sardines', NULL, NULL, '3'),
-(16, 10, 'Sardines', NULL, NULL, '10'),
-(17, 11, 'Sardines', NULL, NULL, '12'),
-(18, 12, 'Sardines', NULL, NULL, '15'),
-(19, 13, 'Sardines', NULL, NULL, '3'),
-(20, 14, 'Sardines', NULL, NULL, '30'),
-(21, 15, 'Sardines', NULL, NULL, '12'),
-(22, 16, 'Sardines', NULL, NULL, '5'),
-(23, 17, 'Sardines', NULL, NULL, '5'),
-(24, 18, 'Sardines', NULL, NULL, '10'),
-(25, 19, 'Sardines', NULL, NULL, '10'),
-(26, 20, 'sardines ', NULL, NULL, '30'),
-(27, 21, 'Sardines', NULL, NULL, '10'),
-(28, 22, 'Sardines', NULL, NULL, '10'),
-(29, 23, 'Sardines', NULL, NULL, '10'),
-(30, 24, 'Sardines', NULL, NULL, '10'),
-(31, 25, 'Sardines', NULL, NULL, '10'),
-(32, 26, 'Sardines', NULL, NULL, '1'),
-(33, 27, 'Corned beef', NULL, NULL, '10'),
-(34, 28, 'Corned beef', NULL, NULL, '10'),
-(35, 29, 'Corned beef', NULL, NULL, '30'),
-(36, 30, '555 tuna', NULL, NULL, '10'),
-(37, 31, '555 tuna', NULL, NULL, '10'),
-(38, 32, 'Century tuna', NULL, NULL, '10'),
-(39, 33, 'Century tuna', NULL, NULL, '10'),
-(40, 34, 'Century tuna', NULL, NULL, '10'),
-(41, 35, 'Century tuna', NULL, NULL, '10'),
-(42, 36, 'Century tuna', NULL, NULL, '10'),
-(43, 37, 'Century tuna', NULL, NULL, '10'),
-(44, 41, 'ss', NULL, NULL, '9');
 
 -- --------------------------------------------------------
 
@@ -590,7 +465,7 @@ CREATE TABLE `donation_items_picking` (
 --
 
 INSERT INTO `donation_items_picking` (`reference_id`) VALUES
-(42);
+(1);
 
 -- --------------------------------------------------------
 
@@ -634,25 +509,25 @@ CREATE TABLE `on_process` (
   `quantity` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `on_process`
+-- Table structure for table `receive_request`
 --
 
-INSERT INTO `on_process` (`id`, `reciept_number`, `productName`, `quantity`) VALUES
-(1, 1, 'Corned beef', '1'),
-(2, 1, 'Creamsilk', '10'),
-(3, 2, 'Sardines', '10'),
-(4, 2, 'Bioflu', '3'),
-(5, 4, 'Sardines', '5'),
-(6, 5, 'sardines', '10'),
-(7, 6, 'creamsilk', '5'),
-(8, 7, '555 tuna', '20'),
-(9, 3, '555 tuna', '1'),
-(10, 3, 'century tuna', '1'),
-(11, 3, 'creamsilk', '1'),
-(12, 3, 'baby oil', '1'),
-(13, 3, ' le minerale 1.5l', '1'),
-(14, 3, 'pork', '1');
+CREATE TABLE `receive_request` (
+  `id` int(11) NOT NULL,
+  `request_id` bigint(20) NOT NULL,
+  `firstname` longtext NOT NULL,
+  `lastname` longtext NOT NULL,
+  `position` longtext NOT NULL,
+  `email` longtext NOT NULL,
+  `evacuees_qty` int(11) NOT NULL,
+  `requestdate` date NOT NULL,
+  `status` longtext DEFAULT NULL,
+  `userID` int(11) NOT NULL,
+  `receivedate` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -44580,7 +44455,7 @@ CREATE TABLE `ref_request` (
 --
 
 INSERT INTO `ref_request` (`request_id`) VALUES
-(8);
+(1);
 
 -- --------------------------------------------------------
 
@@ -44602,19 +44477,6 @@ CREATE TABLE `request` (
   `receivedate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `request`
---
-
-INSERT INTO `request` (`id`, `request_id`, `firstname`, `lastname`, `position`, `email`, `evacuees_qty`, `requestdate`, `status`, `userID`, `receivedate`) VALUES
-(1, 1, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-03-18', 'Request cannot be completed', 2, '2023-04-26'),
-(2, 2, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1000, '2023-03-18', 'Request cannot be completed', 2, NULL),
-(3, 3, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1000, '2023-03-23', 'Request was processed', 2, NULL),
-(4, 4, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 3, '2023-03-24', 'Request completed', 2, '2023-03-25'),
-(5, 5, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-03-25', 'Request completed', 2, '2023-04-26'),
-(6, 6, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 400, '2023-03-25', 'Request cannot be completed', 2, NULL),
-(7, 7, 'Normal', 'User', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-04-14', 'Request cannot be completed', 2, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -44628,27 +44490,6 @@ CREATE TABLE `request_category` (
   `quantity` bigint(20) DEFAULT NULL,
   `notes` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `request_category`
---
-
-INSERT INTO `request_category` (`id`, `request_id`, `categoryName`, `quantity`, `notes`) VALUES
-(1, 1, '01', 500, 'sardines, canton'),
-(2, 1, '02', 500, 'do not include lotions'),
-(3, 2, '01', 500, ''),
-(4, 2, '06', 400, 'include medicine for children for elderly'),
-(5, 3, '01', 500, ''),
-(6, 3, '02', 500, ''),
-(7, 3, '03', 500, ''),
-(8, 3, '04', 500, ''),
-(9, 3, '05', 500, ''),
-(10, 3, '06', 500, ''),
-(11, 3, '07', 500, ''),
-(12, 4, '01', 5, ''),
-(13, 5, '01', 500, ''),
-(14, 6, '02', 6, ''),
-(15, 7, '01', 500, '');
 
 -- --------------------------------------------------------
 
@@ -44807,6 +44648,12 @@ ALTER TABLE `on_process`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `receive_request`
+--
+ALTER TABLE `receive_request`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `refbrgy`
 --
 ALTER TABLE `refbrgy`
@@ -44868,7 +44715,7 @@ ALTER TABLE `year`
 -- AUTO_INCREMENT for table `adduser`
 --
 ALTER TABLE `adduser`
-  MODIFY `uID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `uID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `announcement_template`
@@ -44880,37 +44727,37 @@ ALTER TABLE `announcement_template`
 -- AUTO_INCREMENT for table `categcannoodles`
 --
 ALTER TABLE `categcannoodles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categdrinkingwater`
 --
 ALTER TABLE `categdrinkingwater`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categhygineessential`
 --
 ALTER TABLE `categhygineessential`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categinfant`
 --
 ALTER TABLE `categinfant`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categmeatgrains`
 --
 ALTER TABLE `categmeatgrains`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categmedicine`
 --
 ALTER TABLE `categmedicine`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -44922,7 +44769,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `categothers`
 --
 ALTER TABLE `categothers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categ_products`
@@ -44934,13 +44781,13 @@ ALTER TABLE `categ_products`
 -- AUTO_INCREMENT for table `donation_items`
 --
 ALTER TABLE `donation_items`
-  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `donation_items10`
 --
 ALTER TABLE `donation_items10`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `donation_items_picking`
@@ -44958,7 +44805,13 @@ ALTER TABLE `month`
 -- AUTO_INCREMENT for table `on_process`
 --
 ALTER TABLE `on_process`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `receive_request`
+--
+ALTER TABLE `receive_request`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `refbrgy`
@@ -44988,19 +44841,19 @@ ALTER TABLE `refregion`
 -- AUTO_INCREMENT for table `ref_request`
 --
 ALTER TABLE `ref_request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `request_category`
 --
 ALTER TABLE `request_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `template_certi`

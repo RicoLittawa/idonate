@@ -2,7 +2,7 @@
 require_once '../../include/connection.php';
 $data = array();
 $statusCompleted = "Request completed";
-$request = "SELECT request_id,requestdate,receivedate,status FROM request WHERE status=?";
+$request = "SELECT request_id,requestdate,receivedate,status FROM receive_request WHERE status=?";
 $stmt=$conn->prepare($request);
 try {
     if (!$stmt) {

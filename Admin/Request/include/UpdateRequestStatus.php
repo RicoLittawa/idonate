@@ -69,10 +69,14 @@ if (isset($_POST['saveStatus'])) {
                             $updateStockStatement->bind_param('iss', $newQuantity, $newDistributedQuantity , $onProcessProduct);
                             $success = $updateStockStatement->execute();
                             if ($success) {
-                                $updateStatus = "UPDATE request set status= ? where request_id=?";
-                                $updateStatusStatement = $conn->prepare($updateStatus);
-                                $updateStatusStatement->bind_param('si', $selectedStatus, $reference);
-                                $updateStatusStatement->execute();
+                                $updateStatus1 = "UPDATE request set status= ? where request_id=?";
+                                $updateStatusStatement1 = $conn->prepare($updateStatus1);
+                                $updateStatusStatement1->bind_param('si', $selectedStatus, $reference);
+                                $updateStatusStatement1->execute();
+                                $updateStatus2 = "UPDATE receive_request set status= ? where request_id=?";
+                                $updateStatusStatement2 = $conn->prepare($updateStatus2);
+                                $updateStatusStatement2->bind_param('si', $selectedStatus, $reference);
+                                $updateStatusStatement2->execute();
                                 echo 'success';
                             }
                         } else {
@@ -86,18 +90,26 @@ if (isset($_POST['saveStatus'])) {
             }
             break;
         case "Request cannot be completed":
-            $updateStatus = "UPDATE request set status= ? where request_id=?";
-            $updateStatusStatement = $conn->prepare($updateStatus);
-            $updateStatusStatement->bind_param('si', $selectedStatus, $reference);
-            $updateStatusStatement->execute();
+            $updateStatus1 = "UPDATE request set status= ? where request_id=?";
+            $updateStatusStatement1 = $conn->prepare($updateStatus1);
+            $updateStatusStatement1->bind_param('si', $selectedStatus, $reference);
+            $updateStatusStatement1->execute();
+            $updateStatus2 = "UPDATE receive_request set status= ? where request_id=?";
+            $updateStatusStatement2 = $conn->prepare($updateStatus2);
+            $updateStatusStatement2->bind_param('si', $selectedStatus, $reference);
+            $updateStatusStatement2->execute();
             echo 'success';
             break;
         case "Request completed":
             $currentDate = date('Y-m-d');
-            $updateStatus = "UPDATE request set status= ?, receiveDate=? where request_id=?";
-            $updateStatusStatement = $conn->prepare($updateStatus);
-            $updateStatusStatement->bind_param('ssi', $selectedStatus,$currentDate, $reference);
-            $updateStatusStatement->execute();
+            $updateStatus1 = "UPDATE request set status= ?, receivedate=? where request_id=?";
+            $updateStatusStatement1 = $conn->prepare($updateStatus1);
+            $updateStatusStatement1->bind_param('ssi', $selectedStatus,$currentDate, $reference);
+            $updateStatusStatement1->execute();
+            $updateStatus2 = "UPDATE receive_request set status= ?, receivedate=? where request_id=?";
+            $updateStatusStatement2 = $conn->prepare($updateStatus2);
+            $updateStatusStatement2->bind_param('ssi', $selectedStatus,$currentDate, $reference);
+            $updateStatusStatement2->execute();
             echo 'success';
             break;
     }
