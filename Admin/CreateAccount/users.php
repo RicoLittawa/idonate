@@ -40,7 +40,7 @@ require "../include/sidebar.php";
           <div class="dropdown">
             <a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
               <?php if ($profile == null) { ?>
-                <img src="../img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
+                <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } else { ?>
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
@@ -109,10 +109,13 @@ require "../include/sidebar.php";
                   </div>
                 </div>
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-success btn-block btn-rounded">
+                <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-success btn-rounded">
                   <span class="submit-text">Create</span>
                   <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
                 </button>
+                </div>
+               
               </form>
             </div>
             <!----Filter -->
@@ -127,7 +130,8 @@ require "../include/sidebar.php";
               <div>
                 <button class="btn btn-success btn-rounded" type="button" id="toggleFormBtn">
                   <i class="fas fa-add"></i> Show Form</button>
-                  <button class="btn btn-success btn-rounded me-2 text-wrap" id="printUsers"><i class="fa-solid fa-print"></i></button>
+                  <button class="btn btn-success btn-rounded ms-2 text-wrap" id="printUsers"><i class="fa-solid fa-print"></i></button>
+
               </div>
             </div>
             <!----Filter -->

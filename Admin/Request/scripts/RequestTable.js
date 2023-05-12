@@ -164,6 +164,30 @@ let requestTable = $("#request_data_main").DataTable({
   ],
   dom: "frtip",
   searchDelay: 500,
+  initComplete: function () {
+    this.api()
+      .columns(5)
+      .every(function () {
+        const column = this;
+        const select = $(
+          '<select class="form-select rounded-pill"><option value="">All</option></select>'
+        )
+          .appendTo($("#status_filter"))
+          .on("change", function () {
+            const val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+            column.search(val ? "^" + val + "$" : "", true, false).draw();
+          });
+
+        column
+          .data()
+          .unique()
+          .sort()
+          .each(function (d, j) {
+            select.append('<option value="' + d + '">' + d + "</option>");
+          });
+      });
+  },
 });
 /******************************Populate Table**************************************/
 

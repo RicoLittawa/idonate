@@ -8,69 +8,65 @@ const addRowButton = (buttonType) => {
       '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>';
   }
   if (buttonType === "buttonCN") {
-    html +=
-      '<tr><td><input type="text" class="form-control name_items pnCN" id="pnCN"></td><td><input type="number" class="form-control qCN" id="qCN"></td>';
-    html += "<td>" + remove + "</td></tr>";
+    html = `<tr><td><input type="text" class="form-control name_items pnCN" id="pnCN"></td><td><input type="number" class="form-control qCN" id="qCN"></td>;
+  <td>${remove}</td></tr>`;
     return html;
   } else if (buttonType === "buttonHY") {
-    html +=
-      '<tr><td><input type="text" class="form-control name_items pnHY" id="pnHY"></td><td><input type="number" class="form-control qHY" id="qHY"></td>';
-    html += "<td>" + remove + "</td></tr>";
+    html = `<tr><td><input type="text" class="form-control name_items pnHY" id="pnHY"></td><td><input type="number" class="form-control qHY" id="qHY"></td>
+      <td>${remove}</td></tr>`;
     return html;
   } else if (buttonType === "buttonII") {
-    html +=
-      '<tr><td><input type="text" class="form-control name_items pnII" id="pnII"></td><td><input type="number" class="form-control qII" id="qII"></td>';
-    html += "<td>" + remove + "</td></tr>";
+    html = `<tr><td><input type="text" class="form-control name_items pnII" id="pnII"></td><td><input type="number" class="form-control qII" id="qII"></td>
+      <td>${remove}</td></tr>`;
     return html;
   } else if (buttonType === "buttonDW") {
-    html +=
-      '<tr><td><input type="text" class="form-control name_items pnDW" id="pnDW"></td><td><input type="number" class="form-control qDW" id="qDW"></td>';
-    html += "<td>" + remove + "</td></tr>";
+    html = `<tr><td><input type="text" class="form-control name_items pnDW" id="pnDW"></td><td><input type="number" class="form-control qDW" id="qDW"></td>
+      <td>${remove}</td></tr>`;
     return html;
   } else if (buttonType === "buttonMG") {
-    html +=
-      '<tr><td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>' +
-      '<td><select class="form-control typeMG" name="typeMG" id="typeMG">' +
-      '<option value="">--</option>' +
-      '<option value="Frozen">Frozen</option>' +
-      '<option value="Fresh">Fresh</option>' +
-      '<option value="None">None</option>' +
-      "</select></td>" +
-      '<td><input type="number" class="form-control qMG" id="qMG"></td>' +
-      '<td><select class="form-control unitMG" name="unitMG" id="unitMG">' +
-      '<option value="">--</option>' +
-      '<option value="Kilograms">Kilograms</option>' +
-      '<option value="Grams">Grams</option>' +
-      "</select></td>";
-    html += "<td>" + remove + "</td></tr>";
+    html = `<tr><td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>
+      <td><select class="form-control typeMG" name="typeMG" id="typeMG">
+      <option value="">--</option>
+      <option value="N/A">N/A</option>
+      <option value="Frozen">Frozen</option>
+      <option value="Fresh">Fresh</option>
+      </select></td>
+      <td><input type="number" class="form-control qMG" id="qMG"></td>
+      <td><select class="form-control unitMG" name="unitMG" id="unitMG">
+      <option value="">--</option>
+      <option value="N/A">N/A</option>
+      <option value="Kilograms">Kilograms</option>
+      <option value="Grams">Grams</option>
+      <option value="Sacks">Sacks</option>
+      </select></td>
+      <td>${remove}</td></tr>`;
     return html;
   } else if (buttonType === "buttonME") {
-    html +=
-      '<tr><td><input type="text" class="form-control name_items pnME" id="pnME"></td>' +
-      '<td><select class="form-control typeME" name="typeME" id="typeME">' +
-      '<option value="">--</option>' +
-      '<option value="Tablet">Tablet</option>' +
-      '<option value="Capsule">Capsule</option>' +
-      '<option value="Liquid">Liquid</option>' +
-      '<option value="None">None</option>' +
-      "</select></td>" +
-      '<td><input type="number" class="form-control qME" id="qME"></td>' +
-      '<td><select class="form-control unitME" name="unitME" id="unitME">' +
-      '<option value="">--</option>' +
-      '<option value="Milligrams">Milligrams</option>' +
-      '<option value="Grams">Grams</option>' +
-      '<option value="Micrograms">Micrograms</option>' +
-      '<option value="None">None</option>' +
-      "</select></td>";
-    html += "<td>" + remove + "</td></tr>";
+    html = `<tr><td><input type="text" class="form-control name_items pnME" id="pnME"></td>
+      <td><select class="form-control typeME" name="typeME" id="typeME">
+      <option value="">--</option>
+      <option value="N/A">N/A</option>
+      <option value="Tablet">Tablet</option>
+      <option value="Capsule">Capsule</option>
+      <option value="Liquid">Liquid</option>
+      </select></td>
+      <td><input type="number" class="form-control qME" id="qME"></td>
+      <td><select class="form-control unitME" name="unitME" id="unitME">
+      <option value="">--</option>
+      <option value="N/A">N/A</option>
+      <option value="Milligrams">Milligrams</option>
+      <option value="Grams">Grams</option>
+      <option value="Micrograms">Micrograms</option>
+      </select></td>
+      <td>${remove}</td></tr>`;
     return html;
   } else if (buttonType === "buttonOT") {
-    html +=
-      '<tr><td><input type="text" class="form-control pnOT" id="pnOT"></td>' +
-      '<td><input type="text" class="form-control typeOT" id="typeOT"></td>' +
-      '<td><input type="number" class="form-control qOT" id="qOT"></td>' +
-      '<td><input type="text" class="form-control unituOT" id="unituOT"></td>';
-    html += "<td>" + remove + "</td></tr>";
+    html =
+      `<tr><td><input type="text" class="form-control pnOT" id="pnOT"></td>
+      <td><input type="text" class="form-control typeOT" id="typeOT"></td>
+      <td><input type="number" class="form-control qOT" id="qOT"></td>
+      <td><input type="text" class="form-control unituOT" id="unituOT"></td>
+      <td>${remove}</td></tr>`;
     return html;
   }
 };
@@ -114,11 +110,8 @@ $(document).submit((e) => {
   let donation_date = $("#donation_date").val();
   /****************Donor Details********************************************************************/
 
-  let result = [];
-  let x = 0;
-  $(".selectCateg:checked").each(function () {
-    result[x++] = $(this).val();
-  });
+
+ 
 
   /****************Alert function********************************************************************/
   const alertMessage = (Message) => {
@@ -268,10 +261,22 @@ $(document).submit((e) => {
           return;
         }
       }
-
       $(idField).removeClass("is-invalid");
     }
+    if ($('#fname').val() !== "" && $('#lname').val() !== "" && $('#email').val() !== "" && $('#contact').val() !== "") {
+      if (!$(".selectCateg:checked").length) {
+        console.log($(this).val())
+        isInvalid = true;
+        alertMessage("Please select a category.");
+      }
+    }
   };
+  let result = [];
+  let x = 0;
+  $('.selectCateg:checked').each(function() {
+    result[x++] = $(this).val();
+  });
+console.log(result)
 
   checksDonorInfoIfEmpty(fname, "#fname");
   checksDonorInfoIfEmpty(email, "#email");
@@ -284,10 +289,7 @@ $(document).submit((e) => {
   /****************Donor Information Validation********************************************************************/
 
   /****************Checks if there no checked checkbox********************************************************************/
-  if (result.length === 0) {
-    isInvalid = true;
-    alertMessage("Please select a category.");
-  }
+ 
   /****************Checks if there no checked checkbox********************************************************************/
 
   if (isInvalid) {
@@ -383,5 +385,4 @@ $(document).submit((e) => {
     },
   });
   /***********************Save data to database*******************************/
-
 });

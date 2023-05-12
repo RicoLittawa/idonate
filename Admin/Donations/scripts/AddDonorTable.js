@@ -96,14 +96,18 @@
                 <td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>
                 <td><select class="form-control typeMG" name="typeMG" id="typeMG">
                         <option value="">--</option>
+                        <option value="N/A">N/A</option>
                         <option value="Frozen">Frozen</option>
                         <option value="Fresh">Fresh</option>
                     </select></td>
                 <td><input type="number" class="form-control qMG" id="qMG"></td>
                 <td><select class="form-control unitMG" name="unitMG" id="unitMG">
                         <option value="">--</option>
+                        <option value="N/A">N/A</option>
                         <option value="Kilograms">Kilograms</option>
                         <option value="Grams">Grams</option>
+                        <option value="Sacks">Sacks</option>
+
                     </select></td>
                 <td><button type="button" class="btn btn-success addMG btn-rounded" id="addMG"><i class="fa-solid fa-plus"></i></button></td>
             </tr>
@@ -128,6 +132,7 @@
                 <td><input type="text" class="form-control name_items pnME" id="pnME"></td>
                 <td><select class="form-control typeME" name="typeME" id="typeME">
                         <option value="">--</option>
+                        <option value="N/A">N/A</option>
                         <option value="Tablet">Tablet</option>
                         <option value="Capsule">Capsule</option>
                         <option value="Liquid">Liquid</option>
@@ -135,6 +140,7 @@
                 <td><input type="number" class="form-control qME" id="qME"></td>
                 <td><select class="form-control unitME" name="unitME" id="unitME">
                         <option value="">--</option>
+                        <option value="N/A">N/A</option>
                         <option value="Milligrams">Milligrams</option>
                         <option value="Grams">Grams</option>
                         <option value="Micrograms">Micrograms</option>

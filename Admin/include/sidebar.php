@@ -68,15 +68,9 @@ function userSidebar(){
       <nav class="side-menu">
         <ul class="nav">
           <li class="nav-item">
-            <a href="UserCreateRequest.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'UserCreateRequest.php') !== false ? 'active' : '').'">
-              <i class="bx bxs-cart-add '.(strpos($_SERVER['REQUEST_URI'], 'UserCreateRequest.php') !== false ? 'active' : '').'"></i>
+            <a href="UserCreateRequest.php" class="nav-link '.(strpos($_SERVER['REQUEST_URI'], 'UserCreateRequest.php') !== false || strpos($_SERVER['REQUEST_URI'], 'ViewCreatedRequest.php') !== false ? 'active' : '').'">
+              <i class="bx bxs-cart-add '.(strpos($_SERVER['REQUEST_URI'], 'UserCreateRequest.php') !== false || strpos($_SERVER['REQUEST_URI'], 'ViewCreatedRequest.php') !== false ? 'active' : '').'"></i>
               <span class="text">Create</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="bx bxs-package"></i>
-              <span class="text">History</span>
             </a>
           </li>
           <li class="nav-item">

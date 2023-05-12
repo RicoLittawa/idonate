@@ -42,6 +42,8 @@ $("#password-update").submit((e) => {
           $('button[type="submit"]').prop("disabled", false);
           $(".submit-text").text("Change");
           $(".spinner-border").addClass("d-none");
+          $("#currentPass").val("");
+          $("#newPass").val("")
           Swal.fire({
             title: "Success",
             text: "Your password is updated",

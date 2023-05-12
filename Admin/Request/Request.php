@@ -74,7 +74,7 @@ require "../include/sidebar.php";
           <div class="dropdown">
             <a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
               <?php if ($profile == null) { ?>
-                <img src="../img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
+                <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } else { ?>
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
@@ -97,6 +97,9 @@ require "../include/sidebar.php";
             </div>
             <div class="d-flex justify-content-between py-3">
               <div class="request-download-btn"></div>
+              <div class="form-group">
+                <div id="status_filter"></div>
+              </div>
             </div>
             <!----Filter -->
             <div class="table-container">

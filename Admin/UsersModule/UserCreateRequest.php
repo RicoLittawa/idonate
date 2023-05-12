@@ -3,14 +3,14 @@ require_once "../include/protect.php";
 require_once "../include/profile.inc.php";
 require_once "../include/FunctionSelectBox.php";
 require "../include/sidebar.php";
-require_once '../include/connection.php';
+require_once "../include/connection.php";
 
 $reqId = "SELECT * from ref_request";
 $stmt = $conn->prepare($reqId);
 $stmt->execute();
 $reqResult = $stmt->get_result();
 $refRow = $reqResult->fetch_assoc();
-$requestRef = $refRow['request_id'];
+$requestRef = $refRow["request_id"];
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +35,7 @@ $requestRef = $refRow['request_id'];
 <body>
   <div class="main-container">
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar"> <?php echo userSidebar() ?></div>
+    <div class="sidebar" id="sidebar"> <?php echo userSidebar(); ?></div>
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
@@ -54,12 +54,14 @@ $requestRef = $refRow['request_id'];
           <div class="dropdown">
             <a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
               <?php if ($profile == null) { ?>
-                <img src="../img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
+                <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } else { ?>
-                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+                <img src="../include/profile/<?php echo htmlentities(
+                                                $profile
+                                              ); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo userAccountUpdate() ?>
+            <?php echo userAccountUpdate(); ?>
           </div>
         </div>
       </div>
@@ -70,7 +72,9 @@ $requestRef = $refRow['request_id'];
             <div id="createRequest" class="collapse mt-5" data-duration="500">
               <form class="pe-2 mb-3" id="add-request">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
-                <input hidden type="text" id="requestRef" value="<?php echo htmlentities($requestRef) ?>">
+                <input hidden type="text" id="requestRef" value="<?php echo htmlentities(
+                                                                    $requestRef
+                                                                  ); ?>">
                 <div class="form-outline datepicker mb-3">
                   <input class="form-control" id="request_date" type="date" name="donation" data-mdb-toggle="datepicker">
                   <label for="exampleDatepicker1" class="form-label">Select a date</label>
@@ -108,25 +112,26 @@ $requestRef = $refRow['request_id'];
                   </table>
                 </div>
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-success btn-block btn-rounded">
+                <div class=" d-flex justify-content-end">
+                <button type="submit" class="btn btn-success btn-rounded">
                   <span class="submit-text">Create</span>
                   <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
                 </button>
+                </div>
               </form>
             </div>
             <!----Filter -->
             <div class="d-flex justify-content-between">
               <div id="search-field"></div>
-              <div class="form-group">
-                <div id="role_filter"></div>
+              <div> <button class="btn btn-success btn-rounded me-2 text-wrap" id="printCreatedRequest"><i class="fa-solid fa-print"></i></button>
               </div>
             </div>
             <div class="d-flex justify-content-between py-3">
               <div class="create-request-download-btn"></div>
-              <div>
+              <div class="d-flex">
                 <button class="btn btn-success btn-rounded" type="button" id="toggleFormRequestBtn">
                   <i class="fas fa-add"></i>Show Form</button>
-                <button class="btn btn-success btn-rounded me-2 text-wrap" id="printCreatedRequest"><i class="fa-solid fa-print"></i></button>
+                  <div class="ms-2" id="status_filter"></div>
               </div>
             </div>
             <!----Filter -->
@@ -138,6 +143,7 @@ $requestRef = $refRow['request_id'];
                   <th>Request Date</th>
                   <th>Recieve Date</th>
                   <th>Status</th>
+                  <th>View</th>
                   <th>Delete</th>
                   <!-- Add more columns here -->
                 </tr>

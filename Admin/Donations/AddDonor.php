@@ -47,7 +47,7 @@ require_once '../include/FunctionSelectBox.php';
           <div class="dropdown">
             <a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
               <?php if ($profile == null) { ?>
-                <img src="../img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
+                <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } else { ?>
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
@@ -146,65 +146,43 @@ require_once '../include/FunctionSelectBox.php';
                   <h4 class="text-muted">Donation Type and Category</h4>
                 </div>
               </div>
-              <div class="row">
-                <div class="col">
+              <div class="mt-2">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input selectCateg" type="checkbox" id="box1" value="can-noodles">
                     <label class="form-check-label" for="">Can Goods & Noodles</label>
                   </div>
                   <div id="can-noodles"></div>
-                </div>
-                <div class="col">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input selectCateg" type="checkbox" id="box2" value="hygine-essentials">
                     <label class="form-check-label" for="">Hygine Essentials</label>
                   </div>
                   <div id="hygine-essentials"></div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input selectCateg" type="checkbox" id="box3" value="infant-items">
                     <label class="form-check-label" for="">Infant Items</label>
                   </div>
                   <div id="infant-items"></div>
-                </div>
-                <div class="col">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input selectCateg" type="checkbox" id="box4" value="drinking-water">
                     <label class="form-check-label" for="">Drinking Water</label>
                   </div>
                   <div id="drinking-water"></div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input selectCateg" type="checkbox" id="box5" value="meat-grains">
-                    <label class="form-check-label" for="">Meat Grains</label>
+                    <label class="form-check-label" for="">Meat/Grains</label>
                   </div>
                   <div id="meat-grains"></div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input selectCateg" type="checkbox" id="box6" value="medicine">
                     <label class="form-check-label" for="">Medicine</label>
                   </div>
                   <div id="medicine"></div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input selectCateg" type="checkbox" id="box7" value="others">
                     <label class="form-check-label" for="">Others</label>
                   </div>
                   <div id="others"></div>
-                </div>
-              </div>
+                  </div>
               <div class="d-flex justify-content-end mt-3">
                 <div class="me-3">
                   <button type="button" class="btn btn-danger cancelBtn btn-rounded" id="cancelBtn">Cancel</button>

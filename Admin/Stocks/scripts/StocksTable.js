@@ -17,7 +17,8 @@ let stocksTable = $("#stocks_data").DataTable({
     {
       data: "product",
       render: (data, type, row) => {
-        return `${data}<span class="badge rounded-pill badge-info">${row.type}</span>`;
+        
+        return  row.type.toLowerCase() === "n/a" ? data : `${data}<span class="badge rounded-pill badge-info">${row.type}</span>`;
       },
     },
     {
@@ -25,22 +26,17 @@ let stocksTable = $("#stocks_data").DataTable({
       render: (data, type, row) => {
         if (row.quantity <= 0) {
           return `<span class="badge rounded-pill badge-danger">Out of Stock</span>`;
+        } else {
+          return row.unit === "N/A" || row.unit === "" ? data : `${data}<span class="badge rounded-pill badge-info">&nbsp${row.unit}</span>`;
         }
-        return `${data}<span class="fw-light">&nbsp${row.unit}</span>`;
       },
-    },
+    },    
     {
       data: "distributed",
       render: (data, type, row) => {
         return data !== 0
           ? data
           : `<span class="badge rounded-pill badge-warning">N/A</span>`;
-      },
-    },
-    {
-      data: null,
-      render: function (data, type, row) {
-        return `<button type="button" class="btn btn-success btn-rounded" id="addExpiry"><i class="fa-solid fa-plus"></i></button>`;
       },
     },
   ],
@@ -148,7 +144,3 @@ const filterInitialization = (tableName) => {
 filterInitialization(stocksTable);
 /******************************Filter button initializations**************************************/
 
-/******************************Expiry function**************************************/
-$(document).on("click", "#addExpiry", () => {
-  alert("working");
-});

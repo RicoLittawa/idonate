@@ -104,6 +104,12 @@ let createRequest = $("#create_request_data").DataTable({
     {
       data: null,
       render: (data, type, row) => {
+        return `<div><button type="button" id="viewReceiptBtn" data-request=${row.request_id} class="btn btn-secondary btn-rounded">View</button></div>`;
+      },
+    },
+    {
+      data: null,
+      render: (data, type, row) => {
         return `<a class="d-flex justify-content-center allowed" onclick="deleteRow(${row.request_id},'include/DeleteRequest.php','#create_request_data')"><i class="fa-solid fa-trash text-danger"></i><a/>`;
       },
     },
@@ -154,6 +160,30 @@ let createRequest = $("#create_request_data").DataTable({
 
   searchDelay: 500,
   dom: "frtip",
+  initComplete: function () {
+    this.api()
+      .columns(4)
+      .every(function () {
+        const column = this;
+        const select = $(
+          '<select class="form-select rounded-pill"><option value="">All</option></select>'
+        )
+          .appendTo($("#status_filter"))
+          .on("change", function () {
+            const val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+            column.search(val ? "^" + val + "$" : "", true, false).draw();
+          });
+
+        column
+          .data()
+          .unique()
+          .sort()
+          .each(function (d, j) {
+            select.append('<option value="' + d + '">' + d + "</option>");
+          });
+      });
+  },
 });
 /********************************Create Request  Table*****************************/
 
@@ -312,4 +342,9 @@ $(document).on("submit", "#add-request", (e) => {
       alertMessage(xhr.responseText, "warning", "Error");
     },
   });
+});
+
+$(document).on("click", "#viewReceiptBtn", (event) => {
+  let viewReciept = $(event.target).attr("data-request");
+  window.location.href = "ViewCreatedRequest.php?requestId=" + viewReciept;
 });

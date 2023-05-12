@@ -44,7 +44,7 @@ require_once '../include/sidebar.php';
 					<div class="dropdown">
 						<a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
 							<?php if ($profile == null) { ?>
-								<img src="../img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
+								<img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } else { ?>
 								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
@@ -441,6 +441,7 @@ require_once '../include/sidebar.php';
 	<script type="text/javascript" src="../scripts/mdb.min.js"></script>
 	<script src="../scripts/sweetalert2.all.min.js"></script>
 	<script src="scripts/AcceptRequest.js"></script>
+	<script src="../scripts/CancelButton.js"></script>
 </body>
 
 </html>

@@ -34,6 +34,7 @@ if (isset($_GET["editdonate"])) {
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="../css/mdb.min.css">
 	<link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 	<title>Update Donations</title>
 </head>
 <body>
@@ -60,7 +61,7 @@ if (isset($_GET["editdonate"])) {
 					<div class="dropdown">
 						<a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
 							<?php if ($profile == null) { ?>
-								<img src="../img/default-admin.png" class="rounded-circle w-100" alt="Avatar" />
+								<img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } else { ?>
 								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
@@ -74,6 +75,10 @@ if (isset($_GET["editdonate"])) {
 				<div class="card">
 					<div class="card-body overflow-auto">
 						<!--Place table here --->
+						<div class="d-flex justify-content-end">
+							<button id="printUserData" class="btn btn-success btn-rounded" type="click"><i class="fa-solid fa-print"></i></button>
+						</div>
+						<div id="update_form">
 						<div class="form-container mt-5 ms-5">
 							<div class="d-inline-flex">
 								<h6 class="number-title">1</h6>
@@ -82,7 +87,7 @@ if (isset($_GET["editdonate"])) {
 								</div>
 							</div>
 							<!-- Start of Form-->
-							<form class="p-3 ms-4 me-3" id="update-form">
+							<form class="p-3 ms-4 me-3">
 								<input type="hidden" name="donor_id" id="donor_id" value="<?php echo htmlentities($donorid); ?>" readonly>
 								<input type="hidden" value="<?php echo htmlentities($donorreference); ?>" name="reference_id" id="reference_id" readonly>
 								<div class="row">
@@ -221,7 +226,7 @@ if (isset($_GET["editdonate"])) {
 						</div>
 						<!--2nd table -->
 						<div class="pe-4 ps-5 ms-4 mt-4">
-							<table class="table table-striped table-bordered" id="table_data">
+							<table class="table table-striped table-bordered update-form" id="update-form">
 								<thead>
 									<tr>
 										<th>Product Name</th>
@@ -254,6 +259,8 @@ if (isset($_GET["editdonate"])) {
 								</tbody>
 							</table>
 						</div>
+						</div>
+
 						<div class="d-flex justify-content-end mt-3">
 							<div class="me-3">
 								<button type="button" class="btn btn-danger cancelBtn btn-rounded" id="cancelBtn">Cancel</button>
@@ -267,7 +274,7 @@ if (isset($_GET["editdonate"])) {
 						</div>
 						</form>
 						<!--End of Container form -->
-					</div>
+				</div>
 				</div>
 			</div>
 			<!--End of card-->
@@ -282,6 +289,8 @@ if (isset($_GET["editdonate"])) {
 	<script src="scripts/LocationSelect.js"></script>
 	<script src="scripts/UpdateDonor.js"></script>
 	<script src="../scripts/CancelButton.js"></script>
+	<script src="../scripts/TableFilterButtons.js"></script>
+	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 </body>
 
 </html>

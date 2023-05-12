@@ -94,6 +94,7 @@ printTable("#printReceipt", "form-container");
 printTable("#printStocks", "stocks_data");
 printTable("#printUsers", "user_data");
 printTable("#printCreatedRequest", "create_request_data");
+printTable("#printUserData", "update_form");
 
 /******************************Print Function**************************************/
 
@@ -150,7 +151,10 @@ const deleteDonor = (id,url,tableName) => {
             icon: "success",
             confirmButtonColor: "#20d070",
             confirmButtonText: "OK",
+            cancelButtonColor: '#d33',
+            showCancelButton: true,
             allowOutsideClick: false,
+            reverseButtons: true
           });
           $(tableName).DataTable().ajax.reload();
         },

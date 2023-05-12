@@ -5,7 +5,7 @@
     $(document).on("click",buttonId,function() {
       Swal.fire({
           title: 'Are you sure?',
-          text: "The data you update will not be saved.",
+          text: "The previous actions cannot be saved.",
           icon: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#20d070',
@@ -16,11 +16,11 @@
           if (result.isConfirmed) {
               Swal.fire(
                   'Canceled!',
-                  `Your data has not been ${window.location.pathname.includes("AddDonor.php")? "added" : "updated"}.`,
+                  `Your data has not been saved.`,
                   'error'
               )
               setTimeout(() => {
-                  window.location.href = "Donors.php";
+                window.history.go(-1)
               }, 1500)
           }
       })
