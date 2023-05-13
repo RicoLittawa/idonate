@@ -119,19 +119,15 @@ require "../include/sidebar.php";
               </form>
             </div>
             <!----Filter -->
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-end">
               <div id="search-field"></div>
-              <div class="form-group">
-                <div id="role_filter"></div>
-              </div>
             </div>
             <div class="d-flex justify-content-between py-3">
               <div class="user-download-btn"></div>
-              <div>
+              <div class="d-flex">
                 <button class="btn btn-success btn-rounded" type="button" id="toggleFormBtn">
                   <i class="fas fa-add"></i> Show Form</button>
-                  <button class="btn btn-success btn-rounded ms-2 text-wrap" id="printUsers"><i class="fa-solid fa-print"></i></button>
-
+                  <div class="ms-2" id="role_filter"></div>
               </div>
             </div>
             <!----Filter -->

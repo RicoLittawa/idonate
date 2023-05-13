@@ -86,14 +86,7 @@ const printTable = (buttonId, content) => {
   });
 };
 printTable("#printBarChart", "barChart");
-printTable("#printRequestCompleted", "request_data");
-printTable("#printCategory", "category_data");
-printTable("#printDonors", "donors_data");
-printTable("#printRequest", "request_data_main");
 printTable("#printReceipt", "form-container");
-printTable("#printStocks", "stocks_data");
-printTable("#printUsers", "user_data");
-printTable("#printCreatedRequest", "create_request_data");
 printTable("#printUserData", "update_form");
 
 /******************************Print Function**************************************/

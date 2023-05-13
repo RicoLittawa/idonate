@@ -126,7 +126,10 @@ const appendNewProduct = (
   tableBody,
   buttontype,
   categoryAttribute,
-  selectClassName
+  selectClassName,
+  quantityClassname,
+  invalidProduct,
+  invalidQuantity
 ) => {
   let remove =
     count > 0
@@ -137,13 +140,17 @@ const appendNewProduct = (
   );
   let html = `
         <tr>
-          <td>${selectOption.prop("outerHTML")}</td>
+          <td>${selectOption.prop("outerHTML")}
+          <div class="${invalidProduct} text-danger"></div>
+
+          </td>
           <td>
             <div class="d-flex justify-content-center border">
               <button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="${categoryAttribute}"><i class="fa-solid fa-minus"></i></button>
-              <input type="number" class="form-control quantity" value="0" data-input-category="${categoryAttribute}">
+              <input type="number" class="form-control quantity ${quantityClassname}" value="0" data-input-category="${categoryAttribute}">
               <button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="${categoryAttribute}"><i class="fa-solid fa-plus"></i></button>
             </div>
+            <div class="${invalidQuantity} text-danger"></div>
           </td>
           <td>${remove}</td>
         </tr>
@@ -189,21 +196,75 @@ $(document).on("click", ".remove", function () {
 /***********************************Remove new added rows of table************************************************/
 
 /***********************************Add new row when button is click***********************************************/
-const addNewRow = (buttonId, number, CategoryName, selectClassName) => {
+const addNewRow = (
+  buttonId,
+  number,
+  CategoryName,
+  selectClassName,
+  quantityClassname,
+  invalidProduct,
+  invalidQuantity
+) => {
   $(document).on("click", buttonId, (e) => {
     e.stopImmediatePropagation();
     let tableBody = $(`tbody[data-body-category="${CategoryName}"]`);
     count++;
-    appendNewProduct(tableBody, number, CategoryName, selectClassName);
+    appendNewProduct(
+      tableBody,
+      number,
+      CategoryName,
+      selectClassName,
+      quantityClassname,
+      invalidProduct,
+      invalidQuantity
+    );
   });
 };
-addNewRow("#can-noodles", "01", "CanNoodles", "can-noodles-product");
-addNewRow("#hygine-essentials", "02", "Hygine", "hygine-essentials-product");
-addNewRow("#infant-items", "03", "InfantItems", "infant-items-product");
-addNewRow("#drinking-water", "04", "DrinkingWater", "drinking-water-product");
-addNewRow("#meat-grains", "05", "MeatGrains", "meat-grains-product");
-addNewRow("#medicine", "06", "Medicine", "medicine-product");
-addNewRow("#others", "07", "Others", "others-product");
+addNewRow(
+  "#can-noodles",
+  "01",
+  "CanNoodles",
+  "can-noodles-product",
+  "can-noodles-quantity",
+  "cn-invalid-product",
+  "cn-invalid-quantity"
+);
+addNewRow(
+  "#hygine-essentials",
+  "02",
+  "Hygine",
+  "hygine-essentials-product",
+  "hygine-essentials-quantity"
+);
+addNewRow(
+  "#infant-items",
+  "03",
+  "InfantItems",
+  "infant-items-product",
+  "infant-items-quantity"
+);
+addNewRow(
+  "#drinking-water",
+  "04",
+  "DrinkingWater",
+  "drinking-water-product",
+  "drinking-water-quantity"
+);
+addNewRow(
+  "#meat-grains",
+  "05",
+  "MeatGrains",
+  "meat-grains-product",
+  "meat-grains-quantity"
+);
+addNewRow(
+  "#medicine",
+  "06",
+  "Medicine",
+  "medicine-product",
+  "medicine-quantity"
+);
+addNewRow("#others", "07", "Others", "others-product", "others-quantity");
 /***********************************Add new row when button is click***********************************************/
 
 /***********************************Minus and plus button functionality***********************************************/
@@ -237,66 +298,63 @@ $(document).on("submit", (e) => {
       product: [],
       quantity: [],
     },
-    Hygine: {
+    HygineEssentials: {
       product: [],
       quantity: [],
     },
-    Infant: {
+    InfantItems: {
       product: [],
       quantity: [],
     },
-    Drinks: {
+    DrinkingWater: {
       product: [],
       quantity: [],
     },
-    MeatGrain: {
+    MeatGrains: {
       product: [],
       quantity: [],
+      type: [],
+      unit: [],
     },
     Medicine: {
       product: [],
       quantity: [],
+      type: [],
+      unit: [],
     },
     Others: {
       product: [],
       quantity: [],
+      type: [],
+      unit: [],
     },
   };
+
   let isInvalid = false;
 
-/***********************************Check if input fields are empty if not then push data to category object***********************************************/
+  /***********************************Check if input fields are empty if not then push data to category object***********************************************/
   const checkIfEmpty = (
     classNameProduct,
     classNameQuantity,
     inputFieldProduct,
-    inputFieldQuantity,
-    errorMessageClass,
-    errorMessageQuantity
+    inputFieldQuantity
   ) => {
     $(classNameProduct).each((index, element) => {
       if ($(element).val() == "") {
-        $(errorMessageClass).html(
-          "<span class'text-danger'>Please select a product</span>"
-        );
-        $(classNameProduct).addClass("is-invalid");
+        $(element).addClass("is-invalid");
         isInvalid = true;
       } else {
         inputFieldProduct.push($(element).val());
-        $(classNameProduct).removeClass("is-invalid");
-        $(errorMessageClass).html(``);
+        $(element).removeClass("is-invalid");
       }
     });
     $(classNameQuantity).each((index, element) => {
-      if ($(element).val() == 0) {
-        $(errorMessageQuantity).html(
-          "<span class'text-danger'>Please add a value</span>"
-        );
-        $(classNameQuantity).addClass("is-invalid");
+      if ($(element).val() <= 0) {
+        $(element).addClass("is-invalid");
         isInvalid = true;
       } else {
         inputFieldQuantity.push($(element).val());
-        $(classNameQuantity).removeClass("is-invalid");
-        $(errorMessageQuantity).html(``);
+        $(element).removeClass("is-invalid");
       }
     });
   };
@@ -304,111 +362,84 @@ $(document).on("submit", (e) => {
     ".can-noodles-product",
     ".can-noodles-quantity",
     categoryFields.CanNoodles.product,
-    categoryFields.CanNoodles.quantity,
-    ".cn-invalid-product",
-    ".cn-invalid-quantity"
+    categoryFields.CanNoodles.quantity
   );
   checkIfEmpty(
     ".hygine-essentials-product",
     ".hygine-essentials-quantity",
-    categoryFields.Hygine.product,
-    categoryFields.Hygine.quantity,
-    ".hy-invalid-product",
-    ".hy-invalid-quantity"
+    categoryFields.HygineEssentials.product,
+    categoryFields.HygineEssentials.quantity
   );
   checkIfEmpty(
     ".infant-items-product",
     ".infant-items-quantity",
-    categoryFields.Infant.product,
-    categoryFields.Infant.quantity,
-    ".ii-invalid-product",
-    ".ii-invalid-quantity"
+    categoryFields.InfantItems.product,
+    categoryFields.InfantItems.quantity
   );
   checkIfEmpty(
     ".drinking-water-product",
     ".drinking-water-quantity",
-    categoryFields.Drinks.product,
-    categoryFields.Drinks.quantity,
-    ".dw-invalid-product",
-    ".dw-invalid-quantity"
+    categoryFields.DrinkingWater.product,
+    categoryFields.DrinkingWater.quantity
   );
   checkIfEmpty(
     ".meat-grains-product",
     ".meat-grains-quantity",
-    categoryFields.MeatGrain.product,
-    categoryFields.MeatGrain.quantity,
-    ".mg-invalid-product",
-    ".mg-invalid-quantity"
+    categoryFields.MeatGrains.product,
+    categoryFields.MeatGrains.quantity
   );
   checkIfEmpty(
     ".medicine-product",
     ".medicine-quantity",
     categoryFields.Medicine.product,
-    categoryFields.Medicine.quantity,
-    ".me-invalid-product",
-    ".me-invalid-quantity"
+    categoryFields.Medicine.quantity
   );
   checkIfEmpty(
     ".others-product",
     ".others-quantity",
     categoryFields.Others.product,
-    categoryFields.Others.quantity,
-    ".ot-invalid-product",
-    ".ot-invalid-quantity"
+    categoryFields.Others.quantity
   );
   /***********************************Check if input fields are empty if not then push data to category object***********************************************/
 
-/***********************************Save to data***********************************************/
-let data = {
+  /***********************************Save to data***********************************************/
+  let data = {
     submitProcess: "",
     request_id: request_id,
     CanNoodlesProduct: categoryFields.CanNoodles.product,
     CanNoodlesQuantity: categoryFields.CanNoodles.quantity,
-    HygineProduct: categoryFields.Hygine.product,
-    HygineQuantity: categoryFields.Hygine.quantity,
-    InfantProduct: categoryFields.Infant.product,
-    InfantQuantity: categoryFields.Infant.quantity,
-    DrinkingWaterProduct: categoryFields.Drinks.product,
-    DrinkingWaterQuantity: categoryFields.Drinks.quantity,
-    MeatGrainsProduct: categoryFields.MeatGrain.product,
-    MeatGrainsQuantity: categoryFields.MeatGrain.quantity,
+    HygineProduct: categoryFields.HygineEssentials.product,
+    HygineQuantity: categoryFields.HygineEssentials.quantity,
+    InfantProduct: categoryFields.InfantItems.product,
+    InfantQuantity: categoryFields.InfantItems.quantity,
+    DrinkingWaterProduct: categoryFields.DrinkingWater.product,
+    DrinkingWaterQuantity: categoryFields.DrinkingWater.quantity,
+    MeatGrainsProduct: categoryFields.MeatGrains.product,
+    MeatGrainsQuantity: categoryFields.MeatGrains.quantity,
     MedicineProduct: categoryFields.Medicine.product,
     MedicineQuantity: categoryFields.Medicine.quantity,
     OthersProduct: categoryFields.Others.product,
     OthersQuantity: categoryFields.Others.quantity,
   };
-/***********************************Save to data***********************************************/
-
-/***********************************Check if out of stock***********************************************/
-  const checkIfOutOfStock = (
-    quantity,
-    product,
-    productField,
-    quantityField,
-    classTableProduct,
-    classTableQuantity
-  ) => {
+  /***********************************Save to data***********************************************/ /***********************************Check if out of stock***********************************************/
+  const checkIfOutOfStock = (quantity, product, itemName, quantityField) => {
     for (let i = 0; i < quantity.length; i++) {
-      $(quantityField).each(function (i) {
+      $(quantityField).each( (i,element)=> {
         if (+quantity[i] > +product[i]) {
-          $(productField).addClass("is-invalid");
-          $(quantityField).addClass("is-invalid");
-          $(classTableProduct).html(
-            `<span class'text-danger'>We dont have enough stocks<span/>`
+          swal.fire(
+            "Warning",
+            `We dont have enough stocks of ${itemName[i]}`,
+            "warning"
           );
-          $(classTableQuantity).html(
-            `<span class'text-danger'>Please input a different quantity<span/>`
-          );
+          $(element).addClass("is-invalid");
           isInvalid = true;
         } else {
-          $(productField).removeClass("is-invalid");
-          $(classTableProduct).html(``);
+          $(element).removeClass("is-invalid");
         }
       });
     }
   };
   /***********************************Check if out of stock***********************************************/
-
 
   /***********************************Check product if exist and compare input to quantity of the product***********************************************/
   const checkProductsIfExist = (categoryFields) => {
@@ -429,20 +460,16 @@ let data = {
                   }
                 );
                 const cnTotalQuantity = categoryFields[category].quantity;
-                const cnPnData = $(".can-noodles-product");
+                const cnName = categoryFields[category].product;
                 const cnQuantityData = $(".can-noodles-quantity");
-                const cnClassProduct = $(".cn-invalid-product");
-                const cnClassQuantity = $(".cn-invalid-quantity");
                 checkIfOutOfStock(
                   cnTotalQuantity,
                   commonCanNoodles,
-                  cnPnData,
-                  cnQuantityData,
-                  cnClassProduct,
-                  cnClassQuantity
+                  cnName,
+                  cnQuantityData
                 );
                 break;
-              case "Hygine":
+              case "HygineEssentials":
                 const commonHygine = categoryFields[category].product.map(
                   (productValue) => {
                     const index =
@@ -451,21 +478,16 @@ let data = {
                   }
                 );
                 const hyTotalQuantity = categoryFields[category].quantity;
-                const hyPnData = $(".hygine-essentials-product");
+                const hyName = categoryFields[category].product;
                 const hyQuantityData = $(".hygine-essentials-quantity");
-                const hyClassProduct = $(".hy-invalid-product");
-                const hyClassQuantity = $(".hy-invalid-quantity");
-
                 checkIfOutOfStock(
                   hyTotalQuantity,
                   commonHygine,
-                  hyPnData,
-                  hyQuantityData,
-                  hyClassProduct,
-                  hyClassQuantity
+                  hyName,
+                  hyQuantityData
                 );
                 break;
-              case "Infant":
+              case "InfantItems":
                 const commonInfant = categoryFields[category].product.map(
                   (productValue) => {
                     const index =
@@ -474,20 +496,16 @@ let data = {
                   }
                 );
                 const iiTotalQuantity = categoryFields[category].quantity;
-                const iiPnData = $(".infant-items-product");
+                const iiName = categoryFields[category].product;
                 const iiQuantityData = $(".infant-items-quantity");
-                const iiClassProduct = $(".ii-invalid-product");
-                const iiClassQuantity = $(".ii-invalid-quantity");
                 checkIfOutOfStock(
                   iiTotalQuantity,
                   commonInfant,
-                  iiPnData,
-                  iiQuantityData,
-                  iiClassProduct,
-                  iiClassQuantity
+                  iiName,
+                  iiQuantityData
                 );
                 break;
-              case "Drinks":
+              case "DrinkingWater":
                 const commonDrinks = categoryFields[category].product.map(
                   (productValue) => {
                     const index =
@@ -496,20 +514,16 @@ let data = {
                   }
                 );
                 const dwTotalQuantity = categoryFields[category].quantity;
-                const dwPnData = $(".drinking-water-product");
+                const dwName = categoryFields[category].product;
                 const dwQuantityData = $(".drinking-water-quantity");
-                const dwClassProduct = $(".dw-invalid-product");
-                const dwClassQuantity = $(".dw-invalid-quantity");
                 checkIfOutOfStock(
                   dwTotalQuantity,
                   commonDrinks,
-                  dwPnData,
-                  dwQuantityData,
-                  dwClassProduct,
-                  dwClassQuantity
+                  dwName,
+                  dwQuantityData
                 );
                 break;
-              case "MeatGrain":
+              case "MeatGrains":
                 const commonMeatGrains = categoryFields[category].product.map(
                   (productValue) => {
                     const index =
@@ -518,17 +532,13 @@ let data = {
                   }
                 );
                 const mgTotalQuantity = categoryFields[category].quantity;
-                const mgPnData = $(".meat-grains-product");
+                const mgName = categoryFields[category].product;
                 const mgQuantityData = $(".meat-grains-quantity");
-                const mgClassProduct = $(".mg-invalid-product");
-                const mgClassQuantity = $(".mg-invalid-quantity");               
-                 checkIfOutOfStock(
+                checkIfOutOfStock(
                   mgTotalQuantity,
                   commonMeatGrains,
-                  mgPnData,
-                  mgQuantityData,
-                  mgClassProduct,
-                  mgClassQuantity
+                  mgName,
+                  mgQuantityData
                 );
                 break;
               case "Medicine":
@@ -540,17 +550,13 @@ let data = {
                   }
                 );
                 const meTotalQuantity = categoryFields[category].quantity;
-                const mePnData = $(".medicine-product");
+                const meName = categoryFields[category].product;
                 const meQuantityData = $(".medicine-quantity");
-                const meClassProduct = $(".me-invalid-product");
-                const meClassQuantity = $(".me-invalid-quantity");
                 checkIfOutOfStock(
                   meTotalQuantity,
                   commonMedicine,
-                  mePnData,
-                  meQuantityData,
-                  meClassProduct,
-                  meClassQuantity
+                  meName,
+                  meQuantityData
                 );
                 break;
               case "Others":
@@ -561,17 +567,13 @@ let data = {
                   }
                 );
                 const otTotalQuantity = categoryFields[category].quantity;
-                const otPnData = $(".others-product");
+                const otName = categoryFields[category].product;
                 const otQuantityData = $(".others-quantity");
-                const otClassProduct = $(".ot-invalid-product");
-                const otClassQuantity = $(".ot-invalid-quantity");                
                 checkIfOutOfStock(
                   otTotalQuantity,
                   commonOthers,
-                  otPnData,
-                  otQuantityData,
-                  otClassProduct,
-                  otClassQuantity
+                  otName,
+                  otQuantityData
                 );
                 break;
             }
@@ -582,7 +584,7 @@ let data = {
         });
       }
     }
-    setTimeout(()=>{
+    setTimeout(() => {
       if (!isInvalid) {
         $.ajax({
           url: "include/ProcessRequest.php",
@@ -633,10 +635,8 @@ let data = {
             });
           },
         });
-      }else{
-        swal.fire("Warning", "Please recheck the data you inputted","warning")
       }
-    },500)
+    }, 500);
   };
   checkProductsIfExist(categoryFields);
   /***********************************Check product if exist and compare input to quantity of the product***********************************************/

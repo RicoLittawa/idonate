@@ -89,11 +89,8 @@ require "../include/sidebar.php";
         <div class="card">
           <div class="card-body">
             <!----Filter -->
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-end">
               <div id="search-field"></div>
-              <div class="d-flex">
-                <button class="btn btn-success btn-rounded me-2 text-wrap" id="printRequest"><i class="fa-solid fa-print"></i></button>
-              </div>
             </div>
             <div class="d-flex justify-content-between py-3">
               <div class="request-download-btn"></div>

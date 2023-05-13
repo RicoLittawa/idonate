@@ -60,15 +60,12 @@ require "../include/sidebar.php";
         <div class="card">
           <div class="card-body">
               <!----Filter -->
-              <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-end">
               <div id="search-field"></div>
-              <div class="form-group">
-                <div id="role_filter"></div>
-              </div>
             </div>
             <div class="d-flex justify-content-between py-3">
               <div class="stocks-download-btn"></div>
-              <button class="btn btn-success btn-rounded me-2 text-wrap" id="printStocks"><i class="fa-solid fa-print"></i></button>
+              <div id="role_filter"></div>
             </div>
             <!----Filter -->
               <table class="table table-striped table-bordered w-100" id="stocks_data">

@@ -24,7 +24,7 @@ thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
   let min = minDate.val();
   let max = maxDate.val();
-  let date = new Date(data[3]);
+  let date = new Date(data[2]);
 
   if (
     (min === null && max === null) ||
@@ -117,24 +117,24 @@ let createRequest = $("#create_request_data").DataTable({
   buttons: [
     {
       extend: "copyHtml5",
-      filename: "Users Data",
+      filename: "Created Request Table",
     },
     {
       extend: "excelHtml5",
-      filename: "Users Data",
+      filename: "Created Request Table",
     },
     {
       extend: "csvHtml5",
-      filename: "Users Data",
+      filename: "Created Request Table",
     },
     {
       extend: "pageLength",
     },
     {
       extend: "pdfHtml5",
-      filename: "Users Data",
+      filename: "Created Request Table",
       customize: (doc) => {
-        doc.content[0].text = "Users Data";
+        doc.content[0].text = "Created Request Table";
         doc.pageMargins = [40, 40, 40, 60];
         doc.defaultStyle.fontSize = 12;
         doc.styles.tableHeader = {
@@ -333,7 +333,7 @@ $(document).on("submit", "#add-request", (e) => {
         }, 1500);
         setTimeout(()=>{
           window.location.reload();
-        },1500)
+        },3000)
       } else {
         alertMessage(data, "warning", "Error");
       }

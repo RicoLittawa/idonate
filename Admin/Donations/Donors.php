@@ -55,12 +55,11 @@ require "../include/sidebar.php";
           <div class="card-body overflow-auto">
             <!----Filter -->
             <div class="d-flex justify-content-between">
-              <div id="search-field"></div>
-              <div class="d-flex">
-                <button class="btn btn-success btn-rounded me-2 text-wrap" id="printDonors"><i class="fa-solid fa-print"></i></button>
+            <div class="d-flex">
                 <button class="btn btn-success btn-rounded me-2 email_button text-wrap" id="bulk_email" data-action="bulk">Send to all</button>
                 <button class="btn btn-success btn-rounded text-wrap" id="addPage"><i class="fa-solid fa-plus"></i></button>
               </div>
+              <div id="search-field"></div>
             </div>
             <div class="d-flex justify-content-between py-3">
               <div class="donor-download-btn"></div>

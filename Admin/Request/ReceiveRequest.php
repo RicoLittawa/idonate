@@ -169,7 +169,7 @@ require_once '../include/sidebar.php';
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
-															<select class="form-control can-noodles-product" data-product="CanNoodles">
+															<select class="form-control can-noodles-product">
 															</select>
 															<div class="cn-invalid-product text-danger"></div>
 														</td>
@@ -206,7 +206,7 @@ require_once '../include/sidebar.php';
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
-															<select class="form-control hygine-essentials-product" data-product="Hygine">
+															<select class="form-control hygine-essentials-product">
 															</select>
 															<div class="hy-invalid-product text-danger"></div>
 														</td>
@@ -243,7 +243,7 @@ require_once '../include/sidebar.php';
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
-															<select class="form-control infant-items-product" data-product="InfantItems">
+															<select class="form-control infant-items-product">
 															</select>
 															<div class="ii-invalid-product text-danger"></div>
 														</td>
@@ -280,7 +280,7 @@ require_once '../include/sidebar.php';
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
-															<select class="form-control drinking-water-product" data-product="DrinkingWater">
+															<select class="form-control drinking-water-product">
 															</select>
 															<div class="dw-invalid-product text-danger"></div>
 														</td>
@@ -317,7 +317,7 @@ require_once '../include/sidebar.php';
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
-															<select class="form-control meat-grains-product" data-product="MeatGrains">
+															<select class="form-control meat-grains-product">
 															</select>
 															<div class="mg-invalid-product text-danger"></div>
 														</td>
@@ -354,7 +354,7 @@ require_once '../include/sidebar.php';
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
-															<select name="product" class="form-control medicine-product" data-product="Medicine">
+															<select name="product" class="form-control medicine-product">
 															</select>
 															<div class="me-invalid-product text-danger"></div>
 														</td>
@@ -391,7 +391,7 @@ require_once '../include/sidebar.php';
 													<tr>
 														<td>
 															<label for="product" class="form-label">Available Product</label>
-															<select class="form-control others-product" data-product="Others">
+															<select class="form-control others-product">
 															</select>
 															<div class="ot-invalid-product text-danger"></div>
 														</td>

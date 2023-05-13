@@ -1,15 +1,3 @@
-<?php 
- session_start();
-
- 
-  if(isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='admin') {
-      header("Location: adminpage.php");  
-      exit();
-  }else if (isset($_SESSION['user']['logged_in']) && ($_SESSION['user']['role'])=='user'){
-  	header("Location: userlandingpage.php");  
-      exit();
- }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

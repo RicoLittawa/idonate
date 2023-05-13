@@ -144,7 +144,6 @@ require "../include/sidebar.php";
                 </div>
                 <div class="d-flex justify-content-between py-3">
                   <div class="category-table"></div>
-                  <div class="ps-3 pb-4"><button class="btn btn-success btn-rounded " id="printCategory"><i class="fa-solid fa-print"></i></button></div>
                 </div>
                 <table class="table table-striped table-bordered w-100" id="category_data">
                   <thead>
@@ -164,7 +163,6 @@ require "../include/sidebar.php";
                 <h1 class="mb-3">Requests Completed</h1>
                 <div class="d-flex justify-content-between py-3">
                   <div class="request-table"></div>
-                  <div class="ps-3 pb-4"><button class="btn btn-success btn-rounded " id="printRequestCompleted"><i class="fa-solid fa-print"></i></button></div>
                 </div>
                 <table class="table table-striped table-bordered w-100" id="request_data">
                   <thead>

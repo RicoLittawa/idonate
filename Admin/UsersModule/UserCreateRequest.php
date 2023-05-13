@@ -77,7 +77,7 @@ $requestRef = $refRow["request_id"];
                                                                   ); ?>">
                 <div class="form-outline datepicker mb-3">
                   <input class="form-control" id="request_date" type="date" name="donation" data-mdb-toggle="datepicker">
-                  <label for="exampleDatepicker1" class="form-label">Select a date</label>
+                  <label for="request_date" class="form-label">Select a date</label>
                 </div>
                 <!-- Email and Password inputs -->
                 <div class="form-outline mb-3">
@@ -121,10 +121,8 @@ $requestRef = $refRow["request_id"];
               </form>
             </div>
             <!----Filter -->
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-end">
               <div id="search-field"></div>
-              <div> <button class="btn btn-success btn-rounded me-2 text-wrap" id="printCreatedRequest"><i class="fa-solid fa-print"></i></button>
-              </div>
             </div>
             <div class="d-flex justify-content-between py-3">
               <div class="create-request-download-btn"></div>

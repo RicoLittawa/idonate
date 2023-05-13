@@ -291,7 +291,7 @@ $(document).on("click", "#saveStatus", () => {
 
 $(document).on("click", "#acceptBtn", (event) => {
   let requestId = $(event.target).attr("data-request");
-  window.location.href = "RecieveRequest.php?requestId=" + requestId;
+  window.location.href = "ReceiveRequest.php?requestId=" + requestId;
 });
 $(document).on("click", "#viewReceiptBtn", (event) => {
   let viewReciept = $(event.target).attr("data-request");
