@@ -16,19 +16,29 @@ $(document).on("submit", "#update-user", (event) => {
   let isInvalid = false;
   let fileInput = $('input[type="file"]');
   let file = fileInput[0].files[0];
+  
+  const emailVali =
+    /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  const alertMessage = (title, text, icon) => {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      confirmButtonColor: "#20d070",
+      confirmButtonText: "OK",
+      allowOutsideClick: false,
+    });
+  };
   if (file) {
     let extension = file.name.split(".").pop().toLowerCase();
     if (["gif", "png", "jpg", "jpeg"].indexOf(extension) === -1) {
       // Invalid file extension
       // Display an error message or highlight the input field
-      Swal.fire("Image", "Invalid file extension.", "warning");
-      fileInput.val("");
+     alertMessage("Warning", "Invalid file extension.", "warning");
+     
       isInvalid = true;
     }
   }
-  const emailVali =
-    /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
   if (!fname) {
     $("#fname").addClass("is-invalid");
     isInvalid = true;
@@ -54,7 +64,7 @@ $(document).on("submit", "#update-user", (event) => {
     $("#email").removeClass("is-invalid");
   }
   if (!emailVali.test(email)) {
-    Swal.fire("Warning", "Invalid email address", "warning");
+    alertMessage("Warning", "Invalid email address", "warning");
     $("#email").addClass("is-invalid");
     isInvalid = true;
   } else {
@@ -69,21 +79,12 @@ $(document).on("submit", "#update-user", (event) => {
   if (isInvalid) {
     return false;
   }
-  const alertMessage=(title,text,icon)=>{
-    Swal.fire({
-      title: title,
-      text: text,
-      icon: icon,
-      confirmButtonColor: "#20d070",
-      confirmButtonText: "OK",
-      allowOutsideClick: false,
-    });
-  }
-  const resetBtnLoadingState= ()=>{
+
+  const resetBtnLoadingState = () => {
     $('button[type="submit"]').prop("disabled", false);
     $(".submit-text").text("Update");
     $(".spinner-border").addClass("d-none");
-  }
+  };
   $.ajax({
     url: "include/update-user.php",
     method: "POST",
@@ -101,13 +102,13 @@ $(document).on("submit", "#update-user", (event) => {
       if (data === "success") {
         setTimeout(() => {
           // Enable the submit button and hide the loading animation
-          resetBtnLoadingState()
-          alertMessage("Success","Your profile is updated","success")
+          resetBtnLoadingState();
+          alertMessage("Success", "Your profile is updated", "success");
         }, 1000);
-      } else if (data ==="Email already exists") {
+      } else if (data === "Email already exists") {
         setTimeout(() => {
-          alertMessage("Error",data,"error")
-          resetBtnLoadingState()
+          alertMessage("Error", data, "error");
+          resetBtnLoadingState();
           $("#email").val("");
           $("#email").addClass("is-invalid");
         }, 1000);
@@ -115,8 +116,8 @@ $(document).on("submit", "#update-user", (event) => {
     },
     error: (xhr, status, error) => {
       // Handle errors
-      resetBtnLoadingState()
-      alertMessage("Error",xhr.responseText,"error")
+      resetBtnLoadingState();
+      alertMessage("Error", xhr.responseText, "error");
     },
   });
 });

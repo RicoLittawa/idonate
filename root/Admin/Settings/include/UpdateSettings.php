@@ -4,8 +4,6 @@ require_once '../../../../config/config.php';
 if (isset($_POST["saveBtn"])) {
     try {
         $id = $_POST["templateId"];
-        $email = $_POST["custom_email"];
-        $emailID = $_POST["emailID"];
         $prevImage = $_POST["filename"];
         $certificate = $_FILES["certificate"]["name"];
 
@@ -60,5 +58,4 @@ if (isset($_POST["saveBtn"])) {
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
-    
 }

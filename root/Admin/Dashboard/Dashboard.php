@@ -126,7 +126,7 @@ require_once "../include/sidebar.php";
                       Select
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="selectCategory">
-                      <li><a class="dropdown-item select-category" href="#" data-value="">Select</a></li>
+                      <li><a class="dropdown-item select-category" href="#" data-value="">All</a></li>
                       <?php echo add_category($conn); ?>
                     </ul>
                   </div>

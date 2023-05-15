@@ -14,11 +14,14 @@
           reverseButtons: true
       }).then((result) => {
           if (result.isConfirmed) {
-              Swal.fire(
-                  'Canceled!',
-                  `Your data has not been saved.`,
-                  'error'
-              )
+              Swal.fire({
+                title: 'Canceled',
+                text: "Your data has not been saved",
+                icon: 'error',
+                confirmButtonColor: '#20d070',
+                confirmButtonText: 'OK',
+                allowOutsideClick: false
+            })
               setTimeout(() => {
                 window.history.go(-1)
               }, 1500)

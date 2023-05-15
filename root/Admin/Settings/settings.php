@@ -57,8 +57,7 @@ $fileName = $row["template"];
 							<?php if ($profile == null) { ?>
 								<img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } else { ?>
-								<img src="../include/profile/<?php echo htmlentities($profile); ?>"
-								 class="rounded-circle avatar-size" alt="Avatar" />
+								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
 						</a>
 						<?php echo accountUpdate(); ?>
@@ -85,8 +84,11 @@ $fileName = $row["template"];
 									</div>
 								</div>
 							</div>
-							<div class="pt-3">
-								<button type="submit" id="saveBtn" class="btn btn-success btn-rounded float-end">Save</button>
+							<div class="d-flex justify-content-end pt-3">
+								<button type="submit" class="btn btn-success btn-rounded">
+									<span class="submit-text">Update</span>
+									<span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
+								</button>
 							</div>
 						</form>
 					</div>
@@ -97,23 +99,23 @@ $fileName = $row["template"];
 	</div>
 
 	<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-md">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Template</h5>
-        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-	  <img src="" id="imageContainer" alt="" class="mw-100 rounded">
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Template</h5>
+					<button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<img src="" id="imageContainer" alt="" class="mw-100 rounded">
 
-	  </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
