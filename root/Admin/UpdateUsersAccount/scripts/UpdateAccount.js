@@ -32,11 +32,9 @@ $(document).on("submit", "#update-user", (event) => {
   if (file) {
     let extension = file.name.split(".").pop().toLowerCase();
     if (["gif", "png", "jpg", "jpeg"].indexOf(extension) === -1) {
-      // Invalid file extension
-      // Display an error message or highlight the input field
       alertMessage("Warning", "Invalid file extension.", "warning");
-
       isInvalid = true;
+    } else {
     }
   }
   if (!fname) {
@@ -75,6 +73,13 @@ $(document).on("submit", "#update-user", (event) => {
     isInvalid = true;
   } else {
     $("#address").removeClass("is-invalid");
+  }
+  if (!file) {
+    alertMessage("Warning", "Please input a file", "warning");
+    $("#wizard-picture").addClass("is-invalid");
+    isInvalid = true;
+  } else {
+    $("#wizard-picture").removeClass("is-invalid");
   }
   if (isInvalid) {
     return false;

@@ -35,41 +35,67 @@ $(document).on("submit", "#saveSettings", (event) => {
   if (file) {
     let extension = file.name.split(".").pop().toLowerCase();
     if (["gif", "png", "jpg", "jpeg"].indexOf(extension) === -1) {
-      // Invalid file extension
-      // Display an error message or highlight the input field
+      $("#certificate").addClass("is-invalid");
       alertMessage("Warning","Invalid file extension","warning");
       isInvalid = true;
     }
+    else{
+      $("#certificate").removeClass("is-invalid");
+
+    }
+  }
+  if (!file){
+    alertMessage("Warning","Please input a file","warning");
+    $("#certificate").addClass("is-invalid");
+    isInvalid = true;
+  }
+  else{
+    $("#certificate").removeClass("is-invalid");
   }
   if (isInvalid) {
     return false;
   }
-  $.ajax({
-    url: "include/UpdateSettings.php",
-    method: "POST",
-    processData: false,
-    contentType: false,
-    dataType: "text",
-    data: fd,
-    beforeSend: () => {
-      $('button[type="submit"]').prop("disabled", true);
-      $(".submit-text").text("Updating...");
-      $(".spinner-border").removeClass("d-none");
-    },
-    success: (data) => {
-      console.log(data);
-      if (data==="uploaded"){
-        setTimeout(()=>{
-          alertMessage("Success","Template has been updated","success");
+
+  Swal.fire({
+    title: "Confirm",
+    text: "Click yes to confirm",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#20d070",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, update it",
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "include/UpdateSettings.php",
+        method: "POST",
+        processData: false,
+        contentType: false,
+        dataType: "text",
+        data: fd,
+        beforeSend: () => {
+          $('button[type="submit"]').prop("disabled", true);
+          $(".submit-text").text("Updating...");
+          $(".spinner-border").removeClass("d-none");
+        },
+        success: (data) => {
+          console.log(data);
+          if (data==="uploaded"){
+            setTimeout(()=>{
+              alertMessage("Success","Template has been updated","success");
+              resetBtnLoadingState()
+            },1000)
+          }
+        },
+        error: (xhr, status, error) => {
+          alertMessage("Error",xhr.responseText,"error");
           resetBtnLoadingState()
-        },1000)
-      }
-    },
-    error: (xhr, status, error) => {
-      alertMessage("Error",xhr.responseText,"error");
-      resetBtnLoadingState()
-    },
+        },
+      });
+    }
   });
+ 
 });
 
 /*****************View Certificate template****************************/

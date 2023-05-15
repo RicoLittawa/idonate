@@ -100,9 +100,7 @@ require "../include/sidebar.php";
               <?php if ($profile == null) { ?>
                 <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } else { ?>
-                <img src="../include/profile/<?php echo htmlentities(
-                                                $profile
-                                              ); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
             <?php echo accountUpdate(); ?>
@@ -121,13 +119,9 @@ require "../include/sidebar.php";
                     <?php if ($profile == null) { ?>
                       <img src="../img/default-admin.png" class="picture-src" id="wizardPicturePreview" title="">
                     <?php } else { ?>
-                      <img src="../include/profile/<?php echo htmlentities(
-                                                      $profile
-                                                    ); ?>" class="picture-src" id="wizardPicturePreview" title="">
+                      <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="picture-src" id="wizardPicturePreview" title="">
                     <?php } ?>
-                    <input type="file" name="profileImg" id="wizard-picture" value="<?php echo htmlentities(
-                                                                                      $profile
-                                                                                    ); ?>">
+                    <input type="file" name="profileImg" id="wizard-picture" value="<?php echo htmlentities($profile); ?>">
                   </div>
                   <label>Upload image <i class="fa-sharp fa-solid fa-file-arrow-up"></i></label>
                 </div>
