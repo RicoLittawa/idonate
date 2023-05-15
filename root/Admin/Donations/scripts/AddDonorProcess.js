@@ -61,8 +61,7 @@ const addRowButton = (buttonType) => {
       <td>${remove}</td></tr>`;
     return html;
   } else if (buttonType === "buttonOT") {
-    html =
-      `<tr><td><input type="text" class="form-control pnOT" id="pnOT"></td>
+    html = `<tr><td><input type="text" class="form-control pnOT" id="pnOT"></td>
       <td><input type="text" class="form-control typeOT" id="typeOT"></td>
       <td><input type="number" class="form-control qOT" id="qOT"></td>
       <td><input type="text" class="form-control unituOT" id="unituOT"></td>
@@ -110,9 +109,8 @@ $(document).submit((e) => {
   let donation_date = $("#donation_date").val();
   /****************Donor Details********************************************************************/
 
-
   /****************Alert function********************************************************************/
-  const alertMessage=(title,text,icon)=>{
+  const alertMessage = (title, text, icon) => {
     Swal.fire({
       title: title,
       text: text,
@@ -121,12 +119,12 @@ $(document).submit((e) => {
       confirmButtonText: "OK",
       allowOutsideClick: false,
     });
-  }
-  const resetBtnLoadingState= ()=>{
+  };
+  const resetBtnLoadingState = () => {
     $('button[type="submit"]').prop("disabled", false);
     $(".submit-text").text("Save");
     $(".spinner-border").addClass("d-none");
-  }
+  };
   /****************Alert function********************************************************************/
 
   let isInvalid = false; //tracks all input field
@@ -211,7 +209,11 @@ $(document).submit((e) => {
         $(field.selector).each((index, element) => {
           inputFields[box.category][field.prop].push($(element).val());
           if ($(element).val() == "") {
-            alertMessage(`Please input a value for ${box.category}.`);
+            alertMessage(
+              "Warning",
+              `Please input a value for ${box.category}.`,
+              "warning"
+            );
             $(element).addClass("is-invalid");
             isInvalid = true;
           } else {
@@ -224,7 +226,11 @@ $(document).submit((e) => {
         $(field.selector).each((index, element) => {
           if ($(element).val() != "") {
             isInvalid = true;
-            alertMessage(`Please insert value to ${box.category}`);
+            alertMessage(
+              "Warning",
+              `Please input a value for ${box.category}.`,
+              "warning"
+            );
           }
         });
       }
@@ -248,7 +254,7 @@ $(document).submit((e) => {
       if (idField === "#email") {
         if (!emailVali.test(fieldName)) {
           isInvalid = true;
-          alertMessage("Warning","Invalid email address","warning");
+          alertMessage("Warning", "Invalid email address", "warning");
           $(idField).addClass("is-invalid");
           return;
         }
@@ -256,32 +262,37 @@ $(document).submit((e) => {
       if (idField === "#contact") {
         if (!varnumbers.test(fieldName)) {
           isInvalid = true;
-          alertMessage("Warning","Invalid contact number","warning");
+          alertMessage("Warning", "Invalid contact number", "warning");
           $(idField).addClass("is-invalid");
           return;
         } else if (fieldName.length > 11) {
           isInvalid = true;
-          alertMessage("warning","Invalid contact number","warning");
+          alertMessage("warning", "Invalid contact number", "warning");
           $(idField).addClass("is-invalid");
           return;
         }
       }
       $(idField).removeClass("is-invalid");
     }
-    if ($('#fname').val() !== "" && $('#lname').val() !== "" && $('#email').val() !== "" && $('#contact').val() !== "") {
+    if (
+      $("#fname").val() !== "" &&
+      $("#lname").val() !== "" &&
+      $("#email").val() !== "" &&
+      $("#contact").val() !== ""
+    ) {
       if (!$(".selectCateg:checked").length) {
-        console.log($(this).val())
+        console.log($(this).val());
         isInvalid = true;
-        alertMessage("warning","Please select a category","warning");
+        alertMessage("warning", "Please select a category", "warning");
       }
     }
   };
   let result = [];
   let x = 0;
-  $('.selectCateg:checked').each(function() {
+  $(".selectCateg:checked").each(function () {
     result[x++] = $(this).val();
   });
-console.log(result)
+  console.log(result);
 
   checksDonorInfoIfEmpty(fname, "#fname");
   checksDonorInfoIfEmpty(email, "#email");
@@ -294,7 +305,7 @@ console.log(result)
   /****************Donor Information Validation********************************************************************/
 
   /****************Checks if there no checked checkbox********************************************************************/
- 
+
   /****************Checks if there no checked checkbox********************************************************************/
 
   if (isInvalid) {
@@ -335,35 +346,50 @@ console.log(result)
   };
 
   /***********************Save data to database*******************************/
-  $.ajax({
-    url: "include/add.inc.php",
-    method: "POST",
-    data: inputData,
-    beforeSend: () => {
-      $('button[type="submit"]').prop("disabled", true);
-      $(".submit-text").text("Saving...");
-      $(".spinner-border").removeClass("d-none");
-    },
-    success: (data) => {
-      if (data === "success") {
-        setTimeout(() => {
-          // Enable the submit button and hide the loading animation
+
+  Swal.fire({
+    title: "Confirm",
+    text: "Click yes to confirm",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#20d070",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, update it",
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "include/add.inc.php",
+        method: "POST",
+        data: inputData,
+        beforeSend: () => {
+          $('button[type="submit"]').prop("disabled", true);
+          $(".submit-text").text("Saving...");
+          $(".spinner-border").removeClass("d-none");
+        },
+        success: (data) => {
+          if (data === "success") {
+            setTimeout(() => {
+              // Enable the submit button and hide the loading animation
+              resetBtnLoadingState();
+              alertMessage("Success", "Data has been added", "success");
+              setTimeout(() => {
+                window.location.href = "Donors.php";
+              }, 1500);
+            }, 100);
+          } else {
+            resetBtnLoadingState();
+            alertMessage("Error", data, "error");
+          }
+        },
+        error: (xhr, status, error) => {
+          // Handle errors
           resetBtnLoadingState();
-          alertMessage("Success","Data has been added","success");
-          setTimeout(() => {
-            window.location.href = "Donors.php";
-          }, 1500);
-        }, 100);
-      } else {
-        resetBtnLoadingState()
-        alertMessage("Error",data,"error");
-      }
-    },
-    error: (xhr, status, error) => {
-      // Handle errors
-      resetBtnLoadingState()
-      alertMessage("Error",xhr.responseText,"error");
-    },
+          alertMessage("Error", xhr.responseText, "error");
+        },
+      });
+    }
   });
+
   /***********************Save data to database*******************************/
 });

@@ -104,7 +104,7 @@
 					$('#userEmail').css('border', '1px solid #c80000');
 					isInvalid = true;
 				} else if (emailVali.test(userEmail) == false) {
-					alertMessage("Warning","Invalid email address","warning")
+					alertMessage("Warning", "Invalid email address", "warning")
 					$('#userEmail').css('border', '1px solid #c80000');
 					isInvalid = true;
 				} else {
@@ -136,7 +136,7 @@
 								// Enable the submit button and hide the loading animation
 								$('button[type="submit"]').prop('disabled', false);
 								$('#loader').removeClass('loader');
-								alertMessage("Hello Admin","You are logged in","success")
+								alertMessage("Hello Admin", "You are logged in", "success")
 								setTimeout(() => {
 									window.location.href = "./Dashboard/Dashboard.php";
 								}, 1000)
@@ -147,7 +147,7 @@
 							setTimeout(() => {
 								$('button[type="submit"]').prop('disabled', false);
 								$('#loader').removeClass('loader');
-								alertMessage("Hello User","You are logged in","success")
+								alertMessage("Hello User", "You are logged in", "success")
 								setTimeout(() => {
 									window.location.href = "../Admin/UsersModule/UserCreateRequest.php";
 								}, 1000)
@@ -155,7 +155,7 @@
 						}
 						if (data == "Invalid email or password.") {
 							setTimeout(() => {
-								alertMessage("Error",data,"error")
+								alertMessage("Error", data, "error")
 								$('button[type="submit"]').prop('disabled', false);
 								$('#loader').removeClass('loader');
 								$('.container-login100').removeClass('blur-filter-class')
@@ -170,7 +170,14 @@
 					},
 					error: (xhr, status, error) => {
 						// Handle errors
-						alertMessage("Error",xhr.responseText,"error");
+						alertMessage("Error", xhr.responseText, "error");
+						$('button[type="submit"]').prop('disabled', false);
+						$('#loader').removeClass('loader');
+						$('.container-login100').removeClass('blur-filter-class')
+						$('#userEmail').val('');
+						$('#userPassword').val('');
+						$('#userEmail').css('border', '1px solid #c80000');
+						$('#userPassword').css('border', '1px solid #c80000');
 					}
 				})
 			})

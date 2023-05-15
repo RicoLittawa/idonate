@@ -97,33 +97,48 @@ $(document).submit((e) => {
   if (isInvalid) {
     return false;
   }
-  $.ajax({
-    url: "include/edit.inc.php",
-    method: "POST",
-    data: data,
-    beforeSend: () => {
-      $('button[type="submit"]').prop("disabled", true);
-      $(".submit-text").text("Updating...");
-      $(".spinner-border").removeClass("d-none");
-    },
-    success: function (data) {
-      if (data === "success") {
-        setTimeout(() => {
-          // Enable the submit button and hide the loading animation
-          resetBtnLoadingState()
-          alertMessage("Success","Data has been updated","success")
-          setTimeout(() => {
-            window.location.href = "Donors.php?NewdataAdded";
-          }, 1500);
-        }, 1000);
-      } else {
-        resetBtnLoadingState()
-        alertMessage("Error",aata,"error")
-      }
-    },
-    error: (xhr, status, error) => {
-      resetBtnLoadingState()
-      alertMessage("Error",xhr.responseText,"error")
-    },
+
+  /***Save update */
+  Swal.fire({
+    title: "Confirm",
+    text: "Click yes to confirm",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#20d070",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, save it",
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "include/edit.inc.php",
+        method: "POST",
+        data: data,
+        beforeSend: () => {
+          $('button[type="submit"]').prop("disabled", true);
+          $(".submit-text").text("Updating...");
+          $(".spinner-border").removeClass("d-none");
+        },
+        success: function (data) {
+          if (data === "success") {
+            setTimeout(() => {
+              // Enable the submit button and hide the loading animation
+              resetBtnLoadingState();
+              alertMessage("Success", "Data has been updated", "success");
+              setTimeout(() => {
+                window.location.href = "Donors.php?NewdataAdded";
+              }, 1500);
+            }, 1000);
+          } else {
+            resetBtnLoadingState();
+            alertMessage("Error", aata, "error");
+          }
+        },
+        error: (xhr, status, error) => {
+          resetBtnLoadingState();
+          alertMessage("Error", xhr.responseText, "error");
+        },
+      });
+    }
   });
 });

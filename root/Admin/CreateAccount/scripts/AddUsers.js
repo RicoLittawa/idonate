@@ -200,7 +200,7 @@ $("#add-user").submit((e) => {
     $("#email").addClass("is-invalid");
     isInvalid = true;
   } else if (emailVali.test(email) == false) {
-    alertMessage("warning","Invalid email address","warning");
+    alertMessage("warning", "Invalid email address", "warning");
     $("#email").addClass("is-invalid");
     isInvalid = true;
   } else {
@@ -252,42 +252,59 @@ $("#add-user").submit((e) => {
     $(".spinner-border").addClass("d-none");
   };
 
-  $.ajax({
-    type: "POST",
-    url: "include/register.inc.php",
-    data: data,
-    beforeSend: () => {
-      $('button[type="submit"]').prop("disabled", true);
-      $(".submit-text").text("Creating...");
-      $(".spinner-border").removeClass("d-none");
-    },
-    success: (data) => {
-      if (data === "success") {
-        setTimeout(() => {
-          // Enable the submit button and hide the loading animation
-          userTable.ajax.reload();
+  Swal.fire({
+    title: "Confirm",
+    text: "Click yes to confirm",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#20d070",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, create it",
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "POST",
+        url: "include/register.inc.php",
+        data: data,
+        beforeSend: () => {
+          $('button[type="submit"]').prop("disabled", true);
+          $(".submit-text").text("Creating...");
+          $(".spinner-border").removeClass("d-none");
+        },
+        success: (data) => {
+          if (data === "success") {
+            setTimeout(() => {
+              // Enable the submit button and hide the loading animation
+              userTable.ajax.reload();
+              resetBtnLoadingState();
+              alertMessage(
+                "Success",
+                "Account is successfully created",
+                "success"
+              );
+              $("#fname").val("");
+              $("#lname").val("");
+              $("#position").val("");
+              $("#email").val("");
+              $("#password").val("");
+              $("#address").val("");
+              $('input[name="role"]').prop("checked", false);
+            }, 1000);
+          } else if (data == "Email already exists") {
+            resetBtnLoadingState();
+            alertMessage("Error", data, "error");
+            $("#email").val("");
+            $("#email").addClass("is-invalid");
+          }
+        },
+        error: (xhr, status, error) => {
+          // Handle errors
           resetBtnLoadingState();
-          alertMessage("Success", "Account is successfully created", "success");
-          $("#fname").val("");
-          $("#lname").val("");
-          $("#position").val("");
-          $("#email").val("");
-          $("#password").val("");
-          $("#address").val("");
-          $('input[name="role"]').prop("checked", false);
-        }, 1000);
-      } else if (data == "Email already exists") {
-        resetBtnLoadingState();
-        alertMessage("Error", data, "error");
-        $("#email").val("");
-        $("#email").addClass("is-invalid");
-      }
-    },
-    error: (xhr, status, error) => {
-      // Handle errors
-      resetBtnLoadingState();
-      alertMessage("Error", xhr.responseText, "error");
-    },
+          alertMessage("Error", xhr.responseText, "error");
+        },
+      });
+    }
   });
 });
 /***********************Generate Password*******************/

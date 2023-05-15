@@ -101,8 +101,8 @@ require "../include/sidebar.php";
                 <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } else { ?>
                 <img src="../include/profile/<?php echo htmlentities(
-                  $profile
-                ); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+                                                $profile
+                                              ); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
             <?php echo accountUpdate(); ?>
@@ -122,12 +122,12 @@ require "../include/sidebar.php";
                       <img src="../img/default-admin.png" class="picture-src" id="wizardPicturePreview" title="">
                     <?php } else { ?>
                       <img src="../include/profile/<?php echo htmlentities(
-                        $profile
-                      ); ?>" class="picture-src" id="wizardPicturePreview" title="">
+                                                      $profile
+                                                    ); ?>" class="picture-src" id="wizardPicturePreview" title="">
                     <?php } ?>
                     <input type="file" name="profileImg" id="wizard-picture" value="<?php echo htmlentities(
-                      $profile
-                    ); ?>">
+                                                                                      $profile
+                                                                                    ); ?>">
                   </div>
                   <label>Upload image <i class="fa-sharp fa-solid fa-file-arrow-up"></i></label>
                 </div>
@@ -137,49 +137,39 @@ require "../include/sidebar.php";
               <div class="row mb-4">
                 <div class="col">
                   <div class="form-outline">
-                    <input type="text" id="fname" name="fname" class="form-control" value="<?php echo htmlentities(
-                      $firstname
-                    ); ?>" />
+                    <input type="text" id="fname" name="fname" class="form-control" value="<?php echo htmlentities($firstname); ?>" />
                     <label class="form-label" for="fname">First name</label>
                   </div>
                 </div>
                 <div class="col">
                   <div class="form-outline">
-                    <input type="text" id="lname" name="lname" class="form-control" value="<?php echo htmlentities(
-                      $lastname
-                    ); ?>" />
+                    <input type="text" id="lname" name="lname" class="form-control" value="<?php echo htmlentities($lastname); ?>" />
                     <label class="form-label" for="lname">Last name</label>
                   </div>
                 </div>
                 <div class="col">
                   <div class="form-outline">
-                    <input type="text" id="position" name="position" class="form-control" placeholder="e.g. Brgy Captain/Employee" value="<?php echo htmlentities(
-                      $position
-                    ); ?>" />
+                    <input type="text" id="position" name="position" class="form-control" placeholder="e.g. Brgy Captain/Employee" value="<?php echo htmlentities($position); ?>" />
                     <label class="form-label" for="position">Position</label>
                   </div>
                 </div>
               </div>
               <!-- Email and Password inputs -->
               <div class="form-outline mb-4">
-                <input type="text" id="email" name="email" class="form-control" value="<?php echo htmlentities(
-                  $email
-                ); ?>" />
+                <input type="text" id="email" name="email" class="form-control" value="<?php echo htmlentities($email); ?>" />
                 <label class="form-label" for="email">Email address</label>
               </div>
               <!-- Address input -->
               <div class="form-outline mb-4">
-                <input class="form-control" id="address" name="address" value="<?php echo htmlentities(
-                  $address
-                ); ?>" />
+                <input class="form-control" id="address" name="address" value="<?php echo htmlentities($address); ?>" />
                 <label class="form-label" for="address">Address</label>
               </div>
               <!-- Submit button -->
               <div class="d-flex justify-content-end">
-              <button type="submit" class="btn btn-success  btn-rounded">
-                <span class="submit-text">Update</span>
-                <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
-              </button>
+                <button type="submit" class="btn btn-success  btn-rounded">
+                  <span class="submit-text">Update</span>
+                  <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
+                </button>
               </div>
             </form>
           </div>

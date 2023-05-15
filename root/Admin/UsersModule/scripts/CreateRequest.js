@@ -319,33 +319,47 @@ const resetBtnLoadingState = () => {
   if (isInvalid) {
     return false; // prevent form from submitting if any input is invalid
   }
-  $.ajax({
-    url: "include/CreateRequest.php",
-    method: "POST",
-    data: inputFields,
-    beforeSend: () => {
-      $('button[type="submit"]').prop("disabled", true);
-      $(".submit-text").text("Creating...");
-      $(".spinner-border").removeClass("d-none");
-    },
-    success: (data) => {
-      if (data === "success") {
-        setTimeout(() => {
+
+  Swal.fire({
+    title: "Confirm",
+    text: "Click yes to confirm",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#20d070",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, create it",
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "include/CreateRequest.php",
+        method: "POST",
+        data: inputFields,
+        beforeSend: () => {
+          $('button[type="submit"]').prop("disabled", true);
+          $(".submit-text").text("Creating...");
+          $(".spinner-border").removeClass("d-none");
+        },
+        success: (data) => {
+          if (data === "success") {
+            setTimeout(() => {
+              resetBtnLoadingState()
+              alertMessage("Success", "Your request is created", "success");
+            }, 1500);
+            setTimeout(()=>{
+              window.location.reload();
+            },3000)
+          } else {
+            resetBtnLoadingState()
+            alertMessage("Error", data, "error");
+          }
+        },
+        error: (xhr, status, error) => {
           resetBtnLoadingState()
-          alertMessage("Success", "Your request is created", "success");
-        }, 1500);
-        setTimeout(()=>{
-          window.location.reload();
-        },3000)
-      } else {
-        resetBtnLoadingState()
-        alertMessage("Error", data, "error");
-      }
-    },
-    error: (xhr, status, error) => {
-      resetBtnLoadingState()
-      alertMessage("Error", xhr.responseText, "error");
-    },
+          alertMessage("Error", xhr.responseText, "error");
+        },
+      });
+    }
   });
 });
 

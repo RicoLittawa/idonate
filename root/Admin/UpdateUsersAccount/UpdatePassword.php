@@ -1,6 +1,6 @@
-<?php include "../include/protect.php";
-include "../include/profile.inc.php";
-require "../include/sidebar.php";
+<?php require_once "../include/protect.php";
+require_once "../include/profile.inc.php";
+require_once "../include/sidebar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,10 +70,13 @@ require "../include/sidebar.php";
                 <label class="ps-1" for="newPass">Show Password</label>
               </div>
               <!-- Submit button -->
-              <button type="submit" class="btn btn-success btn-block btn-rounded my-3">
-                <span class="submit-text">Change</span>
-                <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
-              </button>
+              <div class="d-flex justify-content-end pt-3">
+                <button type="submit" class="btn btn-success btn-rounded">
+                  <span class="submit-text">Change</span>
+                  <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
+                </button>
+              </div>
+
             </form>
           </div>
         </div>
@@ -90,7 +93,7 @@ require "../include/sidebar.php";
 
   <script>
     $(document).ready(() => {
-     
+
     })
   </script>
 

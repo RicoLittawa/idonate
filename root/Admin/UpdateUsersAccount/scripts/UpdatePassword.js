@@ -24,7 +24,7 @@ $("#password-update").submit((e) => {
   if (isInvalid) {
     return false;
   }
-  const alertMessage=(title,text,icon)=>{
+  const alertMessage = (title, text, icon) => {
     Swal.fire({
       title: title,
       text: text,
@@ -33,45 +33,59 @@ $("#password-update").submit((e) => {
       confirmButtonText: "OK",
       allowOutsideClick: false,
     });
-  }
-  const resetBtnLoadingState= ()=>{
+  };
+  const resetBtnLoadingState = () => {
     $('button[type="submit"]').prop("disabled", false);
     $(".submit-text").text("Change");
     $(".spinner-border").addClass("d-none");
-  }
-  $.ajax({
-    url: "include/update-user.php",
-    method: "POST",
-    processData: false,
-    contentType: false,
-    dataType: "text",
-    data: fd,
-    beforeSend: () => {
-      $('button[type="submit"]').prop("disabled", true);
-      $(".submit-text").text("Changing...");
-      $(".spinner-border").removeClass("d-none");
-    },
-    success: (data) => {
-      if (data === "success") {
-        setTimeout(() => {
-          $("#currentPass").val("");
-          $("#newPass").val("")
+  };
+
+  Swal.fire({
+    title: "Confirm",
+    text: "Click yes to confirm",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#20d070",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, update it",
+    reverseButtons: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "include/update-user.php",
+        method: "POST",
+        processData: false,
+        contentType: false,
+        dataType: "text",
+        data: fd,
+        beforeSend: () => {
+          $('button[type="submit"]').prop("disabled", true);
+          $(".submit-text").text("Changing...");
+          $(".spinner-border").removeClass("d-none");
+        },
+        success: (data) => {
+          if (data === "success") {
+            setTimeout(() => {
+              $("#currentPass").val("");
+              $("#newPass").val("");
+              resetBtnLoadingState();
+              alertMessage("Success", "Your password is updated", "success");
+            }, 1000);
+          } else {
+            resetBtnLoadingState();
+            alertMessage("Error", data, "error");
+            $("#currentPass").val("");
+            $("#newPass").val("");
+            $("#currentPass").addClass("is-invalid");
+          }
+        },
+        error: (xhr, status, error) => {
+          // Handle errors
           resetBtnLoadingState();
-          alertMessage("Success","Your password is updated","success");
-        }, 1000);
-      } else {
-        resetBtnLoadingState();
-        alertMessage("Error",data,"error");
-        $("#currentPass").val("");
-        $("#newPass").val("");
-        $("#currentPass").addClass("is-invalid");
-      }
-    },
-    error: (xhr, status, error) => {
-      // Handle errors
-      resetBtnLoadingState();
-      alertMessage("Error",xhr.responseText,"error");
-    },
+          alertMessage("Error", xhr.responseText, "error");
+        },
+      });
+    }
   });
 });
 let passwordInputs = $("#newPass, #currentPass");

@@ -115,7 +115,6 @@ require_once "../include/sidebar.php";
                   <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
                 </button>
                 </div>
-               
               </form>
             </div>
             <!----Filter -->

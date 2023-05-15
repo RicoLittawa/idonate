@@ -121,7 +121,7 @@ require_once "../include/sidebar.php";
                   <h4>Number of items based on Category</h4>
                 </div>
                 <div class="d-flex justify-content-lg-end py-3">
-                  <div class="dropdown  mx-2">
+                  <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle btn-rounded" type="button" id="selectCategory" data-mdb-toggle="dropdown" aria-expanded="false">
                       Select
                     </button>
