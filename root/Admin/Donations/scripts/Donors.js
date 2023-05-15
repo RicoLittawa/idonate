@@ -239,7 +239,18 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
         });
       });
     }
-
+  /****************Alert function********************************************************************/
+  const alertMessage=(title,text,icon)=>{
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      confirmButtonColor: "#20d070",
+      confirmButtonText: "OK",
+      allowOutsideClick: false,
+    });
+  }
+  /****************Alert function********************************************************************/
     $.ajax({
       url: "../include/sendcerti.php",
       method: "POST",
@@ -258,12 +269,7 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
           $this.addClass("btn btn-outline-success");
           $("#bulk_email").attr("disabled", false);
           $this.html("Sent");
-          Swal.fire({
-            icon: "success",
-            title: "Sent",
-            text: "Email has been sent",
-            timer: 1500,
-          });
+          alertMessage("Success","Email has been sent","success")
           donorTable.ajax.reload();
         } else {
           $this.text(data);

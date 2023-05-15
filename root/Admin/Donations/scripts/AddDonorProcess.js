@@ -111,17 +111,22 @@ $(document).submit((e) => {
   /****************Donor Details********************************************************************/
 
 
- 
-
   /****************Alert function********************************************************************/
-  const alertMessage = (Message) => {
+  const alertMessage=(title,text,icon)=>{
     Swal.fire({
-      title: "Warning",
-      text: Message,
-      icon: "warning",
+      title: title,
+      text: text,
+      icon: icon,
       confirmButtonColor: "#20d070",
+      confirmButtonText: "OK",
+      allowOutsideClick: false,
     });
-  };
+  }
+  const resetBtnLoadingState= ()=>{
+    $('button[type="submit"]').prop("disabled", false);
+    $(".submit-text").text("Save");
+    $(".spinner-border").addClass("d-none");
+  }
   /****************Alert function********************************************************************/
 
   let isInvalid = false; //tracks all input field
@@ -243,7 +248,7 @@ $(document).submit((e) => {
       if (idField === "#email") {
         if (!emailVali.test(fieldName)) {
           isInvalid = true;
-          alertMessage("Please enter a valid e-mail address.");
+          alertMessage("Warning","Invalid email address","warning");
           $(idField).addClass("is-invalid");
           return;
         }
@@ -251,12 +256,12 @@ $(document).submit((e) => {
       if (idField === "#contact") {
         if (!varnumbers.test(fieldName)) {
           isInvalid = true;
-          alertMessage("Please enter a valid contact number.");
+          alertMessage("Warning","Invalid contact number","warning");
           $(idField).addClass("is-invalid");
           return;
         } else if (fieldName.length > 11) {
           isInvalid = true;
-          alertMessage("Please enter a valid contact number.");
+          alertMessage("warning","Invalid contact number","warning");
           $(idField).addClass("is-invalid");
           return;
         }
@@ -267,7 +272,7 @@ $(document).submit((e) => {
       if (!$(".selectCateg:checked").length) {
         console.log($(this).val())
         isInvalid = true;
-        alertMessage("Please select a category.");
+        alertMessage("warning","Please select a category","warning");
       }
     }
   };
@@ -343,45 +348,21 @@ console.log(result)
       if (data === "success") {
         setTimeout(() => {
           // Enable the submit button and hide the loading animation
-          $('button[type="submit"]').prop("disabled", false);
-          $(".submit-text").text("Save");
-          $(".spinner-border").addClass("d-none");
-          Swal.fire({
-            title: "Success",
-            text: "Data has been added",
-            icon: "success",
-            confirmButtonColor: "#20d070",
-            confirmButtonText: "OK",
-            allowOutsideClick: false,
-          });
-
+          resetBtnLoadingState();
+          alertMessage("Success","Data has been added","success");
           setTimeout(() => {
             window.location.href = "Donors.php";
-          }, 1000);
-        }, 500);
+          }, 1500);
+        }, 100);
       } else {
-        $(".submit-text").text("Save");
-        Swal.fire({
-          title: "Error",
-          text: data,
-          icon: "error",
-          confirmButtonColor: "#20d070",
-          confirmButtonText: "OK",
-          allowOutsideClick: false,
-        });
+        resetBtnLoadingState()
+        alertMessage("Error",data,"error");
       }
     },
     error: (xhr, status, error) => {
       // Handle errors
-      $(".submit-text").text("Save");
-      Swal.fire({
-        title: "Error",
-        text: xhr.responseText,
-        icon: "error",
-        confirmButtonColor: "#20d070",
-        confirmButtonText: "OK",
-        allowOutsideClick: false,
-      });
+      resetBtnLoadingState()
+      alertMessage("Error",xhr.responseText,"error");
     },
   });
   /***********************Save data to database*******************************/

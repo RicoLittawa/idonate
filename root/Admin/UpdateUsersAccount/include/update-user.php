@@ -9,7 +9,7 @@ if (isset($_POST['updateBtn'])) {
     $email = trim($_POST["email"]);
     $address = trim($_POST["address"]);
     $Image = $_FILES['profileImg']['name'];
-    if ($Image == null) {
+    if (empty($Image)) {
         $sql = "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=? where uID=?";
         $stmt = $conn->prepare($sql);
         try {
@@ -19,9 +19,9 @@ if (isset($_POST['updateBtn'])) {
                 $stmt->bind_param("sssssi", $fname, $lname, $position, $email, $address, $uID);
                 if (!$stmt->execute()) {
                     throw new Exception('There was a problem executing the query.');
-                } else {
-                    echo "success";
                 }
+                    echo "success";
+                
             }
         } catch (Exception $e) {
             if ($e->getCode() == 1062) {
@@ -40,49 +40,48 @@ if (isset($_POST['updateBtn'])) {
         $oldRes = $stmt->get_result();
         $old = $oldRes->fetch_assoc();
         $oldImg = $old['profile'];
-        $path = "../include/profile/" . $oldImg;
-        if ($oldImg != null) {
+        $path = "../../include/profile/" . $oldImg;
+        if (!empty($oldImg)) {
             if (file_exists($path)) {
                 unlink($path);
+                /*****************Upload new image**********************************/
+                $filePath = '../../include/profile/';
+                $filename = $uID . '_' . basename($_FILES['profileImg']['name']);
+                $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                $fileSize = $_FILES['profileImg']['size'];
+                $fileError = $_FILES['profileImg']['error'];
+                if (move_uploaded_file($_FILES['profileImg']['tmp_name'], $filePath . $filename)) {
+                    if ($fileError === 0) {
+                        if ($fileSize < 1000000) {
+                            $sql = "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?";
+                            $stmt = $conn->prepare($sql);
+                            try {
+                                if (!$stmt) {
+                                    throw new Exception('There was a problem executing the query.');
+                                } else {
+                                    $stmt->bind_param("ssssssi", $fname, $lname, $position, $email, $address, $filename, $uID);
+                                    if (!$stmt->execute()) {
+                                        throw new Exception('There was a problem executing the query.');
+                                    }
+                                    echo "success";
+                                }
+                            } catch (Exception $e) {
+                                if ($e->getCode() == 1062) {
+                                    // Handle duplicate email error
+                                    echo "Error: Email already exists";
+                                } else {
+                                    // Handle other errors
+                                    echo $e->getMessage();
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         /*****************Update account*********************************/
 
-        /*****************Upload new image**********************************/
-        $filePath = '../../include/profile/';
-        $filename = $uID . '_' . basename($_FILES['profileImg']['name']);
-        $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        $fileSize = $_FILES['profileImg']['size'];
-        $fileError = $_FILES['profileImg']['error'];
-        if (move_uploaded_file($_FILES['profileImg']['tmp_name'], $filePath . $filename)) {
-            if ($fileError === 0) {
-                if ($fileSize < 1000000) {
-                    $sql = "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?";
-                    $stmt = $conn->prepare($sql);
-                    try {
-                        if (!$stmt) {
-                            throw new Exception('There was a problem executing the query.');
-                        } else {
-                            $stmt->bind_param("ssssssi", $fname, $lname, $position, $email, $address, $filename, $uID);
-                            if (!$stmt->execute()) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                echo "success";
-                            }
-                        }
-                    } catch (Exception $e) {
-                        if ($e->getCode() == 1062) {
-                            // Handle duplicate email error
-                            echo "Error: Email already exists";
-                        } else {
-                            // Handle other errors
-                            echo $e->getMessage();
-                        }
-                    }
-                    
-                }
-            }
-        }
+
         /*****************Upload new image**********************************/
     }
 }
@@ -112,6 +111,5 @@ if (isset($_POST['updatePassword'])) {
             echo "Password does not match to any account";
         }
     }
-    $conn->close();
 }
 /*****************Update Password**********************************/

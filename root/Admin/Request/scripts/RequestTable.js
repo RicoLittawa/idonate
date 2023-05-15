@@ -90,9 +90,9 @@ let requestTable = $("#request_data_main").DataTable({
       data: "status",
       render: (data, type, row) => {
         if (data === "Request was processed") {
-          return `<span style="cursor:pointer;" class="badge badge-success" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
+          return `<span class="badge badge-success allowed" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
         } else if (data === "Ready for Pick-up") {
-          return `<span style="cursor:pointer;" class="badge badge-warning" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
+          return `<span class="badge badge-warning allowed" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
         } else if (data === "Request completed") {
           return `<span class="badge badge-success user-select-none not-allowed">${data}</span>`;
         } else if (data === "Request cannot be completed") {
@@ -249,6 +249,14 @@ filterInitialization(requestTable);
 $(document).on("click", "#saveStatus", () => {
   let reference = $("#reference").val();
   let selectStatus = $("#selectStatus").val();
+  /****************Reset function********************************************************************/
+const resetBtnLoadingState = () => {
+  $('button[type="submit"]').prop("disabled", false);
+  $(".submit-text").text("Update");
+  $(".spinner-border").addClass("d-none");
+};
+/****************Reset function********************************************************************/
+
   $.ajax({
     url: "include/UpdateRequestStatus.php",
     method: "POST",
@@ -265,9 +273,7 @@ $(document).on("click", "#saveStatus", () => {
     success: (data) => {
       if (data === "success") {
         setTimeout(() => {
-        $('#saveStatus').prop("disabled", false);
-        $(".submit-text").text("Update");
-        $(".spinner-border").addClass("d-none");
+        resetBtnLoadingState()
         requestTable.ajax.reload();
           Swal.fire({
             title: "Success",

@@ -164,15 +164,16 @@ $("#add-user").submit((e) => {
     /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   let isInvalid = false;
 
-  const showAlert= (message)=>{
+  const alertMessage = (title, text, icon) => {
     Swal.fire({
-        title: "Warning",
-        text: message,
-        icon: "warning",
-        confirmButtonColor: "#20d070", // Change the color value here
-      });
-  }
-
+      title: title,
+      text: text,
+      icon: icon,
+      confirmButtonColor: "#20d070",
+      confirmButtonText: "OK",
+      allowOutsideClick: false,
+    });
+  };
   // Check for empty required fields
   if (!fname) {
     $("#fname").addClass("is-invalid");
@@ -199,7 +200,7 @@ $("#add-user").submit((e) => {
     $("#email").addClass("is-invalid");
     isInvalid = true;
   } else if (emailVali.test(email) == false) {
-    showAlert("Invalid email address")
+    alertMessage("warning","Invalid email address","warning");
     $("#email").addClass("is-invalid");
     isInvalid = true;
   } else {
@@ -209,11 +210,10 @@ $("#add-user").submit((e) => {
   if (!password) {
     $("#password").addClass("is-invalid");
     isInvalid = true;
-  }else if(password.length < 8){
-    showAlert("Password must be atleast 8 characters")
-      $("#password").addClass("is-invalid");
-  }
-   else {
+  } else if (password.length < 8) {
+    showAlert("Password must be atleast 8 characters");
+    $("#password").addClass("is-invalid");
+  } else {
     $("#password").removeClass("is-invalid");
   }
 
@@ -245,6 +245,13 @@ $("#add-user").submit((e) => {
   if (isInvalid) {
     return false;
   }
+
+  const resetBtnLoadingState = () => {
+    $('button[type="submit"]').prop("disabled", false);
+    $(".submit-text").text("Change");
+    $(".spinner-border").addClass("d-none");
+  };
+
   $.ajax({
     type: "POST",
     url: "include/register.inc.php",
@@ -258,54 +265,28 @@ $("#add-user").submit((e) => {
       if (data === "success") {
         setTimeout(() => {
           // Enable the submit button and hide the loading animation
-          $('button[type="submit"]').prop("disabled", false);
-          $(".submit-text").text("Create");
-          $(".spinner-border").addClass("d-none");
-          userTable.ajax.reload()
-          Swal.fire({
-            title: "Success",
-            text: "Account is successfully created",
-            icon: "success",
-            confirmButtonColor: "#20d070",
-            confirmButtonText: "OK",
-            allowOutsideClick: false,
-          });
-          setTimeout(() => {
-            $("#fname").val("");
-            $("#lname").val("");
-            $("#position").val("");
-            $("#email").val("");
-            $("#password").val("");
-            $("#address").val("");
-            $('input[name="role"]').prop("checked", false);
-          }, 1000);
-        }, 500);
+          userTable.ajax.reload();
+          resetBtnLoadingState();
+          alertMessage("Success", "Account is successfully created", "success");
+          $("#fname").val("");
+          $("#lname").val("");
+          $("#position").val("");
+          $("#email").val("");
+          $("#password").val("");
+          $("#address").val("");
+          $('input[name="role"]').prop("checked", false);
+        }, 1000);
       } else if (data == "Email already exists") {
-        $('button[type="submit"]').prop("disabled", false);
-        $(".submit-text").text("Create");
-        $(".spinner-border").addClass("d-none");
+        resetBtnLoadingState();
+        alertMessage("Error", data, "error");
         $("#email").val("");
         $("#email").addClass("is-invalid");
-        Swal.fire({
-          title: "Error",
-          text: data,
-          icon: "error",
-          confirmButtonColor: "#20d070",
-          confirmButtonText: "OK",
-          allowOutsideClick: false,
-        });
       }
     },
     error: (xhr, status, error) => {
       // Handle errors
-      Swal.fire({
-        title: "Error",
-        text: xhr.responseText,
-        icon: "error",
-        confirmButtonColor: "#20d070",
-        confirmButtonText: "OK",
-        allowOutsideClick: false,
-      });
+      resetBtnLoadingState();
+      alertMessage("Error", xhr.responseText, "error");
     },
   });
 });

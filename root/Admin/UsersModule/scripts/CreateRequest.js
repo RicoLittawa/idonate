@@ -89,9 +89,9 @@ let createRequest = $("#create_request_data").DataTable({
       data: "status",
       render: (data, type, row) => {
         if (data === "Request was processed") {
-          return `<span style="cursor:pointer;" class="badge badge-success" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
+          return `<span class="badge badge-success none not-allowed" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
         } else if (data === "Ready for Pick-up") {
-          return `<span style="cursor:pointer;" class="badge badge-warning" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
+          return `<span class="badge badge-warning none not-allowed" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
         } else if (data === "Request completed") {
           return `<span class="badge badge-success user-select-none not-allowed">${data}</span>`;
         } else if (data === "Request cannot be completed") {
@@ -241,7 +241,9 @@ const filterInitialization = (tableName) => {
 filterInitialization(createRequest);
 /******************************Initialized filter buttons**************************************/
 
-const alertMessage = (text, icon, title) => {
+$(document).on("submit", "#add-request", (e) => {
+  /****************Alert function********************************************************************/
+const alertMessage = (title, text, icon) => {
   Swal.fire({
     title: title,
     text: text,
@@ -251,9 +253,13 @@ const alertMessage = (text, icon, title) => {
     allowOutsideClick: false,
   });
 };
+const resetBtnLoadingState = () => {
+  $('button[type="submit"]').prop("disabled", false);
+  $(".submit-text").text("Create");
+  $(".spinner-border").addClass("d-none");
+};
+/****************Alert function********************************************************************/
 
-
-$(document).on("submit", "#add-request", (e) => {
   e.preventDefault();
   let userId = $("#userId").val();
   let reqRef = $("#requestRef").val();
@@ -325,21 +331,20 @@ $(document).on("submit", "#add-request", (e) => {
     success: (data) => {
       if (data === "success") {
         setTimeout(() => {
-          $('button[type="submit"]').prop("disabled", false);
-          $(".submit-text").text("Create");
-          $(".spinner-border").addClass("d-none");
-          alertMessage("Your request is created", "success", "Success");
-       
+          resetBtnLoadingState()
+          alertMessage("Success", "Your request is created", "success");
         }, 1500);
         setTimeout(()=>{
           window.location.reload();
         },3000)
       } else {
-        alertMessage(data, "warning", "Error");
+        resetBtnLoadingState()
+        alertMessage("Error", data, "error");
       }
     },
     error: (xhr, status, error) => {
-      alertMessage(xhr.responseText, "warning", "Error");
+      resetBtnLoadingState()
+      alertMessage("Error", xhr.responseText, "error");
     },
   });
 });

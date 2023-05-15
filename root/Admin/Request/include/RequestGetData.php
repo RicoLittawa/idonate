@@ -1,5 +1,5 @@
 <?php
-require_once '../../../../config/config.php';
+require_once '../../../config/config.php';
 //Get from request table
 if (isset($_GET['requestId'])) {
 	$reference = $_GET['requestId'];

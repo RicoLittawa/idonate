@@ -1,6 +1,6 @@
 <?php require_once '../include/protect.php';
 require_once '../include/profile.inc.php';
-require "../include/sidebar.php";
+require_once "../include/sidebar.php";
 
 
 ?>
@@ -33,13 +33,15 @@ require "../include/sidebar.php";
         </div>
         <div class="modal-body">
           <input hidden id="reference" type="text">
-
+          <div class="form-group">
+          <label for="selectStatus" class="form-label">Select Status</label>
           <select id="selectStatus" class="form-select">
             <option value="">Select Status</option>
             <option value="Ready for Pick-up">Ready for Pick-up</option>
             <option value="Request cannot be completed">Request cannot be proccessed</option>
             <option value="Request completed">Request completed</option>
           </select>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary closeModal">Close</button>
@@ -71,7 +73,7 @@ require "../include/sidebar.php";
           </nav>
         </div>
         <div class="ms-auto">
-          <div class="dropdown">
+          <div class="dropdown allowed">
             <a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
               <?php if ($profile == null) { ?>
                 <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />

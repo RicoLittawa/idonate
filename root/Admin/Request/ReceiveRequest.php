@@ -43,7 +43,7 @@ require_once '../include/sidebar.php';
 					</nav>
 				</div>
 				<div class="ms-auto">
-					<div class="dropdown">
+					<div class="dropdown allowed">
 						<a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
 							<?php if ($profile == null) { ?>
 								<img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />

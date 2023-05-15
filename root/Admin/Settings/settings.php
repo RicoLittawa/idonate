@@ -1,7 +1,7 @@
 <?php require_once "../include/protect.php";
 require_once "../include/profile.inc.php";
 require_once "../include/FunctionSelectBox.php";
-require "../include/sidebar.php";
+require_once "../include/sidebar.php";
 require_once "../../../config/config.php";
 
 $cert = $conn->prepare("SELECT * FROM template_certi");
@@ -52,7 +52,7 @@ $fileName = $row["template"];
 					</nav>
 				</div>
 				<div class="ms-auto">
-					<div class="dropdown">
+					<div class="dropdown allowed">
 						<a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
 							<?php if ($profile == null) { ?>
 								<img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
@@ -119,6 +119,7 @@ $fileName = $row["template"];
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="../scripts/mdb.min.js"></script>
 	<script src="scripts/Settings.js"></script>
+	<script src="../scripts/sweetalert2.all.min.js"></script>
 	<!--Necessary Plugins -->
 
 	<!--Necessary Plugins -->

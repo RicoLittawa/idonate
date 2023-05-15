@@ -1,7 +1,7 @@
 /*****************Update Users Account**********************************/
-$("#update-user").submit((e) => {
-  e.preventDefault();
-  let fd = new FormData($("#update-user")[0]); //JavaScript object that allows you to
+$(document).on("submit", "#update-user", (event) => {
+  event.preventDefault();
+  let fd = new FormData($(event.target)[0]); //JavaScript object that allows you to
   //easily construct and send form data (including files) via AJAX.
   fd.append("updateBtn", true);
   //  for (let [key, value] of fd.entries()) {
@@ -26,6 +26,9 @@ $("#update-user").submit((e) => {
       isInvalid = true;
     }
   }
+  const emailVali =
+    /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
   if (!fname) {
     $("#fname").addClass("is-invalid");
     isInvalid = true;
@@ -50,6 +53,13 @@ $("#update-user").submit((e) => {
   } else {
     $("#email").removeClass("is-invalid");
   }
+  if (!emailVali.test(email)) {
+    Swal.fire("Warning", "Invalid email address", "warning");
+    $("#email").addClass("is-invalid");
+    isInvalid = true;
+  } else {
+    $("#email").removeClass("is-invalid");
+  }
   if (!address) {
     $("#address").addClass("is-invalid");
     isInvalid = true;
@@ -58,6 +68,21 @@ $("#update-user").submit((e) => {
   }
   if (isInvalid) {
     return false;
+  }
+  const alertMessage=(title,text,icon)=>{
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      confirmButtonColor: "#20d070",
+      confirmButtonText: "OK",
+      allowOutsideClick: false,
+    });
+  }
+  const resetBtnLoadingState= ()=>{
+    $('button[type="submit"]').prop("disabled", false);
+    $(".submit-text").text("Update");
+    $(".spinner-border").addClass("d-none");
   }
   $.ajax({
     url: "include/update-user.php",
@@ -72,64 +97,40 @@ $("#update-user").submit((e) => {
       $(".spinner-border").removeClass("d-none");
     },
     success: (data) => {
-      console.log(data)
+      console.log(data);
       if (data === "success") {
         setTimeout(() => {
           // Enable the submit button and hide the loading animation
-          $('button[type="submit"]').prop("disabled", false);
-          $(".submit-text").text("Update");
-          $(".spinner-border").addClass("d-none");
-          Swal.fire({
-            title: "Success",
-            text: "Your profile is updated",
-            icon: "success",
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "OK",
-            allowOutsideClick: false,
-          });
-        }, 1500);
-      } else if (data == "Email already exists") {
-        Swal.fire({
-          title: "Error",
-          text: data,
-          icon: "error",
-          confirmButtonColor: "#20d070",
-          confirmButtonText: "OK",
-          allowOutsideClick: false,
-        });
-        $('button[type="submit"]').prop("disabled", false);
-        $(".submit-text").text("Create");
-        $(".spinner-border").addClass("d-none");
-        $("#email").val("");
-        $("#email").addClass("is-invalid");
+          resetBtnLoadingState()
+          alertMessage("Success","Your profile is updated","success")
+        }, 1000);
+      } else if (data ==="Email already exists") {
+        setTimeout(() => {
+          alertMessage("Error",data,"error")
+          resetBtnLoadingState()
+          $("#email").val("");
+          $("#email").addClass("is-invalid");
+        }, 1000);
       }
     },
     error: (xhr, status, error) => {
       // Handle errors
-      Swal.fire({
-        title: "Error",
-        text: xhr.responseText,
-        icon: "error",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "OK",
-        allowOutsideClick: false,
-      });
+      resetBtnLoadingState()
+      alertMessage("Error",xhr.responseText,"error")
     },
   });
 });
 /*****************Update Users Account**********************************/
 
 /*****************Update Users Account**********************************/
-$("#wizard-picture").change(function() {
-  readURL(this);
-});
-function readURL(input) {
+$("#wizard-picture").change(function () {
+  var input = this;
   if (input.files && input.files[0]) {
     var reader = new FileReader();
 
-    reader.onload = function(e) {
-      $('#wizardPicturePreview').attr('src', e.target.result).fadeIn('slow');
-    }
+    reader.onload = function (e) {
+      $("#wizardPicturePreview").attr("src", e.target.result).fadeIn("slow");
+    };
     reader.readAsDataURL(input.files[0]);
   }
-}
+});

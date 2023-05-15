@@ -14,6 +14,20 @@ $(document).on("submit", "#saveSettings", (event) => {
   let fileInput = $('input[type="file"]');
   let file = fileInput[0].files[0];
 
+  let isInvalid= false;
+  if (file) {
+    let extension = file.name.split(".").pop().toLowerCase();
+    if (["gif", "png", "jpg", "jpeg"].indexOf(extension) === -1) {
+      // Invalid file extension
+      // Display an error message or highlight the input field
+      Swal.fire("Image", "Invalid file extension.", "warning");
+      fileInput.val("");
+      isInvalid = true;
+    }
+  }
+  if (isInvalid) {
+    return false;
+  }
   $.ajax({
     url: "include/UpdateSettings.php",
     method: "POST",

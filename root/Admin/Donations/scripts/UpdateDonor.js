@@ -37,13 +37,20 @@ $(document).submit((e) => {
   let isInvalid = false;
 
   /****************Alert function********************************************************************/
-  const alertMessage = (Message) => {
+  const alertMessage = (title, text, icon) => {
     Swal.fire({
-      title: "Warning",
-      text: Message,
-      icon: "warning",
+      title: title,
+      text: text,
+      icon: icon,
       confirmButtonColor: "#20d070",
+      confirmButtonText: "OK",
+      allowOutsideClick: false,
     });
+  };
+  const resetBtnLoadingState = () => {
+    $('button[type="submit"]').prop("disabled", false);
+    $(".submit-text").text("Update");
+    $(".spinner-border").addClass("d-none");
   };
   /****************Alert function********************************************************************/
 
@@ -56,7 +63,7 @@ $(document).submit((e) => {
       if (idField === "#email") {
         if (!emailVali.test(fieldName)) {
           isInvalid = true;
-          alertMessage("Please enter a valid e-mail address.");
+          alertMessage("Warning", "Invalid email address", "warning");
           $(idField).addClass("is-invalid");
           return;
         }
@@ -64,12 +71,12 @@ $(document).submit((e) => {
       if (idField === "#contact") {
         if (!varnumbers.test(fieldName)) {
           isInvalid = true;
-          alertMessage("Please enter a valid contact number.");
+          alertMessage("Warning", "Invalid contact number", "warning");
           $(idField).addClass("is-invalid");
           return;
         } else if (fieldName.length > 11) {
           isInvalid = true;
-          alertMessage("Please enter a valid contact number.");
+          alertMessage("Warning", "Invalid contact number", "warning");
           $(idField).addClass("is-invalid");
           return;
         }
@@ -103,47 +110,20 @@ $(document).submit((e) => {
       if (data === "success") {
         setTimeout(() => {
           // Enable the submit button and hide the loading animation
-          $('button[type="submit"]').prop("disabled", false);
-          $(".submit-text").text("Update");
-          $(".spinner-border").addClass("d-none");
-          Swal.fire({
-            title: "Success",
-            text: "Data has been updated",
-            icon: "success",
-            confirmButtonColor: "#20d070",
-            confirmButtonText: "OK",
-            allowOutsideClick: false,
-          });
+          resetBtnLoadingState()
+          alertMessage("Success","Data has been updated","success")
           setTimeout(() => {
             window.location.href = "Donors.php?NewdataAdded";
           }, 1500);
         }, 1000);
       } else {
-        $(".submit-text").text("Update");
-        $(".spinner-border").addClass("d-none");
-        Swal.fire({
-          title: "Error",
-          text: data,
-          icon: "error",
-          confirmButtonColor: "#20d070",
-          confirmButtonText: "OK",
-          allowOutsideClick: false,
-        });
+        resetBtnLoadingState()
+        alertMessage("Error",aata,"error")
       }
     },
     error: (xhr, status, error) => {
-      $(".submit-text").text("Update");
-      $(".spinner-border").addClass("d-none");
-      // Handle errors
-      Swal.fire({
-        title: "Error",
-        text: xhr.responseText,
-        icon: "error",
-        confirmButtonColor: "#20d070",
-        confirmButtonText: "OK",
-        allowOutsideClick: false,
-      });
+      resetBtnLoadingState()
+      alertMessage("Error",xhr.responseText,"error")
     },
   });
 });
-

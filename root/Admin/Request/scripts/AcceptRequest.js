@@ -128,8 +128,6 @@ const appendNewProduct = (
   categoryAttribute,
   selectClassName,
   quantityClassname,
-  invalidProduct,
-  invalidQuantity
 ) => {
   let remove =
     count > 0
@@ -223,8 +221,6 @@ addNewRow(
   "CanNoodles",
   "can-noodles-product",
   "can-noodles-quantity",
-  "cn-invalid-product",
-  "cn-invalid-quantity"
 );
 addNewRow(
   "#hygine-essentials",
@@ -418,16 +414,31 @@ $(document).on("submit", (e) => {
     OthersProduct: categoryFields.Others.product,
     OthersQuantity: categoryFields.Others.quantity,
   };
+
+/****************Alert function********************************************************************/
+const alertMessage = (title, text, icon) => {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: icon,
+    confirmButtonColor: "#20d070",
+    confirmButtonText: "OK",
+    allowOutsideClick: false,
+  });
+};
+const resetBtnLoadingState = () => {
+  $('button[type="submit"]').prop("disabled", false);
+  $(".submit-text").text("Process");
+  $(".spinner-border").addClass("d-none");
+};
+/****************Alert function********************************************************************/
+
   /***********************************Save to data***********************************************/ /***********************************Check if out of stock***********************************************/
   const checkIfOutOfStock = (quantity, product, itemName, quantityField) => {
     for (let i = 0; i < quantity.length; i++) {
       $(quantityField).each( (i,element)=> {
         if (+quantity[i] > +product[i]) {
-          swal.fire(
-            "Warning",
-            `We dont have enough stocks of ${itemName[i]}`,
-            "warning"
-          );
+          alertMessage("Warning",`We dont have enough stocks of ${itemName[i]}`,"warning")
           $(element).addClass("is-invalid");
           isInvalid = true;
         } else {
@@ -595,41 +606,20 @@ $(document).on("submit", (e) => {
           success: (data) => {
             if (data == "success") {
               setTimeout(() => {
-                $('button[type="submit"]').prop("disabled", false);
-                $(".submit-text").text("Process");
-                $(".spinner-border").addClass("d-none");
-                Swal.fire({
-                  title: "Success",
-                  text: "Your request is created",
-                  icon: "success",
-                  confirmButtonColor: "#20d070",
-                  confirmButtonText: "OK",
-                  allowOutsideClick: false,
-                });
+                resetBtnLoadingState();
+                alertMessage("Success","Your request is created","success")
                 setTimeout(() => {
                   window.location.href = "Request.php";
                 }, 1000);
               }, 1500);
             } else {
-              Swal.fire({
-                title: "Error",
-                text: data,
-                icon: "error",
-                confirmButtonColor: "#20d070",
-                confirmButtonText: "OK",
-                allowOutsideClick: false,
-              });
+              resetBtnLoadingState();
+              alertMessage("Error",data,"error")
             }
           },
           error: (xhr, status, error) => {
-            Swal.fire({
-              title: "Error",
-              text: xhr.responseText,
-              icon: "error",
-              confirmButtonColor: "#20d070",
-              confirmButtonText: "OK",
-              allowOutsideClick: false,
-            });
+            resetBtnLoadingState();
+            alertMessage("Error",xhr.responseText,"error")
           },
         });
       }

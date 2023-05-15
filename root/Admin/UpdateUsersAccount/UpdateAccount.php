@@ -79,7 +79,7 @@ require "../include/sidebar.php";
 <body>
   <div class="main-container">
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar"><?php echo sidebar() ?></div>
+    <div class="sidebar" id="sidebar"><?php echo sidebar(); ?></div>
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
@@ -100,10 +100,12 @@ require "../include/sidebar.php";
               <?php if ($profile == null) { ?>
                 <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } else { ?>
-                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+                <img src="../include/profile/<?php echo htmlentities(
+                  $profile
+                ); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo accountUpdate() ?>
+            <?php echo accountUpdate(); ?>
           </div>
         </div>
       </div>
@@ -119,50 +121,66 @@ require "../include/sidebar.php";
                     <?php if ($profile == null) { ?>
                       <img src="../img/default-admin.png" class="picture-src" id="wizardPicturePreview" title="">
                     <?php } else { ?>
-                      <img src="../include/profile/<?php echo htmlentities($profile) ?>" class="picture-src" id="wizardPicturePreview" title="">
+                      <img src="../include/profile/<?php echo htmlentities(
+                        $profile
+                      ); ?>" class="picture-src" id="wizardPicturePreview" title="">
                     <?php } ?>
-                    <input type="file" name="profileImg" id="wizard-picture" value="<?php echo htmlentities($profile)  ?>">
+                    <input type="file" name="profileImg" id="wizard-picture" value="<?php echo htmlentities(
+                      $profile
+                    ); ?>">
                   </div>
                   <label>Upload image <i class="fa-sharp fa-solid fa-file-arrow-up"></i></label>
                 </div>
               </div>
-              <input type="text" id="uID" name="uID" value="<?php echo $userID ?>" hidden />
+              <input type="text" id="uID" name="uID" value="<?php echo $userID; ?>" hidden />
               <!-- 2 column grid layout with text inputs for the first and last names -->
               <div class="row mb-4">
                 <div class="col">
                   <div class="form-outline">
-                    <input type="text" id="fname" name="fname" class="form-control" value="<?php echo  htmlentities($firstname); ?>" />
+                    <input type="text" id="fname" name="fname" class="form-control" value="<?php echo htmlentities(
+                      $firstname
+                    ); ?>" />
                     <label class="form-label" for="fname">First name</label>
                   </div>
                 </div>
                 <div class="col">
                   <div class="form-outline">
-                    <input type="text" id="lname" name="lname" class="form-control" value="<?php echo htmlentities($lastname); ?>" />
+                    <input type="text" id="lname" name="lname" class="form-control" value="<?php echo htmlentities(
+                      $lastname
+                    ); ?>" />
                     <label class="form-label" for="lname">Last name</label>
                   </div>
                 </div>
                 <div class="col">
                   <div class="form-outline">
-                    <input type="text" id="position" name="position" class="form-control" placeholder="e.g. Brgy Captain/Employee" value="<?php echo htmlentities($position) ?>" />
+                    <input type="text" id="position" name="position" class="form-control" placeholder="e.g. Brgy Captain/Employee" value="<?php echo htmlentities(
+                      $position
+                    ); ?>" />
                     <label class="form-label" for="position">Position</label>
                   </div>
                 </div>
               </div>
               <!-- Email and Password inputs -->
               <div class="form-outline mb-4">
-                <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlentities($email) ?>" />
+                <input type="text" id="email" name="email" class="form-control" value="<?php echo htmlentities(
+                  $email
+                ); ?>" />
                 <label class="form-label" for="email">Email address</label>
               </div>
               <!-- Address input -->
               <div class="form-outline mb-4">
-                <input class="form-control" id="address" name="address" value="<?php echo htmlentities($address) ?>" />
+                <input class="form-control" id="address" name="address" value="<?php echo htmlentities(
+                  $address
+                ); ?>" />
                 <label class="form-label" for="address">Address</label>
               </div>
               <!-- Submit button -->
-              <button type="submit" class="btn btn-success btn-block btn-rounded">
+              <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-success  btn-rounded">
                 <span class="submit-text">Update</span>
                 <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
               </button>
+              </div>
             </form>
           </div>
         </div>

@@ -1,7 +1,6 @@
 <?php
 function sidebar() {
     $html = '
-      <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
       <nav class="side-menu">
         <ul class="nav">
           <li class="nav-item">
@@ -71,7 +70,6 @@ function userAccountUpdate (){
  }
 function userSidebar(){
   $html= '
-  <button type="button" id="menuBtn" class="menuBtn"><i class="fa-solid fa-bars"></i></button>
       <nav class="side-menu">
         <ul class="nav">
           <li class="nav-item">
