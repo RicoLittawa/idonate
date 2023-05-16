@@ -27,6 +27,7 @@ $(document).on("submit", "#update-user", (event) => {
       confirmButtonColor: "#20d070",
       confirmButtonText: "OK",
       allowOutsideClick: false,
+      timer: 1500
     });
   };
   if (file) {

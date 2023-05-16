@@ -20,16 +20,36 @@ if (isset($_POST['updateBtn'])) {
                 if (!$stmt->execute()) {
                     throw new Exception('There was a problem executing the query.');
                 } else {
-                    echo "success";
+                    $response = array(
+                        'status' => 'Success',
+                        'message' => 'Your profile has been updated successfully',
+                        'icon' => 'success'
+                    );
+                    header('Content-Type: application/json');
+                    echo json_encode($response);
+                    exit();
                 }
             }
         } catch (Exception $e) {
             if ($e->getCode() == 1062) {
-                // Handle duplicate email error
-                echo "Email already exists";
+                $response = array(
+                    'status' => 'Error',
+                    'message' => 'Email address already exist',
+                    'icon' => 'error',
+                    'duplication' => false
+                );
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                exit();
             } else {
-                // Handle other errors
-                echo $e->getMessage();
+                $response = array(
+                    'status' => 'Error',
+                    'message' => $e->getMessage(),
+                    'icon' => 'error',
+                );
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                exit();
             }
         }
     } else {
@@ -67,19 +87,52 @@ if (isset($_POST['updateBtn'])) {
                             if (!$stmt->execute()) {
                                 throw new Exception('There was a problem executing the query.');
                             } else {
-                                echo "success";
+                                $getNewProfile = $conn->prepare("SELECT profile from adduser where uID=?");
+                                $getNewProfile->bind_param("i", $uID);
+                                if (!$getNewProfile->execute()) {
+                                    throw new Exception('There was a problem executing the query.');
+                                } else {
+                                    $getNewProfileResult = $getNewProfile->get_result();
+                                    if ($getNewProfileResult->num_rows === 0) {
+                                        throw new Exception('There are no such user.');
+                                    } else {
+                                        $newProfile = $getNewProfileResult->fetch_assoc();
+                                        $newFetchedProfile = $newProfile['profile'];
+                                        $response = array(
+                                            'status' => 'Success',
+                                            'message' => 'Your profile has been updated successfully',
+                                            'data' => $newFetchedProfile,
+                                            'icon' => 'success'
+                                        );
+                                        header('Content-Type: application/json');
+                                        echo json_encode($response);
+                                        exit();
+                                    }
+                                }
                             }
                         }
                     } catch (Exception $e) {
                         if ($e->getCode() == 1062) {
-                            // Handle duplicate email error
-                            echo "Error: Email already exists";
+                            $response = array(
+                                'status' => 'Error',
+                                'message' => 'Email address already exist',
+                                'icon' => 'error',
+                                'duplication' => false
+                            );
+                            header('Content-Type: application/json');
+                            echo json_encode($response);
+                            exit();
                         } else {
-                            // Handle other errors
-                            echo $e->getMessage();
+                            $response = array(
+                                'status' => 'Error',
+                                'message' => $e->getMessage(),
+                                'icon' => 'error',
+                            );
+                            header('Content-Type: application/json');
+                            echo json_encode($response);
+                            exit();
                         }
                     }
-                    
                 }
             }
         }

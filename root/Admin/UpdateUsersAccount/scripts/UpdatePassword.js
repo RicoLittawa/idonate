@@ -56,24 +56,24 @@ $("#password-update").submit((e) => {
         method: "POST",
         processData: false,
         contentType: false,
-        dataType: "text",
+        dataType: "json",
         data: fd,
         beforeSend: () => {
           $('button[type="submit"]').prop("disabled", true);
           $(".submit-text").text("Changing...");
           $(".spinner-border").removeClass("d-none");
         },
-        success: (data) => {
-          if (data === "success") {
+        success: (response) => {
+          if (response.status === "Success") {
             setTimeout(() => {
               $("#currentPass").val("");
               $("#newPass").val("");
               resetBtnLoadingState();
-              alertMessage("Success", "Your password is updated", "success");
+              alertMessage(response.status, response.message, response.icon);
             }, 1000);
           } else {
             resetBtnLoadingState();
-            alertMessage("Error", data, "error");
+            alertMessage(response.status, response.message, response.icon);
             $("#currentPass").val("");
             $("#newPass").val("");
             $("#currentPass").addClass("is-invalid");
