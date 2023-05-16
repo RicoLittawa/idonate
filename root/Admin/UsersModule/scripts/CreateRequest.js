@@ -335,23 +335,24 @@ const resetBtnLoadingState = () => {
         url: "include/CreateRequest.php",
         method: "POST",
         data: inputFields,
+        dataType:"json",
         beforeSend: () => {
           $('button[type="submit"]').prop("disabled", true);
           $(".submit-text").text("Creating...");
           $(".spinner-border").removeClass("d-none");
         },
-        success: (data) => {
-          if (data === "success") {
+        success: (response) => {
+          if (response.status === "Success") {
             setTimeout(() => {
               resetBtnLoadingState()
-              alertMessage("Success", "Your request is created", "success");
+              alertMessage(response.status,response.message,response.icon);
             }, 1500);
             setTimeout(()=>{
               window.location.reload();
             },3000)
           } else {
             resetBtnLoadingState()
-            alertMessage("Error", data, "error");
+            alertMessage(response.status, response.message, response.icon);
           }
         },
         error: (xhr, status, error) => {

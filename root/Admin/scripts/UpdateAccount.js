@@ -97,7 +97,7 @@ $(document).on("submit", "#update-user", (event) => {
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
-        url: "include/update-user.php",
+        url: "../include/update-user.php",
         method: "POST",
         processData: false,
         contentType: false,

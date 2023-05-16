@@ -56,9 +56,7 @@ $requestRef = $refRow["request_id"];
               <?php if ($profile == null) { ?>
                 <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } else { ?>
-                <img src="../include/profile/<?php echo htmlentities(
-                                                $profile
-                                              ); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
             <?php echo userAccountUpdate(); ?>
@@ -72,9 +70,7 @@ $requestRef = $refRow["request_id"];
             <div id="createRequest" class="collapse mt-5" data-duration="500">
               <form class="pe-2 mb-3" id="add-request">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
-                <input hidden type="text" id="requestRef" value="<?php echo htmlentities(
-                                                                    $requestRef
-                                                                  ); ?>">
+                <input hidden type="text" id="requestRef" value="<?php echo htmlentities($requestRef); ?>">
                 <div class="form-outline datepicker mb-3">
                   <input class="form-control" id="request_date" type="date" name="donation" data-mdb-toggle="datepicker">
                   <label for="request_date" class="form-label">Select a date</label>
@@ -113,10 +109,10 @@ $requestRef = $refRow["request_id"];
                 </div>
                 <!-- Submit button -->
                 <div class=" d-flex justify-content-end">
-                <button type="submit" class="btn btn-success btn-rounded">
-                  <span class="submit-text">Create</span>
-                  <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
-                </button>
+                  <button type="submit" class="btn btn-success btn-rounded">
+                    <span class="submit-text">Create</span>
+                    <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
+                  </button>
                 </div>
               </form>
             </div>
@@ -129,7 +125,7 @@ $requestRef = $refRow["request_id"];
               <div class="d-flex">
                 <button class="btn btn-success btn-rounded" type="button" id="toggleFormRequestBtn">
                   <i class="fas fa-add"></i>Show Form</button>
-                  <div class="ms-2" id="status_filter"></div>
+                <div class="ms-2" id="status_filter"></div>
               </div>
             </div>
             <!----Filter -->

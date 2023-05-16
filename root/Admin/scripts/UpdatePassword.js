@@ -32,6 +32,7 @@ $("#password-update").submit((e) => {
       confirmButtonColor: "#20d070",
       confirmButtonText: "OK",
       allowOutsideClick: false,
+      timer:1500
     });
   };
   const resetBtnLoadingState = () => {
@@ -52,7 +53,7 @@ $("#password-update").submit((e) => {
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
-        url: "include/update-user.php",
+        url: "../include/update-user.php",
         method: "POST",
         processData: false,
         contentType: false,

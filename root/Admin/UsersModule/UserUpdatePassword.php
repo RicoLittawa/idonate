@@ -70,10 +70,12 @@ require_once "../include/sidebar.php";
                 <label class="ps-1" for="newPass">Show Password</label>
               </div>
               <!-- Submit button -->
-              <button type="submit" class="btn btn-success btn-block btn-rounded my-3">
+              <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-success btn-rounded my-3">
                 <span class="submit-text">Change</span>
                 <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
               </button>
+              </div>
             </form>
           </div>
         </div>
@@ -85,7 +87,7 @@ require_once "../include/sidebar.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="../scripts/mdb.min.js"></script>
   <script src="../scripts/sweetalert2.all.min.js"></script>
-  <script src="../UpdateUsersAccount/scripts/UpdatePassword.js"></script>
+  <script src="../scripts/UpdatePassword.js"></script>
 
 
   <script>

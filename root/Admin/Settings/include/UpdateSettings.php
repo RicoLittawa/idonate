@@ -29,41 +29,39 @@ if (isset($_POST["saveBtn"])) {
                 );
                 if (!$updateCert) {
                     throw new Exception(
-                        "Failed to prepare insert statement: " . $conn->error
+                        'There was a problem executing the query' . $conn->error
                     );
                 }
-                $updateCert->bind_param("si", $certificate,$id);
+                $updateCert->bind_param("si", $certificate, $id);
                 if (!$updateCert->execute()) {
                     throw new Exception(
-                        "Failed to insert new certificate into database: " . $conn->error
+                        'There was a problem executing the query' . $conn->error
                     );
-                }else{
-                    $getNewTemplate= $conn->prepare("SELECT template from template_certi where id=?");
-                    $getNewTemplate->bind_param("i",$id);
-                    if(!$getNewTemplate->execute()){
+                } else {
+                    $getNewTemplate = $conn->prepare("SELECT template from template_certi where id=?");
+                    $getNewTemplate->bind_param("i", $id);
+                    if (!$getNewTemplate->execute()) {
                         throw new Exception(
-                            "Failed to execute the database: " . $conn->error
+                            'There was a problem executing the query' . $conn->error
                         );
-                    }
-                    else{
-                        $newTemplateResult= $getNewTemplate->get_result();
-                        if($newTemplateResult-> num_rows <0){
+                    } else {
+                        $newTemplateResult = $getNewTemplate->get_result();
+                        if ($newTemplateResult->num_rows < 0) {
                             throw new Exception(
                                 "Failed to fetch the data from database: " . $conn->error
                             );
                         }
-                        $newTemp= $newTemplateResult->fetch_assoc();
-                        $fetchedTemp= $newTemp['template'];
+                        $newTemp = $newTemplateResult->fetch_assoc();
+                        $fetchedTemp = $newTemp['template'];
                         $response = [
                             "status" => "Success",
-                            "message" => "Template updated successfully",
+                            "message" => "Template is updated successfully",
                             "icon" => "success",
                             "data" => $fetchedTemp
                         ];
                         header("Content-Type: application/json");
                         echo json_encode($response);
                         exit();
-
                     }
                 }
             } else {
