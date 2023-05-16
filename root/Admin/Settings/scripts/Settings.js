@@ -6,26 +6,24 @@ $("#certificate").on("change", (event) => {
     .addClass("selected")
     .html(fileName);
 });
-$(document).on("submit", "#saveSettings", (event) => {
-  event.preventDefault();
-  let fd = new FormData($("#saveSettings")[0]);
-  fd.append("saveBtn", true);
-  let email = fd.get("email");
-  let fileInput = $('input[type="file"]');
+const alertMessage = (title, text, icon) => {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: icon,
+    confirmButtonColor: "#20d070",
+    confirmButtonText: "OK",
+    allowOutsideClick: false,
+  });
+};
+$("#saveSettings").on("submit", (e) => {
+  e.preventDefault();
+  let fileInput = $("#certificate");
   let file = fileInput[0].files[0];
+  let formData = new FormData($(e.target)[0]);
+  formData.append("saveBtn", true);
 
-  let isInvalid= false;
-  const alertMessage = (title, text, icon) => {
-    Swal.fire({
-      title: title,
-      text: text,
-      icon: icon,
-      confirmButtonColor: "#20d070",
-      confirmButtonText: "OK",
-      allowOutsideClick: false,
-    });
-  };
-
+  let isInvalid = false;
   const resetBtnLoadingState = () => {
     $('button[type="submit"]').prop("disabled", false);
     $(".submit-text").text("Update");
@@ -36,20 +34,17 @@ $(document).on("submit", "#saveSettings", (event) => {
     let extension = file.name.split(".").pop().toLowerCase();
     if (["gif", "png", "jpg", "jpeg"].indexOf(extension) === -1) {
       $("#certificate").addClass("is-invalid");
-      alertMessage("Warning","Invalid file extension","warning");
+      alertMessage("Warning", "Invalid file extension", "warning");
       isInvalid = true;
-    }
-    else{
+    } else {
       $("#certificate").removeClass("is-invalid");
-
     }
   }
-  if (!file){
-    alertMessage("Warning","Please input a file","warning");
+  if (!file) {
+    alertMessage("Warning", "Please input a file", "warning");
     $("#certificate").addClass("is-invalid");
     isInvalid = true;
-  }
-  else{
+  } else {
     $("#certificate").removeClass("is-invalid");
   }
   if (isInvalid) {
@@ -72,30 +67,40 @@ $(document).on("submit", "#saveSettings", (event) => {
         method: "POST",
         processData: false,
         contentType: false,
-        dataType: "text",
-        data: fd,
+        dataType: "json",
+        data: formData,
         beforeSend: () => {
           $('button[type="submit"]').prop("disabled", true);
           $(".submit-text").text("Updating...");
           $(".spinner-border").removeClass("d-none");
         },
-        success: (data) => {
-          console.log(data);
-          if (data==="uploaded"){
-            setTimeout(()=>{
-              alertMessage("Success","Template has been updated","success");
-              resetBtnLoadingState()
-            },1000)
+        success: (response) => {
+          console.log(response.status);
+          if (response.status === "Success") {
+            setTimeout(() => {
+              alertMessage(response.status, response.message, response.icon);
+              resetBtnLoadingState();
+              $("#certificate").val("");
+              $("#imageContainer").attr(
+                "src",
+                `../include/Certificate Template/${response.data}`
+              );
+              $("#filename").val(response.data)
+            }, 1000);
+          } else {
+            alertMessage(response.status, response.message, response.icon);
+            resetBtnLoadingState();
+            $("#certificate").val("");
           }
         },
         error: (xhr, status, error) => {
-          alertMessage("Error",xhr.responseText,"error");
-          resetBtnLoadingState()
+          // Handle error response
+          alertMessage("Error", xhr.responseText, "error");
+          resetBtnLoadingState();
         },
       });
     }
   });
- 
 });
 
 /*****************View Certificate template****************************/
@@ -105,7 +110,6 @@ $(document).on("click", "#viewTemplate", () => {
     data: { templateId: "", id: id },
     method: "Get",
     success: (data) => {
-      console.log(data);
       $("#exampleModal").modal("show");
       $("#imageContainer").attr(
         "src",
@@ -113,14 +117,7 @@ $(document).on("click", "#viewTemplate", () => {
       );
     },
     error: (xhr, status, error) => {
-      Swal.fire({
-        title: "Error",
-        text: xhr.responseText,
-        icon: "error",
-        confirmButtonColor: "#20d070",
-        confirmButtonText: "OK",
-        allowOutsideClick: false,
-      });
+      alertMessage("Error", xhr.responseText, "error");
     },
   });
 });

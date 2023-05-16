@@ -100,7 +100,7 @@ require "../include/sidebar.php";
               <?php if ($profile == null) { ?>
                 <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } else { ?>
-                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" id="newProfile" alt="Avatar" />
               <?php } ?>
             </a>
             <?php echo accountUpdate(); ?>

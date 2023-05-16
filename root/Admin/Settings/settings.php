@@ -69,10 +69,10 @@ $fileName = $row["template"];
 			<div class="custom-container pb-3">
 				<div class="card">
 					<div class="card-body">
-						<form id="saveSettings" enctype="multipart/form-data">
+						<form id="saveSettings" enctype="multipart/form-data"  action="include/UpdateSettings.php" method="POST">
 							<div class="d-flex justify-content-between">
 								<input hidden type="text" name="templateId" id="templateId" value="<?php echo htmlentities($id); ?>">
-								<input hidden type="text" name="filename" value="<?php echo htmlentities($fileName) ?>">
+								<input hidden type="text" id="filename" name="filename" value="<?php echo htmlentities($fileName) ?>">
 								<h4>Configure</h4>
 								<button type="button" id="viewTemplate" class="btn btn-secondary btn-rounded">View Template</button>
 							</div>
@@ -85,7 +85,7 @@ $fileName = $row["template"];
 								</div>
 							</div>
 							<div class="d-flex justify-content-end pt-3">
-								<button type="submit" class="btn btn-success btn-rounded">
+								<button name="saveBtn" type="submit" class="btn btn-success btn-rounded">
 									<span class="submit-text">Update</span>
 									<span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
 								</button>

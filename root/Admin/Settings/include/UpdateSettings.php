@@ -1,5 +1,5 @@
 <?php
-require_once '../../../../config/config.php';
+require_once "../../../../config/config.php";
 
 if (isset($_POST["saveBtn"])) {
     try {
@@ -13,18 +13,6 @@ if (isset($_POST["saveBtn"])) {
             if (!unlink($validPath)) {
                 throw new Exception("Failed to delete previous certificate file.");
             }
-            $deletePrevCert = $conn->prepare("DELETE from template_certi where id=?");
-            if (!$deletePrevCert) {
-                throw new Exception(
-                    "Failed to prepare delete statement: " . $conn->error
-                );
-            }
-            $deletePrevCert->bind_param("i", $id);
-            if (!$deletePrevCert->execute()) {
-                throw new Exception(
-                    "Failed to delete previous certificate from database: " . $conn->error
-                );
-            }
             $filePath = "../../include/Certificate Template/";
             $filename = $filePath . basename($_FILES["certificate"]["name"]);
             $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
@@ -37,25 +25,60 @@ if (isset($_POST["saveBtn"])) {
                 )
             ) {
                 $updateCert = $conn->prepare(
-                    "INSERT INTO template_certi (template) value(?)"
+                    "UPDATE template_certi set  template= ? where id=?"
                 );
                 if (!$updateCert) {
                     throw new Exception(
                         "Failed to prepare insert statement: " . $conn->error
                     );
                 }
-                $updateCert->bind_param("s", $certificate);
+                $updateCert->bind_param("si", $certificate,$id);
                 if (!$updateCert->execute()) {
                     throw new Exception(
                         "Failed to insert new certificate into database: " . $conn->error
                     );
+                }else{
+                    $getNewTemplate= $conn->prepare("SELECT template from template_certi where id=?");
+                    $getNewTemplate->bind_param("i",$id);
+                    if(!$getNewTemplate->execute()){
+                        throw new Exception(
+                            "Failed to execute the database: " . $conn->error
+                        );
+                    }
+                    else{
+                        $newTemplateResult= $getNewTemplate->get_result();
+                        if($newTemplateResult-> num_rows <0){
+                            throw new Exception(
+                                "Failed to fetch the data from database: " . $conn->error
+                            );
+                        }
+                        $newTemp= $newTemplateResult->fetch_assoc();
+                        $fetchedTemp= $newTemp['template'];
+                        $response = [
+                            "status" => "Success",
+                            "message" => "Template updated successfully",
+                            "icon" => "success",
+                            "data" => $fetchedTemp
+                        ];
+                        header("Content-Type: application/json");
+                        echo json_encode($response);
+                        exit();
+
+                    }
                 }
-                echo "uploaded";
             } else {
                 throw new Exception("Failed to upload new certificate file.");
             }
         }
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        $response = [
+            "status" => "Error",
+            "message" => $e->getMessage(),
+            "icon" => "error",
+        ];
+
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        exit();
     }
 }

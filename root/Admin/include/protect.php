@@ -13,10 +13,19 @@ if (isset($_SESSION['user'])) {
 // Set the pages that are restricted to admin users
 $restricted_pages = array("Dashboard.php", "Donors.php", "AddDonor.php", "UpdateDonors.php",
 "Request.php","ReceiveRequest.php","ViewRequestReceipt.php","Stocks.php","UpdateAccount.php",
-"UpdatePassword.php","Users.php",);
+"UpdatePassword.php","Users.php","settings.php");
+
+$user_restricted_pages= array("UserCreateRequest.php","UserUpdatePassword.php","UserUpdateProfile.php",
+"ViewCreatedRequest.php");
 
 // Check if the current page is restricted and the user has the admin role
 if (in_array(basename($_SERVER["SCRIPT_FILENAME"]), $restricted_pages) && $userRole !== "admin") {
+    // Redirect the user to the login page if they don't have the admin role
+    header("Location: ../error/index.html");
+    exit();
+}
+
+if (in_array(basename($_SERVER["SCRIPT_FILENAME"]), $user_restricted_pages) && $userRole !== "user") {
     // Redirect the user to the login page if they don't have the admin role
     header("Location: ../error/index.html");
     exit();

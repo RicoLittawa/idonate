@@ -14,10 +14,12 @@ if (isset($_GET['templateId'])){
             $row= $result->fetch_assoc();
             $template= $row['template'];
             echo $template;
+            exit();
         }
     }
     catch (Exception $e){
         echo $e->getMessage();
+        exit();
     }
 
 

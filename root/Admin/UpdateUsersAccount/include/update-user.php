@@ -9,7 +9,7 @@ if (isset($_POST['updateBtn'])) {
     $email = trim($_POST["email"]);
     $address = trim($_POST["address"]);
     $Image = $_FILES['profileImg']['name'];
-    if (empty($Image)) {
+    if ($Image == null) {
         $sql = "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=? where uID=?";
         $stmt = $conn->prepare($sql);
         try {
@@ -19,17 +19,37 @@ if (isset($_POST['updateBtn'])) {
                 $stmt->bind_param("sssssi", $fname, $lname, $position, $email, $address, $uID);
                 if (!$stmt->execute()) {
                     throw new Exception('There was a problem executing the query.');
+                } else {
+                    $response = array(
+                        'status' => 'Success',
+                        'message' => 'Your profile has been updated successfully',
+                        'icon' => 'success'
+                    );
+                    header('Content-Type: application/json');
+                    echo json_encode($response);
+                    exit();
                 }
-                    echo "success";
-                
             }
         } catch (Exception $e) {
             if ($e->getCode() == 1062) {
-                // Handle duplicate email error
-                echo "Email already exists";
+                $response = array(
+                    'status' => 'Error',
+                    'message' => 'Email address already exist',
+                    'icon' => 'error',
+                    'duplication' => false
+                );
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                exit();
             } else {
-                // Handle other errors
-                echo $e->getMessage();
+                $response = array(
+                    'status' => 'Error',
+                    'message' => $e->getMessage(),
+                    'icon' => 'error',
+                );
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                exit();
             }
         }
     } else {
@@ -40,48 +60,82 @@ if (isset($_POST['updateBtn'])) {
         $oldRes = $stmt->get_result();
         $old = $oldRes->fetch_assoc();
         $oldImg = $old['profile'];
-        $path = "../../include/profile/" . $oldImg;
-        if (!empty($oldImg)) {
+        $path = "../include/profile/" . $oldImg;
+        if ($oldImg != null) {
             if (file_exists($path)) {
                 unlink($path);
-                /*****************Upload new image**********************************/
-                $filePath = '../../include/profile/';
-                $filename = $uID . '_' . basename($_FILES['profileImg']['name']);
-                $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-                $fileSize = $_FILES['profileImg']['size'];
-                $fileError = $_FILES['profileImg']['error'];
-                if (move_uploaded_file($_FILES['profileImg']['tmp_name'], $filePath . $filename)) {
-                    if ($fileError === 0) {
-                        if ($fileSize < 1000000) {
-                            $sql = "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?";
-                            $stmt = $conn->prepare($sql);
-                            try {
-                                if (!$stmt) {
+            }
+        }
+        /*****************Update account*********************************/
+
+        /*****************Upload new image**********************************/
+        $filePath = '../../include/profile/';
+        $filename = $uID . '_' . basename($_FILES['profileImg']['name']);
+        $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $fileSize = $_FILES['profileImg']['size'];
+        $fileError = $_FILES['profileImg']['error'];
+        if (move_uploaded_file($_FILES['profileImg']['tmp_name'], $filePath . $filename)) {
+            if ($fileError === 0) {
+                if ($fileSize < 1000000) {
+                    $sql = "UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?";
+                    $stmt = $conn->prepare($sql);
+                    try {
+                        if (!$stmt) {
+                            throw new Exception('There was a problem executing the query.');
+                        } else {
+                            $stmt->bind_param("ssssssi", $fname, $lname, $position, $email, $address, $filename, $uID);
+                            if (!$stmt->execute()) {
+                                throw new Exception('There was a problem executing the query.');
+                            } else {
+                                $getNewProfile = $conn->prepare("SELECT profile from adduser where uID=?");
+                                $getNewProfile->bind_param("i", $uID);
+                                if (!$getNewProfile->execute()) {
                                     throw new Exception('There was a problem executing the query.');
                                 } else {
-                                    $stmt->bind_param("ssssssi", $fname, $lname, $position, $email, $address, $filename, $uID);
-                                    if (!$stmt->execute()) {
-                                        throw new Exception('There was a problem executing the query.');
+                                    $getNewProfileResult = $getNewProfile->get_result();
+                                    if ($getNewProfileResult->num_rows === 0) {
+                                        throw new Exception('There are no such user.');
+                                    } else {
+                                        $newProfile = $getNewProfileResult->fetch_assoc();
+                                        $newFetchedProfile = $newProfile['profile'];
+                                        $response = array(
+                                            'status' => 'Success',
+                                            'message' => 'Your profile has been updated successfully',
+                                            'data' => $newFetchedProfile,
+                                            'icon' => 'success'
+                                        );
+                                        header('Content-Type: application/json');
+                                        echo json_encode($response);
+                                        exit();
                                     }
-                                    echo "success";
-                                }
-                            } catch (Exception $e) {
-                                if ($e->getCode() == 1062) {
-                                    // Handle duplicate email error
-                                    echo "Error: Email already exists";
-                                } else {
-                                    // Handle other errors
-                                    echo $e->getMessage();
                                 }
                             }
+                        }
+                    } catch (Exception $e) {
+                        if ($e->getCode() == 1062) {
+                            $response = array(
+                                'status' => 'Error',
+                                'message' => 'Email address already exist',
+                                'icon' => 'error',
+                                'duplication' => false
+                            );
+                            header('Content-Type: application/json');
+                            echo json_encode($response);
+                            exit();
+                        } else {
+                            $response = array(
+                                'status' => 'Error',
+                                'message' => $e->getMessage(),
+                                'icon' => 'error',
+                            );
+                            header('Content-Type: application/json');
+                            echo json_encode($response);
+                            exit();
                         }
                     }
                 }
             }
         }
-        /*****************Update account*********************************/
-
-
         /*****************Upload new image**********************************/
     }
 }
@@ -111,5 +165,6 @@ if (isset($_POST['updatePassword'])) {
             echo "Password does not match to any account";
         }
     }
+    $conn->close();
 }
 /*****************Update Password**********************************/

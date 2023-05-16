@@ -13,8 +13,10 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,700" rel="stylesheet">
 	<link rel="stylesheet" href="../css/mdb.min.css">
 
+
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,12 +35,16 @@
 				<h1>Oops!</h1>
 				<h2>404 - The Page can't be found</h2>
 			</div>
-			<a class="bg-success" href="../UsersModule/UserCreateRequest.php">Go Back</a>
+			<a class="bg-success" onclick="goBack()" style="cursor: pointer;">Go Back</a>
 		</div>
 	</div>
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 <script src="../scripts/mdb.min.js"></script>
-
+<script>
+	const goBack= ()=>{
+		window.history.go(-1)
+	}
+</script>
 
 </html>

@@ -74,13 +74,6 @@ $(document).on("submit", "#update-user", (event) => {
   } else {
     $("#address").removeClass("is-invalid");
   }
-  if (!file) {
-    alertMessage("Warning", "Please input a file", "warning");
-    $("#wizard-picture").addClass("is-invalid");
-    isInvalid = true;
-  } else {
-    $("#wizard-picture").removeClass("is-invalid");
-  }
   if (isInvalid) {
     return false;
   }
@@ -107,29 +100,36 @@ $(document).on("submit", "#update-user", (event) => {
         method: "POST",
         processData: false,
         contentType: false,
-        dataType: "text",
+        dataType: "json",
         data: fd,
         beforeSend: () => {
           $('button[type="submit"]').prop("disabled", true);
           $(".submit-text").text("Updating...");
           $(".spinner-border").removeClass("d-none");
         },
-        success: (data) => {
-          console.log(data);
-          if (data === "success") {
+        success: (response) => {
+          if (response.status === "Success") {
             setTimeout(() => {
               // Enable the submit button and hide the loading animation
               resetBtnLoadingState();
-              alertMessage("Success", "Your profile is updated", "success");
+              alertMessage(response.status, response.message, response.icon);
+              if (response.data) {
+                $("#newProfile").attr(
+                  "src",
+                  `../include/profile/${response.data}`
+                );
+              }
             }, 1000);
-          } else if (data === "Email already exists") {
+          } else {
             setTimeout(() => {
-              alertMessage("Error", data, "error");
+              alertMessage(response.status, response.message, response.icon);
               resetBtnLoadingState();
-              $("#email").val("");
-              $("#email").addClass("is-invalid");
+              if(!response.duplication){
+                $("#email").val("");
+                $("#email").addClass("is-invalid");
+              }
             }, 1000);
-          }
+          } 
         },
         error: (xhr, status, error) => {
           // Handle errors
@@ -144,9 +144,9 @@ $(document).on("submit", "#update-user", (event) => {
 
 /*****************Update Users Account**********************************/
 $("#wizard-picture").change(function () {
-  var input = this;
+  let input = this;
   if (input.files && input.files[0]) {
-    var reader = new FileReader();
+    let reader = new FileReader();
 
     reader.onload = function (e) {
       $("#wizardPicturePreview").attr("src", e.target.result).fadeIn("slow");
