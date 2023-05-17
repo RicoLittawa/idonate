@@ -362,24 +362,25 @@ $(document).submit((e) => {
         url: "include/add.inc.php",
         method: "POST",
         data: inputData,
+        dataType:"json",
         beforeSend: () => {
           $('button[type="submit"]').prop("disabled", true);
           $(".submit-text").text("Saving...");
           $(".spinner-border").removeClass("d-none");
         },
-        success: (data) => {
-          if (data === "success") {
+        success: (response) => {
+          if (response.status === "Success") {
             setTimeout(() => {
               // Enable the submit button and hide the loading animation
               resetBtnLoadingState();
-              alertMessage("Success", "Data has been added", "success");
+              alertMessage(response.status, response.message, response.icon);
               setTimeout(() => {
                 window.location.href = "Donors.php";
               }, 1500);
             }, 100);
           } else {
             resetBtnLoadingState();
-            alertMessage("Error", data, "error");
+            alertMessage(response.status, response.message, response.icon);
           }
         },
         error: (xhr, status, error) => {

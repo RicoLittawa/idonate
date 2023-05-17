@@ -12,65 +12,130 @@ if (isset($_POST["saveBtn"])) {
     $Date = date('Y-m-d', strtotime($_POST['donation_date']));
     $Contact = trim($_POST['contact']);
     $checkRes = $_POST['result'];
+
+    function insertDonationItem10($conn, $reference, $productName, $quantity , $typeArray, $unitArray)
+    {
+        $list = $conn->prepare("INSERT INTO donation_items10 (Reference, productName, type, unit, quantity) VALUES (?, ?, ?, ?, ?)");
+        try {
+            if (!$list) {
+                throw new Exception('There was a problem connecting to the database');
+            } else {
+                $list->bind_param('issss', $reference, $productName,$typeArray,$unitArray, $quantity);
+                if (!$list->execute()) {
+                    throw new Exception('There was a problem executing the query' . $conn->error);
+                }
+            }
+        } catch (Exception $e) {
+            $response = [
+                "status" => "Error",
+                "message" => $e->getMessage(),
+                "icon" => "error",
+            ];
+    
+            header("Content-Type: application/json");
+            echo json_encode($response);
+            exit();    
+        }
+    };
+
+    function checkProduct($conn, $productName, $quantityArray, $tableName)
+    {
+        $checkProductExist = $conn->prepare("SELECT quantity FROM $tableName WHERE LOWER(productName) = LOWER(?)");
+        try {
+            if (!$checkProductExist) {
+                throw new Exception('There was a problem connecting to the database');
+            } else {
+                $checkProductExist->bind_param('s', $productName);
+                $checkProductExist->execute();
+                $exist = $checkProductExist->get_result();
+                if ($exist->num_rows > 0) {
+                    // Product already exists, update the quantity
+                    $existedProduct = $exist->fetch_assoc();
+                    $newQuantity = $existedProduct['quantity'] + $quantityArray;
+                    $updateProduct = $conn->prepare("UPDATE $tableName SET quantity = ? WHERE LOWER(productName) = LOWER(?)");
+                    if (!$updateProduct) {
+                        throw new Exception('There was a problem connecting to the database');
+                    } else {
+                        $updateProduct->bind_param('is', $newQuantity, $productName);
+                        $updateProduct->execute();
+                    }
+                } else {
+                    // Product does not exist, insert a new entry
+                    $insertNewProduct = $conn->prepare("INSERT INTO $tableName (productName, quantity) VALUES (LOWER(?), ?)");
+                    if (!$insertNewProduct) {
+                        throw new Exception('There was a problem executing the query.');
+                    } else {
+                        $insertNewProduct->bind_param('si', $productName, $quantityArray);
+                        $insertNewProduct->execute();
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            $response = [
+                "status" => "Error",
+                "message" => $e->getMessage(),
+                "icon" => "error",
+            ];
+    
+            header("Content-Type: application/json");
+            echo json_encode($response);
+            exit();    
+        }
+    };
+
+    function fourFieldCategory($conn, $productName, $quantityArray, $typeArray, $unitArray, $tableName,)
+    {
+        $checkProductExist = $conn->prepare("SELECT quantity FROM $tableName WHERE LOWER(productName) = LOWER(?)");
+        try {
+            if (!$checkProductExist) {
+                throw new Exception('There was a problem connecting to the database');
+            } else {
+                $checkProductExist->bind_param('s', $productName);
+                $checkProductExist->execute();
+                $exist = $checkProductExist->get_result();
+                if ($exist->num_rows > 0) {
+                    // Product already exists, update the quantity
+                    $existedProduct = $exist->fetch_assoc();
+                    $newQuantity = $existedProduct['quantity'] + $quantityArray;
+                    $updateProduct = $conn->prepare("UPDATE $tableName SET quantity = ? WHERE LOWER(productName) = LOWER(?)");
+                    if (!$updateProduct) {
+                        throw new Exception('There was a problem connecting to the database');
+                    } else {
+                        $updateProduct->bind_param('is', $newQuantity, $productName);
+                        $updateProduct->execute();
+                    }
+                } else {
+                    // Product does not exist, insert a new entry
+                    $insertNewProduct = $conn->prepare("INSERT INTO categmeatgrains (productName,type,quantity,unit) VALUES (LOWER(?) , ?, ?, ?)");
+                    if (!$insertNewProduct) {
+                        throw new Exception('There was a problem connecting to the database');
+                    } else {
+                        $insertNewProduct->bind_param('ssss', $productName, $typeArray, $quantityArray, $unitArray);
+                        $insertNewProduct->execute();
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            $response = [
+                "status" => "Error",
+                "message" => $e->getMessage(),
+                "icon" => "error",
+            ];
+    
+            header("Content-Type: application/json");
+            echo json_encode($response);
+            exit();    
+        }
+    };
+
     foreach ($checkRes as $res) {
         /*************************IF CAN/NOODLES IS CHECKED******************************************************************************/
         if ($res == 'can-noodles') {
             $pnCN_arr = $_POST['pnCN_arr'];
             $qCN_arr = $_POST['qCN_arr'];
             foreach ($pnCN_arr as $index => $cn) {
-                $list = "INSERT INTO donation_items10 (Reference,productName,type,unit,quantity) VALUES (?,?,null,null,?)";
-                $stmt = $conn->prepare($list);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('iss', $reference_id, $cn, $qCN_arr[$index]);
-                        if (!$result = $stmt->execute()) {
-                            throw new Exception('There was a problem executing the query.');
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
-
-                $checkProductExist = "SELECT quantity FROM categcannoodles WHERE LOWER(productName) = LOWER(?)";
-                $stmt = $conn->prepare($checkProductExist);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('s', $cn);
-                        $stmt->execute();
-                        $exist = $stmt->get_result();
-                        if ($exist->num_rows > 0) {
-                            // Product already exists, update the quantity
-                            $existedProduct = $exist->fetch_assoc();
-                            $newQuantity = $existedProduct['quantity'] + $qCN_arr[$index];
-                            $updateProduct = "UPDATE categcannoodles SET quantity = ? WHERE LOWER(productName) = LOWER(?)";
-                            $stmt = $conn->prepare($updateProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('is', $newQuantity, $cn);
-                                $stmt->execute();
-                            }
-                        } else {
-                            // Product does not exist, insert a new entry
-                            $insertNewProduct = "INSERT INTO categcannoodles ( productName, quantity) VALUES (LOWER(?) , ?)";
-                            $stmt = $conn->prepare($insertNewProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('ss', $cn, $qCN_arr[$index]);
-                                $stmt->execute();
-                            }
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
+                insertDonationItem10($conn, $reference_id, $cn, $qCN_arr[$index],null,null);
+                checkProduct($conn, $cn, $qCN_arr[$index], "categcannoodles");
             }
         }
         /*************************IF CAN/NOODLES IS CHECKED******************************************************************************/
@@ -80,59 +145,8 @@ if (isset($_POST["saveBtn"])) {
             $pnHY_arr = $_POST['pnHY_arr'];
             $qHY_arr = $_POST['qHY_arr'];
             foreach ($pnHY_arr as $index => $hy) {
-                $list = "INSERT INTO donation_items10 (Reference,productName,type,unit,quantity) VALUES (?,?,null,null,?)";
-                $stmt = $conn->prepare($list);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('iss', $reference_id, $hy, $qHY_arr[$index]);
-                        if (!$result = $stmt->execute()) {
-                            throw new Exception('There was a problem executing the query.');
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
-
-                $checkProductExist = "SELECT quantity FROM categhygineessential WHERE LOWER(productName) = LOWER(?)";
-                $stmt = $conn->prepare($checkProductExist);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('s', $hy);
-                        $stmt->execute();
-                        $exist = $stmt->get_result();
-                        if ($exist->num_rows > 0) {
-                            // Product already exists, update the quantity
-                            $existedProduct = $exist->fetch_assoc();
-                            $newQuantity = $existedProduct['quantity'] + $qHY_arr[$index];
-                            $updateProduct = "UPDATE categhygineessential SET quantity = ? WHERE LOWER(productName) = LOWER(?)";
-                            $stmt = $conn->prepare($updateProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('is', $newQuantity, $hy);
-                                $stmt->execute();
-                            }
-                        } else {
-                            // Product does not exist, insert a new entry
-                            $insertNewProduct = "INSERT INTO categhygineessential ( productName, quantity) VALUES (LOWER(?) , ?)";
-                            $stmt = $conn->prepare($insertNewProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('ss', $hy, $qHY_arr[$index]);
-                                $stmt->execute();
-                            }
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
+                insertDonationItem10($conn, $reference_id, $hy, $qHY_arr[$index],null,null);
+                checkProduct($conn, $hy, $qHY_arr[$index], "categhygineessential");
             }
         }
         /*************************IF HYGINE ESSENTIALS IS CHECKED******************************************************************************/
@@ -142,59 +156,8 @@ if (isset($_POST["saveBtn"])) {
             $pnII_arr = $_POST['pnII_arr'];
             $qII_arr = $_POST['qII_arr'];
             foreach ($pnII_arr as $index => $ii) {
-                $list = "INSERT INTO donation_items10 (Reference,productName,type,unit,quantity) VALUES (?,?,null,null,?)";
-                $stmt = $conn->prepare($list);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('iss', $reference_id, $ii, $qII_arr[$index]);
-                        if (!$result = $stmt->execute()) {
-                            throw new Exception('There was a problem executing the query.');
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
-
-                $checkProductExist = "SELECT quantity FROM categinfant WHERE LOWER(productName) = LOWER(?)";
-                $stmt = $conn->prepare($checkProductExist);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('s', $ii);
-                        $stmt->execute();
-                        $exist = $stmt->get_result();
-                        if ($exist->num_rows > 0) {
-                            // Product already exists, update the quantity
-                            $existedProduct = $exist->fetch_assoc();
-                            $newQuantity = $existedProduct['quantity'] + $qII_arr[$index];
-                            $updateProduct = "UPDATE categinfant SET quantity = ? WHERE LOWER(productName) = LOWER(?)";
-                            $stmt = $conn->prepare($updateProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('is', $newQuantity, $ii);
-                                $stmt->execute();
-                            }
-                        } else {
-                            // Product does not exist, insert a new entry
-                            $insertNewProduct = "INSERT INTO categinfant ( productName, quantity) VALUES (LOWER(?) , ?)";
-                            $stmt = $conn->prepare($insertNewProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('ss', $ii, $qII_arr[$index]);
-                                $stmt->execute();
-                            }
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
+                insertDonationItem10($conn, $reference_id, $ii, $qII_arr[$index],null,null);
+                checkProduct($conn, $ii, $qII_arr[$index], "categinfant");
             }
         }
         /*************************IF INFANT ITEMS IS CHECKED******************************************************************************/
@@ -204,59 +167,8 @@ if (isset($_POST["saveBtn"])) {
             $pnDW_arr = $_POST['pnDW_arr'];
             $qDW_arr = $_POST['qDW_arr'];
             foreach ($pnDW_arr as $index => $dw) {
-                $list = "INSERT INTO donation_items10 (Reference,productName,type,unit,quantity) VALUES (?,?,null,null,?)";
-                $stmt = $conn->prepare($list);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('iss', $reference_id, $dw, $qDW_arr[$index]);
-                        if (!$result = $stmt->execute()) {
-                            throw new Exception('There was a problem executing the query.');
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
-
-                $checkProductExist = "SELECT quantity FROM categdrinkingwater WHERE LOWER(productName) = LOWER(?)";
-                $stmt = $conn->prepare($checkProductExist);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('s', $dw);
-                        $stmt->execute();
-                        $exist = $stmt->get_result();
-                        if ($exist->num_rows > 0) {
-                            // Product already exists, update the quantity
-                            $existedProduct = $exist->fetch_assoc();
-                            $newQuantity = $existedProduct['quantity'] + $qDW_arr[$index];
-                            $updateProduct = "UPDATE categdrinkingwater SET quantity = ? WHERE LOWER(productName) = LOWER(?)";
-                            $stmt = $conn->prepare($updateProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('is', $newQuantity, $dw);
-                                $stmt->execute();
-                            }
-                        } else {
-                            // Product does not exist, insert a new entry
-                            $insertNewProduct = "INSERT INTO categdrinkingwater ( productName, quantity) VALUES (LOWER(?) , ?)";
-                            $stmt = $conn->prepare($insertNewProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('ss', $dw, $qDW_arr[$index]);
-                                $stmt->execute();
-                            }
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
+                insertDonationItem10($conn, $reference_id, $dw, $qDW_arr[$index],null,null);
+                checkProduct($conn, $dw, $qDW_arr[$index], "categdrinkingwater");
             }
         }
         /*************************IF DRINKING WATER IS CHECKED******************************************************************************/
@@ -268,59 +180,8 @@ if (isset($_POST["saveBtn"])) {
             $qMG_arr = $_POST['qMG_arr'];
             $unitMG_arr = $_POST['unitMG_arr'];
             foreach ($pnMG_arr as $index => $mg) {
-                $list = "INSERT INTO donation_items10 (Reference,productName,type,unit,quantity) VALUES (?,?,?,?,?)";
-                $stmt = $conn->prepare($list);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('issss', $reference_id, $mg, $typeMG_arr[$index], $unitMG_arr[$index], $qMG_arr[$index]);
-                        if (!$result = $stmt->execute()) {
-                            throw new Exception('There was a problem executing the query.');
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
-
-                $checkProductExist = "SELECT quantity FROM categmeatgrains WHERE LOWER(productName) = LOWER(?)";
-                $stmt = $conn->prepare($checkProductExist);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('s', $mg);
-                        $stmt->execute();
-                        $exist = $stmt->get_result();
-                        if ($exist->num_rows > 0) {
-                            // Product already exists, update the quantity
-                            $existedProduct = $exist->fetch_assoc();
-                            $newQuantity = $existedProduct['quantity'] + $qMG_arr[$index];
-                            $updateProduct = "UPDATE categmeatgrains SET quantity = ? WHERE LOWER(productName) = LOWER(?)";
-                            $stmt = $conn->prepare($updateProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('is', $newQuantity, $mg);
-                                $stmt->execute();
-                            }
-                        } else {
-                            // Product does not exist, insert a new entry
-                            $insertNewProduct = "INSERT INTO categmeatgrains (productName,type,quantity,unit) VALUES (LOWER(?) , ?, ?, ?)";
-                            $stmt = $conn->prepare($insertNewProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('ssss', $mg, $typeMG_arr[$index], $qMG_arr[$index], $unitMG_arr[$index]);
-                                $stmt->execute();
-                            }
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
+                insertDonationItem10($conn, $reference_id, $mg, $qMG_arr[$index], $typeMG_arr[$index], $unitMG_arr[$index]);
+                fourFieldCategory($conn, $mg, $qMG_arr[$index], $typeMG_arr[$index], $unitMG_arr[$index], "categmeatgrains");
             }
         }
         /*************************IF MEAT/GRAINS IS CHECKED******************************************************************************/
@@ -332,59 +193,8 @@ if (isset($_POST["saveBtn"])) {
             $qME_arr = $_POST['qME_arr'];
             $unitME_arr = $_POST['unitME_arr'];
             foreach ($pnME_arr as $index => $me) {
-                $list = "INSERT INTO donation_items10 (Reference,productName,type,unit,quantity) VALUES (?,?,?,?,?)";
-                $stmt = $conn->prepare($list);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('issss', $reference_id, $me, $typeME_arr[$index], $unitME_arr[$index], $qME_arr[$index]);
-                        if (!$result = $stmt->execute()) {
-                            throw new Exception('There was a problem executing the query.');
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
-
-                $checkProductExist = "SELECT quantity FROM categmedicine WHERE LOWER(productName) = LOWER(?)";
-                $stmt = $conn->prepare($checkProductExist);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('s', $me);
-                        $stmt->execute();
-                        $exist = $stmt->get_result();
-                        if ($exist->num_rows > 0) {
-                            // Product already exists, update the quantity
-                            $existedProduct = $exist->fetch_assoc();
-                            $newQuantity = $existedProduct['quantity'] + $qME_arr[$index];
-                            $updateProduct = "UPDATE categmedicine SET quantity = ? WHERE LOWER(productName) = LOWER(?)";
-                            $stmt = $conn->prepare($updateProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('is', $newQuantity, $me);
-                                $stmt->execute();
-                            }
-                        } else {
-                            // Product does not exist, insert a new entry
-                            $insertNewProduct = "INSERT INTO categmedicine (productName,type,quantity,unit) VALUES (LOWER(?) , ?, ?, ?)";
-                            $stmt = $conn->prepare($insertNewProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('ssss', $me, $typeME_arr[$index], $qME_arr[$index], $unitME_arr[$index]);
-                                $stmt->execute();
-                            }
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
+                insertDonationItem10($conn, $reference_id, $me, $qME_arr[$index],$typeME_arr[$index], $unitME_arr[$index]);
+                fourFieldCategory($conn, $me, $qME_arr[$index], $typeME_arr[$index], $unitME_arr[$index], "categmedicine");
             }
         }
         /*************************IF MEDICINE IS CHECKED******************************************************************************/
@@ -402,102 +212,69 @@ if (isset($_POST["saveBtn"])) {
                 $typeOT_arr = null;
             }
             foreach ($pnOT_arr as $index => $ot) {
-                $list = "INSERT INTO donation_items10 (Reference,productName,type,unit,quantity) VALUES (?,?,?,?,?)";
-                $stmt = $conn->prepare($list);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('issss', $reference_id, $ot, $typeOT_arr[$index], $unitOT_arr[$index], $qOT_arr[$index]);
-                        if (!$result = $stmt->execute()) {
-                            throw new Exception('There was a problem executing the query.');
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
-
-                $checkProductExist = "SELECT quantity FROM categothers WHERE LOWER(productName) = LOWER(?)";
-                $stmt = $conn->prepare($checkProductExist);
-                try {
-                    if (!$stmt) {
-                        throw new Exception('There was a problem executing the query.');
-                    } else {
-                        $stmt->bind_param('s', $ot);
-                        $stmt->execute();
-                        $exist = $stmt->get_result();
-                        if ($exist->num_rows > 0) {
-                            // Product already exists, update the quantity
-                            $existedProduct = $exist->fetch_assoc();
-                            $newQuantity = $existedProduct['quantity'] + $qOT_arr[$index];
-                            $updateProduct = "UPDATE categothers SET quantity = ? WHERE LOWER(productName) = LOWER(?)";
-                            $stmt = $conn->prepare($updateProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('is', $newQuantity, $ot);
-                                $stmt->execute();
-                            }
-                        } else {
-                            // Product does not exist, insert a new entry
-                            $insertNewProduct = "INSERT INTO categothers (productName,type,quantity,unit) VALUES (LOWER(?) , ?, ?, ?)";
-                            $stmt = $conn->prepare($insertNewProduct);
-                            if (!$stmt) {
-                                throw new Exception('There was a problem executing the query.');
-                            } else {
-                                $stmt->bind_param('ssss', $ot, $typeOT_arr[$index], $qOT_arr[$index], $unitOT_arr[$index]);
-                                $stmt->execute();
-                            }
-                        }
-                    }
-                } catch (Exception $e) {
-                    echo $e->getMessage();
-                    exit();
-                }
+                insertDonationItem10($conn, $reference_id, $ot, $qOT_arr[$index], $typeOT_arr[$index], $unitOT_arr[$index]);
+                fourFieldCategory($conn, $ot, $qOT_arr[$index], $typeOT_arr[$index], $unitOT_arr[$index], "categothers");
             }
         }
         /*************************IF OTHERS IS CHECKED******************************************************************************/
     }
 
     /*************************INSERT TO DONORS******************************************************************************/
-    $donor = "INSERT INTO donation_items (Reference,donor_name,donor_region,donor_province,donor_municipality,
-         donor_barangay,donor_email,donor_contact,donationDate) VALUES (?,?,?,?,?,?,?,?,?)";
-    $stmt = $conn->prepare($donor);
+    $donor = $conn->prepare("INSERT INTO donation_items (Reference,donor_name,donor_region,donor_province,donor_municipality,
+    donor_barangay,donor_email,donor_contact,donationDate) VALUES (?,?,?,?,?,?,?,?,?)");
     try {
-        if (!$stmt) {
-            throw new Exception('There was a problem executing the query.');
+        if (!$donor) {
+            throw new Exception('There was a problem connecting to the database');
         } else {
-            $stmt->bind_param('sssssssss', $reference_id, $Fname, $Region, $Province, $Municipality, $Barangay, $Email, $Contact, $Date);
-            if (!$stmt->execute()) {
-                throw new Exception('There was a problem executing the query.');
+            $donor->bind_param('sssssssss', $reference_id, $Fname, $Region, $Province, $Municipality, $Barangay, $Email, $Contact, $Date);
+            if (!$donor->execute()) {
+                throw new Exception('There was a problem executing the query' . $conn->error);
             }
         }
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        $response = [
+            "status" => "Error",
+            "message" => $e->getMessage(),
+            "icon" => "error",
+        ];
+
+        header("Content-Type: application/json");
+        echo json_encode($response);
         exit();
     }
 
     /*************************UPDATE REFERENCE EVERY TRANSACTION******************************************************************************/
 
     $reference_id++;
-    $ref = "UPDATE donation_items_picking  set reference_id=? ";
-    $stmt = $conn->prepare($ref);
+    $ref = $conn->prepare("UPDATE donation_items_picking  set reference_id=? ");
     try {
-        if (!$stmt) {
-            throw new Exception('There was a problem executing the query.');
+        if (!$ref) {
+            throw new Exception('There was a problem connecting to the database');
         } else {
-            $stmt->bind_param('i', $reference_id);
-            if (!$stmt->execute()) {
-                throw new Exception('There was a problem executing the query.');
+            $ref->bind_param('i', $reference_id);
+            if (!$ref->execute()) {
+                throw new Exception('There was a problem executing the query' . $conn->error);
             } else {
-                echo "success";
+                $response = [
+                    "status" => "Success",
+                    "message" => "Your data is added successfully",
+                    "icon" => "success",
+                ];
+        
+                header("Content-Type: application/json");
+                echo json_encode($response);
+                exit();
             }
         }
     } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
+        $response = [
+            "status" => "Error",
+            "message" => $e->getMessage(),
+            "icon" => "error",
+        ];
+
+        header("Content-Type: application/json");
+        echo json_encode($response);
         exit();
     }
-    $stmt->close();
-    $conn->close();
 }
