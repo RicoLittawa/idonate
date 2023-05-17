@@ -24,7 +24,7 @@ try {
     } else {
         $stmt->execute();
         $result = $stmt->get_result();
-        if ($result->num_rows === 0) {
+        if ($result->num_rows < 0) {
             throw new Exception("There was a problem getting the status.");
         } else {
             while ($row = $result->fetch_assoc()) {

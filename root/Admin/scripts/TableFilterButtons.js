@@ -115,6 +115,7 @@ const deleteRow = (id,url,tableName) => {
             confirmButtonColor: "#20d070",
             confirmButtonText: "OK",
             allowOutsideClick: false,
+            timer:1500
           });
           $(tableName).DataTable().ajax.reload();
         },

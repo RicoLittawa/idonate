@@ -1,7 +1,16 @@
 /***********************Populate added users table*******************/
 let userTable = $("#user_data").DataTable({
   responsive: true,
-  ajax: "include/usersdata.php",
+  ajax: {
+    url: "include/usersdata.php",
+    error: function (xhr, error, thrown) {
+      if (xhr.status === 404) {
+        $("#user_data").html("<p>No data available</p>");
+      } else {
+        alert("There was an error retrieving data. Please try again.");
+      }
+    },
+  },
   columns: [
     {
       data: "uID",
