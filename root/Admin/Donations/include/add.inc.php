@@ -40,48 +40,56 @@ if (isset($_POST["saveBtn"])) {
 
     function checkProduct($conn, $productName, $quantityArray, $tableName, $typeArray, $unitArray)
     {
-        $checkProductExist = $conn->prepare("SELECT type, unit, quantity,id FROM $tableName WHERE LOWER(productName) = LOWER(?)");
-
+        $checkProductExist = $conn->prepare("SELECT type, unit, quantity, id FROM $tableName WHERE LOWER(productName) = LOWER(?)");
         try {
             if (!$checkProductExist) {
                 throw new Exception('There was a problem connecting to the database');
-            }
-
-            $checkProductExist->bind_param('s', $productName);
-            $checkProductExist->execute();
-            $exist = $checkProductExist->get_result();
-
-            if ($exist->num_rows > 0) {
-                while ($existedProduct = $exist->fetch_assoc()) {
-                    $existedType = $existedProduct['type'];
-                    $existedUnit = $existedProduct['unit'];
-                    $existedQuantity = $existedProduct['quantity'];
-                    $existedId = $existedProduct['id'];
-
-                    // Check if the type and unit match
-                    if ($existedType === $typeArray && $existedUnit === $unitArray) {
-                        // Update the quantity
-                        $newQuantity = $existedQuantity + $quantityArray;
-                        $updateProduct = $conn->prepare("UPDATE $tableName SET quantity = ? WHERE id=?");
-
-                        if (!$updateProduct) {
-                            throw new Exception('There was a problem connecting to the database');
-                        }
-
-                        $updateProduct->bind_param('is', $newQuantity, $existedId);
-                        $updateProduct->execute();
-                    }
-                }
             } else {
-                // Product does not exist, insert a new entry
-                $insertNewProduct = $conn->prepare("INSERT INTO $tableName (productName, type, quantity, unit) VALUES (LOWER(?), ?, ?, ?)");
-
-                if (!$insertNewProduct) {
-                    throw new Exception('There was a problem connecting to the database');
-                }
-
-                $insertNewProduct->bind_param('ssss', $productName, $typeArray, $quantityArray, $unitArray);
-                $insertNewProduct->execute();
+                $checkProductExist->bind_param('s', $productName);
+                $checkProductExist->execute();
+                $exist = $checkProductExist->get_result();
+                if ($exist->num_rows > 0) {
+                    $existingProducts = array();
+    
+                    while ($existedProduct = $exist->fetch_assoc()) {
+                        $existingProducts[] = $existedProduct;
+                    }
+    
+                    // Flag to track if an update has been performed
+                    $isUpdated = false;
+    
+                    foreach ($existingProducts as $product) {
+                        $existedType = $product['type'];
+                        $existedUnit = $product['unit'];
+                        $existedQuantity = $product['quantity'];
+                        $existedId = $product['id'];
+    
+                        // Check if the type and unit match
+                        if ($existedType === $typeArray && $existedUnit === $unitArray) {
+                            // Update the quantity
+                            $newQuantity = $existedQuantity + $quantityArray;
+                            $updateProduct = $conn->prepare("UPDATE $tableName SET quantity = ? WHERE id = ?");
+                            if (!$updateProduct) {
+                                throw new Exception('There was a problem connecting to the database');
+                            } else {
+                                $updateProduct->bind_param('is', $newQuantity, $existedId);
+                                $updateProduct->execute();
+                                $isUpdated = true;
+                            }
+                        }
+                    }
+    
+                    // If no update was performed, insert a new entry
+                    if (!$isUpdated) {
+                        $insertNewProduct = $conn->prepare("INSERT INTO $tableName (productName, type, quantity, unit) VALUES (LOWER(?), ?, ?, ?)");
+                        if (!$insertNewProduct) {
+                            throw new Exception('There was a problem connecting to the database');
+                        } else {
+                            $insertNewProduct->bind_param('ssss', $productName, $typeArray, $quantityArray, $unitArray);
+                            $insertNewProduct->execute();
+                        }
+                    }
+                } 
             }
         } catch (Exception $e) {
             $response = [
@@ -89,13 +97,13 @@ if (isset($_POST["saveBtn"])) {
                 "message" => $e->getMessage(),
                 "icon" => "error",
             ];
-
+    
             header("Content-Type: application/json");
             echo json_encode($response);
             exit();
         }
     }
-
+    
 
 
     foreach ($checkRes as $res) {
@@ -183,7 +191,7 @@ if (isset($_POST["saveBtn"])) {
             }
             foreach ($pnOT_arr as $index => $ot) {
                 insertDonationItem10($conn, $reference_id, $ot, $qOT_arr[$index], $typeOT_arr[$index], $unitOT_arr[$index]);
-                checkProduct($conn, $ot, $qOT_arr[$index], "categothers", $typeOT_arr[$index], $unitOT_arr[$index]);
+                checkProduct($conn, $ot, $qOT_arr[$index], "categmeatgrains", $typeOT_arr[$index], $unitOT_arr[$index]);
             }
         }
         /*************************IF OTHERS IS CHECKED******************************************************************************/

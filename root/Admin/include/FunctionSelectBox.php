@@ -79,29 +79,35 @@ function count_request($conn)
 //Count distributed
 function count_distributed($conn)
 {
-	$output = '';
-	$distributed = "SELECT  sum(distributed) as totalQuantity FROM (
-        SELECT  distributed FROM categcannoodles
+    $output = '';
+    $distributed = "SELECT COALESCE(sum(distributed), 0) as totalQuantity FROM (
+        SELECT distributed FROM categcannoodles
         UNION ALL
-        SELECT  distributed FROM categdrinkingwater
+        SELECT distributed FROM categdrinkingwater
         UNION ALL
-        SELECT  distributed FROM categhygineessential
+        SELECT distributed FROM categhygineessential
         UNION ALL
-        SELECT  distributed FROM categinfant
+        SELECT distributed FROM categinfant
         UNION ALL
         SELECT distributed FROM categmeatgrains
         UNION ALL
         SELECT distributed FROM categmedicine
         UNION ALL
-        SELECT  distributed FROM categothers
-    ) as allProducts ";
-	$stmt = $conn->prepare($distributed);
-	$stmt->execute();
-	$result = $stmt->get_result();
+        SELECT distributed FROM categothers
+    ) as allProducts";
+    $stmt = $conn->prepare($distributed);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-	while ($row = $result->fetch_assoc()) {
-		$count = $row["totalQuantity"];
-		$output .= '<h1 class="m-md-1 text-dark">' . $count . '</h1>';
-	}
-	return $output;
+    while ($row = $result->fetch_assoc()) {
+        $count = $row["totalQuantity"];
+        $output .= '<h1 class="m-md-1 text-dark">' . $count . '</h1>';
+    }
+
+    if (empty($output)) {
+        $output = '<h1 class="m-md-1 text-dark">0</h1>';
+    }
+
+    return $output;
 }
+
