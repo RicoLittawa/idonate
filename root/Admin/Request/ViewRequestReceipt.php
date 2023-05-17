@@ -5,6 +5,7 @@ require_once "../include/sidebar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@ require_once "../include/sidebar.php";
 	<link rel="stylesheet" href="../css/style.css">
 	<title>View Request Receipt</title>
 </head>
+
 <body>
 	<div class="main-container">
 		<!-- SIDEBAR -->
@@ -108,18 +110,11 @@ require_once "../include/sidebar.php";
 									</div>
 								</div>
 								<span class="d-flex py-2">
-									<h6>Status:</h6>&nbsp&nbsp&nbsp
-									<?php if ($status === "Ready for Pick-up") { ?>
-										<span class="badge badge-warning"><?php echo htmlentities($status) ?></span>
-									<?php } else if($status=== "Request was processed") { ?>
-										<span class="badge badge-success"><?php echo htmlentities($status) ?></span>
-									<?php  } else if ($status==="Request completed") { ?>
-										<span class="badge badge-success"><?php echo htmlentities($status) ?></span>
-									<?php  } else if($status ==="Request cannot be completed"){ ?>
-										<span class="badge badge-danger"><?php echo htmlentities($status) ?></span>
-									<?php  } else { ?>
-										<span class="badge badge-info"><?php echo htmlentities($status) ?></span>
-									<?php } ?>
+									<h6>Status:</h6>&nbsp;&nbsp;&nbsp;
+									<?php
+									$badgeClass = ($status === "Ready for Pick-up" || $status === "Request was processed" || $status === "Request completed" || $status === "Request cannot be completed") ? "badge-success" : "badge-info";
+									?>
+									<span class="badge <?php echo htmlentities($badgeClass) ?>"><?php echo htmlentities($status) ?></span>
 								</span>
 							</div>
 							<div class="d-inline-flex">

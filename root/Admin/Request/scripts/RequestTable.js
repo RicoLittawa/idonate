@@ -74,7 +74,7 @@ let requestTable = $("#request_data_main").DataTable({
     {
       data: "Fullname",
       render: (data, type, row) => {
-        return row.firstname + " " + row.lastname;
+        return `${row.firstname} ${row.lastname}`;
       },
     },
     {
@@ -89,24 +89,35 @@ let requestTable = $("#request_data_main").DataTable({
     {
       data: "status",
       render: (data, type, row) => {
-        if (data === "Request was processed") {
-          return `<span class="badge badge-success allowed" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
-        } else if (data === "Ready for Pick-up") {
-          return `<span class="badge badge-warning allowed" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
-        } else if (data === "Request completed") {
-          return `<span class="badge badge-success user-select-none not-allowed">${data}</span>`;
-        } else if (data === "Request cannot be completed") {
-          return `<span class="badge badge-danger user-select-none not-allowed">${data}</span>`;
-        } else {
-          return `<span class="badge badge-info user-select-none not-allowed">${data}</span>`;
+        let badgeClass = "";
+        let additionalClasses = "user-select-none not-allowed";
+
+        switch (data) {
+          case "Request was processed":
+          case "Request completed":
+            badgeClass = "badge-success";
+            break;
+          case "Ready for Pick-up":
+            badgeClass = "badge-warning";
+            break;
+          case "Request cannot be completed":
+          case "Deleted":
+            badgeClass = "badge-danger";
+            break;
+          default:
+            badgeClass = "badge-info";
+            break;
         }
+        return `<span class="badge ${badgeClass} ${additionalClasses}">${data}</span>`;
       },
     },
     {
-      data: "reference",
+      data: "status",
       render: function (data, type, row) {
-        if (row.status === "pending") {
+        if (data === "pending") {
           return `<div><button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button></div>`;
+        } else if (data === "Deleted") {
+          return `<span class="badge badge-warning user-select-none not-allowed">Not applicable <br> (Deleted by: <br> ${row.firstname} ${row.lastname})</span>`;
         } else {
           return `<div><button type="button" id="viewReceiptBtn" data-request=${row.reference} class="btn btn-secondary btn-rounded">View</button></div>`;
         }
@@ -250,12 +261,12 @@ $(document).on("click", "#saveStatus", () => {
   let reference = $("#reference").val();
   let selectStatus = $("#selectStatus").val();
   /****************Reset function********************************************************************/
-const resetBtnLoadingState = () => {
-  $('button[type="submit"]').prop("disabled", false);
-  $(".submit-text").text("Update");
-  $(".spinner-border").addClass("d-none");
-};
-/****************Reset function********************************************************************/
+  const resetBtnLoadingState = () => {
+    $('button[type="submit"]').prop("disabled", false);
+    $(".submit-text").text("Update");
+    $(".spinner-border").addClass("d-none");
+  };
+  /****************Reset function********************************************************************/
 
   $.ajax({
     url: "include/UpdateRequestStatus.php",
@@ -273,8 +284,8 @@ const resetBtnLoadingState = () => {
     success: (data) => {
       if (data === "success") {
         setTimeout(() => {
-        resetBtnLoadingState()
-        requestTable.ajax.reload();
+          resetBtnLoadingState();
+          requestTable.ajax.reload();
           Swal.fire({
             title: "Success",
             text: "Status has been updated",
@@ -285,9 +296,9 @@ const resetBtnLoadingState = () => {
             timer: 1500,
           });
         }, 1500);
-        setTimeout(()=>{
+        setTimeout(() => {
           $("#exampleModal").modal("hide");
-        },2000)
+        }, 2000);
       }
     },
   });

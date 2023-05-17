@@ -1,20 +1,21 @@
 <?php
 require_once '../../../../config/config.php';
 
-if(isset($_POST['deleteBtn'])){
+if (isset($_POST['deleteBtn'])) {
     $id = $_POST['id'];
+    $status = "Deleted";
+    $updateDeleted = $conn->prepare("UPDATE receive_request set status=? where request_id=?");
+    $updateDeleted->bind_param("si", $status, $id);
     try {
-        $stmt1 = $conn->prepare("DELETE FROM request WHERE request_id = ?");
-        $stmt1->bind_param("s", $id);
-        $stmt1->execute();
-
-        if ($stmt1->affected_rows == 0) {
-            throw new Exception("Request ID does not match any data.");
+        if (!$updateDeleted->execute()) {
+            throw new Exception('There was a problem executing the query' . $conn->error);
+        } else {
+            $deleteRequest = $conn->prepare("DELETE FROM request WHERE request_id = ?");
+            $deleteRequest->bind_param("s", $id);
+            $deleteRequest->execute();
+            echo "Deleted Successfully";
         }
-
-        echo "Deleted Successfully";
     } catch (Exception $e) {
-        $conn->rollback(); // rollback transaction
         echo $e->getMessage();
     }
 }

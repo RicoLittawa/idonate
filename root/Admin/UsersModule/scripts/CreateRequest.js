@@ -114,14 +114,13 @@ let createRequest = $("#create_request_data").DataTable({
       data: "status",
       render: (data, type, row) => {
         let buttonHtml = `<div><button type="button" id="viewReceiptBtn" data-request=${row.request_id} class="btn btn-secondary btn-rounded">View</button></div>`;
-        let badgeHtml = `<span class="badge badge-warning user-select-none not-allowed">Not applicable</span>`;
-    
+        let badgeHtml = `<span class="badge badge-warning user-select-none not-allowed">Not applicable <br> Deleted by:<br>Admin</span>`;
         switch (data) {
           case "Request was processed":
           case "Ready for Pick-up":
           case "Request completed":
           case "pending":
-            return buttonHtml;
+              return buttonHtml;
           case "Request cannot be completed":
             return `<span class="badge badge-danger user-select-none not-allowed">${data}</span>`;
           default:
@@ -388,5 +387,5 @@ const resetBtnLoadingState = () => {
 
 $(document).on("click", "#viewReceiptBtn", (event) => {
   let viewReciept = $(event.target).attr("data-request");
-  window.location.href = "ViewCreatedRequest.php?requestId=" + viewReciept;
+  window.location.href = `ViewCreatedRequest.php?requestId=${viewReciept}`;
 });

@@ -128,7 +128,7 @@
 					$('#userPassword').val('');
 					$('#userEmail').css('border', '1px solid #c80000');
 					$('#userPassword').css('border', '1px solid #c80000');
-				}
+				};
 
 				$.ajax({
 					url: "include/login.inc.php",
