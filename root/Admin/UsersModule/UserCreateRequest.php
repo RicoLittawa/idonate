@@ -70,7 +70,7 @@ $requestRef = $refRow["request_id"];
             <div id="createRequest" class="collapse mt-5" data-duration="500">
               <form class="pe-2 mb-3" id="add-request">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
-                <input hidden type="text" id="requestRef" value="<?php echo htmlentities($requestRef); ?>">
+                <input  type="text" id="requestRef" value="<?php echo htmlentities($requestRef); ?>">
                 <div class="form-outline datepicker mb-3">
                   <input class="form-control" id="request_date" type="date" name="donation" data-mdb-toggle="datepicker">
                   <label for="request_date" class="form-label">Select a date</label>

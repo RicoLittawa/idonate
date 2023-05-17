@@ -46,7 +46,7 @@ if (isset($_POST["saveBtn"])) {
                         );
                     } else {
                         $newTemplateResult = $getNewTemplate->get_result();
-                        if ($newTemplateResult->num_rows < 0) {
+                        if ($newTemplateResult->num_rows === 0) {
                             throw new Exception(
                                 "Failed to fetch the data from database: " . $conn->error
                             );

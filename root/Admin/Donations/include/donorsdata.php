@@ -10,7 +10,7 @@ try {
         $getDonorStatement->execute();
         $getDonorResult = $getDonorStatement->get_result();
     }
-    if ($getDonorResult->num_rows < 0) {
+    if ($getDonorResult->num_rows === 0) {
         throw new Exception("There are no such data.");
     } else {
         while ($get = $getDonorResult->fetch_assoc()) {

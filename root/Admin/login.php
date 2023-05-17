@@ -120,6 +120,15 @@
 				if (isInvalid) {
 					return false;
 				}
+				const invalidErrors = () => {
+					$('button[type="submit"]').prop('disabled', false);
+					$('#loader').removeClass('loader');
+					$('.container-login100').removeClass('blur-filter-class')
+					$('#userEmail').val('');
+					$('#userPassword').val('');
+					$('#userEmail').css('border', '1px solid #c80000');
+					$('#userPassword').css('border', '1px solid #c80000');
+				}
 
 				$.ajax({
 					url: "include/login.inc.php",
@@ -130,54 +139,43 @@
 						$('#loader').addClass('loader');
 						$('.container-login100').addClass('blur-filter-class')
 					},
-					success: (data) => {
-						if (data === 'admin') {
+					success: (response) => {
+						if (response.data === 'Admin') {
 							setTimeout(() => {
 								// Enable the submit button and hide the loading animation
 								$('button[type="submit"]').prop('disabled', false);
 								$('#loader').removeClass('loader');
-								alertMessage("Hello Admin", "You are logged in", "success")
+								(`Hello ${response.data}`, response.message, response.icon);
 								setTimeout(() => {
 									window.location.href = "./Dashboard/Dashboard.php";
 								}, 1000)
 							}, 1500);
 
-						}
-						if (data === 'user') {
+						} else if (response.data === 'User') {
 							setTimeout(() => {
 								$('button[type="submit"]').prop('disabled', false);
 								$('#loader').removeClass('loader');
-								alertMessage("Hello User", "You are logged in", "success")
+								alertMessage(`Hello ${response.data}`, response.message, response.icon);
 								setTimeout(() => {
 									window.location.href = "../Admin/UsersModule/UserCreateRequest.php";
 								}, 1000)
 							}, 1500);
-						}
-						if (data == "Invalid email or password.") {
+						} else if (response.message == "Invalid email or password.") {
 							setTimeout(() => {
-								alertMessage("Error", data, "error")
-								$('button[type="submit"]').prop('disabled', false);
-								$('#loader').removeClass('loader');
-								$('.container-login100').removeClass('blur-filter-class')
-								$('#userEmail').val('');
-								$('#userPassword').val('');
-								$('#userEmail').css('border', '1px solid #c80000');
-								$('#userPassword').css('border', '1px solid #c80000');
+								alertMessage(response.status, response.message, response.icon)
+								invalidErrors();
 							}, 1500)
-
+						} else {
+							setTimeout(() => {
+								window.location.href = "error/SomethingWentWrong.html";
+								invalidErrors();
+							}, 1500)
 						}
-
 					},
 					error: (xhr, status, error) => {
 						// Handle errors
 						alertMessage("Error", xhr.responseText, "error");
-						$('button[type="submit"]').prop('disabled', false);
-						$('#loader').removeClass('loader');
-						$('.container-login100').removeClass('blur-filter-class')
-						$('#userEmail').val('');
-						$('#userPassword').val('');
-						$('#userEmail').css('border', '1px solid #c80000');
-						$('#userPassword').css('border', '1px solid #c80000');
+						invalidErrors()
 					}
 				})
 			})

@@ -5,6 +5,7 @@ require_once "../include/sidebar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@ require_once "../include/sidebar.php";
 	<link rel="stylesheet" href="../css/style.css">
 	<title>View Request Receipt</title>
 </head>
+
 <body>
 	<div class="main-container">
 		<!-- SIDEBAR -->
@@ -57,108 +59,130 @@ require_once "../include/sidebar.php";
 						<div class="d-flex justify-content-end">
 							<button id="printReceipt" class="btn btn-success btn-rounded" type="click"><i class="fa-solid fa-print"></i></button>
 						</div>
-						<form id="form-container" class="form-container mt-5 ms-5">
+						<?php if ($status !== "pending") { ?>
+							<form id="form-container" class="form-container mt-5 ms-5">
 
-							<div class="d-inline-flex">
-								<h6 class="number-title">1</h6>
-								<div class="mt-3 ps-3">
-									<h4 class="text-muted">Receipt Details</h4>
-								</div>
-							</div>
-							<div class="p-3 ms-4 me-3">
-								<div class="d-flex justify-content-between">
-									<span class="d-flex justify-content-start py-2">
-										<h6>Receipt No:</h6>
-										<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($dateTrimmed) . "-00" . htmlentities($reference) ?></h6>
-									</span>
-									<span class="d-flex justify-content-end py-2">
-										<h6>Request Date:</h6>
-										<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($requestdate) ?></h6>
-									</span>
-								</div>
-								<hr class="hr" />
-								<div class="row">
-									<div class="col py-3">
-										<span>
-											<h6>Fullname:</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($fname) . " " . htmlentities($lname) ?></h6>
-										</span>
-									</div>
-									<div class="col py-3">
-										<span>
-											<h6>Position</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($position) ?></h6>
-										</span>
+								<div class="d-inline-flex">
+									<h6 class="number-title">1</h6>
+									<div class="mt-3 ps-3">
+										<h4 class="text-muted">Receipt Details</h4>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col py-3">
-										<span>
-											<h6>For (No. of Evacuees/Families):</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($evacuees_qty) ?></h6>
+								<div class="p-3 ms-4 me-3">
+									<div class="d-flex justify-content-between">
+										<span class="d-flex justify-content-start py-2">
+											<h6>Receipt No:</h6>
+											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($dateTrimmed) . "-00" . htmlentities($reference) ?></h6>
+										</span>
+										<span class="d-flex justify-content-end py-2">
+											<h6>Request Date:</h6>
+											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($requestdate) ?></h6>
 										</span>
 									</div>
-									<div class="col py-3">
-										<span>
-											<h6>Email:</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($requestemail) ?></h6>
-										</span>
+									<hr class="hr" />
+									<div class="row">
+										<div class="col py-3">
+											<span>
+												<h6>Fullname:</h6>
+												<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($fname) . " " . htmlentities($lname) ?></h6>
+											</span>
+										</div>
+										<div class="col py-3">
+											<span>
+												<h6>Position</h6>
+												<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($position) ?></h6>
+											</span>
+										</div>
 									</div>
-								</div>
-								<span class="d-flex py-2">
-									<h6>Status:</h6>&nbsp&nbsp&nbsp
-									<?php if ($status === "Ready for Pick-up") { ?>
-										<span class="badge badge-warning"><?php echo htmlentities($status) ?></span>
-									<?php } else if($status=== "Request was processed") { ?>
-										<span class="badge badge-success"><?php echo htmlentities($status) ?></span>
-									<?php  } else if ($status==="Request completed") { ?>
-										<span class="badge badge-success"><?php echo htmlentities($status) ?></span>
-									<?php  } else if($status ==="Request cannot be completed"){ ?>
-										<span class="badge badge-danger"><?php echo htmlentities($status) ?></span>
-									<?php  } else { ?>
-										<span class="badge badge-info"><?php echo htmlentities($status) ?></span>
-									<?php } ?>
-								</span>
-							</div>
-							<div class="d-inline-flex">
-								<h6 class="number-title">2</h6>
-								<div class="mt-3 ps-3">
-									<h4 class="text-muted">Requested Items</h4>
-								</div>
-							</div>
-
-							<!--2nd table -->
-
-							<div class="px-4 ms-5 mt-4 ">
-								<table id="table-container" class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Product name</th>
-											<th>Quantity</th>
-										</tr>
-									</thead>
-									<tbody>
+									<div class="row">
+										<div class="col py-3">
+											<span>
+												<h6>For (No. of Evacuees/Families):</h6>
+												<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($evacuees_qty) ?></h6>
+											</span>
+										</div>
+										<div class="col py-3">
+											<span>
+												<h6>Email:</h6>
+												<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($requestemail) ?></h6>
+											</span>
+										</div>
+									</div>
+									<span class="d-flex py-2">
+										<h6>Status:</h6>&nbsp&nbsp&nbsp
 										<?php
-										$onProcess = "SELECT * from on_process where reciept_number=?";
-										$stmt = $conn->prepare($onProcess);
-										$stmt->bind_param('i', $reference);
-										$stmt->execute();
-										$result = $stmt->get_result();
-										while ($row = $result->fetch_assoc()) :
-
+										$badgeClass = '';
+										if ($status === "Ready for Pick-up" || $status === "Request was processed" || $status === "Request completed" || $status === "Request cannot be completed") {
+											$badgeClass = "badge-success";
+										} else {
+											$badgeClass = "badge-info";
+										}
 										?>
+										<span class="badge <?php echo htmlentities($badgeClass) ?>"><?php echo htmlentities($status) ?></span>
+									</span>
+
+								</div>
+								<div class="d-inline-flex">
+									<h6 class="number-title">2</h6>
+									<div class="mt-3 ps-3">
+										<h4 class="text-muted">Requested Items</h4>
+									</div>
+								</div>
+								<!--2nd table -->
+								<div class="px-4 ms-5 mt-4 ">
+									<table id="table-container" class="table table-striped table-bordered">
+										<thead>
 											<tr>
-												<td class="fw-bold"><?php echo htmlentities($row['productName']) ?></td>
-												<td><?php echo htmlentities($row['quantity']) ?></td>
+												<th>Product name</th>
+												<th>Quantity</th>
 											</tr>
-										<?php endwhile; ?>
-									</tbody>
-								</table>
-							</div>
-							<div class="d-flex justify-content-end me-3">
-								<button type="button" class="btn btn-danger cancelBtn btn-rounded" id="goBack"><i class="fa-solid fa-arrow-left"></i> Go back</button>
-							</div>
-						</form>
+										</thead>
+										<tbody>
+											<?php
+											error_reporting(E_ALL);
+											ini_set('display_errors', 1);
+											try {
+												$onProcess = $conn->prepare("SELECT * FROM on_process WHERE reciept_number = ?");
+												if (!$onProcess) {
+													throw new Exception('There was a problem executing the query' . $conn->error );
+												} else {
+													$onProcess->bind_param('i', $reference);
+
+													if (!$onProcess->execute()) {
+														throw new Exception('There was a problem executing the query' . $conn->error );
+													} else {
+														$processResult = $onProcess->get_result();
+														if ($processResult->num_rows === 0) {
+															throw new Exception("Failed to fetch data from database " . $conn->error);
+														} else {
+															while ($row = $processResult->fetch_assoc()) {
+											?>
+																<tr>
+																	<td class="fw-bold"><?php echo htmlentities($row['productName']) ?></td>
+																	<td><?php echo htmlentities($row['quantity']) ?></td>
+																</tr>
+											<?php
+															}
+														}
+													}
+												}
+											} catch (Exception $e) {
+												echo $e->getMessage();
+												
+											}
+											?>
+										</tbody>
+
+									</table>
+								</div>
+								<div class="d-flex justify-content-end me-3">
+									<button type="button" class="btn btn-danger cancelBtn btn-rounded" id="goBack"><i class="fa-solid fa-arrow-left"></i> Go back</button>
+								</div>
+							</form>
+
+						<?php } else { ?>
+							<h1>hello</h1>
+						<?php } ?>
 						<!--End of Container form -->
 					</div>
 				</div>

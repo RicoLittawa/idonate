@@ -53,7 +53,7 @@ if (isset($_POST['updateBtn'])) {
         $selectOldImg->execute();
         try {
             $oldRes = $selectOldImg->get_result();
-            if ($oldRes->num_rows < 0) {
+            if ($oldRes->num_rows === 0) {
                 throw new Exception("Failed to fetch data from database" . $conn->error);
             } else {
                 $old = $oldRes->fetch_assoc();
@@ -99,7 +99,7 @@ if (isset($_POST['updateBtn'])) {
                                 throw new Exception('There was a problem executing the query' . $conn->error);
                             } else {
                                 $getNewProfileResult = $getNewProfile->get_result();
-                                if ($getNewProfileResult->num_rows < 0) {
+                                if ($getNewProfileResult->num_rows === 0) {
                                     throw new Exception('Failed to fetch data from database');
                                 } else {
                                     $newProfile = $getNewProfileResult->fetch_assoc();

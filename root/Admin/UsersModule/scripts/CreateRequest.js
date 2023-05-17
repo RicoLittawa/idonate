@@ -88,23 +88,45 @@ let createRequest = $("#create_request_data").DataTable({
     {
       data: "status",
       render: (data, type, row) => {
-        if (data === "Request was processed") {
-          return `<span class="badge badge-success none not-allowed" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
-        } else if (data === "Ready for Pick-up") {
-          return `<span class="badge badge-warning none not-allowed" data-status="${row.status}" data-request=${row.reference} onclick="changeStatus(this)">${data}</span>`;
-        } else if (data === "Request completed") {
-          return `<span class="badge badge-success user-select-none not-allowed">${data}</span>`;
-        } else if (data === "Request cannot be completed") {
-          return `<span class="badge badge-danger user-select-none not-allowed">${data}</span>`;
-        } else {
-          return `<span class="badge badge-info user-select-none not-allowed">${data}</span>`;
-        }
-      },
-    },
+        let badgeClass = "";
+        let additionalClasses = "user-select-none not-allowed";
+        
+        switch (data) {
+          case "Request was processed":
+          case "Request completed":
+            badgeClass = "badge-success";
+            break;
+          case "Ready for Pick-up":
+            badgeClass = "badge-warning";
+            break;
+          case "Request cannot be completed":
+          case "Deleted":
+            badgeClass = "badge-danger";
+            break;
+          default:
+            badgeClass = "badge-info";
+            break;
+        }  
+        return `<span class="badge ${badgeClass} ${additionalClasses}">${data}</span>`;
+      }
+    },    
     {
-      data: null,
+      data: "status",
       render: (data, type, row) => {
-        return `<div><button type="button" id="viewReceiptBtn" data-request=${row.request_id} class="btn btn-secondary btn-rounded">View</button></div>`;
+        let buttonHtml = `<div><button type="button" id="viewReceiptBtn" data-request=${row.request_id} class="btn btn-secondary btn-rounded">View</button></div>`;
+        let badgeHtml = `<span class="badge badge-warning user-select-none not-allowed">Not applicable</span>`;
+    
+        switch (data) {
+          case "Request was processed":
+          case "Ready for Pick-up":
+          case "Request completed":
+          case "pending":
+            return buttonHtml;
+          case "Request cannot be completed":
+            return `<span class="badge badge-danger user-select-none not-allowed">${data}</span>`;
+          default:
+            return badgeHtml;
+        }
       },
     },
     {

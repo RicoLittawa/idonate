@@ -13,7 +13,7 @@ if (isset($_GET['viewCert'])) {
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
-            if ($result->num_rows < 0) {
+            if ($result->num_rows === 0) {
                 throw new Exception("There are no such data.");
             } else {
                 while ($row = $result->fetch_assoc()) {

@@ -15,8 +15,7 @@ try {
         throw new Exception(mysqli_connect_error());
     }
 } catch(Exception $e) {
-    echo "SQL error";
+    echo $e->getMessage();
+    header("Location: ../error/SomethingWentWrong.html");
+    exit();
 }
-
-
-?>

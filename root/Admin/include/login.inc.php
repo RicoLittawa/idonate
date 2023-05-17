@@ -1,54 +1,76 @@
 <?php
 session_start();
 require_once '../../../config/config.php';
-if (isset($_POST['submitBtn'])){
-
+if (isset($_POST['submitBtn'])) {
     $userEmail = $_POST['userEmail'];
     $userPassword = $_POST['userPassword'];
-    $sql = "SELECT * FROM adduser WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $userEmail);
-
     try {
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if($result->num_rows == 0) {
-            throw new Exception("Invalid email or password.");
+        if (!$conn) {
+            throw new Exception('There was a problem connecting to the database');
         } else {
-            while($row = $result->fetch_assoc()){
-                $hash = $row['pwdUsers'];
-                if (password_verify($userPassword, $hash)) {
-                    $userID = $row["uID"];
+            $userLogin =  $conn->prepare("SELECT * FROM adduser WHERE email = ?");
+            if (!$userLogin) {
+                throw new Exception('There was a problem executing the query' . $conn->error);
+            } else {
+                $userLogin->bind_param('s', $userEmail);
+                $userLogin->execute();
+                $result = $userLogin->get_result();
 
-                    $_SESSION["user"] = [
-                        "uID" => $row["uID"],
-                        "logged_in" => true,
-                        "role" => $row['role']
-                    ];
-                    $status = 'active';
-                    $updateStatus = "UPDATE adduser SET status = ? WHERE uID = ?";
-                    $stmt = $conn->prepare($updateStatus);
-                    $stmt->bind_param('si', $status, $userID);
-                    $stmt->execute();
-                   if($_SESSION["user"]['role']=='admin'){
-                        echo "admin";
-                   }
-                    if ($_SESSION["user"]['role']=='user'){
-                       echo "user";
-                    }
-                    $stmt->close();
+                if ($result->num_rows == 0) {
+                    throw new Exception("Invalid email or password.");
                 } else {
-                   throw new Exception("Invalid email or password.");
+                    while ($row = $result->fetch_assoc()) {
+                        $hash = $row['pwdUsers'];
+                        if (password_verify($userPassword, $hash)) {
+                            $userID = $row["uID"];
+
+                            $_SESSION["user"] = [
+                                "uID" => $row["uID"],
+                                "logged_in" => true,
+                                "role" => $row['role']
+                            ];
+                            $status = 'active';
+                            $updateStatus = $conn->prepare("UPDATE adduser SET status = ? WHERE uID = ?");
+                            $updateStatus->bind_param('si', $status, $userID);
+                            $updateStatus->execute();
+                            if ($_SESSION["user"]['role'] == 'admin') {
+                                $response = [
+                                    "status" => "Success",
+                                    "message" => "You are logged in",
+                                    "icon" => "success",
+                                    "data" => "Admin"
+                                ];
+                                header("Content-Type: application/json");
+                                echo json_encode($response);
+                                exit();
+                            }
+                            if ($_SESSION["user"]['role'] == 'user') {
+                                $response = [
+                                    "status" => "Success",
+                                    "message" => "You are logged in",
+                                    "icon" => "success",
+                                    "data" => "User"
+                                ];
+                                header("Content-Type: application/json");
+                                echo json_encode($response);
+                                exit();
+                            }
+                        } else {
+                            throw new Exception("Invalid email or password.");
+                        }
+                    }
                 }
             }
         }
-
     } catch (Exception $e) {
-        echo $e->getMessage();
-    }
-    finally{
-        $conn->close();
+        $response = [
+            "status" => "Error",
+            "message" => $e->getMessage(),
+            "icon" => "error",
+        ];
+
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        exit();
     }
 }
-?>
