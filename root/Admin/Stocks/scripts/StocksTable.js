@@ -18,9 +18,14 @@ let stocksTable = $("#stocks_data").DataTable({
       data: "product",
       render: (data, type, row) => {
         
-        return  row.type.toLowerCase() === "n/a" ? data : `${data}<span class="badge rounded-pill badge-info">${row.type}</span>`;
+        if (!row.type || row.type.toLowerCase() === "n/a") {
+          return data;
+        }
+        
+        return `${data}<span class="badge rounded-pill badge-info">${type}</span>`;
       },
     },
+    
     {
       data: "quantity",
       render: (data, type, row) => {

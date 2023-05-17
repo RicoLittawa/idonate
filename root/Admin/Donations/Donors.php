@@ -71,7 +71,7 @@ require_once "../include/sidebar.php";
             <!----Filter -->
             <!--Place table here --->
             <div class="table-container">
-              <table class="table table-striped table-bordered w-100" id="donors_data">
+              <table class="table table-striped table-bordered" id="donors_data">
                 <thead>
                   <tr>
                     <th>Donor Name</th>
