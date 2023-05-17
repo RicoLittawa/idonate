@@ -81,7 +81,7 @@ if (isset($_POST["saveBtn"])) {
     
                     // If no update was performed, insert a new entry
                     if (!$isUpdated) {
-                        $insertNewProduct = $conn->prepare("INSERT INTO $tableName (productName, type, quantity, unit) VALUES (LOWER(?), ?, ?, ?)");
+                        $insertNewProduct = $conn->prepare("INSERT INTO $tableName (productName, type, quantity, unit) VALUES (?, ?, ?, ?)");
                         if (!$insertNewProduct) {
                             throw new Exception('There was a problem connecting to the database');
                         } else {
@@ -90,6 +90,16 @@ if (isset($_POST["saveBtn"])) {
                         }
                     }
                 } 
+                else {
+                    // Product does not exist, insert a new entry
+                    $insertNewProduct = $conn->prepare("INSERT INTO $tableName (productName, type, quantity, unit) VALUES (?, ?, ?, ?)");
+                    if (!$insertNewProduct) {
+                        throw new Exception('There was a problem connecting to the database');
+                    } else {
+                        $insertNewProduct->bind_param('ssss', $productName, $typeArray, $quantityArray, $unitArray);
+                        $insertNewProduct->execute();
+                    }
+                }
             }
         } catch (Exception $e) {
             $response = [

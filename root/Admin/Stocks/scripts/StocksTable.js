@@ -22,7 +22,7 @@ let stocksTable = $("#stocks_data").DataTable({
           return data;
         }
         
-        return `${data}<span class="badge rounded-pill badge-info">${type}</span>`;
+        return `${data}<span class="badge rounded-pill badge-info">${row.type}</span>`;
       },
     },
     

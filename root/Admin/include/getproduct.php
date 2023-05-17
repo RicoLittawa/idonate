@@ -53,13 +53,14 @@ while ($row = $result->fetch_assoc()) {
 }
 
 //Get Meat/Grains
-$mg= "SELECT productName,sum(quantity) as totalQuantity, unit from categmeatgrains GROUP BY productName";
+$mg= "SELECT productName,sum(quantity) as totalQuantity, unit from categmeatgrains GROUP BY productName,unit";
 $stmt= $conn->prepare($mg);
 $stmt->execute();
 $result = $stmt->get_result();
 $MeatGrainsProduct = array();
 $MeatGrainsQuantity = array();
 $MeatGrainsUnit = array();
+
 
 while ($row = $result->fetch_assoc()) {
     array_push($MeatGrainsProduct, $row['productName']);

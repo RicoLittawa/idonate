@@ -1,12 +1,13 @@
 let count = 0;
 /***********************************Populate select options***********************************************/
-const selectOptionPopulated = (select, product, quantity) => {
+const selectOptionPopulated = (select, product, quantity,unit) => {
   select.empty();
   select.append("<option value=''>Select Product</option>");
   for (let i = 0; i < product.length; i++) {
     let productValue = product[i];
     let quantityValue = quantity[i];
-    let optionText = productValue + " (" + quantityValue + " pcs)";
+    let unitValue = unit[i]
+    let optionText =`${productValue} (${quantityValue}) ${unitValue}}`;
     if (quantityValue <= 0) {
       optionText = `${productValue} (Out of stock)`;
     }
@@ -85,7 +86,9 @@ const populateMeatGrains = (select) => {
     success: (response) => {
       let product = response.MeatGrainsProduct;
       let quantity = response.MeatGrainsQuantity;
-      selectOptionPopulated(select, product, quantity);
+      let unit = response.MeatGrainsUnit;
+      
+      selectOptionPopulated(select, product, quantity,unit);
     },
   });
 };
