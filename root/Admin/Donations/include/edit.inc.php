@@ -12,19 +12,34 @@ if (isset($_POST["updateBtn"])) {
   $Email = $_POST['email'];
   $Date = date('Y-m-d', strtotime($_POST['donation_date']));
   $Contact = $_POST['contact'];
-  $sql = "UPDATE donation_items set Reference=?,donor_name=?,donor_region=?,donor_province=?,donor_municipality=?,donor_barangay=?,donor_email=?,donor_contact=?,donationDate=? where donor_id=?";
-  $stmt = $conn->prepare($sql);
+  $update =$conn->prepare("UPDATE donation_items set Reference=?,donor_name=?,donor_region=?,donor_province=?,donor_municipality=?,donor_barangay=?,donor_email=?,donor_contact=?,donationDate=? where donor_id=?");
   try {
-    if (!$stmt) {
-      throw new Exception("There are error when executing the query.");
+    if (!$update) {
+      throw new Exception("'There was a problem connecting to the database");
     } else {
-      $stmt->bind_param('issssssssi', $reference_id, $Fname, $Region, $Province, $Municipality, $Barangay, $Email, $Contact, $Date, $donorid);
-      $stmt->execute();
-      echo "success";
-    }
+      $update->bind_param('issssssssi', $reference_id, $Fname, $Region, $Province, $Municipality, $Barangay, $Email, $Contact, $Date, $donorid);
+      $update->execute();
+      $response = [
+        "status" => "Success",
+        "message" => "Your data is successfully updated",
+        "icon" => "success",
+    ];
+
+    header("Content-Type: application/json");
+    echo json_encode($response);
+    exit();
+}
   } catch (Exception $e) {
-    echo $e->getMessage();
-  }
-  $stmt->close();
+    $response = [
+      "status" => "Error",
+      "message" => $e->getMessage(),
+      "icon" => "error",
+  ];
+
+  header("Content-Type: application/json");
+  echo json_encode($response);
+  exit();
+}
+  $update->close();
   $conn->close();
 }

@@ -245,6 +245,7 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
       title: title,
       text: text,
       icon: icon,
+      timer:1500,
       confirmButtonColor: "#20d070",
       confirmButtonText: "OK",
       allowOutsideClick: false,
@@ -262,17 +263,17 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
         $this.html("Sending...");
         $this.addClass("btn btn-outline-danger");
       },
-      success: function (data) {
-        if (data == "Inserted") {
+      success: function (response) {
+        if (response.status == "Success") {
           $this.attr("disabled", false);
           $this.removeClass("btn btn-outline-danger");
           $this.addClass("btn btn-outline-success");
           $("#bulk_email").attr("disabled", false);
           $this.html("Sent");
-          alertMessage("Success","Email has been sent","success")
+          alertMessage(response.status,response.message,response.icon)
           donorTable.ajax.reload();
         } else {
-          $this.text(data);
+          $this.text(responses.message);
         }
       },
     });

@@ -9,17 +9,18 @@ if (isset($_POST['email_data'])) {
    require 'fpdf/fpdf.php';
    require_once '../../../config/config.php';
 
-   foreach ($_POST['email_data'] as $row) {
-
-      $donor_id = $row['uID'];
+   try {
       $status = 'email_sent';
-      $template = "SELECT * FROM template_certi";
-      $stmt = $conn->prepare($template);
-      $stmt->execute();
-      $result = $stmt->get_result();
-
-      if ($rowTemp = $result->fetch_assoc()) {
-         $tempCert = $rowTemp['template'];
+      $template =  $conn->prepare("SELECT * FROM template_certi");
+      if (!$template) {
+         throw new Exception("There was a problem connecting to the database");
+      }
+      $template->execute();
+      $result = $template->get_result();
+      $rowTemp = $result->fetch_assoc();
+      $tempCert = $rowTemp['template'];
+      foreach ($_POST['email_data'] as $row) {
+         $donor_id = $row['uID'];
 
          $image = imagecreatefrompng('Certificate Template/' . $tempCert);
          $white = imagecolorallocate($image, 255, 255, 255);
@@ -68,23 +69,34 @@ if (isset($_POST['email_data'])) {
          //An HTML or plain text message body
          $mail->Body = "Thank you";
          $mail->addStringAttachment($pdf->Output("S", 'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
-         $mail->Send();    
+         $mail->Send();
 
-
-      }
-      $sql = "UPDATE donation_items set email_status=?, certificate=? where donor_id=?";
-      $stmt = $conn->prepare($sql);
-      try {
-         if (!$stmt) {
-            throw new Exception("There are error when executing query.");
+         $updateEmailStatus =$conn->prepare("UPDATE donation_items set email_status=?, certificate=? where donor_id=?");
+         if (!$updateEmailStatus) {
+            throw new Exception("There was a problem connecting to the database");
          } else {
-            $stmt->bind_param('ssi', $status, $genImage, $donor_id);
-            $stmt->execute();
+            $updateEmailStatus->bind_param('ssi', $status, $genImage, $donor_id);
+            $updateEmailStatus->execute();
+            $response = [
+               "status" => "Success",
+               "message" => "Email has been sent successfully",
+               "icon" => "success",
+           ];
+   
+           header("Content-Type: application/json");
+           echo json_encode($response);
+           exit();   
          }
-      } catch (Exception $e) {
-         echo $e->getMessage();
-      } 
-   }
-   echo "Inserted";
+      }
+   } catch (Exception $e) {
+      $response = [
+         "status" => "Error",
+         "message" => $e->getMessage(),
+         "icon" => "error",
+     ];
 
+     header("Content-Type: application/json");
+     echo json_encode($response);
+     exit();
+}
 }
