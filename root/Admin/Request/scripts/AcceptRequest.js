@@ -1,127 +1,74 @@
 let count = 0;
 /***********************************Populate select options***********************************************/
-const selectOptionPopulated = (select, product, quantity,unit) => {
+const populateSelectOptions = (select, product, quantity, unit, type) => {
   select.empty();
   select.append("<option value=''>Select Product</option>");
+
   for (let i = 0; i < product.length; i++) {
-    let productValue = product[i];
-    let quantityValue = quantity[i];
-    let unitValue = unit[i]
-    let optionText =`${productValue} (${quantityValue}) ${unitValue}}`;
+    const productValue = product[i];
+    const quantityValue = quantity[i];
+    const unitValue = unit[i];
+    const typeValue = type[i];
+
+    let optionText = `${productValue} (${quantityValue})`;
+
     if (quantityValue <= 0) {
       optionText = `${productValue} (Out of stock)`;
     }
-    let option = new Option(optionText, productValue);
+
+    if (unitValue && typeValue) {
+      optionText = `${productValue} ${typeValue} (${quantityValue} ${unitValue})`;
+    }
+
+    const option = new Option(optionText);
     select.append(option);
   }
 };
-/***********************************Populate select options***********************************************/
 
-/***********************************Get can noodles data***********************************************/
+const populateData = (select, category) => {
+  $.ajax({
+    url: "../include/getproduct.php",
+    method: "GET",
+    dataType: "json",
+    success: (response) => {
+      const product = response[`${category}Product`];
+      const quantity = response[`${category}Quantity`];
+      const unit = response[`${category}Unit`];
+      const type = response[`${category}Type`];
+
+      populateSelectOptions(select, product, quantity, unit, type);
+    },
+  });
+};
+
 const populateCanNoodles = (select) => {
-  $.ajax({
-    url: "../include/getproduct.php",
-    method: "GET",
-    dataType: "json",
-    success: (response) => {
-      let product = response.CanNoodlesProduct;
-      let quantity = response.CanNoodlesQuantity;
-      selectOptionPopulated(select, product, quantity);
-    },
-  });
+  populateData(select, 'CanNoodles');
 };
-/***********************************Get can noodles data***********************************************/
 
-/***********************************Get hygine essentials data***********************************************/
 const populateHygineEssentials = (select) => {
-  $.ajax({
-    url: "../include/getproduct.php",
-    method: "GET",
-    dataType: "json",
-    success: (response) => {
-      let product = response.HygineEssentialProduct;
-      let quantity = response.HygineEssentialQuantity;
-      selectOptionPopulated(select, product, quantity);
-    },
-  });
+  populateData(select, 'HygineEssential');
 };
-/***********************************Get hygine essentials data***********************************************/
 
-/***********************************Get infant items data***********************************************/
 const populateInfantItems = (select) => {
-  $.ajax({
-    url: "../include/getproduct.php",
-    method: "GET",
-    dataType: "json",
-    success: (response) => {
-      let product = response.InfantItemsProduct;
-      let quantity = response.InfantItemsQuantity;
-      selectOptionPopulated(select, product, quantity);
-    },
-  });
+  populateData(select, 'InfantItems');
 };
-/***********************************Get infant items data***********************************************/
 
-/***********************************Get drinking water data***********************************************/
 const populateDrinkingWater = (select) => {
-  $.ajax({
-    url: "../include/getproduct.php",
-    method: "GET",
-    dataType: "json",
-    success: (response) => {
-      let product = response.DrinkingWaterProduct;
-      let quantity = response.DrinkingWaterQuantity;
-      selectOptionPopulated(select, product, quantity);
-    },
-  });
+  populateData(select, 'DrinkingWater');
 };
-/***********************************Get drinking water data***********************************************/
 
-/***********************************Get meat grains data***********************************************/
 const populateMeatGrains = (select) => {
-  $.ajax({
-    url: "../include/getproduct.php",
-    method: "GET",
-    dataType: "json",
-    success: (response) => {
-      let product = response.MeatGrainsProduct;
-      let quantity = response.MeatGrainsQuantity;
-      let unit = response.MeatGrainsUnit;
-      
-      selectOptionPopulated(select, product, quantity,unit);
-    },
-  });
+  populateData(select, 'MeatGrains');
 };
-/***********************************Get meat grains data***********************************************/
 
-/***********************************Get medicine data***********************************************/
 const populateMedicine = (select) => {
-  $.ajax({
-    url: "../include/getproduct.php",
-    method: "GET",
-    dataType: "json",
-    success: (response) => {
-      let product = response.MedicineProduct;
-      let quantity = response.MedicineQuantity;
-      selectOptionPopulated(select, product, quantity);
-    },
-  });
+  populateData(select, 'Medicine');
 };
-/***********************************Get medicine data***********************************************/
 
-/***********************************Get others data***********************************************/
 const populateOthers = (select) => {
-  $.ajax({
-    url: "../include/getproduct.php",
-    method: "GET",
-    dataType: "json",
-    success: (response) => {
-      let product = response.OthersProduct;
-      let quantity = response.OthersQuantity;
-      selectOptionPopulated(select, product, quantity);
-    },
-  });
+  populateData(select, 'Others');
 };
+
 /***********************************Get others data***********************************************/
 
 /***********************************Add new product***********************************************/

@@ -112,18 +112,11 @@ require_once '../include/sidebar.php';
 									</div>
 								</div>
 								<span class="d-flex py-2">
-									<h6>Status:</h6>&nbsp&nbsp&nbsp
-									<?php if ($status === "Ready for Pick-up") { ?>
-										<span class="badge badge-warning"><?php echo htmlentities($status) ?></span>
-									<?php } else if ($status === "Request was processed") { ?>
-										<span class="badge badge-success"><?php echo htmlentities($status) ?></span>
-									<?php  } else if ($status === "Request completed") { ?>
-										<span class="badge badge-success"><?php echo htmlentities($status) ?></span>
-									<?php  } else if ($status === "Request cannot be completed") { ?>
-										<span class="badge badge-danger"><?php echo htmlentities($status) ?></span>
-									<?php  } else { ?>
-										<span class="badge badge-info"><?php echo htmlentities($status) ?></span>
-									<?php } ?>
+									<h6>Status:</h6>&nbsp;&nbsp;&nbsp;
+									<?php
+									$badgeClass = ($status === "Ready for Pick-up" || $status === "Request was processed" || $status === "Request completed" || $status === "Request cannot be completed") ? "badge-success" : "badge-info";
+									?>
+									<span class="badge <?php echo htmlentities($badgeClass) ?>"><?php echo htmlentities($status) ?></span>
 								</span>
 							</div>
 							<div class="d-inline-flex">
@@ -134,6 +127,7 @@ require_once '../include/sidebar.php';
 							</div>
 						</div>
 						<!--2nd table -->
+						
 						<form id="processForm">
 							<input hidden type="text" id="request_id" value="<?php echo htmlentities($reference) ?>">
 							<div class="px-4 ms-5 mt-4">
