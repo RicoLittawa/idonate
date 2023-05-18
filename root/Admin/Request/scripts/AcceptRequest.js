@@ -84,7 +84,7 @@ const appendNewProduct = (
       ? '<button type="button" class="btn btn-danger remove btn-rounded"><i class="fa-solid fa-minus"></i></button>'
       : "";
   let selectOption = $(
-    `<select class="form-control ${selectClassName}"></select>`
+    `<select class="form-select ${selectClassName}"></select>`
   );
   let html = `
         <tr>

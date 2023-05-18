@@ -208,27 +208,35 @@ $("#medicine").html(medicineTable());
 $("#others").html(othersTable());
 
 const dynamicOtherOptions = (selectClass, inputClass, divClass) => {
-  $(document).on("change", selectClass, function () {
-    if ($(this).val() === "other") {
-      $(this).siblings(divClass).show();
-    } else {
-      $(this).siblings(divClass).hide();
-    }
-  });
-
-  $(document).on("keyup", inputClass, function (event) {
-    if (event.keyCode === 13) {
-      // Enter key
-      var otherValue = $(this).val();
-      $(this)
-        .parent()
-        .siblings(selectClass)
-        .find("option[value='other']")
-        .text(otherValue);
-      $(this).parent().hide();
-    }
-  });
-};
+    $(document).on("change", selectClass, function(event) {
+      if ($(event.target).val() === "other") {
+        $(event.target).siblings(divClass).show();
+      } else {
+        $(event.target).siblings(divClass).hide();
+      }
+    });
+  
+    $(document).on("keyup", inputClass, function(event) {
+      if (event.keyCode === 13) {
+        // Enter key
+        if ($(event.target).val() === "") {
+          $(event.target).addClass("is-invalid");
+          return false;
+        } else {
+          $(event.target).removeClass("is-invalid");
+  
+          var otherValue = $(event.target).val();
+          $(event.target)
+            .parent()
+            .siblings(selectClass)
+            .find("option[value='other']")
+            .text(otherValue);
+          $(event.target).parent().hide();
+        }
+      }
+    });
+  };
+  
 
 dynamicOtherOptions(".typeMG", ".otherTypeMG", ".dynamicTypeMG");
 dynamicOtherOptions(".unitMG", ".otherUnitMG", ".dynamicUnitMG");
