@@ -1,5 +1,5 @@
-  const canNoodlesTable = () => {
-    const html = `
+const canNoodlesTable = () => {
+  const html = `
     <table class="table cnTB col table-bordered" id="cnTB">
         <thead>
             <tr>
@@ -16,10 +16,10 @@
             </tr>
         </tbody>
     </table>`;
-    return html;
-  };
-  const hygineEssentialTable = () => {
-    const html = `
+  return html;
+};
+const hygineEssentialTable = () => {
+  const html = `
     <table class="table hyTB col table-bordered" id="hyTB">
         <thead>
             <tr>
@@ -36,11 +36,11 @@
             </tr>
         </tbody>
     </table>`;
-    return html;
-  };
-  const infantItemsTable = () => {
-    let html = "";
-    html+= `
+  return html;
+};
+const infantItemsTable = () => {
+  let html = "";
+  html += `
     <table class="table iiTB col table-bordered" id="iiTB">
         <thead>
             <tr>
@@ -57,10 +57,10 @@
             </tr>
         </tbody>
     </table>`;
-    return html;
-  };
-  const drinkingWaterTable = () => {
-    const html= `
+  return html;
+};
+const drinkingWaterTable = () => {
+  const html = `
     <table class="table dwTB col table-bordered" id="dwTB">
         <thead>
             <tr>
@@ -77,10 +77,10 @@
             </tr>
         </tbody>
     </table>`;
-    return html;
-  };
-  const meatGrainsTable = () => {
-    const html= `
+  return html;
+};
+const meatGrainsTable = () => {
+  const html = `
     <table class="table mgTB col table-bordered" id="mgTB">
         <thead>
             <tr>
@@ -94,29 +94,40 @@
         <tbody class="mgBody" id="mgBody">
             <tr>
                 <td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>
-                <td><select class="form-control typeMG" name="typeMG" id="typeMG">
-                        <option value="">--</option>
-                        <option value="N/A">N/A</option>
-                        <option value="Frozen">Frozen</option>
-                        <option value="Fresh">Fresh</option>
-                    </select></td>
+                <td>
+                <select id="typeMG" class="form-select typeMG">
+                <option value="">--</option>
+                <option value="Fresh">Fresh</option>
+                <option value="Frozen">Frozen</option>
+                <option value="other">Other</option>
+              </select>
+              <div class="dynamicTypeMG" style="display: none;">
+                <label for="otherInput">Other:</label>
+                <input type="text" id="otherInput" class="form-control otherTypeMG" />
+              </div>
+              </td>
                 <td><input type="number" class="form-control qMG" id="qMG"></td>
-                <td><select class="form-control unitMG" name="unitMG" id="unitMG">
-                        <option value="">--</option>
-                        <option value="N/A">N/A</option>
-                        <option value="Kilograms">Kilograms</option>
-                        <option value="Grams">Grams</option>
-                        <option value="Sacks">Sacks</option>
-
-                    </select></td>
+                <td>
+                <select id="unitMG" class="form-select unitMG">
+                <option value="">--</option>
+                <option value="Kilograms">Kilograms</option>
+                <option value="Grams">Grams</option>
+                <option value="Sacks">Sacks</option>
+                <option value="other">Other</option>
+              </select>
+              <div class="dynamicUnitMG" style="display: none;">
+                <label for="otherInput">Other:</label>
+                <input type="text" id="otherInput" class="form-control otherUnitMG" />
+              </div>
+               </td>
                 <td><button type="button" class="btn btn-success addMG btn-rounded" id="addMG"><i class="fa-solid fa-plus"></i></button></td>
             </tr>
         </tbody>
     </table>`;
-    return html;
-  };
-  const medicineTable = () => {
-    const html= `
+  return html;
+};
+const medicineTable = () => {
+  const html = `
     <table class="table meTB col table-bordered" id="meTB">
         <thead>
             <tr>
@@ -130,29 +141,40 @@
         <tbody class="meBody" id="meBody">
             <tr>
                 <td><input type="text" class="form-control name_items pnME" id="pnME"></td>
-                <td><select class="form-control typeME" name="typeME" id="typeME">
-                        <option value="">--</option>
-                        <option value="N/A">N/A</option>
-                        <option value="Tablet">Tablet</option>
-                        <option value="Capsule">Capsule</option>
-                        <option value="Liquid">Liquid</option>
-                    </select></td>
+                <td> 
+                <select id="typeME" class="form-select typeME">
+                <option value="">--</option>
+                <option value="Liquid">Liquid</option>
+                <option value="Tablet">Tablet</option>
+                <option value="Capsules">Capsules</option>
+                <option value="other">Other</option>
+              </select>
+              <div class="dynamicTypeME" style="display: none;">
+                <label for="otherInput">Other:</label>
+                <input type="text" id="otherInput" class="form-control otherTypeME" />
+              </div></td>
                 <td><input type="number" class="form-control qME" id="qME"></td>
-                <td><select class="form-control unitME" name="unitME" id="unitME">
-                        <option value="">--</option>
-                        <option value="N/A">N/A</option>
-                        <option value="Milligrams">Milligrams</option>
-                        <option value="Grams">Grams</option>
-                        <option value="Micrograms">Micrograms</option>
-                    </select></td>
+                <td>
+                <select id="unitME" class="form-select unitME">
+                <option value="">--</option>
+                <option value="Milligrams">Milligrams</option>
+                <option value="Grams">Grams</option>
+                <option value="Micrograms">Micrograms</option>
+                <option value="other">Other</option>
+              </select>
+              <div class="dynamicUnitME" style="display: none;">
+                <label for="otherInput">Other:</label>
+                <input type="text" id="otherInput" class="form-control otherUnitME" />
+              </div>
+               </td>
                 <td><button type="button" class="btn btn-success addME btn-rounded" id="addME"><i class="fa-solid fa-plus"></i></button></td>
             </tr>
         </tbody>
     </table>`;
-    return html;
-  };
-  const othersTable = () => {
-    const html= `
+  return html;
+};
+const othersTable = () => {
+  const html = `
     <table class="table otTB col table-bordered" id="otTB">
         <thead>
             <tr>
@@ -174,13 +196,41 @@
         </tbody>
     </table> `;
 
-    return html;
-  };
+  return html;
+};
 
-  $("#can-noodles").html(canNoodlesTable());
-  $("#hygine-essentials").html(hygineEssentialTable());
-  $("#infant-items").html(infantItemsTable());
-  $("#drinking-water").html(drinkingWaterTable());
-  $("#meat-grains").html(meatGrainsTable());
-  $("#medicine").html(medicineTable());
-  $("#others").html(othersTable());  
+$("#can-noodles").html(canNoodlesTable());
+$("#hygine-essentials").html(hygineEssentialTable());
+$("#infant-items").html(infantItemsTable());
+$("#drinking-water").html(drinkingWaterTable());
+$("#meat-grains").html(meatGrainsTable());
+$("#medicine").html(medicineTable());
+$("#others").html(othersTable());
+
+const dynamicOtherOptions = (selectClass, inputClass, divClass) => {
+  $(document).on("change", selectClass, function () {
+    if ($(this).val() === "other") {
+      $(this).siblings(divClass).show();
+    } else {
+      $(this).siblings(divClass).hide();
+    }
+  });
+
+  $(document).on("keyup", inputClass, function (event) {
+    if (event.keyCode === 13) {
+      // Enter key
+      var otherValue = $(this).val();
+      $(this)
+        .parent()
+        .siblings(selectClass)
+        .find("option[value='other']")
+        .text(otherValue);
+      $(this).parent().hide();
+    }
+  });
+};
+
+dynamicOtherOptions(".typeMG", ".otherTypeMG", ".dynamicTypeMG");
+dynamicOtherOptions(".unitMG", ".otherUnitMG", ".dynamicUnitMG");
+dynamicOtherOptions(".typeME", ".otherTypeME", ".dynamicTypeME");
+dynamicOtherOptions(".unitME", ".otherUnitME", ".dynamicUnitME");

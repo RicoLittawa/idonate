@@ -127,7 +127,7 @@ require_once '../include/sidebar.php';
 							</div>
 						</div>
 						<!--2nd table -->
-						
+
 						<form id="processForm">
 							<input hidden type="text" id="request_id" value="<?php echo htmlentities($reference) ?>">
 							<div class="px-4 ms-5 mt-4">
@@ -157,7 +157,7 @@ require_once '../include/sidebar.php';
 												<thead>
 													<tr>
 														<th>Can/Noodles</th>
-														<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
+														<th>EST QTY <span class="badge badge-info"><?php echo htmlentities($quantity) ?></span></th>
 														<th>Action</th>
 													</tr>
 												</thead>
@@ -191,7 +191,7 @@ require_once '../include/sidebar.php';
 												<thead>
 													<tr>
 														<th>Hygine Essentials</th>
-														<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
+														<th>EST QTY <span class="badge badge-info"><?php echo htmlentities($quantity) ?></span></th>
 														<th>Action</th>
 													</tr>
 												</thead>
@@ -225,7 +225,7 @@ require_once '../include/sidebar.php';
 												<thead>
 													<tr>
 														<th>Infant Items</th>
-														<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
+														<th>EST QTY <span class="badge badge-info"><?php echo htmlentities($quantity) ?></span></th>
 														<th>Action</th>
 													</tr>
 												</thead>
@@ -259,7 +259,7 @@ require_once '../include/sidebar.php';
 												<thead>
 													<tr>
 														<th>Drinking Water</th>
-														<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
+														<th>EST QTY <span class="badge badge-info"><?php echo htmlentities($quantity) ?></span></th>
 														<th>Action</th>
 													</tr>
 												</thead>
@@ -294,7 +294,7 @@ require_once '../include/sidebar.php';
 												<thead>
 													<tr>
 														<th>Meat/Grains</th>
-														<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
+														<th>EST QTY <span class="badge badge-info"><?php echo htmlentities($quantity) ?></span></th>
 														<th>Action</th>
 													</tr>
 												</thead>
@@ -328,7 +328,7 @@ require_once '../include/sidebar.php';
 												<thead>
 													<tr>
 														<th>Medicine</th>
-														<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
+														<th>EST QTY <span class="badge badge-info"><?php echo htmlentities($quantity) ?></span></th>
 														<th>Action</th>
 													</tr>
 												</thead>
@@ -362,7 +362,7 @@ require_once '../include/sidebar.php';
 												<thead>
 													<tr>
 														<th>Others</th>
-														<th>EST QTY (<?php echo htmlentities($quantity) ?>)</th>
+														<th>EST QTY <span class="badge badge-info"><?php echo htmlentities($quantity) ?></span></th>
 														<th>Action</th>
 													</tr>
 												</thead>

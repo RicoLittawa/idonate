@@ -25,39 +25,60 @@ const addRowButton = (buttonType) => {
     return html;
   } else if (buttonType === "buttonMG") {
     html = `<tr><td><input type="text" class="form-control name_items pnMG" id="pnMG"></td>
-      <td><select class="form-control typeMG" name="typeMG" id="typeMG">
+      <td><select id="typeMG" class="form-select typeMG">
       <option value="">--</option>
-      <option value="N/A">N/A</option>
-      <option value="Frozen">Frozen</option>
       <option value="Fresh">Fresh</option>
-      </select></td>
+      <option value="Frozen">Frozen</option>
+      <option value="other">Other</option>
+    </select>
+    <div class="dynamicTypeMG" style="display: none;">
+      <label for="otherInput">Other:</label>
+      <input type="text" id="otherInput" class="form-control otherTypeMG" />
+    </div>
+    
+    </td>
       <td><input type="number" class="form-control qMG" id="qMG"></td>
-      <td><select class="form-control unitMG" name="unitMG" id="unitMG">
+      <td>
+      <select id="unitMG" class="form-select unitMG">
       <option value="">--</option>
-      <option value="N/A">N/A</option>
       <option value="Kilograms">Kilograms</option>
       <option value="Grams">Grams</option>
       <option value="Sacks">Sacks</option>
-      </select></td>
+      <option value="other">Other</option>
+    </select>
+    <div class="dynamicUnitMG" style="display: none;">
+      <label for="otherInput">Other:</label>
+      <input type="text" id="otherInput" class="form-control otherUnitMG" />
+    </div></td>
       <td>${remove}</td></tr>`;
     return html;
   } else if (buttonType === "buttonME") {
     html = `<tr><td><input type="text" class="form-control name_items pnME" id="pnME"></td>
-      <td><select class="form-control typeME" name="typeME" id="typeME">
-      <option value="">--</option>
-      <option value="N/A">N/A</option>
-      <option value="Tablet">Tablet</option>
-      <option value="Capsule">Capsule</option>
-      <option value="Liquid">Liquid</option>
-      </select></td>
+      <td>
+      <select id="typeME" class="form-select typeME">
+        <option value="">--</option>
+        <option value="Liquid">Liquid</option>
+        <option value="Tablet">Tablet</option>
+        <option value="Capsules">Capsules</option>
+        <option value="other">Other</option>
+      </select>
+      <div class="dynamicTypeME" style="display: none;">
+        <label for="otherInput">Other:</label>
+        <input type="text" id="otherInput" class="form-control otherTypeME" />
+      </div></td>
       <td><input type="number" class="form-control qME" id="qME"></td>
-      <td><select class="form-control unitME" name="unitME" id="unitME">
+      <td>
+      <select id="unitME" class="form-select unitME">
       <option value="">--</option>
-      <option value="N/A">N/A</option>
       <option value="Milligrams">Milligrams</option>
       <option value="Grams">Grams</option>
       <option value="Micrograms">Micrograms</option>
-      </select></td>
+      <option value="other">Other</option>
+    </select>
+    <div class="dynamicUnitME" style="display: none;">
+      <label for="otherInput">Other:</label>
+      <input type="text" id="otherInput" class="form-control otherUnitME" />
+    </div></td>
       <td>${remove}</td></tr>`;
     return html;
   } else if (buttonType === "buttonOT") {
@@ -98,6 +119,7 @@ appendTableRows("#addOT", "#otBody", "buttonOT");
 $(document).submit((e) => {
   e.preventDefault();
   /****************Donor Details********************************************************************/
+
   let ref_id = $("#reference_id").val();
   let fname = $("#fname").val();
   let region = $("#region").val();
@@ -281,7 +303,6 @@ $(document).submit((e) => {
       $("#contact").val() !== ""
     ) {
       if (!$(".selectCateg:checked").length) {
-        console.log($(this).val());
         isInvalid = true;
         alertMessage("warning", "Please select a category", "warning");
       }
@@ -292,7 +313,6 @@ $(document).submit((e) => {
   $(".selectCateg:checked").each(function () {
     result[x++] = $(this).val();
   });
-  console.log(result);
 
   checksDonorInfoIfEmpty(fname, "#fname");
   checksDonorInfoIfEmpty(email, "#email");
@@ -362,7 +382,7 @@ $(document).submit((e) => {
         url: "include/add.inc.php",
         method: "POST",
         data: inputData,
-        dataType:"json",
+        dataType: "json",
         beforeSend: () => {
           $('button[type="submit"]').prop("disabled", true);
           $(".submit-text").text("Saving...");
