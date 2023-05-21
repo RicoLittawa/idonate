@@ -20,7 +20,10 @@ const populateSelectOptions = (select, product, quantity, unit, type) => {
       optionText = `${productValue} ${typeValue} (${quantityValue} ${unitValue})`;
     }
 
-    const option = new Option(optionText);
+    let option = $("<option>", {
+      text: optionText,
+      value: productValue
+    });
     select.append(option);
   }
 };
@@ -42,31 +45,31 @@ const populateData = (select, category) => {
 };
 
 const populateCanNoodles = (select) => {
-  populateData(select, 'CanNoodles');
+  populateData(select, "CanNoodles");
 };
 
 const populateHygineEssentials = (select) => {
-  populateData(select, 'HygineEssential');
+  populateData(select, "HygineEssential");
 };
 
 const populateInfantItems = (select) => {
-  populateData(select, 'InfantItems');
+  populateData(select, "InfantItems");
 };
 
 const populateDrinkingWater = (select) => {
-  populateData(select, 'DrinkingWater');
+  populateData(select, "DrinkingWater");
 };
 
 const populateMeatGrains = (select) => {
-  populateData(select, 'MeatGrains');
+  populateData(select, "MeatGrains");
 };
 
 const populateMedicine = (select) => {
-  populateData(select, 'Medicine');
+  populateData(select, "Medicine");
 };
 
 const populateOthers = (select) => {
-  populateData(select, 'Others');
+  populateData(select, "Others");
 };
 
 /***********************************Get others data***********************************************/
@@ -563,19 +566,20 @@ $(document).on("submit", (e) => {
               url: "include/ProcessRequest.php",
               method: "POST",
               data: data,
+              dataType: "json",
               beforeSend: () => {
                 $('button[type="submit"]').prop("disabled", true);
                 $(".submit-text").text("Processing...");
                 $(".spinner-border").removeClass("d-none");
               },
-              success: (data) => {
-                if (data == "success") {
+              success: (response) => {
+                if (response.status == "Success") {
                   setTimeout(() => {
                     resetBtnLoadingState();
                     alertMessage(
-                      "Success",
-                      "Your request is created",
-                      "success"
+                      response.status,
+                      response.message,
+                      response.icon
                     );
                     setTimeout(() => {
                       window.location.href = "Request.php";
@@ -583,7 +587,11 @@ $(document).on("submit", (e) => {
                   }, 1500);
                 } else {
                   resetBtnLoadingState();
-                  alertMessage("Error", data, "error");
+                  alertMessage(
+                    response.status,
+                    response.message,
+                    response.icon
+                  );
                 }
               },
               error: (xhr, status, error) => {

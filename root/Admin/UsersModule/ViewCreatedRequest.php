@@ -126,7 +126,7 @@ require_once "../include/sidebar.php";
 									<thead>
 										<tr>
 											<th><?php echo ($status !== "pending") ? "Product Name" : "Category Name"; ?></th>
-											<th>Quantity</th>
+											<th><?php echo ($status !== "pending") ? "Quantity" : "Estimated Quantity"; ?></th>
 										</tr>
 									</thead>
 									<tbody>
