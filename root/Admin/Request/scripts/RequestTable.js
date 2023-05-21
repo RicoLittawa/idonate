@@ -90,25 +90,23 @@ let requestTable = $("#request_data_main").DataTable({
       data: "status",
       render: (data, type, row) => {
         let badgeClass = "";
-        let additionalClasses = "user-select-none not-allowed";
-
         switch (data) {
           case "Request was processed":
           case "Request completed":
-            badgeClass = "badge-success";
+            badgeClass = "badge-success allowed";
             break;
           case "Ready for Pick-up":
-            badgeClass = "badge-warning";
+            badgeClass = "badge-warning allowed";
             break;
           case "Request cannot be completed":
           case "Deleted":
-            badgeClass = "badge-danger";
+            badgeClass = "badge-danger not-allowed";
             break;
           default:
-            badgeClass = "badge-info";
+            badgeClass = "badge-info not-allowed";
             break;
         }
-        return `<span class="badge ${badgeClass} ${additionalClasses}">${data}</span>`;
+        return `<span class="badge ${badgeClass}" onclick="changeStatus('${row.reference}', '${row.status}')">${data}</span>`;
       },
     },
     {
@@ -268,6 +266,7 @@ $(document).on("click", "#saveStatus", () => {
   };
   /****************Reset function********************************************************************/
 
+  /****************Update Status********************************************************************/
   $.ajax({
     url: "include/UpdateRequestStatus.php",
     method: "POST",
@@ -276,20 +275,21 @@ $(document).on("click", "#saveStatus", () => {
       reference: reference,
       selectStatus: selectStatus,
     },
+    dataType:'json',
     beforeSend: () => {
       $("#saveStatus").prop("disabled", true);
       $(".submit-text").text("Updating...");
       $(".spinner-border").removeClass("d-none");
     },
-    success: (data) => {
-      if (data === "success") {
+    success: (response) => {
+      if (response.status === "Success") {
         setTimeout(() => {
           resetBtnLoadingState();
           requestTable.ajax.reload();
           Swal.fire({
-            title: "Success",
-            text: "Status has been updated",
-            icon: "success",
+            title: response.status,
+            text: response.message,
+            icon: response.icon,
             confirmButtonColor: "#20d070",
             confirmButtonText: "OK",
             allowOutsideClick: false,
@@ -299,28 +299,30 @@ $(document).on("click", "#saveStatus", () => {
         setTimeout(() => {
           $("#exampleModal").modal("hide");
         }, 2000);
+      }else{
+        swal.fire(response.status,response.message,response.icon)
       }
     },
   });
 });
+/****************Update Status********************************************************************/
 
 $(document).on("click", "#acceptBtn", (event) => {
   let requestId = $(event.target).attr("data-request");
-  window.location.href = "ReceiveRequest.php?requestId=" + requestId;
+  window.location.href = `ReceiveRequest.php?requestId=${requestId}`;
 });
 $(document).on("click", "#viewReceiptBtn", (event) => {
   let viewReciept = $(event.target).attr("data-request");
-  window.location.href = "ViewRequestReceipt.php?requestId=" + viewReciept;
+  console.log(viewReciept)
+  window.location.href = `ViewRequestReceipt.php?requestId=${viewReciept}`  ;
 });
 $(".closeModal").click(() => {
   $("#exampleModal").modal("hide");
 });
 
-const changeStatus = (element) => {
-  let reference = $(element).data("request");
-  let status = $(element).data("status");
+const changeStatus = (id,status) => {
   $("#exampleModal").modal("show");
-  $("#reference").val(reference);
-  $('#selectStatus option[value="' + status + '"]').prop("selected", true);
+  $("#reference").val(id);
+  $(`#selectStatus option[value="${status}"]`).prop("selected", true);
   $("#selectStatus").find(":selected").text(status);
 };

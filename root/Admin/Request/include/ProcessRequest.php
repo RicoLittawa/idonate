@@ -55,20 +55,20 @@ if (isset($_POST['submitProcess'])) {
     $updateStatus = $conn->prepare("UPDATE receive_request SET status=? WHERE request_id=?");
     $updateStatus->bind_param('si', $status, $request_id);
     $updateStatus->execute();
-    $updateUserRequestStatus= $conn->prepare("UPDATE request SET status=? WHERE request_id=?");
+    $updateUserRequestStatus = $conn->prepare("UPDATE request SET status=? WHERE request_id=?");
     $updateUserRequestStatus->bind_param('si', $status, $request_id);
     $updateUserRequestStatus->execute();
     $response = [
       "status" => "Success",
       "message" => "Your data is accepted successfully",
       "icon" => "success",
-  ];
+    ];
 
-  header("Content-Type: application/json");
-  echo json_encode($response);
-  exit();
-  $updateStatus->close();
-}
+    header("Content-Type: application/json");
+    echo json_encode($response);
+    exit();
+    $updateStatus->close();
+  }
 
   $conn->close();
 }

@@ -11,7 +11,7 @@ if (isset($_POST['saveStatus'])) {
             $onProcessDataStatement = $conn->prepare($onProcessData);
             try {
                 if (!$onProcessDataStatement) {
-                    throw new Exception('There are problem to the connection of query.');
+                    throw new Exception('There was a problem connecting to the database');
                 } else {
                     $onProcessDataStatement->bind_param('i', $reference);
                     $onProcessDataStatement->execute();
@@ -35,14 +35,13 @@ if (isset($_POST['saveStatus'])) {
                             UNION ALL
                             SELECT 'categothers' as category, quantity, productName FROM categothers
                         ) as allProducts 
-                        WHERE productName = lower(?)
+                        WHERE productName = lower(?) 
                         GROUP BY category";
 
                         $stocksCategoryStatement = $conn->prepare($stocksCategory);
                         $stocksCategoryStatement->bind_param('s', $onProcessProduct);
                         $stocksCategoryStatement->execute();
                         $stocksCategoryResult = $stocksCategoryStatement->get_result();
-
 
                         if ($stocksRow = $stocksCategoryResult->fetch_assoc()) {
                             $stocksQuantity = $stocksRow['quantity'];
@@ -57,9 +56,9 @@ if (isset($_POST['saveStatus'])) {
                             $distributedStatement->bind_param('s', $onProcessProduct);
                             $distributedStatement->execute();
                             $distributedResult = $distributedStatement->get_result();
+
                             if ($distributedRow = $distributedResult->fetch_assoc()) {
                                 $distributedQuantity = $distributedRow['distributed'];
-
                                 $newDistributedQuantity = $distributedQuantity + $onProcessQuantity;
                             }
 
@@ -77,8 +76,15 @@ if (isset($_POST['saveStatus'])) {
                                 $updateStatusStatement2 = $conn->prepare($updateStatus2);
                                 $updateStatusStatement2->bind_param('si', $selectedStatus, $reference);
                                 $updateStatusStatement2->execute();
-                                echo 'success';
-                            }
+                                $response = [
+                                    "status" => "Success",
+                                    "message" => "Status is updated successfully",
+                                    "icon" => "success",
+                                ];
+                        
+                                header("Content-Type: application/json");
+                                echo json_encode($response);
+                                exit();                                                    }
                         } else {
                             // handle error: product not found in any category table
                             throw new Exception("Product not found in any category table");
@@ -86,8 +92,16 @@ if (isset($_POST['saveStatus'])) {
                     }
                 }
             } catch (Exception $e) {
-                echo $e->getMessage();
-            }
+                $response = [
+                    "status" => "Error",
+                    "message" => $e->getMessage(),
+                    "icon" => "error",
+                ];
+        
+                header("Content-Type: application/json");
+                echo json_encode($response);
+                exit();
+                    }
             break;
         case "Request cannot be completed":
             $updateStatus1 = "UPDATE request set status= ? where request_id=?";
@@ -98,8 +112,15 @@ if (isset($_POST['saveStatus'])) {
             $updateStatusStatement2 = $conn->prepare($updateStatus2);
             $updateStatusStatement2->bind_param('si', $selectedStatus, $reference);
             $updateStatusStatement2->execute();
-            echo 'success';
-            break;
+            $response = [
+                "status" => "Success",
+                "message" => "Status is updated successfully",
+                "icon" => "success",
+            ];
+    
+            header("Content-Type: application/json");
+            echo json_encode($response);
+            exit();             break;
         case "Request completed":
             $currentDate = date('Y-m-d');
             $updateStatus1 = "UPDATE request set status= ?, receivedate=? where request_id=?";
@@ -110,7 +131,14 @@ if (isset($_POST['saveStatus'])) {
             $updateStatusStatement2 = $conn->prepare($updateStatus2);
             $updateStatusStatement2->bind_param('ssi', $selectedStatus, $currentDate, $reference);
             $updateStatusStatement2->execute();
-            echo 'success';
-            break;
+            $response = [
+                "status" => "Success",
+                "message" => "Status is updated successfully",
+                "icon" => "success",
+            ];
+    
+            header("Content-Type: application/json");
+            echo json_encode($response);
+            exit();             break;
     }
 }
