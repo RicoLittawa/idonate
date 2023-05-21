@@ -276,22 +276,19 @@ $("#add-user").submit((e) => {
         type: "POST",
         url: "include/register.inc.php",
         data: data,
+        dataType: "json",
         beforeSend: () => {
           $('button[type="submit"]').prop("disabled", true);
           $(".submit-text").text("Creating...");
           $(".spinner-border").removeClass("d-none");
         },
-        success: (data) => {
-          if (data === "success") {
+        success: (response) => {
+          if (response.status === "Success") {
             setTimeout(() => {
               // Enable the submit button and hide the loading animation
               userTable.ajax.reload();
               resetBtnLoadingState();
-              alertMessage(
-                "Success",
-                "Account is successfully created",
-                "success"
-              );
+              alertMessage(response.status, response.message, response.icon);
               $("#fname").val("");
               $("#lname").val("");
               $("#position").val("");
@@ -300,11 +297,13 @@ $("#add-user").submit((e) => {
               $("#address").val("");
               $('input[name="role"]').prop("checked", false);
             }, 1000);
-          } else if (data == "Email already exists") {
+          } else if (response.duplicate === true) {
             resetBtnLoadingState();
-            alertMessage("Error", data, "error");
+            alertMessage(response.status, response.message, response.icon);
             $("#email").val("");
             $("#email").addClass("is-invalid");
+          } else {
+            alertMessage(response.status, response.message, response.icon);
           }
         },
         error: (xhr, status, error) => {

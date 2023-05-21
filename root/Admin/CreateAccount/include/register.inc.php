@@ -21,7 +21,7 @@ if(isset($_POST['submitBtn'])){
      $stmt = $conn->prepare($sql);
      try {
        if (!$stmt) {
-         throw new Exception('There was a problem executing the query.');
+         throw new Exception('There was a problem connecting to the database');
        } else {
          $hashPW = password_hash($password, PASSWORD_DEFAULT);
          $stmt->bind_param('sssssss', $fname, $lname, $position, $email, $hashPW, $address, $selectedValue);
@@ -56,7 +56,16 @@ if(isset($_POST['submitBtn'])){
             After that, you can update your password.';
 
             $mail->send();
-            echo "success";
+            $response = [
+              "status" => "Success",
+              "message" => "New account has been successfully created",
+              "icon" => "success",
+          ];
+  
+          header("Content-Type: application/json");
+          echo json_encode($response);
+          exit();
+  
             
             // echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
          
@@ -67,15 +76,42 @@ if(isset($_POST['submitBtn'])){
      } catch (mysqli_sql_exception $e) {
       if ($e->getCode() == 1062) {
           // Handle duplicate email error
+          $response = [
+            "status" => "Error",
+            "message" => "Email address already exist",
+            "icon" => "error",
+            "duplicate"=>true
+        ];
+
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        exit();
+
           echo "Email already exists";
       } else {
           // Handle other MySQL errors
-          echo "MySQL Error: " . $e->getMessage();
+          $response = [
+            "status" => "Error",
+            "message" => $e->getMessage(),
+            "icon" => "error",
+        ];
+
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        exit();
       }
   } catch (Exception $e) {
       // Handle other non-MySQL errors
-      echo $e->getMessage();
-  }
+      $response = [
+        "status" => "Error",
+        "message" => $e->getMessage(),
+        "icon" => "error",
+    ];
+
+    header("Content-Type: application/json");
+    echo json_encode($response);
+    exit();
+}
   finally{
     $conn->close();
   }
