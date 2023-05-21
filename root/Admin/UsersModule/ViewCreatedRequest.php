@@ -109,10 +109,20 @@ require_once "../include/sidebar.php";
 								<span class="d-flex py-2">
 									<h6>Status:</h6>&nbsp;&nbsp;&nbsp;
 									<?php
-									$badgeClass = ($status === "Ready for Pick-up" || $status === "Request was processed" || $status === "Request completed" || $status === "Request cannot be completed") ? "badge-success" : "badge-info";
+									$badgeClass = "";
+									if ($status === "Ready for Pick-up") {
+										$badgeClass = "badge-warning";
+									} elseif ($status === "Request was processed" || $status === "Request completed") {
+										$badgeClass = "badge-success";
+									} elseif ($status === "Deleted" || $status === "Request cannot be completed") {
+										$badgeClass = "badge-danger";
+									} elseif ($status === "pending") {
+										$badgeClass = "badge-info";
+									}
 									?>
 									<span class="badge <?php echo htmlentities($badgeClass) ?>"><?php echo htmlentities($status) ?></span>
 								</span>
+
 							</div>
 							<div class="d-inline-flex">
 								<h6 class="number-title">2</h6>

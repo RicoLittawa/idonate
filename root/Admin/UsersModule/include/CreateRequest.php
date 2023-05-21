@@ -13,7 +13,7 @@ if (isset($_POST['createBtn'])) {
         $user = $conn->prepare("SELECT firstname, lastname, email, position FROM adduser WHERE uID = ?");
 
         if (!$user) {
-            throw new Exception('There was a problem executing the query' . $conn->error);
+            throw new Exception('There was a problem connecting to the database');
         } else {
             $user->bind_param('i', $userID);
             $user->execute();

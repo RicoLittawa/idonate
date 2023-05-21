@@ -20,12 +20,12 @@ $category = "SELECT category,sum(quantity) as totalQuantity  FROM (
 $stmt = $conn->prepare($category);
 try {
     if (!$stmt) {
-        throw new Exception('There was a problem executing the query.');
+        throw new Exception('There was a problem connecting to the database');
     } else {
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows < 0) {
-            throw new Exception("There was a problem getting the status.");
+            throw new Exception("Failed to fetch data from database" . $conn->error);
         } else {
             while ($row = $result->fetch_assoc()) {
                 $data[] = array(

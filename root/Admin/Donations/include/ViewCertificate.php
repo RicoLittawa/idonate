@@ -14,7 +14,7 @@ if (isset($_GET['viewCert'])) {
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows === 0) {
-                throw new Exception("There are no such data.");
+                throw new Exception("Failed to fetch data from database" . $conn->error);
             } else {
                 while ($row = $result->fetch_assoc()) {
                     echo $row['certificate'];

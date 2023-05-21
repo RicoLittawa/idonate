@@ -7,7 +7,7 @@ try {
   $stmt->execute();
   $getResult = $stmt->get_result();
   if ($getResult->num_rows < 0) {
-    throw new Exception("There are no such data.");
+    throw new Exception("Failed to fetch data from database" . $conn->error);
   } else {
     while ($get = $getResult->fetch_assoc()) {
       $reference = $get['request_id'];

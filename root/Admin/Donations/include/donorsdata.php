@@ -5,13 +5,13 @@ $getDonors =  "SELECT donor_id,donor_name,donor_email,donor_contact,donationDate
 $getDonorStatement = $conn->prepare($getDonors);
 try {
     if (!$getDonorStatement) {
-        throw new Exception("There was a problem executing the query.");
+        throw new Exception('There was a problem connecting to the database');
     } else {
         $getDonorStatement->execute();
         $getDonorResult = $getDonorStatement->get_result();
     }
     if ($getDonorResult->num_rows < 0) {
-        throw new Exception("There are no such data.");
+        throw new Exception("Failed to fetch data from database" . $conn->error);
     } else {
         while ($get = $getDonorResult->fetch_assoc()) {
             $donorId = $get['donor_id'];
