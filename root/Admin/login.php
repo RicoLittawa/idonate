@@ -62,7 +62,7 @@
 					<!-- <span id="loading"></span> -->
 
 				</div>
-				<div class="pt-3"><a href="">Forgot password?</a></div>
+				<div class="pt-3"><a href="PasswordReset.php">Forgot password?</a></div>
 
 
 			</form>
@@ -134,6 +134,7 @@
 					url: "include/login.inc.php",
 					method: "POST",
 					data: data,
+					dataType:"json",
 					beforeSend: () => {
 						$('button[type="submit"]').prop('disabled', true);
 						$('#loader').addClass('loader');

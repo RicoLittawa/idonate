@@ -1,14 +1,12 @@
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
-
+require 'phpmailer/src/Exception.php';
+require 'phpmailer/src/PHPMailer.php';
+require 'phpmailer/src/SMTP.php';
+require 'fpdf/fpdf.php';
+require_once '../../../config/config.php';
 if (isset($_POST['email_data'])) {
-   require 'phpmailer/src/Exception.php';
-   require 'phpmailer/src/PHPMailer.php';
-   require 'phpmailer/src/SMTP.php';
-   require 'fpdf/fpdf.php';
-   require_once '../../../config/config.php';
-
    try {
       $status = 'email_sent';
       $template =  $conn->prepare("SELECT * FROM template_certi");
