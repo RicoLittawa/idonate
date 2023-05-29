@@ -146,13 +146,13 @@
 								// Enable the submit button and hide the loading animation
 								$('button[type="submit"]').prop('disabled', false);
 								$('#loader').removeClass('loader');
-								(`Hello ${response.data}`, response.message, response.icon);
-								setTimeout(() => {
-									window.location.href = "./Dashboard/Dashboard.php";
-								}, 1000)
+								alertMessage(`Hello ${response.data}`, response.message, response.icon);
+								 setTimeout(() => {
+								 	window.location.href = "./Dashboard/Dashboard.php";
+								 }, 1000)
 							}, 1500);
 
-						} else if (response.data === 'User') {
+						}else if (response.data === 'User') {
 							setTimeout(() => {
 								$('button[type="submit"]').prop('disabled', false);
 								$('#loader').removeClass('loader');
