@@ -28,7 +28,7 @@
                     Reset Password
                 </span>
                 <div class="wrap-input100">
-                    <input class="input100 is-invalid" type="text" id="userEmail" name="userEmail" placeholder="Code" autocomplete>
+                    <input class="input100 is-invalid" type="text" maxlength="6" id="code" name="userEmail" placeholder="Code" autocomplete>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa-solid fa-hashtag"></i>

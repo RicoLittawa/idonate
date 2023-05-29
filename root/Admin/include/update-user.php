@@ -79,7 +79,7 @@ if (isset($_POST['updateBtn'])) {
         /*****************Update account*********************************/
 
         /*****************Upload new image**********************************/
-        $filePath = '../../include/profile/';
+        $filePath = 'profile/';
         $filename = $uID . '_' . basename($_FILES['profileImg']['name']);
         $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         $fileSize = $_FILES['profileImg']['size'];

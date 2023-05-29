@@ -6,31 +6,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
-
-// Check reset attempts before allowing a reset
-// function checkResetAttempts($ipAddress, $userId) {
-//   global $conn;
-
-//   // Define rate limit parameters
-//   $maxAttempts = 3;
-//   $resetDuration = '-1 hour'; // Example: Limit within the last 1 hour
-
-//   // Prepare and execute query to check reset attempts
-//   $stmt = $conn->prepare("SELECT COUNT(*) as attempt_count FROM reset_attempts WHERE ip_address = ? AND user_id = ? AND timestamp >= NOW() - INTERVAL 1 HOUR");
-//   $stmt->bind_param("si", $ipAddress, $userId);
-//   $stmt->execute();
-//   $result = $stmt->get_result();
-//   $row = $result->fetch_assoc();
-//   $attemptCount = $row['attempt_count'];
-
-//   if ($attemptCount >= $maxAttempts) {
-//     // Rate limit exceeded
-//     return false;
-//   }
-
-//   return true;
-// }
-
 // Update/reset reset attempts
 function updateResetAttempts($ipAddress, $userId)
 {
@@ -59,19 +34,6 @@ if (isset($_POST["sendBtn"])) {
 
     $email = $_POST["email"];
     $ipAddress = $_SERVER['REMOTE_ADDR']; // Get the user's IP address
-
-    // Check reset attempts before allowing a reset
-    // if (!checkResetAttempts($ipAddress, $uID)) {
-    //     $response = [
-    //         "status" => "Error",
-    //         "message" => "Rate limit exceeded. Please try again later.",
-    //         "icon" => "error",
-    //     ];
-    //     header("Content-Type: application/json");
-    //     echo json_encode($response);
-    //     exit();
-    // }
-
     $getEmail = $conn->prepare("SELECT email,uID FROM adduser WHERE email = ?");
     try {
         if (!$getEmail) {
@@ -85,33 +47,52 @@ if (isset($_POST["sendBtn"])) {
             } else {
                 $row = $result->fetch_assoc();
                 $uID = $row['uID'];
-
                 $maxAttempts = 3;
-                $resetDuration = '-1 hour';
+                $resetDuration = '-1 minute';
                 $resetTimeBoundary = date('Y-m-d H:i:s', strtotime($resetDuration));
+
                 $stmt = $conn->prepare("SELECT COUNT(*) as attempt_count FROM reset_attempts WHERE ip_address = ? AND user_id = ? AND timestamp >= ?");
                 $stmt->bind_param("sis", $ipAddress, $uID, $resetTimeBoundary);
-
                 $stmt->execute();
                 $result = $stmt->get_result();
                 $row = $result->fetch_assoc();
                 $attemptCount = $row['attempt_count'];
 
                 if ($attemptCount >= $maxAttempts) {
-                    //Rate limit exceeded
-                    throw new Exception("Rate limit exceeded. Please try again later");
-                } else {
+                    $lastAttemptTime = $conn->prepare("SELECT MAX(timestamp) as last_attempt_time FROM reset_attempts WHERE ip_address = ? AND user_id = ?");
+                    $lastAttemptTime->bind_param("si", $ipAddress, $uID);
+                    $lastAttemptTime->execute();
+                    $result = $lastAttemptTime->get_result();
+                    $row = $result->fetch_assoc();
+                    $lastAttemptTimestamp = $row['last_attempt_time'];
+
+                    $resetTimeBoundary = strtotime($resetDuration, strtotime($lastAttemptTimestamp));
+
+                    if ($resetTimeBoundary <= time()) {
+                        $resetAttempts = $conn->prepare("DELETE FROM reset_attempts WHERE ip_address = ? AND user_id = ?");
+                        $resetAttempts->bind_param("si", $ipAddress, $uID);
+                        $resetAttempts->execute();
+                        $attemptCount = 0;
+                    } else {
+                        throw new Exception("Rate limit exceeded. Please try again later");
+                    }
+                }
+
+                // Continue with the rest of your code for generating the token and sending the email
+
+
+                else {
                     $token = generateToken();
                     $hashToken = password_hash($token, PASSWORD_DEFAULT);
                     $tokenExpiry = date('Y-m-d H:i:s', strtotime('+1 hour')); // Token expiry set to 1 hour from now
                     $updateToken = $conn->prepare("UPDATE adduser SET reset_token=?, reset_token_expiry=? WHERE uID=?");
                     $updateToken->bind_param("ssi", $hashToken, $tokenExpiry, $uID);
-                    $updated = $updateToken->execute();
+                    $updateToken->execute();
                     // Update/reset reset attempts after successful reset
                     updateResetAttempts($ipAddress, $uID);
                     $resetLink = 'http://localhost:3000/root/Admin/SentResetLink.php?token=' . $token;
                     $mail = new PHPMailer(true);
-    
+
                     // Server settings
                     $mail->SMTPDebug = 0;                      // Enable verbose debug output
                     $mail->isSMTP();                                            // Send using SMTP
@@ -121,11 +102,11 @@ if (isset($_POST["sendBtn"])) {
                     $mail->Password   = SMTP_PASSWORD;                               // SMTP password
                     $mail->SMTPSecure = 'ssl';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
                     $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-    
+
                     // Recipients
                     $mail->setFrom('testcdrrmo@gmail.com');
                     $mail->addAddress($email);     // Add a recipient
-    
+
                     // Content
                     $mail->isHTML(true);                                  // Set email format to HTML
                     $mail->Subject = 'Password reset';
