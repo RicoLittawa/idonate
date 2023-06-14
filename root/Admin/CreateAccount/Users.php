@@ -130,14 +130,13 @@ require_once "../include/sidebar.php";
               </div>
             </div>
             <!----Filter -->
-            <table class="table table-striped table-bordered w-100" id="user_data">
-              <thead>
+            <div class="table-responsive">
+            <table class="table align-middle mb-0 bg-white table-hover w-100" id="user_data">
+              <thead class="bg-light">
                 <tr>
                   <th>UID</th>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
+                  <th>Name</th>
                   <th>Position</th>
-                  <th>Email</th>
                   <th>Address</th>
                   <th>Role</th>
                   <th>Status</th>
@@ -147,6 +146,7 @@ require_once "../include/sidebar.php";
               </thead>
               <tbody></tbody>
             </table>
+            </div>
             <!--- For table -->
           </div>
         </div>

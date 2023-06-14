@@ -77,7 +77,7 @@ const printTable = (buttonId, content) => {
   $(buttonId).click(() => {
     printJS({
       printable: content,
-      orientation: "landscape",
+      orientation: "Portrait",
       type: "html",
       css: ["../css/mdb.min.css", "../css/style.css"],
       scanStyles: true,
@@ -86,7 +86,7 @@ const printTable = (buttonId, content) => {
   });
 };
 printTable("#printBarChart", "barChart");
-printTable("#printReceipt", "form-container");
+printTable("#printReceipt", "request_content");
 printTable("#printUserData", "update_form");
 
 /******************************Print Function**************************************/

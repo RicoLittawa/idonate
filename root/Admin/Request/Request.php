@@ -101,12 +101,12 @@ require_once "../include/sidebar.php";
               </div>
             </div>
             <!----Filter -->
-              <table class="table table-striped table-bordered w-100" id="request_data_main" >
-                <thead>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0 bg-white table-hover w-100" id="request_data_main" >
+                <thead class="bg-light">
                   <tr>
                     <th>Receipt No.</th>
-                    <th>Full name</th>
-                    <th>Position</th>
+                    <th>Name</th>
                     <th>No. Evacuees</th>
                     <th>Request Date</th>
                     <th>Status</th>
@@ -117,6 +117,7 @@ require_once "../include/sidebar.php";
                 </thead>
                 <tbody></tbody>
               </table>
+              </div>
           </div>
         </div>
         <!--End of main content -->

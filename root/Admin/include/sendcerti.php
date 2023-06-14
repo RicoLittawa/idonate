@@ -1,6 +1,7 @@
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
+
 require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
@@ -62,14 +63,32 @@ if (isset($_POST['email_data'])) {
          $mail->setFrom('testcdrrmo@gmail.com');
          $mail->AddAddress($row["email"], $row["name"]); //Adds a "To" address
          $mail->WordWrap = 50;       //Sets word wrapping on the body of the message to a given number of characters
-         $mail->IsHTML(true);       //Sets message type to HTML
+         $mail->IsHTML(true);
+         $greeting = "Dear Donor,";
+         $content = "Here is the attachment of your certificate of an acknowledgment as one of our donors to show our gratitude for your kindness";
+         $thankYouMessage =
+            "Thank you for donating. If you have any further questions, please feel free to contact us.";
          $mail->Subject = 'Acknowledgement Reciept'; //Sets the Subject of the message
          //An HTML or plain text message body
-         $mail->Body = "Thank you";
+         $mail->Body = "
+         <html>
+             <body>
+                 <p>{$greeting}</p>
+                 <p>{$content}</p>
+                 <p>{$thankYouMessage}</p>
+                 <br>
+                 <p>Best regards,</p>
+                 <p>City Risk Reduction Management Office</p>
+                 <p>Address: Brgy Bolbok, Batangas City, Philippines</p>
+                 <p>Contact Information: cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
+             </body>
+         </html>
+     ";
+
          $mail->addStringAttachment($pdf->Output("S", 'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
          $mail->Send();
 
-         $updateEmailStatus =$conn->prepare("UPDATE donation_items set email_status=?, certificate=? where donor_id=?");
+         $updateEmailStatus = $conn->prepare("UPDATE donation_items set email_status=?, certificate=? where donor_id=?");
          if (!$updateEmailStatus) {
             throw new Exception("There was a problem connecting to the database");
          } else {
@@ -79,11 +98,11 @@ if (isset($_POST['email_data'])) {
                "status" => "Success",
                "message" => "Email has been sent successfully",
                "icon" => "success",
-           ];
-   
-           header("Content-Type: application/json");
-           echo json_encode($response);
-           exit();   
+            ];
+
+            header("Content-Type: application/json");
+            echo json_encode($response);
+            exit();
          }
       }
    } catch (Exception $e) {
@@ -91,10 +110,10 @@ if (isset($_POST['email_data'])) {
          "status" => "Error",
          "message" => $e->getMessage(),
          "icon" => "error",
-     ];
+      ];
 
-     header("Content-Type: application/json");
-     echo json_encode($response);
-     exit();
-}
+      header("Content-Type: application/json");
+      echo json_encode($response);
+      exit();
+   }
 }

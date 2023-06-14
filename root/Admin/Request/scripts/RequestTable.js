@@ -74,11 +74,9 @@ let requestTable = $("#request_data_main").DataTable({
     {
       data: "Fullname",
       render: (data, type, row) => {
-        return `${row.firstname} ${row.lastname}`;
+        return `<p class="fw-bold mb-1">${row.firstname} ${row.lastname}</p>
+        <p class="text-muted mb-0">${row.position}</p>`;
       },
-    },
-    {
-      data: "position",
     },
     {
       data: "evacuees_qty",
@@ -106,14 +104,14 @@ let requestTable = $("#request_data_main").DataTable({
             badgeClass = "badge-info not-allowed";
             break;
         }
-        return `<span class="badge ${badgeClass}" onclick="changeStatus('${row.reference}', '${row.status}')">${data}</span>`;
+        return `<span class="badge ${badgeClass} d-flex justify-content-center" onclick="changeStatus('${row.reference}', '${row.status}')">${data}</span>`;
       },
     },
     {
       data: "status",
       render: function (data, type, row) {
         if (data === "pending") {
-          return `<div><button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button></div>`;
+          return `<div class="d-flex justify-content-center"><button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button></div>`;
         } else if (data === "Deleted") {
           return `<span class="badge badge-warning user-select-none not-allowed">Not applicable <br> (Deleted by: <br> ${row.firstname} ${row.lastname})</span>`;
         } else {

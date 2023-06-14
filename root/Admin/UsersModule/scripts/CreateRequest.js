@@ -107,7 +107,7 @@ let createRequest = $("#create_request_data").DataTable({
             badgeClass = "badge-info";
             break;
         }  
-        return `<span class="badge ${badgeClass} ${additionalClasses}">${data}</span>`;
+        return `<span class="badge ${badgeClass} ${additionalClasses} d-flex justify-content-center">${data}</span>`;
       }
     },    
     {

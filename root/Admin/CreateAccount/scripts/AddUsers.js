@@ -17,16 +17,24 @@ let userTable = $("#user_data").DataTable({
       visible: false,
     },
     {
-      data: "firstname",
-    },
-    {
-      data: "lastname",
+      data: null,
+      render: (data, type, row) => {
+        return `<div class="d-flex align-items-center">
+        <img
+            src="../include/profile/${row.profile}"
+            alt=""
+            style="width: 50px; height: 50px"
+            class="rounded-circle"
+            />
+        <div class="ms-3">
+          <p class="fw-bold mb-1">${row.firstname} ${row.lastname}</p>
+          <p class="text-muted mb-0">${row.email}</p>
+        </div>
+      </div>`;
+      },
     },
     {
       data: "position",
-    },
-    {
-      data: "email",
     },
     {
       data: "address",
@@ -35,16 +43,16 @@ let userTable = $("#user_data").DataTable({
       data: "role",
       render: (data, type, row) => {
         return data !== "admin"
-          ? `<span class="badge rounded-pill badge-info">${data}</span>`
-          : `<span class="badge rounded-pill badge-success">${data}</span>`;
+          ? `<span class="badge rounded-pill badge-info d-flex justify-content-center">${data}</span>`
+          : `<span class="badge rounded-pill badge-success d-flex justify-content-center">${data}</span>`;
       },
     },
     {
       data: "status",
       render: function (data, type, row) {
         return data !== "offline"
-          ? `<span class="badge rounded-pill badge-success">Active</span>`
-          : `<span class="badge rounded-pill badge-info">Offline</span>`;
+          ? `<span class="badge rounded-pill badge-success d-flex justify-content-center">Active</span>`
+          : `<span class="badge rounded-pill badge-info d-flex justify-content-center">Offline</span>`;
       },
     },
     {
@@ -102,7 +110,7 @@ let userTable = $("#user_data").DataTable({
   dom: "frtip",
   initComplete: function () {
     this.api()
-      .columns(6)
+      .columns(4)
       .every(function () {
         const column = this;
         const select = $(

@@ -70,19 +70,17 @@ require_once "../include/sidebar.php";
             </div>
             <!----Filter -->
             <!--Place table here --->
-            <div class="table-container">
-              <table class="table table-striped table-bordered" id="donors_data">
-                <thead>
+            <div class="table-responsive">
+              <table class="table align-middle mb-0 bg-white table-hover w-100" id="donors_data">
+                <thead class="bg-light">
                   <tr>
                     <th>Donor Name</th>
-                    <th>Email</th>
                     <th>Contact</th>
-                    <th>Donation Date</th>
+                    <th>Date</th>
                     <th>Status</th>
                     <th>Certificate</th>
                     <th>Update</th>
                     <th>Check/Delete</th>
-                    <!-- Add more columns here -->
                   </tr>
                 </thead>
                 <tbody></tbody>

@@ -68,8 +68,9 @@ require_once "../include/sidebar.php";
               <div id="role_filter"></div>
             </div>
             <!----Filter -->
-              <table class="table table-striped table-bordered w-100" id="stocks_data">
-                <thead>
+              <div class="table-responsive">
+              <table class="table align-middle mb-0 bg-white table-hover w-100" id="stocks_data">
+                <thead class="bg-light">
                   <tr>
                     <th>Category</th>
                     <th>Product Name</th>
@@ -80,6 +81,7 @@ require_once "../include/sidebar.php";
                 </thead>
                 <tbody></tbody>
               </table>
+              </div>
           </div>
         </div>
         <!--End of main content -->

@@ -3,7 +3,7 @@ require_once '../../../../config/config.php';
 $data = array(); // Create an empty array for the rows
 
 try {
-  $query = "SELECT uID,firstname, lastname, position, email, address, role, status FROM adduser";
+  $query = "SELECT * FROM adduser";
   $stmt = $conn->prepare($query);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -21,7 +21,8 @@ try {
         'email' => $row['email'],
         'address' => $row['address'],
         'role' => $row['role'],
-        'status' => $row['status']
+        'status' => $row['status'],
+        'profile' => $row['profile']
       );
     }
     header('Content-Type: application/json');

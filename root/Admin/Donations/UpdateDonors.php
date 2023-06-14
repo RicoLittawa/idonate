@@ -226,8 +226,8 @@ if (isset($_GET["editdonate"])) {
 								</div>
 						</div>
 						<!--2nd table -->
-						<div class="pe-4 ps-5 ms-4 mt-4">
-							<table class="table table-striped table-bordered update-form" id="update-form">
+						<div class="pe-4 ps-5 ms-4 mt-4 table-responsive">
+							<table class="table table-sm table-bordered update-form" id="update-form">
 								<thead>
 									<tr>
 										<th>Product Name</th>

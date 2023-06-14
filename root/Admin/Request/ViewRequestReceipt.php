@@ -62,8 +62,8 @@ require_once "../include/sidebar.php";
 							<button id="printReceipt" class="btn btn-success btn-rounded" type="click"><i class="fa-solid fa-print"></i></button>
 						</div>
 						<form id="form-container" class="form-container mt-5 ms-5">
-
-							<div class="d-inline-flex">
+						<div id="request_content">
+							<div class="d-inline-flex ">
 								<h6 class="number-title">1</h6>
 								<div class="mt-3 ps-3">
 									<h4 class="text-muted">Receipt Details</h4>
@@ -80,15 +80,14 @@ require_once "../include/sidebar.php";
 										<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($requestdate) ?></h6>
 									</span>
 								</div>
-								<hr class="hr" />
 								<div class="row">
-									<div class="col py-3">
+									<div class="col">
 										<span>
 											<h6>Fullname:</h6>
 											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($fname) . " " . htmlentities($lname) ?></h6>
 										</span>
 									</div>
-									<div class="col py-3">
+									<div class="col">
 										<span>
 											<h6>Position</h6>
 											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($position) ?></h6>
@@ -96,13 +95,13 @@ require_once "../include/sidebar.php";
 									</div>
 								</div>
 								<div class="row">
-									<div class="col py-3">
+									<div class="col">
 										<span>
 											<h6>For (No. of Evacuees/Families):</h6>
 											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($evacuees_qty) ?></h6>
 										</span>
 									</div>
-									<div class="col py-3">
+									<div class="col">
 										<span>
 											<h6>Email:</h6>
 											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($requestemail) ?></h6>
@@ -133,12 +132,10 @@ require_once "../include/sidebar.php";
 									<h4 class="text-muted">Requested Items</h4>
 								</div>
 							</div>
-
 							<!--2nd table -->
-
-							<div class="px-4 ms-5 mt-4 ">
-								<table id="table-container" class="table table-striped table-bordered">
-									<thead>
+							<div class="px-4 ms-5 mt-2 table-responsive">
+								<table id="table-container" class="table table-sm table-bordered">
+									<thead class="bg-light">
 										<tr>
 											<th>Product name</th>
 											<th>Quantity</th>
@@ -152,7 +149,6 @@ require_once "../include/sidebar.php";
 										$stmt->execute();
 										$result = $stmt->get_result();
 										while ($row = $result->fetch_assoc()) :
-
 										?>
 											<tr>
 												<td class="fw-bold"><?php echo htmlentities($row['productName']) ?></td>
@@ -161,6 +157,7 @@ require_once "../include/sidebar.php";
 										<?php endwhile; ?>
 									</tbody>
 								</table>
+							</div>
 							</div>
 							<div class="d-flex justify-content-end me-3">
 								<button type="button" class="btn btn-danger cancelBtn btn-rounded" id="goBack"><i class="fa-solid fa-arrow-left"></i> Go back</button>

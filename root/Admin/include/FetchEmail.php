@@ -113,6 +113,11 @@ if (isset($_POST["sendBtn"])) {
             <p><a href='{$resetLink}'>{$resetLink}</a></p>
             <p>You can copy the provided token to reset your password: {$token}</p>
             <p>{$thankYouMessage}</p>
+            <br>
+            <p>Best regards,</p>
+            <p>City Risk Reduction Management Office</p>
+            <p>Address: Brgy Bolbok, Batangas City, Philippines</p>
+            <p>Contact Information: cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
         </body>
     </html>
 ";

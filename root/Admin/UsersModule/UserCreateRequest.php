@@ -80,7 +80,7 @@ $requestRef = $refRow["request_id"];
                   <input type="number" id="evacQty" class="form-control"></input>
                   <label class="form-label" for="evacQty">Evacuees/Families Quantity</label>
                 </div>
-                <div>
+                <div class="table-responsive">
                   <table class="table table-striped table-bordered">
                     <thead>
                       <tr>
@@ -129,8 +129,9 @@ $requestRef = $refRow["request_id"];
               </div>
             </div>
             <!----Filter -->
-            <table class="table table-striped table-bordered w-100" id="create_request_data">
-              <thead>
+            <div class="table-responsive">
+            <table class="table align-middle mb-0 bg-white table-hover w-100" id="create_request_data">
+              <thead class="bg-light">
                 <tr>
                   <th>Receipt No</th>
                   <th>No. Evacuees/Families</th>
@@ -144,6 +145,7 @@ $requestRef = $refRow["request_id"];
               </thead>
               <tbody></tbody>
             </table>
+            </div>
           </div>
         </div>
       </div>
