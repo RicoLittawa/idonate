@@ -68,9 +68,6 @@ if (isset($_GET["token"])) {
                     Reset Password
                 </span>
                 <div class="wrap-input100">
-                    <input type="hidden" id="generated_token" value="<?php echo htmlentities(
-                                                                            $token
-                                                                        ); ?>">
                     <input class="input100 is-invalid" type="text" maxlength="6" id="code" name="code" placeholder="Code" autocomplete>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
