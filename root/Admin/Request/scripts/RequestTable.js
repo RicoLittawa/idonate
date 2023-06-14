@@ -24,7 +24,7 @@ thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
   let min = minDate.val();
   let max = maxDate.val();
-  let date = new Date(data[4]);
+  let date = new Date(data[3]);
 
   if (
     (min === null && max === null) ||
@@ -126,7 +126,7 @@ let requestTable = $("#request_data_main").DataTable({
       },
     },
   ],
-  order: [[4, "desc"]],
+  order: [[0, "desc"]],
   buttons: [
     {
       extend: "copyHtml5",
