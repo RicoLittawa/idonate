@@ -1,3 +1,44 @@
+<?php
+require_once "../../config/config.php";
+
+// Check if the token is provided in the URL
+if (isset($_GET["token"])) {
+    $token = $_GET["token"];
+
+    // Retrieve the user's stored hashed token and its expiry time from the database based on the provided token
+    $stmt = $conn->prepare(
+        "SELECT reset_token, reset_token_expiry FROM adduser WHERE reset_token = ?"
+    );
+    $stmt->bind_param("s", $token);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+        // Token is invalid or expired
+        // Handle the error or redirect the user to an appropriate page
+        // For example:
+        header("Location: error/SomethingWentWrong.html");
+        exit();
+    }
+
+    $row = $result->fetch_assoc();
+    $resetTokenExpiry = strtotime($row["reset_token_expiry"]);
+    $currentTimestamp = time();
+
+    if ($currentTimestamp > $resetTokenExpiry) {
+        // Token is expired
+        // Handle the error or redirect the user to an appropriate page
+        // For example:
+        header("Location: error/SomethingWentWrong.html");
+        exit();
+    }
+} else {
+    // Token is not provided, redirect the user to an appropriate page
+    header("Location: error/SomethingWentWrong.html");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,26 +63,35 @@
             <div class="login100-pic">
                 <img src="img/batangascitylogo.png" alt="IMG">
             </div>
-
-            <form class="login100-form" id="reset-form">
+            <form class="reset-form" id="reset-form">
                 <span class="login100-form-title text-wrap">
                     Reset Password
                 </span>
                 <div class="wrap-input100">
-                    <input class="input100 is-invalid" type="text" maxlength="6" id="code" name="userEmail" placeholder="Code" autocomplete>
+                    <input type="hidden" id="generated_token" value="<?php echo htmlentities(
+                                                                            $token
+                                                                        ); ?>">
+                    <input class="input100 is-invalid" type="text" maxlength="6" id="code" name="code" placeholder="Code" autocomplete>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa-solid fa-hashtag"></i>
                 </div>
                 <div class="wrap-input100">
-                    <input class="input100 is-invalid" type="text" id="userEmail" name="userEmail" placeholder="New Password" autocomplete>
+                    <input class="input100 is-invalid" type="text" id="email" name="email" placeholder="Email" autocomplete>
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                </div>
+                <div class="wrap-input100">
+                    <input class="input100 is-invalid" type="password" id="newpass" name="newpass" placeholder="New Password" autocomplete>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>
                 </div>
                 <div class="container-login100-form-btn">
-                    <button type="submit" name="login-submit" class="login100-form-btn">
+                    <button type="submit" class="login100-form-btn">
                         <span class="submit-text">Reset</span>
+                        <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
                     </button>
                     <!-- <span id="loading"></span> -->
 
@@ -56,6 +106,104 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="scripts/mdb.min.js"></script>
     <script src="scripts/sweetalert2.all.min.js"></script>
+
+    <script>
+        $("#reset-form").submit((e) => {
+            e.preventDefault();
+            let token = $("#code").val();
+            let email = $("#email").val();
+            let newPassword = $("#newpass").val();
+            let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            let isInvalid = false;
+            const alertMessage = (title, text, icon) => {
+                Swal.fire({
+                    title: title,
+                    text: text,
+                    icon: icon,
+                    confirmButtonColor: "#20d070",
+                    confirmButtonText: "OK",
+                    allowOutsideClick: false,
+                });
+            };
+            const resetBtnLoadingState = () => {
+                $('button[type="submit"]').prop("disabled", false);
+                $(".submit-text").text("Reset");
+                $(".spinner-border").addClass("d-none");
+            };
+            if (!token) {
+                $('#code').css('border', '1px solid #c80000');
+                isInvalid = true;
+            } else if (!/^[0-9]+$/.test(token)) {
+                $('#code').css('border', '1px solid #c80000');
+                isInvalid = true;
+            } else {
+                $('#code').css('border', 'none');
+
+            }
+            if (!email) {
+                $('#email').css('border', '1px solid #c80000');
+                isInvalid = true;
+            } else if (emailVali.test(email) == false) {
+                alertMessage("Warning", "Invalid email address", "warning")
+                $('#email').css('border', '1px solid #c80000');
+                isInvalid = true;
+            } else {
+                $('#email').css('border', 'none');
+            }
+            if (!newPassword) {
+                $('#newpass').css('border', '1px solid #c80000');
+                isInvalid = true;
+            } else {
+                $('#newpass').css('border', 'none');
+            }
+
+            let data = {
+                resetBtn: "",
+                token: token,
+                email: email,
+                newPassword: newPassword
+            }
+
+            if (isInvalid) {
+                return false;
+            }
+            $.ajax({
+                url: "include/forgotpass.php",
+                method: "POST",
+                data: data,
+                dataType: "json",
+                beforeSend: () => {
+                    $('button[type="submit"]').prop("disabled", true);
+                    $(".submit-text").text("Resetting...");
+                    $(".spinner-border").removeClass("d-none");
+                },
+                success: (response) => {
+                    if (response.status === "Success") {
+                        setTimeout(() => {
+                            alertMessage(response.status, response.message, response.icon);
+                            resetBtnLoadingState();
+                            $('#email').val("");
+                            $('#code').val("");
+                            $('#newpass').val("");
+                        }, 1000);
+                    } else {
+                        setTimeout(() => {
+                            $('#email').val("");
+                            $('#code').val("");
+                            $('#newpass').val("");
+                            resetBtnLoadingState();
+                            alertMessage(response.status, response.message, response.icon);
+                        }, 1000)
+                    }
+                },
+                error: (xhr, status, error) => {
+                    // Handle errors
+                    resetBtnLoadingState();
+                    alertMessage("Error", xhr.responseText, "error");
+                },
+            });
+        })
+    </script>
 
 </body>
 

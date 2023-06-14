@@ -257,7 +257,7 @@ $("#add-user").submit((e) => {
 
   const resetBtnLoadingState = () => {
     $('button[type="submit"]').prop("disabled", false);
-    $(".submit-text").text("Change");
+    $(".submit-text").text("Create");
     $(".spinner-border").addClass("d-none");
   };
 

@@ -35,8 +35,9 @@
 
                 </div>
                 <div class="container-login100-form-btn">
-                    <button type="submit" name="login-submit" class="login100-form-btn">
+                    <button type="submit" class="login100-form-btn">
                         <span class="submit-text">Send</span>
+                        <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
                     </button>
                     <!-- <span id="loading"></span> -->
 
@@ -67,6 +68,11 @@
                     allowOutsideClick: false,
                 });
             };
+            const resetBtnLoadingState = () => {
+                $('button[type="submit"]').prop("disabled", false);
+                $(".submit-text").text("Send");
+                $(".spinner-border").addClass("d-none");
+            };
             if (!email) {
                 $('#userEmail').css('border', '1px solid #c80000');
                 isInvalid = true;
@@ -77,6 +83,7 @@
             } else {
                 $('#userEmail').css('border', 'none');
             }
+
 
             if (isInvalid) {
                 return false;
@@ -89,14 +96,31 @@
                     email: email
                 },
                 dataType: "json",
+                beforeSend: () => {
+                    $('button[type="submit"]').prop("disabled", true);
+                    $(".submit-text").text("Sending...");
+                    $(".spinner-border").removeClass("d-none");
+                },
                 success: function(response) {
-                    console.log(response)
                     if (response.status === "Success") {
-                        alertMessage(response.status,response.message,response.icon);
-                    }else{
-                        alertMessage(response.status,response.message,response.icon);
+                        setTimeout(() => {
+                            alertMessage(response.status, response.message, response.icon);
+                            resetBtnLoadingState();
+                            $('#userEmail').val("");
+                        }, 1000);
+                    } else {
+                        setTimeout(() => {
+                            $('#userEmail').val("");
+                            resetBtnLoadingState();
+                            alertMessage(response.status, response.message, response.icon);
+                        }, 1000)
                     }
-                }
+                },
+                error: (xhr, status, error) => {
+                    // Handle errors
+                    resetBtnLoadingState();
+                    alertMessage("Error", xhr.responseText, "error");
+                },
             });
 
         })

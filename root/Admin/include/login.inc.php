@@ -27,7 +27,7 @@ if (isset($_POST['submitBtn'])) {
                             $_SESSION["user"] = [
                                 "uID" => $row["uID"],
                                 "logged_in" => true,
-                                "role" => $row['role']
+                                "role" => $row['role'],
                             ];
                             $status = 'active';
                             $updateStatus = $conn->prepare("UPDATE adduser SET status = ? WHERE uID = ?");

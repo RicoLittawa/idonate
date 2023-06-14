@@ -5,6 +5,7 @@ if (isset($_SESSION['user'])) {
     $userID = $_SESSION['user']['uID'];
     $loggin = $_SESSION['user']['logged_in'];
     $userRole = $_SESSION['user']['role'];
+    $token = $_SESSION["user"]["token"];
 } else {
     //User is not logged in, redirect to login page
     header("Location: ../login.php?Loginfirst");

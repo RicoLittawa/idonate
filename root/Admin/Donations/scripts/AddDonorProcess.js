@@ -374,7 +374,7 @@ $(document).submit((e) => {
     showCancelButton: true,
     confirmButtonColor: "#20d070",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, update it",
+    confirmButtonText: "Yes, add it",
     reverseButtons: true,
   }).then((result) => {
     if (result.isConfirmed) {
