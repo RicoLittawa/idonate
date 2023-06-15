@@ -18,10 +18,6 @@ tr {
   object-fit: cover;
   height: 400px; /* Adjust the height as needed */
 }
-.landing-paragraph {
-  position: relative;
-  bottom: -130px;
-}
 .date-filter-dropdown {
   position: relative;
   height: 200px;

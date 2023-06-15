@@ -37,8 +37,9 @@ $firstname = $row["firstname"];
           <h1 class="fs-1 breadcrumb-title">Welcome, <span class="text-muted"><?php echo htmlentities($firstname) ?></span></h1>
           <nav class="bc-nav d-flex">
             <h6 class="mb-0">
+            <a href="#" class="text-muted bc-path">Home</a>
               <span>/</span>
-              <a href="#" class="text-reset bc-path active">Home</a>
+              <a href="#" class="text-reset bc-path active">Welcome Page</a>
             </h6>
           </nav>
         </div>
@@ -112,7 +113,7 @@ $firstname = $row["firstname"];
 
             <!-- Carousel wrapper -->
             <div class="second-layer d-flex justify-content-end">
-              <img src="../img/batangascitylogo.png" class="carousel-image mt-5" alt="">
+              <img src="../img/batangascitylogo.png" class="bg-image img-thumbnail me-3 mt-5 img-fluid" alt="">
               <div class="mt-5 pt-xl-5">
                 <h6 class="fs-4 fw-bold text-dark mt-3">Vision</h6>
                 <p>
@@ -134,10 +135,8 @@ $firstname = $row["firstname"];
                   management which will benefit the citizens of Batangas City.
                 </p>
               </div>
-              <img src="../img/photo4.jpg" class="carousel-image rounded ps-3 mt-5" alt="">
+              <img src="../img/photo4.jpg" class="bg-image img-thumbnail ms-3 rounded p-2 mt-5 img-fluid" alt="">
             </div>
-
-
           </div>
         </div>
       </div>
