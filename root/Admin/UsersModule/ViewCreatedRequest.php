@@ -32,6 +32,8 @@ require_once "../include/sidebar.php";
 					<h1 class="fs-1 breadcrumb-title">Process Request</h1>
 					<nav class="bc-nav d-flex">
 						<h6 class="mb-0">
+							<a href="UserLandingPage.php" class="text-muted bc-path">Home</a>
+							<span>/</span>
 							<a href="request.php" class="text-muted bc-path">Request</a>
 							<span>/</span>
 							<a href="#" class="text-reset bc-path active">Process Request</a>

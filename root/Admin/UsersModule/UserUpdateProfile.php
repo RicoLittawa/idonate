@@ -73,7 +73,7 @@ require_once "../include/sidebar.php";
     }
   </style>
 
-  <title>User Details</title>
+  <title>Update Account</title>
 </head>
 
 <body>
@@ -88,7 +88,7 @@ require_once "../include/sidebar.php";
           <h1 class="fs-1 breadcrumb-title">Update Account</h1>
           <nav class="bc-nav d-flex">
             <h6 class="mb-0">
-              <a href="#" class="text-muted bc-path">Home</a>
+              <a href="UserLandingPage.php" class="text-muted bc-path">Home</a>
               <span>/</span>
               <a href="#" class="text-reset bc-path active">Update Account</a>
             </h6>

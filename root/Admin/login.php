@@ -158,7 +158,7 @@
 								$('#loader').removeClass('loader');
 								alertMessage(`Hello ${response.data}`, response.message, response.icon);
 								setTimeout(() => {
-									window.location.href = "../Admin/UsersModule/UserCreateRequest.php";
+									window.location.href = "../Admin/UsersModule/UserLandingPage.php";
 								}, 1000)
 							}, 1500);
 						} else if (response.message == "Invalid email or password.") {

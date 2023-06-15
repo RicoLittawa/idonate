@@ -29,7 +29,7 @@ $requestRef = $refRow["request_id"];
   <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
   <!--Necessary Plugins-->
-  <title>User Details</title>
+  <title>Create Request</title>
 </head>
 
 <body>
@@ -44,7 +44,7 @@ $requestRef = $refRow["request_id"];
           <h1 class="fs-1 breadcrumb-title">Create Request</h1>
           <nav class="bc-nav d-flex">
             <h6 class="mb-0">
-              <a href="#" class="text-muted bc-path">Home</a>
+              <a href="UserLandingPage.php" class="text-muted bc-path">Home</a>
               <span>/</span>
               <a href="#" class="text-reset bc-path active">Create Request</a>
             </h6>

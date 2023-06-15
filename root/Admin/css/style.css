@@ -10,9 +10,17 @@ body {
   background: #ebeae8;
   height: auto;
 }
-tr{
+tr {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
+}
+.carousel-image {
+  object-fit: cover;
+  height: 400px; /* Adjust the height as needed */
+}
+.landing-paragraph {
+  position: relative;
+  bottom: -130px;
 }
 .date-filter-dropdown {
   position: relative;
