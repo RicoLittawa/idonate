@@ -65,8 +65,8 @@ if (isset($_POST['submitBtn'])) {
                 <br>
                 <p>Best regards,</p>
                 <p>City Risk Reduction Management Office</p>
-                <p>Address: Brgy Bolbok, Batangas City, Philippines</p>
-                <p>Contact Information: cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
+                <p>Brgy Bolbok, Batangas City, Philippines</p>
+                <p>cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
             </body>
         </html>
     ";

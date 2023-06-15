@@ -65,7 +65,7 @@ if (isset($_POST['email_data'])) {
          $mail->WordWrap = 50;       //Sets word wrapping on the body of the message to a given number of characters
          $mail->IsHTML(true);
          $greeting = "Dear Donor,";
-         $content = "Here is the attachment of your certificate of an acknowledgment as one of our donors to show our gratitude for your kindness";
+         $content = "Here is the attached certificate of acknowledgement to show gratitude of kindness to our donors.";
          $thankYouMessage =
             "Thank you for donating. If you have any further questions, please feel free to contact us.";
          $mail->Subject = 'Acknowledgement Reciept'; //Sets the Subject of the message
@@ -79,12 +79,11 @@ if (isset($_POST['email_data'])) {
                  <br>
                  <p>Best regards,</p>
                  <p>City Risk Reduction Management Office</p>
-                 <p>Address: Brgy Bolbok, Batangas City, Philippines</p>
-                 <p>Contact Information: cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
+                 <p>Brgy Bolbok, Batangas City, Philippines</p>
+                 <p>cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
              </body>
          </html>
      ";
-
          $mail->addStringAttachment($pdf->Output("S", 'AcknowledgementReciept.pdf'), 'AcknowledgementReciept.pdf', $encoding = 'base64', $type = 'application/pdf');
          $mail->Send();
 
