@@ -31,7 +31,7 @@ if (isset($_POST['submitBtn'])) {
                             ];
 
                             $status = 'active';
-                            $updateStatus = $conn->prepare("UPDATE adduser SET status = ?, logged_in = CURRENT_TIMESTAMP WHERE uID = ?");
+                            $updateStatus = $conn->prepare("UPDATE adduser SET status = ?, logged_in = CURRENT_TIMESTAMP,logged_out=null WHERE uID = ?");
                             $updateStatus->bind_param('si', $status, $userID);
                             $updateStatus->execute();
 
