@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+    max-height: 100vh;
+   background: #dddddd;
+    height: auto;
+  }
+main{
+    margin-left: 7rem;
+    margin-right: 7rem;
+    height: auto;
+    background: #bebebe;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+}
+.navbar{
+  background: #20d070;
+}
+.carousel-image {
+    object-fit: cover;
+    height: 400px; /* Adjust the height as needed */
+  }
+.Homepage{
+    height: auto;
+    /* Additional styling */
+    background-color: #fff9ed;
+  }
+  .mission-vision{
+    height: auto;
+    /* Additional styling */
+    background-color: #fff9ed;  
+  }
+  .how-to-donate{
+    height: auto;
+    /* Additional styling */
+    background-color: #fff9ed;  
+  }
+  .about-us{
+    height: auto;
+    /* Additional styling */
+    background-color: #fff9ed;  
+  }
+
