@@ -88,6 +88,8 @@ require_once "../include/sidebar.php";
   <script src="../scripts/mdb.min.js"></script>
   <script src="../scripts/sweetalert2.all.min.js"></script>
   <script src="../scripts/UpdatePassword.js"></script>
+  <script src="../scripts/timeout.js"></script>
+
 
 
   <script>

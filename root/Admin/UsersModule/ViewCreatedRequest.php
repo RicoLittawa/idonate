@@ -231,6 +231,8 @@ require_once "../include/sidebar.php";
 	<script src="../scripts/sweetalert2.all.min.js"></script>
 	<script src="../scripts/TableFilterButtons.js"></script>
 	<script src="../scripts/CancelButton.js"></script>
+	<script src="../scripts/timeout.js"></script>
+
 </body>
 
 </html>

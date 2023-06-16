@@ -178,6 +178,7 @@ require_once "../include/sidebar.php";
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script type="text/javascript" src="../scripts/mdb.min.js"></script>
 	<script src="../scripts/sweetalert2.all.min.js"></script>
+	<script src="../scripts/timeout.js"></script>
 	<script src="../scripts/TableFilterButtons.js"></script>
 	<script src="../scripts/CancelButton.js"></script>
 </body>

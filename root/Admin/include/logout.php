@@ -3,7 +3,7 @@
     require_once '../../../config/config.php';
 
     $status = 'offline';
-    $updateStatus = "UPDATE adduser SET status = ? WHERE uID = ?";
+    $updateStatus = "UPDATE adduser SET status = ?,last_activity=CURRENT_TIMESTAMP WHERE uID = ?";
     $stmt = $conn->prepare($updateStatus);
     $stmt->bind_param('si', $status, $userID);
     $stmt->execute();

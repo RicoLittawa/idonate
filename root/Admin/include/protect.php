@@ -30,3 +30,5 @@ if (in_array(basename($_SERVER["SCRIPT_FILENAME"]), $user_restricted_pages) && $
     header("Location: ../error/index.html");
     exit();
 }
+
+?>

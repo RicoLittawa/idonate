@@ -122,6 +122,7 @@ $fileName = $row["template"];
 	<script type="text/javascript" src="../scripts/mdb.min.js"></script>
 	<script src="scripts/Settings.js"></script>
 	<script src="../scripts/sweetalert2.all.min.js"></script>
+	<script src="../scripts/timeout.js"></script>
 	<!--Necessary Plugins -->
 
 	<!--Necessary Plugins -->
