@@ -22,7 +22,9 @@ try {
         'address' => $row['address'],
         'role' => $row['role'],
         'status' => $row['status'],
-        'profile' => $row['profile']
+        'profile' => $row['profile'],
+        'logged_in' => $row['logged_in'],
+        'logged_out' => $row['logged_out'],
       );
     }
     header('Content-Type: application/json');

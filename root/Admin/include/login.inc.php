@@ -23,18 +23,15 @@ if (isset($_POST['submitBtn'])) {
                         $hash = $row['pwdUsers'];
                         if (password_verify($userPassword, $hash)) {
                             $userID = $row["uID"];
-                            $last_activity = $row["last_activity"];
                             $role=  $row['role'];
-
                             $_SESSION["user"] = [
                                 "uID" => $userID,
                                 "logged_in" => true,
                                 "role" => $role,
-                                "last_activity" => $last_activity
                             ];
 
                             $status = 'active';
-                            $updateStatus = $conn->prepare("UPDATE adduser SET status = ?, last_activity = CURRENT_TIMESTAMP WHERE uID = ?");
+                            $updateStatus = $conn->prepare("UPDATE adduser SET status = ?, logged_in = CURRENT_TIMESTAMP WHERE uID = ?");
                             $updateStatus->bind_param('si', $status, $userID);
                             $updateStatus->execute();
 

@@ -138,8 +138,9 @@ require_once "../include/sidebar.php";
                   <th>Name</th>
                   <th>Position</th>
                   <th>Address</th>
-                  <th>Role</th>
                   <th>Status</th>
+                  <th>Logged In</th>
+                  <th>Logged Out</th>
                   <th>Action</th>
                   <!-- Add more columns here -->
                 </tr>

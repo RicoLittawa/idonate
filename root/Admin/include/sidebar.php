@@ -34,12 +34,6 @@ function sidebar()
               <span class="text">Users</span>
             </a>
           </li>
-          <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="bx bxs-time"></i>
-            <span class="text-wrap">Logs</span>
-          </a>
-        </li>
         </ul>
       </nav>';
   return $html;

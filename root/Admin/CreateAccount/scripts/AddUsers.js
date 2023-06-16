@@ -29,6 +29,7 @@ let userTable = $("#user_data").DataTable({
         <div class="ms-3">
           <p class="fw-bold mb-1">${row.firstname} ${row.lastname}</p>
           <p class="text-muted mb-0">${row.email}</p>
+          <span class="badge badge-info">${row.role}</span>
         </div>
       </div>`;
       },
@@ -40,24 +41,28 @@ let userTable = $("#user_data").DataTable({
       data: "address",
     },
     {
-      data: "role",
-      render: (data, type, row) => {
-        return data !== "admin"
-          ? `<span class="badge rounded-pill badge-info d-flex justify-content-center">${data}</span>`
-          : `<span class="badge rounded-pill badge-success d-flex justify-content-center">${data}</span>`;
-      },
+      data: "logged_in",
+      render:(data,type,row)=>{
+        return data !== null ? `<span>${data}</span>` :`<span class="badge badge-warning">N/A</span>`
+        }
+    },
+    {
+      data: "logged_out",
+      render:(data,type,row)=>{
+        return data !== null ? `<span>${data}</span>` :`<span class="badge badge-warning">N/A</span>`
+        }
     },
     {
       data: "status",
-      render: function (data, type, row) {
+      render:  (data, type, row)=> {
         return data !== "offline"
           ? `<span class="badge rounded-pill badge-success d-flex justify-content-center">Active</span>`
           : `<span class="badge rounded-pill badge-info d-flex justify-content-center">Offline</span>`;
-      },
+      }
     },
     {
       data: null,
-      render: function (data, type, row) {
+      render:  (data, type, row) =>{
         return `<a class="d-flex justify-content-center allowed" onclick="deleteRow(${row.uID},'include/DeleteUser.php','#user_data')"><i class="fa-solid fa-trash text-danger"></i></a>`;
       },
     },
