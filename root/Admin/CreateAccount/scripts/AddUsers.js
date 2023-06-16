@@ -42,27 +42,39 @@ let userTable = $("#user_data").DataTable({
     },
     {
       data: "logged_in",
-      render:(data,type,row)=>{
-        return data !== null ? `<span>${data}</span>` :`<span class="badge badge-warning">N/A</span>`
-        }
+      render: (data, type, row) => {
+        let dateObj = new Date(data);
+        let options = { timeZone: 'Asia/Manila' };
+        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
+        return data !== null
+          ? `<span>${formattedDateTime}</span>`
+          : `<span class="badge badge-warning">N/A</span>`;
+      },
     },
     {
       data: "logged_out",
-      render:(data,type,row)=>{
-        return data !== null ? `<span>${data}</span>` :`<span class="badge badge-warning">N/A</span>`
-        }
+      render: (data, type, row) => {
+        // Create a Date object from the datetime string
+        let dateObj = new Date(data);
+        let options = { timeZone: 'Asia/Manila' };
+        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
+
+        return data !== null
+          ? `<span>${formattedDateTime}</span>`
+          : `<span class="badge badge-warning">N/A</span>`;
+      },
     },
     {
       data: "status",
-      render:  (data, type, row)=> {
+      render: (data, type, row) => {
         return data !== "offline"
           ? `<span class="badge rounded-pill badge-success d-flex justify-content-center">Active</span>`
           : `<span class="badge rounded-pill badge-info d-flex justify-content-center">Offline</span>`;
-      }
+      },
     },
     {
       data: null,
-      render:  (data, type, row) =>{
+      render: (data, type, row) => {
         return `<a class="d-flex justify-content-center allowed" onclick="deleteRow(${row.uID},'include/DeleteUser.php','#user_data')"><i class="fa-solid fa-trash text-danger"></i></a>`;
       },
     },

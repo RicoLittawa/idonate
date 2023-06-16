@@ -135,8 +135,8 @@ require_once '../include/FunctionSelectBox.php';
                 </div>
                 <div class="col">
                   <div class="form-outline datepicker">
-                    <input class="form-control" id="donation_date" type="date" name="donation" data-mdb-toggle="datepicker">
-                    <label for="exampleDatepicker1" class="form-label">Select a date</label>
+                    <input class="form-control" id="donation_date" type="date" name="donation_date" data-mdb-toggle="datepicker">
+                    <label for="donation_date" class="form-label">Select a date</label>
                   </div>
                 </div>
               </div>

@@ -74,14 +74,23 @@ let createRequest = $("#create_request_data").DataTable({
     {
       data: "evacuees_qty",
     },
-    {
-      data: "request_date",
-    },
+      {
+        data: "request_date",
+        render: (data, type, row) => {
+          let dateObj = new Date(data);
+          let options = { month: "2-digit", day: "2-digit", year: "numeric" };
+          let formattedDate = dateObj.toLocaleDateString(undefined, options);
+          return formattedDate;
+        }
+      },
     {
       data: "receive_date",
       render: (data, type, row) => {
+        let dateObj = new Date(data);
+        let options = { month: "2-digit", day: "2-digit", year: "numeric" };
+        let formattedDate = dateObj.toLocaleDateString(undefined, options);
         return data !== null
-          ? data
+          ? formattedDate
           : `<span class="badge badge-danger user-select-none not-allowed">N/A</span>`;
       },
     },

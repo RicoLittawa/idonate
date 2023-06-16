@@ -397,7 +397,7 @@ $(document).submit((e) => {
               setTimeout(() => {
                 window.location.href = "Donors.php";
               }, 1500);
-            }, 100);
+            }, 1000);
           } else {
             resetBtnLoadingState();
             alertMessage(response.status, response.message, response.icon);

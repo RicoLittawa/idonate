@@ -83,6 +83,12 @@ let requestTable = $("#request_data_main").DataTable({
     },
     {
       data: "requestdate",
+      render: (data, type, row) => {
+        let dateObj = new Date(data);
+        let options = { month: "2-digit", day: "2-digit", year: "numeric" };
+        let formattedDate = dateObj.toLocaleDateString(undefined, options);
+        return formattedDate;
+      }
     },
     {
       data: "status",

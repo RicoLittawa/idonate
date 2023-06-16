@@ -76,6 +76,12 @@ let donorTable = $("#donors_data").DataTable({
     },
     {
       data: "donationDate",
+      render: (data, type, row) => {
+        let dateObj = new Date(data);
+        let options = { month: "2-digit", day: "2-digit", year: "numeric" };
+        let formattedDate = dateObj.toLocaleDateString(undefined, options);
+        return formattedDate;
+      }
     },
     {
       data: "emailStatus",
@@ -113,7 +119,7 @@ let donorTable = $("#donors_data").DataTable({
                 data-id = "${row.donorId}"></div>`;
         } else {
           return `<a class="d-flex justify-content-center" onclick="deleteRow(${row.reference},'include/DeleteDonor.php','#donors_data')">
-            <i class="fa-solid fa-trash text-danger"></i></a>`;
+            <i class="fa-solid fa-trash text-danger allowed"></i></a>`;
         }
       },
     },
