@@ -17,8 +17,8 @@ function sidebar()
             </a>
           </li>
           <li class="nav-item">
-            <a href="../Request/Request.php" class="nav-link ' . (strpos($_SERVER['REQUEST_URI'], 'Request.php') !== false ? 'active' : '') . '">
-              <i class="bx bxs-envelope ' . (strpos($_SERVER['REQUEST_URI'], 'Request.php') !== false ? 'active' : '') . '"></i>
+            <a href="../Request/Request.php" class="nav-link ' . (strpos($_SERVER['REQUEST_URI'], 'Request.php') !== false || strpos($_SERVER['REQUEST_URI'], 'ViewRequestReceipt.php') !== false || strpos($_SERVER['REQUEST_URI'], 'ReceiveRequest.php') !== false ? 'active' : '') . '">
+              <i class="bx bxs-envelope ' . (strpos($_SERVER['REQUEST_URI'], 'Request.php') !== false || strpos($_SERVER['REQUEST_URI'], 'ViewRequestReceipt.php') !== false ? 'active' : '') . '"></i>
               <span class="text">Requests</span>
             </a>
           </li>

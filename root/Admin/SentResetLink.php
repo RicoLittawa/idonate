@@ -7,7 +7,7 @@ if (isset($_GET["token"])) {
 
     // Retrieve the user's stored hashed token and its expiry time from the database based on the provided token
     $stmt = $conn->prepare(
-        "SELECT reset_token, reset_token_expiry FROM adduser WHERE reset_token = ?"
+        "SELECT reset_token, reset_token_expiry,email FROM adduser WHERE reset_token = ?"
     );
     $stmt->bind_param("s", $token);
     $stmt->execute();
@@ -17,11 +17,12 @@ if (isset($_GET["token"])) {
         // Token is invalid or expired
         // Handle the error or redirect the user to an appropriate page
         // For example:
-        header("Location: error/SomethingWentWrong.html");
+        header("Location: login.php");
         exit();
     }
 
     $row = $result->fetch_assoc();
+    $email = $row["email"];
     $resetTokenExpiry = strtotime($row["reset_token_expiry"]);
     $currentTimestamp = time();
 
@@ -29,7 +30,7 @@ if (isset($_GET["token"])) {
         // Token is expired
         // Handle the error or redirect the user to an appropriate page
         // For example:
-        header("Location: error/SomethingWentWrong.html");
+        header("Location: login.php");
         exit();
     }
 } else {
@@ -63,21 +64,17 @@ if (isset($_GET["token"])) {
             <div class="login100-pic">
                 <img src="img/batangascitylogo.png" alt="IMG">
             </div>
-            <form class="reset-form" id="reset-form">
-                <span class="login100-form-title text-wrap">
+            <div id="form-container">
+            <form class="login100-form" id="reset-form">
+                <span class="login100-form-title text-wrap fs-2">
                     Reset Password
                 </span>
                 <div class="wrap-input100">
+                    <input type="hidden"  id="email" value="<?php echo htmlentities($email) ?>">
                     <input class="input100 is-invalid" type="text" maxlength="6" id="code" name="code" placeholder="Code" autocomplete>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa-solid fa-hashtag"></i>
-                </div>
-                <div class="wrap-input100">
-                    <input class="input100 is-invalid" type="text" id="email" name="email" placeholder="Email" autocomplete>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
                 </div>
                 <div class="wrap-input100">
                     <input class="input100 is-invalid" type="password" id="newpass" name="newpass" placeholder="New Password" autocomplete>
@@ -91,10 +88,10 @@ if (isset($_GET["token"])) {
                         <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
                     </button>
                     <!-- <span id="loading"></span> -->
-
                 </div>
                 <div class="pt-3 float-end"><a href="login.php"><i class="fa-solid fa-arrow-left"></i> Go back to login page</a></div>
-            </form>
+            </form>    
+            </div>
         </div>
     </div>
 
@@ -110,8 +107,16 @@ if (isset($_GET["token"])) {
             let token = $("#code").val();
             let email = $("#email").val();
             let newPassword = $("#newpass").val();
-            let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
             let isInvalid = false;
+            const successMessage = (response,note) => {
+                let html = `
+            <div class="note100-form note ${response !== "Success" ? "note-danger" : "note-success"}">
+            <strong>${response}!</strong> ${note}
+            <div class="pt-5 float-end"><a href="login.php"><i class="fa-solid fa-arrow-left"></i> Go back to login page</a></div>
+            </div>
+              `;
+                return html;
+            }
             const alertMessage = (title, text, icon) => {
                 Swal.fire({
                     title: title,
@@ -135,17 +140,6 @@ if (isset($_GET["token"])) {
                 isInvalid = true;
             } else {
                 $('#code').css('border', 'none');
-
-            }
-            if (!email) {
-                $('#email').css('border', '1px solid #c80000');
-                isInvalid = true;
-            } else if (emailVali.test(email) == false) {
-                alertMessage("Warning", "Invalid email address", "warning")
-                $('#email').css('border', '1px solid #c80000');
-                isInvalid = true;
-            } else {
-                $('#email').css('border', 'none');
             }
             if (!newPassword) {
                 $('#newpass').css('border', '1px solid #c80000');
@@ -157,10 +151,9 @@ if (isset($_GET["token"])) {
             let data = {
                 resetBtn: "",
                 token: token,
-                email: email,
+                email:email,
                 newPassword: newPassword
             }
-
             if (isInvalid) {
                 return false;
             }
@@ -177,15 +170,13 @@ if (isset($_GET["token"])) {
                 success: (response) => {
                     if (response.status === "Success") {
                         setTimeout(() => {
-                            alertMessage(response.status, response.message, response.icon);
+                            $("#form-container").html(successMessage(response.status,response.message)) 
                             resetBtnLoadingState();
-                            $('#email').val("");
                             $('#code').val("");
                             $('#newpass').val("");
                         }, 1000);
                     } else {
                         setTimeout(() => {
-                            $('#email').val("");
                             $('#code').val("");
                             $('#newpass').val("");
                             resetBtnLoadingState();

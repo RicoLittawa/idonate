@@ -191,7 +191,12 @@ img{
   position: relative;
   top: -60px;
 }
-
+.note100-form {
+  width: 350px;
+  position: relative;
+  top: -10px;
+  left: 30px;
+}
 .login100-form-title {
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 800;

@@ -5,44 +5,75 @@
   margin: 0;
   padding: 0;
 }
-body {
-    max-height: 100vh;
-   background: #dddddd;
-    height: auto;
-  }
-main{
-    margin-left: 7rem;
-    margin-right: 7rem;
-    height: auto;
-    background: #bebebe;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
+body {
+  max-height: 100vh;
+  background: #dddddd;
 }
-.navbar{
+html {
+  scroll-behavior: smooth;
+}
+main {
+  margin: 0 7rem;
+  height: auto;
+  background: #bebebe;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.navbar {
   background: #20d070;
 }
-.carousel-image {
-    object-fit: cover;
-    height: 400px; /* Adjust the height as needed */
-  }
-.Homepage{
-    height: auto;
-    /* Additional styling */
-    background-color: #fff9ed;
-  }
-  .mission-vision{
-    height: auto;
-    /* Additional styling */
-    background-color: #fff9ed;  
-  }
-  .how-to-donate{
-    height: auto;
-    /* Additional styling */
-    background-color: #fff9ed;  
-  }
-  .about-us{
-    height: auto;
-    /* Additional styling */
-    background-color: #fff9ed;  
-  }
+.navbar-nav .nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
 
+.navbar-nav .nav-link:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover:after {
+  width: 100%;
+}
+
+.carousel-image {
+  object-fit: cover;
+  height: 400px;
+}
+
+.Homepage,
+.mission-vision,
+.how-to-donate,
+.about-us,
+.contact-us,
+.contact-information,
+.maps {
+  height: auto;
+  background-color: #fff9ed;
+}
+
+.no-border{
+  border: none;
+  background: none;
+}
+.go-up {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.go-up.show {
+  opacity: 1;
+}
+#map { height: 500px; }

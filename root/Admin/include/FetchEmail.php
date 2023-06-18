@@ -56,8 +56,7 @@ if (isset($_POST["sendBtn"])) {
 
     $response = [
       "status" => "Error",
-      "message" => "Please wait {$minutes} minutes and {$seconds} seconds before sending another reset email",
-      "icon" => "error",
+      "message" => "Please wait {$minutes} minutes and {$seconds} seconds before sending another request",
       "remainingTime" => $remainingTime,
     ];
     header("Content-Type: application/json");
@@ -70,7 +69,7 @@ if (isset($_POST["sendBtn"])) {
   $hashToken = password_hash($token, PASSWORD_DEFAULT);
 
   // Store the token and its expiry in the database
-  $tokenExpiry = date("Y-m-d H:i:s", strtotime("+30 minutes")); // Token expiry set to 30 minutes from now
+  $tokenExpiry = date("Y-m-d H:i:s", strtotime("+3 hours")); // Token expiry set to 30 minutes from now
   $updateToken = $conn->prepare(
     "UPDATE adduser SET reset_token = ?, reset_token_expiry = ? WHERE email = ?"
   );
@@ -102,35 +101,42 @@ if (isset($_POST["sendBtn"])) {
   // Construct the email body
   $greeting = "Dear User,";
   $content =
-    "We received a request to reset your password. Please click the link below to proceed with the password reset process:";
-  $thankYouMessage =
-    "Thank you for using our service. If you have any further questions, please feel free to contact us.";
+    "We received a request to reset your password. You can use the following button to reset your password:";
   $mail->Body = "
     <html>
+        <head>
+            <style>
+                a {
+                    color: #007bff !important; /* Set the desired link color */
+                    text-decoration: none !important; /* Remove the underline decoration */
+                }
+            </style>
+        </head>
         <body>
-            <p>{$greeting}</p>
-            <p>{$content}</p>
-            <p><a href='{$resetLink}'>{$resetLink}</a></p>
-            <p>You can copy the provided token to reset your password: {$token}</p>
-            <p>{$thankYouMessage}</p>
-            <br>
-            <p>Best regards,</p>
-            <p>City Risk Reduction Management Office</p>
-            <p>Brgy Bolbok, Batangas City, Philippines</p>
-            <p>cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
+            <div style='text-align: center; width: 500px; margin: 0 auto; border: 1px solid #ccc; padding: 20px; border-radius:10px;'>
+                <p style='font-size: 18px; font-weight: bold;'>{$greeting}</p>
+                <p style='font-size: 14px;'>{$content}</p>
+                <a href='{$resetLink}'>
+                    <button style='background-color: #28a745; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; font-size: 14px;'>Reset Password</button>
+                </a>
+                <p style='font-size: 14px;'>You can copy the provided token to reset your password: <strong>{$token}</strong></p>
+                <p style='font-size: 14px;'>If you don't use the token within 3 hours, it will expire. To get a new password reset link, visit: http://localhost:3000/root/Admin/PasswordReset.ph</p>
+                <br>
+                <p style='font-size: 14px;'>Best regards,</p>
+                <p style='font-size: 14px;'>City Risk Reduction Management Office</p>
+                <p style='font-size: 14px;'>Brgy Bolbok, Batangas City, Philippines</p>
+                <p style='font-size: 14px;'>cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
+            </div>
         </body>
     </html>
 ";
+
   try {
     $mail->send();
-    $maskedEmail =
-      substr($email, 0, 2) .
-      str_repeat("*", strlen($email) - 2) .
-      substr($email, strpos($email, "@"));
     $response = [
       "status" => "Success",
-      "message" => "Email has been sent to " . $maskedEmail,
-      "icon" => "success",
+      "message" => "Check your email for a link to reset your password. 
+      If it doesn’t appear within a few minutes, check your spam folder.",
     ];
     header("Content-Type: application/json");
     echo json_encode($response);
@@ -139,8 +145,7 @@ if (isset($_POST["sendBtn"])) {
     $response = [
       "status" => "Error",
       "message" =>
-        "An error occurred while sending the reset email. Please try again later.",
-      "icon" => "error",
+      "An error occurred while sending the reset email. Please try again later.",
     ];
     header("Content-Type: application/json");
     echo json_encode($response);

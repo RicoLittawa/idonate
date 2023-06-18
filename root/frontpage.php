@@ -10,11 +10,17 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="stylesheet" href="Admin/css/mdb.min.css">
   <link rel="stylesheet" href="css/style.css">
-
-
-
+  <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("s-H-S8mkUzj6LfRWt");
+   })();
+</script>
 </head>
 
 <body>
@@ -32,13 +38,13 @@
           </a>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link text-light" href="#">Home</a>
+              <a class="nav-link text-light" href="#about-us">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-light" href="#">About Us</a>
+              <a class="nav-link text-light" href="#maps">Map</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-light" href="#">Contact Us</a>
+              <a class="nav-link text-light" href="#contact-us">Contact Us</a>
             </li>
           </ul>
         </div>
@@ -46,7 +52,7 @@
     </nav>
     <!--Navbar-->
     <!--Section 1-->
-    <section class="Homepage d-block justify-content-center">
+    <section class="Homepage d-block justify-content-center" id="Homepage">
       <div id="cddrrmo" class="carousel slide carousel-fade" data-mdb-ride="carousel">
         <div class="carousel-indicators">
           <button type="button" data-mdb-target="#cddrrmo" data-mdb-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -55,13 +61,13 @@
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="Admin/img/photo1.png" class="d-block w-100 carousel-image" alt="Sunset Over the City" />
+            <img src="Admin/img/photo1.png" class="d-block w-100 carousel-image" alt="Photo 1" />
           </div>
           <div class="carousel-item">
-            <img src="Admin/img/photo2.jpg" class="d-block w-100 carousel-image" alt="Canyon at Nigh" />
+            <img src="Admin/img/photo2.jpg" class="d-block w-100 carousel-image" alt="Photo 2" />
           </div>
           <div class="carousel-item">
-            <img src="Admin/img/photo3.jpg" class="d-block w-100 carousel-image" alt="Canyon at Nigh" />
+            <img src="Admin/img/photo3.jpg" class="d-block w-100 carousel-image" alt="Photo 3" />
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-mdb-target="#cddrrmo" data-mdb-slide="prev">
@@ -100,12 +106,12 @@
           </p>
         </div>
         <div>
-          <img src="Admin/img/batangascitylogo.png" class="bg-image img-thumbnail mt-5 img-fluid h-75 w-100" alt="">
+          <img src="Admin/img/batangascitylogo.png" class="bg-image img-thumbnail mt-5 img-fluid h-75 w-100" alt="Logo">
         </div>
       </div>
       <div class="d-flex justify-content-start ms-5 me-5">
         <div>
-          <img src="Admin/img/photo4.jpg" class="bg-image img-thumbnail  img-fluid h-75 mt-5 w-100" alt="">
+          <img src="Admin/img/photo4.jpg" class="bg-image img-thumbnail  img-fluid h-75 mt-5 w-100" alt="Photo 4">
         </div>
         <div class="pt-5 ms-4">
           <h3>Vision</h3>
@@ -133,33 +139,164 @@
           </ul>
         </div>
         <div class="d-flex justify-content-center">
-        <button class="btn btn-success float-end">Download</button>
+          <button class="btn btn-success float-end">Download</button>
         </div>
       </div>
     </section>
     <!--Section 3-->
 
-    <!--Last Section-->
-    <section class="about-us">
-      <h2 class="text-success text-center">About Us</h2>
+    <!--Section 4-->
+    <section class="about-us pt-5" id="about-us">
+      <h2 class="text-success text-center fw-bold">About Us</h2>
       <p class="text-center fs-6 text-wrap text-muted lead me-5  ms-5 pb-3">Batangas City's City Disaster Risk Reduction and Management Office (CDRRMO) is a
         government agency for disaster risk reduction that is overseen by  Mayor Beverly Dimacuha. Bolbok barangay in Batangas City is
         where our office is situated. Donations of canned goods, noodles, hygiene essentials, ppe, pharmaceuticals, meat, grains,
         drinking water, and baby supplies are also welcome. In addition, we operate a facility called the relief hub, where we receive
         and keep donations.
       </p>
-      <div>
-        <img src="Admin/img/organizational-chart.jpg" class="w-100" alt="">
+      <div class="pb-5">
+        <img src="Admin/img/organizational-chart.jpg" class="w-100" alt="Org Chart">
         <figcaption class="blockquote-footer text-end me-3">
           Source: <cite title="Source Title">https://www.batangascity.gov.ph/</cite>
         </figcaption>
       </div>
     </section>
+    <!--Section 4-->
+
+    <!--Section 5-->
+    <section class="contact-us pt-5" id="contact-us">
+      <h2 class="text-success text-center fw-bold pb-4">Contact Us <i class="fa-solid fa-phone"></i></h2>
+      <div class="pb-5 d-flex justify-content-center">
+        <form class="border rounded p-4 shadow bg-light" id="contact_us">
+          <div class="row">
+            <div class="col">
+              <div class="form-outline mb-4">
+                <input type="text" id="firstname" class="form-control" />
+                <label class="form-label" for="firstname">First Name</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline mb-4">
+                <input type="text" id="lastname" class="form-control" />
+                <label class="form-label" for="lastname">Last Name</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-outline mb-4">
+            <input type="email" id="email" class="form-control" />
+            <label class="form-label" for="email">Email address</label>
+          </div>
+          <div class="form-outline mb-4">
+            <textarea class="form-control" id="message" rows="4"></textarea>
+            <label class="form-label" for="message">Message</label>
+          </div>
+          <button type="submit" class="btn btn-success btn-block mb-4">Send</button>
+        </form>
+      </div>
+    </section>
+    <!--Section 5-->
+
+    <!--Section 6-->
+    <section class="contact-information">
+      <div class="mb-0 text-center">
+        <ul class="list-unstyled pt-3 mb-0 pb-5">
+          <li class="lead fs-6 mb-2"><i class="fa-solid fa-location-dot"></i> Brgy. Bolbok 4200, Batangas City</li>
+          <li class="lead fs-6 mb-2"><i class="fa-solid fa-phone"></i> (043)- 984-4300 /(043)-727-2768</li>
+          <li class="lead fs-6 mb-2"><i class="fa-solid fa-envelope"></i> cdrrmobatangas@yahoo.com.ph</li>
+        </ul>
+      </div>
+      <div class="text-center pb-5">
+        <button class="no-border text-success" type="button" id="goToFacebook"><i class="fa-brands fa-facebook fs-1 me-2"></i></button>
+        <button class="no-border text-success"><i class="fa-brands fa-square-instagram fs-1 me-2"></i></button>
+        <button class="no-border text-success"><i class="fa-brands fa-twitter fs-1 me-2"></i></button>
+        <button class="no-border text-success"><i class="fa-solid fa-envelope fs-1 me-2"></i></button>
+      </div>
+    </section>
+    <!--Section 7-->
+
+    <!--Section 8-->
+    <section class="maps pb-5 pt-5" id="maps">
+      <h2 class="text-success ms-5 pb-4 fw-bold"><i class="fa-solid fa-location-dot"></i> Maps</h2>
+      <div class="me-5 ms-5 rounded border shadow" id="map"></div>
+    </section>
+    <!--Section 8-->
+
+    <div class="go-up mb-0 pb-5 me-3">
+      <button id="go-up-button" class="btn btn-success btn-floating btn-lg float-end"><i class="fa-solid fa-arrow-up"></i></button>
+    </div>
+
+    <footer class="bg-success h-100">
+      <div class="text-center pt-5">
+        <img src="Admin/img/logo.png" alt="">
+      </div>
+      <div class="text-center pb-3">
+        <p class="copyright-text text-light lead fs-6">Copyright &copy; 2022 All Rights Reserved
+      </div>
+    </footer>
   </main>
 
   <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="Admin/scripts/mdb.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    $("#goToFacebook").click(() => {
+      window.location.href = "https://www.facebook.com/profile.php?id=100064680010464";
+    });
+    $(window).scroll(function() {
+      let goUpContainer = $(".go-up");
+      if ($(window).scrollTop() > 100) {
+        goUpContainer.addClass("show");
+      } else {
+        goUpContainer.removeClass("show");
+      }
+    });
+
+    $("#go-up-button").click(function() {
+      $("html, body").animate({
+        scrollTop: 0
+      }, "slow");
+    });
+
+    const goToTop= ()=>{
+      $("html, body").animate({
+        scrollTop: 0
+      }, "slow");
+    }
+    // Initialize the map
+    let map = L.map('map').setView([13.77, 121.05], 15);
+    // Add a tile layer from OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © OpenStreetMap contributors',
+    }).addTo(map);
+    L.marker([13.77, 121.05]).addTo(map)
+      .bindPopup('Our office is located here')
+      .openPopup()
+
+    $(document).submit('#contact_us', (e) => {
+      e.preventDefault();
+      let firstname = $("#firstname").val()
+      let lastname = $("#lastname").val()
+      let email = $("#email").val()
+      let message = $("#message").val()
+      let name = `${firstname} ${lastname}`;
+      console.log(name);
+      let templateParams= {
+        name:name,
+        email:email,
+        message:message
+      }
+      const serviceID= "service_pyxx3oh";
+      const templateID= "template_uyj380c";
+      emailjs.send(serviceID, templateID, templateParams)
+    .then(function(response) {
+       console.log('SUCCESS!', response.status, response.text);
+    }, function(error) {
+       console.log('FAILED...', error);
+    });
+     
+    })
+  </script>
 
 </body>
 

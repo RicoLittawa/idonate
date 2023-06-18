@@ -39,7 +39,6 @@ if (isset($_POST["resetBtn"])) {
         $response = [
           "status" => "Success",
           "message" => "Your password has been reset successfully",
-          "icon" => "success",
         ];
 
         header("Content-Type: application/json");
@@ -53,7 +52,6 @@ if (isset($_POST["resetBtn"])) {
       "message" => $e->getMessage(),
       "icon" => "error",
     ];
-
     header("Content-Type: application/json");
     echo json_encode($response);
     exit();

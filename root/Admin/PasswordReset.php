@@ -17,33 +17,30 @@
 <body>
 
     <div class="container-login100">
-
         <div class="wrap-login100">
             <div class="login100-pic">
                 <img src="img/batangascitylogo.png" alt="IMG">
             </div>
-
-            <form class="login100-form" id="reset-form">
-                <span class="login100-form-title text-wrap">
-                    Forgot Password
-                </span>
-                <div class="wrap-input100">
-                    <input class="input100 is-invalid" type="text" id="userEmail" name="userEmail" placeholder="Email" autocomplete>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
-
-                </div>
-                <div class="container-login100-form-btn">
-                    <button type="submit" class="login100-form-btn">
-                        <span class="submit-text">Send</span>
-                        <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
-                    </button>
-                    <!-- <span id="loading"></span> -->
-
-                </div>
-                <div class="pt-3 float-end"><a href="login.php"><i class="fa-solid fa-arrow-left"></i> Go back to login page</a></div>
-            </form>
+            <div id="form-container">
+                <form class="login100-form" id="reset-form">
+                    <span class="login100-form-title text-wrap fs-2">
+                        Forgot Password
+                    </span>
+                    <div class="wrap-input100">
+                        <input class="input100 is-invalid" type="text" id="userEmail" name="userEmail" placeholder="Email" autocomplete>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <button type="submit" class="login100-form-btn">
+                            <span class="submit-text">Send</span>
+                            <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="pt-3 float-end"><a href="login.php"><i class="fa-solid fa-arrow-left"></i> Go back to login page</a></div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -58,6 +55,17 @@
             let email = $("#userEmail").val();
             let isInvalid = false;
             let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+
+            const successMessage = (response, note) => {
+                let html = `
+            <div class="note100-form note ${response !== "Success" ? "note-danger" : "note-success"}">
+            <strong>${response}!</strong> ${note}
+            <div class="pt-3 float-end"><a href="login.php"><i class="fa-solid fa-arrow-left"></i> Go back to login page</a></div>
+            </div>
+              `;
+                return html;
+            }
             const alertMessage = (title, text, icon) => {
                 Swal.fire({
                     title: title,
@@ -104,7 +112,7 @@
                 success: function(response) {
                     if (response.status === "Success") {
                         setTimeout(() => {
-                            alertMessage(response.status, response.message, response.icon);
+                            $("#form-container").html(successMessage(response.status, response.message))
                             resetBtnLoadingState();
                             $('#userEmail').val("");
                         }, 1000);
@@ -112,7 +120,7 @@
                         setTimeout(() => {
                             $('#userEmail').val("");
                             resetBtnLoadingState();
-                            alertMessage(response.status, response.message, response.icon);
+                            $("#form-container").html(successMessage(response.status, response.message))
                         }, 1000)
                     }
                 },
