@@ -1,18 +1,15 @@
 <?php
 session_start();
 require_once '../../../config/config.php';
-require "../../include/src/autoload.php";
-use ReCaptcha\ReCaptcha; // Include the reCAPTCHA library
 
 
 if (isset($_POST['submitBtn'])) {
     $userEmail = $_POST['userEmail'];
     $userPassword = $_POST['userPassword'];
-    $recaptchaResponse = $_POST["gRecaptchaResponse"]; // Get the reCAPTCHA response
-
-     // Verify the reCAPTCHA response
-     $recaptcha = new ReCaptcha(CAPCHA_SECRETKEY); // Replace with your secret key
-     $recaptchaResult = $recaptcha->verify($recaptchaResponse);
+    $recaptchaResponse = $_POST["recaptchaResponse"]; 
+    $secret_key = '6LddXa4mAAAAAKqUpy5fbcIbBdzv2uv-zeHtWHzu';
+    $verify=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$recaptchaResponse}");
+    $captcha_success=json_decode($verify);
     try {
         if (!$conn) {
             throw new Exception('There was a problem connecting to the database');
@@ -30,7 +27,7 @@ if (isset($_POST['submitBtn'])) {
                 } else {
                     while ($row = $result->fetch_assoc()) {
                         $hash = $row['pwdUsers'];
-                        if (!$recaptchaResult->isSuccess()) {
+                        if ($captcha_success->success==false) {
                            throw new Exception("reCAPTCHA verification failed.");
                         }else{
                             if (password_verify($userPassword, $hash)) {

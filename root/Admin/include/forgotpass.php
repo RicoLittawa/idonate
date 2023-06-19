@@ -1,22 +1,15 @@
 <?php
 require_once "../../../config/config.php";
-require "../../include/src/autoload.php";
-use ReCaptcha\ReCaptcha; // Include the reCAPTCHA library
-
-
 if (isset($_POST["resetBtn"])) {
   $token = $_POST["token"];
   $email = $_POST["email"];
   $newPassword = $_POST["newPassword"];
   $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
   $hashedToken = password_hash($token, PASSWORD_DEFAULT);
-  $recaptchaResponse = $_POST["gRecaptchaResponse"]; // Get the reCAPTCHA response
-  
-  // Verify the reCAPTCHA response
-  $recaptcha = new ReCaptcha(CAPCHA_SECRETKEY); // Replace with your secret key
-  $recaptchaResult = $recaptcha->verify($recaptchaResponse);
-
-
+  $recaptchaResponse = $_POST["recaptchaResponse"]; // Get the reCAPTCHA response
+  $secret_key = '6LddXa4mAAAAAKqUpy5fbcIbBdzv2uv-zeHtWHzu';
+  $verify=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$recaptchaResponse}");
+  $captcha_success=json_decode($verify);
   $getAccount = $conn->prepare(
     "SELECT reset_token FROM adduser WHERE email = ?"
   );
@@ -34,7 +27,7 @@ if (isset($_POST["resetBtn"])) {
       } else {
         $row = $result->fetch_assoc();
         $storedToken = $row["reset_token"];
-        if (!$recaptchaResult->isSuccess()) {
+        if ($captcha_success->success==false) {
           throw new Exception("reCAPTCHA verification failed.");
        }else{
         if (!password_verify($token, $storedToken)) {

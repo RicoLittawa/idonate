@@ -2,24 +2,20 @@
 require_once "../../config/config.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
-use ReCaptcha\ReCaptcha; // Include the reCAPTCHA library
 
 require "../Admin/include/phpmailer/src/Exception.php";
 require "../Admin/include/phpmailer/src/PHPMailer.php";
 require "../Admin/include/phpmailer/src/SMTP.php";
-require "src/autoload.php";
 
 if (isset($_POST["submitBtn"])) {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $message = $_POST["message"];
     $recaptchaResponse = $_POST["recaptchaResponse"]; // Get the reCAPTCHA response
-
-    // Verify the reCAPTCHA response
-    $recaptcha = new ReCaptcha(CAPCHA_SECRETKEY); // Replace with your secret key
-    $recaptchaResult = $recaptcha->verify($recaptchaResponse);
-
-    if (!$recaptchaResult->isSuccess()) {
+    $secret_key = '6LddXa4mAAAAAKqUpy5fbcIbBdzv2uv-zeHtWHzu';
+    $verify=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$recaptchaResponse}");
+    $captcha_success=json_decode($verify);
+    if ($captcha_success->success==false) {
         $response = [
             "status" => "Error",
             "message" => "reCAPTCHA verification failed.",
@@ -27,8 +23,10 @@ if (isset($_POST["submitBtn"])) {
 
         header("Content-Type: application/json");
         echo json_encode($response);
-        exit();
-    }
+        exit();     
+      }
+
+
 
     // Initialize PHPMailer
     $mail = new PHPMailer;
@@ -90,4 +88,3 @@ if (isset($_POST["submitBtn"])) {
         exit();
     }
 }
-?>

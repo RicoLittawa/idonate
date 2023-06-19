@@ -1,7 +1,6 @@
 <?php
-require_once "../../config/config.php";
-
 // Check if the token is provided in the URL
+require_once "../../config/config.php";
 if (isset($_GET["token"])) {
     $token = $_GET["token"];
 
@@ -83,7 +82,7 @@ if (isset($_GET["token"])) {
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                     </div>
-                    <div class="g-recaptcha pb-3 pt-2 d-flex justify-content-center" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="recaptchaCallback" data-badge="bottomright" data-tabindex="0" data-label="My Local Form"></div>
+                    <div class="g-recaptcha pb-3 pt-2 d-flex justify-content-center" data-sitekey="6LddXa4mAAAAALVtpP0nf7GZsDF1SRf052K9Xzk8"></div>
                     <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn">
                             <span class="submit-text">Reset</span>
@@ -104,16 +103,15 @@ if (isset($_GET["token"])) {
     <script src="scripts/sweetalert2.all.min.js"></script>
 
     <script>
-        function recaptchaCallback(response) {
-			// This function will be called when the user successfully completes the reCAPTCHA challenge
-			// console.log("reCAPTCHA response:", response);
-			// You can perform additional actions or validations here
-		}
         $("#reset-form").submit((e) => {
             e.preventDefault();
             let token = $("#code").val();
             let email = $("#email").val();
             let newPassword = $("#newpass").val();
+            let recaptchaResponse = grecaptcha.getResponse();
+            if (recaptchaResponse == '') {
+                console.log("capcha error");
+            }
             let isInvalid = false;
             const successMessage = (response, note) => {
                 let html = `
@@ -160,18 +158,18 @@ if (isset($_GET["token"])) {
                 token: token,
                 email: email,
                 newPassword: newPassword,
-                gRecaptchaResponse: grecaptcha.getResponse()
+                recaptchaResponse: recaptchaResponse // Get the reCAPTCHA response
             }
             if (isInvalid) {
                 return false;
             }
             const invalidErrors = () => {
-				$('button[type="submit"]').prop('disabled', false);
-				$('#code').val('');
-				$('#newpass').val('');
-				$('#code').css('border', '1px solid #c80000');
-				$('#newpass').css('border', '1px solid #c80000');
-			};
+                $('button[type="submit"]').prop('disabled', false);
+                $('#code').val('');
+                $('#newpass').val('');
+                $('#code').css('border', '1px solid #c80000');
+                $('#newpass').css('border', '1px solid #c80000');
+            };
             $.ajax({
                 url: "include/forgotpass.php",
                 method: "POST",
@@ -192,7 +190,7 @@ if (isset($_GET["token"])) {
                         }, 1000);
                     } else {
                         setTimeout(() => {
-                           invalidErrors();
+                            invalidErrors();
                             resetBtnLoadingState();
                             alertMessage(response.status, response.message, response.icon);
                         }, 1000)

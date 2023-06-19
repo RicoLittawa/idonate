@@ -1,4 +1,3 @@
-<?php require_once "../../config/config.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,7 +54,7 @@
 						<i class="fa fa-lock" aria-hidden="true"></i>
 					</span>
 				</div>
-				<div class="g-recaptcha pb-3 pt-2 d-flex justify-content-center" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="recaptchaCallback" data-badge="bottomright" data-tabindex="0" data-label="My Local Form"></div>
+				<div class="g-recaptcha pb-3 pt-2 d-flex justify-content-center" data-sitekey="6LddXa4mAAAAALVtpP0nf7GZsDF1SRf052K9Xzk8"></div>
 				<div class="container-login100-form-btn">
 					<button type="submit" name="login-submit" class="login100-form-btn">
 						<span class="submit-text">Login</span>
@@ -74,11 +73,6 @@
 	<script src="scripts/sweetalert2.all.min.js"></script>
 
 	<script>
-		function recaptchaCallback(response) {
-			// This function will be called when the user successfully completes the reCAPTCHA challenge
-			// console.log("reCAPTCHA response:", response);
-			// You can perform additional actions or validations here
-		}
 		$('#login-form').on('submit', (e) => {
 			e.preventDefault();
 			let userEmail = $('#userEmail').val();
@@ -86,7 +80,10 @@
 
 			let isInvalid = false;
 			let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
+			let recaptchaResponse = grecaptcha.getResponse();
+			if (recaptchaResponse == '') {
+				console.log("capcha error");
+			}
 			const alertMessage = (title, text, icon) => {
 				Swal.fire({
 					title: title,
@@ -101,7 +98,7 @@
 				submitBtn: '',
 				userEmail: userEmail,
 				userPassword: userPassword,
-				gRecaptchaResponse: grecaptcha.getResponse()
+				recaptchaResponse: recaptchaResponse
 			}
 			if (!userEmail) {
 				$('#userEmail').css('border', '1px solid #c80000');
@@ -182,7 +179,7 @@
 				error: (xhr, status, error) => {
 					// Handle errors
 					alertMessage("Error", xhr.responseText, "error");
-					invaalidErrors()
+					invalidErrors()
 				}
 			})
 		})

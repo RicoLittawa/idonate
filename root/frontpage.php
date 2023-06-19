@@ -1,6 +1,3 @@
-<?php
-require_once "../config/config.php";
-?>
 <!doctype html>
 <html lang="en">
 
@@ -185,7 +182,7 @@ require_once "../config/config.php";
             <textarea class="form-control" id="message" rows="4"></textarea>
             <label class="form-label" for="message">Message</label>
           </div>
-          <div class="g-recaptcha pb-4 d-flex justify-content-center" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="recaptchaCallback" data-badge="bottomright" data-tabindex="0" data-label="My Local Form"></div>
+          <div class="g-recaptcha pb-4 d-flex justify-content-center" data-sitekey="6LddXa4mAAAAALVtpP0nf7GZsDF1SRf052K9Xzk8"></div>
           <button type="submit" class="btn btn-success btn-block mb-4">
             <span class="submit-text">Send</span>
             <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
@@ -301,13 +298,6 @@ require_once "../config/config.php";
         }, 300);
       }, 3000);
     };
-
-    function recaptchaCallback(response) {
-      // This function will be called when the user successfully completes the reCAPTCHA challenge
-      // console.log("reCAPTCHA response:", response);
-      // You can perform additional actions or validations here
-    }
-
     $(document).submit('#contact_us', (e) => {
       e.preventDefault();
 
@@ -317,6 +307,9 @@ require_once "../config/config.php";
       let message = $("#message").val();
       let name = `${firstname} ${lastname}`;
       let recaptchaResponse = grecaptcha.getResponse();
+      if (recaptchaResponse == '') {
+        console.log("capcha error");
+      }
       let data = {
         submitBtn: "",
         name: name,

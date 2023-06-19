@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2023 at 12:33 PM
+-- Generation Time: Jun 19, 2023 at 01:31 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -39,17 +39,19 @@ CREATE TABLE `adduser` (
   `status` varchar(10) NOT NULL DEFAULT 'offline',
   `profile` longtext DEFAULT NULL,
   `reset_token` mediumtext DEFAULT NULL,
-  `reset_token_expiry` datetime DEFAULT NULL
+  `reset_token_expiry` datetime DEFAULT NULL,
+  `logged_in` datetime DEFAULT NULL,
+  `logged_out` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `adduser`
 --
 
-INSERT INTO `adduser` (`uID`, `firstname`, `lastname`, `position`, `email`, `pwdUsers`, `address`, `role`, `status`, `profile`, `reset_token`, `reset_token_expiry`) VALUES
-(2, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', '$2y$10$JIww1Yf.zdDtiJsXZVy5F..EnKwPOWRKjAN1vxDdh.HuTXxAC3yWC', 'Balagtas Batangas City', 'user', 'offline', '2_6193969d-602f-4757-932d-80c6c99368c8.jpg', '$2y$10$NxY2xge8VD2RmNc8HiuK.eSv.or05nkT4VVyq24rubPtVQpEG6JcC', '2023-05-22 07:23:57'),
-(10, 'admin', 'admin', 'Cdrrmo Employee', 'littawa_rico@yahoo.com', '$2y$10$8VTvoXExJXtYTks0oHVme./l.EwMW3WUshtDwKlvekc80AsOmXbku', 'Balagtas Batangas City', 'admin', 'active', '10_150 x 150.jpg', '$2y$10$nqOmyOP/FxQp95a7RGsrBOKPh1u3CtwXPf1/r.7aFM0LOCd2hYgOu', '2023-05-21 16:53:19'),
-(11, 'Jobilleen Lopez', 'Agustin', 'Bgry Captain-Balagtas', 'rico.littawa@g.batstate-u.edu.ph', '$2y$10$VP03vnZtqvcAaNLB38YW9.HIqo9iLDx0kgGaDtO68/bGiG8WFNVc.', 'Balagtas Batangas City', 'user', 'offline', NULL, '$2y$10$3JU67VQ.UwibycfYxq4HbeStX1u3q64r8aPwJ/9GN3YP3yXIoWrN2', '2023-05-22 04:05:38');
+INSERT INTO `adduser` (`uID`, `firstname`, `lastname`, `position`, `email`, `pwdUsers`, `address`, `role`, `status`, `profile`, `reset_token`, `reset_token_expiry`, `logged_in`, `logged_out`) VALUES
+(2, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', '$2y$10$fgL8xEz.8CGHi6kBn402jOaQrbjf9gtw39uwnv.gTAVTfA1Iu7.mG', 'Balagtas Batangas City', 'user', 'offline', '2_3619298.jpg', NULL, NULL, '2023-06-19 11:59:05', '2023-06-19 12:06:06'),
+(10, 'admin', 'admin', 'Cdrrmo Employee', 'littawa_rico@yahoo.com', '$2y$10$8VTvoXExJXtYTks0oHVme./l.EwMW3WUshtDwKlvekc80AsOmXbku', 'Balagtas Batangas City', 'admin', 'offline', '10_riconew.jpg', '$2y$10$DiivYIABUgUqSYSVD.8.I.t6kf3deuPtDpFlDrogYqxKO03Z3gNUO', '2023-06-18 12:56:08', '2023-06-19 18:52:11', '2023-06-19 18:54:16'),
+(13, 'try', 'name', 'CDRMO Employee', 'rico.littawa@g.batstate-u.edu.ph', '$2y$10$TyXaOEMOd6EwDh6VTZuvgOPlFSKVRnMlOWVwCQ1rUG9dwXwzWTGki', 'Balagtas Batangas City', 'admin', 'offline', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -71,8 +73,8 @@ CREATE TABLE `categcannoodles` (
 --
 
 INSERT INTO `categcannoodles` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'Sardines', NULL, '1', 0, NULL),
-(2, '555 tuna', NULL, '0', 1, NULL);
+(1, 'Sardines', NULL, '9', 1, NULL),
+(2, 'Pancit Canton', NULL, '20', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -134,14 +136,6 @@ CREATE TABLE `categmeatgrains` (
   `unit` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `categmeatgrains`
---
-
-INSERT INTO `categmeatgrains` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'baboy', 'Frozen', '2', 0, 'Kilograms'),
-(2, 'baboy', 'Fresh', '1', 0, 'Grams');
-
 -- --------------------------------------------------------
 
 --
@@ -156,13 +150,6 @@ CREATE TABLE `categmedicine` (
   `distributed` int(11) NOT NULL,
   `unit` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `categmedicine`
---
-
-INSERT INTO `categmedicine` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'Bioflu', 'Capsule', '1', 0, 'N/A');
 
 -- --------------------------------------------------------
 
@@ -448,9 +435,8 @@ CREATE TABLE `donation_items` (
 --
 
 INSERT INTO `donation_items` (`donor_id`, `Reference`, `donor_name`, `donor_region`, `donor_province`, `donor_municipality`, `donor_barangay`, `donor_email`, `donor_contact`, `donationDate`, `email_status`, `certificate`) VALUES
-(3, 71, 'Richelle Littawa', '13', '1339', '133902', '133902003', 'mroyster@royster.com', '09392560014', '2023-05-17', 'email_sent', 'Richelle Littawa_64661e42d8e34.png'),
-(6, 74, 'Richelle Littawa', '12', '1247', '124717', '124717017', 'mroyster@royster.com', '09392560014', '2023-05-17', 'not sent', 'cert empty'),
-(8, 76, 'Rey Agustin', '16', '1603', '160302', '160302002', 'rico.littawa@g.batstate-u.edu.ph', '09392560014', '2023-05-18', 'not sent', 'cert empty');
+(1, 1, 'Rico Littawa', '04', '0410', '041005', '041005003', 'rico.littawa@g.batstate-u.edu.ph', '09175059819', '2023-06-16', 'email_sent', 'Rico Littawa_64900322deecb.png'),
+(2, 2, 'Rey Agustin', '15', '1507', '150703', '150703030', 'mroyster@royster.com', '09392560014', '2023-06-19', 'not sent', 'cert empty');
 
 -- --------------------------------------------------------
 
@@ -472,9 +458,8 @@ CREATE TABLE `donation_items10` (
 --
 
 INSERT INTO `donation_items10` (`id`, `Reference`, `productName`, `type`, `unit`, `quantity`) VALUES
-(3, 71, 'Sardines', NULL, NULL, '1'),
-(6, 74, 'baboy', 'Frozen', 'Kilograms', '1'),
-(8, 76, '555 tuna', NULL, NULL, '1');
+(1, 1, 'Sardines', NULL, NULL, '10'),
+(2, 2, 'Pancit Canton', NULL, NULL, '20');
 
 -- --------------------------------------------------------
 
@@ -491,7 +476,7 @@ CREATE TABLE `donation_items_picking` (
 --
 
 INSERT INTO `donation_items_picking` (`reference_id`) VALUES
-(77);
+(3);
 
 -- --------------------------------------------------------
 
@@ -511,9 +496,7 @@ CREATE TABLE `on_process` (
 --
 
 INSERT INTO `on_process` (`id`, `reciept_number`, `productName`, `quantity`) VALUES
-(19, 23, '555 tuna', '1'),
-(20, 24, '555 tuna', '1'),
-(21, 25, 'Sardines', '1');
+(1, 1, 'Sardines', '1');
 
 -- --------------------------------------------------------
 
@@ -540,9 +523,8 @@ CREATE TABLE `receive_request` (
 --
 
 INSERT INTO `receive_request` (`id`, `request_id`, `firstname`, `lastname`, `position`, `email`, `evacuees_qty`, `requestdate`, `status`, `userID`, `receivedate`) VALUES
-(27, 23, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-05-21', 'Deleted', 2, NULL),
-(28, 24, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-05-21', 'Request completed', 2, '2023-05-21'),
-(29, 25, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 5, '2023-05-21', 'Request was processed', 2, NULL);
+(1, 1, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-16', 'Ready for Pick-up', 2, NULL),
+(2, 2, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-19', 'pending', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -44470,7 +44452,7 @@ CREATE TABLE `ref_request` (
 --
 
 INSERT INTO `ref_request` (`request_id`) VALUES
-(26);
+(3);
 
 -- --------------------------------------------------------
 
@@ -44497,8 +44479,8 @@ CREATE TABLE `request` (
 --
 
 INSERT INTO `request` (`id`, `request_id`, `firstname`, `lastname`, `position`, `email`, `evacuees_qty`, `requestdate`, `status`, `userID`, `receivedate`) VALUES
-(48, 24, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-05-21', 'Request completed', 2, '2023-05-21'),
-(49, 25, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 5, '2023-05-21', 'Request was processed', 2, NULL);
+(1, 1, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-16', 'Ready for Pick-up', 2, NULL),
+(2, 2, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-19', 'pending', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -44519,34 +44501,8 @@ CREATE TABLE `request_category` (
 --
 
 INSERT INTO `request_category` (`id`, `request_id`, `categoryName`, `quantity`, `notes`) VALUES
-(17, 14, '03', 10, ''),
-(18, 14, '05', 10, ''),
-(29, 23, '01', 100, 'note'),
-(30, 24, '01', 500, ''),
-(31, 25, '01', 6, '1');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `reset_attempts`
---
-
-CREATE TABLE `reset_attempts` (
-  `id` int(11) NOT NULL,
-  `ip_address` varchar(45) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `timestamp` datetime NOT NULL,
-  `attempt_count` int(11) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `reset_attempts`
---
-
-INSERT INTO `reset_attempts` (`id`, `ip_address`, `user_id`, `timestamp`, `attempt_count`) VALUES
-(1, '::1', 2, '2023-05-22 12:23:45', 1),
-(2, '::1', 2, '2023-05-22 12:23:52', 1),
-(3, '::1', 2, '2023-05-22 12:23:58', 1);
+(1, 1, '01', 500, ''),
+(2, 2, '01', 6, '');
 
 -- --------------------------------------------------------
 
@@ -44706,12 +44662,6 @@ ALTER TABLE `request_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `reset_attempts`
---
-ALTER TABLE `reset_attempts`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `template_certi`
 --
 ALTER TABLE `template_certi`
@@ -44725,7 +44675,7 @@ ALTER TABLE `template_certi`
 -- AUTO_INCREMENT for table `adduser`
 --
 ALTER TABLE `adduser`
-  MODIFY `uID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `uID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `categcannoodles`
@@ -44755,13 +44705,13 @@ ALTER TABLE `categinfant`
 -- AUTO_INCREMENT for table `categmeatgrains`
 --
 ALTER TABLE `categmeatgrains`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categmedicine`
 --
 ALTER TABLE `categmedicine`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -44785,31 +44735,31 @@ ALTER TABLE `categ_products`
 -- AUTO_INCREMENT for table `donation_items`
 --
 ALTER TABLE `donation_items`
-  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `donation_items10`
 --
 ALTER TABLE `donation_items10`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `donation_items_picking`
 --
 ALTER TABLE `donation_items_picking`
-  MODIFY `reference_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `reference_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `on_process`
 --
 ALTER TABLE `on_process`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `receive_request`
 --
 ALTER TABLE `receive_request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `refbrgy`
@@ -44839,25 +44789,19 @@ ALTER TABLE `refregion`
 -- AUTO_INCREMENT for table `ref_request`
 --
 ALTER TABLE `ref_request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `request_category`
 --
 ALTER TABLE `request_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-
---
--- AUTO_INCREMENT for table `reset_attempts`
---
-ALTER TABLE `reset_attempts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `template_certi`
