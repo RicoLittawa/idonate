@@ -26,7 +26,6 @@ if (isset($_POST['submitBtn'])) {
                             $role=  $row['role'];
                             $_SESSION["user"] = [
                                 "uID" => $userID,
-                                "logged_in" => true,
                                 "role" => $role,
                             ];
 

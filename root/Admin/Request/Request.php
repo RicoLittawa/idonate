@@ -1,8 +1,6 @@
 <?php require_once '../include/protect.php';
 require_once '../include/profile.inc.php';
 require_once "../include/sidebar.php";
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,13 +32,13 @@ require_once "../include/sidebar.php";
         <div class="modal-body">
           <input hidden id="reference" type="text">
           <div class="form-group">
-          <label for="selectStatus" class="form-label">Select Status</label>
-          <select id="selectStatus" class="form-select">
-            <option value="">Select Status</option>
-            <option value="Ready for Pick-up">Ready for Pick-up</option>
-            <option value="Request cannot be completed">Request cannot be proccessed</option>
-            <option value="Request completed">Request completed</option>
-          </select>
+            <label for="selectStatus" class="form-label">Select Status</label>
+            <select id="selectStatus" class="form-select">
+              <option value="">Select Status</option>
+              <option value="Ready for Pick-up">Ready for Pick-up</option>
+              <option value="Request cannot be completed">Request cannot be proccessed</option>
+              <option value="Request completed">Request completed</option>
+            </select>
           </div>
         </div>
         <div class="modal-footer">
@@ -49,6 +47,79 @@ require_once "../include/sidebar.php";
             <span class="submit-text">Save changes</span>
             <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Print -->
+  <div class="modal fade" id="openPrint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Print Receipt</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <button id="printReceipt" class="btn btn-secondary">Print</button>
+          </div>
+          <hr>
+          <h4>Receipt Details</h4>
+          <div id="printable_area" class="me-3 ms-3">
+            <div>
+              <div class="text-center">
+                <img src="../img/logo1.jpg" class="logo-header" alt="">
+              </div>
+              <p class="mb-0 text-center lead fs-6">City Risk Reduction Management Office</p>
+              <p class="mb-0 text-center lead fs-6">Brgy Bolbok, Batangas City, Philippines</p>
+            </div>
+            <hr class="custom-divider">
+            <div class="row">
+              <div class="col">
+                <p class="lead fs-6 mb-0">Receipt Number: <strong id="receipt_number"></strong></p>
+              </div>
+              <div class="col">
+                <p class="lead fs-6 mb-0">Request Date: <strong id="request_date"></strong></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p class="lead fs-6 mb-0">Name: <strong id="name"></strong></p>
+              </div>
+              <div class="col">
+                <p class="lead fs-6 mb-0">Position: <strong id="position"></strong></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p class="lead fs-6 mb-0">No. of Evacuees/Families: <strong id="evacuees_qty"></strong></p>
+              </div>
+              <div class="col">
+                <p class="lead fs-6 mb-0">Status: <strong id="status"></strong></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p class="lead fs-6 mb-0">Email: <strong id="email"></strong></p>
+              </div>
+              <div class="col">
+                <p class="lead fs-6 mb-0">Receive Date: <strong id="receive_date"></strong></p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table id="table-container" class="table table-sm table-bordered">
+                <thead class="bg-light">
+                  <tr>
+                    <th>Quantity</th>
+                    <th>Product name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -102,7 +173,7 @@ require_once "../include/sidebar.php";
             </div>
             <!----Filter -->
             <div class="table-responsive">
-              <table class="table align-middle mb-0 bg-white table-hover w-100" id="request_data_main" >
+              <table class="table align-middle mb-0 bg-white table-hover w-100" id="request_data_main">
                 <thead class="bg-light">
                   <tr>
                     <th>Receipt No.</th>
@@ -117,7 +188,7 @@ require_once "../include/sidebar.php";
                 </thead>
                 <tbody></tbody>
               </table>
-              </div>
+            </div>
           </div>
         </div>
         <!--End of main content -->
@@ -140,4 +211,5 @@ require_once "../include/sidebar.php";
   <script src="scripts/RequestTable.js"></script>
   <script src="../scripts/TableFilterButtons.js"></script>
 </body>
+
 </html>

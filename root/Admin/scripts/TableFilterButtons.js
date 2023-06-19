@@ -86,7 +86,7 @@ const printTable = (buttonId, content) => {
   });
 };
 printTable("#printBarChart", "barChart");
-printTable("#printReceipt", "request_content");
+printTable("#printReceipt", "printable_area");
 printTable("#printUserData", "update_form");
 
 /******************************Print Function**************************************/

@@ -74,15 +74,15 @@ let createRequest = $("#create_request_data").DataTable({
     {
       data: "evacuees_qty",
     },
-      {
-        data: "request_date",
-        render: (data, type, row) => {
-          let dateObj = new Date(data);
-          let options = { month: "2-digit", day: "2-digit", year: "numeric" };
-          let formattedDate = dateObj.toLocaleDateString(undefined, options);
-          return formattedDate;
-        }
+    {
+      data: "request_date",
+      render: (data, type, row) => {
+        let dateObj = new Date(data);
+        let options = { month: "2-digit", day: "2-digit", year: "numeric" };
+        let formattedDate = dateObj.toLocaleDateString(undefined, options);
+        return formattedDate;
       },
+    },
     {
       data: "receive_date",
       render: (data, type, row) => {
@@ -99,7 +99,7 @@ let createRequest = $("#create_request_data").DataTable({
       render: (data, type, row) => {
         let badgeClass = "";
         let additionalClasses = "user-select-none not-allowed";
-        
+
         switch (data) {
           case "Request was processed":
           case "Request completed":
@@ -115,21 +115,21 @@ let createRequest = $("#create_request_data").DataTable({
           default:
             badgeClass = "badge-info";
             break;
-        }  
+        }
         return `<span class="badge ${badgeClass} ${additionalClasses} d-flex justify-content-center">${data}</span>`;
-      }
-    },    
+      },
+    },
     {
       data: "status",
       render: (data, type, row) => {
-        let buttonHtml = `<div><button type="button" id="viewReceiptBtn" data-request=${row.request_id} class="btn btn-secondary btn-rounded">View</button></div>`;
+        let buttonHtml = `<button data-mdb-toggle="modal" onclick="fetchRequestData(${row.request_id})" data-mdb-target="#openPrint" class="btn btn-secondary btn-rounded" type="button">View</button>`;
         let badgeHtml = `<span class="badge badge-warning user-select-none not-allowed">Not applicable <br> Deleted by:<br>Admin</span>`;
         switch (data) {
           case "Request was processed":
           case "Ready for Pick-up":
           case "Request completed":
           case "pending":
-              return buttonHtml;
+            return buttonHtml;
           case "Request cannot be completed":
             return `<span class="badge badge-danger user-select-none not-allowed">${data}</span>`;
           default:
@@ -272,30 +272,29 @@ filterInitialization(createRequest);
 /******************************Initialized filter buttons**************************************/
 
 $(document).on("submit", "#add-request", (e) => {
-  /****************Alert function********************************************************************/
-const alertMessage = (title, text, icon) => {
-  Swal.fire({
-    title: title,
-    text: text,
-    icon: icon,
-    confirmButtonColor: "#20d070",
-    confirmButtonText: "OK",
-    allowOutsideClick: false,
-  });
-};
-const resetBtnLoadingState = () => {
-  $('button[type="submit"]').prop("disabled", false);
-  $(".submit-text").text("Create");
-  $(".spinner-border").addClass("d-none");
-};
-/****************Alert function********************************************************************/
-
   e.preventDefault();
   let userId = $("#userId").val();
   let reqRef = $("#requestRef").val();
   let request_date = $("#request_date").val();
   let evacQty = $("#evacQty").val();
 
+  /****************Alert function********************************************************************/
+  const alertMessage = (title, text, icon) => {
+    Swal.fire({
+      title: title,
+      text: text,
+      icon: icon,
+      confirmButtonColor: "#20d070",
+      confirmButtonText: "OK",
+      allowOutsideClick: false,
+    });
+  };
+  const resetBtnLoadingState = () => {
+    $('button[type="submit"]').prop("disabled", false);
+    $(".submit-text").text("Create");
+    $(".spinner-border").addClass("d-none");
+  };
+  /****************Alert function********************************************************************/
   let inputFields = {
     createBtn: "",
     category: [],
@@ -365,7 +364,7 @@ const resetBtnLoadingState = () => {
         url: "include/CreateRequest.php",
         method: "POST",
         data: inputFields,
-        dataType:"json",
+        dataType: "json",
         beforeSend: () => {
           $('button[type="submit"]').prop("disabled", true);
           $(".submit-text").text("Creating...");
@@ -374,27 +373,98 @@ const resetBtnLoadingState = () => {
         success: (response) => {
           if (response.status === "Success") {
             setTimeout(() => {
-              resetBtnLoadingState()
-              alertMessage(response.status,response.message,response.icon);
+              resetBtnLoadingState();
+              alertMessage(response.status, response.message, response.icon);
             }, 1500);
-            setTimeout(()=>{
+            setTimeout(() => {
               window.location.reload();
-            },3000)
+            }, 3000);
           } else {
-            resetBtnLoadingState()
+            resetBtnLoadingState();
             alertMessage(response.status, response.message, response.icon);
           }
         },
         error: (xhr, status, error) => {
-          resetBtnLoadingState()
+          resetBtnLoadingState();
           alertMessage("Error", xhr.responseText, "error");
         },
       });
     }
   });
 });
+const fetchRequestData = (reference) => {
+  $.ajax({
+    url: `../include/ReceiptData.php?requestId=${reference}`,
+    method: "GET",
+    dataType: "json",
+    success: (data) => {
+      const requestData = data.requestData;
+      const onProcessData = data.onProcessData;
+      const onCategoryData = data.onCategoryData;
 
-$(document).on("click", "#viewReceiptBtn", (event) => {
-  let viewReciept = $(event.target).attr("data-request");
-  window.location.href = `ViewCreatedRequest.php?requestId=${viewReciept}`;
-});
+      // Populate the receipt details
+      if (requestData.length > 0) {
+        const request = requestData[0];
+        const {
+          dateTrimmed,
+          fname,
+          lname,
+          position,
+          evacuees_qty,
+          status,
+          requestemail,
+          receivedate,
+        } = request;
+
+        const dateObj = new Date(request.requestdate);
+        const options = { month: "2-digit", day: "2-digit", year: "numeric" };
+        const formattedDate = dateObj.toLocaleDateString(undefined, options);
+
+        $("#receipt_number").text(`${dateTrimmed}-00${reference}`);
+        $("#request-date").text(formattedDate);
+        $("#name").text(`${fname} ${lname}`);
+        $("#position").text(position);
+        $("#evacuees_qty").text(evacuees_qty);
+        $("#status").text(status);
+        $("#email").text(requestemail);
+        $("#receive_date").text(receivedate !== null ? receivedate : "N/A");
+      }
+
+      let tableRows = "";
+      let changeName = "";
+      let changeQuantity = "";
+
+      if (requestData.length > 0 && requestData[0].status === "pending") {
+        // Render onCategoryData for "pending" status
+        changeName = "Category";
+        changeQuantity = "Estimated Quantity";
+
+        onCategoryData.forEach((item) => {
+          const { quantity, category } = item;
+          tableRows += `<tr>
+            <td>${quantity}</td>
+            <td class="fw-bold">${category}</td>
+          </tr>`;
+        });
+      } else {
+        // Render onProcessData for other statuses
+        changeName = "Product";
+        changeQuantity = "Quantity";
+
+        onProcessData.forEach((item) => {
+          const { quantity, productName } = item;
+          tableRows += `<tr>
+            <td>${quantity}</td>
+            <td class="fw-bold">${productName}</td>
+          </tr>`;
+        });
+      }
+
+      $("#change_name").text(changeName);
+      $("#change_quantity").text(changeQuantity);
+      $("#table-container tbody").html(tableRows);
+    },
+  });
+};
+
+

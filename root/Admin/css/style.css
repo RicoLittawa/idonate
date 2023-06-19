@@ -14,6 +14,15 @@ tr {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
 }
+.custom-divider {
+  border: none;
+  border-top: 2px solid black;
+  margin: 20px 0;
+  background-color:  black;
+}
+.logo-header{
+  height: 60px;
+}
 .carousel-image {
   object-fit: cover;
   height: 400px; /* Adjust the height as needed */

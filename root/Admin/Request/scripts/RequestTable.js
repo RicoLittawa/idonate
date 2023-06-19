@@ -121,7 +121,7 @@ let requestTable = $("#request_data_main").DataTable({
         } else if (data === "Deleted") {
           return `<span class="badge badge-warning user-select-none not-allowed">Not applicable <br> (Deleted by: <br> ${row.firstname} ${row.lastname})</span>`;
         } else {
-          return `<div><button type="button" id="viewReceiptBtn" data-request=${row.reference} class="btn btn-secondary btn-rounded">View</button></div>`;
+          return `<button data-mdb-toggle="modal" onclick="fetchRequestData(${row.reference})" data-mdb-target="#openPrint" class="btn btn-secondary btn-rounded" type="button">View</button>`;
         }
       },
     },
@@ -315,11 +315,46 @@ $(document).on("click", "#acceptBtn", (event) => {
   let requestId = $(event.target).attr("data-request");
   window.location.href = `ReceiveRequest.php?requestId=${requestId}`;
 });
-$(document).on("click", "#viewReceiptBtn", (event) => {
-  let viewReciept = $(event.target).attr("data-request");
-  console.log(viewReciept)
-  window.location.href = `ViewRequestReceipt.php?requestId=${viewReciept}`  ;
-});
+const fetchRequestData = (reference) => {
+  $.ajax({
+    url: `../include/ReceiptData.php?requestId=${reference}`,
+    method: "GET",
+    dataType: "json",
+    success: (data) => {
+      const requestData = data.requestData;
+      const onProcessData = data.onProcessData;
+      // Populate the receipt details
+      if (requestData.length > 0) {
+        const request = requestData[0];
+        let dateObj = new Date(request.requestdate);
+        let options = { month: "2-digit", day: "2-digit", year: "numeric" };
+        let formattedDate = dateObj.toLocaleDateString(undefined, options);
+        $("#receipt_number").text(`${request.dateTrimmed}-00${reference}`);
+        $("#request_date").text(formattedDate);
+        $("#name").text(`${request.fname} ${request.lname}`);
+        $("#position").text(request.position);
+        $("#evacuees_qty").text(request.evacuees_qty);
+        $("#status").text(request.status);
+        $("#email").text(request.requestemail);
+        $("#receive_date").text(`${request.receivedate !== null ? request.receivedate : "N/A"}`);
+      }
+      // Populate the table rows
+      let tableRows = '';
+      onProcessData.forEach((item) => {
+        let quantity = item.quantity;
+        let productName = item.productName;
+        tableRows = `<tr>
+          <td>${quantity}</td>
+          <td class="fw-bold">${productName}</td>
+        </tr>`;
+      });
+      // Insert the table rows into the table body
+      $('#table-container tbody').html(tableRows);
+    },
+  });
+};
+
+
 $(".closeModal").click(() => {
   $("#exampleModal").modal("hide");
 });

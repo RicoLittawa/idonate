@@ -33,6 +33,79 @@ $requestRef = $refRow["request_id"];
 </head>
 
 <body>
+
+  <!--Print -->
+  <div class="modal fade" id="openPrint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Print Receipt</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <button id="printReceipt" class="btn btn-secondary">Print</button>
+          </div>
+          <hr>
+          <h4>Receipt Details</h4>
+          <div id="printable_area" class="me-3 ms-3">
+            <div>
+              <div class="text-center">
+                <img src="../img/logo1.jpg" class="logo-header" alt="">
+              </div>
+              <p class="mb-0 text-center lead fs-6">City Risk Reduction Management Office</p>
+              <p class="mb-0 text-center lead fs-6">Brgy Bolbok, Batangas City, Philippines</p>
+            </div>
+            <hr class="custom-divider">
+            <div class="row">
+              <div class="col">
+                <p class="lead fs-6 mb-0">Receipt Number: <strong id="receipt_number"></strong></p>
+              </div>
+              <div class="col">
+                <p class="lead fs-6 mb-0">Request Date: <strong id="request-date"></strong></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p class="lead fs-6 mb-0">Name: <strong id="name"></strong></p>
+              </div>
+              <div class="col">
+                <p class="lead fs-6 mb-0">Position: <strong id="position"></strong></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p class="lead fs-6 mb-0">No. of Evacuees/Families: <strong id="evacuees_qty"></strong></p>
+              </div>
+              <div class="col">
+                <p class="lead fs-6 mb-0">Status: <strong id="status"></strong></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p class="lead fs-6 mb-0">Email: <strong id="email"></strong></p>
+              </div>
+              <div class="col">
+                <p class="lead fs-6 mb-0">Receive Date: <strong id="receive_date"></strong></p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table id="table-container" class="table table-sm table-bordered">
+                <thead class="bg-light">
+                  <tr>
+                    <th id="change_quantity">Quantity</th>
+                    <th id="change_name">Product name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar"> <?php echo userSidebar(); ?></div>
@@ -70,7 +143,7 @@ $requestRef = $refRow["request_id"];
             <div id="createRequest" class="collapse mt-5" data-duration="500">
               <form class="pe-2 mb-3" id="add-request">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
-                <input hidden  type="text" id="requestRef" value="<?php echo htmlentities($requestRef); ?>">
+                <input hidden type="text" id="requestRef" value="<?php echo htmlentities($requestRef); ?>">
                 <div class="form-outline datepicker mb-3">
                   <input class="form-control" id="request_date" type="date" name="donation" data-mdb-toggle="datepicker">
                   <label for="request_date" class="form-label">Select a date</label>
@@ -130,21 +203,21 @@ $requestRef = $refRow["request_id"];
             </div>
             <!----Filter -->
             <div class="table-responsive">
-            <table class="table align-middle mb-0 bg-white table-hover w-100" id="create_request_data">
-              <thead class="bg-light">
-                <tr>
-                  <th>Receipt No</th>
-                  <th>No. Evacuees/Families</th>
-                  <th>Request Date</th>
-                  <th>Recieve Date</th>
-                  <th>Status</th>
-                  <th>View</th>
-                  <th>Delete</th>
-                  <!-- Add more columns here -->
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+              <table class="table align-middle mb-0 bg-white table-hover w-100" id="create_request_data">
+                <thead class="bg-light">
+                  <tr>
+                    <th>Receipt No</th>
+                    <th>No. Evacuees/Families</th>
+                    <th>Request Date</th>
+                    <th>Recieve Date</th>
+                    <th>Status</th>
+                    <th>View</th>
+                    <th>Delete</th>
+                    <!-- Add more columns here -->
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -205,4 +278,5 @@ $requestRef = $refRow["request_id"];
     });
   </script>
 </body>
+
 </html>

@@ -50,6 +50,7 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
   }
   return false;
 });
+
 /******************************Date Filter**************************************/
 let donorTable = $("#donors_data").DataTable({
   ajax: {
@@ -81,7 +82,7 @@ let donorTable = $("#donors_data").DataTable({
         let options = { month: "2-digit", day: "2-digit", year: "numeric" };
         let formattedDate = dateObj.toLocaleDateString(undefined, options);
         return formattedDate;
-      }
+      },
     },
     {
       data: "emailStatus",
@@ -104,7 +105,9 @@ let donorTable = $("#donors_data").DataTable({
     {
       data: null,
       render: function (data, type, row) {
-        return `<a class="d-flex justify-content-center" href="UpdateDonors.php?editdonate=${row.donorId}"><i class="fa-solid fa-pen-to-square text-success"></i></a>`;
+        const donorId = row.donorId.toString();
+        const encodedId = btoa(donorId);
+        return `<a class="d-flex justify-content-center" href="UpdateDonors.php?editdonate=${encodeURIComponent(encodedId)}"><i class="fa-solid fa-pen-to-square text-success"></i></a>`;
       },
     },
     {
