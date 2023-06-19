@@ -52,15 +52,13 @@ if (isset($_POST['email_data'])) {
 
          $mail = new PHPMailer;
          $mail->IsSMTP();        //Sets Mailer to send message using SMTP
-         $mail->Host = 'smtp.gmail.com';  //Sets the SMTP hosts of your Email hosting, this for Godaddy
+         $mail->Host = 'smtp.hostinger.com';  //Sets the SMTP hosts of your Email hosting, this for Godaddy
          $mail->Port = '465';        //Sets the default SMTP server port
          $mail->SMTPAuth = true;       //Sets SMTP authentication. Utilizes the Username and Password variables
          $mail->Username = SMTP_USERNAME;     //Sets SMTP username
          $mail->Password = SMTP_PASSWORD;     //Sets SMTP password
          $mail->SMTPSecure = 'ssl';       //Sets connection prefix. Options are "", "ssl" or "tls"
-         $mail->From = 'testcdrrmo@gmail.com';   //Sets the From email address for the message
-         $mail->FromName = 'City Risk Reduction Management Office';
-         $mail->setFrom('testcdrrmo@gmail.com');
+         $mail->setFrom('cityriskreductionoffice@i-donate-btg.com', 'City Risk Reduction Management Office');
          $mail->AddAddress($row["email"], $row["name"]); //Adds a "To" address
          $mail->WordWrap = 50;       //Sets word wrapping on the body of the message to a given number of characters
          $mail->IsHTML(true);

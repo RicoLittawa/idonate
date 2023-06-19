@@ -84,7 +84,7 @@ if (isset($_POST["sendBtn"])) {
   // Server settings
   $mail->SMTPDebug = 0; // Enable verbose debug output
   $mail->isSMTP(); // Send using SMTP
-  $mail->Host = "smtp.gmail.com"; // Set the SMTP server to send through
+  $mail->Host = "smtp.hostinger.com"; // Set the SMTP server to send through
   $mail->SMTPAuth = true; // Enable SMTP authentication
   $mail->Username = SMTP_USERNAME; // SMTP username
   $mail->Password = SMTP_PASSWORD; // SMTP password
@@ -92,7 +92,7 @@ if (isset($_POST["sendBtn"])) {
   $mail->Port = 465; // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
   // Recipients
-  $mail->setFrom("testcdrrmo@gmail.com");
+  $mail->setFrom('cityriskreductionoffice@i-donate-btg.com', 'City Risk Reduction Management Office');
   $mail->addAddress($email); // Add a recipient
 
   // Content

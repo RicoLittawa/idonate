@@ -53,6 +53,7 @@ if (isset($_GET["token"])) {
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/mdb.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <!--===============================================================================================-->
 </head>
 
@@ -65,32 +66,33 @@ if (isset($_GET["token"])) {
                 <img src="img/batangascitylogo.png" alt="IMG">
             </div>
             <div id="form-container">
-            <form class="login100-form" id="reset-form">
-                <span class="login100-form-title text-wrap fs-2">
-                    Reset Password
-                </span>
-                <div class="wrap-input100">
-                    <input type="hidden"  id="email" value="<?php echo htmlentities($email) ?>">
-                    <input class="input100 is-invalid" type="text" maxlength="6" id="code" name="code" placeholder="Code" autocomplete>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa-solid fa-hashtag"></i>
-                </div>
-                <div class="wrap-input100">
-                    <input class="input100 is-invalid" type="password" id="newpass" name="newpass" placeholder="New Password" autocomplete>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                </div>
-                <div class="container-login100-form-btn">
-                    <button type="submit" class="login100-form-btn">
-                        <span class="submit-text">Reset</span>
-                        <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
-                    </button>
-                    <!-- <span id="loading"></span> -->
-                </div>
-                <div class="pt-3 float-end"><a href="login.php"><i class="fa-solid fa-arrow-left"></i> Go back to login page</a></div>
-            </form>    
+                <form class="login100-form" id="reset-form">
+                    <span class="login100-form-title text-wrap fs-2">
+                        Reset Password
+                    </span>
+                    <div class="wrap-input100">
+                        <input type="hidden" id="email" value="<?php echo htmlentities($email) ?>">
+                        <input class="input100 is-invalid" type="text" maxlength="6" id="code" name="code" placeholder="Code" autocomplete>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa-solid fa-hashtag"></i>
+                    </div>
+                    <div class="wrap-input100">
+                        <input class="input100 is-invalid" type="password" id="newpass" name="newpass" placeholder="New Password" autocomplete>
+                        <span class="focus-input100"></span>
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                    </div>
+                    <div class="g-recaptcha pb-3 pt-2 d-flex justify-content-center" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="recaptchaCallback" data-badge="bottomright" data-tabindex="0" data-label="My Local Form"></div>
+                    <div class="container-login100-form-btn">
+                        <button type="submit" class="login100-form-btn">
+                            <span class="submit-text">Reset</span>
+                            <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
+                        </button>
+                        <!-- <span id="loading"></span> -->
+                    </div>
+                    <div class="pt-3 float-end"><a href="login.php"><i class="fa-solid fa-arrow-left"></i> Go back to login page</a></div>
+                </form>
             </div>
         </div>
     </div>
@@ -102,13 +104,18 @@ if (isset($_GET["token"])) {
     <script src="scripts/sweetalert2.all.min.js"></script>
 
     <script>
+        function recaptchaCallback(response) {
+			// This function will be called when the user successfully completes the reCAPTCHA challenge
+			// console.log("reCAPTCHA response:", response);
+			// You can perform additional actions or validations here
+		}
         $("#reset-form").submit((e) => {
             e.preventDefault();
             let token = $("#code").val();
             let email = $("#email").val();
             let newPassword = $("#newpass").val();
             let isInvalid = false;
-            const successMessage = (response,note) => {
+            const successMessage = (response, note) => {
                 let html = `
             <div class="note100-form note ${response !== "Success" ? "note-danger" : "note-success"}">
             <strong>${response}!</strong> ${note}
@@ -151,12 +158,20 @@ if (isset($_GET["token"])) {
             let data = {
                 resetBtn: "",
                 token: token,
-                email:email,
-                newPassword: newPassword
+                email: email,
+                newPassword: newPassword,
+                gRecaptchaResponse: grecaptcha.getResponse()
             }
             if (isInvalid) {
                 return false;
             }
+            const invalidErrors = () => {
+				$('button[type="submit"]').prop('disabled', false);
+				$('#code').val('');
+				$('#newpass').val('');
+				$('#code').css('border', '1px solid #c80000');
+				$('#newpass').css('border', '1px solid #c80000');
+			};
             $.ajax({
                 url: "include/forgotpass.php",
                 method: "POST",
@@ -170,15 +185,14 @@ if (isset($_GET["token"])) {
                 success: (response) => {
                     if (response.status === "Success") {
                         setTimeout(() => {
-                            $("#form-container").html(successMessage(response.status,response.message)) 
+                            $("#form-container").html(successMessage(response.status, response.message))
                             resetBtnLoadingState();
                             $('#code').val("");
                             $('#newpass').val("");
                         }, 1000);
                     } else {
                         setTimeout(() => {
-                            $('#code').val("");
-                            $('#newpass').val("");
+                           invalidErrors();
                             resetBtnLoadingState();
                             alertMessage(response.status, response.message, response.icon);
                         }, 1000)

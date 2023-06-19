@@ -1,3 +1,6 @@
+<?php
+require_once "../config/config.php";
+?>
 <!doctype html>
 <html lang="en">
 
@@ -13,18 +16,10 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="stylesheet" href="Admin/css/mdb.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
-</script>
-<script type="text/javascript">
-   (function(){
-      emailjs.init("s-H-S8mkUzj6LfRWt");
-   })();
-</script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
-
   <main class="main">
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -42,6 +37,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link text-light" href="#maps">Map</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="#how-to">How to donate?</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-light" href="#contact-us">Contact Us</a>
@@ -81,10 +79,7 @@
       </div>
       <div class="pt-3">
         <h1 class="text-success text-center fw-bold">City Risk Reduction Management Office</h1>
-        <h3 class="text-success text-center">in Batangas City</h3>
-        <div class="d-flex justify-content-center pt-2 pb-5">
-          <button class="btn btn-secondary ">Learn more</button>
-        </div>
+        <h3 class="text-success text-center mb-0 pb-5">in Batangas City</h3>
       </div>
     </section>
     <!--Section 1-->
@@ -125,7 +120,7 @@
     <!--Section 2-->
 
     <!--Section 3-->
-    <section class="how-to-donate">
+    <section class="how-to-donate pt-5" id="how-to">
       <div class="pb-5">
         <h1 class="mb-0 ms-5">How to donate?</h1>
         <p class=" mb-0 ms-5 me-5 text-muted fs-6 lead pt-2">Please be aware that if you want to donate, we no longer accept used clothing,
@@ -139,7 +134,7 @@
           </ul>
         </div>
         <div class="d-flex justify-content-center">
-          <button class="btn btn-success float-end">Download</button>
+          <a href="include/Form.docx" class="btn btn-success float-end" download>Download</a>
         </div>
       </div>
     </section>
@@ -190,7 +185,11 @@
             <textarea class="form-control" id="message" rows="4"></textarea>
             <label class="form-label" for="message">Message</label>
           </div>
-          <button type="submit" class="btn btn-success btn-block mb-4">Send</button>
+          <div class="g-recaptcha pb-4 d-flex justify-content-center" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="recaptchaCallback" data-badge="bottomright" data-tabindex="0" data-label="My Local Form"></div>
+          <button type="submit" class="btn btn-success btn-block mb-4">
+            <span class="submit-text">Send</span>
+            <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
+          </button>
         </form>
       </div>
     </section>
@@ -225,6 +224,8 @@
       <button id="go-up-button" class="btn btn-success btn-floating btn-lg float-end"><i class="fa-solid fa-arrow-up"></i></button>
     </div>
 
+    <div id="toastContainer"></div>
+
     <footer class="bg-success h-100">
       <div class="text-center pt-5">
         <img src="Admin/img/logo.png" alt="">
@@ -258,7 +259,7 @@
       }, "slow");
     });
 
-    const goToTop= ()=>{
+    const goToTop = () => {
       $("html, body").animate({
         scrollTop: 0
       }, "slow");
@@ -272,30 +273,96 @@
     L.marker([13.77, 121.05]).addTo(map)
       .bindPopup('Our office is located here')
       .openPopup()
+    const showToast = (content, status) => {
+      const toastContainer = $('#toastContainer');
+
+      // Create toast element
+      const toast = $('<div class="toast"></div>').text(content);
+
+      // Set background color based on status
+      if (status === 'Error') {
+        toast.addClass('bg-danger');
+      } else {
+        toast.addClass('bg-success');
+      }
+
+      // Add toast to container
+      toastContainer.append(toast);
+
+      // Show toast
+      toast.addClass('show');
+
+      // Automatically hide toast after 3 seconds
+      setTimeout(() => {
+        toast.removeClass('show');
+        // Remove toast from container after animation
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, 3000);
+    };
+
+    function recaptchaCallback(response) {
+      // This function will be called when the user successfully completes the reCAPTCHA challenge
+      // console.log("reCAPTCHA response:", response);
+      // You can perform additional actions or validations here
+    }
 
     $(document).submit('#contact_us', (e) => {
       e.preventDefault();
-      let firstname = $("#firstname").val()
-      let lastname = $("#lastname").val()
-      let email = $("#email").val()
-      let message = $("#message").val()
+
+      let firstname = $("#firstname").val();
+      let lastname = $("#lastname").val();
+      let email = $("#email").val();
+      let message = $("#message").val();
       let name = `${firstname} ${lastname}`;
-      console.log(name);
-      let templateParams= {
-        name:name,
-        email:email,
-        message:message
-      }
-      const serviceID= "service_pyxx3oh";
-      const templateID= "template_uyj380c";
-      emailjs.send(serviceID, templateID, templateParams)
-    .then(function(response) {
-       console.log('SUCCESS!', response.status, response.text);
-    }, function(error) {
-       console.log('FAILED...', error);
+      let recaptchaResponse = grecaptcha.getResponse();
+      let data = {
+        submitBtn: "",
+        name: name,
+        email: email,
+        message: message,
+        recaptchaResponse: recaptchaResponse // Get the reCAPTCHA response
+      };
+      const resetBtnLoadingState = () => {
+        $('button[type="submit"]').prop("disabled", false);
+        $(".submit-text").text("Send");
+        $(".spinner-border").addClass("d-none");
+      };
+
+      $.ajax({
+        url: "include/SendEmail.php",
+        method: "POST",
+        dataType: "json",
+        data: data,
+        beforeSend: () => {
+          $('button[type="submit"]').prop("disabled", true);
+          $(".submit-text").text("Sending...");
+          $(".spinner-border").removeClass("d-none");
+        },
+        success: (response) => {
+          if (response.status === "Success") {
+            setTimeout(() => {
+              showToast(response.message, response.status);
+              $("#firstname").val("");
+              $("#lastname").val("");
+              $("#email").val("");
+              $("#message").val("");
+              resetBtnLoadingState();
+            }, 1000);
+          } else {
+            setTimeout(() => {
+              showToast(response.message, response.status);
+              $("#firstname").val("");
+              $("#lastname").val("");
+              $("#email").val("");
+              $("#message").val("");
+              resetBtnLoadingState();
+            }, 1000);
+          }
+        }
+      });
     });
-     
-    })
   </script>
 
 </body>

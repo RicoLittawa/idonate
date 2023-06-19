@@ -21,8 +21,8 @@ let userTable = $("#user_data").DataTable({
       render: (data, type, row) => {
         return `<div class="d-flex align-items-center">
         <img
-            src="../include/profile/${row.profile}"
-            alt=""
+        src="../${row.profile !== null ? 'include/profile/' + row.profile : 'img/default-admin.png'}"
+        alt="Profile"
             style="width: 50px; height: 50px"
             class="rounded-circle"
             />

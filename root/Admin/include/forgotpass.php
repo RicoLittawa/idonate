@@ -1,5 +1,8 @@
 <?php
 require_once "../../../config/config.php";
+require "../../include/src/autoload.php";
+use ReCaptcha\ReCaptcha; // Include the reCAPTCHA library
+
 
 if (isset($_POST["resetBtn"])) {
   $token = $_POST["token"];
@@ -7,6 +10,12 @@ if (isset($_POST["resetBtn"])) {
   $newPassword = $_POST["newPassword"];
   $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
   $hashedToken = password_hash($token, PASSWORD_DEFAULT);
+  $recaptchaResponse = $_POST["gRecaptchaResponse"]; // Get the reCAPTCHA response
+  
+  // Verify the reCAPTCHA response
+  $recaptcha = new ReCaptcha(CAPCHA_SECRETKEY); // Replace with your secret key
+  $recaptchaResult = $recaptcha->verify($recaptchaResponse);
+
 
   $getAccount = $conn->prepare(
     "SELECT reset_token FROM adduser WHERE email = ?"
@@ -25,7 +34,9 @@ if (isset($_POST["resetBtn"])) {
       } else {
         $row = $result->fetch_assoc();
         $storedToken = $row["reset_token"];
-
+        if (!$recaptchaResult->isSuccess()) {
+          throw new Exception("reCAPTCHA verification failed.");
+       }else{
         if (!password_verify($token, $storedToken)) {
           throw new Exception("Invalid token");
         }
@@ -44,6 +55,7 @@ if (isset($_POST["resetBtn"])) {
         header("Content-Type: application/json");
         echo json_encode($response);
         exit();
+       }
       }
     }
   } catch (Exception $e) {
@@ -57,4 +69,3 @@ if (isset($_POST["resetBtn"])) {
     exit();
   }
 }
-?>

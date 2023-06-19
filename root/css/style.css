@@ -77,3 +77,21 @@ main {
   opacity: 1;
 }
 #map { height: 500px; }
+#toastContainer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.toast {
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: none;
+}
+
+.toast.show {
+  display: block;
+}

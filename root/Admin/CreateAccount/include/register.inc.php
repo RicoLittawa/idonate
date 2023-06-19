@@ -35,7 +35,7 @@ if (isset($_POST['submitBtn'])) {
         // Server settings
         $mail->SMTPDebug = 0;                      // Enable verbose debug output
         $mail->isSMTP();                                            // Send using SMTP
-        $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+        $mail->Host       = 'smtp.hostinger.com';                    // Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
         $mail->Username   = SMTP_USERNAME;                     // SMTP username
         $mail->Password   = SMTP_PASSWORD;                               // SMTP password
@@ -43,33 +43,42 @@ if (isset($_POST['submitBtn'])) {
         $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
         // Recipients
-        $mail->setFrom('testcdrrmo@gmail.com');
+        $mail->setFrom('cityriskreductionoffice@i-donate-btg.com', 'City Risk Reduction Management Office');
         $mail->addAddress($email);     // Add a recipient
 
         // Content
         $mail->isHTML(true);
         $greeting = "Dear New User";
         $content = "Your account has been created successfully. You can use the email and password to login to the system.";
-        $thankYouMessage =
-          "Thank you for using our service. If you have any further questions, please feel free to contact us.";
         $mail->Subject = 'Created Account';
         $mail->Body = "
-        <html>
-            <body>
-                <p>{$greeting}</p>
-                <p>{$content}</p>
-                <p>Email: <strong>{$email}<strong></p>
-                <p>Password: <strong>{$_POST['password']}</strong></p>
-                <p>You can update your password after you login to the system</p>
-                <p>{$thankYouMessage}</p>
+    <html>
+        <head>
+            <style>
+                a {
+                    color: #007bff !important; /* Set the desired link color */
+                    text-decoration: none !important; /* Remove the underline decoration */
+                }
+            </style>
+        </head>
+        <body>
+            <div style='text-align: center; width: 500px; margin: 0 auto; border: 1px solid #ccc; padding: 20px; border-radius:10px;'>
+                <p style='font-size: 18px; font-weight: bold;'>{$greeting}</p>
+                <p style='font-size: 14px;'>{$content}</p>
+                <a href='http://localhost:3000/root/Admin/login.php'>
+                    <button style='background-color: #28a745; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; font-size: 14px;'>Login</button>
+                </a>
+                <p style='font-size: 14px;'>Email: <strong>{$email}</strong></p>
+                <p style='font-size: 14px;'>Password: <strong>{$_POST['password']}</strong></p>
                 <br>
-                <p>Best regards,</p>
-                <p>City Risk Reduction Management Office</p>
-                <p>Brgy Bolbok, Batangas City, Philippines</p>
-                <p>cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
-            </body>
-        </html>
-    ";
+                <p style='font-size: 14px;'>Best regards,</p>
+                <p style='font-size: 14px;'>City Risk Reduction Management Office</p>
+                <p style='font-size: 14px;'>Brgy Bolbok, Batangas City, Philippines</p>
+                <p style='font-size: 14px;'>cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
+            </div>
+        </body>
+    </html>
+";
 
         $mail->send();
         $response = [

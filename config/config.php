@@ -1,6 +1,14 @@
 <?php
-define('SMTP_USERNAME', 'testcdrrmo@gmail.com');
-define('SMTP_PASSWORD', 'mlytxekfgplnhsap');
+define('SMTP_USERNAME', 'cityriskreductionoffice@i-donate-btg.com');
+define('SMTP_PASSWORD', 'Cityriskreductionoffice01!');
+define('CAPCHA_SECRETKEY', '6LddXa4mAAAAAKqUpy5fbcIbBdzv2uv-zeHtWHzu');
+define('CAPTCHA_SITEKEY', '6LddXa4mAAAAALVtpP0nf7GZsDF1SRf052K9Xzk8');
+
+
+
+
+
+
 define('DB_USERNAME', 'u321569821_idonate');
 define('DB_PASSWORD', 'Idonate123');
 

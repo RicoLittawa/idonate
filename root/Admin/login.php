@@ -1,3 +1,4 @@
+<?php require_once "../../config/config.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,12 +12,11 @@
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<!--===============================================================================================-->
 </head>
 
 <body>
-
-
 	<div class="loading-container">
 		<div id="loader">
 			<div class="cell d-0"></div>
@@ -55,16 +55,14 @@
 						<i class="fa fa-lock" aria-hidden="true"></i>
 					</span>
 				</div>
+				<div class="g-recaptcha pb-3 pt-2 d-flex justify-content-center" data-sitekey="<?php echo CAPTCHA_SITEKEY; ?>" data-callback="recaptchaCallback" data-badge="bottomright" data-tabindex="0" data-label="My Local Form"></div>
 				<div class="container-login100-form-btn">
 					<button type="submit" name="login-submit" class="login100-form-btn">
 						<span class="submit-text">Login</span>
 					</button>
 					<!-- <span id="loading"></span> -->
-
 				</div>
 				<div class="pt-3"><a href="PasswordReset.php">Forgot password?</a></div>
-
-
 			</form>
 		</div>
 	</div>
@@ -76,109 +74,116 @@
 	<script src="scripts/sweetalert2.all.min.js"></script>
 
 	<script>
-		$(document).ready(() => {
-			$('#login-form').on('submit', (e) => {
-				e.preventDefault();
-				let userEmail = $('#userEmail').val();
-				let userPassword = $('#userPassword').val();
+		function recaptchaCallback(response) {
+			// This function will be called when the user successfully completes the reCAPTCHA challenge
+			// console.log("reCAPTCHA response:", response);
+			// You can perform additional actions or validations here
+		}
+		$('#login-form').on('submit', (e) => {
+			e.preventDefault();
+			let userEmail = $('#userEmail').val();
+			let userPassword = $('#userPassword').val();
 
-				let isInvalid = false;
-				let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			let isInvalid = false;
+			let emailVali = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-				const alertMessage = (title, text, icon) => {
-					Swal.fire({
-						title: title,
-						text: text,
-						icon: icon,
-						confirmButtonColor: "#20d070",
-						confirmButtonText: "OK",
-						allowOutsideClick: false,
-					});
-				};
-				let data = {
-					submitBtn: '',
-					userEmail: userEmail,
-					userPassword: userPassword,
-				}
-				if (!userEmail) {
-					$('#userEmail').css('border', '1px solid #c80000');
-					isInvalid = true;
-				} else if (emailVali.test(userEmail) == false) {
-					alertMessage("Warning", "Invalid email address", "warning")
-					$('#userEmail').css('border', '1px solid #c80000');
-					isInvalid = true;
-				} else {
-					$('#userEmail').css('border', 'none');
-				}
-				if (!userPassword) {
-					$('#userPassword').css('border', '1px solid #c80000');
-					isInvalid = true;
-				} else {
-					$('#userPassword').css('border', 'none');
-				}
+			const alertMessage = (title, text, icon) => {
+				Swal.fire({
+					title: title,
+					text: text,
+					icon: icon,
+					confirmButtonColor: "#20d070",
+					confirmButtonText: "OK",
+					allowOutsideClick: false,
+				});
+			};
+			let data = {
+				submitBtn: '',
+				userEmail: userEmail,
+				userPassword: userPassword,
+				gRecaptchaResponse: grecaptcha.getResponse()
+			}
+			if (!userEmail) {
+				$('#userEmail').css('border', '1px solid #c80000');
+				isInvalid = true;
+			} else if (emailVali.test(userEmail) == false) {
+				alertMessage("Warning", "Invalid email address", "warning")
+				$('#userEmail').css('border', '1px solid #c80000');
+				isInvalid = true;
+			} else {
+				$('#userEmail').css('border', 'none');
+			}
+			if (!userPassword) {
+				$('#userPassword').css('border', '1px solid #c80000');
+				isInvalid = true;
+			} else {
+				$('#userPassword').css('border', 'none');
+			}
 
-				if (isInvalid) {
-					return false;
-				}
-				const invalidErrors = () => {
-					$('button[type="submit"]').prop('disabled', false);
-					$('#loader').removeClass('loader');
-					$('.container-login100').removeClass('blur-filter-class')
-					$('#userEmail').val('');
-					$('#userPassword').val('');
-					$('#userEmail').css('border', '1px solid #c80000');
-					$('#userPassword').css('border', '1px solid #c80000');
-				};
+			if (isInvalid) {
+				return false;
+			}
+			const invalidErrors = () => {
+				$('button[type="submit"]').prop('disabled', false);
+				$('#loader').removeClass('loader');
+				$('.container-login100').removeClass('blur-filter-class')
+				$('#userEmail').val('');
+				$('#userPassword').val('');
+				$('#userEmail').css('border', '1px solid #c80000');
+				$('#userPassword').css('border', '1px solid #c80000');
+			};
 
-				$.ajax({
-					url: "include/login.inc.php",
-					method: "POST",
-					data: data,
-					dataType:"json",
-					beforeSend: () => {
-						$('button[type="submit"]').prop('disabled', true);
-						$('#loader').addClass('loader');
-						$('.container-login100').addClass('blur-filter-class')
-					},
-					success: (response) => {
-						if (response.data === 'Admin') {
+			$.ajax({
+				url: "include/login.inc.php",
+				method: "POST",
+				data: data,
+				dataType: "json",
+				beforeSend: () => {
+					$('button[type="submit"]').prop('disabled', true);
+					$('#loader').addClass('loader');
+					$('.container-login100').addClass('blur-filter-class')
+				},
+				success: (response) => {
+					if (response.data === 'Admin') {
+						setTimeout(() => {
+							// Enable the submit button and hide the loading animation
+							$('button[type="submit"]').prop('disabled', false);
+							$('#loader').removeClass('loader');
+							alertMessage(`Hello ${response.data}`, response.message, response.icon);
 							setTimeout(() => {
-								// Enable the submit button and hide the loading animation
-								$('button[type="submit"]').prop('disabled', false);
-								$('#loader').removeClass('loader');
-								alertMessage(`Hello ${response.data}`, response.message, response.icon);
-								 setTimeout(() => {
-								 	window.location.href = "./Dashboard/Dashboard.php";
-								 }, 1000)
-							}, 1500);
+								window.location.href = "./Dashboard/Dashboard.php";
+							}, 1000)
+						}, 1500);
 
-						}else if (response.data === 'User') {
+					} else if (response.data === 'User') {
+						setTimeout(() => {
+							$('button[type="submit"]').prop('disabled', false);
+							$('#loader').removeClass('loader');
+							alertMessage(`Hello ${response.data}`, response.message, response.icon);
 							setTimeout(() => {
-								$('button[type="submit"]').prop('disabled', false);
-								$('#loader').removeClass('loader');
-								alertMessage(`Hello ${response.data}`, response.message, response.icon);
-								setTimeout(() => {
-									window.location.href = "../Admin/UsersModule/UserLandingPage.php";
-								}, 1000)
-							}, 1500);
-						} else if (response.message == "Invalid email or password.") {
-							setTimeout(() => {
-								alertMessage(response.status, response.message, response.icon)
-								invalidErrors();
-							}, 1500)
-						} else {
-							setTimeout(() => {
-								window.location.href = "error/SomethingWentWrong.html";
-								invalidErrors();
-							}, 1500)
-						}
-					},
-					error: (xhr, status, error) => {
-						// Handle errors
-						alertMessage("Error", xhr.responseText, "error");
-						invalidErrors()
+								window.location.href = "../Admin/UsersModule/UserLandingPage.php";
+							}, 1000)
+						}, 1500);
+					} else if (response.message == "Invalid email or password.") {
+						setTimeout(() => {
+							alertMessage(response.status, response.message, response.icon)
+							invalidErrors();
+						}, 1500)
+					} else if (response.message == "reCAPTCHA verification failed.") {
+						alertMessage(response.status, response.message, response.icon);
+						invalidErrors();
+					} else {
+						setTimeout(() => {
+							window.location.href = "error/SomethingWentWrong.html";
+							invalidErrors();
+						}, 1500)
 					}
-				})
+				},
+				error: (xhr, status, error) => {
+					// Handle errors
+					alertMessage("Error", xhr.responseText, "error");
+					invaalidErrors()
+				}
 			})
 		})
 	</script>
