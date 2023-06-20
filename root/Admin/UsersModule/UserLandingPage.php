@@ -1,7 +1,6 @@
 <?php require_once "../include/protect.php";
 require_once "../include/profile.inc.php";
 require_once "../include/sidebar.php";
-
 require_once "../../../config/config.php";
 
 $getUser = $conn->prepare("SELECT firstname from adduser where uID=?");
@@ -22,6 +21,8 @@ $firstname = $row["firstname"];
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="../css/mdb.min.css">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
+	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <title>Home</title>
 </head>
 

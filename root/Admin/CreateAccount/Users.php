@@ -15,6 +15,8 @@ require_once "../include/sidebar.php";
   <!--Necessary Plugins-->
   <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+  <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
+	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <!--Necessary Plugins-->
   <title>User Details</title>
 </head>
@@ -124,8 +126,7 @@ require_once "../include/sidebar.php";
             <div class="d-flex justify-content-between py-3">
               <div class="user-download-btn"></div>
               <div class="d-flex">
-                <button class="btn btn-success btn-rounded" type="button" id="toggleFormBtn">
-                  <i class="fas fa-add"></i> Show Form</button>
+                <button class="btn btn-success btn-rounded" type="button" id="toggleFormBtn">Show Form</button>
                   <div class="ms-2" id="role_filter"></div>
               </div>
             </div>

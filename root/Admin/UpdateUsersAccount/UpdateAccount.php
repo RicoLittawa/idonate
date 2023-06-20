@@ -13,6 +13,8 @@ require "../include/sidebar.php";
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="../css/mdb.min.css">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
+	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <style>
     .picture-container {
       position: relative;
@@ -88,7 +90,7 @@ require "../include/sidebar.php";
           <h1 class="fs-1 breadcrumb-title">Update Account</h1>
           <nav class="bc-nav d-flex">
             <h6 class="mb-0">
-              <a href="#" class="text-muted bc-path">Home</a>
+              <a href="../Dashboard/Dashboard.php" class="text-muted bc-path">Home</a>
               <span>/</span>
               <a href="#" class="text-reset bc-path active">Update Account</a>
             </h6>

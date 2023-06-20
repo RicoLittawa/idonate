@@ -38,6 +38,8 @@ if (isset($_GET["editdonate"])) {
 	<link rel="stylesheet" href="../css/mdb.min.css">
 	<link rel="stylesheet" href="../css/style.css">
 	<link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+	<link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
+	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
 	<title>Update Donors</title>
 </head>
 

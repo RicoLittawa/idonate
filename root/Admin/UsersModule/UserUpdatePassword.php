@@ -13,6 +13,8 @@ require_once "../include/sidebar.php";
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="../css/mdb.min.css">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
+	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <title>Update Password</title>
 </head>
 
@@ -89,15 +91,6 @@ require_once "../include/sidebar.php";
   <script src="../scripts/sweetalert2.all.min.js"></script>
   <script src="../scripts/UpdatePassword.js"></script>
   <script src="../scripts/timeout.js"></script>
-
-
-
-  <script>
-    $(document).ready(() => {
-     
-    })
-  </script>
-
 </body>
 
 </html>

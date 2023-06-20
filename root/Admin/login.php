@@ -11,7 +11,10 @@
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="css/mdb.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="icon" href="img/batangascitylogo.png" type="image/x-icon">
+	<link rel="shortcut icon" href="img/batangascitylogo.png" type="image/x-icon">
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 	<!--===============================================================================================-->
 </head>
 

@@ -4,10 +4,10 @@
    
   
     $(formId).collapse('toggle');
-    if ($(this).html().includes('<i class="fas fa-minus"></i> Hide Form')) {
-        $(this).html('<i class="fas fa-plus"></i> Show Form');
+    if ($(this).html().includes('Hide Form')) {
+        $(this).html('Show Form');
     } else {
-        $(this).html('<i class="fas fa-minus"></i> Hide Form');
+        $(this).html('Hide Form');
     }
     $('html, body').animate({
         scrollTop: $('.main-container').offset().top
