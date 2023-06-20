@@ -209,7 +209,7 @@ $requestRef = $refRow["request_id"];
                     <th>Receipt No</th>
                     <th>No. Evacuees/Families</th>
                     <th>Request Date</th>
-                    <th>Recieve Date</th>
+                    <th>Receive Date</th>
                     <th>Status</th>
                     <th>View</th>
                     <th>Delete</th>

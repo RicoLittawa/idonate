@@ -341,6 +341,7 @@
               $("#lastname").val("");
               $("#email").val("");
               $("#message").val("");
+              grecaptcha.reset()
               resetBtnLoadingState();
             }, 1000);
           } else {
@@ -350,6 +351,7 @@
               $("#lastname").val("");
               $("#email").val("");
               $("#message").val("");
+              grecaptcha.reset()
               resetBtnLoadingState();
             }, 1000);
           }

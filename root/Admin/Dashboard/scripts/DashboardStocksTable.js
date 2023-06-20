@@ -96,7 +96,7 @@
        },
      },
      {
-      data: "recievedate",
+      data: "receivedate",
       render: (data, type, row) => {
         let dateObj = new Date(data);
         let options = { month: "2-digit", day: "2-digit", year: "numeric" };

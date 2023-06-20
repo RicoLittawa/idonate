@@ -192,6 +192,7 @@ if (isset($_GET["token"])) {
                         setTimeout(() => {
                             invalidErrors();
                             resetBtnLoadingState();
+                            grecaptcha.reset()
                             alertMessage(response.status, response.message, response.icon);
                         }, 1000)
                     }

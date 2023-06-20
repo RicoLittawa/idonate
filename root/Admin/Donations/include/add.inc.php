@@ -151,7 +151,7 @@ if (isset($_POST["saveBtn"])) {
         /*************************IF INFANT ITEMS IS CHECKED******************************************************************************/
 
         /*************************IF DRINKING WATER IS CHECKED******************************************************************************/
-        if ($res == 'drink-water') {
+        if ($res == 'drinking-water') {
             $pnDW_arr = $_POST['pnDW_arr'];
             $qDW_arr = $_POST['qDW_arr'];
             foreach ($pnDW_arr as $index => $dw) {
@@ -201,7 +201,7 @@ if (isset($_POST["saveBtn"])) {
             }
             foreach ($pnOT_arr as $index => $ot) {
                 insertDonationItem10($conn, $reference_id, $ot, $qOT_arr[$index], $typeOT_arr[$index], $unitOT_arr[$index]);
-                checkProduct($conn, $ot, $qOT_arr[$index], "categmeatgrains", $typeOT_arr[$index], $unitOT_arr[$index]);
+                checkProduct($conn, $ot, $qOT_arr[$index], "categothers", $typeOT_arr[$index], $unitOT_arr[$index]);
             }
         }
         /*************************IF OTHERS IS CHECKED******************************************************************************/

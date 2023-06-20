@@ -163,7 +163,8 @@
 						}, 1500);
 					} else if (response.message == "Invalid email or password.") {
 						setTimeout(() => {
-							alertMessage(response.status, response.message, response.icon)
+							alertMessage(response.status, response.message, response.icon);
+							grecaptcha.reset()
 							invalidErrors();
 						}, 1500)
 					} else if (response.message == "reCAPTCHA verification failed.") {
