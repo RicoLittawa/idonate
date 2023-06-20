@@ -1,8 +1,8 @@
 <?php
-require_once '../../../config/config.php';
+require_once '../../../../config/config.php';
 
 $categories = array(
-    'CanNoodles' => 'categcanNoodles',
+    'CanNoodles' => 'categcannoodles',
     'HygineEssential' => 'categhygineessential',
     'InfantItems' => 'categinfant',
     'DrinkingWater' => 'categdrinkingwater',

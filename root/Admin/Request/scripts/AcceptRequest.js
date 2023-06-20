@@ -30,7 +30,7 @@ const populateSelectOptions = (select, product, quantity, unit, type) => {
 
 const populateData = (select, category) => {
   $.ajax({
-    url: "../include/getproduct.php",
+    url: "include/getproduct.php",
     method: "GET",
     dataType: "json",
     success: (response) => {
@@ -411,7 +411,7 @@ $(document).on("submit", (e) => {
     for (const category in categoryFields) {
       if (categoryFields[category].product.length > 0) {
         $.ajax({
-          url: "../include/getproduct.php",
+          url: "include/getproduct.php",
           method: "GET",
           dataType: "json",
           success: (response) => {
