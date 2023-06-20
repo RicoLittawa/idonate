@@ -6,8 +6,8 @@
 body {
   padding: 0;
   margin: 0;
+  background: #fff9ed;
 }
-
 #notfound {
   position: relative;
   height: 100vh;
@@ -57,7 +57,7 @@ body {
   font-weight: 400;
   text-transform: uppercase;
   color: #211b19;
-  background: #fff;
+  background: #fff9ed;
   padding: 10px 5px;
   margin: auto;
   display: inline-block;

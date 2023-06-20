@@ -4,7 +4,12 @@ require_once '../../include/protect.php';
 //accept request
 if (isset($_POST['createBtn'])) {
     $reqRef = $_POST['reqRef'];
-    $request_date = date('Y-m-d', strtotime($_POST['request_date']));
+    $request_date = $_POST['request_date'];
+    $manilaTimezone = new DateTimeZone('Asia/Manila');
+    $currentDateTime = new DateTime('now', $manilaTimezone);
+    $currentDate = $currentDateTime->format('Y-m-d');
+    $currentTime = $currentDateTime->format('H:i:s');
+    $timestamp = $request_date . ' ' . $currentTime;
     $evacQty = trim($_POST['evacQty']);
     $category = $_POST['category'];
     $quantity = $_POST['quantity'];
@@ -33,37 +38,37 @@ if (isset($_POST['createBtn'])) {
         $resultcount = 0;
         $status = "pending";
         $reqDetails = $conn->prepare("INSERT INTO request
- (userID, request_id, firstname, lastname, position, email, evacuees_qty, requestdate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+ (userID, request_id, firstname, lastname, position, email, evacuees_qty, requestdate, status,deleted_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,Null)");
         $reqReceive = $conn->prepare("INSERT INTO receive_request 
-(userID, request_id, firstname, lastname, position, email, evacuees_qty, requestdate, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+(userID, request_id, firstname, lastname, position, email, evacuees_qty, requestdate, status,deleted_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,Null)");
 
-        $reqDetails->bind_param('iisssssss', $userID, $reqRef, $firstname, $lastname, $position, $email, $evacQty, $request_date, $status);
+        $reqDetails->bind_param('iisssssss', $userID, $reqRef, $firstname, $lastname, $position, $email, $evacQty, $timestamp, $status);
         $reqDetails->execute();
         // Insert data into receive_request table
-        $reqReceive->bind_param('iisssssss', $userID, $reqRef, $firstname, $lastname, $position, $email, $evacQty, $request_date, $status);
+        $reqReceive->bind_param('iisssssss', $userID, $reqRef, $firstname, $lastname, $position, $email, $evacQty, $timestamp, $status);
         $reqReceive->execute();
-            $response = [
-                "status" => "Success",
-                "message" => "Your request is successfully created",
-                "icon" => "success",
-            ];
-            header("Content-Type: application/json");
-            echo json_encode($response);
+        $response = [
+            "status" => "Success",
+            "message" => "Your request is successfully created",
+            "icon" => "success",
+        ];
+        header("Content-Type: application/json");
+        echo json_encode($response);
 
         foreach ($category as $categ) {
             $categDetails = $conn->prepare("INSERT INTO request_category (request_id,categoryName,quantity,notes) VALUES (?,?,?,?)");
-                $categDetails->bind_param('isss', $reqRef, $categ, $quantity[$count], $notes[$count]);
-                if (!$categDetails->execute()) {
-                    throw new Exception('There was a problem executing the query' . $conn->error);
-                } else {
-                    $resultcount++;
-                    $count++;
-                }
+            $categDetails->bind_param('isss', $reqRef, $categ, $quantity[$count], $notes[$count]);
+            if (!$categDetails->execute()) {
+                throw new Exception('There was a problem executing the query' . $conn->error);
+            } else {
+                $resultcount++;
+                $count++;
+            }
         }
         $reqRef++;
         $requestRefUpdate = $conn->prepare("UPDATE ref_request set request_id=?");
-            $requestRefUpdate->bind_param('i', $reqRef);
-            $requestRefUpdate->execute();
+        $requestRefUpdate->bind_param('i', $reqRef);
+        $requestRefUpdate->execute();
     } catch (Exception $e) {
         $response = [
             "status" => "Error",

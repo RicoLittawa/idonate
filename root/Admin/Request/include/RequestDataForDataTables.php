@@ -2,7 +2,7 @@
 require_once '../../../../config/config.php';
 $data = array();
 try {
-  $getRequest = "SELECT request_id,firstname,lastname,position,evacuees_qty,requestdate,receivedate,status FROM receive_request";
+  $getRequest = "SELECT request_id,firstname,lastname,position,evacuees_qty,requestdate,receivedate,status,status_timestamp,deleted_timestamp FROM receive_request";
   $stmt = $conn->prepare($getRequest);
   $stmt->execute();
   $getResult = $stmt->get_result();
@@ -16,9 +16,12 @@ try {
       $position = $get['position'];
       $evacuees_qty = $get['evacuees_qty'];
       $requestdate = $get['requestdate'];
-      $dateTrimmed = str_replace('-', '', $requestdate);
+      $date = date('Y-m-d', strtotime($requestdate));
+      $dateTrimmed = str_replace('-', '', $date);
       $receivedate = $get['receivedate'];
       $status = $get['status'];
+      $deleted_timestamp = $get['deleted_timestamp'];
+      $status_timestamp = $get['status_timestamp'];
 
       $data[] = array(
         'reference' => $reference,
@@ -29,7 +32,9 @@ try {
         'requestdate' => $requestdate,
         'dateTrimmed' => $dateTrimmed,
         'status' => $status,
-        'receivedate' => $receivedate
+        'receivedate' => $receivedate,
+        'deleted_timestamp'=>$deleted_timestamp,
+        'status_timestamp'=>$status_timestamp
       );
     }
     header('Content-Type: application/json');

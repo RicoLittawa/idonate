@@ -52,11 +52,14 @@ if (isset($_POST['submitProcess'])) {
 
   if ($checkIfSave) {
     $status = "Request was processed";
-    $updateStatus = $conn->prepare("UPDATE receive_request SET status=? WHERE request_id=?");
-    $updateStatus->bind_param('si', $status, $request_id);
+    $manilaTimezone = new DateTimeZone('Asia/Manila');
+    $currentDateTime = new DateTime('now', $manilaTimezone);
+    $timestamp = $currentDateTime->format('Y-m-d H:i:s');
+    $updateStatus = $conn->prepare("UPDATE receive_request SET status=?,status_timestamp=? WHERE request_id=?");
+    $updateStatus->bind_param('ssi', $status,$timestamp ,$request_id);
     $updateStatus->execute();
-    $updateUserRequestStatus = $conn->prepare("UPDATE request SET status=? WHERE request_id=?");
-    $updateUserRequestStatus->bind_param('si', $status, $request_id);
+    $updateUserRequestStatus = $conn->prepare("UPDATE request SET status=?,status_timestamp=? WHERE request_id=?");
+    $updateUserRequestStatus->bind_param('ssi', $status,$timestamp ,$request_id);
     $updateUserRequestStatus->execute();
     $response = [
       "status" => "Success",

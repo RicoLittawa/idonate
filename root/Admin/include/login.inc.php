@@ -1,6 +1,10 @@
 <?php
 session_start();
 require_once '../../../config/config.php';
+if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') {
+    header("Location: ../error/ForbiddenPage.html");
+    exit();
+}
 
 
 if (isset($_POST['submitBtn'])) {

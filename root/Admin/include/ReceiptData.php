@@ -24,7 +24,8 @@ if (isset($_GET['requestId'])) {
                     $requestemail = $get['email'];
                     $evacuees_qty = $get['evacuees_qty'];
                     $requestdate = $get['requestdate'];
-                    $dateTrimmed = str_replace('-', '', $requestdate);
+                    $date = date('Y-m-d', strtotime($requestdate));
+                    $dateTrimmed = str_replace('-', '', $date);
                     $status = $get['status'];
                     $receivedate = $get['receivedate'];
 

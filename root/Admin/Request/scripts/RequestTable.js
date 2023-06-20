@@ -85,14 +85,18 @@ let requestTable = $("#request_data_main").DataTable({
       data: "requestdate",
       render: (data, type, row) => {
         let dateObj = new Date(data);
-        let options = { month: "2-digit", day: "2-digit", year: "numeric" };
-        let formattedDate = dateObj.toLocaleDateString(undefined, options);
-        return formattedDate;
+        let options = { timeZone: 'Asia/Manila' };
+        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
+        return formattedDateTime;
       }
     },
     {
       data: "status",
       render: (data, type, row) => {
+        let statusTime = row.status_timestamp;
+        let dateObj = new Date(statusTime);
+        let options = { timeZone: 'Asia/Manila' };
+        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
         let badgeClass = "";
         switch (data) {
           case "Request was processed":
@@ -105,21 +109,27 @@ let requestTable = $("#request_data_main").DataTable({
           case "Request cannot be completed":
           case "Deleted":
             badgeClass = "badge-danger not-allowed";
+            formattedDateTime = "";
             break;
           default:
             badgeClass = "badge-info not-allowed";
+            formattedDateTime = "";
             break;
         }
-        return `<span class="badge ${badgeClass} d-flex justify-content-center" onclick="changeStatus('${row.reference}', '${row.status}')">${data}</span>`;
+        return `<span class="badge ${badgeClass} d-flex justify-content-center" onclick="changeStatus('${row.reference}', '${row.status}')">${data}<br>${formattedDateTime}</span>`;
       },
     },
     {
       data: "status",
       render: function (data, type, row) {
+        let statusTime = row.deleted_timestamp;
+        let dateObj = new Date(statusTime);
+        let options = { timeZone: 'Asia/Manila' };
+        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
         if (data === "pending") {
           return `<div class="d-flex justify-content-center"><button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button></div>`;
         } else if (data === "Deleted") {
-          return `<span class="badge badge-warning user-select-none not-allowed">Not applicable <br> (Deleted by: <br> ${row.firstname} ${row.lastname})</span>`;
+          return `<span class="badge badge-warning user-select-none not-allowed">Action made by: <br> ${row.firstname} ${row.lastname}<br>${formattedDateTime}</span>`;
         } else {
           return `<button data-mdb-toggle="modal" onclick="fetchRequestData(${row.reference})" data-mdb-target="#openPrint" class="btn btn-secondary btn-rounded" type="button">View</button>`;
         }

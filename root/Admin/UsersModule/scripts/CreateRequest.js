@@ -78,19 +78,19 @@ let createRequest = $("#create_request_data").DataTable({
       data: "request_date",
       render: (data, type, row) => {
         let dateObj = new Date(data);
-        let options = { month: "2-digit", day: "2-digit", year: "numeric" };
-        let formattedDate = dateObj.toLocaleDateString(undefined, options);
-        return formattedDate;
+        let options = { timeZone: 'Asia/Manila' };
+        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
+        return formattedDateTime;
       },
     },
     {
       data: "receive_date",
       render: (data, type, row) => {
         let dateObj = new Date(data);
-        let options = { month: "2-digit", day: "2-digit", year: "numeric" };
-        let formattedDate = dateObj.toLocaleDateString(undefined, options);
+        let options = { timeZone: 'Asia/Manila' };
+        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
         return data !== null
-          ? formattedDate
+          ? formattedDateTime
           : `<span class="badge badge-danger user-select-none not-allowed">N/A</span>`;
       },
     },
@@ -99,7 +99,10 @@ let createRequest = $("#create_request_data").DataTable({
       render: (data, type, row) => {
         let badgeClass = "";
         let additionalClasses = "user-select-none not-allowed";
-
+        let statusTime = row.status_timestamp;
+        let dateObj = new Date(statusTime);
+        let options = { timeZone: 'Asia/Manila' };
+        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
         switch (data) {
           case "Request was processed":
           case "Request completed":
@@ -111,19 +114,25 @@ let createRequest = $("#create_request_data").DataTable({
           case "Request cannot be completed":
           case "Deleted":
             badgeClass = "badge-danger";
+            formattedDateTime="";
             break;
           default:
             badgeClass = "badge-info";
+            formattedDateTime="";
             break;
         }
-        return `<span class="badge ${badgeClass} ${additionalClasses} d-flex justify-content-center">${data}</span>`;
+        return `<span class="badge ${badgeClass} ${additionalClasses} d-flex justify-content-center">${data}<br>${formattedDateTime}</span>`;
       },
     },
     {
       data: "status",
       render: (data, type, row) => {
+        let statusTime = row.deleted_timestamp;
+        let dateObj = new Date(statusTime);
+        let options = { timeZone: 'Asia/Manila' };
+        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
         let buttonHtml = `<button data-mdb-toggle="modal" onclick="fetchRequestData(${row.request_id})" data-mdb-target="#openPrint" class="btn btn-secondary btn-rounded" type="button">View</button>`;
-        let badgeHtml = `<span class="badge badge-warning user-select-none not-allowed">Not applicable <br> Deleted by:<br>Admin</span>`;
+        let badgeHtml = `<span class="badge badge-warning user-select-none not-allowed">Action made by: Admin <br>${formattedDateTime}</span>`;
         switch (data) {
           case "Request was processed":
           case "Ready for Pick-up":
