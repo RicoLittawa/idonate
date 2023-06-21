@@ -141,7 +141,7 @@ let donorTable = $("#donors_data").DataTable({
       extend: "excelHtml5",
       filename: "Donors Date",
       exportOptions: {
-        columns: [0, 1, 2],
+        columns: [0, 1, 2, 3],
       },
     },
     {
@@ -161,7 +161,7 @@ let donorTable = $("#donors_data").DataTable({
                 stack: [
                   { text: "Republic of the Philippines", alignment: "center" },
                   {
-                    text: "City Risk Reduction Management Office",
+                    text: "City Disaster Risk Reduction Management Office",
                     alignment: "center",
                   },
                 ],

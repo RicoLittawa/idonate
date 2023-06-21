@@ -58,7 +58,7 @@ if (isset($_POST['email_data'])) {
          $mail->Username = SMTP_USERNAME;     //Sets SMTP username
          $mail->Password = SMTP_PASSWORD;     //Sets SMTP password
          $mail->SMTPSecure = 'ssl';       //Sets connection prefix. Options are "", "ssl" or "tls"
-         $mail->setFrom('cityriskreductionoffice@i-donate-btg.com', 'City Risk Reduction Management Office');
+         $mail->setFrom('cityriskreductionoffice@i-donate-btg.com', 'City Disaster Risk Reduction Management Office');
          $mail->AddAddress($row["email"], $row["name"]); //Adds a "To" address
          $mail->WordWrap = 50;       //Sets word wrapping on the body of the message to a given number of characters
          $mail->IsHTML(true);
@@ -76,7 +76,7 @@ if (isset($_POST['email_data'])) {
                  <p>{$thankYouMessage}</p>
                  <br>
                  <p>Best regards,</p>
-                 <p>City Risk Reduction Management Office</p>
+                 <p>City Disaster Risk Reduction Management Office</p>
                  <p>Brgy Bolbok, Batangas City, Philippines</p>
                  <p>cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
              </body>

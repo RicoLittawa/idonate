@@ -51,7 +51,7 @@ const category_table = $("#category_data").DataTable({
                 stack: [
                   { text: "Republic of the Philippines", alignment: "center" },
                   {
-                    text: "City Risk Reduction Management Office",
+                    text: "City Disaster Risk Reduction Management Office",
                     alignment: "center",
                   },
                 ],
@@ -188,7 +188,7 @@ const request_table = $("#request_data").DataTable({
                 stack: [
                   { text: "Republic of the Philippines", alignment: "center" },
                   {
-                    text: "City Risk Reduction Management Office",
+                    text: "City Disaster Risk Reduction Management Office",
                     alignment: "center",
                   },
                 ],

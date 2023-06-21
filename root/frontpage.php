@@ -77,7 +77,7 @@
         </button>
       </div>
       <div class="pt-3">
-        <h1 class="text-success text-center fw-bold">City Risk Reduction Management Office</h1>
+        <h1 class="text-success text-center fw-bold">City Disaster Risk Reduction Management Office</h1>
         <h3 class="text-success text-center mb-0 pb-5">in Batangas City</h3>
       </div>
     </section>

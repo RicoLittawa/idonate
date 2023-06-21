@@ -55,7 +55,7 @@ $requestRef = $refRow["request_id"];
               <div class="text-center">
                 <img src="../img/logo1.jpg" class="logo-header" alt="">
               </div>
-              <p class="mb-0 text-center lead fs-6">City Risk Reduction Management Office</p>
+              <p class="mb-0 text-center lead fs-6">City Disaster Risk Reduction Management Office</p>
               <p class="mb-0 text-center lead fs-6">Brgy Bolbok, Batangas City, Philippines</p>
             </div>
             <hr class="custom-divider">

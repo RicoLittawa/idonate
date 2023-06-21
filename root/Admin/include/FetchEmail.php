@@ -92,7 +92,7 @@ if (isset($_POST["sendBtn"])) {
   $mail->Port = 465; // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
   // Recipients
-  $mail->setFrom('cityriskreductionoffice@i-donate-btg.com', 'City Risk Reduction Management Office');
+  $mail->setFrom('cityriskreductionoffice@i-donate-btg.com', 'City Disaster Risk Reduction Management Office');
   $mail->addAddress($email); // Add a recipient
 
   // Content
@@ -123,7 +123,7 @@ if (isset($_POST["sendBtn"])) {
                 <p style='font-size: 14px;'>If you don't use the token within 3 hours, it will expire. To get a new password reset link, visit: http://localhost:3000/root/Admin/PasswordReset.ph</p>
                 <br>
                 <p style='font-size: 14px;'>Best regards,</p>
-                <p style='font-size: 14px;'>City Risk Reduction Management Office</p>
+                <p style='font-size: 14px;'>City Disaster Risk Reduction Management Office</p>
                 <p style='font-size: 14px;'>Brgy Bolbok, Batangas City, Philippines</p>
                 <p style='font-size: 14px;'>cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
             </div>
