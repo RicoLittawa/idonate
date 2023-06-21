@@ -65,6 +65,10 @@ let donorTable = $("#donors_data").DataTable({
   },
   columns: [
     {
+      data: "donorId",
+      visible: false,
+    },
+    {
       data: "donorName",
       render: (data, type, row) => {
         return `<p class="fw-bold mb-1">${data}</p>
@@ -135,7 +139,7 @@ let donorTable = $("#donors_data").DataTable({
     },
     {
       extend: "excelHtml5",
-      filename: "Donors Date", 
+      filename: "Donors Date",
       exportOptions: {
         columns: [0, 1, 2],
       },
@@ -147,33 +151,37 @@ let donorTable = $("#donors_data").DataTable({
       extend: "pdfHtml5",
       filename: "Donors",
       exportOptions: {
-        columns: [0, 1, 2],
-        format: {
-          body: function (data, row, column, node) {
-            return data.replace(/<.*?>/g, "");
-          },
-        },
+        columns: [0, 1, 2, 3],
       },
-      customize: (doc) => {   
+      customize: (doc) => {
         let docDefinition = {
           header: {
             columns: [
               {
                 stack: [
-                  { text: 'Republic of the Philippines', alignment: 'center' },
-                  { text: 'City Risk Reduction Management Office', alignment: 'center' }
+                  { text: "Republic of the Philippines", alignment: "center" },
+                  {
+                    text: "City Risk Reduction Management Office",
+                    alignment: "center",
+                  },
                 ],
-              }
+              },
             ],
-            margin: [0, 10, 0, 0] // Adjust the top margin here
+            margin: [0, 10, 0, 0], // Adjust the top margin here
           },
           content: [
-            { text: 'Donors', fontSize: 18, bold: true, alignment: 'center', margin: [0, 10, 0, 10] },
-          ]
+            {
+              text: "Donors",
+              fontSize: 18,
+              bold: true,
+              alignment: "center",
+              margin: [0, 10, 0, 10],
+            },
+          ],
         };
         doc.header = docDefinition.header;
-        doc.content[0] =docDefinition.content;
-        doc.content[1].margin = [ 100, 0, 100, 0 ] //left, top, right, bottom
+        doc.content[0] = docDefinition.content;
+        doc.content[1].margin = [80, 0, 80, 0]; //left, top, right, bottom
         doc.styles.tableHeader = {
           fontSize: 12,
           bold: true,
@@ -203,7 +211,7 @@ let donorTable = $("#donors_data").DataTable({
           },
         };
         // Align the columns
-        doc.content[1].table.widths = ["auto", "auto", "auto"];
+        doc.content[1].table.widths = ["auto", "auto", "auto", "auto"];
         doc.content[1].table.body.forEach((row) => {
           row.forEach((cell, i) => {
             cell.alignment = i === 0 ? "left" : "center"; // Adjust alignment for each column
@@ -212,7 +220,7 @@ let donorTable = $("#donors_data").DataTable({
       },
     },
   ],
-  order: [[2, "desc"]],
+  order: [[0, "desc"]],
   lengthMenu: [
     [10, 25, 50, -1],
     ["10 rows", "25 rows", "50 rows", "Show all"],

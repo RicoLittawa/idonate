@@ -171,7 +171,7 @@ let userTable = $("#user_data").DataTable({
       },
     },
   ],
-  order: [[0, "asc"]],
+  order: [[0, "desc"]],
   lengthMenu: [
     [10, 25, 50, -1],
     ["10 rows", "25 rows", "50 rows", "Show all"],

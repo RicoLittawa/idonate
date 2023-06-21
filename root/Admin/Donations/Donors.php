@@ -76,6 +76,7 @@ require_once "../include/sidebar.php";
               <table class="table align-middle mb-0 bg-white table-hover w-100" id="donors_data">
                 <thead class="bg-light">
                   <tr>
+                    <th>ID</th>
                     <th>Donor Name</th>
                     <th>Contact</th>
                     <th>Date</th>
