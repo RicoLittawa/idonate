@@ -107,7 +107,9 @@ let donorTable = $("#donors_data").DataTable({
       render: function (data, type, row) {
         const donorId = row.donorId.toString();
         const encodedId = btoa(donorId);
-        return `<a class="d-flex justify-content-center" href="UpdateDonors.php?editdonate=${encodeURIComponent(encodedId)}"><i class="fa-solid fa-pen-to-square text-success"></i></a>`;
+        return `<a class="d-flex justify-content-center" href="UpdateDonors.php?editdonate=${encodeURIComponent(
+          encodedId
+        )}"><i class="fa-solid fa-pen-to-square text-success"></i></a>`;
       },
     },
     {
@@ -130,38 +132,83 @@ let donorTable = $("#donors_data").DataTable({
   buttons: [
     {
       extend: "copyHtml5",
-      filename: "Donors Date", // set the file name
     },
     {
       extend: "excelHtml5",
-      filename: "Donors Date", // set the file name
-    },
-    {
-      extend: "csvHtml5",
-      filename: "Donors Date", // set the file name
+      filename: "Donors Date", 
+      exportOptions: {
+        columns: [0, 1, 2],
+      },
     },
     {
       extend: "pageLength",
     },
     {
       extend: "pdfHtml5",
-      filename: "Donors Date", // set the file name
-      customize: (doc) => {
-        doc.content[0].text = "Donors Date";
-        doc.pageMargins = [40, 40, 40, 60];
-        doc.defaultStyle.fontSize = 12;
+      filename: "Donors",
+      exportOptions: {
+        columns: [0, 1, 2],
+        format: {
+          body: function (data, row, column, node) {
+            return data.replace(/<.*?>/g, "");
+          },
+        },
+      },
+      customize: (doc) => {   
+        let docDefinition = {
+          header: {
+            columns: [
+              {
+                stack: [
+                  { text: 'Republic of the Philippines', alignment: 'center' },
+                  { text: 'City Risk Reduction Management Office', alignment: 'center' }
+                ],
+              }
+            ],
+            margin: [0, 10, 0, 0] // Adjust the top margin here
+          },
+          content: [
+            { text: 'Donors', fontSize: 18, bold: true, alignment: 'center', margin: [0, 10, 0, 10] },
+          ]
+        };
+        doc.header = docDefinition.header;
+        doc.content[0] =docDefinition.content;
+        doc.content[1].margin = [ 100, 0, 100, 0 ] //left, top, right, bottom
         doc.styles.tableHeader = {
-          fontSize: 14,
+          fontSize: 12,
           bold: true,
           alignment: "left",
         };
-        doc.styles.title = {
-          color: "#4c8aa0",
-          fontSize: 16,
-          alignment: "center",
-        };
-        doc.pageSize = "A4"; // set page size
+        doc.defaultStyle.fontSize = 12;
+        doc.pageSize = "A4";
         doc.pageOrientation = "portrait";
+        doc.content[1].layout = {
+          hLineWidth: function (i, node) {
+            return 1; // Horizontal line width
+          },
+          vLineWidth: function (i, node) {
+            return 1; // Vertical line width
+          },
+          hLineColor: function (i, node) {
+            return "#aaa"; // Horizontal line color
+          },
+          vLineColor: function (i, node) {
+            return "#aaa"; // Vertical line color
+          },
+          paddingTop: function (i, node) {
+            return 5; // Padding top
+          },
+          paddingBottom: function (i, node) {
+            return 5; // Padding bottom
+          },
+        };
+        // Align the columns
+        doc.content[1].table.widths = ["auto", "auto", "auto"];
+        doc.content[1].table.body.forEach((row) => {
+          row.forEach((cell, i) => {
+            cell.alignment = i === 0 ? "left" : "center"; // Adjust alignment for each column
+          });
+        });
       },
     },
   ],
@@ -170,7 +217,6 @@ let donorTable = $("#donors_data").DataTable({
     [10, 25, 50, -1],
     ["10 rows", "25 rows", "50 rows", "Show all"],
   ],
-
   searchDelay: 500,
   dom: "frtip",
 });
@@ -185,9 +231,6 @@ const initializeTableButtons = (selector, tableName) => {
   $(selector).on("click", ".select-row", (event) => {
     event.preventDefault();
     tableName.page.len($(event.target).data("length")).draw();
-  });
-  $(selector).on("click", "#csvTable", function () {
-    tableName.button(".buttons-csv").trigger();
   });
   $(selector).on("click", "#excelTable", function () {
     tableName.button(".buttons-excel").trigger();

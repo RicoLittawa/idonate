@@ -48,7 +48,6 @@ const tableBtn = () => {
             </div>
             <button class="btn btn-secondary btn-rounded mx-1" id="copyTable">Copy</button>
             <button class="btn btn-secondary btn-rounded mx-1" id="excelTable">Excel</button>
-            <button class="btn btn-secondary btn-rounded mx-1" id="csvTable">Csv</button>
             <button class="btn btn-secondary btn-rounded mx-1" id="pdfTable">PDF</button>
         </div>
         `;

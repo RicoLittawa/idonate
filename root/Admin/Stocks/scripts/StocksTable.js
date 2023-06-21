@@ -17,25 +17,26 @@ let stocksTable = $("#stocks_data").DataTable({
     {
       data: "product",
       render: (data, type, row) => {
-        
         if (!row.type || row.type.toLowerCase() === "n/a") {
           return data;
         }
-        
+
         return `${data}<span class="badge rounded-pill badge-info">${row.type}</span>`;
       },
     },
-    
+
     {
       data: "quantity",
       render: (data, type, row) => {
         if (row.quantity <= 0) {
           return `<span class="badge rounded-pill badge-danger">Out of Stock</span>`;
         } else {
-          return row.unit === "N/A" || row.unit === "" || row.unit=== null ? data : `${data}<span class="badge rounded-pill badge-info">&nbsp${row.unit}</span>`;
+          return row.unit === "N/A" || row.unit === "" || row.unit === null
+            ? data
+            : `${data}<span class="badge rounded-pill badge-info">&nbsp${row.unit}</span>`;
         }
       },
-    },    
+    },
     {
       data: "distributed",
       render: (data, type, row) => {
@@ -48,38 +49,89 @@ let stocksTable = $("#stocks_data").DataTable({
   buttons: [
     {
       extend: "copyHtml5",
-      filename: "Stocks data", // set the file name
     },
     {
       extend: "excelHtml5",
-      filename: "Stocks data", // set the file name
-    },
-    {
-      extend: "csvHtml5",
-      filename: "Stocks data", // set the file name
+      filename: "Stocks Data",
+      exportOptions: {
+        columns: [0, 1, 2, 3],
+      },
     },
     {
       extend: "pageLength",
     },
     {
       extend: "pdfHtml5",
-      filename: "Stocks data", // set the file name
+      filename: "Stocks Data",
+      exportOptions: {
+        columns: [0, 1, 2, 3],
+      },
       customize: (doc) => {
-        doc.content[0].text = "Stocks data";
-        doc.pageMargins = [40, 40, 40, 60];
-        doc.defaultStyle.fontSize = 12;
+        let docDefinition = {
+          header: {
+            columns: [
+              {
+                stack: [
+                  { text: "Republic of the Philippines", alignment: "center" },
+                  {
+                    text: "City Risk Reduction Management Office",
+                    alignment: "center",
+                  },
+                ],
+              },
+            ],
+            margin: [0, 10, 0, 0], // Adjust the top margin here
+          },
+          content: [
+            {
+              text: "Stocks Data",
+              fontSize: 18,
+              bold: true,
+              alignment: "center",
+              margin: [0, 10, 0, 10],
+            },
+          ],
+        };
+        doc.header = docDefinition.header;
+        doc.content[0] = docDefinition.content;
         doc.styles.tableHeader = {
-          fontSize: 14,
+          fontSize: 12,
           bold: true,
           alignment: "left",
         };
-        doc.styles.title = {
-          color: "#4c8aa0",
-          fontSize: 16,
-          alignment: "center",
-        };
         doc.pageSize = "A4"; // set page size
         doc.pageOrientation = "portrait";
+        doc.content[1].margin = [100, 0, 100, 0]; //left, top, right, bottom
+        doc.defaultStyle.fontSize = 12;
+        // Add table border
+        doc.content[1].layout = {
+          hLineWidth: function (i, node) {
+            return 1; // Horizontal line width
+          },
+          vLineWidth: function (i, node) {
+            return 1; // Vertical line width
+          },
+          hLineColor: function (i, node) {
+            return "#aaa"; // Horizontal line color
+          },
+          vLineColor: function (i, node) {
+            return "#aaa"; // Vertical line color
+          },
+          paddingTop: function (i, node) {
+            return 5; // Padding top
+          },
+          paddingBottom: function (i, node) {
+            return 5; // Padding bottom
+          },
+        };
+
+        // Align the columns
+        doc.content[1].table.widths = ["auto", "auto", "auto", "auto"];
+        doc.content[1].table.body.forEach((row) => {
+          row.forEach((cell, i) => {
+            cell.alignment = i === 0 ? "left" : "center"; // Adjust alignment for each column
+          });
+        });
       },
     },
   ],
@@ -128,9 +180,6 @@ const initializeTableButtons = (selector, tableName) => {
     event.preventDefault();
     tableName.page.len($(event.target).data("length")).draw();
   });
-  $(selector).on("click", "#csvTable", function () {
-    tableName.button(".buttons-csv").trigger();
-  });
   $(selector).on("click", "#excelTable", function () {
     tableName.button(".buttons-excel").trigger();
   });
@@ -148,4 +197,3 @@ const filterInitialization = (tableName) => {
 };
 filterInitialization(stocksTable);
 /******************************Filter button initializations**************************************/
-

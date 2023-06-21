@@ -18,7 +18,8 @@ try {
                 $request_id = $row['request_id'];
                 $requestdate = $row['requestdate'];
                 $receivedate = $row['receivedate'];
-                $dateTrimmed = str_replace('-', '', $requestdate);
+                $date = date('Y-m-d', strtotime($requestdate));
+                $dateTrimmed = str_replace('-', '', $date);
                 $status = $row['status'];
 
                 $data[] = array(
