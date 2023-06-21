@@ -3,7 +3,9 @@ require_once '../../../../config/config.php';
 if (isset($_POST['saveStatus'])) {
     $reference = $_POST['reference'];
     $selectedStatus = $_POST['selectStatus'];
-
+    $manilaTimezone = new DateTimeZone('Asia/Manila');
+    $currentDateTime = new DateTime('now', $manilaTimezone);
+    $timestamp = $currentDateTime->format('Y-m-d H:i:s');
     switch ($selectedStatus) {
             //When status is set for ready for pickup
         case "Ready for Pick-up":
@@ -68,13 +70,13 @@ if (isset($_POST['saveStatus'])) {
                             $updateStockStatement->bind_param('iss', $newQuantity, $newDistributedQuantity, $onProcessProduct);
                             $success = $updateStockStatement->execute();
                             if ($success) {
-                                $updateStatus1 = "UPDATE request set status= ? where request_id=?";
+                                $updateStatus1 = "UPDATE request set status= ?, status_timestamp=? where request_id=?";
                                 $updateStatusStatement1 = $conn->prepare($updateStatus1);
-                                $updateStatusStatement1->bind_param('si', $selectedStatus, $reference);
+                                $updateStatusStatement1->bind_param('ssi', $selectedStatus,$timestamp,$reference);
                                 $updateStatusStatement1->execute();
-                                $updateStatus2 = "UPDATE receive_request set status= ? where request_id=?";
+                                $updateStatus2 = "UPDATE receive_request set status= ?, status_timestamp=? where request_id=?";
                                 $updateStatusStatement2 = $conn->prepare($updateStatus2);
-                                $updateStatusStatement2->bind_param('si', $selectedStatus, $reference);
+                                $updateStatusStatement2->bind_param('ssi', $selectedStatus,$timestamp,$reference);
                                 $updateStatusStatement2->execute();
                                 $response = [
                                     "status" => "Success",
@@ -104,13 +106,13 @@ if (isset($_POST['saveStatus'])) {
                     }
             break;
         case "Request cannot be completed":
-            $updateStatus1 = "UPDATE request set status= ? where request_id=?";
+            $updateStatus1 = "UPDATE request set status= ?,status_timestamp where request_id=?";
             $updateStatusStatement1 = $conn->prepare($updateStatus1);
-            $updateStatusStatement1->bind_param('si', $selectedStatus, $reference);
+            $updateStatusStatement1->bind_param('ssi', $selectedStatus, $timestamp,$reference);
             $updateStatusStatement1->execute();
             $updateStatus2 = "UPDATE receive_request set status= ? where request_id=?";
             $updateStatusStatement2 = $conn->prepare($updateStatus2);
-            $updateStatusStatement2->bind_param('si', $selectedStatus, $reference);
+            $updateStatusStatement2->bind_param('ssi', $selectedStatus, $timestamp,$reference);
             $updateStatusStatement2->execute();
             $response = [
                 "status" => "Success",
@@ -122,14 +124,13 @@ if (isset($_POST['saveStatus'])) {
             echo json_encode($response);
             exit();             break;
         case "Request completed":
-            $currentDate = date('Y-m-d');
-            $updateStatus1 = "UPDATE request set status= ?, receivedate=? where request_id=?";
+            $updateStatus1 = "UPDATE request set status= ?,status_timestamp=?, receivedate=? where request_id=?";
             $updateStatusStatement1 = $conn->prepare($updateStatus1);
-            $updateStatusStatement1->bind_param('ssi', $selectedStatus, $currentDate, $reference);
+            $updateStatusStatement1->bind_param('sssi', $selectedStatus, $timestamp, $timestamp,$reference);
             $updateStatusStatement1->execute();
-            $updateStatus2 = "UPDATE receive_request set status= ?, receivedate=? where request_id=?";
+            $updateStatus2 = "UPDATE receive_request set status= ?,status_timestamp=?,receivedate=? where request_id=?";
             $updateStatusStatement2 = $conn->prepare($updateStatus2);
-            $updateStatusStatement2->bind_param('ssi', $selectedStatus, $currentDate, $reference);
+            $updateStatusStatement2->bind_param('sssi', $selectedStatus, $timestamp, $timestamp,$reference);
             $updateStatusStatement2->execute();
             $response = [
                 "status" => "Success",

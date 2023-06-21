@@ -78,8 +78,8 @@ let createRequest = $("#create_request_data").DataTable({
       data: "request_date",
       render: (data, type, row) => {
         let dateObj = new Date(data);
-        let options = { timeZone: 'Asia/Manila' };
-        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
+        let options = { timeZone: "Asia/Manila" };
+        let formattedDateTime = dateObj.toLocaleString("en-PH", options);
         return formattedDateTime;
       },
     },
@@ -87,8 +87,8 @@ let createRequest = $("#create_request_data").DataTable({
       data: "receive_date",
       render: (data, type, row) => {
         let dateObj = new Date(data);
-        let options = { timeZone: 'Asia/Manila' };
-        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
+        let options = { timeZone: "Asia/Manila" };
+        let formattedDateTime = dateObj.toLocaleString("en-PH", options);
         return data !== null
           ? formattedDateTime
           : `<span class="badge badge-danger user-select-none not-allowed">N/A</span>`;
@@ -101,8 +101,8 @@ let createRequest = $("#create_request_data").DataTable({
         let additionalClasses = "user-select-none not-allowed";
         let statusTime = row.status_timestamp;
         let dateObj = new Date(statusTime);
-        let options = { timeZone: 'Asia/Manila' };
-        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
+        let options = { timeZone: "Asia/Manila" };
+        let formattedDateTime = dateObj.toLocaleString("en-PH", options);
         switch (data) {
           case "Request was processed":
           case "Request completed":
@@ -114,11 +114,11 @@ let createRequest = $("#create_request_data").DataTable({
           case "Request cannot be completed":
           case "Deleted":
             badgeClass = "badge-danger";
-            formattedDateTime="";
+            formattedDateTime = "";
             break;
           default:
             badgeClass = "badge-info";
-            formattedDateTime="";
+            formattedDateTime = "";
             break;
         }
         return `<span class="badge ${badgeClass} ${additionalClasses} d-flex justify-content-center">${data}<br>${formattedDateTime}</span>`;
@@ -129,8 +129,8 @@ let createRequest = $("#create_request_data").DataTable({
       render: (data, type, row) => {
         let statusTime = row.deleted_timestamp;
         let dateObj = new Date(statusTime);
-        let options = { timeZone: 'Asia/Manila' };
-        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
+        let options = { timeZone: "Asia/Manila" };
+        let formattedDateTime = dateObj.toLocaleString("en-PH", options);
         let buttonHtml = `<button data-mdb-toggle="modal" onclick="fetchRequestData(${row.request_id})" data-mdb-target="#openPrint" class="btn btn-secondary btn-rounded" type="button">View</button>`;
         let badgeHtml = `<span class="badge badge-warning user-select-none not-allowed">Action made by: Admin <br>${formattedDateTime}</span>`;
         switch (data) {
@@ -423,20 +423,26 @@ const fetchRequestData = (reference) => {
           status,
           requestemail,
           receivedate,
+          requestdate,
         } = request;
 
-        const dateObj = new Date(request.requestdate);
-        const options = { month: "2-digit", day: "2-digit", year: "numeric" };
-        const formattedDate = dateObj.toLocaleDateString(undefined, options);
+        const dateOnly = (date) => {
+          let dateObj = new Date(date);
+          let options = { month: "2-digit", day: "2-digit", year: "numeric" };
+          let formattedDate = dateObj.toLocaleDateString(undefined, options);
+          return formattedDate;
+        };
 
         $("#receipt_number").text(`${dateTrimmed}-00${reference}`);
-        $("#request-date").text(formattedDate);
+        $("#request-date").text(dateOnly(requestdate));
         $("#name").text(`${fname} ${lname}`);
         $("#position").text(position);
         $("#evacuees_qty").text(evacuees_qty);
         $("#status").text(status);
         $("#email").text(requestemail);
-        $("#receive_date").text(receivedate !== null ? receivedate : "N/A");
+        $("#receive_date").text(
+          receivedate !== null ? dateOnly(receivedate) : "N/A"
+        );
       }
 
       let tableRows = "";
@@ -475,5 +481,3 @@ const fetchRequestData = (reference) => {
     },
   });
 };
-
-

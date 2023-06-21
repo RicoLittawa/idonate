@@ -51,6 +51,17 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 });
 /******************************Date Filter**************************************/
 
+const formatDate = (date, status) => {
+  if (status === "pending" || status === "Deleted") {
+    return ""; // Return an empty string for pending or deleted status
+  }
+
+  let dateObj = new Date(date);
+  let options = { timeZone: "Asia/Manila" };
+  let formattedDateTime = dateObj.toLocaleString("en-PH", options);
+  return formattedDateTime;
+};
+
 /******************************Populate Table**************************************/
 let requestTable = $("#request_data_main").DataTable({
   responsive: true,
@@ -84,24 +95,20 @@ let requestTable = $("#request_data_main").DataTable({
     {
       data: "requestdate",
       render: (data, type, row) => {
-        let dateObj = new Date(data);
-        let options = { timeZone: 'Asia/Manila' };
-        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
-        return formattedDateTime;
-      }
+        return formatDate(data);
+      },
     },
     {
       data: "status",
       render: (data, type, row) => {
         let statusTime = row.status_timestamp;
-        let dateObj = new Date(statusTime);
-        let options = { timeZone: 'Asia/Manila' };
-        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
         let badgeClass = "";
         switch (data) {
           case "Request was processed":
-          case "Request completed":
             badgeClass = "badge-success allowed";
+            break;
+          case "Request completed":
+            badgeClass = "badge-success not-allowed";
             break;
           case "Ready for Pick-up":
             badgeClass = "badge-warning allowed";
@@ -109,27 +116,29 @@ let requestTable = $("#request_data_main").DataTable({
           case "Request cannot be completed":
           case "Deleted":
             badgeClass = "badge-danger not-allowed";
-            formattedDateTime = "";
             break;
           default:
             badgeClass = "badge-info not-allowed";
-            formattedDateTime = "";
             break;
         }
-        return `<span class="badge ${badgeClass} d-flex justify-content-center" onclick="changeStatus('${row.reference}', '${row.status}')">${data}<br>${formattedDateTime}</span>`;
+        return `<span class="badge ${badgeClass} d-flex justify-content-center" onclick="changeStatus('${
+          row.reference
+        }', '${row.status}')">${data}<br>${formatDate(
+          statusTime,
+          data
+        )}</span>`;
       },
     },
     {
       data: "status",
       render: function (data, type, row) {
         let statusTime = row.deleted_timestamp;
-        let dateObj = new Date(statusTime);
-        let options = { timeZone: 'Asia/Manila' };
-        let formattedDateTime = dateObj.toLocaleString('en-PH', options);
         if (data === "pending") {
           return `<div class="d-flex justify-content-center"><button type="button" id="acceptBtn" data-request=${row.reference} class="btn btn-success btn-rounded">Accept</button></div>`;
         } else if (data === "Deleted") {
-          return `<span class="badge badge-warning user-select-none not-allowed">Action made by: <br> ${row.firstname} ${row.lastname}<br>${formattedDateTime}</span>`;
+          return `<span class="badge badge-warning user-select-none not-allowed">Action made by: <br> ${
+            row.firstname
+          } ${row.lastname}<br>${formatDate(statusTime)}</span>`;
         } else {
           return `<button data-mdb-toggle="modal" onclick="fetchRequestData(${row.reference})" data-mdb-target="#openPrint" class="btn btn-secondary btn-rounded" type="button">View</button>`;
         }
@@ -289,7 +298,7 @@ $(document).on("click", "#saveStatus", () => {
       reference: reference,
       selectStatus: selectStatus,
     },
-    dataType:'json',
+    dataType: "json",
     beforeSend: () => {
       $("#saveStatus").prop("disabled", true);
       $(".submit-text").text("Updating...");
@@ -313,8 +322,8 @@ $(document).on("click", "#saveStatus", () => {
         setTimeout(() => {
           $("#exampleModal").modal("hide");
         }, 2000);
-      }else{
-        swal.fire(response.status,response.message,response.icon)
+      } else {
+        swal.fire(response.status, response.message, response.icon);
       }
     },
   });
@@ -333,43 +342,55 @@ const fetchRequestData = (reference) => {
     success: (data) => {
       const requestData = data.requestData;
       const onProcessData = data.onProcessData;
+
       // Populate the receipt details
       if (requestData.length > 0) {
         const request = requestData[0];
-        let dateObj = new Date(request.requestdate);
-        let options = { month: "2-digit", day: "2-digit", year: "numeric" };
-        let formattedDate = dateObj.toLocaleDateString(undefined, options);
+        const dateOnly = (date) => {
+          const options = { month: "2-digit", day: "2-digit", year: "numeric" };
+          return new Date(date).toLocaleDateString(undefined, options);
+        };
         $("#receipt_number").text(`${request.dateTrimmed}-00${reference}`);
-        $("#request_date").text(formattedDate);
+        $("#request_date").text(dateOnly(request.requestdate));
         $("#name").text(`${request.fname} ${request.lname}`);
         $("#position").text(request.position);
         $("#evacuees_qty").text(request.evacuees_qty);
         $("#status").text(request.status);
         $("#email").text(request.requestemail);
-        $("#receive_date").text(`${request.receivedate !== null ? request.receivedate : "N/A"}`);
+        $("#receive_date").text(
+          request.receivedate ? dateOnly(request.receivedate) : "N/A"
+        );
       }
+
       // Populate the table rows
-      let tableRows = '';
+      let tableRows = "";
       onProcessData.forEach((item) => {
-        let quantity = item.quantity;
-        let productName = item.productName;
-        tableRows = `<tr>
+        const quantity = item.quantity;
+        const productName = item.productName;
+        tableRows += `<tr>
           <td>${quantity}</td>
           <td class="fw-bold">${productName}</td>
         </tr>`;
       });
+
       // Insert the table rows into the table body
-      $('#table-container tbody').html(tableRows);
+      $("#table-container tbody").html(tableRows);
     },
   });
 };
-
 
 $(".closeModal").click(() => {
   $("#exampleModal").modal("hide");
 });
 
-const changeStatus = (id,status) => {
+const changeStatus = (id, status) => {
+  if (
+    status === "pending" ||
+    status === "Deleted" ||
+    status === "Request completed"
+  ) {
+    return;
+  }
   $("#exampleModal").modal("show");
   $("#reference").val(id);
   $(`#selectStatus option[value="${status}"]`).prop("selected", true);
