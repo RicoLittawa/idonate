@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2023 at 01:31 PM
+-- Generation Time: Jun 21, 2023 at 02:55 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -49,9 +49,9 @@ CREATE TABLE `adduser` (
 --
 
 INSERT INTO `adduser` (`uID`, `firstname`, `lastname`, `position`, `email`, `pwdUsers`, `address`, `role`, `status`, `profile`, `reset_token`, `reset_token_expiry`, `logged_in`, `logged_out`) VALUES
-(2, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', '$2y$10$fgL8xEz.8CGHi6kBn402jOaQrbjf9gtw39uwnv.gTAVTfA1Iu7.mG', 'Balagtas Batangas City', 'user', 'offline', '2_3619298.jpg', NULL, NULL, '2023-06-19 11:59:05', '2023-06-19 12:06:06'),
-(10, 'admin', 'admin', 'Cdrrmo Employee', 'littawa_rico@yahoo.com', '$2y$10$8VTvoXExJXtYTks0oHVme./l.EwMW3WUshtDwKlvekc80AsOmXbku', 'Balagtas Batangas City', 'admin', 'offline', '10_riconew.jpg', '$2y$10$DiivYIABUgUqSYSVD.8.I.t6kf3deuPtDpFlDrogYqxKO03Z3gNUO', '2023-06-18 12:56:08', '2023-06-19 18:52:11', '2023-06-19 18:54:16'),
-(13, 'try', 'name', 'CDRMO Employee', 'rico.littawa@g.batstate-u.edu.ph', '$2y$10$TyXaOEMOd6EwDh6VTZuvgOPlFSKVRnMlOWVwCQ1rUG9dwXwzWTGki', 'Balagtas Batangas City', 'admin', 'offline', NULL, NULL, NULL, NULL, NULL);
+(2, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', '$2y$10$fgL8xEz.8CGHi6kBn402jOaQrbjf9gtw39uwnv.gTAVTfA1Iu7.mG', 'Balagtas Batangas City', 'user', 'offline', '2_3619298.jpg', NULL, NULL, '2023-06-21 17:29:47', '2023-06-21 17:33:28'),
+(10, 'admin', 'admin', 'Cdrrmo Employee', 'littawa_rico@yahoo.com', '$2y$10$8VTvoXExJXtYTks0oHVme./l.EwMW3WUshtDwKlvekc80AsOmXbku', 'Balagtas Batangas City', 'admin', 'active', '10_riconew.jpg', '$2y$10$DiivYIABUgUqSYSVD.8.I.t6kf3deuPtDpFlDrogYqxKO03Z3gNUO', '2023-06-18 12:56:08', '2023-06-21 20:51:31', NULL),
+(13, 'try', 'name', 'CDRMO Employee', 'rico.littawa@g.batstate-u.edu.ph', '$2y$10$38ZyVqlom07/08mIv4fwAewf/pZJug6Z.p1MmAu2LBOrkbS4NuG4u', 'Balagtas Batangas City', 'admin', 'offline', NULL, NULL, NULL, '2023-06-19 22:27:26', '2023-06-19 22:33:13');
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,8 @@ CREATE TABLE `categcannoodles` (
 
 INSERT INTO `categcannoodles` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
 (1, 'Sardines', NULL, '9', 1, NULL),
-(2, 'Pancit Canton', NULL, '20', 0, NULL);
+(2, 'Pancit Canton', NULL, '20', 0, NULL),
+(3, '555 tuna', NULL, '18', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -91,6 +92,13 @@ CREATE TABLE `categdrinkingwater` (
   `unit` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `categdrinkingwater`
+--
+
+INSERT INTO `categdrinkingwater` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
+(1, 'Absolute 1.5L', NULL, '10', 0, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -105,6 +113,13 @@ CREATE TABLE `categhygineessential` (
   `distributed` int(11) NOT NULL,
   `unit` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categhygineessential`
+--
+
+INSERT INTO `categhygineessential` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
+(1, 'Creamsilk', NULL, '10', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -150,6 +165,13 @@ CREATE TABLE `categmedicine` (
   `distributed` int(11) NOT NULL,
   `unit` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categmedicine`
+--
+
+INSERT INTO `categmedicine` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
+(1, 'Bioflu', 'Liquid', '10', 0, 'Milligrams');
 
 -- --------------------------------------------------------
 
@@ -436,7 +458,13 @@ CREATE TABLE `donation_items` (
 
 INSERT INTO `donation_items` (`donor_id`, `Reference`, `donor_name`, `donor_region`, `donor_province`, `donor_municipality`, `donor_barangay`, `donor_email`, `donor_contact`, `donationDate`, `email_status`, `certificate`) VALUES
 (1, 1, 'Rico Littawa', '04', '0410', '041005', '041005003', 'rico.littawa@g.batstate-u.edu.ph', '09175059819', '2023-06-16', 'email_sent', 'Rico Littawa_64900322deecb.png'),
-(2, 2, 'Rey Agustin', '15', '1507', '150703', '150703030', 'mroyster@royster.com', '09392560014', '2023-06-19', 'not sent', 'cert empty');
+(2, 2, 'Rey Agustin', '15', '1507', '150703', '150703030', 'mroyster@royster.com', '09392560014', '2023-06-19', 'not sent', 'cert empty'),
+(3, 3, 'Richelle Littawa', '11', '1123', '112303', '112303020', 'rico.littawa@g.batstate-u.edu.ph', '09392560014', '2023-06-20', 'not sent', 'cert empty'),
+(4, 4, 'Rey Agustin', '14', '1401', '140116', '140116002', 'mroyster@royster.com', '09392560014', '2023-06-20', 'not sent', 'cert empty'),
+(5, 5, 'Rey Agustin', '14', '1401', '140115', '140115004', 'mroyster@royster.com', '09392560014', '2023-06-20', 'not sent', 'cert empty'),
+(6, 6, 'Rey Agustin', '15', '1538', '153819', '153819018', 'mroyster@royster.com', '09392560014', '2023-06-20', 'not sent', 'cert empty'),
+(7, 7, 'Richelle Littawa', '13', '1374', '137403', '137403013', 'mroyster@royster.com', '09392560014', '2023-06-20', 'not sent', 'cert empty'),
+(8, 8, 'last', '14', '1411', '141102', '141102019', 'mroyster@royster.com', '09392560014', '2023-06-20', 'not sent', 'cert empty');
 
 -- --------------------------------------------------------
 
@@ -459,7 +487,11 @@ CREATE TABLE `donation_items10` (
 
 INSERT INTO `donation_items10` (`id`, `Reference`, `productName`, `type`, `unit`, `quantity`) VALUES
 (1, 1, 'Sardines', NULL, NULL, '10'),
-(2, 2, 'Pancit Canton', NULL, NULL, '20');
+(2, 2, 'Pancit Canton', NULL, NULL, '20'),
+(3, 4, '555 tuna', NULL, NULL, '19'),
+(4, 6, 'Bioflu', 'Liquid', 'Milligrams', '10'),
+(5, 7, 'Creamsilk', NULL, NULL, '10'),
+(6, 8, 'Absolute 1.5L', NULL, NULL, '10');
 
 -- --------------------------------------------------------
 
@@ -476,7 +508,7 @@ CREATE TABLE `donation_items_picking` (
 --
 
 INSERT INTO `donation_items_picking` (`reference_id`) VALUES
-(3);
+(9);
 
 -- --------------------------------------------------------
 
@@ -496,7 +528,8 @@ CREATE TABLE `on_process` (
 --
 
 INSERT INTO `on_process` (`id`, `reciept_number`, `productName`, `quantity`) VALUES
-(1, 1, 'Sardines', '1');
+(1, 1, 'Sardines', '1'),
+(2, 6, '555 tuna', '1');
 
 -- --------------------------------------------------------
 
@@ -512,19 +545,23 @@ CREATE TABLE `receive_request` (
   `position` longtext NOT NULL,
   `email` longtext NOT NULL,
   `evacuees_qty` int(11) NOT NULL,
-  `requestdate` date NOT NULL,
+  `requestdate` datetime NOT NULL,
   `status` longtext DEFAULT NULL,
+  `status_timestamp` datetime DEFAULT NULL,
+  `deleted_timestamp` datetime DEFAULT NULL,
   `userID` int(11) NOT NULL,
-  `receivedate` date DEFAULT NULL
+  `receivedate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `receive_request`
 --
 
-INSERT INTO `receive_request` (`id`, `request_id`, `firstname`, `lastname`, `position`, `email`, `evacuees_qty`, `requestdate`, `status`, `userID`, `receivedate`) VALUES
-(1, 1, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-16', 'Ready for Pick-up', 2, NULL),
-(2, 2, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-19', 'pending', 2, NULL);
+INSERT INTO `receive_request` (`id`, `request_id`, `firstname`, `lastname`, `position`, `email`, `evacuees_qty`, `requestdate`, `status`, `status_timestamp`, `deleted_timestamp`, `userID`, `receivedate`) VALUES
+(1, 3, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-20 14:57:49', 'Deleted', NULL, '2023-06-20 21:02:34', 2, NULL),
+(2, 4, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 10, '2023-06-20 15:03:18', 'Deleted', NULL, '2023-06-20 21:18:26', 2, NULL),
+(4, 6, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-20 21:16:42', 'Request completed', '2023-06-21 08:18:17', NULL, 2, '2023-06-21 08:18:17'),
+(5, 7, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-20 21:50:29', 'pending', NULL, NULL, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -44452,7 +44489,7 @@ CREATE TABLE `ref_request` (
 --
 
 INSERT INTO `ref_request` (`request_id`) VALUES
-(3);
+(8);
 
 -- --------------------------------------------------------
 
@@ -44468,19 +44505,22 @@ CREATE TABLE `request` (
   `position` longtext NOT NULL,
   `email` longtext NOT NULL,
   `evacuees_qty` int(11) NOT NULL,
-  `requestdate` date NOT NULL,
+  `requestdate` datetime NOT NULL,
   `status` varchar(100) DEFAULT NULL,
+  `status_timestamp` datetime DEFAULT NULL,
+  `deleted_timestamp` datetime DEFAULT NULL,
   `userID` bigint(20) NOT NULL,
-  `receivedate` date DEFAULT NULL
+  `receivedate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `request`
 --
 
-INSERT INTO `request` (`id`, `request_id`, `firstname`, `lastname`, `position`, `email`, `evacuees_qty`, `requestdate`, `status`, `userID`, `receivedate`) VALUES
-(1, 1, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-16', 'Ready for Pick-up', 2, NULL),
-(2, 2, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-19', 'pending', 2, NULL);
+INSERT INTO `request` (`id`, `request_id`, `firstname`, `lastname`, `position`, `email`, `evacuees_qty`, `requestdate`, `status`, `status_timestamp`, `deleted_timestamp`, `userID`, `receivedate`) VALUES
+(3, 5, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-20 15:10:18', 'Deleted', NULL, '2023-06-20 21:32:08', 2, NULL),
+(4, 6, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-20 21:16:42', 'Request completed', '2023-06-21 08:18:17', NULL, 2, '2023-06-21 08:18:17'),
+(5, 7, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-20 21:50:29', 'pending', NULL, NULL, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -44502,7 +44542,11 @@ CREATE TABLE `request_category` (
 
 INSERT INTO `request_category` (`id`, `request_id`, `categoryName`, `quantity`, `notes`) VALUES
 (1, 1, '01', 500, ''),
-(2, 2, '01', 6, '');
+(2, 2, '01', 6, ''),
+(3, 3, '04', 1, ''),
+(4, 4, '04', 10, ''),
+(6, 6, '01', 1, ''),
+(7, 7, '05', 1, '');
 
 -- --------------------------------------------------------
 
@@ -44681,19 +44725,19 @@ ALTER TABLE `adduser`
 -- AUTO_INCREMENT for table `categcannoodles`
 --
 ALTER TABLE `categcannoodles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `categdrinkingwater`
 --
 ALTER TABLE `categdrinkingwater`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `categhygineessential`
 --
 ALTER TABLE `categhygineessential`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `categinfant`
@@ -44711,7 +44755,7 @@ ALTER TABLE `categmeatgrains`
 -- AUTO_INCREMENT for table `categmedicine`
 --
 ALTER TABLE `categmedicine`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -44735,13 +44779,13 @@ ALTER TABLE `categ_products`
 -- AUTO_INCREMENT for table `donation_items`
 --
 ALTER TABLE `donation_items`
-  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `donation_items10`
 --
 ALTER TABLE `donation_items10`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `donation_items_picking`
@@ -44753,13 +44797,13 @@ ALTER TABLE `donation_items_picking`
 -- AUTO_INCREMENT for table `on_process`
 --
 ALTER TABLE `on_process`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `receive_request`
 --
 ALTER TABLE `receive_request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `refbrgy`
@@ -44795,13 +44839,13 @@ ALTER TABLE `ref_request`
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `request_category`
 --
 ALTER TABLE `request_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `template_certi`
