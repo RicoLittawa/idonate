@@ -58,7 +58,7 @@ if (isset($_POST['email_data'])) {
          $mail->Username = SMTP_USERNAME;     //Sets SMTP username
          $mail->Password = SMTP_PASSWORD;     //Sets SMTP password
          $mail->SMTPSecure = 'ssl';       //Sets connection prefix. Options are "", "ssl" or "tls"
-         $mail->setFrom('cityriskreductionoffice@i-donate-btg.com', 'City Disaster Risk Reduction Management Office');
+         $mail->setFrom('citydisasterriskreductionmanagementoffice@i-donate-btg.com', 'City Disaster Risk Reduction Management Office');
          $mail->AddAddress($row["email"], $row["name"]); //Adds a "To" address
          $mail->WordWrap = 50;       //Sets word wrapping on the body of the message to a given number of characters
          $mail->IsHTML(true);

@@ -37,7 +37,7 @@ if (isset($_POST["submitBtn"])) {
     $mail->Username = SMTP_USERNAME;
     $mail->Password = SMTP_PASSWORD;
     $mail->SMTPSecure = 'ssl';
-    $mail->From = 'cityriskreductionoffice@i-donate-btg.com'; // Set your forwarder email address
+    $mail->From = 'citydisasterriskreductionmanagementoffice@i-donate-btg.com'; // Set your forwarder email address
     $mail->FromName = 'City Disaster Risk Reduction Management Office';
     $mail->AddAddress('cdrrmoidonatebtg@gmail.com'); // Your own email address to receive the emails
     $mail->WordWrap = 50;

@@ -1,5 +1,5 @@
 <?php
-define('SMTP_USERNAME', 'cityriskreductionoffice@i-donate-btg.com');
+define('SMTP_USERNAME', 'citydisasterriskreductionmanagementoffice@i-donate-btg.com');
 define('SMTP_PASSWORD', 'Cityriskreductionoffice01!');
 define('DB_USERNAME', 'u321569821_idonate');
 define('DB_PASSWORD', 'Idonate123');

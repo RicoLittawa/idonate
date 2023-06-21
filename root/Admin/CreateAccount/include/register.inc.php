@@ -43,7 +43,7 @@ if (isset($_POST['submitBtn'])) {
         $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
         // Recipients
-        $mail->setFrom('cityriskreductionoffice@i-donate-btg.com', 'City Disaster Risk Reduction Management Office');
+        $mail->setFrom('citydisasterriskreductionmanagementoffice@i-donate-btg.com', 'City Disaster Risk Reduction Management Office');
         $mail->addAddress($email);     // Add a recipient
 
         // Content
