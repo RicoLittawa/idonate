@@ -9,7 +9,9 @@ const showNotification = (userID) => {
       data.data.forEach((item) => {
         notificationList += `<li class="list-group-item d-flex justify-content-between align-items-center lead fs-6">
                                   ${item.message}
-                                  <span class="ps-5 text-danger"><i class="fa-solid fa-trash"></i></span>
+                                  <span class="ps-5 d-flex">
+                                  <i class="fa-solid fa-check pe-3"></i>
+                                  <i class="fa-solid fa-xmark text-danger"></i></span>
                               </li>`;
       });
       notificationList += "</ul>";
@@ -20,5 +22,5 @@ const showNotification = (userID) => {
 };
 
 const showNotifCount= ()=>{
-    
+
 }

@@ -23,13 +23,13 @@ function sidebar()
           <li class="nav-item">
             <a href="../Donations/Donors.php" class="nav-link ' .
     (strpos($_SERVER["REQUEST_URI"], "Donors.php") !== false ||
-    strpos($_SERVER["REQUEST_URI"], "AddDonor.php") !== false
+      strpos($_SERVER["REQUEST_URI"], "AddDonor.php") !== false
       ? "active"
       : "") .
     '">
               <i class="bx bxs-box ' .
     (strpos($_SERVER["REQUEST_URI"], "Donors.php") !== false ||
-    strpos($_SERVER["REQUEST_URI"], "AddDonor.php") !== false
+      strpos($_SERVER["REQUEST_URI"], "AddDonor.php") !== false
       ? "active"
       : "") .
     '"></i>
@@ -39,14 +39,14 @@ function sidebar()
           <li class="nav-item">
             <a href="../Request/Request.php" class="nav-link ' .
     (strpos($_SERVER["REQUEST_URI"], "Request.php") !== false ||
-    strpos($_SERVER["REQUEST_URI"], "ViewRequestReceipt.php") !== false ||
-    strpos($_SERVER["REQUEST_URI"], "ReceiveRequest.php") !== false
+      strpos($_SERVER["REQUEST_URI"], "ViewRequestReceipt.php") !== false ||
+      strpos($_SERVER["REQUEST_URI"], "ReceiveRequest.php") !== false
       ? "active"
       : "") .
     '">
               <i class="bx bxs-envelope ' .
     (strpos($_SERVER["REQUEST_URI"], "Request.php") !== false ||
-    strpos($_SERVER["REQUEST_URI"], "ViewRequestReceipt.php") !== false
+      strpos($_SERVER["REQUEST_URI"], "ViewRequestReceipt.php") !== false
       ? "active"
       : "") .
     '"></i>
@@ -82,7 +82,7 @@ function showModal()
 {
   $html = '
   <div class="modal fade" id="showNotification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
@@ -121,26 +121,33 @@ function accountUpdate()
 function userAccountUpdate($conn)
 {
   $userID = $_SESSION["user"]["uID"];
-  $getNotifCount = $conn->prepare("SELECT COUNT(*) AS notificationCount FROM notification WHERE userID = ?");
+  $getNotifCount = $conn->prepare("SELECT COUNT(*) AS notificationCount, MAX(read_message) AS readStatus FROM notification WHERE userID = ?");
   $getNotifCount->bind_param("i", $userID);
   $getNotifCount->execute();
   $notifCountResult = $getNotifCount->get_result();
   $notifCountRow = $notifCountResult->fetch_assoc();
   $notificationCount = $notifCountRow["notificationCount"];
+  $readStatus = $notifCountRow["readStatus"];
 
   $html = '
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <li><a class="dropdown-item" href="UserUpdateProfile.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="UserUpdatePassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
     <li><a class="dropdown-item" href="#" onClick="showNotification(' . $userID . ')"><i class="fa-solid fa-envelope"></i> Notifications   
-        <span class="badge rounded-pill badge-notification bg-danger">' . $notificationCount . '</span>
-    </a></li>
+    ';
+
+  if ($notificationCount > 0 && $readStatus === 'unread') {
+    $html .= '
+          <span class="badge rounded-pill badge-notification bg-danger">' . $notificationCount . '</span>';
+  }
+
+  $html .= '
+  </a></li>
     <li><a class="dropdown-item" href="../include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
   </ul>';
 
   return $html;
 }
-
 
 function userSidebar()
 {
@@ -151,13 +158,13 @@ function userSidebar()
         <li class="nav-item">
             <a href="UserLandingPage.php" class="nav-link ' .
     (strpos($_SERVER["REQUEST_URI"], "UserLandingPage.php") !== false ||
-    strpos($_SERVER["REQUEST_URI"], "UserLandingPage.php") !== false
+      strpos($_SERVER["REQUEST_URI"], "UserLandingPage.php") !== false
       ? "active"
       : "") .
     '">
               <i class="bx bxs-home ' .
     (strpos($_SERVER["REQUEST_URI"], "UserLandingPage.php") !== false ||
-    strpos($_SERVER["REQUEST_URI"], "UserLandingPage.php") !== false
+      strpos($_SERVER["REQUEST_URI"], "UserLandingPage.php") !== false
       ? "active"
       : "") .
     '"></i>
@@ -167,13 +174,13 @@ function userSidebar()
           <li class="nav-item">
             <a href="UserCreateRequest.php" class="nav-link ' .
     (strpos($_SERVER["REQUEST_URI"], "UserCreateRequest.php") !== false ||
-    strpos($_SERVER["REQUEST_URI"], "ViewCreatedRequest.php") !== false
+      strpos($_SERVER["REQUEST_URI"], "ViewCreatedRequest.php") !== false
       ? "active"
       : "") .
     '">
               <i class="bx bxs-cart-add ' .
     (strpos($_SERVER["REQUEST_URI"], "UserCreateRequest.php") !== false ||
-    strpos($_SERVER["REQUEST_URI"], "ViewCreatedRequest.php") !== false
+      strpos($_SERVER["REQUEST_URI"], "ViewCreatedRequest.php") !== false
       ? "active"
       : "") .
     '"></i>
@@ -183,13 +190,13 @@ function userSidebar()
           <li class="nav-item">
             <a href="UserUpdateProfile.php" class="nav-link ' .
     (strpos($_SERVER["REQUEST_URI"], "UserUpdateProfile.php") !== false ||
-    strpos($_SERVER["REQUEST_URI"], "UserUpdatePassword.php") !== false
+      strpos($_SERVER["REQUEST_URI"], "UserUpdatePassword.php") !== false
       ? "active"
       : "") .
     '">
               <i class="bx bxs-user ' .
     (strpos($_SERVER["REQUEST_URI"], "UserUpdateProfile.php") ||
-    strpos($_SERVER["REQUEST_URI"], "UserUpdatePassword.php") !== false
+      strpos($_SERVER["REQUEST_URI"], "UserUpdatePassword.php") !== false
       ? "active"
       : "") .
     '"></i>

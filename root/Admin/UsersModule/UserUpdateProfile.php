@@ -105,7 +105,7 @@ require_once "../include/sidebar.php";
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" id="newProfile"/>
               <?php } ?>
             </a>
-            <?php echo userAccountUpdate() ?>
+            <?php echo userAccountUpdate($conn) ?>
           </div>
         </div>
       </div>
