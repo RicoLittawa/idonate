@@ -111,7 +111,7 @@ let userTable = $("#user_data").DataTable({
                 stack: [
                   { text: "Republic of the Philippines", alignment: "center" },
                   {
-                    text: "City Disaster Risk Reduction Management Office",
+                    text: "City Disaster Risk Reduction Management Office Batangas City",
                     alignment: "center",
                   },
                 ],

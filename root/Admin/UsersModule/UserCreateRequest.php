@@ -35,13 +35,14 @@ $requestRef = $refRow["request_id"];
 </head>
 
 <body>
-
+<!-- Button trigger modal -->
   <!--Print -->
-  <div class="modal fade" id="openPrint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <?php echo showModal() ?>
+  <div class="modal fade" id="openPrint" tabindex="-1" aria-labelledby="printreceipt" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Print Receipt</h5>
+          <h5 class="modal-title" id="printreceipt">Print Receipt</h5>
           <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -55,6 +56,7 @@ $requestRef = $refRow["request_id"];
               <div class="text-center">
                 <img src="../img/logo1.jpg" class="logo-header" alt="">
               </div>
+              <p class="mb-0 text-center lead fs-6">Republic of the Philippines</p>
               <p class="mb-0 text-center lead fs-6">City Disaster Risk Reduction Management Office</p>
               <p class="mb-0 text-center lead fs-6">Brgy Bolbok, Batangas City, Philippines</p>
             </div>
@@ -134,7 +136,7 @@ $requestRef = $refRow["request_id"];
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo userAccountUpdate(); ?>
+            <?php echo userAccountUpdate($conn); ?>
           </div>
         </div>
       </div>
@@ -243,6 +245,7 @@ $requestRef = $refRow["request_id"];
   <script src="../scripts/TableFilterButtons.js"></script>
   <script src="scripts/CreateRequest.js"></script>
   <script src="../scripts/ToggleForm.js"></script>
+  <script src="../scripts/ShowNotification.js"></script>
   <script>
     let count = 0;
     const addCategory = () => {

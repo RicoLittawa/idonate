@@ -61,6 +61,25 @@ if (isset($_POST['submitProcess'])) {
     $updateUserRequestStatus = $conn->prepare("UPDATE request SET status=?,status_timestamp=? WHERE request_id=?");
     $updateUserRequestStatus->bind_param('ssi', $status,$timestamp ,$request_id);
     $updateUserRequestStatus->execute();
+
+    //Notification
+    $selectRequesterId= $conn->prepare("SELECT userID,requestdate from request where request_id=?");
+    $selectRequesterId->bind_param("i",$request_id);
+    $selectRequesterId->execute();
+    $requesterIdResult= $selectRequesterId->get_result();
+    $fetchedRequesterId= $requesterIdResult->fetch_assoc();
+    $userID= $fetchedRequesterId["userID"];
+    $requestdate= $fetchedRequesterId["requestdate"];
+    $date = date('Y-m-d', strtotime($requestdate));
+    $receiptNumber =str_replace('-', '', $date);
+    $message= "Your request {$receiptNumber}-00{$request_id} has been processed";
+
+    $insertNotif = $conn->prepare("INSERT INTO notification (userID, message, timestamp) VALUES (?, ?, ?)");
+    $insertNotif->bind_param("iss", $userID, $message, $timestamp);
+    $insertNotif->execute();
+    
+
+    
     $response = [
       "status" => "Success",
       "message" => "Your data is accepted successfully",

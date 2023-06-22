@@ -208,34 +208,36 @@ $("#medicine").html(medicineTable());
 $("#others").html(othersTable());
 
 const dynamicOtherOptions = (selectClass, inputClass, divClass) => {
-    $(document).on("change", selectClass, function(event) {
-      if ($(event.target).val() === "other") {
-        $(event.target).siblings(divClass).show();
+  $(document).on("change", selectClass, function(event) {
+    if ($(event.target).val() === "other") {
+      $(event.target).siblings(divClass).show();
+    } else {
+      $(event.target).siblings(divClass).hide();
+    }
+  });
+
+  $(document).on("keyup", inputClass, function(event) {
+    if (event.keyCode === 32) {
+      // Spacebar key
+      if ($(event.target).val() === "") {
+        $(event.target).addClass("is-invalid");
+        return false;
       } else {
-        $(event.target).siblings(divClass).hide();
+        $(event.target).removeClass("is-invalid");
+
+        var otherValue = $(event.target).val();
+        $(event.target)
+          .parent()
+          .siblings(selectClass)
+          .find("option[value='other']")
+          .text(otherValue)
+          .val(otherValue); // Set the value of the "other" option
+        $(event.target).parent().hide();
       }
-    });
-  
-    $(document).on("keyup", inputClass, function(event) {
-      if (event.keyCode === 13) {
-        // Enter key
-        if ($(event.target).val() === "") {
-          $(event.target).addClass("is-invalid");
-          return false;
-        } else {
-          $(event.target).removeClass("is-invalid");
-  
-          var otherValue = $(event.target).val();
-          $(event.target)
-            .parent()
-            .siblings(selectClass)
-            .find("option[value='other']")
-            .text(otherValue);
-          $(event.target).parent().hide();
-        }
-      }
-    });
-  };
+    }
+  });
+};
+
   
 
 dynamicOtherOptions(".typeMG", ".otherTypeMG", ".dynamicTypeMG");
