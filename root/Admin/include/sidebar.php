@@ -78,52 +78,165 @@ function sidebar()
   return $html;
 }
 
-//Notification modal
-function showModal()
+//Notification modal user
+function showUserModal($conn)
 {
   $userID = $_SESSION["user"]["uID"];
+  $GetNotif = $conn->prepare("SELECT * FROM notification WHERE userID = ? ORDER BY timestamp DESC");
+  $GetNotif->bind_param("i", $userID);
+  $GetNotif->execute();
+  $result = $GetNotif->get_result();
+  $count = $result->num_rows;
   $html = '
-  <div class="modal fade" id="showNotification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="showUserNotification" tabindex="-1" aria-labelledby="user-notification" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
+        <h5 class="modal-title" id="user-notification">Notifications</h5>
         <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <div class="d-flex justify-content-center" id="toastContainer"></div>
-      <div class"me-4 ms-4">
-     <div class="d-flex justify-content-between">
-     <p id="notifCount" class="lead fs-6"></p>
-     <p class="text-primary text-end allowed" id="deleteAll" onClick="deleteAll('.$userID.')">Delete All</p></div>
-      <ul class="list-group list-group-light">
-      <li id="notification-list" class="list-group-item d-flex justify-content-between align-items-center lead fs-6">
-      </li>
-    </ul>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-      </div>
+      <div class="me-1 ms-1">';
+
+  if ($count > 0) {
+    $html .= '
+        <div class="d-flex justify-content-between">
+          <p class="lead fs-6">You have ' . $count . ' notifications</p>
+          <p class="text-primary text-end allowed" onClick="deleteUserNotificationAll(' . $userID . ')">Delete All</p>
+        </div>
+        <ul class="list-group list-group-light">';
+
+    while ($row = $result->fetch_assoc()) {
+      $message = $row["message"];
+      $id = $row["id"];
+      $timestamp = $row["timestamp"];
+      date_default_timezone_set('Asia/Manila');
+      $dateTime = new DateTime($timestamp);
+      $formattedDateTime = $dateTime->format("n/j/Y, g:i:s A");
+      $html .= '
+          <li class="list-group-item d-flex justify-content-between align-items-center lead fs-6">
+            <div class="d-block">
+              <span class="mb-0 me-0 ms-0 fw-bold">
+                <i class="fa-solid fa-circle text-primary me-2"></i>' . $message . '
+              </span>
+              <h6 class="fw-lighter text-muted mb-0">' . $formattedDateTime . '</h6>
+            </div>
+            <i class="fa-solid fa-xmark text-danger allowed me-4" onClick="deleteUserNotification(' . $id . ')"></i>
+          </li>';
+    }
+
+    $html .= '
+        </ul>';
+  } else {
+    $html .= '
+        <p class="lead fs-6">You don\'t have any notifications</p>';
+  }
+
+  $html .= '
+    </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
     </div>
   </div>
 </div>
-  ';
+</div>';
+
+  return $html;
+}
+
+//Show modal admin
+function showModalAdmin($conn)
+{
+  $getAdminNotification = $conn->prepare("SELECT * FROM admin_notification ORDER BY timestamp DESC");
+  $getAdminNotification->execute();
+  $result = $getAdminNotification->get_result();
+  $count = $result->num_rows;
+
+  $html = '
+  <div class="modal fade" id="showAdmin" tabindex="-1" aria-labelledby="notification-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notification-label">Notifications</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="me-1 ms-1">';
+
+  if ($count > 0) {
+    $html .= '
+            <div class="d-flex justify-content-between">
+              <p class="lead fs-6">You have ' . $count . ' notifications</p>
+              <p class="text-primary text-end allowed" onClick="deleteAllNotificationAdmin()">Delete All</p>
+            </div>
+            <ul class="list-group list-group-light">';
+
+    while ($row = $result->fetch_assoc()) {
+      $message = $row["message"];
+      $id = $row["id"];
+      $timestamp = $row["timestamp"];
+      date_default_timezone_set('Asia/Manila');
+      $dateTime = new DateTime($timestamp);
+      $formattedDateTime = $dateTime->format("n/j/Y, g:i:s A");
+      $html .= '
+              <li class="list-group-item d-flex justify-content-between align-items-center lead fs-6">
+                <div class="d-block">
+                  <span class="mb-0 me-0 ms-0 fw-bold">
+                    <i class="fa-solid fa-circle text-primary me-2"></i>' . $message . '
+                  </span>
+                  <h6 class="fw-lighter text-muted mb-0">' . $formattedDateTime . '</h6>
+                </div>
+                <i class="fa-solid fa-xmark text-danger allowed me-4" onClick="deleteAdminNotification(' . $id . ')"></i>
+              </li>';
+    }
+
+    $html .= '
+            </ul>';
+  } else {
+    $html .= '
+            <p class="lead fs-6">You don\'t have any notifications</p>';
+  }
+
+  $html .= '
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>';
+
   return $html;
 }
 
 //Admin profile menu
-function accountUpdate()
+function accountUpdate($conn)
 {
+  $getNotifCount = $conn->prepare("SELECT COUNT(*) AS notificationCount FROM admin_notification");
+  $getNotifCount->execute();
+  $notifCountResult = $getNotifCount->get_result();
+  $notifCountRow = $notifCountResult->fetch_assoc();
+  $notificationCount = $notifCountRow["notificationCount"];
   $html = '
  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <li><a class="dropdown-item" href="../UpdateUsersAccount/UpdateAccount.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="../UpdateUsersAccount/UpdatePassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
     <li><a class="dropdown-item" href="../Settings/settings.php"><i class="fa-solid fa-gear"></i> Settings</a></li>
-    <li><a class="dropdown-item" href="../include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
-  </ul>
+    <li><a class="dropdown-item" href="#" onClick="showAdminNotification()"><i class="fa-solid fa-envelope"></i> Notifications   
+    ';
 
- ';
+  if ($notificationCount > 0) {
+    $html .= '
+          <span class="badge rounded-pill badge-notification bg-danger">' . $notificationCount . '</span>';
+  }
+
+  $html .= '
+  </a></li>
+    <li><a class="dropdown-item" href="../include/logout.php"><i class="fa-sharp fa-solid fa-power-off"></i> Logout</a></li>
+  </ul>';
+
   return $html;
 }
 
@@ -141,7 +254,7 @@ function userAccountUpdate($conn)
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <li><a class="dropdown-item" href="UserUpdateProfile.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="UserUpdatePassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
-    <li><a class="dropdown-item" href="#" onClick="showNotification(' . $userID . ')"><i class="fa-solid fa-envelope"></i> Notifications   
+    <li><a class="dropdown-item" href="#" onClick="showUserNotification()"><i class="fa-solid fa-envelope"></i> Notifications   
     ';
 
   if ($notificationCount > 0) {
@@ -219,7 +332,7 @@ function userSidebar()
 }
 
 //Add to notification function
-function addToNotification($conn, $request_id,$statusMessage)
+function addToNotification($conn, $request_id, $statusMessage)
 {
   //Notification
   $manilaTimezone = new DateTimeZone('Asia/Manila');
@@ -249,14 +362,15 @@ function addToNotification($conn, $request_id,$statusMessage)
 }
 
 //Update request status
-function updateRequestStatus($conn,$status,$request_id){
+function updateRequestStatus($conn, $status, $request_id)
+{
   $manilaTimezone = new DateTimeZone('Asia/Manila');
   $currentDateTime = new DateTime('now', $manilaTimezone);
   $timestamp = $currentDateTime->format('Y-m-d H:i:s');
   $updateStatus = $conn->prepare("UPDATE receive_request SET status=?,status_timestamp=? WHERE request_id=?");
-  $updateStatus->bind_param('ssi', $status,$timestamp ,$request_id);
+  $updateStatus->bind_param('ssi', $status, $timestamp, $request_id);
   $updateStatus->execute();
   $updateUserRequestStatus = $conn->prepare("UPDATE request SET status=?,status_timestamp=? WHERE request_id=?");
-  $updateUserRequestStatus->bind_param('ssi', $status,$timestamp ,$request_id);
+  $updateUserRequestStatus->bind_param('ssi', $status, $timestamp, $request_id);
   $updateUserRequestStatus->execute();
 }

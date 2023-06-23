@@ -1,7 +1,6 @@
 <?php require_once "../include/protect.php";
 require_once "../include/profile.inc.php";
 require_once "../include/sidebar.php";
-require_once "../../../config/config.php";
 
 $getUser = $conn->prepare("SELECT firstname from adduser where uID=?");
 $getUser->bind_param("i", $userID);
@@ -22,13 +21,13 @@ $firstname = $row["firstname"];
   <link rel="stylesheet" href="../css/mdb.min.css">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
-	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <title>Home</title>
 </head>
 
 <body>
-<?php echo showModal() ?>
-<input type="hidden" id="userID" value="<?php echo htmlentities($userID) ?>">
+  <?php echo showUserModal($conn) ?>
+  <input type="hidden" id="userID" value="<?php echo htmlentities($userID) ?>">
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar"><?php echo userSidebar() ?></div>
@@ -40,7 +39,7 @@ $firstname = $row["firstname"];
           <h1 class="fs-1 breadcrumb-title">Welcome, <span class="text-muted"><?php echo htmlentities($firstname) ?></span></h1>
           <nav class="bc-nav d-flex">
             <h6 class="mb-0">
-            <a href="#" class="text-muted bc-path">Home</a>
+              <a href="#" class="text-muted bc-path">Home</a>
               <span>/</span>
               <a href="#" class="text-reset bc-path active">Welcome Page</a>
             </h6>
@@ -152,8 +151,25 @@ $firstname = $row["firstname"];
   <script src="../scripts/sweetalert2.all.min.js"></script>
   <script src="../scripts/timeout.js"></script>
   <script src="../scripts/ShowNotification.js"></script>
-  <script src="../scripts/ShowAlertNotification.js"></script>
+  <script>
+    let userID = $("#userID").val();
+    const showUserAlertNotification = (id) => {
+      $.ajax({
+        url: `../include/GetUserNotification.php?userID=${id}`,
+        method: "GET",
+        success: (response) => {
+          if (response.count > 0) {
+            $("#showUserNotification").modal("show");
+          }
+        },
+        error: (xhr, status, error) => {
+          console.error(error); // Example: Display any error messages in the console
+        }
+      });
+    };
 
+    showUserAlertNotification(userID);
+  </script>
 
 
 </body>

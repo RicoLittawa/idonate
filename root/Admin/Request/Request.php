@@ -23,6 +23,7 @@ require_once "../include/sidebar.php";
 </head>
 
 <body>
+  <?php echo showModalAdmin($conn) ?>
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" data-mdb-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
@@ -130,7 +131,7 @@ require_once "../include/sidebar.php";
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
-      <?php echo sidebar($conn); ?>
+      <?php echo sidebar(); ?>
     </div>
     <!--Main content -->
     <div class="main-content">
@@ -155,7 +156,7 @@ require_once "../include/sidebar.php";
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo accountUpdate() ?>
+            <?php echo accountUpdate($conn) ?>
           </div>
         </div>
       </div>
@@ -213,6 +214,7 @@ require_once "../include/sidebar.php";
   <!--Necessary Plugins -->
   <script src="scripts/RequestTable.js"></script>
   <script src="../scripts/TableFilterButtons.js"></script>
+  <script src="../scripts/ShowNotification.js"></script>
 </body>
 
 </html>

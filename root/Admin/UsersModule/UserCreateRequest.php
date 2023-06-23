@@ -37,7 +37,7 @@ $requestRef = $refRow["request_id"];
 <body>
 <!-- Button trigger modal -->
   <!--Print -->
-  <?php echo showModal() ?>
+  <?php echo showUserModal($conn) ?>
   <div class="modal fade" id="openPrint" tabindex="-1" aria-labelledby="printreceipt" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">

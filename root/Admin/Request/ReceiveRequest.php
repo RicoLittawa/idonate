@@ -54,6 +54,7 @@ if (isset($_GET['requestId'])) {
 </head>
 
 <body>
+	<?php echo showModalAdmin($conn) ?>
 	<div class="main-container">
 		<!-- SIDEBAR -->
 		<div class="sidebar" id="sidebar"><?php echo sidebar() ?></div>
@@ -82,7 +83,7 @@ if (isset($_GET['requestId'])) {
 								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
 						</a>
-						<?php echo accountUpdate() ?>
+						<?php echo accountUpdate($conn) ?>
 					</div>
 				</div>
 			</div>
@@ -460,6 +461,7 @@ if (isset($_GET['requestId'])) {
 	<script src="../scripts/timeout.js"></script>
 	<script src="scripts/AcceptRequest.js"></script>
 	<script src="../scripts/CancelButton.js"></script>
+	<script src="../scripts/ShowNotification.js"></script>
 </body>
 
 </html>

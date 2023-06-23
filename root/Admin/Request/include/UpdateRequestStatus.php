@@ -5,6 +5,9 @@ include "../../include/sidebar.php";
 if (isset($_POST['saveStatus'])) {
     $reference = $_POST['reference'];
     $selectedStatus = $_POST['selectStatus'];
+    $manilaTimezone = new DateTimeZone('Asia/Manila');
+    $currentDateTime = new DateTime('now', $manilaTimezone);
+    $timestamp = $currentDateTime->format('Y-m-d H:i:s');
     switch ($selectedStatus) {
             //When status is set for ready for pickup
         case "Ready for Pick-up":

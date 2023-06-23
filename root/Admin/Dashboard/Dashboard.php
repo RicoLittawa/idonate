@@ -19,15 +19,16 @@ require_once "../include/sidebar.php";
   <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
   <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
-	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <!--Necessary Plugins-->
   <title>Dashboard</title>
 </head>
 
 <body>
+  <?php echo showModalAdmin($conn); ?>
   <div class="main-container">
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar"><?php echo sidebar() ?></div>
+    <div class="sidebar" id="sidebar"><?php echo sidebar(); ?></div>
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
@@ -51,7 +52,7 @@ require_once "../include/sidebar.php";
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo accountUpdate() ?>
+            <?php echo accountUpdate($conn); ?>
           </div>
         </div>
       </div>
@@ -148,15 +149,15 @@ require_once "../include/sidebar.php";
                   <div class="category-table"></div>
                 </div>
                 <div class="table-responsive">
-                <table class="table align-middle mb-0 bg-white table-hover w-100" id="category_data">
-                  <thead class="bg-light">
-                    <tr>
-                      <th>Category</th>
-                      <th>Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
+                  <table class="table align-middle mb-0 bg-white table-hover w-100" id="category_data">
+                    <thead class="bg-light">
+                      <tr>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -169,16 +170,16 @@ require_once "../include/sidebar.php";
                   <div class="request-table"></div>
                 </div>
                 <div class="table-responsive">
-                <table class="table align-middle mb-0 bg-white table-hover w-100" id="request_data">
-                  <thead class="bg-light">
-                    <tr>
-                      <th>Receipt Number</th>
-                      <th>Date Completed</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
+                  <table class="table align-middle mb-0 bg-white table-hover w-100" id="request_data">
+                    <thead class="bg-light">
+                      <tr>
+                        <th>Receipt Number</th>
+                        <th>Date Completed</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -204,5 +205,26 @@ require_once "../include/sidebar.php";
     <script src="scripts/TotalNumberCategoryBarChart.js"></script>
     <script src="scripts/DashboardStocksTable.js"></script>
     <script src="../scripts/TableFilterButtons.js"></script>
+    <script src="../scripts/ShowNotification.js"></script>
+
+    <script>
+      const showAdminAlertNotification = () => {
+        $.ajax({
+          url: "../include/GetAdminNotification.php",
+          method: "GET",
+          success: (response) => {
+            if (response.count > 0) {
+              $("#showAdmin").modal("show");
+            }
+          },
+          error: (xhr, status, error) => {
+            console.error(error); // Example: Display any error messages in the console
+          }
+        });
+      };
+      showAdminAlertNotification();
+    </script>
+
 </body>
+
 </html>

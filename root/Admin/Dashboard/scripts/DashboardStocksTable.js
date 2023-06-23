@@ -159,7 +159,7 @@ const request_table = $("#request_data").DataTable({
       },
     },
   ],
-  order: [[1, "Desc"]],
+  order: [[0, "Desc"]],
   buttons: [
     {
       extend: "copyHtml5",

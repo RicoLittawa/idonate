@@ -4,6 +4,7 @@ require_once '../../include/protect.php';
 //accept request
 if (isset($_POST['createBtn'])) {
     $reqRef = $_POST['reqRef'];
+    $request_id = $_POST['reqRef'];
     $request_date = $_POST['request_date'];
     $manilaTimezone = new DateTimeZone('Asia/Manila');
     $currentDateTime = new DateTime('now', $manilaTimezone);
@@ -69,6 +70,26 @@ if (isset($_POST['createBtn'])) {
         $requestRefUpdate = $conn->prepare("UPDATE ref_request set request_id=?");
         $requestRefUpdate->bind_param('i', $reqRef);
         $requestRefUpdate->execute();
+
+        //Admin Notification
+        $current_timestamp = $currentDateTime->format('Y-m-d H:i:s');
+        $selectRequesterId = $conn->prepare("SELECT firstname,lastname from adduser where uID=?");
+        $selectRequesterId->bind_param("i", $userID);
+        $selectRequesterId->execute();
+        $requesterIdResult = $selectRequesterId->get_result();
+            if ($requesterIdResult->num_rows === 0) {
+                throw new Exception("Request id cannot be found");
+            } else {
+                $fetchedRequesterId = $requesterIdResult->fetch_assoc();
+                $request_firstname = $fetchedRequesterId["firstname"];
+                $request_lastname = $fetchedRequesterId["lastname"];
+                $date = date('Y-m-d', strtotime($request_date));
+                $receiptNumber = str_replace('-', '', $date);
+                $message = "{$request_firstname} {$request_lastname} created a new request with receipt number {$receiptNumber}-00{$request_id}";
+                $insertNotif = $conn->prepare("INSERT INTO admin_notification (message, timestamp) VALUES (?, ?)");
+                $insertNotif->bind_param("ss", $message, $current_timestamp);
+                $insertNotif->execute();
+            }
     } catch (Exception $e) {
         $response = [
             "status" => "Error",

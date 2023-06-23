@@ -19,7 +19,7 @@ require_once "../include/sidebar.php";
 </head>
 
 <body>
-<?php echo showModal() ?>
+<?php echo showUserModal($conn) ?>
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar"><?php echo userSidebar() ?></div>
