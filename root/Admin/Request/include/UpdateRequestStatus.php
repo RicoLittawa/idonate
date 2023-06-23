@@ -1,11 +1,10 @@
 <?php
 require_once '../../../../config/config.php';
+include "../../include/sidebar.php";
+
 if (isset($_POST['saveStatus'])) {
     $reference = $_POST['reference'];
     $selectedStatus = $_POST['selectStatus'];
-    $manilaTimezone = new DateTimeZone('Asia/Manila');
-    $currentDateTime = new DateTime('now', $manilaTimezone);
-    $timestamp = $currentDateTime->format('Y-m-d H:i:s');
     switch ($selectedStatus) {
             //When status is set for ready for pickup
         case "Ready for Pick-up":
@@ -70,23 +69,20 @@ if (isset($_POST['saveStatus'])) {
                             $updateStockStatement->bind_param('iss', $newQuantity, $newDistributedQuantity, $onProcessProduct);
                             $success = $updateStockStatement->execute();
                             if ($success) {
-                                $updateStatus1 = "UPDATE request set status= ?, status_timestamp=? where request_id=?";
-                                $updateStatusStatement1 = $conn->prepare($updateStatus1);
-                                $updateStatusStatement1->bind_param('ssi', $selectedStatus,$timestamp,$reference);
-                                $updateStatusStatement1->execute();
-                                $updateStatus2 = "UPDATE receive_request set status= ?, status_timestamp=? where request_id=?";
-                                $updateStatusStatement2 = $conn->prepare($updateStatus2);
-                                $updateStatusStatement2->bind_param('ssi', $selectedStatus,$timestamp,$reference);
-                                $updateStatusStatement2->execute();
+                                updateRequestStatus($conn, $selectedStatus, $reference);
+                                $statusMessage = "is ready for pick-up";
+                                addToNotification($conn,$reference,$statusMessage);
+                            
                                 $response = [
                                     "status" => "Success",
                                     "message" => "Status is updated successfully",
                                     "icon" => "success",
                                 ];
-                        
+
                                 header("Content-Type: application/json");
                                 echo json_encode($response);
-                                exit();                                                    }
+                                exit();
+                            }
                         } else {
                             // handle error: product not found in any category table
                             throw new Exception("Product not found in any category table");
@@ -99,47 +95,46 @@ if (isset($_POST['saveStatus'])) {
                     "message" => $e->getMessage(),
                     "icon" => "error",
                 ];
-        
+
                 header("Content-Type: application/json");
                 echo json_encode($response);
                 exit();
-                    }
+            }
             break;
         case "Request cannot be completed":
-            $updateStatus1 = "UPDATE request set status= ?,status_timestamp where request_id=?";
-            $updateStatusStatement1 = $conn->prepare($updateStatus1);
-            $updateStatusStatement1->bind_param('ssi', $selectedStatus, $timestamp,$reference);
-            $updateStatusStatement1->execute();
-            $updateStatus2 = "UPDATE receive_request set status= ? where request_id=?";
-            $updateStatusStatement2 = $conn->prepare($updateStatus2);
-            $updateStatusStatement2->bind_param('ssi', $selectedStatus, $timestamp,$reference);
-            $updateStatusStatement2->execute();
+            updateRequestStatus($conn, $selectedStatus, $reference);
+            $statusMessage = "is cannot be completed";
+            addToNotification($conn,$reference,$statusMessage);
             $response = [
                 "status" => "Success",
                 "message" => "Status is updated successfully",
                 "icon" => "success",
             ];
-    
+
             header("Content-Type: application/json");
             echo json_encode($response);
-            exit();             break;
+            exit();
+            break;
         case "Request completed":
             $updateStatus1 = "UPDATE request set status= ?,status_timestamp=?, receivedate=? where request_id=?";
             $updateStatusStatement1 = $conn->prepare($updateStatus1);
-            $updateStatusStatement1->bind_param('sssi', $selectedStatus, $timestamp, $timestamp,$reference);
+            $updateStatusStatement1->bind_param('sssi', $selectedStatus, $timestamp, $timestamp, $reference);
             $updateStatusStatement1->execute();
             $updateStatus2 = "UPDATE receive_request set status= ?,status_timestamp=?,receivedate=? where request_id=?";
             $updateStatusStatement2 = $conn->prepare($updateStatus2);
-            $updateStatusStatement2->bind_param('sssi', $selectedStatus, $timestamp, $timestamp,$reference);
+            $updateStatusStatement2->bind_param('sssi', $selectedStatus, $timestamp, $timestamp, $reference);
             $updateStatusStatement2->execute();
+            $statusMessage = "is completed";
+            addToNotification($conn,$reference,$statusMessage);
             $response = [
                 "status" => "Success",
                 "message" => "Status is updated successfully",
                 "icon" => "success",
             ];
-    
+
             header("Content-Type: application/json");
             echo json_encode($response);
-            exit();             break;
+            exit();
+            break;
     }
 }

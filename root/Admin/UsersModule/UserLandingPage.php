@@ -27,6 +27,8 @@ $firstname = $row["firstname"];
 </head>
 
 <body>
+<?php echo showModal() ?>
+<input type="hidden" id="userID" value="<?php echo htmlentities($userID) ?>">
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar"><?php echo userSidebar() ?></div>
@@ -149,6 +151,10 @@ $firstname = $row["firstname"];
   <script src="../scripts/mdb.min.js"></script>
   <script src="../scripts/sweetalert2.all.min.js"></script>
   <script src="../scripts/timeout.js"></script>
+  <script src="../scripts/ShowNotification.js"></script>
+  <script src="../scripts/ShowAlertNotification.js"></script>
+
+
 
 </body>
 

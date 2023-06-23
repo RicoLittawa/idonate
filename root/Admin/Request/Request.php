@@ -38,14 +38,14 @@ require_once "../include/sidebar.php";
             <select id="selectStatus" class="form-select">
               <option value="">Select Status</option>
               <option value="Ready for Pick-up">Ready for Pick-up</option>
-              <option value="Request cannot be completed">Request cannot be proccessed</option>
+              <option value="Request cannot be completed">Request cannot be completed</option>
               <option value="Request completed">Request completed</option>
             </select>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary closeModal">Close</button>
-          <button type="button" id="saveStatus" class="btn btn-success">
+          <button type="submit" id="saveStatus" class="btn btn-success">
             <span class="submit-text">Save changes</span>
             <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
           </button>

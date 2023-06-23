@@ -1,5 +1,5 @@
 <?php
-require_once '../../../config/config.php';
+//Admin sidebar
 function sidebar()
 {
   $html =
@@ -78,8 +78,10 @@ function sidebar()
   return $html;
 }
 
+//Notification modal
 function showModal()
 {
+  $userID = $_SESSION["user"]["uID"];
   $html = '
   <div class="modal fade" id="showNotification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
@@ -89,10 +91,16 @@ function showModal()
         <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <ul class="list-group list-group-light me-4 ms-4">
-        <li id="notification-list" class="list-group-item d-flex justify-content-between align-items-center lead fs-6">
-        </li>
-      </ul>
+      <div class="d-flex justify-content-center" id="toastContainer"></div>
+      <div class"me-4 ms-4">
+     <div class="d-flex justify-content-between">
+     <p id="notifCount" class="lead fs-6"></p>
+     <p class="text-primary text-end allowed" id="deleteAll" onClick="deleteAll('.$userID.')">Delete All</p></div>
+      <ul class="list-group list-group-light">
+      <li id="notification-list" class="list-group-item d-flex justify-content-between align-items-center lead fs-6">
+      </li>
+    </ul>
+      </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
@@ -104,6 +112,7 @@ function showModal()
   return $html;
 }
 
+//Admin profile menu
 function accountUpdate()
 {
   $html = '
@@ -118,17 +127,16 @@ function accountUpdate()
   return $html;
 }
 
+//User profile menu
 function userAccountUpdate($conn)
 {
   $userID = $_SESSION["user"]["uID"];
-  $getNotifCount = $conn->prepare("SELECT COUNT(*) AS notificationCount, MAX(read_message) AS readStatus FROM notification WHERE userID = ?");
+  $getNotifCount = $conn->prepare("SELECT COUNT(*) AS notificationCount FROM notification WHERE userID = ?");
   $getNotifCount->bind_param("i", $userID);
   $getNotifCount->execute();
   $notifCountResult = $getNotifCount->get_result();
   $notifCountRow = $notifCountResult->fetch_assoc();
   $notificationCount = $notifCountRow["notificationCount"];
-  $readStatus = $notifCountRow["readStatus"];
-
   $html = '
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <li><a class="dropdown-item" href="UserUpdateProfile.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
@@ -136,7 +144,7 @@ function userAccountUpdate($conn)
     <li><a class="dropdown-item" href="#" onClick="showNotification(' . $userID . ')"><i class="fa-solid fa-envelope"></i> Notifications   
     ';
 
-  if ($notificationCount > 0 && $readStatus === 'unread') {
+  if ($notificationCount > 0) {
     $html .= '
           <span class="badge rounded-pill badge-notification bg-danger">' . $notificationCount . '</span>';
   }
@@ -149,6 +157,7 @@ function userAccountUpdate($conn)
   return $html;
 }
 
+//User sidebar
 function userSidebar()
 {
   $html =
@@ -207,4 +216,47 @@ function userSidebar()
       </nav>
   ';
   return $html;
+}
+
+//Add to notification function
+function addToNotification($conn, $request_id,$statusMessage)
+{
+  //Notification
+  $manilaTimezone = new DateTimeZone('Asia/Manila');
+  $currentDateTime = new DateTime('now', $manilaTimezone);
+  $timestamp = $currentDateTime->format('Y-m-d H:i:s');
+  $selectRequesterId = $conn->prepare("SELECT userID,requestdate from request where request_id=?");
+  $selectRequesterId->bind_param("i", $request_id);
+  $selectRequesterId->execute();
+  $requesterIdResult = $selectRequesterId->get_result();
+  try {
+    if ($requesterIdResult->num_rows === 0) {
+      throw new Exception("Request id cannot be found");
+    } else {
+      $fetchedRequesterId = $requesterIdResult->fetch_assoc();
+      $userID = $fetchedRequesterId["userID"];
+      $requestdate = $fetchedRequesterId["requestdate"];
+      $date = date('Y-m-d', strtotime($requestdate));
+      $receiptNumber = str_replace('-', '', $date);
+      $message = "Your request {$receiptNumber}-00{$request_id} {$statusMessage}";
+      $insertNotif = $conn->prepare("INSERT INTO notification (userID, message, timestamp) VALUES (?, ?, ?)");
+      $insertNotif->bind_param("iss", $userID, $message, $timestamp);
+      $insertNotif->execute();
+    }
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+}
+
+//Update request status
+function updateRequestStatus($conn,$status,$request_id){
+  $manilaTimezone = new DateTimeZone('Asia/Manila');
+  $currentDateTime = new DateTime('now', $manilaTimezone);
+  $timestamp = $currentDateTime->format('Y-m-d H:i:s');
+  $updateStatus = $conn->prepare("UPDATE receive_request SET status=?,status_timestamp=? WHERE request_id=?");
+  $updateStatus->bind_param('ssi', $status,$timestamp ,$request_id);
+  $updateStatus->execute();
+  $updateUserRequestStatus = $conn->prepare("UPDATE request SET status=?,status_timestamp=? WHERE request_id=?");
+  $updateUserRequestStatus->bind_param('ssi', $status,$timestamp ,$request_id);
+  $updateUserRequestStatus->execute();
 }
