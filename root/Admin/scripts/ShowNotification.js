@@ -18,7 +18,7 @@ const showNotification = (userID) => {
             ${item.message}</span>
             <h6  class="fw-lighter text-muted mb-0">${formattedDateTime}</h6>
           </div>
-            <i class="fa-solid fa-xmark text-danger allowed ps-5" onClick="deleteNotification(${item.notifID})"></i>
+            <i class="fa-solid fa-xmark text-danger allowed ps-5 ms-5" onClick="deleteNotification(${item.notifID})"></i>
         </li>`;
       });
       notificationList += "</ul>";

@@ -79,6 +79,7 @@ require_once "../include/sidebar.php";
 </head>
 
 <body>
+<?php echo showModal() ?>
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar"><?php echo userSidebar() ?></div>
@@ -180,6 +181,7 @@ require_once "../include/sidebar.php";
   <script src="../scripts/sweetalert2.all.min.js"></script>
   <script src="../scripts/UpdateAccount.js"></script>
   <script src="../scripts/timeout.js"></script>
+  <script src="../scripts/ShowNotification.js"></script>
 </body>
 
 </html>
