@@ -23,7 +23,7 @@ const showNotification = (userID) => {
       });
       notificationList += "</ul>";
       $("#notification-list").html(notificationList);
-      if (data.count > 0 ) {
+      if (data.count > 0) {
         $("#notifCount").text(`You have ${data.count} new notifications`);
         $("#deleteAll").show();
       } else {
@@ -72,12 +72,20 @@ const deleteNotification = (notifID) => {
     data: { deleteBtn: "", notifID: notifID },
     success: (data) => {
       if (data === "deleted") {
-        showToast("deleted");
-        setTimeout(()=>{
+        Swal.fire({
+          title: "Success",
+          text: "Notification deleted",
+          icon: "success",
+          confirmButtonColor: "#20d070",
+          confirmButtonText: "OK",
+          allowOutsideClick: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
           window.location.reload();
-        },1500)
+        }, 2500);
       } else {
-        alert(data);
+        return;
       }
     },
   });
@@ -85,4 +93,3 @@ const deleteNotification = (notifID) => {
 const deleteAll = (userID) => {
   alert(userID);
 };
-

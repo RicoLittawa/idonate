@@ -141,7 +141,7 @@ let createRequest = $("#create_request_data").DataTable({
           case "pending":
             return buttonHtml;
           case "Request cannot be completed":
-            return `<span class="badge badge-danger user-select-none not-allowed">${data}</span>`;
+            return `<span class="badge badge-warning user-select-none not-allowed">N/A</span>`;
           default:
             return badgeHtml;
         }

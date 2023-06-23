@@ -26,7 +26,7 @@
                 window.history.go(-1)
               }, 1500)
           }
-      })
+      });
   })
   }
   cancelButton("#cancelBtn");
