@@ -25,7 +25,7 @@ $requestRef = $refRow["request_id"];
   <link rel="stylesheet" href="../css/mdb.min.css">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
-	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <!--Necessary Plugins-->
   <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
@@ -34,7 +34,7 @@ $requestRef = $refRow["request_id"];
 </head>
 
 <body>
-<!-- Button trigger modal -->
+  <!-- Button trigger modal -->
   <!--Print -->
   <?php echo showUserModal($conn) ?>
   <div class="modal fade" id="openPrint" tabindex="-1" aria-labelledby="printreceipt" aria-hidden="true">
@@ -192,19 +192,19 @@ $requestRef = $refRow["request_id"];
                 </div>
               </form>
             </div>
-            <!----Filter -->
-            <div class="d-flex justify-content-end">
-              <div id="search-field"></div>
-            </div>
-            <div class="d-flex justify-content-between py-3">
-              <div class="create-request-download-btn"></div>
-              <div class="d-flex">
-                <button class="btn btn-success btn-rounded" type="button" id="toggleFormRequestBtn">Show Form</button>
-                <div class="ms-2" id="status_filter"></div>
-              </div>
-            </div>
-            <!----Filter -->
             <div class="table-responsive">
+              <!----Filter -->
+              <div class="d-flex justify-content-end">
+                <div id="search-field"></div>
+              </div>
+              <div class="d-flex justify-content-between py-3">
+                <div class="create-request-download-btn"></div>
+                <div class="d-flex">
+                  <button class="btn btn-success btn-rounded" type="button" id="toggleFormRequestBtn">Show Form</button>
+                  <div class="ms-2" id="status_filter"></div>
+                </div>
+              </div>
+              <!----Filter -->
               <table class="table align-middle mb-0 bg-white table-hover w-100" id="create_request_data">
                 <thead class="bg-light">
                   <tr>

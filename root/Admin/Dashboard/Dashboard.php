@@ -142,12 +142,10 @@ require_once "../include/sidebar.php";
             <div class="card">
               <div class="card-body">
                 <div class="d-flex justify-content-start">
-                  <h4 class="mb-3">Total number of donated items</h4>
-                </div>
-                <div class="d-flex justify-content-between py-3">
-                  <div class="category-table"></div>
+                  <h4 class="mb-3">Total number of items</h4>
                 </div>
                 <div class="table-responsive">
+                  <div class="category-table py-3"></div>
                   <table class="table align-middle mb-0 bg-white table-hover w-100" id="category_data">
                     <thead class="bg-light">
                       <tr>
@@ -165,10 +163,8 @@ require_once "../include/sidebar.php";
             <div class="card">
               <div class="card-body">
                 <h1 class="mb-3">Requests Completed</h1>
-                <div class="d-flex justify-content-between py-3">
-                  <div class="request-table"></div>
-                </div>
                 <div class="table-responsive">
+                  <div class="request-table py-3"></div>
                   <table class="table align-middle mb-0 bg-white table-hover w-100" id="request_data">
                     <thead class="bg-light">
                       <tr>
@@ -211,7 +207,7 @@ require_once "../include/sidebar.php";
         $.ajax({
           url: "../include/GetAdminNotification.php",
           method: "GET",
-          dataType:"json",
+          dataType: "json",
           success: (response) => {
             if (response.count != 0) {
               $("#showAdmin").modal("show");

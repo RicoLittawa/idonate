@@ -120,7 +120,8 @@ require_once "../include/sidebar.php";
                 </div>
               </form>
             </div>
-            <!----Filter -->
+            <div class="table-responsive">
+                <!----Filter -->
             <div class="d-flex justify-content-end">
               <div id="search-field"></div>
             </div>
@@ -132,7 +133,6 @@ require_once "../include/sidebar.php";
               </div>
             </div>
             <!----Filter -->
-            <div class="table-responsive">
             <table class="table align-middle mb-0 bg-white table-hover w-100" id="user_data">
               <thead class="bg-light">
                 <tr>

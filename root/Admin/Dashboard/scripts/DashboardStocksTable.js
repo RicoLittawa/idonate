@@ -1,6 +1,5 @@
 //Populate category table on dashboard
 const category_table = $("#category_data").DataTable({
-  responsive: true,
   headerCallback: function (thead) {
     $(thead).find("th").css("font-weight", "bolder");
   },
@@ -122,7 +121,6 @@ const category_table = $("#category_data").DataTable({
 //Populate request table on dashboard
 
 const request_table = $("#request_data").DataTable({
-  responsive: true,
   headerCallback: function (thead) {
     $(thead).find("th").css("font-weight", "bolder");
   },

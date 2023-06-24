@@ -58,24 +58,24 @@ require_once "../include/sidebar.php";
       <div class="custom-container pb-3 me-5">
         <div class="card">
           <div class="card-body overflow-auto">
-            <!----Filter -->
-            <div class="d-flex justify-content-between">
-              <div class="d-flex">
-                <button class="btn btn-success btn-rounded me-2 email_button text-wrap" id="bulk_email" data-action="bulk">Send to all</button>
-                <button class="btn btn-success btn-rounded text-wrap" id="addPage"><i class="fa-solid fa-plus"></i></button>
-              </div>
-              <div id="search-field"></div>
-            </div>
-            <div class="d-flex justify-content-between py-3">
-              <div class="donor-download-btn"></div>
-              <div>
-                <input type="checkbox" class="btn-check" id="selectAll" autocomplete="off" />
-                <label class="btn btn-secondary btn-rounded" for="selectAll">Select All</label>
-              </div>
-            </div>
-            <!----Filter -->
             <!--Place table here --->
             <div class="table-responsive">
+              <!----Filter -->
+              <div class="d-flex justify-content-between">
+                <div class="d-flex">
+                  <button class="btn btn-success btn-rounded me-2 email_button text-wrap" id="bulk_email" data-action="bulk">Send to all</button>
+                  <button class="btn btn-success btn-rounded text-wrap" id="addPage"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div id="search-field"></div>
+              </div>
+              <div class="d-flex justify-content-between py-3">
+                <div class="donor-download-btn"></div>
+                <div>
+                  <input type="checkbox" class="btn-check" id="selectAll" autocomplete="off" />
+                  <label class="btn btn-secondary btn-rounded" for="selectAll">Select All</label>
+                </div>
+              </div>
+              <!----Filter -->
               <table class="table align-middle mb-0 bg-white table-hover w-100" id="donors_data">
                 <thead class="bg-light">
                   <tr>

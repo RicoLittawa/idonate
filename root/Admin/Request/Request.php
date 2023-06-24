@@ -17,7 +17,7 @@ require_once "../include/sidebar.php";
   <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
   <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
-	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <title>Requests</title>
 </head>
 
@@ -164,18 +164,18 @@ require_once "../include/sidebar.php";
       <div class="custom-container pb-3 me-5">
         <div class="card">
           <div class="card-body">
-            <!----Filter -->
-            <div class="d-flex justify-content-end">
-              <div id="search-field"></div>
-            </div>
-            <div class="d-flex justify-content-between py-3">
-              <div class="request-download-btn"></div>
-              <div class="form-group">
-                <div id="status_filter"></div>
-              </div>
-            </div>
-            <!----Filter -->
             <div class="table-responsive">
+              <!----Filter -->
+              <div class="d-flex justify-content-end">
+                <div id="search-field"></div>
+              </div>
+              <div class="d-flex justify-content-between py-3">
+                <div class="request-download-btn"></div>
+                <div class="form-group">
+                  <div id="status_filter"></div>
+                </div>
+              </div>
+              <!----Filter -->
               <table class="table align-middle mb-0 bg-white table-hover w-100" id="request_data_main">
                 <thead class="bg-light">
                   <tr>
