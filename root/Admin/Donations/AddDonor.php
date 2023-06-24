@@ -26,6 +26,7 @@ require_once '../include/FunctionSelectBox.php';
 </head>
 
 <body>
+  <?php echo showModalAdmin($conn) ?>
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar"><?php echo sidebar(); ?></div>
@@ -54,7 +55,7 @@ require_once '../include/FunctionSelectBox.php';
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo accountUpdate() ?>
+            <?php echo accountUpdate($conn) ?>
           </div>
         </div>
       </div>
@@ -218,6 +219,7 @@ require_once '../include/FunctionSelectBox.php';
   <script src="scripts/AddDonorProcess.js"></script>
   <script src="scripts/AutoCompleteProducts.js"></script>
   <script src="../scripts/CancelButton.js"></script>
+  <script src="../scripts/ShowNotification.js"></script>
 </body>
 
 </html>

@@ -2,8 +2,6 @@
 require_once "../include/profile.inc.php";
 require_once "../include/FunctionSelectBox.php";
 require_once "../include/sidebar.php";
-require_once "../../../config/config.php";
-
 $cert = $conn->prepare("SELECT * FROM template_certi");
 $cert->execute();
 $result = $cert->get_result();
@@ -36,6 +34,7 @@ $fileName = $row["template"];
 </head>
 
 <body>
+	<?php echo showModalAdmin($conn) ?>
 	<div class="main-container">
 		<!-- SIDEBAR -->
 		<div class="sidebar" id="sidebar"><?php echo sidebar(); ?></div>
@@ -62,7 +61,7 @@ $fileName = $row["template"];
 								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
 						</a>
-						<?php echo accountUpdate(); ?>
+						<?php echo accountUpdate($conn); ?>
 					</div>
 				</div>
 			</div>
@@ -125,11 +124,7 @@ $fileName = $row["template"];
 	<script src="scripts/Settings.js"></script>
 	<script src="../scripts/sweetalert2.all.min.js"></script>
 	<script src="../scripts/timeout.js"></script>
-	<!--Necessary Plugins -->
-
-	<!--Necessary Plugins -->
-
-
+	<script src="../scripts/ShowNotification.js"></script>
 </body>
 
 </html>

@@ -26,6 +26,7 @@ require_once "../include/sidebar.php";
 </head>
 
 <body>
+  <?php echo showModalAdmin($conn) ?>
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar"><?php echo sidebar() ?></div>
@@ -52,7 +53,7 @@ require_once "../include/sidebar.php";
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo accountUpdate() ?>
+            <?php echo accountUpdate($conn) ?>
           </div>
         </div>
       </div>
@@ -107,7 +108,7 @@ require_once "../include/sidebar.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
   <script src="../scripts/TableFilterButtons.js"></script>
   <script src="scripts/StocksTable.js"></script>
-
+  <script src="../scripts/ShowNotification.js"></script>
 </body>
 
 </html>

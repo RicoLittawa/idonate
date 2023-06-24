@@ -115,7 +115,7 @@ require_once "../include/sidebar.php";
   <!--Necessary Plugins -->
   <script src="scripts/Donors.js"></script>
   <script src="../scripts/TableFilterButtons.js"></script>
-  <script src="../scripts/ShowAdminNotification.js"></script>
+  <script src="../scripts/ShowNotification.js"></script>
 </body>
 
 </html>

@@ -77,7 +77,7 @@ require "../include/sidebar.php";
 
   <title>User Details</title>
 </head>
-
+<?php echo showModalAdmin($conn) ?>
 <body>
   <div class="main-container">
     <!-- SIDEBAR -->
@@ -105,7 +105,7 @@ require "../include/sidebar.php";
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" id="newProfile" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo accountUpdate(); ?>
+            <?php echo accountUpdate($conn); ?>
           </div>
         </div>
       </div>
@@ -180,6 +180,7 @@ require "../include/sidebar.php";
   <script src="../scripts/sweetalert2.all.min.js"></script>
   <script src="../scripts/timeout.js"></script>
   <script src="../scripts/UpdateAccount.js"></script>
+  <script src="../scripts/ShowNotification.js"></script>
 </body>
 
 </html>

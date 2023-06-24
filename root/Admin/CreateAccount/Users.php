@@ -21,6 +21,7 @@ require_once "../include/sidebar.php";
   <title>User Details</title>
 </head>
 <body>
+  <?php echo showModalAdmin($conn) ?>
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar"><?php echo sidebar() ?> </div>
@@ -47,7 +48,7 @@ require_once "../include/sidebar.php";
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-          <?php echo accountUpdate() ?>
+          <?php echo accountUpdate($conn) ?>
           </div>
         </div>
       </div>
@@ -172,5 +173,6 @@ require_once "../include/sidebar.php";
   <script src="../scripts/TableFilterButtons.js"></script>
   <script src="../scripts/ToggleForm.js"></script>
   <script src="scripts/AddUsers.js"></script>
+  <script src="../scripts/ShowNotification.js"></script>
 </body>
 </html>

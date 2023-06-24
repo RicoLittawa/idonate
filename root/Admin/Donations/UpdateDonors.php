@@ -2,8 +2,6 @@
 require_once "../include/profile.inc.php";
 require_once "../include/sidebar.php";
 require_once "../include/FunctionSelectBox.php";
-require_once "../../../config/config.php";
-
 if (isset($_GET["editdonate"])) {
 	$encodedId = $_GET["editdonate"];
 	$update_id = base64_decode($encodedId);
@@ -44,6 +42,7 @@ if (isset($_GET["editdonate"])) {
 </head>
 
 <body>
+	<?php echo showModalAdmin($conn) ?>
 	<!--Print -->
 	<div class="modal fade" id="openPrint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl">
@@ -208,7 +207,7 @@ if (isset($_GET["editdonate"])) {
 								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
 						</a>
-						<?php echo accountUpdate() ?>
+						<?php echo accountUpdate($conn) ?>
 					</div>
 				</div>
 			</div>
@@ -435,5 +434,6 @@ if (isset($_GET["editdonate"])) {
 	<script src="../scripts/CancelButton.js"></script>
 	<script src="../scripts/TableFilterButtons.js"></script>
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+	<script src="../scripts/ShowNotification.js"></script>
 </body>
 </html>
