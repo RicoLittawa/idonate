@@ -1,6 +1,5 @@
 <?php
 require_once '../../../config/config.php';
-
 if (isset($_GET['requestId'])) {
     $reference = $_GET['requestId'];
     try {

@@ -1,6 +1,5 @@
 <?php
 require_once "../../../config/config.php";
-
 if (isset($_GET["userID"])) {
     $userID = $_GET["userID"];
     $getUserNotification = $conn->prepare("SELECT COUNT(*) as count FROM notification WHERE userID = ?");

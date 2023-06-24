@@ -1,13 +1,6 @@
 <?php require_once "../include/protect.php";
 require_once "../include/profile.inc.php";
 require_once "../include/sidebar.php";
-
-$getUser = $conn->prepare("SELECT firstname from adduser where uID=?");
-$getUser->bind_param("i", $userID);
-$getUser->execute();
-$result = $getUser->get_result();
-$row = $result->fetch_assoc();
-$firstname = $row["firstname"];
 ?>
 <!DOCTYPE html>
 <html lang="en">

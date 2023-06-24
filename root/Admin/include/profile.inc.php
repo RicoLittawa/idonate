@@ -7,8 +7,8 @@ try{
   $stmt->execute();
   $result= $stmt->get_result();
   if($result->num_rows == 0) {
-    echo "Invalid email or password.";
-  }
+    throw new Exception("Invalid email or password.");
+    }
   else{
     while($row= $result->fetch_assoc()){
      $firstname=  $row['firstname'];
@@ -18,12 +18,11 @@ try{
      $address=  $row['address'];
      $profile=  $row['profile'];
      $role=  $row['role'];
-     
 
     }
   }
 
 }
 catch(Exception $e){
-  echo "Error". $e->getMessage();
+    $e->getMessage();
 }

@@ -5,8 +5,6 @@ if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQ
     header("Location: ../error/ForbiddenPage.html");
     exit();
 }
-
-
 if (isset($_POST['submitBtn'])) {
     $userEmail = $_POST['userEmail'];
     $userPassword = $_POST['userPassword'];

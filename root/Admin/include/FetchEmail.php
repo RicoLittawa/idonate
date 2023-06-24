@@ -1,6 +1,5 @@
 <?php
 require_once "../../../config/config.php";
-
 use PHPMailer\PHPMailer\PHPMailer;
 
 require "phpmailer/src/Exception.php";

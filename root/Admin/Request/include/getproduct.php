@@ -1,6 +1,5 @@
 <?php
 require_once '../../../../config/config.php';
-
 $categories = array(
     'CanNoodles' => 'categcannoodles',
     'HygineEssential' => 'categhygineessential',

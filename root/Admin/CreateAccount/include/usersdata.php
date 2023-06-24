@@ -1,5 +1,9 @@
 <?php
 require_once '../../../../config/config.php';
+if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') {
+  header("Location: ../../error/ForbiddenPage.html");
+  exit();
+}
 $data = array(); // Create an empty array for the rows
 
 try {
