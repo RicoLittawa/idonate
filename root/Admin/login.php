@@ -18,7 +18,7 @@
 </head>
 
 <body>
-	<div class="loading-container">
+	<div class="loading-container d-block justify-content-center">
 		<div id="loader">
 			<div class="cell d-0"></div>
 			<div class="cell d-1"></div>

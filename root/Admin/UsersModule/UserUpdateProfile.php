@@ -86,7 +86,7 @@ require_once "../include/sidebar.php";
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
-      <div class="mb-4 custom-breadcrumb">
+      <div class="mb-4 custom-breadcrumb pt-4">
         <div class="crumb">
           <h1 class="fs-1 breadcrumb-title">Update Account</h1>
           <nav class="bc-nav d-flex">
@@ -111,7 +111,7 @@ require_once "../include/sidebar.php";
         </div>
       </div>
       <!--Header -->
-      <div class="custom-container pb-3">
+      <div class="custom-container pb-3 me-5">
         <div class="card">
           <div class="card-body overflow-auto">
             <form class="pe-2 mb-3" id="update-user" enctype="multipart/form-data">

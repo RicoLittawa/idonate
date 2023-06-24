@@ -28,7 +28,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <a class="navbar-brand mt-2 mt-lg-0" href="#">
-            <img src="Admin/img/batangascitylogo.png" height="45" alt="CDRRMO Logo" loading="lazy" />
+            <img src="Admin/img/batangascitylogo.png" height="45"  class="d-none d-md-block" alt="CDRRMO Logo"/>
           </a>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
@@ -76,17 +76,17 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-      <div class="pt-3">
+      <div class="pt-3 pt-md-4">
         <h1 class="text-success text-center fw-bold">City Disaster Risk Reduction Management Office</h1>
-        <h3 class="text-success text-center mb-0 pb-5">in Batangas City</h3>
+        <h3 class="text-success text-center mb-0 pb-3 pb-md-4 pb-lg-5">in Batangas City</h3>
       </div>
     </section>
     <!--Section 1-->
 
     <!--Section 2-->
     <section class="mission-vision d-block">
-      <div class="d-flex justify-content-start ms-5 me-5 pb-5">
-        <div class="mt-5 me-2">
+      <div class="d-flex justify-content-start me-3 me-md-4 me-lg-5  ms-3 ms-md-4 ms-lg-5 pb-5">
+        <div class="pt-3 pt-md-4 pt-lg-5 me-0 me-md-4 me-lg-5">
           <h3>Mission</h3>
           <p class="text-wrap fs-6 fw-light text-muted lead">The Batangas City Disaster Risk Reduction Management Office aims to advance policy, reduce disaster risks,
             manage and analyze the casual factors of disaster, reduce exposure to hazards, lessen vulnerability of
@@ -100,14 +100,14 @@
           </p>
         </div>
         <div>
-          <img src="Admin/img/batangascitylogo.png" class="bg-image img-thumbnail mt-5 img-fluid h-75 w-100" alt="Logo">
+          <img src="Admin/img/batangascitylogo.png" class="bg-image img-thumbnail mt-5 img-fluid h-75 w-100 d-none d-md-block" alt="Logo">
         </div>
       </div>
-      <div class="d-flex justify-content-start ms-5 me-5">
+      <div class="d-flex justify-content-start me-3 me-md-4 me-lg-5  ms-3 ms-md-4 ms-lg-5">
         <div>
-          <img src="Admin/img/photo4.jpg" class="bg-image img-thumbnail  img-fluid h-75 mt-5 w-100" alt="Photo 4">
+          <img src="Admin/img/photo4.jpg" class="bg-image img-thumbnail  img-fluid h-75 mt-5 w-100 d-none d-md-block" alt="Photo 4">
         </div>
-        <div class="pt-5 ms-4">
+        <div class="mt-1 mt-md-4 mt-lg-5 ms-0 ms-md-4 ms-lg-5">
           <h3>Vision</h3>
           <p class="text-wrap fs-6 fw-light text-muted lead">The Batangas City Disaster Risk Reduction and Management Office seeks
             to provide an effective approach in disaster management towards the protection of lives, livelihoods and property caused
@@ -121,11 +121,11 @@
     <!--Section 3-->
     <section class="how-to-donate pt-5" id="how-to">
       <div class="pb-5">
-        <h1 class="mb-0 ms-5">How to donate?</h1>
-        <p class=" mb-0 ms-5 me-5 text-muted fs-6 lead pt-2">Please be aware that if you want to donate, we no longer accept used clothing,
+        <h2 class="mb-0 ms-3 ms-md-4 ms-lg-5">How to donate?</h2>
+        <p class=" mb-0 me-3 me-md-4 me-lg-5  ms-3 ms-md-4 ms-lg-5 text-muted fs-6 lead pt-2">Please be aware that if you want to donate, we no longer accept used clothing,
           used shoes, baby formula milks, and anything that can't be kept for an extended amount of time. Before visiting the relief hub,
           you can complete out this form that you can download. Your donation will be encoded using this form.</p>
-        <div class="pt-3 ms-5">
+        <div class="pt-3 me-3 me-md-4 me-lg-5  ms-3 ms-md-4 ms-lg-5">
           <ul class="list-unstyled">
             <li class="mb-1 lead"><i class="fa-solid fa-check text-success"></i></i> <strong>Step 1.</strong> Fill up the form provided</li>
             <li class="mb-1 lead"><i class="fa-solid fa-check text-success"></i></i> <strong>Step 2.</strong> Write down every item you want to give under its respective category.</li>
@@ -142,7 +142,7 @@
     <!--Section 4-->
     <section class="about-us pt-5" id="about-us">
       <h2 class="text-success text-center fw-bold">About Us</h2>
-      <p class="text-center fs-6 text-wrap text-muted lead me-5  ms-5 pb-3">Batangas City's City Disaster Risk Reduction and Management Office (CDRRMO) is a
+      <p class="text-center fs-6 text-wrap text-muted lead me-3 me-md-4 me-lg-5  ms-3 ms-md-4 ms-lg-5 pb-3">Batangas City's City Disaster Risk Reduction and Management Office (CDRRMO) is a
         government agency for disaster risk reduction that is overseen by  Mayor Beverly Dimacuha. Bolbok barangay in Batangas City is
         where our office is situated. Donations of canned goods, noodles, hygiene essentials, ppe, pharmaceuticals, meat, grains,
         drinking water, and baby supplies are also welcome. In addition, we operate a facility called the relief hub, where we receive
@@ -161,7 +161,7 @@
     <section class="contact-us pt-5" id="contact-us">
       <h2 class="text-success text-center fw-bold pb-4">Contact Us <i class="fa-solid fa-phone"></i></h2>
       <div class="pb-5 d-flex justify-content-center">
-        <form class="border rounded p-4 shadow bg-light" id="contact_us">
+        <form class="border rounded p-4 shadow bg-light w-100 me-3 me-md-4 me-lg-5  ms-3 ms-md-4 ms-lg-5" id="contact_us">
           <div class="row">
             <div class="col">
               <div class="form-outline mb-4">
@@ -185,10 +185,12 @@
             <label class="form-label" for="message">Message</label>
           </div>
           <div class="g-recaptcha pb-4 d-flex justify-content-center" data-sitekey="6LddXa4mAAAAALVtpP0nf7GZsDF1SRf052K9Xzk8"></div>
-          <button type="submit" class="btn btn-success btn-block mb-4">
+          <div class="d-flex justify-content-center">
+          <button type="submit" class="btn btn-success w-50 float-end-md mb-4">
             <span class="submit-text">Send</span>
             <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
           </button>
+          </div>  
         </form>
       </div>
     </section>
@@ -214,8 +216,8 @@
 
     <!--Section 8-->
     <section class="maps pb-5 pt-5" id="maps">
-      <h2 class="text-success ms-5 pb-4 fw-bold"><i class="fa-solid fa-location-dot"></i> Maps</h2>
-      <div class="me-5 ms-5 rounded border shadow" id="map"></div>
+      <h2 class="text-success ms-3 ms-md-4 ms-lg-5 pb-4 fw-bold"><i class="fa-solid fa-location-dot"></i> Maps</h2>
+      <div class="me-3 me-md-4 me-lg-5  ms-3 ms-md-4 ms-lg-5 rounded border shadow" id="map"></div>
     </section>
     <!--Section 8-->
 

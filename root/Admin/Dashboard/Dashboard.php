@@ -31,7 +31,7 @@ require_once "../include/sidebar.php";
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
-      <div class="mb-4 custom-breadcrumb">
+      <div class="mb-4 custom-breadcrumb pt-4">
         <div class="crumb">
           <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
           <nav class="bc-nav d-flex">
@@ -58,7 +58,7 @@ require_once "../include/sidebar.php";
       <!--Header -->
 
       <!--reports -->
-      <div class="custom-container pb-3">
+      <div class="custom-container pb-3 me-5">
         <div class="row g-3">
           <div class="col-12 col-sm-12 col-md-12 col-lg-4">
             <div class="card">

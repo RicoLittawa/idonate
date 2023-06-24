@@ -115,7 +115,7 @@ $requestRef = $refRow["request_id"];
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
-      <div class="mb-4 custom-breadcrumb">
+      <div class="mb-4 custom-breadcrumb pt-4">
         <div class="crumb">
           <h1 class="fs-1 breadcrumb-title">Create Request</h1>
           <nav class="bc-nav d-flex">
@@ -140,7 +140,7 @@ $requestRef = $refRow["request_id"];
         </div>
       </div>
       <!--Header -->
-      <div class="custom-container pb-3">
+      <div class="custom-container pb-3 me-5">
         <div class="card">
           <div class="card-body overflow-auto">
             <div id="createRequest" class="collapse mt-5" data-duration="500">

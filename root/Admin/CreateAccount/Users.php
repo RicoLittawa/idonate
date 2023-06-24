@@ -28,7 +28,7 @@ require_once "../include/sidebar.php";
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
-      <div class="mb-4 custom-breadcrumb">
+      <div class="mb-4 custom-breadcrumb pt-4">
         <div class="crumb">
           <h1 class="fs-1 breadcrumb-title">Users</h1>
           <nav class="bc-nav d-flex">
@@ -53,7 +53,7 @@ require_once "../include/sidebar.php";
         </div>
       </div>
       <!--Header -->
-      <div class="custom-container pb-3">
+      <div class="custom-container pb-3 me-5">
         <div class="card">
           <div class="card-body overflow-auto">
             <div id="registerForm" class="collapse mt-5" data-duration="500">

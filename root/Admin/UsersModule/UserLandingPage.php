@@ -28,7 +28,7 @@ require_once "../include/sidebar.php";
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
-      <div class="mb-4 custom-breadcrumb">
+      <div class="mb-4 custom-breadcrumb pt-4">
         <div class="crumb">
           <h1 class="fs-1 breadcrumb-title">Welcome, <span class="text-muted"><?php echo htmlentities($firstname) ?></span></h1>
           <nav class="bc-nav d-flex">
@@ -55,7 +55,7 @@ require_once "../include/sidebar.php";
 
       <!--Header -->
 
-      <div class="custom-container pb-3">
+      <div class="custom-container pb-3 me-5">
         <div class="card">
           <div class="card-body">
             <!-- Carousel wrapper -->
@@ -109,7 +109,7 @@ require_once "../include/sidebar.php";
 
             <!-- Carousel wrapper -->
             <div class="second-layer d-flex justify-content-end">
-              <img src="../img/batangascitylogo.png" class="bg-image img-thumbnail me-3 mt-5 img-fluid" alt="">
+              <img src="../img/batangascitylogo.png" class="bg-image img-thumbnail me-3 mt-5 img-fluid d-none d-md-block" alt="">
               <div class="mt-5 pt-xl-5">
                 <h6 class="fs-4 fw-bold text-dark mt-3">Vision</h6>
                 <p>
@@ -131,7 +131,7 @@ require_once "../include/sidebar.php";
                   management which will benefit the citizens of Batangas City.
                 </p>
               </div>
-              <img src="../img/photo4.jpg" class="bg-image img-thumbnail ms-3 rounded p-2 mt-5 img-fluid" alt="">
+              <img src="../img/photo4.jpg" class="bg-image img-thumbnail ms-3 rounded p-2 mt-5 img-fluid d-none d-md-block" alt="">
             </div>
 
             <section class="maps pb-5 pt-5" id="maps">
@@ -153,23 +153,23 @@ require_once "../include/sidebar.php";
   <script src="../scripts/ShowNotification.js"></script>
   <script src="../scripts/DisplayMaps.js"></script>
   <script>
-    let userID = $("#userID").val();
-    const showUserAlertNotification = (id) => {
-      $.ajax({
-        url: `../include/GetUserNotification.php?userID=${id}`,
-        method: "GET",
-        dataType: "json",
-        success: (response) => {
-          if (response.count != 0) {
-            $("#showUserNotification").modal("show");
-          }
-        },
-        error: (xhr, status, error) => {
-          console.error(error); // Example: Display any error messages in the console
-        }
-      });
-    };
-    showUserAlertNotification(userID);
+    // let userID = $("#userID").val();
+    // const showUserAlertNotification = (id) => {
+    //   $.ajax({
+    //     url: `../include/GetUserNotification.php?userID=${id}`,
+    //     method: "GET",
+    //     dataType: "json",
+    //     success: (response) => {
+    //       if (response.count != 0) {
+    //         $("#showUserNotification").modal("show");
+    //       }
+    //     },
+    //     error: (xhr, status, error) => {
+    //       console.error(error); // Example: Display any error messages in the console
+    //     }
+    //   });
+    // };
+    // showUserAlertNotification(userID);
   </script>
 
 

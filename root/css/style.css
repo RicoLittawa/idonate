@@ -13,13 +13,12 @@ body {
 html {
   scroll-behavior: smooth;
 }
-main {
+/* main {
   margin: 0 7rem;
   height: auto;
   background: #bebebe;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
+} */
 
 .navbar {
   background: #20d070;
@@ -30,7 +29,7 @@ main {
 }
 
 .navbar-nav .nav-link:after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -60,7 +59,7 @@ main {
   background-color: #fff9ed;
 }
 
-.no-border{
+.no-border {
   border: none;
   background: none;
 }
@@ -76,7 +75,9 @@ main {
 .go-up.show {
   opacity: 1;
 }
-#map { height: 500px; }
+#map {
+  height: 500px;
+}
 #toastContainer {
   position: fixed;
   bottom: 20px;
@@ -95,3 +96,4 @@ main {
 .toast.show {
   display: block;
 }
+

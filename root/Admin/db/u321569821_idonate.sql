@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2023 at 02:55 PM
+-- Generation Time: Jun 24, 2023 at 04:30 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -49,9 +49,28 @@ CREATE TABLE `adduser` (
 --
 
 INSERT INTO `adduser` (`uID`, `firstname`, `lastname`, `position`, `email`, `pwdUsers`, `address`, `role`, `status`, `profile`, `reset_token`, `reset_token_expiry`, `logged_in`, `logged_out`) VALUES
-(2, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', '$2y$10$fgL8xEz.8CGHi6kBn402jOaQrbjf9gtw39uwnv.gTAVTfA1Iu7.mG', 'Balagtas Batangas City', 'user', 'offline', '2_3619298.jpg', NULL, NULL, '2023-06-21 17:29:47', '2023-06-21 17:33:28'),
-(10, 'admin', 'admin', 'Cdrrmo Employee', 'littawa_rico@yahoo.com', '$2y$10$8VTvoXExJXtYTks0oHVme./l.EwMW3WUshtDwKlvekc80AsOmXbku', 'Balagtas Batangas City', 'admin', 'active', '10_riconew.jpg', '$2y$10$DiivYIABUgUqSYSVD.8.I.t6kf3deuPtDpFlDrogYqxKO03Z3gNUO', '2023-06-18 12:56:08', '2023-06-21 20:51:31', NULL),
-(13, 'try', 'name', 'CDRMO Employee', 'rico.littawa@g.batstate-u.edu.ph', '$2y$10$38ZyVqlom07/08mIv4fwAewf/pZJug6Z.p1MmAu2LBOrkbS4NuG4u', 'Balagtas Batangas City', 'admin', 'offline', NULL, NULL, NULL, '2023-06-19 22:27:26', '2023-06-19 22:33:13');
+(2, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', '$2y$10$xROgcGdUjjdHJiz3huKub.niE0etweo/nE7pq1bfsxZQvb9Y7/VTa', 'Balagtas Batangas City', 'user', 'offline', '2_3619298.jpg', NULL, NULL, '2023-06-24 08:27:44', '2023-06-24 08:31:30'),
+(10, 'admin', 'admin1', 'Cdrrmo Employee', 'littawa_rico@yahoo.com', '$2y$10$8VTvoXExJXtYTks0oHVme./l.EwMW3WUshtDwKlvekc80AsOmXbku', 'Balagtas Batangas City', 'admin', 'active', '10_riconew.jpg', '$2y$10$dxo/86J7C7IJRmD/BdNBT.JUnkwUzfilOaNyztvSA7u5In7SgEGFO', '2023-06-21 18:15:23', '2023-06-24 10:10:57', NULL),
+(14, 'im a', 'user', 'Bgry Captain-SanPascual', 'rico.littawa@g.batstate-u.edu.ph', '$2y$10$oV.QAmTR2nk4wdFvByRFY.5Ji/MEcKlMutOLU3yCFy7QlBIVbKf.2', 'Balagtas Batangas City', 'user', 'offline', '14_3619298.jpg', '$2y$10$OLml6XBSkmkyOt0jfAw7j.ibT7PTTQSjLz1PfCWAt8JHy6fj5uEgm', '2023-06-24 07:00:21', '2023-06-24 10:10:06', '2023-06-24 10:10:20');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_notification`
+--
+
+CREATE TABLE `admin_notification` (
+  `id` int(11) NOT NULL,
+  `message` longtext NOT NULL,
+  `timestamp` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin_notification`
+--
+
+INSERT INTO `admin_notification` (`id`, `message`, `timestamp`) VALUES
+(6, 'im a user created a new request with receipt number 20230624-0035', '2023-06-24 08:25:03');
 
 -- --------------------------------------------------------
 
@@ -74,8 +93,8 @@ CREATE TABLE `categcannoodles` (
 
 INSERT INTO `categcannoodles` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
 (1, 'Sardines', NULL, '9', 1, NULL),
-(2, 'Pancit Canton', NULL, '20', 0, NULL),
-(3, '555 tuna', NULL, '18', 1, NULL);
+(2, 'Pancit Canton', NULL, '18', 2, NULL),
+(3, '555 tuna', NULL, '15', 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -97,7 +116,7 @@ CREATE TABLE `categdrinkingwater` (
 --
 
 INSERT INTO `categdrinkingwater` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'Absolute 1.5L', NULL, '10', 0, NULL);
+(1, 'Absolute 1.5L', NULL, '9', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -119,7 +138,7 @@ CREATE TABLE `categhygineessential` (
 --
 
 INSERT INTO `categhygineessential` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
-(1, 'Creamsilk', NULL, '10', 0, NULL);
+(1, 'Creamsilk', NULL, '9', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -150,6 +169,15 @@ CREATE TABLE `categmeatgrains` (
   `distributed` int(11) NOT NULL,
   `unit` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categmeatgrains`
+--
+
+INSERT INTO `categmeatgrains` (`id`, `productName`, `type`, `quantity`, `distributed`, `unit`) VALUES
+(1, 'sinandomeng', 'other', '1', 0, 'Kilograms'),
+(2, 'eggs', 'other', '12', 0, 'other'),
+(3, 'eggs', 'try ', '1', 0, 'tray ');
 
 -- --------------------------------------------------------
 
@@ -464,7 +492,10 @@ INSERT INTO `donation_items` (`donor_id`, `Reference`, `donor_name`, `donor_regi
 (5, 5, 'Rey Agustin', '14', '1401', '140115', '140115004', 'mroyster@royster.com', '09392560014', '2023-06-20', 'not sent', 'cert empty'),
 (6, 6, 'Rey Agustin', '15', '1538', '153819', '153819018', 'mroyster@royster.com', '09392560014', '2023-06-20', 'not sent', 'cert empty'),
 (7, 7, 'Richelle Littawa', '13', '1374', '137403', '137403013', 'mroyster@royster.com', '09392560014', '2023-06-20', 'not sent', 'cert empty'),
-(8, 8, 'last', '14', '1411', '141102', '141102019', 'mroyster@royster.com', '09392560014', '2023-06-20', 'not sent', 'cert empty');
+(8, 8, 'last', '14', '1411', '141102', '141102019', 'mroyster@royster.com', '09392560014', '2023-06-20', 'not sent', 'cert empty'),
+(9, 9, 'Rey Agustin', '13', '1339', '133904', '133904003', 'mroyster@royster.com', '09392560014', '2023-06-22', 'not sent', 'cert empty'),
+(10, 10, 'Rey Agustin', '13', '1339', '133904', '133904004', 'rico.littawa@g.batstate-u.edu.ph', '09392560014', '2023-06-22', 'email_sent', 'Rey Agustin_649650e7db5b6.png'),
+(11, 11, 'Rey Agustin', '14', '1401', '140117', '140117005', 'mroyster@royster.com', '09392560014', '2023-06-22', 'not sent', 'cert empty');
 
 -- --------------------------------------------------------
 
@@ -491,7 +522,10 @@ INSERT INTO `donation_items10` (`id`, `Reference`, `productName`, `type`, `unit`
 (3, 4, '555 tuna', NULL, NULL, '19'),
 (4, 6, 'Bioflu', 'Liquid', 'Milligrams', '10'),
 (5, 7, 'Creamsilk', NULL, NULL, '10'),
-(6, 8, 'Absolute 1.5L', NULL, NULL, '10');
+(6, 8, 'Absolute 1.5L', NULL, NULL, '10'),
+(7, 9, 'sinandomeng', 'other', 'Kilograms', '1'),
+(8, 10, 'eggs', 'other', 'other', '12'),
+(9, 11, 'eggs', 'try ', 'tray ', '1');
 
 -- --------------------------------------------------------
 
@@ -508,7 +542,29 @@ CREATE TABLE `donation_items_picking` (
 --
 
 INSERT INTO `donation_items_picking` (`reference_id`) VALUES
-(9);
+(12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notification`
+--
+
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `message` longtext NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notification`
+--
+
+INSERT INTO `notification` (`id`, `userID`, `message`, `timestamp`) VALUES
+(23, 2, 'Your request 20230623-0034 is ready for pick-up', '2023-06-23 12:43:02'),
+(24, 2, 'Your request 20230623-0034 is completed', '2023-06-23 12:43:10'),
+(25, 14, 'Your request 20230624-0035 has been processed', '2023-06-24 00:26:55');
 
 -- --------------------------------------------------------
 
@@ -528,8 +584,18 @@ CREATE TABLE `on_process` (
 --
 
 INSERT INTO `on_process` (`id`, `reciept_number`, `productName`, `quantity`) VALUES
-(1, 1, 'Sardines', '1'),
-(2, 6, '555 tuna', '1');
+(1, 11, 'Sardines', '1'),
+(2, 12, 'Absolute 1.5L', '1'),
+(3, 14, '555 tuna', '1'),
+(4, 15, 'Pancit Canton', '1'),
+(5, 16, '555 tuna', '1'),
+(6, 16, '555 tuna', '1'),
+(7, 17, 'Pancit Canton', '1'),
+(8, 18, 'Creamsilk', '1'),
+(9, 19, 'Absolute 1.5L', '1'),
+(10, 34, '555 tuna', '1'),
+(11, 33, 'Creamsilk', '1'),
+(12, 35, '555 tuna', '1');
 
 -- --------------------------------------------------------
 
@@ -558,10 +624,31 @@ CREATE TABLE `receive_request` (
 --
 
 INSERT INTO `receive_request` (`id`, `request_id`, `firstname`, `lastname`, `position`, `email`, `evacuees_qty`, `requestdate`, `status`, `status_timestamp`, `deleted_timestamp`, `userID`, `receivedate`) VALUES
-(1, 3, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-20 14:57:49', 'Deleted', NULL, '2023-06-20 21:02:34', 2, NULL),
-(2, 4, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 10, '2023-06-20 15:03:18', 'Deleted', NULL, '2023-06-20 21:18:26', 2, NULL),
-(4, 6, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-20 21:16:42', 'Request completed', '2023-06-21 08:18:17', NULL, 2, '2023-06-21 08:18:17'),
-(5, 7, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-20 21:50:29', 'pending', NULL, NULL, 2, NULL);
+(1, 11, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 3, '2023-06-23 07:33:01', 'Request cannot be completed', '2023-06-23 08:49:38', NULL, 2, NULL),
+(2, 12, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-23 07:40:49', 'Request was processed', '2023-06-23 07:41:37', NULL, 2, NULL),
+(3, 13, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1000, '2023-06-23 08:01:48', 'pending', NULL, NULL, 2, NULL),
+(4, 14, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 08:03:09', 'Request completed', NULL, NULL, 2, NULL),
+(5, 15, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 300, '2023-06-23 08:21:11', 'Request completed', NULL, NULL, 2, NULL),
+(6, 16, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-23 08:30:21', 'Request completed', NULL, NULL, 2, NULL),
+(7, 17, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 300, '2023-06-23 08:34:48', 'Request completed', NULL, NULL, 2, NULL),
+(8, 18, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1000, '2023-06-23 12:57:27', 'Request completed', NULL, NULL, 2, NULL),
+(9, 19, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-23 15:35:00', 'Request completed', NULL, NULL, 2, NULL),
+(10, 20, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:49:42', 'pending', NULL, NULL, 2, NULL),
+(11, 21, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-16 16:51:02', 'pending', NULL, NULL, 2, NULL),
+(12, 22, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-23 16:52:15', 'pending', NULL, NULL, 2, NULL),
+(13, 23, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:54:07', 'pending', NULL, NULL, 2, NULL),
+(14, 24, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:54:35', 'pending', NULL, NULL, 2, NULL),
+(15, 25, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:56:37', 'pending', NULL, NULL, 2, NULL),
+(16, 26, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:57:12', 'pending', NULL, NULL, 2, NULL),
+(17, 27, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:58:08', 'pending', NULL, NULL, 2, NULL),
+(18, 28, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:59:03', 'pending', NULL, NULL, 2, NULL),
+(19, 29, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 17:00:46', 'pending', NULL, NULL, 2, NULL),
+(20, 30, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 17:06:44', 'pending', NULL, NULL, 2, NULL),
+(21, 31, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 17:38:30', 'pending', NULL, NULL, 2, NULL),
+(22, 32, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 18:33:21', 'pending', NULL, NULL, 2, NULL),
+(23, 33, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 18:47:40', 'Request was processed', '2023-06-23 20:19:43', NULL, 2, NULL),
+(24, 34, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1000, '2023-06-23 19:16:17', 'Request completed', '2023-06-23 20:43:10', NULL, 2, '2023-06-23 20:43:10'),
+(25, 35, 'im a', 'user', 'Bgry Captain-SanPascual', 'rico.littawa@g.batstate-u.edu.ph', 3, '2023-06-24 08:25:03', 'Request was processed', '2023-06-24 08:26:55', NULL, 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -44489,7 +44576,7 @@ CREATE TABLE `ref_request` (
 --
 
 INSERT INTO `ref_request` (`request_id`) VALUES
-(8);
+(36);
 
 -- --------------------------------------------------------
 
@@ -44518,9 +44605,31 @@ CREATE TABLE `request` (
 --
 
 INSERT INTO `request` (`id`, `request_id`, `firstname`, `lastname`, `position`, `email`, `evacuees_qty`, `requestdate`, `status`, `status_timestamp`, `deleted_timestamp`, `userID`, `receivedate`) VALUES
-(3, 5, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-20 15:10:18', 'Deleted', NULL, '2023-06-20 21:32:08', 2, NULL),
-(4, 6, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-20 21:16:42', 'Request completed', '2023-06-21 08:18:17', NULL, 2, '2023-06-21 08:18:17'),
-(5, 7, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-20 21:50:29', 'pending', NULL, NULL, 2, NULL);
+(1, 11, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 3, '2023-06-23 07:33:01', 'Request cannot be completed', '2023-06-23 08:49:38', NULL, 2, NULL),
+(2, 12, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-23 07:40:49', 'Request was processed', '2023-06-23 07:41:37', NULL, 2, NULL),
+(3, 13, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1000, '2023-06-23 08:01:48', 'pending', NULL, NULL, 2, NULL),
+(4, 14, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 08:03:09', 'Request completed', NULL, NULL, 2, NULL),
+(5, 15, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 300, '2023-06-23 08:21:11', 'Request completed', NULL, NULL, 2, NULL),
+(6, 16, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-23 08:30:21', 'Request completed', NULL, NULL, 2, NULL),
+(7, 17, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 300, '2023-06-23 08:34:48', 'Request completed', NULL, NULL, 2, NULL),
+(8, 18, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1000, '2023-06-23 12:57:27', 'Request completed', NULL, NULL, 2, NULL),
+(9, 19, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-23 15:35:00', 'Request completed', NULL, NULL, 2, NULL),
+(10, 20, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:49:42', 'pending', NULL, NULL, 2, NULL),
+(11, 21, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-16 16:51:02', 'pending', NULL, NULL, 2, NULL),
+(12, 22, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 500, '2023-06-23 16:52:15', 'pending', NULL, NULL, 2, NULL),
+(13, 23, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:54:07', 'pending', NULL, NULL, 2, NULL),
+(14, 24, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:54:35', 'pending', NULL, NULL, 2, NULL),
+(15, 25, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:56:37', 'pending', NULL, NULL, 2, NULL),
+(16, 26, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:57:12', 'pending', NULL, NULL, 2, NULL),
+(17, 27, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:58:08', 'pending', NULL, NULL, 2, NULL),
+(18, 28, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 16:59:03', 'pending', NULL, NULL, 2, NULL),
+(19, 29, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 17:00:46', 'pending', NULL, NULL, 2, NULL),
+(20, 30, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 17:06:44', 'pending', NULL, NULL, 2, NULL),
+(21, 31, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 17:38:30', 'pending', NULL, NULL, 2, NULL),
+(22, 32, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 18:33:21', 'pending', NULL, NULL, 2, NULL),
+(23, 33, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1, '2023-06-23 18:47:40', 'Request was processed', '2023-06-23 20:19:43', NULL, 2, NULL),
+(24, 34, 'Normal', 'Person', 'Bgry Captain-Balagtas', 'ricolittawa030620@gmail.com', 1000, '2023-06-23 19:16:17', 'Request completed', '2023-06-23 20:43:10', NULL, 2, '2023-06-23 20:43:10'),
+(25, 35, 'im a', 'user', 'Bgry Captain-SanPascual', 'rico.littawa@g.batstate-u.edu.ph', 3, '2023-06-24 08:25:03', 'Request was processed', '2023-06-24 08:26:55', NULL, 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -44541,12 +44650,31 @@ CREATE TABLE `request_category` (
 --
 
 INSERT INTO `request_category` (`id`, `request_id`, `categoryName`, `quantity`, `notes`) VALUES
-(1, 1, '01', 500, ''),
-(2, 2, '01', 6, ''),
-(3, 3, '04', 1, ''),
-(4, 4, '04', 10, ''),
-(6, 6, '01', 1, ''),
-(7, 7, '05', 1, '');
+(1, 11, '01', 3, 'easy to eat foods only'),
+(2, 12, '04', 12, ''),
+(3, 13, '03', 12, ''),
+(4, 14, '01', 1, ''),
+(5, 15, '01', 1, ''),
+(6, 16, '01', 12, ''),
+(7, 17, '01', 12, ''),
+(8, 18, '02', 10, ''),
+(9, 19, '04', 1, ''),
+(10, 20, '02', 1, ''),
+(11, 21, '01', 1, ''),
+(12, 22, '01', 1, ''),
+(13, 23, '01', 1, ''),
+(14, 24, '02', 1, ''),
+(15, 25, '01', 1, ''),
+(16, 26, '01', 1, ''),
+(17, 27, '01', 1, ''),
+(18, 28, '02', 1, ''),
+(19, 29, '01', 1, ''),
+(20, 30, '01', 1, ''),
+(21, 31, '02', 1, ''),
+(22, 32, '01', 1, ''),
+(23, 33, '02', 1, ''),
+(24, 34, '01', 1, ''),
+(25, 35, '01', 1, '');
 
 -- --------------------------------------------------------
 
@@ -44576,6 +44704,12 @@ INSERT INTO `template_certi` (`id`, `template`) VALUES
 ALTER TABLE `adduser`
   ADD PRIMARY KEY (`uID`),
   ADD UNIQUE KEY `constraint_name` (`email`) USING HASH;
+
+--
+-- Indexes for table `admin_notification`
+--
+ALTER TABLE `admin_notification`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `categcannoodles`
@@ -44652,6 +44786,12 @@ ALTER TABLE `donation_items_picking`
   ADD PRIMARY KEY (`reference_id`);
 
 --
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `on_process`
 --
 ALTER TABLE `on_process`
@@ -44719,7 +44859,13 @@ ALTER TABLE `template_certi`
 -- AUTO_INCREMENT for table `adduser`
 --
 ALTER TABLE `adduser`
-  MODIFY `uID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `uID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `admin_notification`
+--
+ALTER TABLE `admin_notification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `categcannoodles`
@@ -44749,7 +44895,7 @@ ALTER TABLE `categinfant`
 -- AUTO_INCREMENT for table `categmeatgrains`
 --
 ALTER TABLE `categmeatgrains`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `categmedicine`
@@ -44779,13 +44925,13 @@ ALTER TABLE `categ_products`
 -- AUTO_INCREMENT for table `donation_items`
 --
 ALTER TABLE `donation_items`
-  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `donor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `donation_items10`
 --
 ALTER TABLE `donation_items10`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `donation_items_picking`
@@ -44794,16 +44940,22 @@ ALTER TABLE `donation_items_picking`
   MODIFY `reference_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
+-- AUTO_INCREMENT for table `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
 -- AUTO_INCREMENT for table `on_process`
 --
 ALTER TABLE `on_process`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `receive_request`
 --
 ALTER TABLE `receive_request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `refbrgy`
@@ -44833,19 +44985,19 @@ ALTER TABLE `refregion`
 -- AUTO_INCREMENT for table `ref_request`
 --
 ALTER TABLE `ref_request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `request_category`
 --
 ALTER TABLE `request_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `template_certi`
