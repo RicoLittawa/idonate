@@ -9,7 +9,6 @@ require_once "../include/sidebar.php";
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="../css/mdb.min.css">
@@ -23,7 +22,7 @@ require_once "../include/sidebar.php";
 </head>
 
 <body>
-  <?php echo showModalAdmin($conn) ?>
+  <?php echo showAdminModal($conn) ?>
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" data-mdb-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
@@ -131,7 +130,7 @@ require_once "../include/sidebar.php";
   <div class="main-container">
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
-      <?php echo sidebar(); ?>
+      <?php echo adminSidebar(); ?>
     </div>
     <!--Main content -->
     <div class="main-content">
@@ -156,7 +155,7 @@ require_once "../include/sidebar.php";
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo accountUpdate($conn) ?>
+            <?php echo adminMenu($conn) ?>
           </div>
         </div>
       </div>

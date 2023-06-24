@@ -239,7 +239,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="Admin/scripts/mdb.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script>
+  <script src="Admin/scripts/DisplayMaps.js"></script>
+ <script>
     $("#goToFacebook").click(() => {
       window.location.href = "https://www.facebook.com/profile.php?id=100064680010464";
     });
@@ -263,15 +264,6 @@
         scrollTop: 0
       }, "slow");
     }
-    // Initialize the map
-    let map = L.map('map').setView([13.77, 121.05], 15);
-    // Add a tile layer from OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data © OpenStreetMap contributors',
-    }).addTo(map);
-    L.marker([13.77, 121.05]).addTo(map)
-      .bindPopup('Our office is located here')
-      .openPopup()
     const showToast = (content, status) => {
       const toastContainer = $('#toastContainer');
 

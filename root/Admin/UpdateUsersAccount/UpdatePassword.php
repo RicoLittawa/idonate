@@ -19,10 +19,10 @@ require_once "../include/sidebar.php";
 </head>
 
 <body>
-  <?php echo showModalAdmin($conn) ?>
+  <?php echo showAdminModal($conn) ?>
   <div class="main-container">
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar"><?php echo sidebar() ?></div>
+    <div class="sidebar" id="sidebar"><?php echo adminSidebar() ?></div>
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
@@ -46,7 +46,7 @@ require_once "../include/sidebar.php";
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo accountUpdate($conn) ?>
+            <?php echo adminMenu($conn) ?>
           </div>
         </div>
       </div>

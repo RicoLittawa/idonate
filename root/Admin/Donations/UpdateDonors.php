@@ -42,7 +42,7 @@ if (isset($_GET["editdonate"])) {
 </head>
 
 <body>
-	<?php echo showModalAdmin($conn) ?>
+	<?php echo showAdminModal($conn) ?>
 	<!--Print -->
 	<div class="modal fade" id="openPrint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl">
@@ -181,7 +181,7 @@ if (isset($_GET["editdonate"])) {
 	</div>
 	<div class="main-container">
 		<!-- SIDEBAR -->
-		<div class="sidebar" id="sidebar"><?php echo sidebar() ?> </div>
+		<div class="sidebar" id="sidebar"><?php echo adminSidebar() ?> </div>
 		<!--Main content -->
 		<div class="main-content">
 			<!--Header -->
@@ -207,7 +207,7 @@ if (isset($_GET["editdonate"])) {
 								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
 						</a>
-						<?php echo accountUpdate($conn) ?>
+						<?php echo adminMenu($conn) ?>
 					</div>
 				</div>
 			</div>

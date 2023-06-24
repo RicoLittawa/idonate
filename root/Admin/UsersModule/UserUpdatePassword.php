@@ -46,7 +46,7 @@ require_once "../include/sidebar.php";
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo userAccountUpdate($conn) ?>
+            <?php echo userMenu($conn) ?>
           </div>
         </div>
       </div>

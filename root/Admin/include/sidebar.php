@@ -1,6 +1,6 @@
 <?php
 //Admin sidebar
-function sidebar()
+function adminSidebar()
 {
   $html =
     '
@@ -146,7 +146,7 @@ function showUserModal($conn)
 }
 
 //Show modal admin
-function showModalAdmin($conn)
+function showAdminModal($conn)
 {
   $getAdminNotification = $conn->prepare("SELECT * FROM admin_notification ORDER BY timestamp DESC");
   $getAdminNotification->execute();
@@ -212,7 +212,7 @@ function showModalAdmin($conn)
 }
 
 //Admin profile menu
-function accountUpdate($conn)
+function adminMenu($conn)
 {
   $getNotifCount = $conn->prepare("SELECT COUNT(*) AS notificationCount FROM admin_notification");
   $getNotifCount->execute();
@@ -241,7 +241,7 @@ function accountUpdate($conn)
 }
 
 //User profile menu
-function userAccountUpdate($conn)
+function userMenu($conn)
 {
   $userID = $_SESSION["user"]["uID"];
   $getNotifCount = $conn->prepare("SELECT COUNT(*) AS notificationCount FROM notification WHERE userID = ?");
@@ -300,7 +300,7 @@ function userSidebar()
       ? "active"
       : "") .
     '">
-              <i class="bx bxs-cart-add ' .
+              <i class="bx bxs-plus-circle ' .
     (strpos($_SERVER["REQUEST_URI"], "UserCreateRequest.php") !== false ||
       strpos($_SERVER["REQUEST_URI"], "ViewCreatedRequest.php") !== false
       ? "active"

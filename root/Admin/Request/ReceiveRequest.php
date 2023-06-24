@@ -41,7 +41,6 @@ if (isset($_GET['requestId'])) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Kantumruy+Pro:wght@300&family=Lato:wght@300&display=swap" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap5.min.css">
@@ -54,10 +53,10 @@ if (isset($_GET['requestId'])) {
 </head>
 
 <body>
-	<?php echo showModalAdmin($conn) ?>
+	<?php echo showAdminModal($conn) ?>
 	<div class="main-container">
 		<!-- SIDEBAR -->
-		<div class="sidebar" id="sidebar"><?php echo sidebar() ?></div>
+		<div class="sidebar" id="sidebar"><?php echo adminSidebar() ?></div>
 		<!--Main content -->
 		<div class="main-content">
 			<!--Header -->
@@ -83,7 +82,7 @@ if (isset($_GET['requestId'])) {
 								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
 							<?php } ?>
 						</a>
-						<?php echo accountUpdate($conn) ?>
+						<?php echo adminMenu($conn) ?>
 					</div>
 				</div>
 			</div>

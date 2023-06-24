@@ -20,6 +20,7 @@ $firstname = $row["firstname"];
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="../css/mdb.min.css">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <title>Home</title>
@@ -54,7 +55,7 @@ $firstname = $row["firstname"];
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-            <?php echo userAccountUpdate($conn) ?>
+            <?php echo userMenu($conn) ?>
           </div>
         </div>
       </div>
@@ -139,6 +140,11 @@ $firstname = $row["firstname"];
               </div>
               <img src="../img/photo4.jpg" class="bg-image img-thumbnail ms-3 rounded p-2 mt-5 img-fluid" alt="">
             </div>
+
+            <section class="maps pb-5 pt-5" id="maps">
+              <h2 class="text-dark ms-5 pb-4 fw-bold"><i class="fa-solid fa-location-dot"></i> Maps</h2>
+              <div class="rounded border shadow" id="map"></div>
+            </section>
           </div>
         </div>
       </div>
@@ -149,16 +155,19 @@ $firstname = $row["firstname"];
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="../scripts/mdb.min.js"></script>
   <script src="../scripts/sweetalert2.all.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="../scripts/timeout.js"></script>
   <script src="../scripts/ShowNotification.js"></script>
+  <script src="../scripts/DisplayMaps.js"></script>
   <script>
     let userID = $("#userID").val();
     const showUserAlertNotification = (id) => {
       $.ajax({
         url: `../include/GetUserNotification.php?userID=${id}`,
         method: "GET",
+        dataType: "json",
         success: (response) => {
-          if (response.count > 0) {
+          if (response.count != 0) {
             $("#showUserNotification").modal("show");
           }
         },
@@ -167,7 +176,6 @@ $firstname = $row["firstname"];
         }
       });
     };
-
     showUserAlertNotification(userID);
   </script>
 
