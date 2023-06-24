@@ -45,7 +45,6 @@ tr {
 .custom-breadcrumb {
   max-width: 96.5%;
   height: 100%;
-  /* border:1px solid black;  */
   display: flex;
 }
 
@@ -180,19 +179,6 @@ h6 {
 .sidebar .side-menu ul.nav li.nav-item:last-child {
   margin-bottom: 0;
 }
-.sidebar .menuBtn {
-  position: absolute;
-  border: none;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  left: 100%;
-  color: #06603b;
-  margin-top: 2rem;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  transform: translateX(-50%);
-  cursor: pointer;
-}
 label {
   font-family: "Roboto", sans-serif;
   font-size: 12px;
@@ -203,7 +189,7 @@ select option {
   font-size: 14px;
 }
 .main-content {
-  margin-left: 12.5rem;
+  margin-left: 13rem;
   width: 85%;
   transition: all 0.2s ease-in;
 }
@@ -227,12 +213,19 @@ select option {
 }
 
 /*Dashboard cards*/
-
-
-@media (max-width: 390px) {
-  .sidebar {
-    max-width: 100%;
+@media (min-width: 1500px){
+  .main-content {
+    margin-left: 14.5rem;
   }
+}
+@media (min-width: 2000px){
+  .main-content {
+    margin-left: 16rem;
+  }
+}
+
+
+@media (max-width: 500px) {
   .sidebar .side-menu ul.nav li.nav-item a.nav-link i {
     margin-left: 20px;
     margin-right: 20px;
@@ -240,13 +233,39 @@ select option {
   .sidebar .side-menu ul.nav li.nav-item a.nav-link span.text {
     display: none;
   }
-  .sidebar .side-menu ul.nav li.nav-item:last-child {
-    margin-bottom: 0;
+  .main-content {
+    margin-left: 6rem;
   }
-  .sidebar .menuBtn {
+}
+
+@media (max-width: 470px) {
+  .sidebar .side-menu ul.nav li.nav-item a.nav-link i {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .sidebar .side-menu ul.nav li.nav-item a.nav-link span.text {
     display: none;
   }
   .main-content {
-    margin-left: 5rem;
+    margin-left: 5.5rem;
   }
 }
+
+@media (max-width: 390px) {
+  .sidebar .side-menu ul.nav li.nav-item a.nav-link i {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .sidebar .side-menu ul.nav li.nav-item a.nav-link span.text {
+    display: none;
+  }
+  .main-content {
+    margin-left: 5.2rem;
+  }
+  .avatar-size {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+

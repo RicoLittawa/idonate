@@ -62,8 +62,8 @@ require_once "../include/sidebar.php";
             <div class="table-responsive">
               <!----Filter -->
               <div class="d-flex justify-content-between">
-                <div class="d-flex">
-                  <button class="btn btn-success btn-rounded me-2 email_button text-wrap" id="bulk_email" data-action="bulk">Send to all</button>
+                <div>
+                  <button class="btn btn-success btn-rounded me-2 email_button text-wrap" id="bulk_email" data-action="bulk">All</button>
                   <button class="btn btn-success btn-rounded text-wrap" id="addPage"><i class="fa-solid fa-plus"></i></button>
                 </div>
                 <div id="search-field"></div>
@@ -72,7 +72,7 @@ require_once "../include/sidebar.php";
                 <div class="donor-download-btn"></div>
                 <div>
                   <input type="checkbox" class="btn-check" id="selectAll" autocomplete="off" />
-                  <label class="btn btn-secondary btn-rounded" for="selectAll">Select All</label>
+                  <label class="btn btn-secondary btn-rounded" for="selectAll"><i class="fa-solid fa-check"></i></label>
                 </div>
               </div>
               <!----Filter -->
@@ -97,8 +97,6 @@ require_once "../include/sidebar.php";
         </div>
       </div>
     </div>
-  </div>
-  </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

@@ -89,7 +89,7 @@ printTable("#printReceipt", "printable_area");
 /******************************Print Function**************************************/
 
 /******************************Delete Function**************************************/
-const deleteRow = (id,url,tableName) => {
+const deleteRow = (id, url, tableName) => {
   Swal.fire({
     title: "Are you sure?",
     text: "You won't be able to revert this!",
@@ -112,7 +112,7 @@ const deleteRow = (id,url,tableName) => {
             confirmButtonColor: "#20d070",
             confirmButtonText: "OK",
             allowOutsideClick: false,
-            timer:1500
+            timer: 1500,
           });
           $(tableName).DataTable().ajax.reload();
         },

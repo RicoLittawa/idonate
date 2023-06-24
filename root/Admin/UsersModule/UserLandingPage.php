@@ -35,7 +35,7 @@ require_once "../include/sidebar.php";
             <h6 class="mb-0">
               <a href="#" class="text-muted bc-path">Home</a>
               <span>/</span>
-              <a href="#" class="text-reset bc-path active">Welcome Page</a>
+              <a href="#" class="text-reset bc-path active">Welcome</a>
             </h6>
           </nav>
         </div>
@@ -93,7 +93,7 @@ require_once "../include/sidebar.php";
               </div>
               <div>
                 <h6 class="text-center fs-4 fw-bold text-dark mt-3">Mission</h6>
-                <p class="text-center text-body">
+                <p class="text-center text-body lead fs-6">
                   The Batangas City Disaster Risk Reduction Management Office aims to advance policy, reduce disaster risks,
                   manage and analyze the casual factors of disaster, reduce exposure to hazards, lessen vulnerability of people and property,
                   wise management of land and the environment, and improved preparedness in developing and implementing best practices in disaster risk reduction and mitigation program.
@@ -112,7 +112,7 @@ require_once "../include/sidebar.php";
               <img src="../img/batangascitylogo.png" class="bg-image img-thumbnail me-3 mt-5 img-fluid d-none d-md-block" alt="">
               <div class="mt-5 pt-xl-5">
                 <h6 class="fs-4 fw-bold text-dark mt-3">Vision</h6>
-                <p>
+                <p class="lead fs-6">
                   The Batangas City Disaster Risk Reduction and Management Office seeks to provide an effective approach in disaster
                   management towards the protection of lives, livelihoods and property caused by both natural and human induced hazards
                   through innovation, coordination and partnership, and build a safe, adaptive and resilient Batangas City.
@@ -123,7 +123,7 @@ require_once "../include/sidebar.php";
             <div class="third-layer d-flex">
               <div class="mt-5 pt-xl-5">
                 <h6 class="fs-4 fw-bold text-dark mt-3">Quanlity Policy</h6>
-                <p class="text-wrap fs-6">
+                <p class="text-wrap lead fs-6">
                   The Batangas City Disaster Risk Reduction and Management Office is committed to ensure that the community
                   will reside in a safe, adaptive and resilient City, which takes into consideration the existing geographical
                   risk, the aggravating factors, and the evolving climate situation, and works in coordination with all sectors
@@ -135,14 +135,13 @@ require_once "../include/sidebar.php";
             </div>
 
             <section class="maps pb-5 pt-5" id="maps">
-              <h2 class="text-dark ms-5 pb-4 fw-bold"><i class="fa-solid fa-location-dot"></i> Maps</h2>
+              <h2 class="text-dark pb-4 fw-bold"><i class="fa-solid fa-location-dot"></i> Maps</h2>
               <div class="rounded border shadow" id="map"></div>
             </section>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -153,23 +152,23 @@ require_once "../include/sidebar.php";
   <script src="../scripts/ShowNotification.js"></script>
   <script src="../scripts/DisplayMaps.js"></script>
   <script>
-    // let userID = $("#userID").val();
-    // const showUserAlertNotification = (id) => {
-    //   $.ajax({
-    //     url: `../include/GetUserNotification.php?userID=${id}`,
-    //     method: "GET",
-    //     dataType: "json",
-    //     success: (response) => {
-    //       if (response.count != 0) {
-    //         $("#showUserNotification").modal("show");
-    //       }
-    //     },
-    //     error: (xhr, status, error) => {
-    //       console.error(error); // Example: Display any error messages in the console
-    //     }
-    //   });
-    // };
-    // showUserAlertNotification(userID);
+     let userID = $("#userID").val();
+     const showUserAlertNotification = (id) => {
+       $.ajax({
+         url: `../include/GetUserNotification.php?userID=${id}`,
+         method: "GET",
+         dataType: "json",
+         success: (response) => {
+           if (response.count != 0) {
+             $("#showUserNotification").modal("show");
+           }
+         },
+         error: (xhr, status, error) => {
+           console.error(error);  
+         }
+       });
+     };
+     showUserAlertNotification(userID);
   </script>
 
 

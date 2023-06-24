@@ -30,7 +30,7 @@ $requestRef = $refRow["request_id"];
   <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
   <!--Necessary Plugins-->
-  <title>Create Request</title>
+  <title>Create</title>
 </head>
 
 <body>
@@ -117,12 +117,12 @@ $requestRef = $refRow["request_id"];
       <!--Header -->
       <div class="mb-4 custom-breadcrumb pt-4 me-5">
         <div class="crumb">
-          <h1 class="fs-1 breadcrumb-title">Create Request</h1>
+          <h1 class="fs-1 breadcrumb-title">Create </h1>
           <nav class="bc-nav d-flex">
             <h6 class="mb-0">
               <a href="UserLandingPage.php" class="text-muted bc-path">Home</a>
               <span>/</span>
-              <a href="#" class="text-reset bc-path active">Create Request</a>
+              <a href="#" class="text-reset bc-path active">Create</a>
             </h6>
           </nav>
         </div>
@@ -226,8 +226,6 @@ $requestRef = $refRow["request_id"];
       </div>
     </div>
   </div>
-  </div>
-
   <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

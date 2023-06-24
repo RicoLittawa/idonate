@@ -415,14 +415,10 @@ if (isset($_GET["editdonate"])) {
 							</div>
 						</div>
 						</form>
-						<!--End of Container form -->
 					</div>
 				</div>
 			</div>
-			<!--End of card-->
 		</div>
-		<!--End of container-->
-	</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

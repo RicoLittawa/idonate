@@ -86,7 +86,6 @@ require_once "../include/sidebar.php";
             </div>
           </div>
         </div>
-        <!--End of main content -->
       </div>
     </div>
   </div>
