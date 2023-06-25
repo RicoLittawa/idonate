@@ -43,7 +43,7 @@ if (isset($_POST['submitBtn'])) {
         $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
         // Recipients
-        $mail->setFrom('citydisasterriskreductionmanagementoffice@i-donate-btg.com', 'City Disaster Risk Reduction Management Office');
+        $mail->setFrom('citydisasterriskreductionmanagementoffice@i-donate-btg.com', 'City Disaster Risk and Reduction Management Office');
         $mail->addAddress($email);     // Add a recipient
 
         // Content
@@ -72,7 +72,7 @@ if (isset($_POST['submitBtn'])) {
                 <p style='font-size: 14px;'>Password: <strong>{$_POST['password']}</strong></p>
                 <br>
                 <p style='font-size: 14px;'>Best regards,</p>
-                <p style='font-size: 14px;'>City Disaster Risk Reduction Management Office</p>
+                <p style='font-size: 14px;'>City Disaster Risk and Reduction Management Office</p>
                 <p style='font-size: 14px;'>Brgy Bolbok, Batangas City, Philippines</p>
                 <p style='font-size: 14px;'>cdrrmobatangas@yahoo.com.ph | (043) 702 3902</p>
             </div>

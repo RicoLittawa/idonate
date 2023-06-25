@@ -77,7 +77,7 @@
         </button>
       </div>
       <div class="pt-3 pt-md-4">
-        <h1 class="text-success text-center fw-bold">City Disaster Risk Reduction Management Office</h1>
+        <h1 class="text-success text-center fw-bold">City Disaster Risk and Reduction Management Office</h1>
         <h3 class="text-success text-center mb-0 pb-3 pb-md-4 pb-lg-5">in Batangas City</h3>
       </div>
     </section>
@@ -88,7 +88,7 @@
       <div class="d-flex justify-content-start me-3 me-md-4 me-lg-5  ms-3 ms-md-4 ms-lg-5 pb-5">
         <div class="pt-3 pt-md-4 pt-lg-5 me-0 me-md-4 me-lg-5">
           <h3>Mission</h3>
-          <p class="text-wrap fs-6 fw-light text-muted lead">The Batangas City Disaster Risk Reduction Management Office aims to advance policy, reduce disaster risks,
+          <p class="text-wrap fs-6 fw-light text-muted lead">The Batangas City Disaster Risk and Reduction Management Office aims to advance policy, reduce disaster risks,
             manage and analyze the casual factors of disaster, reduce exposure to hazards, lessen vulnerability of
             people and property, wise management of land and the environment, and improved preparedness in developing
             and implementing best practices in disaster risk reduction and mitigation program.

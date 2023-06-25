@@ -94,7 +94,7 @@ require_once "../include/sidebar.php";
               <div>
                 <h6 class="text-center fs-4 fw-bold text-dark mt-3">Mission</h6>
                 <p class="text-center text-body lead fs-6">
-                  The Batangas City Disaster Risk Reduction Management Office aims to advance policy, reduce disaster risks,
+                  The Batangas City Disaster Risk and Reduction Management Office aims to advance policy, reduce disaster risks,
                   manage and analyze the casual factors of disaster, reduce exposure to hazards, lessen vulnerability of people and property,
                   wise management of land and the environment, and improved preparedness in developing and implementing best practices in disaster risk reduction and mitigation program.
 

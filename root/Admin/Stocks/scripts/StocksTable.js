@@ -74,7 +74,7 @@ let stocksTable = $("#stocks_data").DataTable({
                 stack: [
                   { text: "Republic of the Philippines", alignment: "center" },
                   {
-                    text: "City Disaster Risk Reduction Management Office Batangas City",
+                    text: "City Disaster Risk and Reduction Management Office Batangas City",
                     alignment: "center",
                   },
                 ],

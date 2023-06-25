@@ -74,7 +74,7 @@ require_once "../include/sidebar.php";
                 <img src="../img/logo1.jpg" class="logo-header" alt="">
               </div>
               <p class="mb-0 text-center lead fs-6">Republic of the Philippines</p>
-              <p class="mb-0 text-center lead fs-6">City Disaster Risk Reduction Management Office</p>
+              <p class="mb-0 text-center lead fs-6">City Disaster Risk and Reduction Management Office</p>
               <p class="mb-0 text-center lead fs-6">Brgy Bolbok, Batangas City, Philippines</p>
             </div>
             <hr class="custom-divider">

@@ -67,8 +67,8 @@ tr {
   display: none;
 }
 .avatar-size {
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   object-fit: cover;
   border: 1px green;
 }
@@ -212,7 +212,7 @@ select option {
   right: 34px;
 }
 
-/*Dashboard cards*/
+/*Media queries*/
 @media (min-width: 1500px){
   .main-content {
     margin-left: 14.5rem;
