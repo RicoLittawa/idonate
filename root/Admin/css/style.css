@@ -266,7 +266,7 @@ select option {
     display: flex;
     background: #20d070;
   }
-  .admin-notif{
+  .notif{
     display: none;
   }
   .avatar-size {
@@ -292,7 +292,7 @@ select option {
     display: flex;
     background: #20d070;
   }
-  .admin-notif{
+  .notif{
     display: none;
   }
   .avatar-size {
@@ -318,7 +318,7 @@ select option {
     display: flex;
     background: #20d070;
   }
-  .admin-notif{
+  .notif{
     display: none;
   }
   .avatar-size {

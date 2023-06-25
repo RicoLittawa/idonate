@@ -225,7 +225,7 @@ function showNotificationUserMobile($conn)
   $notifCountRow = $notifCountResult->fetch_assoc();
   $notificationCount = $notifCountRow["notificationCount"];
   $html .= '
-  <a onClick="showAdminNotification()" class="text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+  <a onClick="showUserNotification()" class="text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-bell text-light"></i>';
   if ($notificationCount > 0) {
     $html .= '<span class="badge rounded-pill badge-notification bg-danger">' . $notificationCount . '</span>';
@@ -315,7 +315,7 @@ function adminMenu($conn)
     <li><a class="dropdown-item" href="../UpdateUsersAccount/UpdateAccount.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="../UpdateUsersAccount/UpdatePassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
     <li><a class="dropdown-item" href="../Settings/settings.php"><i class="fa-solid fa-gear"></i> Settings</a></li>
-    <li><a class="dropdown-item admin-notif" href="#" onClick="showAdminNotification()"><i class="fa-solid fa-envelope"></i> Notifications   
+    <li><a class="dropdown-item notif" href="#" onClick="showAdminNotification()"><i class="fa-solid fa-envelope"></i> Notifications   
     ';
 
   if ($notificationCount > 0) {
@@ -345,7 +345,7 @@ function userMenu($conn)
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <li><a class="dropdown-item" href="UserUpdateProfile.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="UserUpdatePassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
-    <li><a class="dropdown-item" href="#" onClick="showUserNotification()"><i class="fa-solid fa-envelope"></i> Notifications   
+    <li><a class="dropdown-item notif" href="#" onClick="showUserNotification()"><i class="fa-solid fa-envelope"></i> Notifications   
     ';
 
   if ($notificationCount > 0) {
