@@ -64,13 +64,10 @@ require_once '../include/FunctionSelectBox.php';
         <div class="card">
           <div class="card-body overflow-auto">
             <!--Place table here --->
-            <div class="d-inline-flex">
-              <h6 class="number-title">1</h6>
-              <div class="mt-3 ps-3">
-                <h4 class="text-muted">Personal Details</h4>
+              <div class="mt-2 mt-md-3 mb-3">
+                <h4 class="text-muted title-1">1. Personal Details</h4>
               </div>
-            </div>
-            <form id="add-form" class="p-3 ms-4 me-3" novalidate>
+            <form id="add-form">
               <?php
               require_once "../../../config/config.php";
               $sql = "SELECT * FROM donation_items_picking";
@@ -80,107 +77,104 @@ require_once '../include/FunctionSelectBox.php';
               }
               ?>
               <input hidden id="reference_id" value="<?php echo htmlentities($referenceId); ?>" readonly>
-              <div class="row pb-2">
-                <div class="col">
+              <div class="row pb-2 gy-2">
+                <div class="col-12 col-md-6">
                   <div class="form-outline">
                     <input class="form-control" type="text" name="fname" id="fname" required />
                     <label class="form-label" for="fname">Full Name</label>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-6">
                   <div class="form-outline">
                     <input class="form-control" type="text" name="email" id="email">
                     <label class="form-label" for="email">Email</label>
                   </div>
                 </div>
               </div>
-              <div class="row pb-3">
-                <div class="col">
+              <div class="row pb-3 gy-2">
+                <div class="col-12 col-md-3">
                   <div class="form-group">
-                    <label class="form-label" for="fname">Region</label>
+                    <label class="form-label d-none d-md-inline" for="fname">Region</label>
                     <select class="form-control dropdown" name="region" id="region">
-                      <option value="">--</option>
+                      <option value="">-Select-</option>
                       <?php echo fill_region_select_box($conn); ?>
                     </select>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-3">
                   <div class="form-group">
-                    <label for="province" class="form-label">Province</label>
+                    <label for="province" class="form-label d-none d-md-inline">Province</label>
                     <select class="form-control dropdown" name="province" id="province">
-                      <option value="">--</option>
+                      <option value="">-Select-</option>
                     </select>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-3">
                   <div class="form-group">
-                    <label for="municipality" class="form-label">Municipality</label>
+                    <label for="municipality" class="form-label d-none d-md-inline">Municipality</label>
                     <select class="form-control dropdown" name="municipality" id="municipality">
-                      <option value="">--</option>
+                      <option value="">-Select-</option>
                     </select>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-3">
                   <div class="form-group">
-                    <label for="barangay" class="form-label">Barangay</label>
+                    <label for="barangay" class="form-label d-none d-md-inline">Barangay</label>
                     <select class="form-control dropdown" name="barangay" id="barangay">
-                      <option value="">--</option>
+                      <option value="">-Select-</option>
                     </select>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col">
+              <div class="row pb-3 gy-2">
+                <div class="col-12 col-md-6">
                   <div class="form-outline">
                     <input class="form-control" type="text" id="contact" name="contact">
                     <label class="form-label" for="contact">Contact</label>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-12 col-md-6">
                   <div class="form-outline datepicker">
                     <input class="form-control" id="donation_date" type="date" name="donation_date" data-mdb-toggle="datepicker">
                     <label for="donation_date" class="form-label">Select a date</label>
                   </div>
                 </div>
               </div>
-              <div class="d-inline-flex pt-4 number-two">
-                <h6 class="number-title">2</h6>
-                <div class="mt-3 ps-1">
-                  <h4 class="text-muted">Donation Type and Category</h4>
-                </div>
+              <div class="mt-2 mt-md-3 mb-3">
+                <h4 class="text-muted title-1">2. Donation Type and Category</h4>
               </div>
               <div class="mt-2">
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box1" value="can-noodles">
                   <label class="form-check-label" for="">Can Goods & Noodles</label>
                 </div>
                 <div id="can-noodles"></div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box2" value="hygine-essentials">
                   <label class="form-check-label" for="">Hygine Essentials</label>
                 </div>
                 <div id="hygine-essentials"></div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box3" value="infant-items">
                   <label class="form-check-label" for="">Infant Items</label>
                 </div>
                 <div id="infant-items"></div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box4" value="drinking-water">
                   <label class="form-check-label" for="">Drinking Water</label>
                 </div>
                 <div id="drinking-water"></div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box5" value="meat-grains">
                   <label class="form-check-label" for="">Meat/Grains</label>
                 </div>
                 <div id="meat-grains"></div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box6" value="medicine">
                   <label class="form-check-label" for="">Medicine</label>
                 </div>
                 <div id="medicine"></div>
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box7" value="others">
                   <label class="form-check-label" for="">Others</label>
                 </div>
@@ -198,7 +192,6 @@ require_once '../include/FunctionSelectBox.php';
                 </div>
               </div>
             </form>
-            <!--Place table here --->
           </div>
         </div>
       </div>

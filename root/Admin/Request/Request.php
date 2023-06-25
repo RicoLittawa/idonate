@@ -137,12 +137,12 @@ require_once "../include/sidebar.php";
       <!--Header -->
       <div class="mb-4 custom-breadcrumb pt-4 me-5">
         <div class="crumb">
-          <h1 class="fs-1 breadcrumb-title">Process Request</h1>
+          <h1 class="fs-1 breadcrumb-title">Requests</h1>
           <nav class="bc-nav d-flex">
             <h6 class="mb-0">
               <a href="../Dashboard/Dashboard.php" class="text-muted bc-path">Home</a>
               <span>/</span>
-              <a href="#" class="text-reset bc-path active">Request</a>
+              <a href="#" class="text-reset bc-path active">Requests</a>
             </h6>
           </nav>
         </div>

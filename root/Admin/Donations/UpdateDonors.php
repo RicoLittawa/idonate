@@ -5,7 +5,7 @@ require_once "../include/FunctionSelectBox.php";
 if (isset($_GET["editdonate"])) {
 	$encodedId = $_GET["editdonate"];
 	$update_id = base64_decode($encodedId);
-		$donor = "SELECT * FROM donation_items WHERE donor_id=?";
+	$donor = "SELECT * FROM donation_items WHERE donor_id=?";
 	$stmt = $conn->prepare($donor);
 	$stmt->bind_param("i", $update_id);
 	$stmt->execute();
@@ -220,190 +220,187 @@ if (isset($_GET["editdonate"])) {
 							<button data-mdb-toggle="modal" data-mdb-target="#openPrint" class="btn btn-secondary btn-rounded" type="button">View</button>
 						</div>
 						<div id="update_form">
-							<div class="form-container mt-5 ms-5">
-								<div class="d-inline-flex">
-									<h6 class="number-title">1</h6>
-									<div class="mt-3 ps-3">
-										<h4 class="text-muted">Personal Details</h4>
+							<div class="mt-2 mt-md-3 mb-3">
+								<h4 class="text-muted title-1">1. Personal Details</h4>
+							</div>
+							<form>
+								<input type="hidden" name="donor_id" id="donor_id" value="<?php echo htmlentities($donorid); ?>" readonly>
+								<input type="hidden" value="<?php echo htmlentities($donorreference); ?>" name="reference_id" id="reference_id" readonly>
+								<div class="row gy-3">
+									<div class="col-12 col-md-6">
+										<div class="form-group">
+											<div class="form-outline">
+												<input class="form-control" type="text" name="fname" id="fname" value="<?php echo htmlentities($donorname); ?>">
+												<label class="form-label" for="fname">Fullname</label>
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-md-6">
+										<div class="form-group">
+											<div class="form-outline">
+												<input class="form-control" type="text" name="email" id="email" value="<?php echo htmlentities($donoremail); ?>">
+												<label class="form-label" for="email">Email</label>
+											</div>
+										</div>
 									</div>
 								</div>
-								<!-- Start of Form-->
-								<form class="p-3 ms-4 me-3">
-									<input type="hidden" name="donor_id" id="donor_id" value="<?php echo htmlentities($donorid); ?>" readonly>
-									<input type="hidden" value="<?php echo htmlentities($donorreference); ?>" name="reference_id" id="reference_id" readonly>
-									<div class="row">
-										<div class="col">
-											<div class="form-group  mt-3">
-												<div class="form-outline">
-													<input class="form-control" type="text" name="fname" id="fname" value="<?php echo htmlentities($donorname); ?>">
-													<label class="form-label" for="fname">Fullname</label>
-												</div>
-											</div>
-										</div>
-										<div class="col">
-											<div class="form-group mt-3">
-												<div class="form-outline">
-													<input class="form-control" type="text" name="email" id="email" value="<?php echo htmlentities($donoremail); ?>">
-													<label class="form-label" for="email">Email</label>
-												</div>
-											</div>
+								<div class="row gy-2">
+									<div class="col-12 col-md-3">
+										<div class="form-group ">
+											<label for="region">Select Region</label>
+											<select class="form-control region" name="region" id="region">
+												<option value="">-Select-</option>
+												<?php
+												$sql = "SELECT * FROM refregion";
+												$result = mysqli_query($conn, $sql);
+												foreach ($result as $row) : ?>
+													<option value="
+														<?php echo htmlentities($row["regCode"]); ?>" 
+														<?php if ($donorregion == $row["regCode"]) 
+														{
+															echo 'selected="selected"';
+														} ?>>
+														<?php echo htmlentities($row["regDesc"]); ?></option>
+												<?php endforeach; ?>
+											</select>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col">
-											<div class="form-group  mt-3">
-												<label for="region">Select Region</label>
-												<select class="form-control region" name="region" id="region">
-													<option value="-Select-">-Select-</option>
-													<?php
-													$sql = "SELECT * FROM refregion";
-													$result = mysqli_query($conn, $sql);
-													foreach ($result as $row) : ?>
-														<option value="
-														<?php echo htmlentities($row["regCode"]); ?>" 
-														<?php if ($donorregion == $row["regCode"])
-														 { echo 'selected="selected"'; } ?>>
-														<?php echo htmlentities($row["regDesc"]); ?></option>
-													<?php endforeach; ?>
-												</select>
-											</div>
-										</div>
-										<div class="col">
-											<div class="form-group  mt-3">
-												<label for="province">Select Province</label>
-												<select class="form-control province" name="province" id="province">
-													<option value="-Select-">-Select-</option>
-													<?php
-													$province = "SELECT provCode, provDesc FROM refprovince where regCode=?";
-													$stmt = $conn->prepare($province);
-													$stmt->bind_param("s", $donorregion);
-													$stmt->execute();
-													$resultProv = $stmt->get_result();
-													$data = $resultProv->fetch_all(MYSQLI_ASSOC);
-													foreach ($data as $row) : ?>
-														<option value="
+									<div class="col-12 col-md-3">
+										<div class="form-group ">
+											<label for="province">Select Province</label>
+											<select class="form-control province" name="province" id="province">
+												<option value="">-Select-</option>
+												<?php
+												$province = "SELECT provCode, provDesc FROM refprovince where regCode=?";
+												$stmt = $conn->prepare($province);
+												$stmt->bind_param("s", $donorregion);
+												$stmt->execute();
+												$resultProv = $stmt->get_result();
+												$data = $resultProv->fetch_all(MYSQLI_ASSOC);
+												foreach ($data as $row) : ?>
+													<option value="
 														<?php echo htmlentities($row["provCode"]); ?>" 
-														<?php if ($donorprovince == $row["provCode"])
-														{ echo 'selected="selected"'; } ?>>
+														<?php if ($donorprovince == $row["provCode"]) 
+														{
+															echo 'selected="selected"';
+														} ?>>
 														<?php echo htmlentities($row["provDesc"]); ?></option>
-													<?php endforeach; ?>
-												</select>
-											</div>
+												<?php endforeach; ?>
+											</select>
 										</div>
-										<div class="col">
-											<div class="form-group  mt-3">
-												<label for="municipality">Select Municipality</label>
-												<select class="form-control municipality" name="municipality" id="municipality">
-													<option value="-Select-">-Select-</option>
-													<?php
-													$city =
-														"SELECT citymunCode, citymunDesc FROM refcitymun where provCode=?";
-													$stmt = $conn->prepare($city);
-													$stmt->bind_param("s", $donorprovince);
-													$stmt->execute();
-													$resultProv = $stmt->get_result();
-													$data = $resultProv->fetch_all(MYSQLI_ASSOC);
-													foreach ($data as $row) : ?>
-														<option value="
+									</div>
+									<div class="col-12 col-md-3">
+										<div class="form-group ">
+											<label for="municipality">Select Municipality</label>
+											<select class="form-control municipality" name="municipality" id="municipality">
+												<option value="">-Select-</option>
+												<?php
+												$city =
+													"SELECT citymunCode, citymunDesc FROM refcitymun where provCode=?";
+												$stmt = $conn->prepare($city);
+												$stmt->bind_param("s", $donorprovince);
+												$stmt->execute();
+												$resultProv = $stmt->get_result();
+												$data = $resultProv->fetch_all(MYSQLI_ASSOC);
+												foreach ($data as $row) : ?>
+													<option value="
 														<?php echo htmlentities($row["citymunCode"]); ?>" 
 														<?php if ($donormunicipality == $row["citymunCode"]) 
-														{ echo 'selected="selected"'; } ?>>
+														{
+															echo 'selected="selected"';
+														} ?>>
 														<?php echo htmlentities($row["citymunDesc"]); ?></option>
-													<?php endforeach; ?>
-												</select>
-											</div>
+												<?php endforeach; ?>
+											</select>
 										</div>
-										<div class="col">
-											<div class="form-group  mt-3">
-												<label for="barangay">Select Barangay</label>
-												<select class="form-control barangay" name="barangay" id="barangay">
-													<option value="-Select-">-Select-</option>
-													<?php
-													$brgy = "SELECT brgyCode, brgyDesc FROM refbrgy where citymunCode=?";
-													$stmt = $conn->prepare($brgy);
-													$stmt->bind_param("s", $donormunicipality);
-													$stmt->execute();
-													$resultProv = $stmt->get_result();
-													$data = $resultProv->fetch_all(MYSQLI_ASSOC);
-													foreach ($data as $row) : ?>
-														<option value="
+									</div>
+									<div class="col-12 col-md-3">
+										<div class="form-group ">
+											<label for="barangay">Select Barangay</label>
+											<select class="form-control barangay" name="barangay" id="barangay">
+												<option value="">-Select-</option>
+												<?php
+												$brgy = "SELECT brgyCode, brgyDesc FROM refbrgy where citymunCode=?";
+												$stmt = $conn->prepare($brgy);
+												$stmt->bind_param("s", $donormunicipality);
+												$stmt->execute();
+												$resultProv = $stmt->get_result();
+												$data = $resultProv->fetch_all(MYSQLI_ASSOC);
+												foreach ($data as $row) : ?>
+													<option value="
 														<?php echo htmlentities($row["brgyCode"]); ?>" 
 														<?php if ($donorbarangay == $row["brgyCode"]) 
-														{ echo 'selected="selected"'; } ?>>
-														<?php echo htmlentities($row["brgyDesc"]); ?></option> 
-													<?php endforeach; ?>
-												</select>
+														{
+															echo 'selected="selected"';
+														} ?>>
+														<?php echo htmlentities($row["brgyDesc"]); ?></option>
+												<?php endforeach; ?>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="row mt-2 gy-3">
+									<div class="col-12 col-md-6">
+										<div class="form-group">
+											<div class="form-outline">
+												<input class="form-control" type="text" name="contact" id="contact" value="<?php echo htmlentities($donorcontact); ?>">
+												<label class="form-label" for="contact">Contact</label>
 											</div>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col">
-											<div class="form-group mt-4">
-												<div class="form-outline">
-													<input class="form-control" type="text" name="contact" id="contact" value="<?php echo htmlentities($donorcontact); ?>">
-													<label class="form-label" for="contact">Contact</label>
-												</div>
-											</div>
-										</div>
-										<div class="col">
-											<div class="form-group">
-												<label for="donation_date">Donation Date</label>
-												<input class="form-control" type="date" name="donation_date" id="donation_date" value="<?php echo $donordate; ?>">
-											</div>
+									<div class="col-12 col-md-6">
+										<div class="form-outline datepicker">
+											<input class="form-control" id="donation_date" type="date" name="donation_date" data-mdb-toggle="datepicker" value="<?php echo $donordate; ?>">
+											<label for="donation_date" class="form-label">Select a date</label>
 										</div>
 									</div>
-									<!--Number 2 -->
-									<div class="d-inline-flex pt-4 number-two">
-										<h6 class="number-title">2</h6>
-										<div class="mt-3 ps-3">
-											<h4 class="text-muted">Donations</h4>
-										</div>
-									</div>
-							</div>
-							<!--2nd table -->
-							<div class="pe-4 ps-5 ms-4 mt-4 table-responsive">
-								<table class="table table-sm table-bordered update-form" id="update-form">
-									<thead>
-										<tr>
-											<th>Product Name</th>
-											<td>Type</td>
-											<th>Unit</th>
-											<th>Quantity</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php
-										$sql = "SELECT * FROM donation_items10 where Reference=?";
-										$stmt = $conn->prepare($sql);
-										$stmt->bind_param('i', $donorreference);
-										$stmt->execute();
-										$result = $stmt->get_result();
-										$stmt->execute();
-										$result = $stmt->get_result();
-										while ($row = $result->fetch_assoc()) : ?>
+								</div>
+								<div class="mt-3 mt-md-3 mb-3">
+									<h4 class="text-muted title-1">2. Donations</h4>
+								</div>
+								<!--2nd table -->
+								<div class="mt-4 table-responsive">
+									<table class="table table-sm table-bordered update-form" id="update-form">
+										<thead>
 											<tr>
-												<td><?php echo $row["productName"]; ?></td>
-												<td><?php if ($row['type'] == null) { ?>
-														<span class="badge rounded-pill badge-warning">Empty</span>
-													<?php } else {
-														echo $row["type"];
-													} ?>
-												</td>
-												<td><?php if ($row['unit'] == null) { ?>
-														<span class="badge rounded-pill badge-warning">Empty</span>
-													<?php } else {
-														echo $row["unit"];
-													} ?>
-												</td>
-												<td><?php echo $row["quantity"]; ?></td>
+												<th>Product Name</th>
+												<td>Type</td>
+												<th>Unit</th>
+												<th>Quantity</th>
 											</tr>
-										<?php endwhile; ?>
-									</tbody>
-								</table>
-							</div>
+										</thead>
+										<tbody>
+											<?php
+											$sql = "SELECT * FROM donation_items10 where Reference=?";
+											$stmt = $conn->prepare($sql);
+											$stmt->bind_param('i', $donorreference);
+											$stmt->execute();
+											$result = $stmt->get_result();
+											$stmt->execute();
+											$result = $stmt->get_result();
+											while ($row = $result->fetch_assoc()) : ?>
+												<tr>
+													<td><?php echo $row["productName"]; ?></td>
+													<td><?php if ($row['type'] == null) { ?>
+															<span class="badge rounded-pill badge-warning">Empty</span>
+														<?php } else {
+															echo $row["type"];
+														} ?>
+													</td>
+													<td><?php if ($row['unit'] == null) { ?>
+															<span class="badge rounded-pill badge-warning">Empty</span>
+														<?php } else {
+															echo $row["unit"];
+														} ?>
+													</td>
+													<td><?php echo $row["quantity"]; ?></td>
+												</tr>
+											<?php endwhile; ?>
+										</tbody>
+									</table>
+								</div>
 						</div>
-
-						<div class="d-flex justify-content-end mt-3">
+						<div class="d-flex justify-content-end">
 							<div class="me-3">
 								<button type="button" class="btn btn-danger cancelBtn btn-rounded" id="cancelBtn">Cancel</button>
 							</div>
@@ -432,4 +429,5 @@ if (isset($_GET["editdonate"])) {
 	<script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
 	<script src="../scripts/ShowNotification.js"></script>
 </body>
+
 </html>

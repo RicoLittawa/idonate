@@ -91,59 +91,55 @@ if (isset($_GET['requestId'])) {
 				<div class="card">
 					<div class="card-body overflow-auto">
 						<!--Place table here --->
-						<div class="form-container mt-5 ms-5">
-							<div class="d-inline-flex">
-								<h6 class="number-title">1</h6>
-								<div class="mt-3 ps-3">
-									<h4 class="text-muted">Request Details</h4>
-								</div>
+						<div class="form-container mt-5 ms-md-5 ms-0 me-0 me-md-5">
+							<div class="mt-2 mt-md-3 mb-3">
+								<h4 class="text-muted title-1">1. Request Details</h4>
 							</div>
-							<div class="d-block p-3 ms-4 me-3">
+							<div class="d-block">
 								<div class="row">
-									<div class="col">
-										<span class="d-flex py-2">
-											<h6>Reciept No:</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($dateTrimmed) . "-00" . htmlentities($reference) ?></h6>
+									<div class="col-12 col-md-6">
+										<span class="d-flex">
+											<p class="fw-bold fs-6">Reciept No:</p>
+											<p class="fw-light lead fs-6 ms-2"><?php echo htmlentities($dateTrimmed) . "-00" . htmlentities($reference) ?></p>
 										</span>
 									</div>
-									<div class="col">
-										<span class="d-flex justify-content-end py-2">
-											<h6>Request Date:</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($date) ?></h6>
-										</span>
-									</div>
-								</div>
-								<hr class="hr" />
-								<div class="row">
-									<div class="col py-3">
-										<span>
-											<h6>Fullname:</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($fname) . " " . htmlentities($lname) ?></h6>
-										</span>
-									</div>
-									<div class="col py-3">
-										<span>
-											<h6>Position</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($position) ?></h6>
+									<div class="col-12 col-md-6">
+										<span class="d-flex justify-content-md-end">
+											<p class="fw-bold">Request Date:</p>
+											<p class="fw-light lead fs-6 ms-2"><?php echo htmlentities($date) ?></p>
 										</span>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col py-3">
-										<span>
-											<h6>For (No. of Evacuees/Families):</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($evacuees_qty) ?></h6>
+									<div class="col-12 col-md-6">
+										<span class="d-flex d-md-block">
+											<p class="fw-bold mb-0">Fullname:</p>
+											<p class="fw-light lead fs-6 ms-2"><?php echo htmlentities($fname) . " " . htmlentities($lname) ?></p>
 										</span>
 									</div>
-									<div class="col py-3">
+									<div class="col-12 col-md-6">
+										<span class="d-flex d-md-block">
+											<p class="fw-bold mb-0">Position:</p>
+											<p class="fw-light lead fs-6 ms-2"><?php echo htmlentities($position) ?></p>
+										</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-12 col-md-6">
 										<span>
-											<h6>Email:</h6>
-											<h6 class="fw-light"> &nbsp&nbsp&nbsp<?php echo htmlentities($requestemail) ?></h6>
+											<p class="fw-bold mb-0">For (No. of Evacuees/Families):</p>
+											<p class="fw-light lead fs-6 ms-2"><?php echo htmlentities($evacuees_qty) ?></p>
+										</span>
+									</div>
+									<div class="col-12 col-md-6">
+										<span>
+											<p class="fw-bold mb-0">Email:</p>
+											<p class="fw-light lead fs-6 ms-2"><?php echo htmlentities($requestemail) ?></p>
 										</span>
 									</div>
 								</div>
 								<span class="d-flex py-2">
-									<h6>Status:</h6>&nbsp;&nbsp;&nbsp;
+									<p class="fw-bold mb-0">Status:</p>
 									<?php
 									$badgeClass = "";
 									if ($status === "Ready for Pick-up") {
@@ -156,22 +152,17 @@ if (isset($_GET['requestId'])) {
 										$badgeClass = "badge-info";
 									}
 									?>
-									<span class="badge <?php echo htmlentities($badgeClass) ?>"><?php echo htmlentities($status) ?></span>
+									<span class="badge <?php echo htmlentities($badgeClass) ?>  mt-1 ms-2"><?php echo htmlentities($status) ?></span>
 								</span>
-
 							</div>
-							<div class="d-inline-flex">
-								<h6 class="number-title">2</h6>
-								<div class="mt-3 ps-3">
-									<h4 class="text-muted">Requested Category</h4>
-								</div>
+							<div class="mt-2 mt-md-3 mb-3">
+								<h4 class="text-muted title-1">2. Requested Category</h4>
 							</div>
 						</div>
 						<!--2nd table -->
-
 						<form id="processForm">
 							<input hidden type="text" id="request_id" value="<?php echo htmlentities($reference) ?>">
-							<div class="px-4 ms-5 mt-4">
+							<div class="px-4 ms-0 ms-md-4 mt-4 table-responsive">
 								<?php
 								$reqCategory = "SELECT categoryName,quantity,notes from request_category where request_id=?";
 								$stmt = $conn->prepare($reqCategory);
@@ -194,7 +185,7 @@ if (isset($_GET['requestId'])) {
 													<strong>Can/Noodles:</strong>&nbsp<?php echo htmlentities($notes) ?>
 												</div>
 											<?php endif; ?>
-											<table class="table table-striped table-bordered">
+											<table class="table table-sm table-bordered">
 												<thead>
 													<tr>
 														<th>Can/Noodles</th>
@@ -228,7 +219,7 @@ if (isset($_GET['requestId'])) {
 													<strong>Hygine Essentials:</strong>&nbsp<?php echo htmlentities($notes) ?>
 												</div>
 											<?php endif; ?>
-											<table class="table table-striped table-bordered">
+											<table class="table table-sm table-bordered">
 												<thead>
 													<tr>
 														<th>Hygine Essentials</th>
@@ -262,7 +253,7 @@ if (isset($_GET['requestId'])) {
 													<strong>Infant Items:</strong>&nbsp<?php echo htmlentities($notes) ?>
 												</div>
 											<?php endif; ?>
-											<table class="table table-striped table-bordered">
+											<table class="table table-sm table-bordered">
 												<thead>
 													<tr>
 														<th>Infant Items</th>
@@ -296,7 +287,7 @@ if (isset($_GET['requestId'])) {
 													<strong>Drinking Water:</strong>&nbsp<?php echo htmlentities($notes) ?>
 												</div>
 											<?php endif; ?>
-											<table class="table table-striped table-bordered">
+											<table class="table table-sm table-bordered">
 												<thead>
 													<tr>
 														<th>Drinking Water</th>
@@ -331,7 +322,7 @@ if (isset($_GET['requestId'])) {
 													<strong>Meat/Grains:</strong>&nbsp<?php echo htmlentities($notes) ?>
 												</div>
 											<?php endif; ?>
-											<table class="table table-striped table-bordered">
+											<table class="table table-sm table-bordered">
 												<thead>
 													<tr>
 														<th>Meat/Grains</th>
@@ -365,7 +356,7 @@ if (isset($_GET['requestId'])) {
 													<strong>Medicine:</strong>&nbsp<?php echo htmlentities($notes) ?>
 												</div>
 											<?php endif; ?>
-											<table class="table table-striped table-bordered">
+											<table class="table table-sm table-bordered">
 												<thead>
 													<tr>
 														<th>Medicine</th>
@@ -399,7 +390,7 @@ if (isset($_GET['requestId'])) {
 													<strong>Others:</strong>&nbsp<?php echo htmlentities($notes) ?>
 												</div>
 											<?php endif; ?>
-											<table class="table table-striped table-bordered">
+											<table class="table table-sm table-bordered">
 												<thead>
 													<tr>
 														<th>Others</th>

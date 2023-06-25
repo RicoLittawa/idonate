@@ -1,6 +1,6 @@
 const canNoodlesTable = () => {
   const html = `
-    <table class="table cnTB col table-bordered" id="cnTB">
+    <table class="table table-sm cnTB col table-bordered" id="cnTB">
         <thead>
             <tr>
                 <th>Product Name</th>
@@ -20,7 +20,7 @@ const canNoodlesTable = () => {
 };
 const hygineEssentialTable = () => {
   const html = `
-    <table class="table hyTB col table-bordered" id="hyTB">
+    <table class="table table-sm hyTB col table-bordered" id="hyTB">
         <thead>
             <tr>
                 <th>Product Name</th>
@@ -41,7 +41,7 @@ const hygineEssentialTable = () => {
 const infantItemsTable = () => {
   let html = "";
   html += `
-    <table class="table iiTB col table-bordered" id="iiTB">
+    <table class="table table-sm iiTB col table-bordered" id="iiTB">
         <thead>
             <tr>
                 <th>Product Name</th>
@@ -61,7 +61,7 @@ const infantItemsTable = () => {
 };
 const drinkingWaterTable = () => {
   const html = `
-    <table class="table dwTB col table-bordered" id="dwTB">
+    <table class="table table-sm dwTB col table-bordered" id="dwTB">
         <thead>
             <tr>
                 <th>Product Name</th>
@@ -81,7 +81,7 @@ const drinkingWaterTable = () => {
 };
 const meatGrainsTable = () => {
   const html = `
-    <table class="table mgTB col table-bordered" id="mgTB">
+    <table class="table table-sm mgTB col table-bordered" id="mgTB">
         <thead>
             <tr>
                 <th>Product Name</th>
@@ -128,7 +128,7 @@ const meatGrainsTable = () => {
 };
 const medicineTable = () => {
   const html = `
-    <table class="table meTB col table-bordered" id="meTB">
+    <table class="table table-sm meTB col table-bordered" id="meTB">
         <thead>
             <tr>
                 <th>Product Name</th>
@@ -175,7 +175,7 @@ const medicineTable = () => {
 };
 const othersTable = () => {
   const html = `
-    <table class="table otTB col table-bordered" id="otTB">
+    <table class="table table-sm otTB col table-bordered" id="otTB">
         <thead>
             <tr>
                 <th>Product Name</th>

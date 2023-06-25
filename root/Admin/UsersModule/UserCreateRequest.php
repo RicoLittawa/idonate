@@ -157,7 +157,7 @@ $requestRef = $refRow["request_id"];
                   <label class="form-label" for="evacQty">Evacuees/Families Quantity</label>
                 </div>
                 <div class="table-responsive">
-                  <table class="table table-striped table-bordered">
+                  <table class="table table-sm table-bordered">
                     <thead>
                       <tr>
                         <th>Available Category</th>
@@ -177,7 +177,7 @@ $requestRef = $refRow["request_id"];
                         <td>
                           <input type="number" class="form-control quantity" id="quantity">
                         </td>
-                        <td><textarea class="form-control notes" id="notes" cols="30" rows="5" placeholder="e.g. We only need shampoo, soap, and mouthwash"></textarea></td>
+                        <td><textarea class="form-control notes" id="notes" cols="30" rows="1" placeholder="e.g. We only need shampoo, soap, and mouthwash"></textarea></td>
                         <td><button class="btn btn-success" type="button" id="addCategory"><i class="fa-solid fa-plus"></i></button></td>
                       </tr>
                     </tbody>

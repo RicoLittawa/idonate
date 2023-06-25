@@ -59,20 +59,20 @@ require_once "../include/sidebar.php";
             <div id="registerForm" class="collapse mt-5" data-duration="500">
               <form class="pe-2 mb-3" id="add-user">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
-                <div class="row mb-4">
-                  <div class="col">
+                <div class="row mb-2 gy-2">
+                  <div class="col-12 col-md-4">
                     <div class="form-outline">
                       <input type="text" id="fname" class="form-control" />
                       <label class="form-label" for="fname">First name</label>
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col-12 col-md-4">
                     <div class="form-outline">
                       <input type="text" id="lname" class="form-control" />
                       <label class="form-label" for="lname">Last name</label>
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col-12 col-md-4">
                     <div class="form-outline">
                       <input type="text" id="position" class="form-control" placeholder="e.g. Brgy Captain/Employee" />
                       <label class="form-label" for="position">Position</label>
@@ -80,20 +80,20 @@ require_once "../include/sidebar.php";
                   </div>
                 </div>
                 <!-- Email and Password inputs -->
-                <div class="form-outline mb-4">
+                <div class="form-outline mb-2">
                   <input type="text" id="email" class="form-control" />
                   <label class="form-label" for="email">Email address</label>
                 </div>
-                <div class="input-group form-outline mb-4">
+                <div class="d-block mb-2">
+                  <div class="input-group form-outline">
                   <input type="password" class="form-control" id="password">
-                  <div class="input-group-append">
-                    <button class="btn btn-success h-100" type="button" id="generatePasswordBtn">Generate Password</button>
+                  <label class="form-label" for="password">Password</label>
                   </div>
-                  <div class="input-group-append">
+                  <div class="text-center pt-2">
+                  <button class="btn btn-success h-100" type="button" id="generatePasswordBtn">Generate Password</button>
                     <button class="btn btn-secondary h-100" type="button" id="togglePass">
                       <i class="fa fa-eye"></i> </button>
                   </div>
-                  <label class="form-label" for="password">Password</label>
                 </div>
                 <!-- Address input -->
                 <div class="form-outline mb-4">
