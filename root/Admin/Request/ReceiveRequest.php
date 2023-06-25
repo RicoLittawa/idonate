@@ -55,12 +55,37 @@ if (isset($_GET['requestId'])) {
 <body>
 	<?php echo showAdminModal($conn) ?>
 	<div class="main-container">
-		<!-- SIDEBAR -->
-		<div class="sidebar" id="sidebar"><?php echo adminSidebar() ?></div>
+		<!-- Desktop SIDEBAR -->
+		<div class="sidebar" id="sidebar"><?php echo adminSidebar(); ?></div>
+		<!-- Desktop SIDEBAR -->
+		<!-- Mobile nav -->
+		<nav class="mobide-nav navbar navbar-expand-lg navbar-light">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#mobileAdminNavbar" aria-controls="mobileAdminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-bars text-light"></i>
+				</button>
+				<div class="collapse navbar-collapse" id="mobileAdminNavbar">
+					<?php echo showMobileAdminNav() ?>
+				</div>
+				<div class="d-flex align-items-center">
+					<?php echo showNotificationAdminMobile($conn) ?>
+					<div class="dropdown">
+						<a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+							<?php if ($profile == null) { ?>
+								<img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
+							<?php } else { ?>
+								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+							<?php } ?> </a>
+						<?php echo adminMenu($conn); ?>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!-- Mobile nav -->
 		<!--Main content -->
 		<div class="main-content">
 			<!--Header -->
-			<div class="mb-4 custom-breadcrumb pt-4 me-5">
+			<div class="mb-4 custom-breadcrumb pt-4 me-md-5">
 				<div class="crumb">
 					<h1 class="fs-1 breadcrumb-title">Process Request</h1>
 					<nav class="bc-nav d-flex">
@@ -73,7 +98,7 @@ if (isset($_GET['requestId'])) {
 						</h6>
 					</nav>
 				</div>
-				<div class="ms-auto">
+				<div class="profile-container ms-auto">
 					<div class="dropdown allowed">
 						<a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
 							<?php if ($profile == null) { ?>
@@ -87,7 +112,7 @@ if (isset($_GET['requestId'])) {
 				</div>
 			</div>
 			<!--Header -->
-			<div class="custom-container pb-3 me-5">
+			<div class="custom-container pb-3 me-2 me-md-5">
 				<div class="card">
 					<div class="card-body overflow-auto">
 						<!--Place table here --->
@@ -162,7 +187,7 @@ if (isset($_GET['requestId'])) {
 						<!--2nd table -->
 						<form id="processForm">
 							<input hidden type="text" id="request_id" value="<?php echo htmlentities($reference) ?>">
-							<div class="px-4 ms-0 ms-md-4 mt-4 table-responsive">
+							<div class="px-md-4 ms-0 ms-md-4 mt-4 table-responsive">
 								<?php
 								$reqCategory = "SELECT categoryName,quantity,notes from request_category where request_id=?";
 								$stmt = $conn->prepare($reqCategory);

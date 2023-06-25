@@ -4,6 +4,7 @@ require_once "../include/sidebar.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,19 +17,44 @@ require_once "../include/sidebar.php";
   <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
   <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
-	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <!--Necessary Plugins-->
   <title>User Details</title>
 </head>
+
 <body>
   <?php echo showAdminModal($conn) ?>
   <div class="main-container">
-    <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar"><?php echo adminSidebar() ?> </div>
-    <!--Main content -->
+    <!-- Desktop SIDEBAR -->
+    <div class="sidebar" id="sidebar"><?php echo adminSidebar(); ?></div>
+    <!-- Desktop SIDEBAR -->
+    <!-- Mobile nav -->
+    <nav class="mobide-nav navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#mobileAdminNavbar" aria-controls="mobileAdminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars text-light"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="mobileAdminNavbar">
+          <?php echo showMobileAdminNav() ?>
+        </div>
+        <div class="d-flex align-items-center">
+          <?php echo showNotificationAdminMobile($conn) ?>
+          <div class="dropdown">
+            <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <?php if ($profile == null) { ?>
+                <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
+              <?php } else { ?>
+                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+              <?php } ?> </a>
+            <?php echo adminMenu($conn); ?>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Mobile nav -->
     <div class="main-content">
       <!--Header -->
-      <div class="mb-4 custom-breadcrumb pt-4 me-5">
+      <div class="mb-4 custom-breadcrumb pt-4 me-md-5">
         <div class="crumb">
           <h1 class="fs-1 breadcrumb-title">Users</h1>
           <nav class="bc-nav d-flex">
@@ -39,7 +65,7 @@ require_once "../include/sidebar.php";
             </h6>
           </nav>
         </div>
-        <div class="ms-auto">
+        <div class="profile-container ms-auto">
           <div class="dropdown allowed">
             <a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
               <?php if ($profile == null) { ?>
@@ -48,12 +74,12 @@ require_once "../include/sidebar.php";
                 <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
               <?php } ?>
             </a>
-          <?php echo adminMenu($conn) ?>
+            <?php echo adminMenu($conn) ?>
           </div>
         </div>
       </div>
       <!--Header -->
-      <div class="custom-container pb-3 me-5">
+      <div class="custom-container pb-3 me-2 me-md-5">
         <div class="card">
           <div class="card-body overflow-auto">
             <div id="registerForm" class="collapse mt-5" data-duration="500">
@@ -86,11 +112,11 @@ require_once "../include/sidebar.php";
                 </div>
                 <div class="d-block mb-2">
                   <div class="input-group form-outline">
-                  <input type="password" class="form-control" id="password">
-                  <label class="form-label" for="password">Password</label>
+                    <input type="password" class="form-control" id="password">
+                    <label class="form-label" for="password">Password</label>
                   </div>
                   <div class="text-center pt-2">
-                  <button class="btn btn-success h-100" type="button" id="generatePasswordBtn">Generate Password</button>
+                    <button class="btn btn-success h-100" type="button" id="generatePasswordBtn">Generate Password</button>
                     <button class="btn btn-secondary h-100" type="button" id="togglePass">
                       <i class="fa fa-eye"></i> </button>
                   </div>
@@ -113,42 +139,42 @@ require_once "../include/sidebar.php";
                 </div>
                 <!-- Submit button -->
                 <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-success btn-rounded">
-                  <span class="submit-text">Create</span>
-                  <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
-                </button>
+                  <button type="submit" class="btn btn-success btn-rounded">
+                    <span class="submit-text">Create</span>
+                    <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
+                  </button>
                 </div>
               </form>
             </div>
             <div class="table-responsive">
-                <!----Filter -->
-            <div class="d-flex justify-content-end">
-              <div id="search-field"></div>
-            </div>
-            <div class="d-flex justify-content-between py-3">
-              <div class="user-download-btn"></div>
-              <div class="d-flex">
-                <button class="btn btn-success btn-rounded" type="button" id="toggleFormBtn">Show Form</button>
-                  <div class="ms-2" id="role_filter"></div>
+              <!----Filter -->
+              <div class="d-flex justify-content-md-end">
+                <div id="search-field"></div>
               </div>
-            </div>
-            <!----Filter -->
-            <table class="table align-middle mb-0 bg-white table-hover w-100" id="user_data">
-              <thead class="bg-light">
-                <tr>
-                  <th>UID</th>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Address</th>
-                  <th>Logged In</th>
-                  <th>Logged Out</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                  <!-- Add more columns here -->
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+              <div class="d-flex justify-content-between py-3">
+                <div class="user-download-btn"></div>
+                <div class="d-flex">
+                  <button class="btn btn-success btn-rounded" type="button" id="toggleFormBtn">Show Form</button>
+                  <div class="ms-2" id="role_filter"></div>
+                </div>
+              </div>
+              <!----Filter -->
+              <table class="table align-middle mb-0 bg-white table-hover w-100" id="user_data">
+                <thead class="bg-light">
+                  <tr>
+                    <th>UID</th>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Address</th>
+                    <th>Logged In</th>
+                    <th>Logged Out</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                    <!-- Add more columns here -->
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
             </div>
             <!--- For table -->
           </div>
@@ -175,4 +201,5 @@ require_once "../include/sidebar.php";
   <script src="scripts/AddUsers.js"></script>
   <script src="../scripts/ShowNotification.js"></script>
 </body>
+
 </html>

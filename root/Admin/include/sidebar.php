@@ -65,10 +65,12 @@ function adminSidebar()
           </li>
           <li class="nav-item">
             <a href="../CreateAccount/Users.php" class="nav-link ' .
-    (strpos($_SERVER["REQUEST_URI"], "Users.php") !== false ? "active" : "") .
+    (strpos($_SERVER["REQUEST_URI"], "Users.php") !== false ||strpos($_SERVER["REQUEST_URI"], "UpdateAccount.php") !== false
+    || strpos($_SERVER["REQUEST_URI"], "UpdatePassword.php") !== false || strpos($_SERVER["REQUEST_URI"], "settings.php") !== false ? "active" : "") .
     '">
               <i class="bx bxs-user-plus ' .
-    (strpos($_SERVER["REQUEST_URI"], "Users.php") !== false ? "active" : "") .
+    (strpos($_SERVER["REQUEST_URI"], "Users.php") !== false || strpos($_SERVER["REQUEST_URI"], "UpdateAccount.php") !== false
+    || strpos($_SERVER["REQUEST_URI"], "UpdatePassword.php") !== false || strpos($_SERVER["REQUEST_URI"], "settings.php") !== false ? "active" : "") .
     '"></i>
               <span class="text">Users</span>
             </a>
@@ -144,6 +146,95 @@ function showUserModal($conn)
 
   return $html;
 }
+
+//Mobile admin navbar
+function showMobileAdminNav()
+{
+  $html = "";
+  $html .= '
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-light" href="../Dashboard/Dashboard.php">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="../Donations/Donors.php">Donors</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="../Request/Request.php">Requests</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="../Stocks/Stocks.php">Stocks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="../CreateAccount/Users.php">Users</a>
+            </li>
+          </ul>
+  ';
+  return $html;
+}
+
+//Mobile user navbar
+function showMobileUserNav()
+{
+  $html = "";
+  $html .= '
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-light" href="../UsersModule/UserLandingPage.php">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="../UsersModule/UserCreateRequest.php">Create</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="../UsersModule/UserUpdateProfile.php">Account</a>
+            </li>
+          </ul>
+  ';
+  return $html;
+}
+
+//Show admin notification mobile
+function showNotificationAdminMobile($conn)
+{
+  $html = "";
+  $getNotifCount = $conn->prepare("SELECT COUNT(*) AS notificationCount FROM admin_notification");
+  $getNotifCount->execute();
+  $notifCountResult = $getNotifCount->get_result();
+  $notifCountRow = $notifCountResult->fetch_assoc();
+  $notificationCount = $notifCountRow["notificationCount"];
+  $html .= '
+  <a onClick="showAdminNotification()" class="text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-bell text-light"></i>';
+  if ($notificationCount > 0) {
+    $html .= '<span class="badge rounded-pill badge-notification bg-danger">' . $notificationCount . '</span>';
+  }
+  $html .= ' </a>';
+
+  return $html;
+}
+
+//Show user notification mobile
+function showNotificationUserMobile($conn)
+{
+  $html = "";
+  $userID = $_SESSION["user"]["uID"];
+  $getNotifCount = $conn->prepare("SELECT COUNT(*) AS notificationCount FROM notification WHERE userID = ?");
+  $getNotifCount->bind_param("i", $userID);
+  $getNotifCount->execute();
+  $notifCountResult = $getNotifCount->get_result();
+  $notifCountRow = $notifCountResult->fetch_assoc();
+  $notificationCount = $notifCountRow["notificationCount"];
+  $html .= '
+  <a onClick="showAdminNotification()" class="text-reset me-3 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-bell text-light"></i>';
+  if ($notificationCount > 0) {
+    $html .= '<span class="badge rounded-pill badge-notification bg-danger">' . $notificationCount . '</span>';
+  }
+  $html .= ' </a>';
+
+  return $html;
+}
+
 
 //Show modal admin
 function showAdminModal($conn)
@@ -224,7 +315,7 @@ function adminMenu($conn)
     <li><a class="dropdown-item" href="../UpdateUsersAccount/UpdateAccount.php"><i class="fa-solid fa-pen"></i> Update Profile</a></li>
     <li><a class="dropdown-item" href="../UpdateUsersAccount/UpdatePassword.php"><i class="fa-solid fa-key"></i> Change Password</a></li>
     <li><a class="dropdown-item" href="../Settings/settings.php"><i class="fa-solid fa-gear"></i> Settings</a></li>
-    <li><a class="dropdown-item" href="#" onClick="showAdminNotification()"><i class="fa-solid fa-envelope"></i> Notifications   
+    <li><a class="dropdown-item admin-notif" href="#" onClick="showAdminNotification()"><i class="fa-solid fa-envelope"></i> Notifications   
     ';
 
   if ($notificationCount > 0) {

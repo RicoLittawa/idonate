@@ -14,19 +14,43 @@ require_once "../include/sidebar.php";
   <link rel="stylesheet" href="../css/mdb.min.css">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
-	<link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <title>User Details</title>
 </head>
 
 <body>
   <?php echo showAdminModal($conn) ?>
   <div class="main-container">
-    <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar"><?php echo adminSidebar() ?></div>
-    <!--Main content -->
+    <!-- Desktop SIDEBAR -->
+    <div class="sidebar" id="sidebar"><?php echo adminSidebar(); ?></div>
+    <!-- Desktop SIDEBAR -->
+    <!-- Mobile nav -->
+    <nav class="mobide-nav navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#mobileAdminNavbar" aria-controls="mobileAdminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars text-light"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="mobileAdminNavbar">
+          <?php echo showMobileAdminNav() ?>
+        </div>
+        <div class="d-flex align-items-center">
+          <?php echo showNotificationAdminMobile($conn) ?>
+          <div class="dropdown">
+            <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <?php if ($profile == null) { ?>
+                <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
+              <?php } else { ?>
+                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+              <?php } ?> </a>
+            <?php echo adminMenu($conn); ?>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Mobile nav -->
     <div class="main-content">
       <!--Header -->
-      <div class="mb-4 custom-breadcrumb pt-4 me-5">
+      <div class="mb-4 custom-breadcrumb pt-4 me-md-5">
         <div class="crumb">
           <h1 class="fs-1 breadcrumb-title">Update Password</h1>
           <nav class="bc-nav d-flex">
@@ -37,7 +61,7 @@ require_once "../include/sidebar.php";
             </h6>
           </nav>
         </div>
-        <div class="ms-auto">
+        <div class="profile-container ms-auto">
           <div class="dropdown">
             <a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
               <?php if ($profile == null) { ?>
@@ -50,10 +74,8 @@ require_once "../include/sidebar.php";
           </div>
         </div>
       </div>
-
       <!--Header -->
-
-      <div class="custom-container pb-3 me-5">
+      <div class="custom-container pb-3 me-2 me-md-5">
         <div class="card">
           <div class="card-body overflow-auto">
             <form class="pe-2 mb-3" id="password-update">
@@ -79,7 +101,6 @@ require_once "../include/sidebar.php";
                   <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
                 </button>
               </div>
-
             </form>
           </div>
         </div>

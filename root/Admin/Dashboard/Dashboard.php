@@ -26,12 +26,37 @@ require_once "../include/sidebar.php";
 <body>
   <?php echo showAdminModal($conn); ?>
   <div class="main-container">
-    <!-- SIDEBAR -->
+    <!-- Desktop SIDEBAR -->
     <div class="sidebar" id="sidebar"><?php echo adminSidebar(); ?></div>
+    <!-- Desktop SIDEBAR -->
+    <!-- Mobile nav -->
+    <nav class="mobide-nav navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#mobileAdminNavbar" aria-controls="mobileAdminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars text-light"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="mobileAdminNavbar">
+          <?php echo showMobileAdminNav() ?>
+        </div>
+        <div class="d-flex align-items-center">
+          <?php  echo showNotificationAdminMobile($conn)?>
+          <div class="dropdown">
+            <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+              <?php if ($profile == null) { ?>
+                <img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
+              <?php } else { ?>
+                <img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+              <?php } ?> </a>
+            <?php echo adminMenu($conn); ?>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Mobile nav -->
     <!--Main content -->
     <div class="main-content">
       <!--Header -->
-      <div class="mb-4 custom-breadcrumb pt-4 me-5">
+      <div class="mb-4 custom-breadcrumb pt-4 me-md-5">
         <div class="crumb">
           <h1 class="fs-1 breadcrumb-title">Dashboard</h1>
           <nav class="bc-nav d-flex">
@@ -42,7 +67,7 @@ require_once "../include/sidebar.php";
             </h6>
           </nav>
         </div>
-        <div class="ms-auto">
+        <div class="profile-container ms-auto">
           <div class="dropdown allowed">
             <a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
               <?php if ($profile == null) { ?>
@@ -56,9 +81,7 @@ require_once "../include/sidebar.php";
         </div>
       </div>
       <!--Header -->
-
-      <!--reports -->
-      <div class="custom-container pb-3 me-5">
+      <div class="custom-container pb-3 me-2 me-md-5">
         <div class="row g-3">
           <div class="col-12 col-sm-12 col-md-12 col-lg-4">
             <div class="card">
@@ -201,7 +224,6 @@ require_once "../include/sidebar.php";
   <script src="scripts/DashboardStocksTable.js"></script>
   <script src="../scripts/TableFilterButtons.js"></script>
   <script src="../scripts/ShowNotification.js"></script>
-
   <script>
     const showAdminAlertNotification = () => {
       $.ajax({

@@ -180,12 +180,37 @@ if (isset($_GET["editdonate"])) {
 		</div>
 	</div>
 	<div class="main-container">
-		<!-- SIDEBAR -->
-		<div class="sidebar" id="sidebar"><?php echo adminSidebar() ?> </div>
+		<!-- Desktop SIDEBAR -->
+		<div class="sidebar" id="sidebar"><?php echo adminSidebar(); ?></div>
+		<!-- Desktop SIDEBAR -->
+		<!-- Mobile nav -->
+		<nav class="mobide-nav navbar navbar-expand-lg navbar-light">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#mobileAdminNavbar" aria-controls="mobileAdminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-bars text-light"></i>
+				</button>
+				<div class="collapse navbar-collapse" id="mobileAdminNavbar">
+					<?php echo showMobileAdminNav() ?>
+				</div>
+				<div class="d-flex align-items-center">
+					<?php echo showNotificationAdminMobile($conn) ?>
+					<div class="dropdown">
+						<a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+							<?php if ($profile == null) { ?>
+								<img src="../img/default-admin.png" class="rounded-circle avatar-size" alt="Avatar" />
+							<?php } else { ?>
+								<img src="../include/profile/<?php echo htmlentities($profile); ?>" class="rounded-circle avatar-size" alt="Avatar" />
+							<?php } ?> </a>
+						<?php echo adminMenu($conn); ?>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!-- Mobile nav -->
 		<!--Main content -->
 		<div class="main-content">
 			<!--Header -->
-			<div class="mb-4 custom-breadcrumb pt-4 me-5">
+			<div class="mb-4 custom-breadcrumb pt-4 me-md-5">
 				<div class="crumb">
 					<h1 class="fs-1 breadcrumb-title">Update Donors</h1>
 					<nav class="bc-nav d-flex">
@@ -198,7 +223,7 @@ if (isset($_GET["editdonate"])) {
 						</h6>
 					</nav>
 				</div>
-				<div class="ms-auto">
+				<div class="profile-container ms-auto">
 					<div class="dropdown allowed">
 						<a class="dropdown-toggle border border-0" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false">
 							<?php if ($profile == null) { ?>
@@ -212,7 +237,7 @@ if (isset($_GET["editdonate"])) {
 				</div>
 			</div>
 			<!--Header -->
-			<div class="custom-container pb-3 me-5">
+			<div class="custom-container pb-3 me-2 me-md-5">
 				<div class="card">
 					<div class="card-body overflow-auto">
 						<!--Place table here --->
@@ -255,11 +280,9 @@ if (isset($_GET["editdonate"])) {
 												$result = mysqli_query($conn, $sql);
 												foreach ($result as $row) : ?>
 													<option value="
-														<?php echo htmlentities($row["regCode"]); ?>" 
-														<?php if ($donorregion == $row["regCode"]) 
-														{
-															echo 'selected="selected"';
-														} ?>>
+														<?php echo htmlentities($row["regCode"]); ?>" <?php if ($donorregion == $row["regCode"]) {
+																											echo 'selected="selected"';
+																										} ?>>
 														<?php echo htmlentities($row["regDesc"]); ?></option>
 												<?php endforeach; ?>
 											</select>
@@ -279,11 +302,9 @@ if (isset($_GET["editdonate"])) {
 												$data = $resultProv->fetch_all(MYSQLI_ASSOC);
 												foreach ($data as $row) : ?>
 													<option value="
-														<?php echo htmlentities($row["provCode"]); ?>" 
-														<?php if ($donorprovince == $row["provCode"]) 
-														{
-															echo 'selected="selected"';
-														} ?>>
+														<?php echo htmlentities($row["provCode"]); ?>" <?php if ($donorprovince == $row["provCode"]) {
+																											echo 'selected="selected"';
+																										} ?>>
 														<?php echo htmlentities($row["provDesc"]); ?></option>
 												<?php endforeach; ?>
 											</select>
@@ -304,11 +325,9 @@ if (isset($_GET["editdonate"])) {
 												$data = $resultProv->fetch_all(MYSQLI_ASSOC);
 												foreach ($data as $row) : ?>
 													<option value="
-														<?php echo htmlentities($row["citymunCode"]); ?>" 
-														<?php if ($donormunicipality == $row["citymunCode"]) 
-														{
-															echo 'selected="selected"';
-														} ?>>
+														<?php echo htmlentities($row["citymunCode"]); ?>" <?php if ($donormunicipality == $row["citymunCode"]) {
+																												echo 'selected="selected"';
+																											} ?>>
 														<?php echo htmlentities($row["citymunDesc"]); ?></option>
 												<?php endforeach; ?>
 											</select>
@@ -328,11 +347,9 @@ if (isset($_GET["editdonate"])) {
 												$data = $resultProv->fetch_all(MYSQLI_ASSOC);
 												foreach ($data as $row) : ?>
 													<option value="
-														<?php echo htmlentities($row["brgyCode"]); ?>" 
-														<?php if ($donorbarangay == $row["brgyCode"]) 
-														{
-															echo 'selected="selected"';
-														} ?>>
+														<?php echo htmlentities($row["brgyCode"]); ?>" <?php if ($donorbarangay == $row["brgyCode"]) {
+																											echo 'selected="selected"';
+																										} ?>>
 														<?php echo htmlentities($row["brgyDesc"]); ?></option>
 												<?php endforeach; ?>
 											</select>
