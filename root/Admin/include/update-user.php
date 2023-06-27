@@ -84,10 +84,10 @@ if (isset($_POST['updateBtn'])) {
         $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         $fileSize = $_FILES['profileImg']['size'];
         $fileError = $_FILES['profileImg']['error'];
-        if (move_uploaded_file($_FILES['profileImg']['tmp_name'], $filePath . $filename)) {
-            if ($fileError === 0) {
-                if ($fileSize < 1000000) {
-                    try {
+        try {
+            if (move_uploaded_file($_FILES['profileImg']['tmp_name'], $filePath . $filename)) {
+                if ($fileError === 0) {
+                    if ($fileSize < 10485760) {
                         $updateUserWithImage = $conn->prepare("UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?");
                         $updateUserWithImage->bind_param("ssssssi", $fname, $lname, $position, $email, $address, $filename, $uID);
                         if (!$updateUserWithImage->execute()) {
@@ -116,29 +116,37 @@ if (isset($_POST['updateBtn'])) {
                                 }
                             }
                         }
-                    } catch (Exception $e) {
-                        if ($e->getCode() == 1062) {
-                            $response = array(
-                                'status' => 'Error',
-                                'message' => 'Email address already exist',
-                                'icon' => 'error',
-                                'duplication' => false
-                            );
-                            header('Content-Type: application/json');
-                            echo json_encode($response);
-                            exit();
-                        } else {
-                            $response = array(
-                                'status' => 'Error',
-                                'message' => $e->getMessage(),
-                                'icon' => 'error',
-                            );
-                            header('Content-Type: application/json');
-                            echo json_encode($response);
-                            exit();
-                        }
+                    }else{
+                      throw new Exception("File is too large");  
                     }
+                }else{
+                    throw new Exception("There are problem uploading the file");  
                 }
+            }else{
+                throw new Exception("There are problem uploading the file");  
+            }
+        } catch (Exception $e) {
+            if ($e->getCode() == 1062) {
+                $response = array(
+                    'status' => 'Error',
+                    'message' => 'Email address already exist',
+                    'icon' => 'error',
+                    'duplication' => true
+                );
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                exit();
+            } else {
+                $response = array(
+                    'status' => 'Error',
+                    'message' => $e->getMessage(),
+                    'icon' => 'error',
+                    'duplication' => false
+
+                );
+                header('Content-Type: application/json');
+                echo json_encode($response);
+                exit();
             }
         }
         /*****************Upload new image**********************************/

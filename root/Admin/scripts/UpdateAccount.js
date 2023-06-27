@@ -27,15 +27,14 @@ $(document).on("submit", "#update-user", (event) => {
       confirmButtonColor: "#20d070",
       confirmButtonText: "OK",
       allowOutsideClick: false,
-      timer: 1500
+      timer: 1500,
     });
   };
   if (file) {
     let extension = file.name.split(".").pop().toLowerCase();
-    if (["gif", "png", "jpg", "jpeg"].indexOf(extension) === -1) {
+    if (["png", "jpg", "jpeg"].indexOf(extension) === -1) {
       alertMessage("Warning", "Invalid file extension.", "warning");
       isInvalid = true;
-    } else {
     }
   }
   if (!fname) {
@@ -115,22 +114,22 @@ $(document).on("submit", "#update-user", (event) => {
               resetBtnLoadingState();
               alertMessage(response.status, response.message, response.icon);
               if (response.data) {
-                $("#newProfile").attr(
-                  "src",
-                  `../include/profile/${response.data}`
-                );
+                $("#newProfile").attr("src", `../include/profile/${response.data}`);
               }
             }, 1000);
           } else {
             setTimeout(() => {
-              alertMessage(response.status, response.message, response.icon);
-              resetBtnLoadingState();
-              if(!response.duplication){
-                $("#email").val("");
-                $("#email").addClass("is-invalid");
+              if (response.duplication) {
+                // Handle duplication error separately
+                alertMessage(response.status, response.message, response.icon);
+                resetBtnLoadingState();
+              } else {
+                // Handle other errors
+                alertMessage(response.status, response.message, response.icon);
+                resetBtnLoadingState();
               }
             }, 1000);
-          } 
+          }          
         },
         error: (xhr, status, error) => {
           // Handle errors

@@ -18,12 +18,7 @@ if (isset($_POST["saveBtn"])) {
             $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
             $fileSize = $_FILES["certificate"]["size"];
             $fileError = $_FILES["certificate"]["error"];
-            if (
-                move_uploaded_file(
-                    $_FILES["certificate"]["tmp_name"],
-                    $filePath . $certificate
-                )
-            ) {
+            if (move_uploaded_file($_FILES["certificate"]["tmp_name"],$filePath . $certificate)) {
                 $updateCert = $conn->prepare(
                     "UPDATE template_certi set  template= ? where id=?"
                 );

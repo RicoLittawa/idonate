@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="Admin/css/mdb.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="Admin/img/batangascitylogo.png" type="image/x-icon">
-	<link rel="shortcut icon" href="Admin/img/batangascitylogo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="Admin/img/batangascitylogo.png" type="image/x-icon">
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
@@ -28,7 +28,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <a class="navbar-brand mt-2 mt-lg-0" href="#">
-            <img src="Admin/img/batangascitylogo.png" height="45"  class="d-none d-md-block" alt="CDRRMO Logo"/>
+            <img src="Admin/img/batangascitylogo.png" height="45" class="d-none d-md-block" alt="CDRRMO Logo" />
           </a>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
@@ -186,11 +186,11 @@
           </div>
           <div class="g-recaptcha pb-4 d-flex justify-content-center" data-sitekey="6LddXa4mAAAAALVtpP0nf7GZsDF1SRf052K9Xzk8"></div>
           <div class="d-flex justify-content-center">
-          <button type="submit" class="btn btn-success w-50 float-end-md mb-4">
-            <span class="submit-text">Send</span>
-            <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
-          </button>
-          </div>  
+            <button type="submit" class="btn btn-success w-50 float-end-md mb-4">
+              <span class="submit-text">Send</span>
+              <span class="spinner-border spinner-border-sm  d-none" aria-hidden="true"></span>
+            </button>
+          </div>
         </form>
       </div>
     </section>
@@ -242,7 +242,7 @@
   <script src="Admin/scripts/mdb.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="Admin/scripts/DisplayMaps.js"></script>
- <script>
+  <script>
     $("#goToFacebook").click(() => {
       window.location.href = "https://www.facebook.com/profile.php?id=100064680010464";
     });
@@ -313,6 +313,44 @@
         message: message,
         recaptchaResponse: recaptchaResponse // Get the reCAPTCHA response
       };
+      let isInvalid = false;
+      let emailVali =
+        /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+      if (!firstname) {
+        $("#firstname").addClass("is-invalid")
+        isInvalid = true;
+      } else {
+        $("#firstname").removeClass("is-invalid")
+      }
+      if (!lastname) {
+        $("#lastname").addClass("is-invalid")
+        isInvalid = true;
+      } else {
+        $("#lastname").removeClass("is-invalid")
+      }
+      if (!email) {
+        $("#email").addClass("is-invalid");
+        isInvalid = true;
+      } else if (emailVali.test(email) == false) {
+        alertMessage("warning", "Invalid email address", "warning");
+        $("#email").addClass("is-invalid");
+        isInvalid = true;
+      } else {
+        $("#email").removeClass("is-invalid");
+      }
+      if (!message){
+        $("#message").addClass("is-invalid");
+        isInvalid = true;
+      }
+      else{
+        $("#message").removeClass("is-invalid");
+      }
+
+
+      if (isInvalid) {
+        return false;
+      }
       const resetBtnLoadingState = () => {
         $('button[type="submit"]').prop("disabled", false);
         $(".submit-text").text("Send");

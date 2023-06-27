@@ -39,9 +39,10 @@ if (isset($_POST['submitBtn'])) {
                                     "uID" => $userID,
                                     "role" => $role,
                                 ];
+                                $_SESSION['loggedin'] = true;
     
                                 $status = 'active';
-                                $updateStatus = $conn->prepare("UPDATE adduser SET status = ?, logged_in = CURRENT_TIMESTAMP,logged_out=null WHERE uID = ?");
+                                $updateStatus = $conn->prepare("UPDATE adduser SET status = ?, logged_in = NOW(),logged_out=null WHERE uID = ?");
                                 $updateStatus->bind_param('si', $status, $userID);
                                 $updateStatus->execute();
     

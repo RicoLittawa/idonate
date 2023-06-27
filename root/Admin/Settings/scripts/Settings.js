@@ -32,7 +32,7 @@ $("#saveSettings").on("submit", (e) => {
 
   if (file) {
     let extension = file.name.split(".").pop().toLowerCase();
-    if (["gif", "png", "jpg", "jpeg"].indexOf(extension) === -1) {
+    if (["png", "jpg", "jpeg"].indexOf(extension) === -1) {
       $("#certificate").addClass("is-invalid");
       alertMessage("Warning", "Invalid file extension", "warning");
       isInvalid = true;

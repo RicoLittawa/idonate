@@ -1,9 +1,10 @@
 <?php
 session_start();
 
-if (isset($_SESSION['user'])) {
+if (isset($_SESSION['user'])&& $_SESSION['loggedin'] === true) {
     $userID = $_SESSION['user']['uID'];
     $userRole = $_SESSION['user']['role'];
+
 } else {
     //User is not logged in, redirect to login page
     header("Location: ../login.php?Loginfirst");
@@ -29,5 +30,6 @@ if (in_array(basename($_SERVER["SCRIPT_FILENAME"]), $user_restricted_pages) && $
     header("Location: ../error/ForbiddenPage.html");
     exit();
 }
+
 
 ?>

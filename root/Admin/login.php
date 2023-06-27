@@ -1,3 +1,18 @@
+<?php
+session_start();
+if (isset($_SESSION['user'])&& $_SESSION['loggedin'] === true) {
+    $userRole = $_SESSION['user']['role'];
+
+	if ($userRole==="admin"){
+		header("Location: Dashboard/Dashboard.php");
+		exit();
+	} else{
+
+		header("Location: UsersModule/UserLandingPage.php");
+		exit();
+	}
+} 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
