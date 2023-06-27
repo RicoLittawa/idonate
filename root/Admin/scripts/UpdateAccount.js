@@ -27,7 +27,6 @@ $(document).on("submit", "#update-user", (event) => {
       confirmButtonColor: "#20d070",
       confirmButtonText: "OK",
       allowOutsideClick: false,
-      timer: 1500,
     });
   };
   if (file) {
@@ -119,17 +118,16 @@ $(document).on("submit", "#update-user", (event) => {
             }, 1000);
           } else {
             setTimeout(() => {
-              if (response.duplication) {
-                // Handle duplication error separately
-                alertMessage(response.status, response.message, response.icon);
-                resetBtnLoadingState();
-              } else {
-                // Handle other errors
-                alertMessage(response.status, response.message, response.icon);
-                resetBtnLoadingState();
-              }
+              alertMessage(response.status, response.message, response.icon);
+              resetBtnLoadingState();
             }, 1000);
-          }          
+          }    
+          if (response.message=== "Email already exist"){
+            setTimeout(()=>{
+             $("#email").val("");
+             $("#email").addClass("is-invalid");
+            },1000)
+           }      
         },
         error: (xhr, status, error) => {
           // Handle errors

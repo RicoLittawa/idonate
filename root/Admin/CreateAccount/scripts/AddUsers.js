@@ -373,13 +373,17 @@ $("#add-user").submit((e) => {
               $("#address").val("");
               $('input[name="role"]').prop("checked", false);
             }, 1000);
-          } else if (response.duplicate === true) {
-            resetBtnLoadingState();
-            alertMessage(response.status, response.message, response.icon);
+          } else {
+            setTimeout(()=>{
+              alertMessage(response.status, response.message, response.icon);
+              resetBtnLoadingState();
+            },1000)
+          }
+          if (response.message=== "Email already exist"){
+           setTimeout(()=>{
             $("#email").val("");
             $("#email").addClass("is-invalid");
-          } else {
-            alertMessage(response.status, response.message, response.icon);
+           },1000)
           }
         },
         error: (xhr, status, error) => {

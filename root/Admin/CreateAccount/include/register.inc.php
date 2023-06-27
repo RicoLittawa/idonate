@@ -16,42 +16,50 @@ if (isset($_POST['submitBtn'])) {
   $address = trim($_POST['address']);
   $selectedValue = $_POST['selectedValue'];
 
-
-
-  // Insert the new record
-  $sql = 'INSERT INTO adduser (firstname, lastname, position, email, pwdUsers, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)';
-  $stmt = $conn->prepare($sql);
   try {
-    if (!$stmt) {
-      throw new Exception('There was a problem connecting to the database');
+    $getEmail = $conn->prepare("SELECT COUNT(*) AS count FROM adduser WHERE email = ?");
+    $getEmail->bind_param("s", $email);
+    $getEmail->execute();
+    $emailResult = $getEmail->get_result();
+    $row = $emailResult->fetch_assoc();
+    $count = $row['count'];
+    if ($count > 0) {
+      throw new Exception("Email already exist");
     } else {
-      $hashPW = password_hash($password, PASSWORD_DEFAULT);
-      $stmt->bind_param('sssssss', $fname, $lname, $position, $email, $hashPW, $address, $selectedValue);
-      $result = $stmt->execute();
-      if ($result) {
-        // Send email
-        $mail = new PHPMailer(true);
+      // Insert the new record
+      $sql = 'INSERT INTO adduser (firstname, lastname, position, email, pwdUsers, address, role) VALUES (?, ?, ?, ?, ?, ?, ?)';
+      $stmt = $conn->prepare($sql);
 
-        // Server settings
-        $mail->SMTPDebug = 0;                      // Enable verbose debug output
-        $mail->isSMTP();                                            // Send using SMTP
-        $mail->Host       = 'smtp.hostinger.com';                    // Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-        $mail->Username   = SMTP_USERNAME;                     // SMTP username
-        $mail->Password   = SMTP_PASSWORD;                               // SMTP password
-        $mail->SMTPSecure = 'ssl';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-        $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+      if (!$stmt) {
+        throw new Exception('There was a problem connecting to the database');
+      } else {
+        $hashPW = password_hash($password, PASSWORD_DEFAULT);
+        $stmt->bind_param('sssssss', $fname, $lname, $position, $email, $hashPW, $address, $selectedValue);
+        $result = $stmt->execute();
+        if ($result) {
+          // Send email
+          $mail = new PHPMailer(true);
 
-        // Recipients
-        $mail->setFrom('citydisasterriskreductionmanagementoffice@i-donate-btg.com', 'City Disaster Risk and Reduction Management Office');
-        $mail->addAddress($email);     // Add a recipient
+          // Server settings
+          $mail->SMTPDebug = 0;                      // Enable verbose debug output
+          $mail->isSMTP();                                            // Send using SMTP
+          $mail->Host       = 'smtp.hostinger.com';                    // Set the SMTP server to send through
+          $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+          $mail->Username   = SMTP_USERNAME;                     // SMTP username
+          $mail->Password   = SMTP_PASSWORD;                               // SMTP password
+          $mail->SMTPSecure = 'ssl';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+          $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
-        // Content
-        $mail->isHTML(true);
-        $greeting = "Dear New User";
-        $content = "Your account has been created successfully. You can use the email and password to login to the system.";
-        $mail->Subject = 'Created Account';
-        $mail->Body = "
+          // Recipients
+          $mail->setFrom('citydisasterriskreductionmanagementoffice@i-donate-btg.com', 'City Disaster Risk and Reduction Management Office');
+          $mail->addAddress($email);     // Add a recipient
+
+          // Content
+          $mail->isHTML(true);
+          $greeting = "Dear New User";
+          $content = "Your account has been created successfully. You can use the email and password to login to the system.";
+          $mail->Subject = 'Created Account';
+          $mail->Body = "
     <html>
         <head>
             <style>
@@ -80,45 +88,19 @@ if (isset($_POST['submitBtn'])) {
     </html>
 ";
 
-        $mail->send();
-        $response = [
-          "status" => "Success",
-          "message" => "New account has been successfully created",
-          "icon" => "success",
-        ];
+          $mail->send();
+          $response = [
+            "status" => "Success",
+            "message" => "New account has been successfully created",
+            "icon" => "success",
+          ];
 
-        header("Content-Type: application/json");
-        echo json_encode($response);
-        exit();
-        $stmt->close();
+          header("Content-Type: application/json");
+          echo json_encode($response);
+          exit();
+          $stmt->close();
+        }
       }
-    }
-  } catch (mysqli_sql_exception $e) {
-    if ($e->getCode() == 1062) {
-      // Handle duplicate email error
-      $response = [
-        "status" => "Error",
-        "message" => "Email address already exist",
-        "icon" => "error",
-        "duplicate" => true
-      ];
-
-      header("Content-Type: application/json");
-      echo json_encode($response);
-      exit();
-
-      echo "Email already exists";
-    } else {
-      // Handle other MySQL errors
-      $response = [
-        "status" => "Error",
-        "message" => $e->getMessage(),
-        "icon" => "error",
-      ];
-
-      header("Content-Type: application/json");
-      echo json_encode($response);
-      exit();
     }
   } catch (Exception $e) {
     // Handle other non-MySQL errors

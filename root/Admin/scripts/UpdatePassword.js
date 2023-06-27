@@ -32,7 +32,6 @@ $("#password-update").submit((e) => {
       confirmButtonColor: "#20d070",
       confirmButtonText: "OK",
       allowOutsideClick: false,
-      timer:1500
     });
   };
   const resetBtnLoadingState = () => {
@@ -73,11 +72,13 @@ $("#password-update").submit((e) => {
               alertMessage(response.status, response.message, response.icon);
             }, 1000);
           } else {
-            resetBtnLoadingState();
-            alertMessage(response.status, response.message, response.icon);
-            $("#currentPass").val("");
-            $("#newPass").val("");
-            $("#currentPass").addClass("is-invalid");
+            setTimeout(()=>{
+              resetBtnLoadingState();
+              alertMessage(response.status, response.message, response.icon);
+              $("#currentPass").val("");
+              $("#newPass").val("");
+              $("#currentPass").addClass("is-invalid");
+            },1000)
           }
         },
         error: (xhr, status, error) => {

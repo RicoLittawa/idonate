@@ -11,41 +11,41 @@ if (isset($_POST['updateBtn'])) {
     $Image = $_FILES['profileImg']['name'];
     if ($Image == null) {
         try {
-            $updateUser = $conn->prepare("UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=? where uID=?");
-            $updateUser->bind_param("sssssi", $fname, $lname, $position, $email, $address, $uID);
-            if (!$updateUser->execute()) {
-                throw new Exception('There was a problem executing the query' . $conn->error);
+            $getEmail = $conn->prepare("SELECT COUNT(*) AS count FROM adduser WHERE email = ? AND uID <> ?");
+            $getEmail->bind_param("si", $email, $uID);
+            $getEmail->execute();
+            $emailResult = $getEmail->get_result();
+            $row = $emailResult->fetch_assoc();
+            $count = $row['count'];
+            if ($count > 0) {
+                throw new Exception("Email already exist");
             } else {
-                $response = array(
-                    'status' => 'Success',
-                    'message' => 'Your profile has been updated successfully',
-                    'icon' => 'success'
-                );
-                header('Content-Type: application/json');
-                echo json_encode($response);
-                exit();
+                $updateUser = $conn->prepare("UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=? where uID=?");
+                $updateUser->bind_param("sssssi", $fname, $lname, $position, $email, $address, $uID);
+                if (!$updateUser->execute()) {
+                    throw new Exception('There was a problem executing the query' . $conn->error);
+                } else {
+                    $response = array(
+                        'status' => 'Success',
+                        'message' => 'Your profile has been updated successfully',
+                        'icon' => 'success'
+                    );
+                    header('Content-Type: application/json');
+                    echo json_encode($response);
+                    exit();
+                }
             }
         } catch (Exception $e) {
-            if ($e->getCode() == 1062) {
-                $response = array(
-                    'status' => 'Error',
-                    'message' => 'Email address already exist',
-                    'icon' => 'error',
-                    'duplication' => false
-                );
-                header('Content-Type: application/json');
-                echo json_encode($response);
-                exit();
-            } else {
-                $response = array(
-                    'status' => 'Error',
-                    'message' => $e->getMessage(),
-                    'icon' => 'error',
-                );
-                header('Content-Type: application/json');
-                echo json_encode($response);
-                exit();
-            }
+            $response = array(
+                'status' => 'Error',
+                'message' => $e->getMessage(),
+                'icon' => 'error',
+                'duplication' => false
+
+            );
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            exit();
         }
     } else {
         $selectOldImg = $conn->prepare("SELECT profile from adduser where uID=?");
@@ -65,92 +65,78 @@ if (isset($_POST['updateBtn'])) {
                     }
                 }
             }
+            /*****************Update account*********************************/
+
+            /*****************Upload new image**********************************/
+            $filePath = 'profile/';
+            $filename = $uID . '_' . basename($_FILES['profileImg']['name']);
+            $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            $fileSize = $_FILES['profileImg']['size'];
+            $fileError = $_FILES['profileImg']['error'];
+            if (move_uploaded_file($_FILES['profileImg']['tmp_name'], $filePath . $filename)) {
+                if ($fileError === 0) {
+                    if ($fileSize < 10485760) {
+                        $getEmail = $conn->prepare("SELECT COUNT(*) AS count FROM adduser WHERE email = ? AND uID <> ?");
+                        $getEmail->bind_param("si", $email, $uID);
+                        $getEmail->execute();
+                        $emailResult = $getEmail->get_result();
+                        $row = $emailResult->fetch_assoc();
+                        $count = $row['count'];
+                        if ($count > 0) {
+                            throw new Exception("Email already exist");
+                        } else {
+                            $updateUserWithImage = $conn->prepare("UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?");
+                            $updateUserWithImage->bind_param("ssssssi", $fname, $lname, $position, $email, $address, $filename, $uID);
+                            if (!$updateUserWithImage->execute()) {
+                                throw new Exception('There was a problem executing the query' . $conn->error);
+                            } else {
+                                $getNewProfile = $conn->prepare("SELECT profile from adduser where uID=?");
+                                $getNewProfile->bind_param("i", $uID);
+                                if (!$getNewProfile->execute()) {
+                                    throw new Exception('There was a problem executing the query' . $conn->error);
+                                } else {
+                                    $getNewProfileResult = $getNewProfile->get_result();
+                                    if ($getNewProfileResult->num_rows === 0) {
+                                        throw new Exception('Failed to fetch data from database');
+                                    } else {
+                                        $newProfile = $getNewProfileResult->fetch_assoc();
+                                        $newFetchedProfile = $newProfile['profile'];
+                                        $response = array(
+                                            'status' => 'Success',
+                                            'message' => 'Your profile has been updated successfully',
+                                            'data' => $newFetchedProfile,
+                                            'icon' => 'success'
+                                        );
+                                        header('Content-Type: application/json');
+                                        echo json_encode($response);
+                                        exit();
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        throw new Exception("File is too large");
+                    }
+                } else {
+                    throw new Exception("There are problem uploading the file");
+                }
+            } else {
+                throw new Exception("There are problem uploading the file");
+            }
+            /*****************Upload new image**********************************/
         } catch (Exception $e) {
             $response = array(
                 'status' => 'Error',
                 'message' => $e->getMessage(),
                 'icon' => 'error',
+                'duplication' => false
+
             );
             header('Content-Type: application/json');
             echo json_encode($response);
             exit();
         }
-
-        /*****************Update account*********************************/
-
-        /*****************Upload new image**********************************/
-        $filePath = 'profile/';
-        $filename = $uID . '_' . basename($_FILES['profileImg']['name']);
-        $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        $fileSize = $_FILES['profileImg']['size'];
-        $fileError = $_FILES['profileImg']['error'];
-        try {
-            if (move_uploaded_file($_FILES['profileImg']['tmp_name'], $filePath . $filename)) {
-                if ($fileError === 0) {
-                    if ($fileSize < 10485760) {
-                        $updateUserWithImage = $conn->prepare("UPDATE adduser set firstname=?,lastname=?,position=?,email=?,address=?,profile=? where uID=?");
-                        $updateUserWithImage->bind_param("ssssssi", $fname, $lname, $position, $email, $address, $filename, $uID);
-                        if (!$updateUserWithImage->execute()) {
-                            throw new Exception('There was a problem executing the query' . $conn->error);
-                        } else {
-                            $getNewProfile = $conn->prepare("SELECT profile from adduser where uID=?");
-                            $getNewProfile->bind_param("i", $uID);
-                            if (!$getNewProfile->execute()) {
-                                throw new Exception('There was a problem executing the query' . $conn->error);
-                            } else {
-                                $getNewProfileResult = $getNewProfile->get_result();
-                                if ($getNewProfileResult->num_rows === 0) {
-                                    throw new Exception('Failed to fetch data from database');
-                                } else {
-                                    $newProfile = $getNewProfileResult->fetch_assoc();
-                                    $newFetchedProfile = $newProfile['profile'];
-                                    $response = array(
-                                        'status' => 'Success',
-                                        'message' => 'Your profile has been updated successfully',
-                                        'data' => $newFetchedProfile,
-                                        'icon' => 'success'
-                                    );
-                                    header('Content-Type: application/json');
-                                    echo json_encode($response);
-                                    exit();
-                                }
-                            }
-                        }
-                    }else{
-                      throw new Exception("File is too large");  
-                    }
-                }else{
-                    throw new Exception("There are problem uploading the file");  
-                }
-            }else{
-                throw new Exception("There are problem uploading the file");  
-            }
-        } catch (Exception $e) {
-            if ($e->getCode() == 1062) {
-                $response = array(
-                    'status' => 'Error',
-                    'message' => 'Email address already exist',
-                    'icon' => 'error',
-                    'duplication' => true
-                );
-                header('Content-Type: application/json');
-                echo json_encode($response);
-                exit();
-            } else {
-                $response = array(
-                    'status' => 'Error',
-                    'message' => $e->getMessage(),
-                    'icon' => 'error',
-                    'duplication' => false
-
-                );
-                header('Content-Type: application/json');
-                echo json_encode($response);
-                exit();
-            }
-        }
-        /*****************Upload new image**********************************/
-    }
+    } //here end else
 }
 
 /*****************Update Password**********************************/
