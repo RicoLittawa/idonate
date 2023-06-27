@@ -228,7 +228,7 @@ if (isset($_GET['requestId'])) {
 															<label class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="CanNoodles"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control can-noodles-quantity quantity" value=0 data-input-category="CanNoodles">
+																<input type="number" class="form-control can-noodles-quantity quantity" value=0 data-input-category="CanNoodles"/>
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="CanNoodles"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -262,7 +262,7 @@ if (isset($_GET['requestId'])) {
 															<label class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="Hygine"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control hygine-essentials-quantity quantity" value=0 data-input-category="Hygine">
+																<input type="number" class="form-control hygine-essentials-quantity quantity" value=0 data-input-category="Hygine"/>
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="Hygine"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -296,7 +296,7 @@ if (isset($_GET['requestId'])) {
 															<label class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="InfantItems"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control infant-items-quantity quantity" value=0 data-input-category="InfantItems">
+																<input type="number" class="form-control infant-items-quantity quantity" value=0 data-input-category="InfantItems"/>
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="InfantItems"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -331,7 +331,7 @@ if (isset($_GET['requestId'])) {
 															<label class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="DrinkingWater"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control drinking-water-quantity quantity" value=0 data-input-category="DrinkingWater">
+																<input type="number" class="form-control drinking-water-quantity quantity" value=0 data-input-category="DrinkingWater"/>
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="DrinkingWater"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -365,7 +365,7 @@ if (isset($_GET['requestId'])) {
 															<label class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="MeatGrains"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control meat-grains-quantity quantity" value=0 data-input-category="MeatGrains">
+																<input type="number" class="form-control meat-grains-quantity quantity" value=0 data-input-category="MeatGrains"/>
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="MeatGrains"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -399,7 +399,7 @@ if (isset($_GET['requestId'])) {
 															<label class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="Medicine"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control medicine-quantity quantity" value=0 data-input-category="Medicine">
+																<input type="number" class="form-control medicine-quantity quantity" value=0 data-input-category="Medicine"/>
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="Medicine"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>
@@ -433,7 +433,7 @@ if (isset($_GET['requestId'])) {
 															<label class="form-label">Quantity</label>
 															<div class="d-flex justify-content-center border">
 																<button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="Others"><i class="fa-solid fa-minus"></i></button>
-																<input type="number" class="form-control others-quantity quantity" value=0 data-input-category="Others">
+																<input type="number" class="form-control others-quantity quantity" value=0 data-input-category="Others"/>
 																<button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="Others"><i class="fa-solid fa-plus"></i></button>
 															</div>
 														</td>

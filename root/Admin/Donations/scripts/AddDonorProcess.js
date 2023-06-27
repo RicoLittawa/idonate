@@ -85,7 +85,7 @@ const addRowButton = (buttonType) => {
     html = `<tr><td><input type="text" class="form-control pnOT" id="pnOT"></td>
       <td><input type="text" class="form-control typeOT" id="typeOT"></td>
       <td><input type="number" class="form-control qOT" id="qOT"></td>
-      <td><input type="text" class="form-control unituOT" id="unituOT"></td>
+      <td><input type="text" class="form-control unitOT" id="unitOT"></td>
       <td>${remove}</td></tr>`;
     return html;
   }
@@ -116,7 +116,7 @@ appendTableRows("#addOT", "#otBody", "buttonOT");
 
 /****************Save Data********************************************************************/
 
-$(document).submit((e) => {
+$(document).on("submit", "#add-form", (e) => {
   e.preventDefault();
   /****************Donor Details********************************************************************/
 
@@ -247,12 +247,12 @@ $(document).submit((e) => {
       for (const field of box.fields) {
         $(field.selector).each((index, element) => {
           if ($(element).val() != "") {
-            isInvalid = true;
             alertMessage(
               "Warning",
               `Please input a value for ${box.category}.`,
               "warning"
             );
+            isInvalid = true;
           }
         });
       }
@@ -263,51 +263,52 @@ $(document).submit((e) => {
   /****************Custom Validators********************/
   const emailVali =
     /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  const varnumbers = /^\d+$/;
+  const regex = /^\d{11}$/;
 
   /****************Custom Validators********************/
 
   /****************Donor Information Validation********************************************************************/
   const checksDonorInfoIfEmpty = (fieldName, idField) => {
     if (fieldName === "") {
-      isInvalid = true;
       $(idField).addClass("is-invalid");
+      isInvalid = true;
     } else {
       if (idField === "#email") {
         if (!emailVali.test(fieldName)) {
-          isInvalid = true;
           alertMessage("Warning", "Invalid email address", "warning");
           $(idField).addClass("is-invalid");
+          isInvalid = true;
           return;
         }
-      }
-      if (idField === "#contact") {
-        if (!varnumbers.test(fieldName)) {
-          isInvalid = true;
+      } else if (idField === "#contact") {
+        if (!regex.test(fieldName)) {
           alertMessage("Warning", "Invalid contact number", "warning");
           $(idField).addClass("is-invalid");
-          return;
-        } else if (fieldName.length > 11) {
           isInvalid = true;
-          alertMessage("warning", "Invalid contact number", "warning");
-          $(idField).addClass("is-invalid");
           return;
         }
       }
       $(idField).removeClass("is-invalid");
     }
+  
     if (
       $("#fname").val() !== "" &&
       $("#lname").val() !== "" &&
       $("#email").val() !== "" &&
-      $("#contact").val() !== ""
+      $("#contact").val() !== "" &&
+      $("#donation_date").val() !== ""
     ) {
+      if (!regex.test(fieldName)) {
+        return;
+      }
+      
       if (!$(".selectCateg:checked").length) {
-        isInvalid = true;
         alertMessage("warning", "Please select a category", "warning");
+        isInvalid = true;
       }
     }
   };
+  
   let result = [];
   let x = 0;
   $(".selectCateg:checked").each(function () {

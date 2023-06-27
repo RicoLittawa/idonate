@@ -22,7 +22,7 @@ const populateSelectOptions = (select, product, quantity, unit, type) => {
 
     let option = $("<option>", {
       text: optionText,
-      value: productValue
+      value: productValue,
     });
     select.append(option);
   }
@@ -96,7 +96,7 @@ const appendNewProduct = (
           <td>
             <div class="d-flex justify-content-center border">
               <button type="button" class="btnMinus btn btn-sm btn-flat" data-btn-category="${categoryAttribute}"><i class="fa-solid fa-minus"></i></button>
-              <input type="number" class="form-control quantity ${quantityClassname}" value="0" data-input-category="${categoryAttribute}">
+              <input type="number" class="form-control quantity ${quantityClassname}" value="0" data-input-category="${categoryAttribute}"/>
               <button type="button" class="btnAdd btn btn-sm btn-flat" data-btn-category="${categoryAttribute}"><i class="fa-solid fa-plus"></i></button>
             </div>
           </td>
@@ -289,19 +289,19 @@ $(document).on("submit", (e) => {
       if ($(element).val() == "") {
         $(element).addClass("is-invalid");
         isInvalid = true;
-      } else {
+      } else {  
         inputFieldProduct.push($(element).val());
         $(element).removeClass("is-invalid");
       }
     });
     $(classNameQuantity).each((index, element) => {
-      if ($(element).val() <= 0) {
-        $(element).addClass("is-invalid");
-        isInvalid = true;
-      } else {
-        inputFieldQuantity.push($(element).val());
-        $(element).removeClass("is-invalid");
-      }
+        if ($(element).val() <= 0) {
+          $(element).addClass("is-invalid");
+          isInvalid = true;
+        } else {
+          inputFieldQuantity.push($(element).val());
+          $(element).removeClass("is-invalid");
+        }
     });
   };
   checkIfEmpty(
@@ -356,8 +356,8 @@ $(document).on("submit", (e) => {
     CanNoodlesQuantity: categoryFields.CanNoodles.quantity,
     HygineProduct: categoryFields.HygineEssentials.product,
     HygineQuantity: categoryFields.HygineEssentials.quantity,
-    InfantProduct: categoryFields.InfantItems.product,
-    InfantQuantity: categoryFields.InfantItems.quantity,
+    InfantItemsProduct: categoryFields.InfantItems.product,
+    InfantItemsQuantity: categoryFields.InfantItems.quantity,
     DrinkingWaterProduct: categoryFields.DrinkingWater.product,
     DrinkingWaterQuantity: categoryFields.DrinkingWater.quantity,
     MeatGrainsProduct: categoryFields.MeatGrains.product,
@@ -389,19 +389,17 @@ $(document).on("submit", (e) => {
   /***********************************Save to data***********************************************/ /***********************************Check if out of stock***********************************************/
   const checkIfOutOfStock = (quantity, product, itemName, quantityField) => {
     for (let i = 0; i < quantity.length; i++) {
-      $(quantityField).each((i, element) => {
         if (+quantity[i] > +product[i]) {
           alertMessage(
             "Warning",
             `We dont have enough stocks of ${itemName[i]}`,
             "warning"
           );
-          $(element).addClass("is-invalid");
+          $(quantityField[i]).addClass("is-invalid");
           isInvalid = true;
         } else {
-          $(element).removeClass("is-invalid");
+          $(quantityField[i]).removeClass("is-invalid");
         }
-      });
     }
   };
   /***********************************Check if out of stock***********************************************/

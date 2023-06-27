@@ -105,7 +105,7 @@ require_once '../include/FunctionSelectBox.php';
               <div class="row pb-2 gy-2">
                 <div class="col-12 col-md-6">
                   <div class="form-outline">
-                    <input class="form-control" type="text" name="fname" id="fname" required />
+                    <input class="form-control" type="text" name="fname" id="fname" />
                     <label class="form-label" for="fname">Full Name</label>
                   </div>
                 </div>
@@ -154,7 +154,7 @@ require_once '../include/FunctionSelectBox.php';
               <div class="row pb-3 gy-2">
                 <div class="col-12 col-md-6">
                   <div class="form-outline">
-                    <input class="form-control" type="text" id="contact" name="contact">
+                    <input class="form-control" type="number" id="contact" name="contact">
                     <label class="form-label" for="contact">Contact</label>
                   </div>
                 </div>
@@ -210,7 +210,7 @@ require_once '../include/FunctionSelectBox.php';
                   <button type="button" class="btn btn-danger cancelBtn btn-rounded" id="cancelBtn">Cancel</button>
                 </div>
                 <div>
-                  <button type="submit" class="btn btn-success waves-effect waves-light btn-rounded" id="saveButton">
+                  <button type="submit" class="btn btn-success waves-effect waves-light btn-rounded">
                     <span class="submit-text">Save</span>
                     <span class="spinner-border spinner-border-sm  d-none" role="status" aria-hidden="true"></span>
                   </button>

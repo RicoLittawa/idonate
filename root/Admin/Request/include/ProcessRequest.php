@@ -8,7 +8,7 @@ if (isset($_POST['submitProcess'])) {
   $categories = [
     'CanNoodles' => 'CanNoodlesProduct',
     'Hygine' => 'HygineProduct',
-    'InfantItems' => 'InfantProduct',
+    'InfantItems' => 'InfantItemsProduct',
     'DrinkingWater' => 'DrinkingWaterProduct',
     'MeatGrains' => 'MeatGrainsProduct',
     'Medicine' => 'MedicineProduct',
