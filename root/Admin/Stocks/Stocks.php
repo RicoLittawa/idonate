@@ -93,7 +93,7 @@ require_once "../include/sidebar.php";
               </div>
               <div class="d-flex justify-content-between py-3">
                 <div class="stocks-download-btn"></div>
-                <div id="role_filter"></div>
+                <div id="category_filter"></div>
               </div>
               <!----Filter -->
               <table class="table align-middle mb-0 bg-white table-hover w-100" id="stocks_data">
@@ -128,7 +128,6 @@ require_once "../include/sidebar.php";
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
   <!--Necessary Plugins -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
   <script src="../scripts/TableFilterButtons.js"></script>
   <script src="scripts/StocksTable.js"></script>
   <script src="../scripts/ShowNotification.js"></script>

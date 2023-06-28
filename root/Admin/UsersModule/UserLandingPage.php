@@ -16,6 +16,7 @@ require_once "../include/sidebar.php";
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <link rel="icon" href="../img/batangascitylogo.png" type="image/x-icon">
   <link rel="shortcut icon" href="../img/batangascitylogo.png" type="image/x-icon">
+  <link href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.css" rel="stylesheet" />
   <title>Home</title>
 </head>
 
@@ -156,6 +157,9 @@ require_once "../include/sidebar.php";
               </div>
               <img src="../img/photo4.jpg" class="bg-image img-thumbnail ms-3 rounded p-2 mt-5 img-fluid d-none d-md-block" alt="">
             </div>
+            <div class="d-flex justify-content-center my-5">
+              <button class="btn btn-secondary" onclick="showProducts()">Show Available Items</button>
+            </div>
 
             <section class="maps pb-5 pt-5" id="maps">
               <h2 class="text-dark pb-4 fw-bold"><i class="fa-solid fa-location-dot"></i> Maps</h2>
@@ -166,6 +170,54 @@ require_once "../include/sidebar.php";
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="products" tabindex="-1" aria-labelledby="productsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" id="productsLabel">Available Products</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+        <div class="d-flex justify-content-between">
+          <div><button class="btn btn-success me-3"><a href="UserCreateRequest.php" class="text-light">Create Request</a></button></div>
+          <div class="d-flex">
+          <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle btn-rounded" type="button" id="pageTable" data-mdb-toggle="dropdown" aria-expanded="false">
+                  Select
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="pageTable">
+                  <li><a class="dropdown-item select-row" href="#" data-length="10">10 rows</a></li>
+                  <li><a class="dropdown-item select-row" href="#" data-length="25">25 rows</a></li>
+                  <li><a class="dropdown-item select-row" href="#" data-length="50">50 rows</a></li>
+                  <li><a class="dropdown-item select-row" href="#" data-length="-1">All</a></li>
+                </ul>
+              </div>
+              <div class="ms-3" id="category_filter"></div>
+          </div>    
+          
+            </div>
+        <table class="table align-middle mb-0 bg-white table-hover w-100" id="products_data">
+              <thead class="bg-light">
+                <tr>
+                  <th>Category</th>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
   <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="../scripts/mdb.min.js"></script>
@@ -174,6 +226,8 @@ require_once "../include/sidebar.php";
   <script src="../scripts/timeout.js"></script>
   <script src="../scripts/ShowNotification.js"></script>
   <script src="../scripts/DisplayMaps.js"></script>
+  <script src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/date-1.4.0/fh-3.3.2/kt-2.8.2/rg-1.3.1/sc-2.1.1/datatables.min.js"></script>
+  <script src="scripts/ProductsTable.js"></script>
   <script>
     let userID = $("#userID").val();
     const showUserAlertNotification = (id) => {
@@ -192,6 +246,9 @@ require_once "../include/sidebar.php";
       });
     };
     showUserAlertNotification(userID);
+    const showProducts = () => {
+      $("#products").modal("show");
+    }
   </script>
 
 

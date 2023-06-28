@@ -1,5 +1,4 @@
 let stocksTable = $("#stocks_data").DataTable({
-  responsive: true,
   ajax: {
     url: "include/stocksdata.php",
     error: function (xhr, error, thrown) {
@@ -151,7 +150,7 @@ let stocksTable = $("#stocks_data").DataTable({
         const select = $(
           '<select class="form-select rounded-pill"><option value="">All</option></select>'
         )
-          .appendTo($("#role_filter"))
+          .appendTo($("#category_filter"))
           .on("change", function () {
             const val = $.fn.dataTable.util.escapeRegex($(this).val());
 
