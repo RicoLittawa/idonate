@@ -11,8 +11,9 @@ if (isset($_POST['saveStatus'])) {
     switch ($selectedStatus) {
             //When status is set for ready for pickup
         case "Ready for Pick-up":
-            $onProcessData = "SELECT productName,quantity from on_process where reciept_number=?";
+            $onProcessData = "SELECT productName, quantity FROM on_process WHERE reciept_number=?";
             $onProcessDataStatement = $conn->prepare($onProcessData);
+            
             try {
                 if (!$onProcessDataStatement) {
                     throw new Exception('There was a problem connecting to the database');
@@ -20,10 +21,14 @@ if (isset($_POST['saveStatus'])) {
                     $onProcessDataStatement->bind_param('i', $reference);
                     $onProcessDataStatement->execute();
                     $onProcessResult = $onProcessDataStatement->get_result();
+            
+                    $updateSuccess = true; // Flag to check if all updates are successful
+            
                     while ($onProcessRow = $onProcessResult->fetch_assoc()) {
                         $onProcessProduct = $onProcessRow['productName'];
                         $onProcessQuantity = $onProcessRow['quantity'];
-                        //Get Stocks
+            
+                        // Get Stocks
                         $stocksCategory = "SELECT category, quantity FROM (
                             SELECT 'categcannoodles' as category, quantity, productName FROM categcannoodles
                             UNION ALL
@@ -39,57 +44,60 @@ if (isset($_POST['saveStatus'])) {
                             UNION ALL
                             SELECT 'categothers' as category, quantity, productName FROM categothers
                         ) as allProducts 
-                        WHERE productName = lower(?) 
+                        WHERE productName = LOWER(?) 
                         GROUP BY category";
-
+            
                         $stocksCategoryStatement = $conn->prepare($stocksCategory);
                         $stocksCategoryStatement->bind_param('s', $onProcessProduct);
                         $stocksCategoryStatement->execute();
                         $stocksCategoryResult = $stocksCategoryStatement->get_result();
-
+            
                         if ($stocksRow = $stocksCategoryResult->fetch_assoc()) {
                             $stocksQuantity = $stocksRow['quantity'];
-
-                            // subtract the quantity from the on process to the category product quantity
+            
+                            // Subtract the quantity from the on process to the category product quantity
                             $newQuantity = $stocksQuantity - $onProcessQuantity;
-                            $categoryName = $stocksRow['category']; //Determine tables in db
-
-                            //Get distributed
-                            $distributedData = "SELECT distributed from " . strtolower($categoryName) . " WHERE productName = lower(?) ";
+                            $categoryName = $stocksRow['category']; // Determine tables in db
+            
+                            // Get distributed
+                            $distributedData = "SELECT distributed FROM " . strtolower($categoryName) . " WHERE productName = LOWER(?)";
                             $distributedStatement = $conn->prepare($distributedData);
                             $distributedStatement->bind_param('s', $onProcessProduct);
                             $distributedStatement->execute();
                             $distributedResult = $distributedStatement->get_result();
-
+            
                             if ($distributedRow = $distributedResult->fetch_assoc()) {
                                 $distributedQuantity = $distributedRow['distributed'];
                                 $newDistributedQuantity = $distributedQuantity + $onProcessQuantity;
                             }
-
-                            //update the category table with the new quantity
-                            $updateStocks = "UPDATE  " . strtolower($categoryName) . " SET quantity = ? , distributed = ? WHERE productName = lower(?)";
+            
+                            // Update the category table with the new quantity
+                            $updateStocks = "UPDATE " . strtolower($categoryName) . " SET quantity = ?, distributed = ? WHERE productName = LOWER(?)";
                             $updateStockStatement = $conn->prepare($updateStocks);
                             $updateStockStatement->bind_param('iss', $newQuantity, $newDistributedQuantity, $onProcessProduct);
-                            $success = $updateStockStatement->execute();
-                            if ($success) {
-                                updateRequestStatus($conn, $selectedStatus, $reference);
-                                $statusMessage = "is ready for pick-up";
-                                addToNotification($conn,$reference,$statusMessage);
-                            
-                                $response = [
-                                    "status" => "Success",
-                                    "message" => "Status is updated successfully",
-                                    "icon" => "success",
-                                ];
-
-                                header("Content-Type: application/json");
-                                echo json_encode($response);
-                                exit();
-                            }
+                            $updateSuccess = $updateStockStatement->execute() && $updateSuccess;
                         } else {
-                            // handle error: product not found in any category table
+                            // Handle error: product not found in any category table
                             throw new Exception("Product not found in any category table");
                         }
+                    }
+            
+                    if ($updateSuccess) {
+                        updateRequestStatus($conn, $selectedStatus, $reference);
+                        $statusMessage = "is ready for pick-up";
+                        addToNotification($conn, $reference, $statusMessage);
+            
+                        $response = [
+                            "status" => "Success",
+                            "message" => "Status is updated successfully",
+                            "icon" => "success",
+                        ];
+            
+                        header("Content-Type: application/json");
+                        echo json_encode($response);
+                        exit();
+                    } else {
+                        throw new Exception("Failed to update stocks for one or more products");
                     }
                 }
             } catch (Exception $e) {
