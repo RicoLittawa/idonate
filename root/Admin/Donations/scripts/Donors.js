@@ -298,7 +298,6 @@ $(document).on("click", ".email_button", (event) => {
       $this.attr("disabled", true);
       return;
     }
-
     $checkedBoxes.each((index, element) => {
       const $this = $(element);
       email_data.push({
@@ -322,28 +321,30 @@ $(document).on("click", ".email_button", (event) => {
   };
   /****************Alert function********************************************************************/
   $.ajax({
-    url: "../include/sendcerti.php",
+    url: "include/sendcerti.php",
     method: "POST",
     data: {
       email_data: email_data,
     },
-    beforeSend: function () {
-      $this.attr("disabled", true);
-      $this.html("Sending...");
-      $this.addClass("btn btn-outline-danger");
-    },
-    success: function (response) {
-      if (response.status == "Success") {
-        $this.attr("disabled", false);
-        $this.removeClass("btn btn-outline-danger");
-        $this.addClass("btn btn-outline-success");
-        $("#bulk_email").attr("disabled", false);
-        $this.html("Sent");
-        alertMessage(response.status, response.message, response.icon);
-        donorTable.ajax.reload();
-      } else {
-        $this.text(responses.message);
-      }
+     dataType: "json",
+     beforeSend: function () {
+       $this.attr("disabled", true);
+       $this.html("Sending...");
+       $this.addClass("btn btn-outline-danger");
+     },
+    success:  (response) =>{
+console.log(response.message)      
+ if (response.status == "Success") {
+         $this.attr("disabled", false);
+         $this.removeClass("btn btn-outline-danger");
+         $this.addClass("btn btn-outline-success");
+         $("#bulk_email").attr("disabled", false);
+         $this.html("Sent");
+         alertMessage(response.status, response.message, response.icon);
+         donorTable.ajax.reload();
+       } else {
+         $this.text(response.message);
+       }
     },
   });
 });
