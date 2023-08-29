@@ -1,0 +1,41 @@
+<?php
+require_once 'connection.php';
+// Fetch data from form
+$typeOfEmergency = $_POST['typeOfEmergency'];
+foreach ($typeOfEmergency as $type) {
+    echo $type; // Display each selected value
+}
+$date = date('Y-m-d', strtotime($_POST['date']));;
+$time = date('H:i', strtotime($_POST['time']));
+$typeOfIncident = $_POST['typeOfIncident'];
+$location = $_POST['location'];
+$nameOfCaller = $_POST['nameOfCaller'];
+$noOfPersonInvolved = $_POST['noOfPersonInvolved'];
+//PatientInfo
+$patientName = $_POST['patientName'];
+$address = $_POST['address'];
+$age = $_POST['age'];
+$gender = $_POST['gender'];
+$injuryCondition = $_POST['injuryCondition'];
+$actionTaken = $_POST['actionTaken'];
+$responder = $_POST['responder'];
+$reference= $_POST['reference'];
+
+//save Data to report infprmation
+$saveReportInformation = $conn->prepare("INSERT INTO reportinformation (referenceId ,typeOfEmergency,dateTaken, timeTaken, typeOfIncident, location, nameOfCaller, noOfPersonsInvolved ) VALUES(?,?,?,?,?,?,?,?)");
+$saveReportInformation->bind_param("isssssss",$reference,$type,$date,$time,$typeOfIncident,$location,$nameOfCaller,$noOfPersonInvolved);
+$saveReportInformation->execute();
+
+//save Data to patient information
+$savePatientInformation= $conn->prepare("INSERT INTO patientinformation (reportID,name,address,age,gender,InjuryCondition,actionTaken, responder) VALUES(?,?,?,?,?,?,?,?)");
+$savePatientInformation->bind_param("isssssss",$reference,$patientName,$address,$age,$gender,$injuryCondition,$actionTaken,$responder);
+if ($savePatientInformation->execute()){
+    $newReference= $reference+1;
+    $updateRef= $conn->prepare("UPDATE reference set referenceId=?");
+    $updateRef->bind_param('i',$newReference);
+    $updateRef->execute();
+    header("Location: index.php");
+    $_SESSION['successMessage'] = "Record saved successfully!";
+
+
+};

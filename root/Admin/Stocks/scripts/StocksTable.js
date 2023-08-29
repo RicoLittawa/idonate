@@ -44,6 +44,12 @@ let stocksTable = $("#stocks_data").DataTable({
           : `<span class="badge rounded-pill badge-warning">N/A</span>`;
       },
     },
+    {
+      data: "product",
+render:(data,type,row)=>{
+  return `<button id="exampleModal" onClick="addProduct('${row.product}')" class="btn btn-success" data-mdb-toggle="modal" data-mdb-target="#exampleModal"><i class="fa-solid fa-plus"></i></button>`;
+
+}    }
   ],
   buttons: [
     {

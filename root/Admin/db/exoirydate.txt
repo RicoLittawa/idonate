@@ -1,0 +1,20 @@
+// Specify the expiry date (year, month (0-based), day)
+const expiryYear = 2023;
+const expiryMonth = 8; // September (0-based index)
+const expiryDay = 15;
+
+// Create a Date object for the expiry date
+const expiryDate = new Date(expiryYear, expiryMonth, expiryDay);
+
+// Get the current date
+const currentDate = new Date();
+
+// Calculate the number of milliseconds between current date and expiry date
+const timeDifference = expiryDate - currentDate;
+
+// Calculate the number of days from milliseconds
+const daysUntilExpiry = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+console.log("Expiry Date:", expiryDate.toISOString().substr(0, 10));
+console.log("Current Date:", currentDate.toISOString().substr(0, 10));
+console.log("Days Until Expiry:", daysUntilExpiry);

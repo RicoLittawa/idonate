@@ -25,6 +25,53 @@ require_once "../include/sidebar.php";
 </head>
 
 <body>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Expiry Date</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="" class="form-label">Product</label>
+            <input type="text" class="form-control" id="product" readonly>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="year" class="form-label">Year</label>
+                <select name="year" id="year" class="form-select">
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="month" class="form-label">Month</label>
+                <select name="month" id="month" class="form-select">
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="day" class="form-label">Day</label>
+                <select name="day" id="day" class="form-select">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="form-label">Quantity</label>
+            <input type="number" class="form-control" id="quantity">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <?php echo showAdminModal($conn) ?>
   <div class="main-container">
     <!-- Desktop SIDEBAR -->
@@ -101,8 +148,9 @@ require_once "../include/sidebar.php";
                   <tr>
                     <th>Category</th>
                     <th>Product Name</th>
-                    <th>Quantity</th>
-                    <th>Total Distributed</th>
+                    <th>Available Stock</th>
+                    <th>Stock Out</th>
+                    <th>Add Expiry</th>
                     <!-- Add more columns here -->
                   </tr>
                 </thead>
@@ -130,6 +178,7 @@ require_once "../include/sidebar.php";
   <!--Necessary Plugins -->
   <script src="../scripts/TableFilterButtons.js"></script>
   <script src="scripts/StocksTable.js"></script>
+  <script src="scripts/AddExpiry.js"></script>
   <script src="../scripts/ShowNotification.js"></script>
 </body>
 

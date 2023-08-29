@@ -108,7 +108,7 @@ let donorTable = $("#donors_data").DataTable({
     },
     {
       data: null,
-      render: function (data, type, row) {
+      render:  (data, type, row) =>{
         const donorId = row.donorId.toString();
         const encodedId = btoa(donorId);
         return `<a class="d-flex justify-content-center" href="UpdateDonors.php?editdonate=${encodeURIComponent(
@@ -326,25 +326,24 @@ $(document).on("click", ".email_button", (event) => {
     data: {
       email_data: email_data,
     },
-     dataType: "json",
-     beforeSend: function () {
-       $this.attr("disabled", true);
-       $this.html("Sending...");
-       $this.addClass("btn btn-outline-danger");
-     },
-    success:  (response) =>{
-console.log(response.message)      
- if (response.status == "Success") {
-         $this.attr("disabled", false);
-         $this.removeClass("btn btn-outline-danger");
-         $this.addClass("btn btn-outline-success");
-         $("#bulk_email").attr("disabled", false);
-         $this.html("Sent");
-         alertMessage(response.status, response.message, response.icon);
-         donorTable.ajax.reload();
-       } else {
-         $this.text(response.message);
-       }
+    dataType: "json",
+    beforeSend: function () {
+      $this.attr("disabled", true);
+      $this.html("Sending...");
+      $this.addClass("btn btn-outline-danger");
+    },
+    success: (response) => {
+      if (response.status == "Success") {
+        $this.attr("disabled", false);
+        $this.removeClass("btn btn-outline-danger");
+        $this.addClass("btn btn-outline-success");
+        $("#bulk_email").attr("disabled", false);
+        $this.html("Sent");
+        alertMessage(response.status, response.message, response.icon);
+        donorTable.ajax.reload();
+      } else {
+        $this.text(response.message);
+      }
     },
   });
 });

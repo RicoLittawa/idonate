@@ -173,35 +173,63 @@ require_once '../include/FunctionSelectBox.php';
                   <input class="form-check-input selectCateg" type="checkbox" id="box1" value="can-noodles">
                   <label class="form-check-label" for="">Can Goods & Noodles</label>
                 </div>
+                <div class="form-check form-check-inline table-responsive">
+                  <input class="form-check-input withExpiryDate" type="checkbox" id="expiryCanNoodles" value="can-noodles">
+                  <label class="form-check-label" for="">If product has expiry</label>
+                </div>
                 <div id="can-noodles"></div>
                 <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box2" value="hygine-essentials">
                   <label class="form-check-label" for="">Hygine Essentials</label>
+                </div>
+                <div class="form-check form-check-inline table-responsive">
+                  <input class="form-check-input withExpiryDate" type="checkbox" id="expiryHygineEssentials" value="hygine-essentials">
+                  <label class="form-check-label" for="">If product has expiry</label>
                 </div>
                 <div id="hygine-essentials"></div>
                 <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box3" value="infant-items">
                   <label class="form-check-label" for="">Infant Items</label>
                 </div>
+                <div class="form-check form-check-inline table-responsive">
+                  <input class="form-check-input withExpiryDate" type="checkbox" id="expiryInfantItems" value="infant-items">
+                  <label class="form-check-label" for="">If product has expiry</label>
+                </div>
                 <div id="infant-items"></div>
                 <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box4" value="drinking-water">
                   <label class="form-check-label" for="">Drinking Water</label>
+                </div>
+                <div class="form-check form-check-inline table-responsive">
+                  <input class="form-check-input withExpiryDate" type="checkbox" id="expiryDrinkingWater" value="drinking-water">
+                  <label class="form-check-label" for="">If product has expiry</label>
                 </div>
                 <div id="drinking-water"></div>
                 <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box5" value="meat-grains">
                   <label class="form-check-label" for="">Meat/Grains</label>
                 </div>
+                <div class="form-check form-check-inline table-responsive">
+                  <input class="form-check-input withExpiryDate" type="checkbox" id="expiryMeatGrains" value="meat-grains">
+                  <label class="form-check-label" for="">If product has expiry</label>
+                </div>
                 <div id="meat-grains"></div>
                 <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box6" value="medicine">
                   <label class="form-check-label" for="">Medicine</label>
                 </div>
+                <div class="form-check form-check-inline table-responsive">
+                  <input class="form-check-input withExpiryDate" type="checkbox" id="expiryMedicine" value="medicine">
+                  <label class="form-check-label" for="">If product has expiry</label>
+                </div>
                 <div id="medicine"></div>
                 <div class="form-check form-check-inline table-responsive">
                   <input class="form-check-input selectCateg" type="checkbox" id="box7" value="others">
                   <label class="form-check-label" for="">Others</label>
+                </div>
+                <div class="form-check form-check-inline table-responsive">
+                  <input class="form-check-input withExpiryDate" type="checkbox" id="expiryOthers" value="others">
+                  <label class="form-check-label" for="">If product has expiry</label>
                 </div>
                 <div id="others"></div>
               </div>
