@@ -50,20 +50,20 @@ if (isset($_POST["saveBtn"])) {
                 $exist = $checkProductExist->get_result();
                 if ($exist->num_rows > 0) {
                     $existingProducts = array();
-    
+
                     while ($existedProduct = $exist->fetch_assoc()) {
                         $existingProducts[] = $existedProduct;
                     }
-    
+
                     // Flag to track if an update has been performed
                     $isUpdated = false;
-    
+
                     foreach ($existingProducts as $product) {
                         $existedType = $product['type'];
                         $existedUnit = $product['unit'];
                         $existedQuantity = $product['quantity'];
                         $existedId = $product['id'];
-    
+
                         // Check if the type and unit match
                         if ($existedType === $typeArray && $existedUnit === $unitArray) {
                             // Update the quantity
@@ -78,7 +78,7 @@ if (isset($_POST["saveBtn"])) {
                             }
                         }
                     }
-    
+
                     // If no update was performed, insert a new entry
                     if (!$isUpdated) {
                         $insertNewProduct = $conn->prepare("INSERT INTO $tableName (productName, type, quantity, unit) VALUES (?, ?, ?, ?)");
@@ -89,8 +89,7 @@ if (isset($_POST["saveBtn"])) {
                             $insertNewProduct->execute();
                         }
                     }
-                } 
-                else {
+                } else {
                     // Product does not exist, insert a new entry
                     $insertNewProduct = $conn->prepare("INSERT INTO $tableName (productName, type, quantity, unit) VALUES (?, ?, ?, ?)");
                     if (!$insertNewProduct) {
@@ -107,13 +106,13 @@ if (isset($_POST["saveBtn"])) {
                 "message" => $e->getMessage(),
                 "icon" => "error",
             ];
-    
+
             header("Content-Type: application/json");
             echo json_encode($response);
             exit();
         }
     }
-    
+
 
 
     foreach ($checkRes as $res) {

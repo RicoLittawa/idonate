@@ -140,7 +140,7 @@ $(document).on("submit", "#add-form", (e) => {
   let isInvalid = false; //tracks all input field if valid or not
   //Object for products to pass data to the ajax call
   const inputFields = {
-    CanNoodles: { pn: [], q: [] },
+    CanNoodles: { pn: [], q: [], checkExpiry: false },
     HygineEssentials: { pn: [], q: [] },
     InfantItems: { pn: [], q: [] },
     DrinkingWater: { pn: [], q: [] },
@@ -152,7 +152,6 @@ $(document).on("submit", "#add-form", (e) => {
   const boxes = [
     {
       id: "#box1",
-      expiryBox: false,
       category: "CanNoodles",
       fields: [
         { selector: ".pnCN", prop: "pn" },
@@ -161,7 +160,6 @@ $(document).on("submit", "#add-form", (e) => {
     },
     {
       id: "#box2",
-      expiryBox: false,
       category: "HygineEssentials",
       fields: [
         { selector: ".pnHY", prop: "pn" },
@@ -171,7 +169,6 @@ $(document).on("submit", "#add-form", (e) => {
     {
       id: "#box3",
       category: "InfantItems",
-      expiryBox: false,
       fields: [
         { selector: ".pnII", prop: "pn" },
         { selector: ".qII", prop: "q" },
@@ -180,7 +177,6 @@ $(document).on("submit", "#add-form", (e) => {
     {
       id: "#box4",
       category: "DrinkingWater",
-      expiryBox: false,
       fields: [
         { selector: ".pnDW", prop: "pn" },
         { selector: ".qDW", prop: "q" },
@@ -189,7 +185,6 @@ $(document).on("submit", "#add-form", (e) => {
     {
       id: "#box5",
       category: "MeatGrains",
-      expiryBox: false,
       fields: [
         { selector: ".pnMG", prop: "pn" },
         { selector: ".typeMG", prop: "type" },
@@ -200,7 +195,6 @@ $(document).on("submit", "#add-form", (e) => {
     {
       id: "#box6",
       category: "Medicine",
-      expiryBox: false,
       fields: [
         { selector: ".pnME", prop: "pn" },
         { selector: ".typeME", prop: "type" },
@@ -211,7 +205,6 @@ $(document).on("submit", "#add-form", (e) => {
     {
       id: "#box7",
       category: "Others",
-      expiryBox: false,
       fields: [
         { selector: ".pnOT", prop: "pn" },
         { selector: ".typeOT", prop: "type" },
@@ -220,15 +213,6 @@ $(document).on("submit", "#add-form", (e) => {
       ],
     },
   ];
-  //Check if product has expiration date. It iterates to the indexes of withExpiryDate class. Then change the property of the box.expiryBox to true if checked
-  $(".withExpiryDate").each((index, exp) => {
-    const isChecked = $(exp).prop("checked");
-    if (isChecked) {
-      boxes[index].expiryBox = true;
-    } else {
-      boxes[index].expiryBox = false;
-    }
-  });
   //Check if the checkbox for category is checked then find each input field to populate the object property of inputFields
   function processItemsFields(box, isChecked) {
     box.fields.forEach((field) => {
@@ -259,11 +243,16 @@ $(document).on("submit", "#add-form", (e) => {
       });
     });
   }
+  let result = []; // Initialize as an empty array for value of checkbox category
   //Iterates to each indexes of the object boxes
   boxes.forEach((box) => {
     const isChecked = $(box.id).prop("checked"); //Check if checkbox is checked
     processItemsFields(box, isChecked);
+    if (isChecked) {
+      result.push($(box.id).val());
+    }
   });
+  console.log(result);
   //Custom Validators/Regex
   const emailVali =
     /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -307,12 +296,6 @@ $(document).on("submit", "#add-form", (e) => {
       }
     }
   };
-  //Use to check the product if it is already exist or not
-  let result = [];
-  let x = 0;
-  $(".selectCateg:checked").each(function () {
-    result[x++] = $(this).val();
-  });
   //Validate using function
   checksDonorInfoIfEmpty(fname, "#fname");
   checksDonorInfoIfEmpty(email, "#email");
@@ -327,7 +310,7 @@ $(document).on("submit", "#add-form", (e) => {
   }
   let inputData = {
     saveBtn: "",
-    result: result,
+    result: result, //Array of category and expiry
     ref_id: ref_id,
     fname: fname,
     region: region,
@@ -381,6 +364,7 @@ $(document).on("submit", "#add-form", (e) => {
           $(".spinner-border").removeClass("d-none");
         },
         success: (response) => {
+          console.log(response);
           if (response.status === "Success") {
             setTimeout(() => {
               // Enable the submit button and hide the loading animation
