@@ -1,4 +1,4 @@
-/****************function to identify each button and add dynamic row to table***********************************/
+//Function to identify each button and add dynamic row to table
 let count = 0;
 const addRowButton = (buttonType) => {
   let html = "";
@@ -90,15 +90,11 @@ const addRowButton = (buttonType) => {
     return html;
   }
 };
-/****************Runction to identify each button and add dynamic row to table***********************************/
-
-/****************Remove row on specific table********************************************************************/
+//Remove rows from the table
 $(document).on("click", ".remove", function () {
   $(this).closest("tr").remove();
 });
-/****************Remove row on specific table********************************************************************/
-
-/****************Append new rows********************************************************************/
+//Append new rows in product table
 const appendTableRows = (buttonId, buttonBody, generatedRow) => {
   $(document).on("click", buttonId, function () {
     count++;
@@ -112,14 +108,10 @@ appendTableRows("#addDW", "#dwBody", "buttonDW");
 appendTableRows("#addMG", "#mgBody", "buttonMG");
 appendTableRows("#addME", "#meBody", "buttonME");
 appendTableRows("#addOT", "#otBody", "buttonOT");
-/****************Append new rows********************************************************************/
-
-/****************Save Data********************************************************************/
-
+//Save data to database
 $(document).on("submit", "#add-form", (e) => {
   e.preventDefault();
-  /****************Donor Details********************************************************************/
-
+  //Donor Details
   let ref_id = $("#reference_id").val();
   let fname = $("#fname").val();
   let region = $("#region").val();
@@ -129,9 +121,7 @@ $(document).on("submit", "#add-form", (e) => {
   let contact = $("#contact").val();
   let email = $("#email").val();
   let donation_date = $("#donation_date").val();
-  /****************Donor Details********************************************************************/
-
-  /****************Alert function********************************************************************/
+  //Alert Function
   const alertMessage = (title, text, icon) => {
     Swal.fire({
       title: title,
@@ -147,11 +137,8 @@ $(document).on("submit", "#add-form", (e) => {
     $(".submit-text").text("Save");
     $(".spinner-border").addClass("d-none");
   };
-  /****************Alert function********************************************************************/
-
-  let isInvalid = false; //tracks all input field
-
-  /****************Check if there are checked checkbox and push data to the specific object base on value of checkbox********************************************************************/
+  let isInvalid = false; //tracks all input field if valid or not
+  //Object for products to pass data to the ajax call
   const inputFields = {
     CanNoodles: { pn: [], q: [] },
     HygineEssentials: { pn: [], q: [] },
@@ -161,9 +148,11 @@ $(document).on("submit", "#add-form", (e) => {
     Medicine: { pn: [], q: [], type: [], unit: [] },
     Others: { pn: [], q: [], type: [], unit: [] },
   };
+  //Object for product input fields
   const boxes = [
     {
       id: "#box1",
+      expiryBox: false,
       category: "CanNoodles",
       fields: [
         { selector: ".pnCN", prop: "pn" },
@@ -172,6 +161,7 @@ $(document).on("submit", "#add-form", (e) => {
     },
     {
       id: "#box2",
+      expiryBox: false,
       category: "HygineEssentials",
       fields: [
         { selector: ".pnHY", prop: "pn" },
@@ -181,6 +171,7 @@ $(document).on("submit", "#add-form", (e) => {
     {
       id: "#box3",
       category: "InfantItems",
+      expiryBox: false,
       fields: [
         { selector: ".pnII", prop: "pn" },
         { selector: ".qII", prop: "q" },
@@ -189,6 +180,7 @@ $(document).on("submit", "#add-form", (e) => {
     {
       id: "#box4",
       category: "DrinkingWater",
+      expiryBox: false,
       fields: [
         { selector: ".pnDW", prop: "pn" },
         { selector: ".qDW", prop: "q" },
@@ -197,6 +189,7 @@ $(document).on("submit", "#add-form", (e) => {
     {
       id: "#box5",
       category: "MeatGrains",
+      expiryBox: false,
       fields: [
         { selector: ".pnMG", prop: "pn" },
         { selector: ".typeMG", prop: "type" },
@@ -207,6 +200,7 @@ $(document).on("submit", "#add-form", (e) => {
     {
       id: "#box6",
       category: "Medicine",
+      expiryBox: false,
       fields: [
         { selector: ".pnME", prop: "pn" },
         { selector: ".typeME", prop: "type" },
@@ -217,6 +211,7 @@ $(document).on("submit", "#add-form", (e) => {
     {
       id: "#box7",
       category: "Others",
+      expiryBox: false,
       fields: [
         { selector: ".pnOT", prop: "pn" },
         { selector: ".typeOT", prop: "type" },
@@ -225,12 +220,22 @@ $(document).on("submit", "#add-form", (e) => {
       ],
     },
   ];
-  for (const box of boxes) {
-    if ($(box.id).is(":checked")) {
-      for (const field of box.fields) {
-        $(field.selector).each((index, element) => {
+  //Check if product has expiration date. It iterates to the indexes of withExpiryDate class. Then change the property of the box.expiryBox to true if checked
+  $(".withExpiryDate").each((index, exp) => {
+    const isChecked = $(exp).prop("checked");
+    if (isChecked) {
+      boxes[index].expiryBox = true;
+    } else {
+      boxes[index].expiryBox = false;
+    }
+  });
+  //Check if the checkbox for category is checked then find each input field to populate the object property of inputFields
+  function processItemsFields(box, isChecked) {
+    box.fields.forEach((field) => {
+      $(field.selector).each((index, element) => {
+        if (isChecked) {
           inputFields[box.category][field.prop].push($(element).val());
-          if ($(element).val() == "") {
+          if ($(element).val() === "") {
             alertMessage(
               "Warning",
               `Please input a value for ${box.category}.`,
@@ -241,12 +246,8 @@ $(document).on("submit", "#add-form", (e) => {
           } else {
             $(element).removeClass("is-invalid");
           }
-        });
-      }
-    } else {
-      for (const field of box.fields) {
-        $(field.selector).each((index, element) => {
-          if ($(element).val() != "") {
+        } else {
+          if ($(element).val() !== "") {
             alertMessage(
               "Warning",
               `Please input a value for ${box.category}.`,
@@ -254,20 +255,20 @@ $(document).on("submit", "#add-form", (e) => {
             );
             isInvalid = true;
           }
-        });
-      }
-    }
+        }
+      });
+    });
   }
-  /****************Check if there are checked checkbox and push data to the specific object base on value of checkbox********************/
-
-  /****************Custom Validators********************/
+  //Iterates to each indexes of the object boxes
+  boxes.forEach((box) => {
+    const isChecked = $(box.id).prop("checked"); //Check if checkbox is checked
+    processItemsFields(box, isChecked);
+  });
+  //Custom Validators/Regex
   const emailVali =
     /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   const regex = /^\d{11}$/;
-
-  /****************Custom Validators********************/
-
-  /****************Donor Information Validation********************************************************************/
+  //Donor information validation
   const checksDonorInfoIfEmpty = (fieldName, idField) => {
     if (fieldName === "") {
       $(idField).addClass("is-invalid");
@@ -290,7 +291,6 @@ $(document).on("submit", "#add-form", (e) => {
       }
       $(idField).removeClass("is-invalid");
     }
-  
     if (
       $("#fname").val() !== "" &&
       $("#lname").val() !== "" &&
@@ -301,20 +301,19 @@ $(document).on("submit", "#add-form", (e) => {
       if (!regex.test(fieldName)) {
         return;
       }
-      
       if (!$(".selectCateg:checked").length) {
         alertMessage("warning", "Please select a category", "warning");
         isInvalid = true;
       }
     }
   };
-  
+  //Use to check the product if it is already exist or not
   let result = [];
   let x = 0;
   $(".selectCateg:checked").each(function () {
     result[x++] = $(this).val();
   });
-
+  //Validate using function
   checksDonorInfoIfEmpty(fname, "#fname");
   checksDonorInfoIfEmpty(email, "#email");
   checksDonorInfoIfEmpty(region, "#region");
@@ -323,12 +322,6 @@ $(document).on("submit", "#add-form", (e) => {
   checksDonorInfoIfEmpty(barangay, "#barangay");
   checksDonorInfoIfEmpty(contact, "#contact");
   checksDonorInfoIfEmpty(donation_date, "#donation_date");
-  /****************Donor Information Validation********************************************************************/
-
-  /****************Checks if there no checked checkbox********************************************************************/
-
-  /****************Checks if there no checked checkbox********************************************************************/
-
   if (isInvalid) {
     return false; //prevent form from submitting if any input is invalid
   }
@@ -365,9 +358,7 @@ $(document).on("submit", "#add-form", (e) => {
     qOT_arr: inputFields.Others.q,
     unitOT_arr: inputFields.Others.unit,
   };
-
-  /***********************Save data to database*******************************/
-
+  //Use ajax call to save data to the database
   Swal.fire({
     title: "Confirm",
     text: "Click yes to confirm",
@@ -412,6 +403,4 @@ $(document).on("submit", "#add-form", (e) => {
       });
     }
   });
-
-  /***********************Save data to database*******************************/
 });
