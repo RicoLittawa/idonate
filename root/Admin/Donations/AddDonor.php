@@ -169,41 +169,42 @@ require_once '../include/FunctionSelectBox.php';
                 <h4 class="text-muted title-1">2. Donation Type and Category</h4>
               </div>
               <div class="mt-2">
-                <div class="form-check form-check-inline table-responsive">
-                  <input class="form-check-input selectCateg" type="checkbox" id="box1" value="can-noodles">
-                  <label class="form-check-label" for="">Can Goods & Noodles</label>
-                </div>
-                <div id="can-noodles"></div>
-                <div class="form-check form-check-inline table-responsive">
-                  <input class="form-check-input selectCateg" type="checkbox" id="box2" value="hygine-essentials">
-                  <label class="form-check-label" for="">Hygine Essentials</label>
-                </div>
-                <div id="hygine-essentials"></div>
-                <div class="form-check form-check-inline table-responsive">
-                  <input class="form-check-input selectCateg" type="checkbox" id="box3" value="infant-items">
-                  <label class="form-check-label" for="">Infant Items</label>
-                </div>
-                <div id="infant-items"></div>
-                <div class="form-check form-check-inline table-responsive">
-                  <input class="form-check-input selectCateg" type="checkbox" id="box4" value="drinking-water">
-                  <label class="form-check-label" for="">Drinking Water</label>
-                </div>
-                <div id="drinking-water"></div>
-                <div class="form-check form-check-inline table-responsive">
-                  <input class="form-check-input selectCateg" type="checkbox" id="box5" value="meat-grains">
-                  <label class="form-check-label" for="">Meat/Grains</label>
-                </div>
-                <div id="meat-grains"></div>
-                <div class="form-check form-check-inline table-responsive">
-                  <input class="form-check-input selectCateg" type="checkbox" id="box6" value="medicine">
-                  <label class="form-check-label" for="">Medicine</label>
-                </div>
-                <div id="medicine"></div>
-                <div class="form-check form-check-inline table-responsive">
-                  <input class="form-check-input selectCateg" type="checkbox" id="box7" value="others">
-                  <label class="form-check-label" for="">Others</label>
-                </div>
-                <div id="others"></div>
+                <table class="table table-sm table-bordered add-items">
+                  <t-head>
+                    <tr>
+                      <th>Category</th>
+                      <th>Product Name</th>
+                      <th>Unit</th>
+                      <th>Quantity</th>
+                      <th>Add New Field</th>
+                    </tr>
+                  </t-head>
+                  <t-body>
+                    <tr>
+                      <td>
+                        <select class="form-select category-name">
+                          <option value="">Select Category</option>
+                        </select>
+                        <div class="othersSelected" style="display: none;">
+                          <label for="otherInput">Other:</label>
+                          <input type="text" id="otherInput" class="form-control category-name-others" />
+                        </div>
+                      </td>
+                      <td><input type="text" class="form-control product-name"></td>
+                      <td>
+                        <select class="form-select product-unit">
+                          <option value="">Select Unit</option>
+                        </select>
+                        <div class="unit-othersSelected" style="display: none;">
+                          <label for="unitotherInput">Other:</label>
+                          <input type="text" id="unitotherInput" class="form-control unit-others" />
+                        </div>
+                      </td>
+                      <td><input type="number" class="form-control product-quantity"></td>
+                      <td><button type="button" id="addNewField" class="btn btn-success"><i class="fa-solid fa-plus"></i></button></td>
+                    </tr>
+                  </t-body>
+                </table>
               </div>
               <div class="d-flex justify-content-end mt-3">
                 <div class="me-3">
@@ -230,7 +231,6 @@ require_once '../include/FunctionSelectBox.php';
   <!--Necessary Plugins -->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <!--Necessary Plugins -->
-  <script src="scripts/AddDonorTable.js"></script>
   <script src="scripts/LocationSelect.js"></script>
   <script src="scripts/AddDonorProcess.js"></script>
   <script src="scripts/AutoCompleteProducts.js"></script>
