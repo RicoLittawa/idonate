@@ -139,14 +139,13 @@ if (isset($_GET["editdonate"])) {
 								<thead class="bg-light">
 									<tr>
 										<th>Product Name</th>
-										<th>Type</th>
-										<th>Unit</th>
 										<th>Quantity</th>
+										<th>Unit</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
-									$sql = "SELECT * FROM donation_items10 where Reference=?";
+									$sql = "SELECT productName,quantity,productUnit FROM receiveitems where donator_id=?";
 									$stmt = $conn->prepare($sql);
 									$stmt->bind_param('i', $donorreference);
 									$stmt->execute();
@@ -156,19 +155,13 @@ if (isset($_GET["editdonate"])) {
 									while ($row = $result->fetch_assoc()) : ?>
 										<tr>
 											<td><?php echo $row["productName"]; ?></td>
-											<td><?php if ($row['type'] == null) { ?>
-													<p class="lead fs-6">N/A</p>
-												<?php } else {
-													echo $row["type"];
-												} ?>
-											</td>
-											<td><?php if ($row['unit'] == null) { ?>
+											<td><?php echo $row["quantity"]; ?></td>
+											<td><?php if ($row['productUnit'] == null) { ?>
 													<p class="lead fs-6">N/A</p>
 												<?php } else {
 													echo $row["unit"];
 												} ?>
 											</td>
-											<td><?php echo $row["quantity"]; ?></td>
 										</tr>
 									<?php endwhile; ?>
 								</tbody>
@@ -381,14 +374,13 @@ if (isset($_GET["editdonate"])) {
 										<thead>
 											<tr>
 												<th>Product Name</th>
-												<td>Type</td>
-												<th>Unit</th>
 												<th>Quantity</th>
+												<th>Unit</th>
 											</tr>
 										</thead>
 										<tbody>
 											<?php
-											$sql = "SELECT * FROM donation_items10 where Reference=?";
+											$sql = "SELECT productName,quantity,productUnit FROM receiveitems where donator_id=?";
 											$stmt = $conn->prepare($sql);
 											$stmt->bind_param('i', $donorreference);
 											$stmt->execute();
@@ -398,19 +390,13 @@ if (isset($_GET["editdonate"])) {
 											while ($row = $result->fetch_assoc()) : ?>
 												<tr>
 													<td><?php echo $row["productName"]; ?></td>
-													<td><?php if ($row['type'] == null) { ?>
-															<span class="badge rounded-pill badge-warning">Empty</span>
-														<?php } else {
-															echo $row["type"];
-														} ?>
-													</td>
-													<td><?php if ($row['unit'] == null) { ?>
-															<span class="badge rounded-pill badge-warning">Empty</span>
-														<?php } else {
-															echo $row["unit"];
-														} ?>
-													</td>
 													<td><?php echo $row["quantity"]; ?></td>
+													<td><?php if ($row['productUnit'] == null) { ?>
+															<span class="badge rounded-pill badge-warning">Empty</span>
+														<?php } else {
+															echo $row["productUnit"];
+														} ?>
+													</td>
 												</tr>
 											<?php endwhile; ?>
 										</tbody>

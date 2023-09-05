@@ -130,7 +130,6 @@ $(document).on("click", ".remove", function () {
   //Remove rows from the table
   $(this).closest("tr").remove();
 });
-
 //Save data to database
 $(document).on("submit", "#add-form", (e) => {
   e.preventDefault();
@@ -145,7 +144,28 @@ $(document).on("submit", "#add-form", (e) => {
   let email = $("#email").val();
   let donation_date = $("#donation_date").val();
   let isInvalid = false; //tracks all input field if valid or not
-  //Alert Function
+  let productField = {
+    category: [],
+    product: [],
+    quantity: [],
+    unit: [],
+  };
+  let informationData = {
+    saveBtn: "",
+    category: productField.category,
+    product: productField.product,
+    quantity: productField.quantity,
+    unit: productField.unit,
+    ref_id: ref_id,
+    fname: fname,
+    province: province,
+    municipality: municipality,
+    barangay: barangay,
+    region: region,
+    email: email,
+    donation_date: donation_date,
+    contact: contact,
+  };
   const alertMessage = (title, text, icon) => {
     //Show alert messages
     Swal.fire({
@@ -163,102 +183,73 @@ $(document).on("submit", "#add-form", (e) => {
     $(".submit-text").text("Save");
     $(".spinner-border").addClass("d-none");
   };
-
-  let productField = {
-    category: [],
-    product: [],
-    quantity: [],
-    unit: [],
-  };
-
   const pushProductToObject = (inputField, classSelector) => {
     //Push data to productfField object
     $(classSelector).each((index, element) => {
-      productField[inputField].push($(element).val());
+      if ($(element).val() == "") {
+        $(element).addClass("is-invalid");
+        isInvalid = true;
+      } else {
+        productField[inputField].push($(element).val());
+        $(element).removeClass("is-invalid");
+      }
     });
   };
-
   pushProductToObject("category", ".category-name");
   pushProductToObject("product", ".product-name");
   pushProductToObject("quantity", ".product-quantity");
   pushProductToObject("unit", ".product-unit");
-
-
-  let informationData= {
-    saveBtn: "",
-    category:productField.category,
-    product:productField.product,
-    quantity:productField.quantity,
-    unit:productField.unit,
-    ref_id:ref_id,
-    fname:fname,
-    province:province,
-    municipality:municipality,
-    barangay:barangay,
-    region:region,
-    email:email,
-    donation_date:donation_date,
-    contact:contact
-  }
-
-
-  //Object for products to pass data to the ajax call
-
   //Custom Validators/Regex
-  //  const emailVali =
-  //    /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  //  const regex = /^\d{11}$/;
+  const emailVali =
+    /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  const regex = /^\d{11}$/;
   //Donor information validation
-  //  const checksDonorInfoIfEmpty = (fieldName, idField) => {
-  //    if (fieldName === "") {
-  //      $(idField).addClass("is-invalid");
-  //      isInvalid = true;
-  //    } else {
-  //      if (idField === "#email") {
-  //        if (!emailVali.test(fieldName)) {
-  //          alertMessage("Warning", "Invalid email address", "warning");
-  //          $(idField).addClass("is-invalid");
-  //          isInvalid = true;
-  //          return;
-  //        }
-  //      } else if (idField === "#contact") {
-  //        if (!regex.test(fieldName)) {
-  //          alertMessage("Warning", "Invalid contact number", "warning");
-  //          $(idField).addClass("is-invalid");
-  //          isInvalid = true;
-  //          return;
-  //        }
-  //      }
-  //      $(idField).removeClass("is-invalid");
-  //    }
-  //    if (
-  //      $("#fname").val() !== "" &&
-  //      $("#lname").val() !== "" &&
-  //      $("#email").val() !== "" &&
-  //      $("#contact").val() !== "" &&
-  //      $("#donation_date").val() !== ""
-  //    ) {
-  //      if (!regex.test(fieldName)) {
-  //        return;
-  //      }
-  //      if (!$(".selectCateg:checked").length) {
-  //        alertMessage("warning", "Please select a category", "warning");
-  //        isInvalid = true;
-  //      }
-  //    }
-  //  };
+  const checksDonorInfoIfEmpty = (fieldName, idField) => {
+    if (fieldName === "") {
+      $(idField).addClass("is-invalid");
+      isInvalid = true;
+    } else {
+      if (idField === "#email") {
+        if (!emailVali.test(fieldName)) {
+          alertMessage("Warning", "Invalid email address", "warning");
+          $(idField).addClass("is-invalid");
+          isInvalid = true;
+          return;
+        }
+      } else if (idField === "#contact") {
+        if (!regex.test(fieldName)) {
+          alertMessage("Warning", "Invalid contact number", "warning");
+          $(idField).addClass("is-invalid");
+          isInvalid = true;
+          return;
+        }
+      }
+      $(idField).removeClass("is-invalid");
+    }
+    if (
+      $("#fname").val() !== "" &&
+      $("#lname").val() !== "" &&
+      $("#email").val() !== "" &&
+      $("#contact").val() !== "" &&
+      $("#donation_date").val() !== ""
+    ) {
+      if (!regex.test(fieldName)) {
+        return;
+      }
+    }
+  };
   //Validate using function
-  //  checksDonorInfoIfEmpty(fname, "#fname");
-  //  checksDonorInfoIfEmpty(email, "#email");
-  //  checksDonorInfoIfEmpty(region, "#region");
-  //  checksDonorInfoIfEmpty(province, "#province");
-  //  checksDonorInfoIfEmpty(municipality, "#municipality");
-  //  checksDonorInfoIfEmpty(barangay, "#barangay");
-  //  checksDonorInfoIfEmpty(contact, "#contact");
-  //  checksDonorInfoIfEmpty(donation_date, "#donation_date");
-  //  if (isInvalid) {
-  //    return false; //prevent form from submitting if any input is invalid
-  //  }
+  checksDonorInfoIfEmpty(fname, "#fname");
+  checksDonorInfoIfEmpty(email, "#email");
+  checksDonorInfoIfEmpty(region, "#region");
+  checksDonorInfoIfEmpty(province, "#province");
+  checksDonorInfoIfEmpty(municipality, "#municipality");
+  checksDonorInfoIfEmpty(barangay, "#barangay");
+  checksDonorInfoIfEmpty(contact, "#contact");
+  checksDonorInfoIfEmpty(donation_date, "#donation_date");
+  if (isInvalid) {
+    return false;
+  }
 
   //Use ajax call to save data to the database
   Swal.fire({
@@ -277,29 +268,27 @@ $(document).on("submit", "#add-form", (e) => {
         method: "POST",
         data: informationData,
         dataType: "json",
-        // beforeSend: () => {
-        //   $('button[type="submit"]').prop("disabled", true);
-        //   $(".submit-text").text("Saving...");
-        //   $(".spinner-border").removeClass("d-none");
-        // },
+        beforeSend: () => {
+          $('button[type="submit"]').prop("disabled", true);
+          $(".submit-text").text("Saving...");
+          $(".spinner-border").removeClass("d-none");
+        },
         success: (response) => {
-        console.log(response)
-          // if (response.status === "Success") {
-          //   setTimeout(() => {
-          //     // Enable the submit button and hide the loading animation
-          //     resetBtnLoadingState();
-          //     alertMessage(response.status, response.message, response.icon);
-          //     setTimeout(() => {
-          //       window.location.href = "Donors.php";
-          //     }, 1500);
-          //   }, 1000);
-          // } else {
-          //   resetBtnLoadingState();
-          //   alertMessage(response.status, response.message, response.icon);
-          // }
+          console.log(response);
+          if (response.status === "Success") {
+            setTimeout(() => {
+              resetBtnLoadingState();
+              alertMessage(response.status, response.message, response.icon);
+              setTimeout(() => {
+                window.location.href = "Donors.php";
+              }, 1500);
+            }, 1000);
+          } else {
+            resetBtnLoadingState();
+            alertMessage(response.status, response.message, response.icon);
+          }
         },
         error: (xhr, status, error) => {
-          // Handle errors
           resetBtnLoadingState();
           alertMessage("Error", xhr.responseText, "error");
         },

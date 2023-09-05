@@ -18,10 +18,6 @@ if (isset($_POST['deleteBtn'])) {
         errorMessage("Request ID does not match any data.");
     }
 
-    $stmt2 = $conn->prepare("DELETE FROM donation_items10 WHERE Reference = ?");
-    $stmt2->bind_param("s", $id);
-    $stmt2->execute();
-
     $validPath = '../../include/download-certificate/' . $cert;
     unlink($validPath);
 
