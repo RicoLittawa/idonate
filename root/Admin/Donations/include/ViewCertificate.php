@@ -6,24 +6,20 @@ if (isset($_GET['viewCert'])) {
     $message = '';
     $sql = "SELECT certificate from donation_items where donor_id=?";
     $stmt = $conn->prepare($sql);
-    try {
-        if (!$stmt) {
-            throw new Exception("There was a problem executing the query.");
+    if (!$stmt) {
+        throw new Exception("There was a problem executing the query.");
+    } else {
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows === 0) {
+            throw new Exception("Failed to fetch data from database" . $conn->error);
         } else {
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if ($result->num_rows === 0) {
-                throw new Exception("Failed to fetch data from database" . $conn->error);
-            } else {
-                while ($row = $result->fetch_assoc()) {
-                    echo $row['certificate'];
-                }
+            while ($row = $result->fetch_assoc()) {
+                echo $row['certificate'];
             }
         }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-        $stmt->close();
-        $conn->close();
     }
+    $stmt->close();
+    $conn->close();
 }
