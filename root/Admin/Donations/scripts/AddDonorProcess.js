@@ -200,9 +200,9 @@ $(document).on("submit", "#add-form", (e) => {
   pushProductToObject("quantity", ".product-quantity");
   pushProductToObject("unit", ".product-unit");
   //Custom Validators/Regex
-  const emailVali =
+  const validEmailAddress =
     /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  const regex = /^\d{11}$/;
+  const validContactNumber = /^\d{11}$/;
   //Donor information validation
   const checksDonorInfoIfEmpty = (fieldName, idField) => {
     if (fieldName === "") {
@@ -210,14 +210,14 @@ $(document).on("submit", "#add-form", (e) => {
       isInvalid = true;
     } else {
       if (idField === "#email") {
-        if (!emailVali.test(fieldName)) {
+        if (!validEmailAddress.test(fieldName)) {
           alertMessage("Warning", "Invalid email address", "warning");
           $(idField).addClass("is-invalid");
           isInvalid = true;
           return;
         }
       } else if (idField === "#contact") {
-        if (!regex.test(fieldName)) {
+        if (!validContactNumber.test(fieldName)) {
           alertMessage("Warning", "Invalid contact number", "warning");
           $(idField).addClass("is-invalid");
           isInvalid = true;
@@ -225,17 +225,6 @@ $(document).on("submit", "#add-form", (e) => {
         }
       }
       $(idField).removeClass("is-invalid");
-    }
-    if (
-      $("#fname").val() !== "" &&
-      $("#lname").val() !== "" &&
-      $("#email").val() !== "" &&
-      $("#contact").val() !== "" &&
-      $("#donation_date").val() !== ""
-    ) {
-      if (!regex.test(fieldName)) {
-        return;
-      }
     }
   };
   //Validate using function

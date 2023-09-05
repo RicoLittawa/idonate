@@ -128,34 +128,60 @@ require_once "../include/sidebar.php";
           </div>
         </div>
       </div>
-      <!--Header -->
-      <!--reports -->
-      <div class="custom-container pb-3 me-2 me-md-5">
-        <div class="card">
-          <div class="card-body">
-            <div class="table-responsive">
-              <!----Filter -->
-              <div class="d-flex justify-content-md-end">
-                <div id="search-field"></div>
-              </div>
-              <div class="d-flex justify-content-between py-3">
-                <div class="stocks-download-btn"></div>
-                <div id="category_filter"></div>
-              </div>
-              <!----Filter -->
-              <table class="table align-middle mb-0 bg-white table-hover w-100" id="stocks_data">
-                <thead class="bg-light">
-                  <tr>
-                    <th>Category</th>
-                    <th>Product Name</th>
-                    <th>Available Stock</th>
-                    <th>Stock Out</th>
-                    <th>Add Expiry</th>
-                    <!-- Add more columns here -->
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
+      <div class="row gap-3 pb-3 mx-auto">
+        <div class="col-12 col-md-3 col-lg-5">
+          <div class="card allowed">
+            <div class="card-body text-center">
+              <h5 class="card-title fw-bold">Can & Noodles</h5>
+              <img src="../img/cannoodles.svg" alt="" class="img-fluid img-custom-size category-card">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-5">
+          <div class="card allowed">
+            <div class="card-body text-center">
+              <h5 class="card-title fw-bold">Hygine Essentials</h5>
+              <img src="../img/hygineessentials.svg" alt="" class="img-fluid img-custom-size category-card">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-5">
+          <div class="card allowed">
+            <div class="card-body text-center">
+              <h5 class="card-title fw-bold">Infant Items</h5>
+              <img src="../img/infantitems.svg" alt="" class="img-fluid img-custom-size category-card">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-5">
+          <div class="card allowed">
+            <div class="card-body text-center">
+              <h5 class="card-title fw-bold">Drinking Water</h5>
+              <img src="../img/drinking water.svg" alt="" class="img-fluid img-custom-size category-card">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-5">
+          <div class="card allowed">
+            <div class="card-body text-center">
+              <h5 class="card-title fw-bold">Meat & Grains</h5>
+              <img src="../img/meatgrains.svg" alt="" class="img-fluid img-custom-size category-card">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-5">
+          <div class="card allowed">
+            <div class="card-body text-center">
+              <h5 class="card-title fw-bold">Medicine</h5>
+              <img src="../img/medicine.svg" alt="" class="img-fluid img-custom-size category-card">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-3 col-lg-5">
+          <div class="card allowed">
+            <div class="card-body text-center">
+              <h5 class="card-title fw-bold">Others</h5>
+              <img src="../img/others.svg" alt="" class="img-fluid img-custom-size category-card">
             </div>
           </div>
         </div>
