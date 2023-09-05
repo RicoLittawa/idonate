@@ -184,7 +184,24 @@ $(document).on("submit", "#add-form", (e) => {
   pushProductToObject("unit", ".product-unit");
 
 
-  console.log(productField);
+  let informationData= {
+    saveBtn: "",
+    category:productField.category,
+    product:productField.product,
+    quantity:productField.quantity,
+    unit:productField.unit,
+    ref_id:ref_id,
+    fname:fname,
+    province:province,
+    municipality:municipality,
+    barangay:barangay,
+    region:region,
+    email:email,
+    donation_date:donation_date,
+    contact:contact
+  }
+
+
   //Object for products to pass data to the ajax call
 
   //Custom Validators/Regex
@@ -243,7 +260,6 @@ $(document).on("submit", "#add-form", (e) => {
   //    return false; //prevent form from submitting if any input is invalid
   //  }
 
-  return;
   //Use ajax call to save data to the database
   Swal.fire({
     title: "Confirm",
@@ -259,7 +275,7 @@ $(document).on("submit", "#add-form", (e) => {
       $.ajax({
         url: "include/add.inc.php",
         method: "POST",
-        data: inputData,
+        data: informationData,
         dataType: "json",
         // beforeSend: () => {
         //   $('button[type="submit"]').prop("disabled", true);
@@ -267,7 +283,7 @@ $(document).on("submit", "#add-form", (e) => {
         //   $(".spinner-border").removeClass("d-none");
         // },
         success: (response) => {
-          console.log(response);
+        console.log(response)
           // if (response.status === "Success") {
           //   setTimeout(() => {
           //     // Enable the submit button and hide the loading animation

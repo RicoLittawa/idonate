@@ -104,15 +104,16 @@ const deleteRow = (id, url, tableName) => {
         url: url,
         method: "POST",
         data: { deleteBtn: "", id: id },
-        success: () => {
+        dataType: "json",
+        success: (response) => {
           Swal.fire({
-            title: "Success",
-            text: "Request deleted successfully",
-            icon: "success",
+            title: response.status,
+            text: response.message,
+            icon: response.icon,
             confirmButtonColor: "#20d070",
             confirmButtonText: "OK",
             allowOutsideClick: false,
-            timer: 1500,
+            timer: 2000,
           });
           $(tableName).DataTable().ajax.reload();
         },
